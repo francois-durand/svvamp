@@ -2,6 +2,5 @@
 
 __author__ = 'François Durand'
 __email__ = 'fradurand@gmail.com'
-__version__ = '0.0.1'
 
 from . import Preferences
