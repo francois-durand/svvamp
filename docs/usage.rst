@@ -7,5 +7,5 @@ To use SVVAMP in a project::
     import svvamp
 
 
-.. automodule:: svvamp.Utils.MyLog
+.. autoclass:: svvamp.Population
    :members:
