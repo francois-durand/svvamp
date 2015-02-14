@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 """
 Created on Mon Sep 22 15:24:52 2014
 Copyright François Durand 2014, 2015
@@ -24,7 +24,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
-from svvamp.svvamp.Utils import MyLog
+from svvamp.Utils import MyLog
 
 
 class _Storage:

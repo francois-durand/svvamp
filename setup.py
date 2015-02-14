@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
+import setuptools
 try:
     from setuptools import setup
 except ImportError:
@@ -24,15 +25,13 @@ test_requirements = [
 
 setup(
     name='svvamp',
-    version='0.0.2a1',
+    version='0.0.2b0',
     description="Simulator of Various Voting Algorithms in Manipulating Populations",
     long_description=readme + '\n\n' + history,
     author="François Durand",
     author_email='fradurand@gmail.com',
     url='https://github.com/francois-durand/svvamp',
-    packages=[
-        'svvamp',
-    ],
+    packages=setuptools.find_packages(),
     package_dir={'svvamp':
                  'svvamp'},
     include_package_data=True,
