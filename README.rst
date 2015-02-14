@@ -14,13 +14,13 @@ SVVAMP
 
 Simulator of Various Voting Algorithms in Manipulating Populations
 
-* Free software: GNU General Public License version 3
+* Free software: GNU General Public License version 3.
 * Documentation: https://svvamp.readthedocs.org.
 
 WARNING
 -------
 
-SVVAMP is currently out of use becaus of a complete reorganization of my github / readthedocs / pypi accounts. Please excuse me!
+SVVAMP is currently out of use because of a complete reorganization of my github / readthedocs / pypi accounts. Please excuse me!
 
 It should be available again before February 16th.
 
