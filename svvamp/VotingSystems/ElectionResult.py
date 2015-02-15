@@ -161,7 +161,7 @@ class ElectionResult(MyLog.MyLog):
 
         Default behavior is:
         ``ballots[v, k]`` =
-        :attr:`~svvamp.Population.preferences_ranking```[v, k]``.
+        :attr:`~svvamp.Population.preferences_ranking``\ `[v, k]``.
 
         This can be overridden by specific voting systems.
         """
