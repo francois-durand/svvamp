@@ -19,3 +19,8 @@ Preferences
 
 Voting Systems
 --------------
+
+.. toctree::
+   :maxdepth: 2
+
+   VotingSystems/ElectionResult

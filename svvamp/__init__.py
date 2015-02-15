@@ -14,4 +14,6 @@ from .Preferences.PopulationVMFHypercircle import PopulationVMFHypercircle
 from .Preferences.PopulationVMFHypersphere import PopulationVMFHypersphere
 from .Preferences.PopulationFromFile import PopulationFromFile
 
+from .VotingSystems.ElectionResult import ElectionResult
+
 
