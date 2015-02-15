@@ -586,9 +586,7 @@ class Population(MyLog.MyLog):
     @property
     def exists_condorcet_admissible(self):
         """Boolean (``True`` iff there is at least one Condorcet-admissible
-        candidate).
-
-        .. seealso:: :attr:`svvamp.Population.condorcet_admissible_candidates`
+        candidate, :attr:`svvamp.Population.condorcet_admissible_candidates`).
         """
         return self.nb_condorcet_admissible > 0
 
