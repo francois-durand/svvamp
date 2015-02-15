@@ -8,5 +8,5 @@ from .Preferences.Population import Population
 from .Preferences.PopulationCubicUniform import PopulationCubicUniform
 from .Preferences.PopulationEuclideanBox import PopulationEuclideanBox
 from .Preferences.PopulationGaussianWell import PopulationGaussianWell
-from .Preferences.PopulationLadder import Population Ladder
+from .Preferences.PopulationLadder import PopulationLadder
 from .Preferences.PopulationSpheroid import PopulationSpheroid
