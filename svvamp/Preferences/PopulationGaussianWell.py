@@ -23,7 +23,7 @@ This file is part of SVVAMP.
 import itertools
 
 import numpy as np
-from scipy.spatial.distance import cdist
+from scipy.spatial import distance
 
 from svvamp.Preferences.Population import Population
 
@@ -63,7 +63,7 @@ class PopulationGaussianWell(Population):
         else:
             shift = np.array(shift)
         candidates_positions = shift + np.random.randn(C, d) * sigma
-        preferences_utilities = - cdist(
+        preferences_utilities = - distance.cdist(
             voters_positions, candidates_positions, 'euclidean')
         preferences_utilities -= np.average(preferences_utilities)
         log_creation = ['Gaussian well', C, V,

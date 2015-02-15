@@ -23,7 +23,7 @@ This file is part of SVVAMP.
 import itertools
 
 import numpy as np
-from scipy.spatial.distance import cdist
+from scipy.spatial import distance
 
 from svvamp.Preferences.Population import Population
 
@@ -53,7 +53,7 @@ class PopulationEuclideanBox(Population):
         d = len(box_dimensions)
         voters_positions = np.random.rand(V, d) * box_dimensions
         candidates_positions = np.random.rand(C, d) * box_dimensions
-        preferences_utilities = - cdist(
+        preferences_utilities = - distance.cdist(
             voters_positions, candidates_positions, 'euclidean')
         preferences_utilities -= np.average(preferences_utilities)
         log_creation = ['Euclidean box', C, V,
