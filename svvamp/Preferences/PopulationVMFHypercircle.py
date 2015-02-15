@@ -37,41 +37,47 @@ class PopulationVMFHypercircle(Population):
         """Population drawn with Von Mises-Fisher distributions on the
         C-2-sphere
 
-        Arguments:
-        V -- Integer. Number of voters.
-        C -- Integer. Number of candidates.
-        vmf_concentration -- 1d array of size k. Let us note k its size (number
-            of 'groups'). vmf_concentration[i] is the VMF concentration of
-            group i.
-        vmf_probability -- 1d array. vmf_probability[i] is the probability,
-            for a voter, to be in group i (up to normalization). If None,
-            then groups have equal probabilities.
-        vmf_pole -- 2d array of size (k, C). vmf_pole[i, :] is the pole of
-            the VMF distribution for group i.
+        :param V: Integer. Number of voters.
+        :param C: Integer. Number of candidates.
+        :param vmf_concentration: 1d array. Let us note ``k`` its size (number
+            of 'groups'). ``vmf_concentration[i]`` is the VMF concentration of
+            group ``i``.
+        :param vmf_probability: 1d array of size k. ``vmf_probability[i]`` is
+            the probability, for a voter, to be in group ``i`` (up to
+            normalization). If ``None``, then groups have equal probabilities.
+        :param vmf_pole: 2d array of size ``(k, C)``. ``vmf_pole[i, :]`` is the
+            pole of the VMF distribution for group ``i``.
 
-        We work on the C-2-sphere: vectors of R^C with Euclidean norm equal
-        to 1 and that are orthogonal to [1, ..., 1]. It is a representation
-        of the classical Von Neumann-Morgenstern utility space. Cf working
-        paper Durand et al. 'Geometry on the Utility Sphere'.
+        :return: A :class:`~svvamp.Population` object.
+
+        We work on the ``C-2``-sphere: vectors of :math:`\mathbb{R}^C` with
+        Euclidean norm equal to 1 and that are orthogonal to
+        [1, ...,  1]. It is a representation of the classical Von
+        Neumann-Morgenstern utility space. Cf. working paper Durand et al.
+        'Geometry on the Utility Sphere'.
 
         Before all computations, the poles are projected onto the hyperplane
-        and normalized. So, the only source of concentration for group i is
-        vmf_concentration[i], not the norm of vmf_pole[i]. If pole is None,
-        then each pole is drawn independently and uniformly on the C-2-sphere.
+        and normalized. So, the only source of concentration for group ``i`` is
+        ``vmf_concentration[i]``, not the norm of ``vmf_pole[i]``. If ``pole``
+        is None, then each pole is drawn independently and uniformly on the
+        ``C-2``-sphere.
 
-        For each voter c, we draw a group i at random, according to
-        vmf_probability (normalized beforehand if necessary). Then, v's
+        For each voter ``c``, we draw a group ``i`` at random, according to
+        ``vmf_probability`` (normalized beforehand if necessary). Then, ``v``'s
         utility vector is drawn according to a Von Mises-Fisher distribution
-        of pole vmf_pole[i, :] and concentration vmf_concentration[i],
+        of pole ``vmf_pole[i, :]`` and concentration ``vmf_concentration[i]``,
         using Ulrich's method modified by Wood.
 
-        Once group i is chosen, then up to a normalization constant, the
-        density of probability for a unit vector x is exp(vmf_concentration[i]
-        vmf.pole[i, :].x), where vmf.pole[i, :].x is a dot product.
+        Once group ``i`` is chosen, then up to a normalization constant, the
+        density of probability for a unit vector ``x`` is
+        ``exp(vmf_concentration[i] vmf.pole[i, :].x)``,
+        where ``vmf.pole[i, :].x`` is a dot product.
 
         References:
-        Ulrich (1984) - Computer Generation of Distributions on the m-Sphere
-        Wood (1994) - Simulation of the von Mises Fisher distribution
+
+            Ulrich (1984) - Computer Generation of Distributions on the m-Sphere
+
+            Wood (1994) - Simulation of the von Mises Fisher distribution
         """
         # Ensure that _vmf_concentration is an np.array
         # Compute k, its size.

@@ -37,6 +37,12 @@ class PopulationVMFHypersphere(Population):
         """Population drawn with Von Mises-Fisher distributions on the
         C-1-sphere
 
+        :param V: Integer. Number of voters.
+        :param C: Integer. Number of candidates.
+
+        :return: A :class:`~svvamp.Population` object.
+
+
         Arguments:
         V -- Integer. Number of voters.
         C -- Integer. Number of candidates.
