@@ -794,8 +794,8 @@ class Population(MyLog.MyLog):
         :attr:`svvamp.Population.matrix_victories_abs_ctb`. If there is no
         such candidate, then ``NaN``.
 
-        .. seealso: :attr:`svvamp.Population.exists_condorcet_winner_ctb`,
-                    :attr:`svvamp.Population.not_exists_condorcet_winner_ctb`
+        .. seealso:: :attr:`svvamp.Population.exists_condorcet_winner_ctb`,
+                     :attr:`svvamp.Population.not_exists_condorcet_winner_ctb`
         """
         if self._condorcet_winner_ctb is None:
             self._mylog("Compute condorcet_winner_ctb", 1)
