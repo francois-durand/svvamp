@@ -1423,7 +1423,7 @@ class Population(MyLog.MyLog):
     #%% Demo
 
     def demo(self, log_depth=1):
-        """Demonstrate the methods of Population class.
+        """Demonstrate the methods of :class:`~svvamp.Population` class.
 
         :param log_depth: Integer from 0 (basic info) to 3 (verbose).
         """
