@@ -935,9 +935,9 @@ class Population(MyLog.MyLog):
 
     @property
     def total_utility_c(self):
-        """1d array of floats. total_utility_c[c] is the total utility for
-        candidate c (i.e. the sum of c's column in matrix 
-        preferences_utilities).
+        """1d array of floats. ``total_utility_c[c]`` is the total utility for
+        candidate ``c`` (i.e. the sum of ``c``'s column in matrix
+        :attr:`svvamp.Population.preferences_utilities`).
         """
         if self._total_utility_c is None:
             self._mylog("Compute total utility of candidates", 1)
@@ -946,7 +946,8 @@ class Population(MyLog.MyLog):
 
     @property
     def total_utility_min(self):
-        """Float. total_utility_min is the minimum of total_utility_c.
+        """Float. ``total_utility_min`` is the minimum of
+        :attr:`svvamp.Population.total_utility_c`.
         """
         if self._total_utility_min is None:
             self._mylog("Compute total_utility_min", 1)
@@ -955,7 +956,8 @@ class Population(MyLog.MyLog):
 
     @property
     def total_utility_max(self):
-        """Float. total_utility_max is the maximum of total_utility_c.
+        """Float. ``total_utility_max`` is the maximum of
+        :attr:`svvamp.Population.total_utility_c`.
         """
         if self._total_utility_max is None:
             self._mylog("Compute total_utility_max", 1)
@@ -964,7 +966,8 @@ class Population(MyLog.MyLog):
 
     @property
     def total_utility_mean(self):
-        """Float. total_utility_mean is the mean of total_utility_c.
+        """Float. ``total_utility_mean`` is the mean of
+        :attr:`svvamp.Population.total_utility_c`.
         """
         if self._total_utility_mean is None:
             self._mylog("Compute total_utility_mean", 1)
@@ -973,8 +976,8 @@ class Population(MyLog.MyLog):
 
     @property
     def total_utility_std(self):
-        """Float. total_utility_std is the standard deviation of
-        total_utility_c.
+        """Float. ``total_utility_std`` is the standard deviation of
+        :attr:`svvamp.Population.total_utility_c`.
         """
         if self._total_utility_std is None:
             self._mylog("Compute total_utility_std", 1)
@@ -985,9 +988,9 @@ class Population(MyLog.MyLog):
 
     @property
     def mean_utility_c(self):
-        """1d array of floats. mean_utility_c[c] is the mean utility for
-        candidate c (i.e. the mean of c's column in matrix 
-        preferences_utilities).
+        """1d array of floats. ``mean_utility_c[c]`` is the mean utility for
+        candidate ``c`` (i.e. the mean of ``c``'s column in matrix
+        :attr:`svvamp.Population.preferences_utilities`).
         """
         if self._mean_utility_c is None:
             self._mylog("Compute mean utility of candidates", 1)
@@ -996,7 +999,8 @@ class Population(MyLog.MyLog):
 
     @property
     def mean_utility_min(self):
-        """Float. mean_utility_min is the minimum of mean_utility_c.
+        """Float. ``mean_utility_min`` is the minimum of
+        :attr:`svvamp.Population.mean_utility_c`.
         """
         if self._mean_utility_min is None:
             self._mylog("Compute mean_utility_min", 1)
@@ -1005,7 +1009,8 @@ class Population(MyLog.MyLog):
 
     @property
     def mean_utility_max(self):
-        """Float. mean_utility_max is the maximum of mean_utility_c.
+        """Float. ``mean_utility_max`` is the maximum of
+        :attr:`svvamp.Population.mean_utility_c`.
         """
         if self._mean_utility_max is None:
             self._mylog("Compute mean_utility_max", 1)
@@ -1014,7 +1019,8 @@ class Population(MyLog.MyLog):
 
     @property
     def mean_utility_mean(self):
-        """Float. mean_utility_mean is the mean of mean_utility_c.
+        """Float. ``mean_utility_mean`` is the mean of
+        :attr:`svvamp.Population.mean_utility_c`.
         """
         if self._mean_utility_mean is None:
             self._mylog("Compute mean_utility_mean", 1)
@@ -1023,8 +1029,8 @@ class Population(MyLog.MyLog):
 
     @property
     def mean_utility_std(self):
-        """Float. mean_utility_std is the standard deviation of
-        mean_utility_c.
+        """Float. ``mean_utility_std`` is the standard deviation of
+        :attr:`svvamp.Population.mean_utility_c`.
         """
         if self._mean_utility_std is None:
             self._mylog("Compute mean_utility_std", 1)
@@ -1035,8 +1041,8 @@ class Population(MyLog.MyLog):
 
     @property
     def borda_score_c_vtb(self):
-        """1d array of integers. borda_score_c_vtb[c] is the total Borda score
-        of candidate c (using
+        """1d array of integers. ``borda_score_c_vtb[c]`` is the total Borda
+        score of candidate ``c`` (using
         :attr:`svvamp.Population.preferences_borda_vtb`, i.e. strict orders).
         """
         if self._borda_score_c_vtb is None:
@@ -1046,7 +1052,7 @@ class Population(MyLog.MyLog):
 
     @property
     def borda_score_c_novtb(self):
-        """1d array of integers. borda_score_c_novtb[c] is the total Borda
+        """1d array of integers. ``borda_score_c_novtb[c]`` is the total Borda
         score of candidate c (using
         :attr:`svvamp.Population.preferences_borda_novtb`, i.e. weak orders).
         """
@@ -1058,10 +1064,11 @@ class Population(MyLog.MyLog):
 
     @property
     def candidates_by_decreasing_borda_score_vtb(self):
-        """1d array of integers. candidates_by_decreasing_borda_score_vtb[k] is
-        the candidate ranked k-th by decreasing Borda score (with vtb,
-        i.e. based on strict orders). E.g.
-        candidates_by_decreasing_borda_score_vtb[0] is the candidate with
+        """1d array of integers.
+        ``candidates_by_decreasing_borda_score_vtb[k]`` is
+        the candidate ranked ``k``\ :sup:`th` by decreasing Borda score (with
+        vtb, i.e. based on strict orders). E.g.
+        ``candidates_by_decreasing_borda_score_vtb[0]`` is the candidate with
         highest Borda score.
         """
         if self._candidates_by_decreasing_borda_score_vtb is None:
@@ -1077,7 +1084,7 @@ class Population(MyLog.MyLog):
         """1d array of integers. ``decreasing_borda_scores_vtb[k]`` is the
         k\ :sup:`th` Borda score (with vtb, i.e. based on strict orders) by
         decreasing
-        order. E.g. decreasing_borda_scores_vtb[0] is the highest Borda
+        order. E.g. ``decreasing_borda_scores_vtb[0]`` is the highest Borda
         score for a candidate.
         """
         if self._decreasing_borda_scores_vtb is None:
@@ -1090,10 +1097,11 @@ class Population(MyLog.MyLog):
 
     @property
     def candidates_by_decreasing_borda_score_novtb(self):
-        """1d array of integers. candidates_by_decreasing_borda_score_novtb[k]
-        is the candidate ranked k-th by decreasing Borda score (weak). E.g.
-        candidates_by_decreasing_borda_score_novtb[0] is the candidate with
-        highest Borda score (weak).
+        """1d array of integers.
+        ``candidates_by_decreasing_borda_score_novtb[k]``
+        is the candidate ranked ``k``\ :sup:`th` by decreasing Borda score
+        (weak). E.g. ``candidates_by_decreasing_borda_score_novtb[0]`` is the
+        candidate with highest Borda score (weak).
         """
         if self._candidates_by_decreasing_borda_score_novtb is None:
             self._mylog("Compute candidates_by_decreasing_borda_score_novtb",
@@ -1106,9 +1114,9 @@ class Population(MyLog.MyLog):
 
     @property
     def decreasing_borda_scores_novtb(self):
-        """1d array of integers. decreasing_borda_scores_novtb[k] is the k-th
-        Borda score (weak) by decreasing order. E.g.
-        decreasing_borda_scores_novtb[0] is the highest Borda score (weak)
+        """1d array of integers. ``decreasing_borda_scores_novtb[k]`` is the
+        k\ :sup:`th` Borda score (weak) by decreasing order. E.g.
+        ``decreasing_borda_scores_novtb[0]`` is the highest Borda score (weak)
         for a candidate.
         """
         if self._decreasing_borda_scores_novtb is None:
@@ -1336,13 +1344,12 @@ class Population(MyLog.MyLog):
         plt.axis('off')
         plt.show()
 
-    #%% Plot a population
+    #%% Demo
 
     def demo(self, log_depth=1):
         """Demonstrate the methods of Population class.
 
-        Arguments:
-        log_depth -- Integer from 0 (basic info) to 3 (verbose).
+        :param log_depth: Integer from 0 (basic info) to 3 (verbose).
         """
         old_log_depth = self._log_depth
         self._log_depth = log_depth
