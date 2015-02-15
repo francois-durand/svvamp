@@ -945,11 +945,9 @@ class Population(MyLog.MyLog):
 
         One candidate ``d`` is enough, so:
 
-        .. math::
-
-            \\text{\\verb!threshold_c_prevents_w_Condorcet[c, w]!} =
-            2 \\cdot \\min_{d \\neq w} |w \geq c \\text{ and } w > d|
-            - |w \geq c|.
+        ``threshold_c_prevents_w_Condorcet[c, w]`` :math:`=
+        2 \\cdot \\min_{d \\neq w} |w \geq c \\text{ and } w > d|
+        - |w \geq c|`.
 
         If this result is negative, it means that even without
         ``c``-manipulators, ``w`` is not a Condorcet winner. In that case,
