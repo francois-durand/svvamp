@@ -50,7 +50,7 @@ class ElectionResult(MyLog.MyLog):
         """Create a simple election (without manipulation).
 
         This is an 'abstract' class. As an end-user, you should always use its
-        subclasses ApprovalResult, PluralityResult, etc.
+        subclasses Approval, Plurality, etc.
 
         :param population: A :class:`~svvamp.Population` object.
         :param kwargs: additional keyword parameters.
@@ -160,7 +160,8 @@ class ElectionResult(MyLog.MyLog):
         """2d array of integers (generally).
 
         Default behavior is:
-        ``ballots[v, k] = preferences_ranking[v, k]``.
+        ``ballots[v, k]`` =
+        :attr:`~svvamp.Population.preferences_ranking```[v, k]``.
 
         This can be overridden by specific voting systems.
         """
