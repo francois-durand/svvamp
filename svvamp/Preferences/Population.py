@@ -868,7 +868,7 @@ class Population(MyLog.MyLog):
 
         .. math::
 
-            | \\text{sincere for whom } w > d | \\leq (n_s + n_m) / 2.
+            | \\text{sincere for whom } w > d | \\leq \\frac{n_s + n_m}{2}.
 
         I.e.:
 
@@ -880,14 +880,14 @@ class Population(MyLog.MyLog):
 
         .. math::
 
-            n_m \\geq 2 * | \\text{non } c > w \\text{ and } w > d |
+            n_m \\geq 2 \\cdot | \\text{non } c > w \\text{ and } w > d |
             - | \\text{non } c > w |.
 
         One candidate ``d`` is enough, so:
 
         .. math::
 
-            \\mathtt{threshold_c_prevents_w_Condorcet[c, w]} =
+            \\text{threshold_c_prevents_w_Condorcet[c, w]} =
             min_{d \\neq w}{2 * |w \geq c \\text{ and } w > d| - |w \geq c|}``.
 
         If this result is negative, it means that even without
