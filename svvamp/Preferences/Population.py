@@ -38,50 +38,52 @@ class Population(MyLog.MyLog):
     def __init__(self, preferences_utilities=None, preferences_ranking=None,
                  log_creation=None, labels_candidates=None):
         """Create a population with preferences. 
-        
-        Arguments:
-        preferences_utilities -- 2d array of floats.
-            preferences_utilities[v, c] is the utility of candidate c as
-            seen by voter v.
-        preferences_ranking -- 2d array of integers. preferences_ranking[v, k]
-            is the candidate at rank k for voter v.
-        log_creation -- Any type (string, list...). Some comments.
-        labels_candidates -- List of strings. Names of the candidates.
-        
+
+        :param preferences_utilities: 2d array of floats.
+            ``preferences_utilities[v, c]`` is the utility of candidate ``c``
+            as seen by voter ``v``.
+        :param preferences_ranking: 2d array of integers.
+            preferences_ranking[v, k] is the candidate at rank k for voter v.
+        :param log_creation: Any type (string, list...). Some comments.
+        :param labels_candidates: List of strings. Names of the candidates.
+
         The user may enter either preferences_utilities or
         preferences_ranking to define the preferences of the population. If
         both are provided, then only preferences_utilities is used.
         
         If voter v attributes the same utility to several candidates:
-        * The first time preferences_ranking is computed, a random ranking will
-        be decided (once and for all) for these candidates. This strict
-        ranking will be used for sincere voting in all voting systems
-        accepting only strict orders.
-        * For manipulation purposes, this indifference will be taken into
-        account as such.
+            * The first time preferences_ranking is computed, a random ranking
+              will be decided (once and for all) for these tied candidates.
+              This strict ranking will be used for sincere voting in all
+              voting systems accepting only strict orders. This process is
+              called **voter tie-breaking** or **VTB**.
+            * But for manipulation purposes, this indifference will be taken
+              into account as such.
 
-        If user provides preferences_ranking, then preferences_utilities
-        is set to the corresponding Borda scores.
+        If the user provides preferences_ranking only,
+        then preferences_utilities is set to the corresponding Borda scores.
 
-        Implications between majority favorite and Condorcet criteria.
-        # majority_favorite              ==>            majority_favorite_ctb
-        #  ||              ||                                ||            ||
-        #  V               ||                                ||            ||
-        # Resistant Cond.  V                                 V             ||
-        #  ||      majority_favorite_vtb ==> majority_favorite_vtb_ctb     ||
-        #  ||                     ||                   ||                  ||
-        #  V                      ||                   ||                  V
-        # Condorcet                      ==>                    Condorcet_ctb
-        #  ||      ||             ||                   ||         ||       ||
-        #  ||      V              V                    V          V        ||
-        #  V         Condorcet_vtb       ==>         Condorcet_vtb_ctb     V
-        # Condorcet_rel                  ==>                Condorcet_rel_ctb
-        #  ||
-        #  V
-        # Weak Condorcet
-        #  ||
-        #  V
-        # Condorcet-admissible
+        Implications between majority favorite and Condorcet criteria (cf.
+        corresponding functions below).
+        ::
+            majority_favorite             ==>            majority_favorite_ctb
+            ||              ||                                ||            ||
+            V               ||                                ||            ||
+            Resistant Cond. V                                 V             ||
+            ||      majority_favorite_vtb ==> majority_favorite_vtb_ctb     ||
+            ||                     ||                   ||                  ||
+            V                      ||                   ||                  V
+            Condorcet                     ==>                    Condorcet_ctb
+            ||      ||             ||                   ||         ||       ||
+            ||      V              V                    V          V        ||
+            V         Condorcet_vtb       ==>         Condorcet_vtb_ctb     V
+            Condorcet_rel                 ==>                Condorcet_rel_ctb
+            ||
+            V
+            Weak Condorcet
+            ||
+            V
+            Condorcet-admissible
         """
         super().__init__()
         self._log_identity = "POPULATION"
@@ -930,7 +932,8 @@ class Population(MyLog.MyLog):
     @property
     def borda_score_c_vtb(self):
         """1d array of integers. borda_score_c_vtb[c] is the total Borda score
-        of candidate c (using preferences_borda_vtb, i.e. strict orders).
+        of candidate c (using
+        :meth:`svvamp.Population.preferences_borda_vtb`, i.e. strict orders).
         """
         if self._borda_score_c_vtb is None:
             self._mylog("Compute Borda scores of the candidates with vtb", 1)
@@ -940,8 +943,8 @@ class Population(MyLog.MyLog):
     @property
     def borda_score_c_novtb(self):
         """1d array of integers. borda_score_c_novtb[c] is the total Borda
-        score of candidate c (using preferences_borda_novtb, i.e. weak
-        orders).
+        score of candidate c (using
+        :meth:`svvamp.Population.preferences_borda_novtb`, i.e. weak orders).
         """
         if self._borda_score_c_novtb is None:
             self._mylog("Compute Borda scores of the candidates (weak "
@@ -967,8 +970,9 @@ class Population(MyLog.MyLog):
 
     @property
     def decreasing_borda_scores_vtb(self):
-        """1d array of integers. decreasing_borda_scores_vtb[k] is the k-th
-        Borda score (with vtb, i.e. based on strict orders) by decreasing
+        """1d array of integers. ``decreasing_borda_scores_vtb[k]`` is the
+        k\ :sup:`th` Borda score (with vtb, i.e. based on strict orders) by
+        decreasing
         order. E.g. decreasing_borda_scores_vtb[0] is the highest Borda
         score for a candidate.
         """
@@ -1016,15 +1020,16 @@ class Population(MyLog.MyLog):
     def plot3(self, indexes=None, normalize=True, use_labels=True):
         """Plot utilities with approval limit for 3 candidates
 
-        Arguments:
-        indexes -- List of 3 candidates. If None, defaults to [0, 1, 2].
-        normalize -- Boolean.
-        use_labels -- Boolean. If True, then labels_candidates is used.
-            Otherwise, candidates are simply represented by their index.
+        :param indexes: List of 3 candidates. If None, defaults to [0, 1, 1].
+        :param normalize: Boolean. Cf. below.
+        :param use_labels: Boolean. If True, then labels_candidates is
+            used to label the plot. Otherwise, candidates are simply
+            represented by their index.
 
         Each red point of the plot represents a voter v: its position is
         preferences_utilities[v, indexes]. If normalize is True,
-        then each position is normalized before plotting (Euclidean norm = 1).
+        then each position is normalized before plotting such that
+        its Euclidean norm is equal to 1.
 
         The equator (in blue) is the set of points such that sum(point[
         i]**2) = 1 and sum(point[i]) = 0, i.e. the unit circle of the plan
@@ -1033,7 +1038,8 @@ class Population(MyLog.MyLog):
         Other blue circles are the frontiers between the 6 different strict
         total orders on the candidates.
 
-        Cf. working paper by Durand et al., 'Geometry on the Utility Space'.
+        Cf. working paper by Durand et al., 'Geometry on the Utility
+        Space'.
         """
         if indexes is None:
             _indexes = [0, 1, 2]
@@ -1102,26 +1108,27 @@ class Population(MyLog.MyLog):
     def plot4(self, indexes=None, normalize=True, use_labels=True):
         """Plot utilities for 4 candidates (without approval limit)
 
-        Arguments:
-        indexes -- List of 4 candidates. If None, defaults to [0, 1, 2, 3].
-        normalize -- Boolean.
-        use_labels -- Boolean. If True, then labels_candidates is used.
-            Otherwise, candidates are simply represented by their index.
+        :param indexes: List of 4 candidates. If None, defaults to
+            [0, 1, 2, 3].
+        :param normalize: Boolean. Cf. below.
+        :param use_labels: Boolean. If True, then labels_candidates is
+            used to label the plot. Otherwise, candidates are simply
+            represented by their index.
 
         Each red point of the plot represents a voter v.
-        * preferences_utilities[v, indexes] is sent to the hyperplane that
-        is orthogonal to [1, 1, 1, 1], which discards information related to
-        approval limit and keeps only the relative preferences between
-        candidates.
-        * The plot will be done in this 3d hyperplane. In practice, we use a
-        symmetry that exchanges [1, 1, 1, 1] and [0, 0, 0, 1], so the new
-        vector is orthogonal to [0, 0, 0, 1] and can be easily plotted in 3
-        dimensions.
-        * If normalize is True, then the vector is normalized (Euclidean
-        norm = 1).
+            * preferences_utilities[v, indexes] is sent to the hyperplane that
+              is orthogonal to [1, 1, 1, 1], which discards information related
+              to approval limit and keeps only the relative preferences between
+              candidates.
+            * The plot is done in this 3d hyperplane. In practice, we use a
+              mirror symmetry that exchanges [1, 1, 1, 1] and [0, 0, 0, 1].
+              This way, the new vector is orthogonal to [0, 0, 0, 1] and can be
+              plotted in the first 3 dimensions.
+            * If normalize is True, then the vector is normalized  before
+              plotting such that its Euclidean norm is equal to 1.
 
         Blue lines are the frontiers between the 24 different strict
-        total orders on the candidates ('permutoedron').
+        total orders on the candidates ('permutohedron').
 
         Cf. working paper by Durand et al., 'Geometry on the Utility Space'.
         """
