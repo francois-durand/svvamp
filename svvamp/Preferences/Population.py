@@ -643,9 +643,10 @@ class Population(MyLog.MyLog):
         :attr:`svvamp.Population.matrix_victories_vtb_ctb`. If there is no
         such candidate, then ``NaN``.
 
-        'vtb' stands for 'voters ties broken'.
+        .. seealso::
 
-        'ctb' stands for 'candidates ties broken'.
+            :attr:`svvamp.Population.exists_condorcet_winner_vtb_ctb`,
+            :attr:`svvamp.Population.not_exists_condorcet_winner_vtb_ctb`.
         """
         if self._condorcet_winner_vtb_ctb is None:
             self._mylog("Compute condorcet_winner_vtb_ctb", 1)
@@ -680,7 +681,8 @@ class Population(MyLog.MyLog):
         :attr:`svvamp.Population.matrix_victories_vtb`. If there is no such
         candidate, then ``NaN``.
 
-        'vtb' stands for 'voters ties broken'.
+        .. seealso:: :attr:`svvamp.Population.exists_condorcet_winner_vtb`,
+                     :attr:`svvamp.Population.not_exists_condorcet_winner_vtb`.
         """
         if self._condorcet_winner_vtb is None:
             self._mylog("Compute condorcet_winner_vtb", 1)
@@ -712,9 +714,14 @@ class Population(MyLog.MyLog):
     @property
     def condorcet_winner_rel_ctb(self):
         """Integer or ``NaN``. 'ctb' stands for 'candidates ties broken'.
-        Candidate who has only victories in
+        Candidate who has only victories in the sense of
         :attr:`svvamp.Population.matrix_victories_rel_ctb`. If there is no
         such candidate, then ``NaN``.
+
+        .. seealso:
+
+            :attr:`svvamp.Population.exists_condorcet_winner_rel_ctb`,
+            :attr:`svvamp.Population.not_exists_condorcet_winner_rel_ctb`.
         """
         if self._condorcet_winner_rel_ctb is None:
             self._mylog("Compute condorcet_winner_rel_ctb", 1)
@@ -746,9 +753,12 @@ class Population(MyLog.MyLog):
 
     @property
     def condorcet_winner_rel(self):
-        """Integer or ``NaN``. Candidate who has only victories in
+        """Integer or ``NaN``. Candidate who has only victories in the sense of
         :attr:`svvamp.Population.matrix_victories_rel`. If there is no such
         candidate, then ``NaN``.
+
+        .. seealso:: :attr:`svvamp.Population.exists_condorcet_winner_rel`,
+                     :attr:`svvamp.Population.not_exists_condorcet_winner_rel`.
         """
         if self._condorcet_winner_rel is None:
             self._mylog("Compute condorcet_winner_rel", 1)
@@ -814,9 +824,12 @@ class Population(MyLog.MyLog):
 
     @property
     def condorcet_winner(self):
-        """Integer or ``NaN``. Candidate who has only victories in
+        """Integer or ``NaN``. Candidate who has only victories in the sense of
         :attr:`svvamp.Population.matrix_victories_abs`. If there is no such
         candidate, then ``NaN``.
+
+        .. seealso:: :attr:`svvamp.Population.exists_condorcet_winner`,
+                     :attr:`svvamp.Population.not_exists_condorcet_winner`.
         """
         if self._condorcet_winner is None:
             self._mylog("Compute Condorcet winner", 1)
