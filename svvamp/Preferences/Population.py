@@ -858,7 +858,7 @@ class Population(MyLog.MyLog):
 
         .. math::
 
-            | sincere for whom w > d | \\leq (n_s + n_m) / 2
+            | \\text{sincere for whom } w > d | \\leq (n_s + n_m) / 2
 
         I.e.:
             ``| sincere for whom w > d | <= (n_s + n_m) / 2``.
