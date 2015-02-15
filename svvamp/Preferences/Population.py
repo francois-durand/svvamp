@@ -372,9 +372,11 @@ class Population(MyLog.MyLog):
         based on :attr:`svvamp.Population.matrix_duels`.
 
         ``matrix_victories_abs[c, d]`` is:
+
             * 1   iff ``matrix_duels[c, d] > V / 2``.
             * 0.5 iff ``matrix_duels[c, d] = V / 2``.
             * 0   iff ``matrix_duels[c, d] < V / 2``.
+
         By convention, diagonal coefficients are set to 0.
         """
         if self._matrix_victories_abs is None:
@@ -851,13 +853,11 @@ class Population(MyLog.MyLog):
         ``c``-manipulators must we add in order to create a non-victory for
         ``w`` against some candidate ``d != w`` (possibly ``c`` herself)?
 
-        Since Pythagoras, we know that :math:`a^2 + b^2 = c^2`.
-
         We need:
 
         .. math::
 
-            a^2 + b^2 = c^2
+            \\| sincere for whom w > d \\| \\leq (n_s + n_m) / 2
 
         I.e.:
             ``| sincere for whom w > d | <= (n_s + n_m) / 2``.
