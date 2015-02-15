@@ -26,8 +26,8 @@
       <file leaf-file-name="Population.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Preferences/Population.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5530587" vertical-offset="13043" max-vertical-offset="38676">
-              <caret line="613" column="33" selection-start-line="613" selection-start-column="33" selection-end-line="613" selection-end-column="33" />
+            <state vertical-scroll-proportion="0.505618" vertical-offset="1289" max-vertical-offset="38720">
+              <caret line="77" column="25" selection-start-line="77" selection-start-column="25" selection-end-line="77" selection-end-column="25" />
               <folding>
                 <element signature="e#791#809#0" expanded="true" />
               </folding>
@@ -310,8 +310,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Preferences/Population.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5530587" vertical-offset="13043" max-vertical-offset="38676">
-          <caret line="613" column="33" selection-start-line="613" selection-start-column="33" selection-end-line="613" selection-end-column="33" />
+        <state vertical-scroll-proportion="0.505618" vertical-offset="1289" max-vertical-offset="38720">
+          <caret line="77" column="25" selection-start-line="77" selection-start-column="25" selection-end-line="77" selection-end-column="25" />
           <folding>
             <element signature="e#791#809#0" expanded="true" />
           </folding>

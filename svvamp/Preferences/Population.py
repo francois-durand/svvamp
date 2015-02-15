@@ -57,29 +57,31 @@ class Population(MyLog.MyLog):
             * The first time the attribute ``preferences_ranking`` is
               called, a random ranking will be decided for these tied
               candidates (once and for all). This strict ranking will be used
-              for sincere voting in all voting systems accepting only strict
+              for sincere voting when a voting system accepts only strict
               orders. This process is called **voter tie-breaking** or **VTB**.
-            * However, for manipulation purposes, indifference is taken
+            * In contrast, for manipulation purposes, indifference is taken
               into account as such. If voter ``v`` attributes the same
               utility to candidates ``w`` and ``c``, and if ``w`` is the
-              sincere winner of the election, then ``v`` is not interested in
-              a manipulation in favor of ``c``.
+              sincere winner in an election, then ``v`` is not interested in
+              a manipulation for ``c``.
 
         If you provide ``preferences_ranking`` only,
         then ``preferences_utilities`` is set to the corresponding Borda
-        scores. Cf. :attr:`~svvamp.Population.borda_score_c_vtb`.
+        scores (:attr:`~svvamp.Population.borda_score_c_novtb` or
+        :attr:`~svvamp.Population.borda_score_c_vtb`, which are equivalent
+        in that case).
 
         If all voters have a strict order of preference, either because you
         provided utilities without ties for each voter, or because you
         provided preference rankings only, then VTB does not matter. In
-        that case, each function without VTB below is equivalent to its
+        that case, each function below without VTB is equivalent to its
         variant with VTB.
 
         In some voting systems and in some of the attributes below,
         we use a process referred as **candidate tie-breaking** or **CTB** in
-        SVVAMP. It means that lowest-index candidates are favored. If
-        candidates ``c`` and ``d`` are tied (for example, in an election
-        using Plurality), then when using CTB, ``c`` is favored over ``d``
+        SVVAMP. It means that lowest-index candidates are favored. When using
+        CTB, if candidates ``c`` and ``d`` are tied (for example,
+        in an election using Plurality), then ``c`` is favored over ``d``
         iff ``c < d``.
 
         Implications between majority favorite and Condorcet criteria (cf.
