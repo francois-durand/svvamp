@@ -571,7 +571,7 @@ class Population(MyLog.MyLog):
     def nb_condorcet_admissible(self):
         """Integer (number of Condorcet-admissible candidates).
 
-        .. seealso:: :attr:`svvamp.Population.condorcet_admissible_candidates`
+        :seealso: :attr:`svvamp.Population.condorcet_admissible_candidates`.
         """
         if self._nb_condorcet_admissible_candidates is None:
             self._mylog("Compute number of Condorcet-admissible candidates", 1)
