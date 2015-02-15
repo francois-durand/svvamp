@@ -394,10 +394,12 @@ class Population(MyLog.MyLog):
         candidates.
 
         ``matrix_victories_abs_ctb[c, d]`` is:
+
             * 1   iff ``matrix_duels[c, d] > V / 2``, or
               ``matrix_duels[c, d] = V / 2`` and ``c < d``.
             * 0   iff ``matrix_duels[c, d] < V / 2``, or
               ``matrix_duels[c, d] = V / 2`` and ``d < c``.
+
         By convention, diagonal coefficients are set to 0.
         """
         if self._matrix_victories_abs_vtb is None:
@@ -418,9 +420,11 @@ class Population(MyLog.MyLog):
         based on :attr:`svvamp.Population.matrix_duels`.
 
         ``matrix_victories_rel[c, d]`` is:
+
             * 1   iff ``matrix_duels[c, d] > matrix_duels[d, c]``.
             * 0.5 iff ``matrix_duels[c, d] = matrix_duels[d, c]``.
             * 0   iff ``matrix_duels[c, d] < matrix_duels[d, c]``.
+
         By convention, diagonal coefficients are set to 0.
         """
         if self._matrix_victories_rel is None:
@@ -439,10 +443,12 @@ class Population(MyLog.MyLog):
         candidates.
 
         ``matrix_victories_rel_ctb[c, d]`` is:
+
             * 1   iff ``matrix_duels[c, d] > matrix_duels[d, c]``, or
               ``matrix_duels[c, d] = matrix_duels[d, c]`` and ``c < d``.
             * 0   iff ``matrix_duels[c, d] < matrix_duels[d, c]``, or
               ``matrix_duels[c, d] = matrix_duels[d, c]`` and ``d < c``.
+
         By convention, diagonal coefficients are set to 0.
         """
         if self._matrix_victories_rel_ctb is None:
@@ -465,12 +471,14 @@ class Population(MyLog.MyLog):
         breaks her own ties).
 
         ``matrix_victories_vtb[c, d]`` is:
+
             * 1   iff ``matrix_duels_vtb[c, d] > matrix_duels_vtb[d, c]``,
               i.e. iff ``matrix_duels_vtb[c, d] > V / 2``.
             * 0.5 iff ``matrix_duels_vtb[c, d] = matrix_duels_vtb[d, c]``,
               i.e. iff ``matrix_duels_vtb[c, d] = V / 2``.
             * 0   iff ``matrix_duels_vtb[c, d] < matrix_duels_vtb[d, c]``,
               i.e. iff ``matrix_duels_vtb[c, d] < V / 2``.
+
         By convention, diagonal coefficients are set to 0.
         """
         if self._matrix_victories_vtb is None:
@@ -488,12 +496,14 @@ class Population(MyLog.MyLog):
         her own ties), with tie-breaks on candidates.
 
         ``matrix_victories_vtb_ctb[c, d]`` is:
+
             * 1   iff ``matrix_duels_vtb[c, d] > matrix_duels_vtb[d, c]``, or
               ``matrix_duels_vtb[c, d] = matrix_duels_vtb[d, c]`` and
               ``c < d``.
             * 0   iff ``matrix_duels_vtb[c, d] < matrix_duels_vtb[d, c]``, or
               ``matrix_duels_vtb[c, d] = matrix_duels_vtb[d, c]`` and
               ``d < c``.
+
         By convention, diagonal coefficients are set to 0.
         """
         if self._matrix_victories_vtb_ctb is None:
@@ -858,18 +868,27 @@ class Population(MyLog.MyLog):
 
         .. math::
 
-            | \\text{sincere for whom } w > d | \\leq (n_s + n_m) / 2
+            | \\text{sincere for whom } w > d | \\leq (n_s + n_m) / 2.
 
         I.e.:
-            ``| sincere for whom w > d | <= (n_s + n_m) / 2``.
+
+        .. math::
+
+            | \\text{non } c > w \\text{ and } w > d | \\leq
+            (| \\text{non } c > w | + n_m) / 2.
         I.e.:
-            ``| non c > w and w > d | <= (| non c > w | + n_m) / 2``.
-        I.e.:
-            ``n_m >= 2 * | non c > w and w > d | - | non c > w |``.
-        
+
+        .. math::
+
+            n_m \\geq 2 * | \\text{non } c > w \\text{ and } w > d |
+            - | \\text{non } c > w |.
+
         One candidate ``d`` is enough, so:
-            ``threshold_c_prevents_w_Condorcet[c, w] =
-            min_{d != w}{2 * |w >= c and w > d| - |w >= c|}``.
+
+        .. math::
+
+            \\mathtt{threshold_c_prevents_w_Condorcet[c, w]} =
+            min_{d \\neq w}{2 * |w \geq c \\text{ and } w > d| - |w \geq c|}``.
 
         If this result is negative, it means that even without
         ``c``-manipulators, ``w`` is not a Condorcet winner. In that case,
