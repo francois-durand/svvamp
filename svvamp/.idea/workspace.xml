@@ -26,18 +26,20 @@
       <file leaf-file-name="Population.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Preferences/Population.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="38918">
-              <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-              <folding />
+            <state vertical-scroll-proportion="-8.424242" vertical-offset="646" max-vertical-offset="38918">
+              <caret line="42" column="14" selection-start-line="42" selection-start-column="8" selection-end-line="42" selection-end-column="14" />
+              <folding>
+                <element signature="e#791#809#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PopulationEuclideanBox.py" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Preferences/PopulationEuclideanBox.py">
+      <file leaf-file-name="PopulationCubicUniform.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Preferences/PopulationCubicUniform.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.3189448" vertical-offset="0" max-vertical-offset="2090">
-              <caret line="50" column="19" selection-start-line="50" selection-start-column="19" selection-end-line="50" selection-end-column="19" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="528" max-vertical-offset="1760">
+              <caret line="40" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
               <folding>
                 <element signature="e#788#804#0" expanded="true" />
               </folding>
@@ -45,12 +47,26 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PopulationGaussianWell.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="PopulationEuclideanBox.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Preferences/PopulationEuclideanBox.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="431" max-vertical-offset="2134">
+              <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
+              <folding>
+                <element signature="e#788#804#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PopulationGaussianWell.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Preferences/PopulationGaussianWell.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.666667" vertical-offset="264" max-vertical-offset="2376">
-              <caret line="25" column="31" selection-start-line="25" selection-start-column="31" selection-end-line="25" selection-end-column="31" />
-              <folding />
+            <state vertical-scroll-proportion="0.6089965" vertical-offset="704" max-vertical-offset="2398">
+              <caret line="56" column="19" selection-start-line="56" selection-start-column="19" selection-end-line="56" selection-end-column="19" />
+              <folding>
+                <element signature="e#788#804#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -67,8 +83,8 @@
       <list>
         <option value="$PROJECT_DIR$/Preferences/Population.py" />
         <option value="$PROJECT_DIR$/Preferences/PopulationCubicUniform.py" />
-        <option value="$PROJECT_DIR$/Preferences/PopulationGaussianWell.py" />
         <option value="$PROJECT_DIR$/Preferences/PopulationEuclideanBox.py" />
+        <option value="$PROJECT_DIR$/Preferences/PopulationGaussianWell.py" />
       </list>
     </option>
   </component>
@@ -345,7 +361,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="18752" max-vertical-offset="38962">
           <caret line="873" column="0" selection-start-line="873" selection-start-column="0" selection-end-line="873" selection-end-column="8" />
-          <folding />
+          <folding>
+            <element signature="e#791#809#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -353,24 +371,8 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="130" max-vertical-offset="34650">
           <caret line="26" column="30" selection-start-line="26" selection-start-column="30" selection-end-line="26" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Preferences/Population.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="38918">
-          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Preferences/PopulationCubicUniform.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="528" max-vertical-offset="1760">
-          <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
           <folding>
-            <element signature="e#788#804#0" expanded="true" />
+            <element signature="e#791#809#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -395,18 +397,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Preferences/PopulationGaussianWell.py">
+    <entry file="file://$PROJECT_DIR$/Preferences/Population.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.666667" vertical-offset="264" max-vertical-offset="2376">
-          <caret line="25" column="31" selection-start-line="25" selection-start-column="31" selection-end-line="25" selection-end-column="31" />
-          <folding />
+        <state vertical-scroll-proportion="-8.424242" vertical-offset="646" max-vertical-offset="38918">
+          <caret line="42" column="14" selection-start-line="42" selection-start-column="8" selection-end-line="42" selection-end-column="14" />
+          <folding>
+            <element signature="e#791#809#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Preferences/PopulationCubicUniform.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="528" max-vertical-offset="1760">
+          <caret line="40" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+          <folding>
+            <element signature="e#788#804#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Preferences/PopulationEuclideanBox.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.3189448" vertical-offset="0" max-vertical-offset="2090">
-          <caret line="50" column="19" selection-start-line="50" selection-start-column="19" selection-end-line="50" selection-end-column="19" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="431" max-vertical-offset="2134">
+          <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
+          <folding>
+            <element signature="e#788#804#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Preferences/PopulationGaussianWell.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6089965" vertical-offset="704" max-vertical-offset="2398">
+          <caret line="56" column="19" selection-start-line="56" selection-start-column="19" selection-end-line="56" selection-end-column="19" />
           <folding>
             <element signature="e#788#804#0" expanded="true" />
           </folding>

@@ -35,19 +35,21 @@ class PopulationEuclideanBox(Population):
     def __init__(self, V, C, box_dimensions):
         """Population with 'Euclidean box' model.
 
-        Arguments:
-        V -- Integer. Number of voters.
-        C -- Integer. Number of candidates.
-        box_dimensions -- 1d array of numbers. The length of the
-        Euclidean box along each axis.
+        :param V: Integer. Number of voters.
+        :param C: Integer. Number of candidates.
+        :param box_dimensions: 1d array of numbers. The length of the
+            Euclidean box along each axis.
+
+        :return: A :class:`~svvamp.Population` object.
 
         For each voter and each candidate, a position is independently and
-        uniformly drawn in a rectangular box of dimensions box_dimensions[0],
-        ..., box_dimensions[n_dim - 1], where n_dim is the number of
-        elements in box_dimensions. Let d[v, c] denote the Euclidean distance
-        between voter v and candidate c. Then
-        preferences_utilities[v, c] = A - d[v, c],
-        where A is such that the average utility is 0 over the whole
+        uniformly drawn in a rectangular box of dimensions
+        ``box_dimensions[0]``,... , ``box_dimensions[n_dim - 1]``, where
+        ``n_dim`` is the number of elements in box_dimensions. Let
+        ``d[v, c]`` denote the Euclidean distance between voter ``v`` and
+        candidate ``c``. Then
+        ``preferences_utilities[v, c] = A - d[v, c]``,
+        where ``A`` is such that the average utility is 0 over the whole
         population.
         """
         d = len(box_dimensions)

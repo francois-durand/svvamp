@@ -35,25 +35,26 @@ class PopulationGaussianWell(Population):
     def __init__(self, V, C, sigma, shift=None):
         """Population with 'Gaussian well' model.
 
-        Arguments:
-        V -- Integer. Number of voters.
-        C -- Integer. Number of candidates.
-        sigma -- 1d array of numbers. The variance of the gaussian law along
-        each dimension.
-        shift -- 1d array of numbers, same dimension as sigma. Shift for the
-            mean position of the candidates.
+        :param V: Integer. Number of voters.
+        :param C: Integer. Number of candidates.
+        :param sigma: 1d array of numbers. The variance of the gaussian law
+            along each dimension.
+        :param shift: 1d array of numbers, same dimension as ``sigma``. Shift
+            for the mean position of the candidates.
 
-        Let us note d the number of elements in sigma.
-        For voter v (resp. each candidate c) and each axis i in range(d),
-        a position x_i[v] (resp. y_i[c]) is independently drawn according
-        to a normal law of mean 0 and variance sigma[i]. If shift is used,
-        the distribution of positions for candidates is displaced by this
-        vector.
+        :return: A :class:`~svvamp.Population` object.
 
-        Let d[v, c] denote the Euclidean distance between voter v's position
-        x[v] and candidate c's position y[c]. Then
-        preferences_utilities[v, c] = A - d[v, c],
-        where A is such that the average utility is 0 over the whole
+        Let us note ``dim`` the number of elements in ``sigma``.
+        For voter ``v`` (resp. each candidate ``c``) and each axis ``i`` in
+        ``range(d)``, a position ``x_i[v]`` (resp. ``y_i[c]``) is
+        independently drawn according to a normal law of mean 0 and variance
+        ``sigma[i]``. If ``shift`` is used, the distribution of positions
+        for candidates is displaced by this vector.
+
+        Let ``d[v, c]`` denote the Euclidean distance between voter ``v``'s
+        position ``x[v]`` and candidate ``c``'s position ``y[c]``. Then
+        ``preferences_utilities[v, c] = A - d[v, c]``,
+        where ``A`` is such that the average utility is 0 over the whole
         population.
         """
         d = len(sigma)
