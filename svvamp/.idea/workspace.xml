@@ -48,9 +48,11 @@
       <file leaf-file-name="PopulationEuclideanBox.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Preferences/PopulationEuclideanBox.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6343714" vertical-offset="0" max-vertical-offset="2090">
-              <caret line="25" column="27" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="27" />
-              <folding />
+            <state vertical-scroll-proportion="0.38062283" vertical-offset="264" max-vertical-offset="2090">
+              <caret line="27" column="52" selection-start-line="27" selection-start-column="52" selection-end-line="27" selection-end-column="52" />
+              <folding>
+                <element signature="e#788#804#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -405,9 +407,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Preferences/PopulationEuclideanBox.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6343714" vertical-offset="0" max-vertical-offset="2090">
-          <caret line="25" column="27" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="27" />
-          <folding />
+        <state vertical-scroll-proportion="0.38062283" vertical-offset="264" max-vertical-offset="2090">
+          <caret line="27" column="52" selection-start-line="27" selection-start-column="52" selection-end-line="27" selection-end-column="52" />
+          <folding>
+            <element signature="e#788#804#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
