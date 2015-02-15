@@ -263,15 +263,19 @@ class Population(MyLog.MyLog):
     def ensure_voters_sorted_by_ordinal_preferences(self):
         """Ensure that voters are sorted.
         
-        If needed, sort voters first by their strict order of preference
-        (row in ``preferences_ranking``), then by their weak order of
-        preference (row in ``preferences_borda_novtb``). Note that two voters
-        having the same strict order may have different weak orders,
-        and vice versa.
+        This function sorts voters first by their strict order of preference
+        (their row in :attr:``svvamp.Population.preferences_ranking``), then
+        by their weak order of preference (their row in
+        :attr:``svvamp.Population.preferences_borda_novtb``). Note
+        that two voters having the same strict order may have different weak
+        orders, and vice versa.
 
-        This method will be called automatically when creating an election, 
+        This function will be called automatically when creating an election,
         because it allows to accelerate some algorithms (typically  Individual 
         Manipulation).
+
+        This function actually performs the sort only when it is called on a
+        Population object for the first time.
         """
         if self._voters_sorted_by_ranking:
             return
