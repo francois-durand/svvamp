@@ -264,9 +264,9 @@ class Population(MyLog.MyLog):
         """Ensure that voters are sorted.
         
         This function sorts voters first by their strict order of preference
-        (their row in :attr:``svvamp.Population.preferences_ranking``), then
+        (their row in :attr:`svvamp.Population.preferences_ranking`), then
         by their weak order of preference (their row in
-        :attr:``svvamp.Population.preferences_borda_novtb``). Note
+        :attr:`svvamp.Population.preferences_borda_novtb`). Note
         that two voters having the same strict order may have different weak
         orders, and vice versa.
 
