@@ -35,7 +35,7 @@ class PopulationVMFHypercircle(Population):
     def __init__(self, V, C, vmf_concentration, vmf_probability=None,
                  vmf_pole=None):
         """Population drawn with Von Mises-Fisher distributions on the
-        C-2-sphere
+        ``C-2``-sphere
 
         :param V: Integer. Number of voters.
         :param C: Integer. Number of candidates.
