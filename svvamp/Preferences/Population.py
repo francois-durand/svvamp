@@ -869,7 +869,8 @@ class Population(MyLog.MyLog):
         candidate, then ``NaN``.
         
         A Condorcet winner ``w`` is resistant iff in any Condorcet voting
-        system, the profile is not manipulable (cf. Durand et al. 2014).
+        system, the profile is not manipulable (cf. Durand et al., working
+        paper 2014).
         This is equivalent to say that for any pair ``(c, d)`` of other
         distinct candidates, there is a strict majority of voters who
         simultaneously:
