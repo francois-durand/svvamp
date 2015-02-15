@@ -639,7 +639,7 @@ class Population(MyLog.MyLog):
 
     @property
     def condorcet_winner_vtb_ctb(self):
-        """Integer or ``NaN``. Candidate who has only victories in
+        """Integer or ``NaN``. Candidate who has only victories in the sense of
         :attr:`svvamp.Population.matrix_victories_vtb_ctb`. If there is no
         such candidate, then ``NaN``.
 
@@ -677,7 +677,7 @@ class Population(MyLog.MyLog):
 
     @property
     def condorcet_winner_vtb(self):
-        """Integer or ``NaN``. Candidate who has only victories in
+        """Integer or ``NaN``. Candidate who has only victories in the sense of
         :attr:`svvamp.Population.matrix_victories_vtb`. If there is no such
         candidate, then ``NaN``.
 
@@ -790,7 +790,7 @@ class Population(MyLog.MyLog):
     @property
     def condorcet_winner_ctb(self):
         """Integer or ``NaN``.
-        Candidate who has only victories in
+        Candidate who has only victories in the sense of
         :attr:`svvamp.Population.matrix_victories_abs_ctb`. If there is no
         such candidate, then ``NaN``.
 
