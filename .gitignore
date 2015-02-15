@@ -27,6 +27,9 @@ pip-log.txt
 nosetests.xml
 htmlcov
 
+# PyCharm
+*.idea
+
 # Translations
 *.mo
 
