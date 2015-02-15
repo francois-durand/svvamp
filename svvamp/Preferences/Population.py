@@ -223,8 +223,10 @@ class Population(MyLog.MyLog):
     @property
     def preferences_ranking(self):
         """2d array of integers. ``preferences_ranking[v, k]`` is the
-        candidate at rank k for voter v. For example,
-        ``preferences_ranking[v, 0]`` is ``v``'s preferred candidate.
+        candidate at rank ``k`` for voter ``v``.
+
+        For example, ``preferences_ranking[v, 0]`` is ``v``'s preferred
+        candidate.
         """
         if self._preferences_ranking is None:
             self._mylog("Compute preference rankings", 1)
@@ -313,8 +315,10 @@ class Population(MyLog.MyLog):
         """1d array of booleans.
         ``v_has_same_ordinal_preferences_as_previous_voter[v]`` is
         ``True`` iff voter ``v`` has the same preference strict order (row in
-        ``preferences_ranking``) and the same preference weak order (row in
-        ``preferences_borda_novtb``) as voter ``v-1``.
+        :attr:`~svvamp.Population.preferences_ranking`) and the same
+        preference weak order (row in
+        :attr:`~svvamp.Population.preferences_borda_novtb`) as voter ``v-1``.
+
         By convention, it is ``False`` for voter ``0``.
         """
         if self._v_has_same_ordinal_preferences_as_previous_voter is None:
@@ -355,8 +359,8 @@ class Population(MyLog.MyLog):
     @property
     def plurality_scores_novtb(self):
         """1d array of booleans. ``plurality_scores_novtb[c]`` is the number of
-        voters who strictly prefer ``c`` to all other candidates (with no VTB,
-        i.e. ex-aequo top-ranked candidates are not counted).
+        voters who strictly prefer ``c`` to all other candidates. No vtb is
+        used and ex-aequo top-ranked candidates are not counted.
         """
         if self._plurality_scores_novtb is None:
             self._mylog("Compute Plurality scores (with no vtb)", 1)
@@ -602,8 +606,14 @@ class Population(MyLog.MyLog):
     def weak_condorcet_winners(self):
         """1d array of booleans. ``weak_condorcet_winners[c]`` is ``True`` iff
         candidate ``c`` is a weak Condorcet winner, i.e. iff no candidate
-        ``d`` has a relative victory against ``c`` (using
+        ``d`` has a relative victory against ``c`` (in the sense of
         :attr:`~svvamp.Population.matrix_victories_rel`).
+
+        .. seealso:
+
+            :attr:`~svvamp.Population.nb_weak_condorcet_winners`,
+            :attr:`~svvamp.Population.exists_weak_condorcet_winner`,
+            :attr:`~svvamp.Population.not_exists_weak_condorcet_winner`.
         """
         if self._weak_condorcet_winners is None:
             self._mylog("Compute weak Condorcet winners", 1)
@@ -858,6 +868,11 @@ class Population(MyLog.MyLog):
         This is equivalent to say that for any pair ``(c, d)`` of other
         distinct candidates, there is a strict majority of voters who
         simultaneously do not prefer ``c`` to ``w`` and prefer ``w`` to ``d``.
+
+        .. seealso:
+
+            :attr:`~svvamp.Population.exists_resistant_condorcet_winner`,
+            :attr:`~svvamp.Population.not_exists_resistant_condorcet_winner`.
         """
         if self._resistant_condorcet_winner is None:
             self._mylog("Compute Resistant Condorcet winner", 1)
@@ -895,9 +910,11 @@ class Population(MyLog.MyLog):
         i.e. not preferring ``c`` to ``w``. The precise question is: how many
         ``c``-manipulators :math:`n_m` must we add in order to create a
         non-victory for
-        ``w`` against some candidate ``d != w`` (possibly ``c`` herself)?
+        ``w`` against some candidate ``d`` :math:`\\neq` ``w`` (possibly ``c``
+        herself)?
 
-        We need:
+        In the following, :math:`| c > d |` denotes the number of voters who
+        strictly prefer candidate ``c`` to ``d``. We need:
 
         .. math::
 
@@ -1171,7 +1188,7 @@ class Population(MyLog.MyLog):
     #%% Plot a population
 
     def plot3(self, indexes=None, normalize=True, use_labels=True):
-        """Plot utilities with approval limit for 3 candidates.
+        """Plot utilities for 3 candidates (with approval limit).
 
         :param indexes: List of 3 candidates. If None, defaults to [0, 1, 1].
         :param normalize: Boolean. Cf. below.
@@ -1187,7 +1204,7 @@ class Population(MyLog.MyLog):
 
         The equator (in blue) is the set of points :math:`\\mathbf{u}` such
         that
-        :math:`\\sum u_i^2 = 1` and
+        :math:`\\sum {u_i}^2 = 1` and
         :math:`\\sum u_i = 0`,
         i.e. the unit circle of the plan that is orthogonal to the main
         diagonal [1, 1, 1].
