@@ -388,7 +388,7 @@ class Population(MyLog.MyLog):
     def matrix_duels_vtb(self):
         """2d array of integers. ``matrix_duels_vtb[c, d]`` is the number of
         voters who strictly prefer candidate ``c`` to ``d``, or who break a
-        tie in favor of c over d (so we use
+        tie in favor of ``c`` over ``d`` (which means we use
         :attr:`svvamp.Population.preferences_borda_vtb`). By convention,
         diagonal coefficients are set to 0.
         """
@@ -1021,7 +1021,7 @@ class Population(MyLog.MyLog):
     def mean_utility_c(self):
         """1d array of floats. ``mean_utility_c[c]`` is the mean utility for
         candidate ``c`` (i.e. the mean of ``c``'s column in matrix
-        :attr:`svvamp.Population.preferences_utilities`).
+        :attr:`~svvamp.Population.preferences_utilities`).
         """
         if self._mean_utility_c is None:
             self._mylog("Compute mean utility of candidates", 1)
