@@ -48,22 +48,33 @@ class Population(MyLog.MyLog):
         :param log_creation: Any type (string, list...). Some comments.
         :param labels_candidates: List of strings. Names of the candidates.
 
-        The user may enter either ``preferences_utilities`` or
+        You may enter either ``preferences_utilities`` or
         ``preferences_ranking`` to define the preferences of the population.
-        If both are provided, then only ``preferences_utilities`` is used.
+        If you provide both, then only ``preferences_utilities`` is used.
         
         If voter ``v`` attributes the same utility to several candidates:
-            * The first time ``preferences_ranking`` is computed, a random
-              ranking will be decided (once and for all) for these tied
-              candidates. This strict ranking will be used for sincere
-              voting in all voting systems accepting only strict orders.
-              This process is called **voter tie-breaking** or **VTB**.
-            * But for manipulation purposes, this indifference will be taken
-              into account as such.
+
+            * The first time the attribute ``preferences_ranking`` is
+              called, a random ranking will be decided for these tied
+              candidates (once and for all). This strict ranking will be used
+              for sincere voting in all voting systems accepting only strict
+              orders. This process is called **voter tie-breaking** or **VTB**.
+            * However, for manipulation purposes, indifference is taken
+              into account as such. I.e. if voter ``v`` attributes the same
+              utility for candidates ``w`` and ``c``, and if when ``w`` is the
+              sincere winner of the election, then ``v`` is not interested in
+              a manipulation in favor of ``c``.
 
         If the user provides ``preferences_ranking`` only,
         then ``preferences_utilities`` is set to the corresponding Borda
-        scores.
+        scores. Cf. :attr:`svvamp.Population.borda_score_c_vtb`.
+
+        In some voting systems and in some of the Condorcet notions below,
+        we use a process called **candidate tie-breaking** or **CTB** in
+        SVVAMP: we break the ties by natural order on the indexes of
+        candidates. If candidates ``c`` and ``d`` are tied (for example,
+        for their Plurality score), then when using CTB, ``c`` is favored over
+        ``d`` iff ``c < d``.
 
         Implications between majority favorite and Condorcet criteria (cf.
         corresponding functions below).
