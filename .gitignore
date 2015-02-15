@@ -28,7 +28,7 @@ nosetests.xml
 htmlcov
 
 # PyCharm
-svvamp/.idea
+svvamp/.idea/
 
 # Translations
 *.mo
