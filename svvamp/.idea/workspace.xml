@@ -26,7 +26,7 @@
       <file leaf-file-name="Population.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Preferences/Population.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-24.424242" vertical-offset="118" max-vertical-offset="38918">
+            <state vertical-scroll-proportion="-28.0" vertical-offset="0" max-vertical-offset="38918">
               <caret line="42" column="14" selection-start-line="42" selection-start-column="8" selection-end-line="42" selection-end-column="14" />
               <folding>
                 <element signature="e#791#809#0" expanded="true" />
@@ -62,11 +62,9 @@
       <file leaf-file-name="ElectionResult.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/VotingSystems/ElectionResult.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5409836" vertical-offset="66" max-vertical-offset="13530">
-              <caret line="24" column="30" selection-start-line="24" selection-start-column="30" selection-end-line="24" selection-end-column="30" />
-              <folding>
-                <element signature="e#791#809#0" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="-0.36065573" vertical-offset="792" max-vertical-offset="13530">
+              <caret line="22" column="18" selection-start-line="22" selection-start-column="18" selection-end-line="22" selection-end-column="18" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -90,6 +88,7 @@
         <option value="$PROJECT_DIR$/Preferences/PopulationVMFHypercircle.py" />
         <option value="$PROJECT_DIR$/Preferences/PopulationVMFHypersphere.py" />
         <option value="$PROJECT_DIR$/Preferences/PopulationFromFile.py" />
+        <option value="$PROJECT_DIR$/VotingSystems/ElectionResult.py" />
       </list>
     </option>
   </component>
@@ -141,7 +140,12 @@
   <component name="PropertiesComponent">
     <property name="recentsLimit" value="5" />
   </component>
-  <component name="RunManager" selected="Python.PopulationCubicUniform">
+  <component name="PyConsoleOptionsProvider">
+    <option name="myPythonConsoleState">
+      <console-settings />
+    </option>
+  </component>
+  <component name="RunManager" selected="Python.ElectionResult">
     <configuration default="false" name="Population" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -173,6 +177,24 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="svvamp" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Preferences/PopulationCubicUniform.py" />
+      <option name="PARAMETERS" value="" />
+      <RunnerSettings RunnerId="PythonRunner" />
+      <ConfigurationWrapper RunnerId="PythonRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="ElectionResult" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/VotingSystems" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="svvamp" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/VotingSystems/ElectionResult.py" />
       <option name="PARAMETERS" value="" />
       <RunnerSettings RunnerId="PythonRunner" />
       <ConfigurationWrapper RunnerId="PythonRunner" />
@@ -299,14 +321,16 @@
       <option name="USE_PATTERN" value="false" />
       <method />
     </configuration>
-    <list size="2">
+    <list size="3">
       <item index="0" class="java.lang.String" itemvalue="Python.Population" />
       <item index="1" class="java.lang.String" itemvalue="Python.PopulationCubicUniform" />
+      <item index="2" class="java.lang.String" itemvalue="Python.ElectionResult" />
     </list>
     <recent_temporary>
-      <list size="2">
-        <item index="0" class="java.lang.String" itemvalue="Python.PopulationCubicUniform" />
-        <item index="1" class="java.lang.String" itemvalue="Python.Population" />
+      <list size="3">
+        <item index="0" class="java.lang.String" itemvalue="Python.ElectionResult" />
+        <item index="1" class="java.lang.String" itemvalue="Python.PopulationCubicUniform" />
+        <item index="2" class="java.lang.String" itemvalue="Python.Population" />
       </list>
     </recent_temporary>
   </component>
@@ -460,7 +484,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Preferences/Population.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-24.424242" vertical-offset="118" max-vertical-offset="38918">
+        <state vertical-scroll-proportion="-28.0" vertical-offset="0" max-vertical-offset="38918">
           <caret line="42" column="14" selection-start-line="42" selection-start-column="8" selection-end-line="42" selection-end-column="14" />
           <folding>
             <element signature="e#791#809#0" expanded="true" />
@@ -470,11 +494,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/VotingSystems/ElectionResult.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5409836" vertical-offset="66" max-vertical-offset="13530">
-          <caret line="24" column="30" selection-start-line="24" selection-start-column="30" selection-end-line="24" selection-end-column="30" />
-          <folding>
-            <element signature="e#791#809#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="-0.36065573" vertical-offset="792" max-vertical-offset="13530">
+          <caret line="22" column="18" selection-start-line="22" selection-start-column="18" selection-end-line="22" selection-end-column="18" />
+          <folding />
         </state>
       </provider>
     </entry>
