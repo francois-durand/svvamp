@@ -34,12 +34,15 @@ class PopulationCubicUniform(Population):
     def __init__(self, V, C):
         """Population with 'Cubic uniform' model.
 
-        Arguments:
-        V -- Integer. Number of voters.
-        C -- Integer. Number of candidates.
+        :param V: Integer. Number of voters.
+        :param C: Integer. Number of candidates.
 
-        Each coefficient preferences_utilities[v, c] is drawn independently
+        :return: A :class:`~svvamp.Population` object.
+
+        Each coefficient ``preferences_utilities[v, c]`` is drawn independently
         and uniformly in the interval [-1, 1].
+
+        The ordinal part of this distribution is the Impartial Culture.
         """
         preferences_utilities = 2 * np.random.rand(V, C) - 1
         log_creation = ['Cubic uniform', C, V]
