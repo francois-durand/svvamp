@@ -34,16 +34,19 @@ class PopulationLadder(Population):
     def __init__(self, V, C, n_rungs):
         """Population with 'Ladder' model.
 
-        Arguments:
-        V -- Integer. Number of voters.
-        C -- Integer. Number of candidates.
-        n_rungs -- Integer. Number of rungs of the ladder.
+        :param V: Integer. Number of voters.
+        :param C: Integer. Number of candidates.
+        :param n_rungs: Integer. Number of rungs of the ladder.
 
-        Each utility preferences_utilities[v, c] is drawn independently and
-        equiprobably between n_rungs value that divide the interval [-1, 1]
-        equally. For example, if n_rungs = 21, then values in {-1, -0.9, ...,
-        1} are used.
+        :return: A :class:`~svvamp.Population` object.
 
+        Each utility ``preferences_utilities[v, c]`` is drawn independently and
+        equiprobably between ``n_rungs`` values that divide the interval
+        [-1, 1] equally. For example, if ``n_rungs = 21``, then values in
+        {-1, -0.9, ..., 1} are used.
+
+        The ordinal part of this distribution is **not** the Impartial Culture.
+        Indeed, weak orders of preference come with non-zero probability.
         This model is interesting the study the effect of voters' ties.
         """
         preferences_utilities = np.random.randint(

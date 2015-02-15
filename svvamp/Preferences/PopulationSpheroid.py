@@ -34,30 +34,33 @@ class PopulationSpheroid(Population):
     def __init__(self, V, C, stretching=1):
         """Population with 'Spheroid' model.
 
-        Arguments:
-        V -- Integer. Number of voters.
-        C -- Integer. Number of candidates.
-        stretching -- Number between 0 and np.inf (both included).
+        :param V: Integer. Number of voters.
+        :param C: Integer. Number of candidates.
+        :param stretching: Number between 0 and ``numpy.inf`` (both included).
+
+        :return: A :class:`~svvamp.Population` object.
 
         The utility vector of each voter is drawn independently and uniformly
-        on a sphere in R^C. Then, it is sent on the spheroid that is the
-        image of the sphere by a dilatation of factor 'stretching' in direction
-        (1, ..., 1). Cf working paper Durand et al. 'Geometry on the Utility
-        Sphere'.
+        on a sphere in :math:`\\mathbb{R}^C`. Then, it is sent on the spheroid
+        that is the image of the sphere by a dilatation of factor
+        ``stretching`` in direction [1, ..., 1]. Cf working paper Durand et
+        al. 'Geometry on the Utility Sphere'.
 
-        For ordinal voting systems, this probability law leads to the
-        Impartial Culture.
+        The ordinal part of this distribution is the Impartial Culture.
 
-        The parameter 'stretching' has only influence on voting system based on
-        utilities (Approval, etc.)
-        * stretching = 0: pure Von Neumann-Morgenstern utility, normalized
-        to sum_c u_v(c) = 0 (spherical model with C-2 dimensions).
-        * stretching = 1: spherical model with C-1 dimensions.
-        * stretching = inf: axial/cylindrical model with only two possible
-        values, all-approval (1, ..., 1) and all-reject (-1, ..., -1).
+        The parameter ``stretching`` has only influence on voting systems
+        based on utilities, especially Approval voting.
+
+            * ``stretching = 0``: pure Von Neumann-Morgenstern utility,
+              normalized to :math:`\\sum_c u_v(c) = 0` (spherical model
+              with ``C-2`` dimensions).
+            * ``stretching = 1``: spherical model with ``C-1`` dimensions.
+            * ``stretching = inf``: axial/cylindrical model with only two
+              possible values, all-approval [1, ..., 1] and all-reject
+              [-1, ..., -1].
 
         N.B.: This class gives the same probability distribution as a Von
-        Mises-Fisher with concentration=0.
+        Mises-Fisher with concentration = 0.
         """
         # Step 1: spherical distribution
         preferences_utilities = np.random.randn(V, C)

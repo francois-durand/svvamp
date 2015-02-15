@@ -44,9 +44,9 @@ class PopulationGaussianWell(Population):
 
         :return: A :class:`~svvamp.Population` object.
 
-        Let us note ``dim`` the number of elements in ``sigma``.
+        Let us note ``n_dim`` the number of elements in ``sigma``.
         For voter ``v`` (resp. each candidate ``c``) and each axis ``i`` in
-        ``range(d)``, a position ``x_i[v]`` (resp. ``y_i[c]``) is
+        ``range(n_dim)``, a position ``x_i[v]`` (resp. ``y_i[c]``) is
         independently drawn according to a normal law of mean 0 and variance
         ``sigma[i]``. If ``shift`` is used, the distribution of positions
         for candidates is displaced by this vector.
@@ -56,6 +56,8 @@ class PopulationGaussianWell(Population):
         ``preferences_utilities[v, c] = A - d[v, c]``,
         where ``A`` is such that the average utility is 0 over the whole
         population.
+
+        If ``ndim = 1``, the population is single-peaked.
         """
         d = len(sigma)
         voters_positions = np.random.randn(V, d) * sigma

@@ -51,6 +51,8 @@ class PopulationEuclideanBox(Population):
         ``preferences_utilities[v, c] = A - d[v, c]``,
         where ``A`` is such that the average utility is 0 over the whole
         population.
+
+        If ``ndim = 1``, the population is single-peaked.
         """
         d = len(box_dimensions)
         voters_positions = np.random.rand(V, d) * box_dimensions
