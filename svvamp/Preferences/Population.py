@@ -66,8 +66,8 @@ class Population(MyLog.MyLog):
 
         If you provide ``preferences_ranking`` only,
         then ``preferences_utilities`` is set to the corresponding Borda
-        scores (:attr:`~svvamp.Population.borda_score_c_novtb` or
-        :attr:`~svvamp.Population.borda_score_c_vtb`, which are equivalent
+        scores (:attr:`~svvamp.Population.preferences_borda_novtb` or
+        :attr:`~svvamp.Population.preferences_borda_vtb`, which are equivalent
         in that case).
 
         If all voters have a strict order of preference, either because you
