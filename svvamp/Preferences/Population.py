@@ -362,8 +362,10 @@ class Population(MyLog.MyLog):
     @property
     def plurality_scores_novtb(self):
         """1d array of booleans. ``plurality_scores_novtb[c]`` is the number of
-        voters who strictly prefer ``c`` to all other candidates. No vtb is
-        used and ex-aequo top-ranked candidates are not counted.
+        voters who strictly prefer ``c`` to all other candidates.
+
+        No vtb is used. If a voter has several candidates with maximal utility,
+        then none of them receives any point.
         """
         if self._plurality_scores_novtb is None:
             self._mylog("Compute Plurality scores (with no vtb)", 1)
@@ -870,9 +872,12 @@ class Population(MyLog.MyLog):
         system, the profile is not manipulable (cf. Durand et al. 2014).
         This is equivalent to say that for any pair ``(c, d)`` of other
         distinct candidates, there is a strict majority of voters who
-        simultaneously do not prefer ``c`` to ``w`` and prefer ``w`` to ``d``.
+        simultaneously:
 
-        .. seealso:
+            1) Do not prefer ``c`` to ``w``,
+            2) And prefer ``w`` to ``d``.
+
+        .. seealso::
 
             :attr:`~svvamp.Population.exists_resistant_condorcet_winner`,
             :attr:`~svvamp.Population.not_exists_resistant_condorcet_winner`.
@@ -1197,14 +1202,14 @@ class Population(MyLog.MyLog):
     def plot3(self, indexes=None, normalize=True, use_labels=True):
         """Plot utilities for 3 candidates (with approval limit).
 
-        :param indexes: List of 3 candidates. If None, defaults to [0, 1, 1].
+        :param indexes: List of 3 candidates. If None, defaults to [0, 1, 2].
         :param normalize: Boolean. Cf. below.
         :param use_labels: Boolean. If ``True``, then
             :attr:`~svvamp.Population.labels_candidates` is
             used to label the plot. Otherwise, candidates are simply
             represented by their index.
 
-        Each red point of the plot represents a voter v. Its position is
+        Each red point of the plot represents a voter ``v``. Its position is
         :attr:`~svvamp.Population.preferences_utilities`\ ``[v, indexes]``. If
         ``normalize`` is ``True``, then each position is normalized before
         plotting so that its Euclidean norm is equal to 1.
@@ -1297,19 +1302,19 @@ class Population(MyLog.MyLog):
             used to label the plot. Otherwise, candidates are simply
             represented by their index.
 
-        Each red point of the plot represents a voter v.
+        Each red point of the plot represents a voter ``v``.
 
             * :attr:`~svvamp.Population.preferences_utilities`\ ``[v, indexes]``
               is sent to the hyperplane that
-              is orthogonal to [1, 1, 1, 1], which discards information related
-              to approval limit and keeps only the relative preferences between
-              candidates.
+              is orthogonal to [1, 1, 1, 1] (by orthogonal projection),
+              which discards information related to approval limit and keeps
+              only the relative preferences between candidates.
             * The plot is done in this 3d hyperplane. In practice, we use a
               mirror symmetry that exchanges [1, 1, 1, 1] and [0, 0, 0, 1].
-              This way, the new vector is orthogonal to [0, 0, 0, 1] and can be
-              plotted in the first 3 dimensions.
-            * If ``normalize`` is True, then the vector is normalized  before
-              plotting such that its Euclidean norm is equal to 1.
+              This way, the image vector is orthogonal to [0, 0, 0, 1] and
+              can be plotted in the first 3 dimensions.
+            * If ``normalize`` is True, then the image vector is normalized
+              before plotting so that its Euclidean norm is equal to 1.
 
         Blue lines are the frontiers between the 24 different strict
         total orders on the candidates ('permutohedron').
