@@ -61,24 +61,32 @@ class Population(MyLog.MyLog):
               orders. This process is called **voter tie-breaking** or **VTB**.
             * However, for manipulation purposes, indifference is taken
               into account as such. If voter ``v`` attributes the same
-              utility for candidates ``w`` and ``c``, and if when ``w`` is the
+              utility to candidates ``w`` and ``c``, and if ``w`` is the
               sincere winner of the election, then ``v`` is not interested in
               a manipulation in favor of ``c``.
 
-        If the user provides ``preferences_ranking`` only,
+        If you provide ``preferences_ranking`` only,
         then ``preferences_utilities`` is set to the corresponding Borda
         scores. Cf. :attr:`svvamp.Population.borda_score_c_vtb`.
 
-        In some voting systems and in some of the Condorcet notions below,
+        If all voters have a strict order of preference, either because you
+        provided utilities without ties for each voter, or because you
+        provided preference rankings only, then VTB does not matter. In
+        that case, each function without VTB below is equivalent to its
+        variant with VTB.
+
+        In some voting systems and in some of the attributes below,
         we use a process referred as **candidate tie-breaking** or **CTB** in
-        SVVAMP. It means that we break the ties by natural order on the
-        indexes of candidates. If candidates ``c`` and ``d`` are tied (for
-        example, for their Plurality score), then when using CTB, ``c`` is
-        favored over ``d`` iff ``c < d``.
+        SVVAMP. It means that lowest-index candidates are favored. If
+        candidates ``c`` and ``d`` are tied (for example, in an election
+        using Plurality), then when using CTB, ``c`` is favored over ``d``
+        iff ``c < d``.
 
         Implications between majority favorite and Condorcet criteria (cf.
         corresponding functions below).
+
         ::
+
             majority_favorite             ==>            majority_favorite_ctb
             ||              ||                                ||            ||
             V               ||                                ||            ||
@@ -97,6 +105,16 @@ class Population(MyLog.MyLog):
             ||
             V
             Condorcet-admissible
+
+        If all voters have strict orders of preference and if there is an
+        odd number of voters, then:
+
+            * ``majority_favorite``, ``majority_favorite_vtb``,
+              ``majority_favorite_ctb`` and ``majority_favorite_vtb_ctb``
+               are equivalent,
+            * ``Condorcet``, ``Condorcet_ctb``, ``Condorcet_vtb``,
+              ``Condorcet_vtb_ctb``, ``Condorcet_rel``, ``Condorcet_rel_ctb``,
+              ``Weak Condorcet`` and ``Condorcet-admissible`` are equivalent.
         """
         super().__init__()
         self._log_identity = "POPULATION"
