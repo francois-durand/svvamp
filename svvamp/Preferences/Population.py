@@ -868,14 +868,15 @@ class Population(MyLog.MyLog):
 
         .. math::
 
-            | \\text{sincere for whom } w > d | \\leq \\frac{n_s + n_m}{2}.
+            | \\text{sincere voters for whom } w > d |
+            \\leq \\frac{n_s + n_m}{2}.
 
         I.e.:
 
         .. math::
 
             | \\text{non } c > w \\text{ and } w > d | \\leq
-            (| \\text{non } c > w | + n_m) / 2.
+            \\frac{| \\text{non } c > w | + n_m}{2}.
         I.e.:
 
         .. math::
@@ -888,7 +889,8 @@ class Population(MyLog.MyLog):
         .. math::
 
             \\text{threshold_c_prevents_w_Condorcet[c, w]} =
-            min_{d \\neq w}{2 * |w \geq c \\text{ and } w > d| - |w \geq c|}``.
+            2 \\cdot \\min_{d \\neq w} |w \geq c \\text{ and } w > d|
+            - |w \geq c|.
 
         If this result is negative, it means that even without
         ``c``-manipulators, ``w`` is not a Condorcet winner. In that case,
