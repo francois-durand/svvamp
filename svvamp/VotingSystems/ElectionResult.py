@@ -26,7 +26,6 @@ from svvamp.Utils import MyLog
 
 
 class ElectionResult(MyLog.MyLog):
-    """Results of an election."""
 
     # _options_parameters is a dictionary of allowed and default options.
     # Allowed is a minimal check that will be performed before launching big
@@ -39,7 +38,7 @@ class ElectionResult(MyLog.MyLog):
 
     @property
     def options_parameters(self):
-        """Display options
+        """Display options.
 
         Display a overview of available options, their default values and a
         minimal indication about what values are allowed for each option. For
@@ -50,9 +49,11 @@ class ElectionResult(MyLog.MyLog):
     def __init__(self, population, **kwargs):
         """Create a simple election (without manipulation).
 
-        Arguments:
-        population -- a Population object representing preferences.
-        Other arguments -- option1=value1, option2=value2, etc.
+        This is an 'abstract' class. As an end-user, you should always use its
+        subclasses ApprovalResult, PluralityResult, etc.
+
+        :param population: A :class:`~svvamp.Population` object.
+        :param kwargs: additional keyword parameters.
         """
         super().__init__()
         self._log_identity = "ELECTION_RESULT"
@@ -129,7 +130,8 @@ class ElectionResult(MyLog.MyLog):
 
     @property
     def pop(self):
-        """Population object. The population running the election.
+        """A :class:`~svvamp.Population object`. The population running the
+        election.
         """
         return self._pop
         
@@ -145,7 +147,8 @@ class ElectionResult(MyLog.MyLog):
 
     @property
     def scores(self):
-        """1d or 2d array (generally).
+        """1d or 2d array (generally). See specific documentation for each
+        voting system.
         """
         raise NotImplementedError
 
@@ -154,7 +157,11 @@ class ElectionResult(MyLog.MyLog):
 
     @property
     def ballots(self):
-        """2d array of integers. ballots[v, k] = preferences_ranking[v, k].
+        """2d array of integers (generally).
+
+        Default behavior is:
+        ``ballots[v, k] = preferences_ranking[v, k]``. This can be
+        overridden by specific voting systems.
         """
         # This general method is ok only for ordinal voting systems (and
         # even in this case, it can be redefined for something more practical).
@@ -165,9 +172,11 @@ class ElectionResult(MyLog.MyLog):
 
     @property
     def w(self):
-        """Integer (winning candidate). The candidate with highest score is
-        declared the winner. In case of a tie, the candidate with lowest
-        index wins.
+        """Integer (winning candidate).
+
+        Default behavior: the candidate with highest score is declared the
+        winner. In case of a tie, the candidate with lowest index wins. This
+        can be overridden by specific voting systems.
         """
         # This general method works only if scores are scalar and the best
         # score wins.
@@ -178,10 +187,14 @@ class ElectionResult(MyLog.MyLog):
 
     @property
     def candidates_by_scores_best_to_worst(self):
-        """1d array of integers. candidates_by_scores_best_to_worst[k] is the
-        candidate with k-th highest score.
+        """1d array of integers (generally).
+
+        Default behavior: ``candidates_by_scores_best_to_worst[k]`` is the
+        candidate with ``k``\ :sup:`th` highest score.
         
-        By definition, candidates_by_scores_best_to_worst[0] = w.
+        By definition, ``candidates_by_scores_best_to_worst[0] = w``.
+
+        This can be overridden by specific voting systems.
         """
         # This general method works only if scores are scalar and the best
         # score wins. If the lowest score wins, then
@@ -213,11 +226,16 @@ class ElectionResult(MyLog.MyLog):
         
     @property
     def score_w(self):
-        """If scores is a 1d array, then score_w is a number: it is the score
-        of the sincere winner w. I.e. score_w = scores[w].
+        """If :attr:`~svvamp.ElectionResult.scores` is a 1d array,
+        then ``score_w`` is a number: it is the score of the sincere winner
+        :attr:`~svvamp.ElectionResult.w`. I.e. ``score_w = scores[w]``.
         
-        If scores is a 2d array, then score_w is w's score vector. I.e.
-        score_w = scores[:, w].
+        If :attr:`~svvamp.ElectionResult.scores` is a 2d array, then
+        ``score_w`` is :attr:`~svvamp.ElectionResult.w`'s score vector.
+        I.e. ``score_w = scores[:, w]``.
+
+        This can be overridden by specific voting systems (for example,
+        Ranked Pairs).
         """
         # Exception: if scores are read in rows (Schulze, Ranked pairs), this
         # needs to be redefined.
@@ -236,17 +254,23 @@ class ElectionResult(MyLog.MyLog):
 
     @property 
     def scores_best_to_worst(self):
-        """scores_best_to_worst is the scores of the candidates, from the 
+        """``scores_best_to_worst`` is the scores of the candidates, from the
         winner to the last candidate of the election.
         
-        If scores is a 1d array, then so is scores_best_to_worst. For most
-        voting systems, scalar scores are sorted by descending order.
-        By definition, scores_best_to_worst[0] = score_w.
+        If :attr:`~svvamp.ElectionResult.scores` is a 1d array, then so is
+        ``scores_best_to_worst``. For most voting systems, scalar scores are
+        sorted by descending order. By definition,
+        ``scores_best_to_worst[0]`` = :attr:`~svvamp.ElectionResult.score_w`.
         
-        If scores is a 2d array, then so is scores_best_to_worst.
-        scores_best_to_worst[:, k] is the score vector of the k-th best
-        candidate of the election. By definition, 
-        scores_best_to_worst[:, 0] = score_w.
+        If :attr:`~svvamp.ElectionResult.scores` is a 2d array, then so is
+        ``scores_best_to_worst``.
+        ``scores_best_to_worst[:, k]`` is the score vector of the
+        ``k``\ :sup:`th` best candidate of the election. By definition,
+        ``scores_best_to_worst[:, 0]`` =
+        :attr:`~svvamp.ElectionResult.score_w`.
+
+        This can be overridden by specific voting systems (for example,
+        Ranked Pairs).
         """
         # Exception: if scores are read in rows (Schulze, Ranked pairs), this
         # needs to be redefined.
@@ -267,14 +291,16 @@ class ElectionResult(MyLog.MyLog):
 
     @property
     def total_utility_w(self):
-        """Float. The total utility for the sincere winner w. Be careful, this 
+        """Float. The total utility for the sincere winner
+        :attr:`~svvamp.ElectionResult.w`. Be careful, this
         makes sense only if interpersonal comparison of utilities make sense.
         """
         return self.pop.total_utility_c[self.w]
 
     @property
     def mean_utility_w(self):
-        """Float. The mean utility for the sincere winner w. Be careful, this 
+        """Float. The mean utility for the sincere winner
+        :attr:`~svvamp.ElectionResult.w`. Be careful, this
         makes sense only if interpersonal comparison of utilities make sense.
         """
         return self.pop.mean_utility_c[self.w]
@@ -283,14 +309,18 @@ class ElectionResult(MyLog.MyLog):
         
     @property
     def w_is_condorcet_admissible(self):
-        """Boolean. True iff the sincere winner w is Condorcet-admissible.
+        """Boolean. ``True`` iff the sincere winner
+        :attr:`~svvamp.ElectionResult.w` is Condorcet-admissible.
+        Cf. :attr:`~svvamp.Population.condorcet_admissible_candidates`.
         """
         return self.pop.condorcet_admissible_candidates[self.w]
 
     @property
     def w_is_not_condorcet_admissible(self):
-        """Boolean. True iff the sincere winner w is not a Condorcet-admissible
+        """Boolean. ``True`` iff the sincere winner
+        :attr:`~svvamp.ElectionResult.w` is not a Condorcet-admissible
         candidate (whether some exist or not).
+        Cf. :attr:`~svvamp.Population.condorcet_admissible_candidates`.
         """
         return not self.w_is_condorcet_admissible
 
