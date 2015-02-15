@@ -557,11 +557,9 @@ class Population(MyLog.MyLog):
         candidate ``d`` has an absolute victory against ``c`` (in
         the sense of :attr:`svvamp.Population.matrix_victories_abs`).
 
-        .. seealso:
-
-            :attr:`svvamp.Population.nb_condorcet_admissible`,
-            :attr:`svvamp.Population.exists_condorcet_admissible`,
-            :attr:`svvamp.Population.not_exists_condorcet_admissible`.
+        .. seealso:: :attr:`svvamp.Population.nb_condorcet_admissible`,
+                     :attr:`svvamp.Population.exists_condorcet_admissible`,
+                     :attr:`svvamp.Population.not_exists_condorcet_admissible`.
         """
         if self._condorcet_admissible_candidates is None:
             self._mylog("Compute Condorcet-admissible candidates", 1)
@@ -573,7 +571,7 @@ class Population(MyLog.MyLog):
     def nb_condorcet_admissible(self):
         """Integer (number of Condorcet-admissible candidates).
 
-        .. seealso: :attr:`svvamp.Population.condorcet_admissible_candidates`.
+        .. seealso:: :attr:`svvamp.Population.condorcet_admissible_candidates`.
         """
         if self._nb_condorcet_admissible_candidates is None:
             self._mylog("Compute number of Condorcet-admissible candidates", 1)
