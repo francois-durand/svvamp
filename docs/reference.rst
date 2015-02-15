@@ -24,3 +24,4 @@ Voting Systems
    :maxdepth: 2
 
    VotingSystems/ElectionResult
+   VotingSystems/Election
