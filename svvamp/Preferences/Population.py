@@ -193,7 +193,9 @@ class Population(MyLog.MyLog):
 
     @property
     def labels_candidates(self):
-        """List of ``C`` strings (names of the candidates)."""
+        """List of :attr:`~svvamp.Population.C` strings (names of the
+        candidates).
+        """
         if self._labels_candidates is None:
             self._labels_candidates = [str(x) for x in range(self._C)]
         return self._labels_candidates
@@ -1177,14 +1179,16 @@ class Population(MyLog.MyLog):
             used to label the plot. Otherwise, candidates are simply
             represented by their index.
 
-        Each red point of the plot represents a voter v: its position is
-        preferences_utilities[v, indexes]. If normalize is True,
-        then each position is normalized before plotting such that
-        its Euclidean norm is equal to 1.
+        Each red point of the plot represents a voter v. Its position is
+        :attr:`~svvamp.Population.preferences_utilities```[v, indexes]``. If
+        ``normalize`` is ``True``, then each position is normalized before
+        plotting so that its Euclidean norm is equal to 1.
 
-        The equator (in blue) is the set of points such that sum(point[
-        i]**2) = 1 and sum(point[i]) = 0, i.e. the unit circle of the plan
-        that is orthogonal to the main diagonal [1, 1, 1].
+        The equator (in blue) is the set of points such that
+        :math:`\\sum \\text{point}[i]^2 = 1` and
+        :math:`\\sum \\text{point}[i] = 0`,
+        i.e. the unit circle of the plan that is orthogonal to the main
+        diagonal [1, 1, 1].
 
         Other blue circles are the frontiers between the 6 different strict
         total orders on the candidates.
