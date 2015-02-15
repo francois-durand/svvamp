@@ -713,7 +713,7 @@ class Population(MyLog.MyLog):
 
     @property
     def condorcet_winner_rel_ctb(self):
-        """Integer or ``NaN``. 'ctb' stands for 'candidates ties broken'.
+        """Integer or ``NaN``.
         Candidate who has only victories in the sense of
         :attr:`svvamp.Population.matrix_victories_rel_ctb`. If there is no
         such candidate, then ``NaN``.
@@ -789,7 +789,7 @@ class Population(MyLog.MyLog):
 
     @property
     def condorcet_winner_ctb(self):
-        """Integer or ``NaN``. 'ctb' stands for 'candidates ties broken'.
+        """Integer or ``NaN``.
         Candidate who has only victories in
         :attr:`svvamp.Population.matrix_victories_abs_ctb`. If there is no
         such candidate, then ``NaN``.
