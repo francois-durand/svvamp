@@ -111,7 +111,7 @@ class Population(MyLog.MyLog):
 
             * ``majority_favorite``, ``majority_favorite_vtb``,
               ``majority_favorite_ctb`` and ``majority_favorite_vtb_ctb``
-               are equivalent,
+              are equivalent,
             * ``Condorcet``, ``Condorcet_ctb``, ``Condorcet_vtb``,
               ``Condorcet_vtb_ctb``, ``Condorcet_rel``, ``Condorcet_rel_ctb``,
               ``Weak Condorcet`` and ``Condorcet-admissible`` are equivalent.
