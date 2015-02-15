@@ -555,7 +555,11 @@ class Population(MyLog.MyLog):
         """1d array of booleans. ``condorcet_admissible_candidates[c]`` is
         ``True`` iff candidate ``c`` is Condorcet-admissible, i.e. iff no
         candidate ``d`` has an absolute victory against ``c`` (in
-        :attr:`svvamp.Population.matrix_victories_abs`).
+        the sense of :attr:`svvamp.Population.matrix_victories_abs`).
+
+        :seealso: :attr:`nb_condorcet_admissible`,
+        :attr:`exists_condorcet_admissible`,
+        :attr:`not_exists_condorcet_admissible`.
         """
         if self._condorcet_admissible_candidates is None:
             self._mylog("Compute Condorcet-admissible candidates", 1)
