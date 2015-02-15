@@ -60,7 +60,7 @@ class Population(MyLog.MyLog):
               for sincere voting in all voting systems accepting only strict
               orders. This process is called **voter tie-breaking** or **VTB**.
             * However, for manipulation purposes, indifference is taken
-              into account as such. I.e. if voter ``v`` attributes the same
+              into account as such. If voter ``v`` attributes the same
               utility for candidates ``w`` and ``c``, and if when ``w`` is the
               sincere winner of the election, then ``v`` is not interested in
               a manipulation in favor of ``c``.
@@ -70,11 +70,11 @@ class Population(MyLog.MyLog):
         scores. Cf. :attr:`svvamp.Population.borda_score_c_vtb`.
 
         In some voting systems and in some of the Condorcet notions below,
-        we use a process called **candidate tie-breaking** or **CTB** in
-        SVVAMP: we break the ties by natural order on the indexes of
-        candidates. If candidates ``c`` and ``d`` are tied (for example,
-        for their Plurality score), then when using CTB, ``c`` is favored over
-        ``d`` iff ``c < d``.
+        we use a process referred as **candidate tie-breaking** or **CTB** in
+        SVVAMP. It means that we break the ties by natural order on the
+        indexes of candidates. If candidates ``c`` and ``d`` are tied (for
+        example, for their Plurality score), then when using CTB, ``c`` is
+        favored over ``d`` iff ``c < d``.
 
         Implications between majority favorite and Condorcet criteria (cf.
         corresponding functions below).
