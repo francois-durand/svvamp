@@ -15,6 +15,7 @@ Preferences
    Preferences/PopulationSpheroid
    Preferences/PopulationVMFHypercircle
    Preferences/PopulationVMFHypersphere
+   Preferences/PopulationFromFile
 
 Voting Systems
 --------------
