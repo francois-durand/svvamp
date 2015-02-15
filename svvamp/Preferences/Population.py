@@ -947,7 +947,7 @@ class Population(MyLog.MyLog):
 
         .. math::
 
-            \\text{threshold_c_prevents_w_Condorcet[c, w]} =
+            \\text{threshold\\_c\\_prevents\\_w\\_Condorcet[c, w]} =
             2 \\cdot \\min_{d \\neq w} |w \geq c \\text{ and } w > d|
             - |w \geq c|.
 
