@@ -16,4 +16,5 @@ from .Preferences.PopulationFromFile import PopulationFromFile
 
 from .VotingSystems.ElectionResult import ElectionResult
 from .VotingSystems.Election import Election
+from .VotingSystems.Approval import Approval
 

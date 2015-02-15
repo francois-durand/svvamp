@@ -25,3 +25,4 @@ Voting Systems
 
    VotingSystems/ElectionResult
    VotingSystems/Election
+   VotingSystems/Approval
