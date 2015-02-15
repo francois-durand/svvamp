@@ -1171,22 +1171,24 @@ class Population(MyLog.MyLog):
     #%% Plot a population
 
     def plot3(self, indexes=None, normalize=True, use_labels=True):
-        """Plot utilities with approval limit for 3 candidates
+        """Plot utilities with approval limit for 3 candidates.
 
         :param indexes: List of 3 candidates. If None, defaults to [0, 1, 1].
         :param normalize: Boolean. Cf. below.
-        :param use_labels: Boolean. If True, then labels_candidates is
+        :param use_labels: Boolean. If ``True``, then
+            :attr:`~svvamp.Population.labels_candidates` is
             used to label the plot. Otherwise, candidates are simply
             represented by their index.
 
         Each red point of the plot represents a voter v. Its position is
-        :attr:`~svvamp.Population.preferences_utilities```[v, indexes]``. If
+        :attr:`~svvamp.Population.preferences_utilities`\ ``[v, indexes]``. If
         ``normalize`` is ``True``, then each position is normalized before
         plotting so that its Euclidean norm is equal to 1.
 
-        The equator (in blue) is the set of points such that
-        :math:`\\sum \\text{point}[i]^2 = 1` and
-        :math:`\\sum \\text{point}[i] = 0`,
+        The equator (in blue) is the set of points :math:`\\mathbf{u}` such
+        that
+        :math:`\\sum u_i^2 = 1` and
+        :math:`\\sum u_i = 0`,
         i.e. the unit circle of the plan that is orthogonal to the main
         diagonal [1, 1, 1].
 
@@ -1261,17 +1263,20 @@ class Population(MyLog.MyLog):
         plt.show()
 
     def plot4(self, indexes=None, normalize=True, use_labels=True):
-        """Plot utilities for 4 candidates (without approval limit)
+        """Plot utilities for 4 candidates (without approval limit).
 
         :param indexes: List of 4 candidates. If None, defaults to
             [0, 1, 2, 3].
         :param normalize: Boolean. Cf. below.
-        :param use_labels: Boolean. If True, then labels_candidates is
+        :param use_labels: Boolean. If ``True``, then
+            :attr:`~svvamp.Population.labels_candidates` is
             used to label the plot. Otherwise, candidates are simply
             represented by their index.
 
         Each red point of the plot represents a voter v.
-            * preferences_utilities[v, indexes] is sent to the hyperplane that
+
+            * :attr:`~svvamp.Population.preferences_utilities`\ ``[v, indexes]``
+              is sent to the hyperplane that
               is orthogonal to [1, 1, 1, 1], which discards information related
               to approval limit and keeps only the relative preferences between
               candidates.
@@ -1279,7 +1284,7 @@ class Population(MyLog.MyLog):
               mirror symmetry that exchanges [1, 1, 1, 1] and [0, 0, 0, 1].
               This way, the new vector is orthogonal to [0, 0, 0, 1] and can be
               plotted in the first 3 dimensions.
-            * If normalize is True, then the vector is normalized  before
+            * If ``normalize`` is True, then the vector is normalized  before
               plotting such that its Euclidean norm is equal to 1.
 
         Blue lines are the frontiers between the 24 different strict
