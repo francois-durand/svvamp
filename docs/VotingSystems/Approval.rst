@@ -3,5 +3,5 @@ Approval
 ========
 
 .. autoclass:: svvamp.Approval
-   :members: ballots, scores
+   :inherited-members: ballots, scores
    :members:
