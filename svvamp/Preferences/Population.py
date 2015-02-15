@@ -1116,7 +1116,7 @@ class Population(MyLog.MyLog):
         """1d array of integers.
         ``candidates_by_decreasing_borda_score_vtb[k]`` is
         the candidate ranked ``k``\ :sup:`th` by decreasing Borda score
-        (using strict orders, i.e. with vtb,
+        (using strict orders with vtb,
         :attr:`svvamp.Population.borda_score_c_vtb`).
 
         For example, ``candidates_by_decreasing_borda_score_vtb[0]`` is the
@@ -1133,7 +1133,7 @@ class Population(MyLog.MyLog):
     @property
     def decreasing_borda_scores_vtb(self):
         """1d array of integers. ``decreasing_borda_scores_vtb[k]`` is the
-        k\ :sup:`th` Borda score (using strict orders, i.e. with vtb,
+        ``k``\ :sup:`th` Borda score (using strict orders with vtb,
         :attr:`svvamp.Population.borda_score_c_vtb`) by decreasing
         order.
 
@@ -1170,7 +1170,7 @@ class Population(MyLog.MyLog):
     @property
     def decreasing_borda_scores_novtb(self):
         """1d array of integers. ``decreasing_borda_scores_novtb[k]`` is the
-        k\ :sup:`th` Borda score (using weak orders,
+        ``k``\ :sup:`th` Borda score (using weak orders,
         :attr:`svvamp.Population.borda_score_c_novtb`) by decreasing order.
 
         For example, ``decreasing_borda_scores_novtb[0]`` is the highest
