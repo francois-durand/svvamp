@@ -573,9 +573,8 @@ class Population(MyLog.MyLog):
 
     @property
     def nb_condorcet_admissible(self):
-        """Integer (number of Condorcet-admissible candidates).
-
-        .. seealso:: :attr:`svvamp.Population.condorcet_admissible_candidates`.
+        """Integer (number of Condorcet-admissible candidates,
+        :attr:`svvamp.Population.condorcet_admissible_candidates`).
         """
         if self._nb_condorcet_admissible_candidates is None:
             self._mylog("Compute number of Condorcet-admissible candidates", 1)
@@ -592,9 +591,8 @@ class Population(MyLog.MyLog):
 
     @property
     def not_exists_condorcet_admissible(self):
-        """Boolean (``True`` iff there is no Condorcet-admissible candidate).
-
-        .. seealso:: :attr:`svvamp.Population.condorcet_admissible_candidates`
+        """Boolean (``True`` iff there is no Condorcet-admissible candidate,
+        :attr:`svvamp.Population.condorcet_admissible_candidates`).
         """
         return self.nb_condorcet_admissible == 0
 
@@ -613,9 +611,8 @@ class Population(MyLog.MyLog):
 
     @property
     def nb_weak_condorcet_winners(self):
-        """Integer (number of weak Condorcet winners).
-
-        .. seealso:: :attr:`svvamp.Population.weak_condorcet_winners`
+        """Integer (number of weak Condorcet winners,
+        :attr:`svvamp.Population.weak_condorcet_winners`).
         """
         if self._nb_weak_condorcet_winners is None:
             self._mylog("Compute number of weak Condorcet winners", 1)
@@ -625,17 +622,15 @@ class Population(MyLog.MyLog):
 
     @property
     def exists_weak_condorcet_winner(self):
-        """Boolean (``True`` iff there is at least one weak Condorcet winner).
-
-        .. seealso:: :attr:`svvamp.Population.weak_condorcet_winners`
+        """Boolean (``True`` iff there is at least one weak Condorcet winner,
+        :attr:`svvamp.Population.weak_condorcet_winners`).
         """
         return self.nb_weak_condorcet_winners > 0
 
     @property
     def not_exists_weak_condorcet_winner(self):
-        """Boolean (``True`` iff there is no weak Condorcet winner).
-
-        .. seealso:: :attr:`svvamp.Population.weak_condorcet_winners`
+        """Boolean (``True`` iff there is no weak Condorcet winner,
+        :attr:`svvamp.Population.weak_condorcet_winners`).
         """
         return self.nb_weak_condorcet_winners == 0
 
@@ -663,17 +658,15 @@ class Population(MyLog.MyLog):
 
     @property
     def exists_condorcet_winner_vtb_ctb(self):
-        """Boolean (``True`` iff there is a Condorcet winner with vtb and ctb).
-
-        .. seealso:: :attr:`svvamp.Population.condorcet_winner_vtb_ctb`
+        """Boolean (``True`` iff there is a Condorcet winner with vtb and
+        ctb, :attr:`svvamp.Population.condorcet_winner_vtb_ctb`).
         """
         return not np.isnan(self.condorcet_winner_vtb_ctb)
 
     @property
     def not_exists_condorcet_winner_vtb_ctb(self):
-        """Boolean (``True`` iff there is no Condorcet winner with vtb and ctb).
-
-        .. seealso:: :attr:`svvamp.Population.condorcet_winner_vtb_ctb`
+        """Boolean (``True`` iff there is no Condorcet winner with vtb and ctb,
+        :attr:`svvamp.Population.condorcet_winner_vtb_ctb`).
         """
         return np.isnan(self.condorcet_winner_vtb_ctb)
 
@@ -699,17 +692,15 @@ class Population(MyLog.MyLog):
 
     @property
     def exists_condorcet_winner_vtb(self):
-        """Boolean (``True`` iff there is a Condorcet winner with vtb).
-
-        .. seealso:: :attr:`svvamp.Population.condorcet_winner_vtb`
+        """Boolean (``True`` iff there is a Condorcet winner with vtb,
+        :attr:`svvamp.Population.condorcet_winner_vtb`).
         """
         return not np.isnan(self.condorcet_winner_vtb)
 
     @property
     def not_exists_condorcet_winner_vtb(self):
-        """Boolean (``True`` iff there is no Condorcet winner with vtb).
-
-        .. seealso:: :attr:`svvamp.Population.condorcet_winner_vtb`
+        """Boolean (``True`` iff there is no Condorcet winner with vtb,
+        :attr:`svvamp.Population.condorcet_winner_vtb`).
         """
         return np.isnan(self.condorcet_winner_vtb)
 
@@ -738,18 +729,15 @@ class Population(MyLog.MyLog):
 
     @property
     def exists_condorcet_winner_rel_ctb(self):
-        """Boolean (``True`` iff there is a relative Condorcet winner with ctb).
-
-        .. seealso:: :attr:`svvamp.Population.condorcet_winner_rel_ctb`
+        """Boolean (``True`` iff there is a relative Condorcet winner with ctb,
+        :attr:`svvamp.Population.condorcet_winner_rel_ctb`).
         """
         return not np.isnan(self.condorcet_winner_rel_ctb)
 
     @property
     def not_exists_condorcet_winner_rel_ctb(self):
         """Boolean (``True`` iff there is no relative Condorcet winner with
-        ctb).
-
-        .. seealso:: :attr:`svvamp.Population.condorcet_winner_rel_ctb`
+        ctb, :attr:`svvamp.Population.condorcet_winner_rel_ctb`).
         """
         return np.isnan(self.condorcet_winner_rel_ctb)
 
@@ -775,17 +763,15 @@ class Population(MyLog.MyLog):
 
     @property
     def exists_condorcet_winner_rel(self):
-        """Boolean (``True`` iff there is a relative Condorcet winner).
-
-        .. seealso:: :attr:`svvamp.Population.condorcet_winner_rel`
+        """Boolean (``True`` iff there is a relative Condorcet winner,
+        :attr:`svvamp.Population.condorcet_winner_rel`).
         """
         return not np.isnan(self.condorcet_winner_rel)
 
     @property
     def not_exists_condorcet_winner_rel(self):
-        """Boolean (``True`` iff there is no relative Condorcet winner).
-
-        .. seealso:: :attr:`svvamp.Population.condorcet_winner_rel`
+        """Boolean (``True`` iff there is no relative Condorcet winner,
+        :attr:`svvamp.Population.condorcet_winner_rel`).
         """
         return np.isnan(self.condorcet_winner_rel)
 
@@ -813,17 +799,15 @@ class Population(MyLog.MyLog):
 
     @property
     def exists_condorcet_winner_ctb(self):
-        """Boolean (``True`` iff there is a Condorcet winner with ctb).
-
-        .. seealso:: :attr:`svvamp.Population.condorcet_winner_ctb`
+        """Boolean (``True`` iff there is a Condorcet winner with ctb,
+        :attr:`svvamp.Population.condorcet_winner_ctb`).
         """
         return not np.isnan(self.condorcet_winner_ctb)
 
     @property
     def not_exists_condorcet_winner_ctb(self):
-        """Boolean (``True`` iff there is no Condorcet winner with ctb).
-
-        .. seealso:: :attr:`svvamp.Population.condorcet_winner_ctb`
+        """Boolean (``True`` iff there is no Condorcet winner with ctb,
+        :attr:`svvamp.Population.condorcet_winner_ctb`).
         """
         return np.isnan(self.condorcet_winner_ctb)
 
@@ -850,17 +834,15 @@ class Population(MyLog.MyLog):
 
     @property
     def exists_condorcet_winner(self):
-        """Boolean (``True`` iff there is a Condorcet winner).
-
-        .. seealso:: :attr:`svvamp.Population.condorcet_winner`
+        """Boolean (``True`` iff there is a Condorcet winner,
+        :attr:`svvamp.Population.condorcet_winner`).
         """
         return not np.isnan(self.condorcet_winner)
 
     @property
     def not_exists_condorcet_winner(self):
-        """Boolean (``True`` iff there is no Condorcet winner).
-
-        .. seealso:: :attr:`svvamp.Population.condorcet_winner`
+        """Boolean (``True`` iff there is no Condorcet winner,
+        :attr:`svvamp.Population.condorcet_winner`).
         """
         return np.isnan(self.condorcet_winner)
 
@@ -886,17 +868,15 @@ class Population(MyLog.MyLog):
 
     @property
     def exists_resistant_condorcet_winner(self):
-        """Boolean (True iff there is a resistant Condorcet winner).
-
-        .. seealso:: :attr:`svvamp.Population.resistant_condorcet_winner`
+        """Boolean (True iff there is a resistant Condorcet winner,
+        :attr:`svvamp.Population.resistant_condorcet_winner`).
         """
         return not np.isnan(self.resistant_condorcet_winner)
 
     @property
     def not_exists_resistant_condorcet_winner(self):
-        """Boolean (``True`` iff there is no resistant Condorcet winner).
-
-        .. seealso:: :attr:`svvamp.Population.resistant_condorcet_winner`
+        """Boolean (``True`` iff there is no resistant Condorcet winner,
+        :attr:`svvamp.Population.resistant_condorcet_winner`).
         """
         return np.isnan(self.resistant_condorcet_winner)
 
