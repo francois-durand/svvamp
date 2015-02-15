@@ -848,16 +848,17 @@ class Population(MyLog.MyLog):
         is the winner, how many ``c``-manipulators are needed to prevent ``w``
         from  being a Condorcet winner?
         
-        We start with the sub-population of 'sincere' voters, i.e. not
-        preferring ``c`` to ``w``. The precise question is: how many
-        ``c``-manipulators must we add in order to create a non-victory for
+        We start with the sub-population of :math:`n_s` 'sincere' voters,
+        i.e. not preferring ``c`` to ``w``. The precise question is: how many
+        ``c``-manipulators :math:`n_m` must we add in order to create a
+        non-victory for
         ``w`` against some candidate ``d != w`` (possibly ``c`` herself)?
 
         We need:
 
         .. math::
 
-            \\| sincere for whom w > d \\| \\leq (n_s + n_m) / 2
+            | sincere for whom w > d | \\leq (n_s + n_m) / 2
 
         I.e.:
             ``| sincere for whom w > d | <= (n_s + n_m) / 2``.
