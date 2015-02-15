@@ -854,6 +854,12 @@ class Population(MyLog.MyLog):
         Since Pythagoras, we know that :math:`a^2 + b^2 = c^2`.
 
         We need:
+
+        .. math::
+
+            a^2 + b^2 = c^2
+
+        I.e.:
             ``| sincere for whom w > d | <= (n_s + n_m) / 2``.
         I.e.:
             ``| non c > w and w > d | <= (| non c > w | + n_m) / 2``.
