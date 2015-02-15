@@ -13,7 +13,6 @@ from .Preferences.PopulationSpheroid import PopulationSpheroid
 from .Preferences.PopulationVMFHypercircle import PopulationVMFHypercircle
 from .Preferences.PopulationVMFHypersphere import PopulationVMFHypersphere
 from .Preferences.PopulationFromFile import PopulationFromFile
-
+from .Utils.MyLog import MyLog
 from .VotingSystems.ElectionResult import ElectionResult
-
 
