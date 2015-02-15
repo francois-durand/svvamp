@@ -33,7 +33,6 @@ class _Storage:
 
 
 class Population(MyLog.MyLog):
-    """Population of voters."""
 
     def __init__(self, preferences_utilities=None, preferences_ranking=None,
                  log_creation=None, labels_candidates=None):
