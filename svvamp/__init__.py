@@ -5,3 +5,4 @@ __email__ = 'fradurand@gmail.com'
 __version__ = '0.0.2b1'
 
 from .Preferences.Population import Population
+from .Preferences.PopulationCubicUniform import PopulationCubicUniform
