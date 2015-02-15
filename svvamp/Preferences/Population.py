@@ -34,6 +34,8 @@ class _Storage:
 
 class Population(MyLog.MyLog):
 
+    #TODO: implement majority_favorite and co, since they are in doc
+
     def __init__(self, preferences_utilities=None, preferences_ranking=None,
                  log_creation=None, labels_candidates=None):
         """Create a population with preferences. 
@@ -1104,7 +1106,7 @@ class Population(MyLog.MyLog):
     @property
     def borda_score_c_novtb(self):
         """1d array of integers. ``borda_score_c_novtb[c]`` is the total Borda
-        score of candidate c (using
+        score of candidate ``c`` (using
         :attr:`~svvamp.Population.preferences_borda_novtb`, i.e. weak orders).
         """
         if self._borda_score_c_novtb is None:
@@ -1118,11 +1120,11 @@ class Population(MyLog.MyLog):
         """1d array of integers.
         ``candidates_by_decreasing_borda_score_vtb[k]`` is
         the candidate ranked ``k``\ :sup:`th` by decreasing Borda score
-        (using strict orders with vtb,
+        (using strict orders,
         :attr:`~svvamp.Population.borda_score_c_vtb`).
 
         For example, ``candidates_by_decreasing_borda_score_vtb[0]`` is the
-        candidate with highest Borda score.
+        candidate with highest Borda score (with vtb).
         """
         if self._candidates_by_decreasing_borda_score_vtb is None:
             self._mylog("Compute candidates_by_decreasing_borda_score_vtb", 1)
@@ -1135,12 +1137,12 @@ class Population(MyLog.MyLog):
     @property
     def decreasing_borda_scores_vtb(self):
         """1d array of integers. ``decreasing_borda_scores_vtb[k]`` is the
-        ``k``\ :sup:`th` Borda score (using strict orders with vtb,
+        ``k``\ :sup:`th` Borda score (using strict orders,
         :attr:`~svvamp.Population.borda_score_c_vtb`) by decreasing
         order.
 
         For example, ``decreasing_borda_scores_vtb[0]`` is the highest
-        Borda score for a candidate.
+        Borda score for a candidate (with vtb).
         """
         if self._decreasing_borda_scores_vtb is None:
             self._mylog("Compute decreasing_borda_scores_vtb", 1)
@@ -1158,7 +1160,7 @@ class Population(MyLog.MyLog):
         (using weak orders, :attr:`~svvamp.Population.borda_score_c_novtb`).
 
         For example, ``candidates_by_decreasing_borda_score_novtb[0]`` is the
-        candidate with highest Borda score.
+        candidate with highest Borda score (without vtb).
         """
         if self._candidates_by_decreasing_borda_score_novtb is None:
             self._mylog("Compute candidates_by_decreasing_borda_score_novtb",
@@ -1176,7 +1178,7 @@ class Population(MyLog.MyLog):
         :attr:`~svvamp.Population.borda_score_c_novtb`) by decreasing order.
 
         For example, ``decreasing_borda_scores_novtb[0]`` is the highest
-        Borda score for a candidate.
+        Borda score for a candidate (without vtb).
         """
         if self._decreasing_borda_scores_novtb is None:
             self._mylog("Compute decreasing_borda_scores_novtb", 1)
