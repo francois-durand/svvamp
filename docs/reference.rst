@@ -13,6 +13,8 @@ Preferences
    Preferences/PopulationGaussianWell
    Preferences/PopulationLadder
    Preferences/PopulationSpheroid
+   Preferences/PopulationVMFHypercircle
+   Preferences/PopulationVMFHypersphere
 
 Voting Systems
 --------------

@@ -10,3 +10,5 @@ from .Preferences.PopulationEuclideanBox import PopulationEuclideanBox
 from .Preferences.PopulationGaussianWell import PopulationGaussianWell
 from .Preferences.PopulationLadder import PopulationLadder
 from .Preferences.PopulationSpheroid import PopulationSpheroid
+from .Preferences.PopulationVMFHypercircle import PopulationVMFHypercircle
+from .Preferences.PopulationVMFHypersphere import PopulationVMFHypersphere

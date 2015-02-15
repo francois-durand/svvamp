@@ -43,7 +43,7 @@ class PopulationSpheroid(Population):
         The utility vector of each voter is drawn independently and uniformly
         on a sphere in :math:`\\mathbb{R}^C`. Then, it is sent on the spheroid
         that is the image of the sphere by a dilatation of factor
-        ``stretching`` in direction [1, ..., 1]. Cf working paper Durand et
+        ``stretching`` in direction [1, ..., 1]. Cf. working paper Durand et
         al. 'Geometry on the Utility Sphere'.
 
         The ordinal part of this distribution is the Impartial Culture.
@@ -59,7 +59,7 @@ class PopulationSpheroid(Population):
               possible values, all-approval [1, ..., 1] and all-reject
               [-1, ..., -1].
 
-        N.B.: This class gives the same probability distribution as a Von
+        N.B.: This model gives the same probability distribution as a Von
         Mises-Fisher with concentration = 0.
         """
         # Step 1: spherical distribution
