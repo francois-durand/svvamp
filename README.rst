@@ -16,6 +16,7 @@ Simulator of Various Voting Algorithms in Manipulating Populations
 
 * Free software: GNU General Public License version 3.
 * Documentation: https://svvamp.readthedocs.org.
+* Installation: https://svvamp.readthedocs.org/en/latest/installation.html.
 
 Features
 --------
