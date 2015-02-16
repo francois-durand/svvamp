@@ -30,7 +30,7 @@ from svvamp.Preferences.Population import Population
 class Approval(ApprovalResult, Election):
     """Approval voting.
 
-    Inherits functions and optional parameters for superclasses
+    Inherits functions and optional parameters from superclasses
     :class:`svvamp.ElectionResult` and :class:`svvamp.Election`.
 
     :param approval_comparator: When ``approval_comparator`` is ``>``,
