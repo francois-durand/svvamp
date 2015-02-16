@@ -15,12 +15,6 @@ Demonstrate the functions of superclass :class:`~svvamp.Population`::
 
     pop.demo()
 
-Plot this population, using several different projections of the utility space::
-
-    pop.plot3()
-
-    pop.plot4()
-
 Define an election, using Approval voting::
 
     election = svvamp.Approval(pop)
