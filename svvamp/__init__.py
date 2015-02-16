@@ -23,7 +23,7 @@ from .VotingSystems.Bucklin import Bucklin
 from .VotingSystems.CondorcetAbsIRV import CondorcetAbsIRV
 from .VotingSystems.CondorcetSumDefeats import CondorcetSumDefeats
 from .VotingSystems.CondorcetVtbIRV import CondorcetVtbIRV
-from .VotingSystems.Coombs import 
+from .VotingSystems.Coombs import Coombs
 from .VotingSystems.ExhaustiveBallot import ExhaustiveBallot
 from .VotingSystems.ICRV import ICRV
 from .VotingSystems.IRV import IRV
