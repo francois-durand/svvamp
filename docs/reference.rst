@@ -5,7 +5,7 @@ Preferences
 -----------
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
    Preferences/Population
    Preferences/PopulationCubicUniform
@@ -21,7 +21,7 @@ Voting Systems
 --------------
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
    VotingSystems/ElectionResult
    VotingSystems/Election

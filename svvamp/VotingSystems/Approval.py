@@ -28,16 +28,26 @@ from svvamp.Preferences.Population import Population
 
 
 class Approval(ApprovalResult, Election):
-    """Approval.
-    
-    If approval_comparator is '>' (resp. '>='), then sincere voter v votes for
-    candidates c iff preferences_utilities[v, c] > approval_threshold.
-    
+    """Approval voting.
+
+    Inherits functions and optional parameters for superclasses
+    :class:`svvamp.ElectionResult` and :class:`svvamp.Election`.
+
+    :param approval_comparator: When ``approval_comparator`` is ``>``,
+        sincere voter ``v`` votes for candidates ``c`` iff
+        :attr:`~svvamp.Population.preferences_utilities`\
+        ``[v, c]`` > :attr:`~svvamp.Approval.approval_threshold`. If it is
+        ``>=``, previous relation is modified accordingly.
+    :param approval_threshold: Number.
+
     Ties are broken by natural order on the candidates (lower index wins).
 
-    Selected references
-    Brams, Steven and Peter Fishburn. « Approval voting ». In: American
-    Political Science Review 72 (3 1978), pp. 831–847.
+    IIA, TM, UM, etc.: A word on their performance.
+
+    Selected references:
+
+        Brams, Steven and Peter Fishburn. « Approval voting ». In: American
+        Political Science Review 72 (3 1978), pp. 831–847.
     """
 
     _layout_name = 'Approval'
@@ -142,89 +152,20 @@ class Approval(ApprovalResult, Election):
         return self.CM()
 
     def TM_c(self, c):
-        """Trivial manipulation, focus on one candidate.
-
-        Arguments:
-        c -- Integer. The candidate for whom we want to manipulate.
-
-        Returns:
-        is_TM_c -- Boolean (or NaN). True if TM for candidate c is possible,
-            False otherwise. If the algorithm cannot decide, then NaN.
-        log_TM -- String. Parameters used to compute TM.
-        """
         return self.CM_c(c)
 
     def TM_with_candidates(self):
-        """Trivial manipulation, complete mode.
-
-        For ordinal voting systems, we call 'trivial manipulation' for
-        candidate c against w the fact of putting c on top (compromising), w
-        at bottom (burying), while keeping a sincere order on other candidates.
-
-        For cardinal voting systems, we call 'trivial manipulation' for c
-        (against w) the fact of putting the maximum grade for c and the
-        minimum grade for other candidates.
-
-        In both cases, the intuitive idea is the following: if I want to
-        make c win and I only know that candidate w is 'dangerous' (but I know
-        nothing else), then trivial manipulation is my 'best' strategy.
-
-        We say that a situation is "trivially manipulable" for c (implicitly:
-        by coalition) iff, when all voters preferring c to the sincere winner w
-        use trivial manipulation, candidate c wins.
-
-        Returns:
-        is_TM -- Boolean (or NaN). True if TM is possible, False otherwise. If
-            the algorithm cannot decide, then NaN.
-        log_TM -- String. Parameters used to compute TM.
-        candidates_TM -- 1d array of booleans (or NaN). candidates_TM[c]
-            is True if a TM for candidate c is possible, False otherwise. If
-            the algorithm cannot decide, then NaN. By convention,
-            candidates_TM[w] = False.
-        """
         return self.CM_with_candidates()
 
     #%% Unison Manipulation (UM)
 
     def UM(self):
-        """Unison manipulation, incomplete mode.
-
-        Returns:
-        is_UM -- Boolean (or NaN). True if UM is possible, False otherwise. If
-            the algorithm cannot decide, then NaN.
-        log_UM -- String. Parameters used to compute UM.
-        """
         return self.CM()
 
     def UM_c(self, c):
-        """Unison manipulation, focus on one candidate.
-
-        Arguments:
-        c -- Integer. The candidate for whom we want to manipulate.
-
-        Returns:
-        is_UM_c -- Boolean (or NaN). True if UM for candidate c is possible,
-            False otherwise. If the algorithm cannot decide, then NaN.
-        log_UM -- String. Parameters used to compute UM.
-        """
         return self.CM_c(c)
 
     def UM_with_candidates(self):
-        """Unison manipulation, complete mode.
-
-        We say that a situation is unison-manipulable for a candidate c != w
-        iff all voters who prefer c to the sincere winner w can cast the SAME
-        ballot so that c is elected (while other voters still vote sincerely).
-
-        Returns:
-        is_UM -- Boolean (or NaN). True if UM is possible, False otherwise. If
-            the algorithm cannot decide, then NaN.
-        log_UM -- String. Parameters used to compute UM.
-        candidates_UM -- 1d array of booleans (or NaN). candidates_UM[c]
-            is True if UM for candidate c is possible, False otherwise. If
-            the algorithm cannot decide, then NaN. By convention,
-            candidates_UM[w] = False.
-        """
         return self.CM_with_candidates()
 
     #%% Ignorant-Coalition Manipulation (ICM)

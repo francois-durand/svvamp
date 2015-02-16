@@ -147,9 +147,23 @@ class ElectionResult(MyLog.MyLog):
 
     @property
     def scores(self):
-        """1d or 2d array (generally). See specific documentation for each
+        """Scores of the candidates in the election.
+
+        This function is not implemented in the superclass
+        :class:`~svvamp.ElectionResult`\ . See specific documentation for each
         voting system.
+
+        Typical type in most subclasses:
+            1d or 2d array.
+
+        Typical behavior in most subclasses:
+            If ``scores`` is a 1d array, then ``scores[c]`` is the numerical
+            score for candidate ``c``.
+
+            If ``scores`` is a 2d array, then ``scores[:, c]`` is the score
+            vector for candidate ``c``.
         """
+        # It is not mandatory to follow the default expected behavior.
         raise NotImplementedError
 
     #%% Counting ballots
@@ -157,14 +171,16 @@ class ElectionResult(MyLog.MyLog):
 
     @property
     def ballots(self):
-        """2d array of integers (generally).
+        """Ballots cast by the voters.
 
-        Default behavior is:
-        ``ballots[v, k]`` =
-        :attr:`~svvamp.Population.preferences_ranking`\ ``[v, k]``.
+        Default type in superclass :class:`~svvamp.ElectionResult`\ :
+            2d array of integers.
 
-        This can be overridden by specific voting systems.
+        Default behavior in superclass :class:`~svvamp.ElectionResult`\ :
+            ``ballots[v, k]`` =
+            :attr:`~svvamp.Population.preferences_ranking`\ ``[v, k]``.
         """
+        # This can be overridden by specific voting systems.
         # This general method is ok only for ordinal voting systems (and
         # even in this case, it can be redefined for something more practical).
         if self._ballots is None:
@@ -176,9 +192,10 @@ class ElectionResult(MyLog.MyLog):
     def w(self):
         """Integer (winning candidate).
 
-        Default behavior: the candidate with highest score is declared the
-        winner. In case of a tie, the candidate with lowest index wins. This
-        can be overridden by specific voting systems.
+        Default behavior in superclass :class:`~svvamp.ElectionResult`\ :
+            The candidate with highest value in vector
+            :attr:`~svvamp.ElectionResult.scores` is declared the
+            winner. In case of a tie, the candidate with lowest index wins.
         """
         # This general method works only if scores are scalar and the best
         # score wins.
@@ -189,15 +206,18 @@ class ElectionResult(MyLog.MyLog):
 
     @property
     def candidates_by_scores_best_to_worst(self):
-        """1d array of integers (generally).
+        """1d array of integers. All candidates, sorted from the winner to
+        the last candidate in the result of the election.
 
-        Default behavior: ``candidates_by_scores_best_to_worst[k]`` is the
-        candidate with ``k``\ :sup:`th` highest score.
+        Default behavior in superclass :class:`~svvamp.ElectionResult`\ :
+            ``candidates_by_scores_best_to_worst[k]`` is the
+            candidate with ``k``\ :sup:`th` highest value in
+            :attr:`~svvamp.ElectionResult.scores`.
         
-        By definition, ``candidates_by_scores_best_to_worst[0] = w``.
-
-        This can be overridden by specific voting systems.
+        By definition, ``candidates_by_scores_best_to_worst[0]`` =
+        :attr:`~svvamp.ElectionResult.w`.
         """
+        # This can be overridden by specific voting systems.
         # This general method works only if scores are scalar and the best
         # score wins. If the lowest score wins, then
         # candidates_by_scores_best_to_worst need to be sorted by ascending
@@ -228,16 +248,20 @@ class ElectionResult(MyLog.MyLog):
         
     @property
     def score_w(self):
-        """If :attr:`~svvamp.ElectionResult.scores` is a 1d array,
-        then ``score_w`` is a number: it is the score of the sincere winner
-        :attr:`~svvamp.ElectionResult.w`. I.e. ``score_w = scores[w]``.
-        
-        If :attr:`~svvamp.ElectionResult.scores` is a 2d array, then
-        ``score_w`` is :attr:`~svvamp.ElectionResult.w`'s score vector.
-        I.e. ``score_w = scores[:, w]``.
+        """Score of the sincere winner.
 
-        This can be overridden by specific voting systems (for example,
-        Ranked Pairs).
+        Default type in superclass :class:`~svvamp.ElectionResult`\ :
+            Number or 1d array.
+
+        Default behavior in superclass :class:`~svvamp.ElectionResult`\ :
+            If :attr:`~svvamp.ElectionResult.scores` is a 1d array,
+            then ``score_w`` is
+            :attr:`~svvamp.ElectionResult.w`'s numerical score:
+            ``score_w = scores[w]``.
+
+            If :attr:`~svvamp.ElectionResult.scores` is a 2d array, then
+            ``score_w`` is :attr:`~svvamp.ElectionResult.w`'s score vector:
+            ``score_w = scores[:, w]``.
         """
         # Exception: if scores are read in rows (Schulze, Ranked pairs), this
         # needs to be redefined.
@@ -256,23 +280,30 @@ class ElectionResult(MyLog.MyLog):
 
     @property 
     def scores_best_to_worst(self):
-        """``scores_best_to_worst`` is the scores of the candidates, from the
-        winner to the last candidate of the election.
-        
-        If :attr:`~svvamp.ElectionResult.scores` is a 1d array, then so is
-        ``scores_best_to_worst``. For most voting systems, scalar scores are
-        sorted by descending order. By definition,
-        ``scores_best_to_worst[0]`` = :attr:`~svvamp.ElectionResult.score_w`.
-        
-        If :attr:`~svvamp.ElectionResult.scores` is a 2d array, then so is
-        ``scores_best_to_worst``.
-        ``scores_best_to_worst[:, k]`` is the score vector of the
-        ``k``\ :sup:`th` best candidate of the election. By definition,
-        ``scores_best_to_worst[:, 0]`` =
-        :attr:`~svvamp.ElectionResult.score_w`.
+        """Scores of the candidates, from the winner to the last candidate
+        of the election.
 
-        This can be overridden by specific voting systems (for example,
-        Ranked Pairs).
+        Default type in superclass :class:`~svvamp.ElectionResult`\ :
+            1d or 2d array.
+
+        Default behavior in superclass :class:`~svvamp.ElectionResult`\ :
+            ``scores_best_to_worst`` is derived from
+            :attr:`~svvamp.ElectionResult.scores` and
+            :attr:`~svvamp.ElectionResult.candidates_by_scores_best_to_worst`.
+
+            If :attr:`~svvamp.ElectionResult.scores` is a 1d array, then so is
+            ``scores_best_to_worst``. It is defined by
+            ``scores_best_to_worst`` =
+            ``scores[candidates_by_scores_best_to_worst]``.
+            Then by definition, ``scores_best_to_worst[0]`` =
+            :attr:`~svvamp.ElectionResult.score_w`.
+
+            If :attr:`~svvamp.ElectionResult.scores` is a 2d array, then so is
+            ``scores_best_to_worst``. It is defined by
+            ``scores_best_to_worst`` =
+            ``scores[:, candidates_by_scores_best_to_worst]``.
+            Then by definition, ``scores_best_to_worst[:, 0]`` =
+            :attr:`~svvamp.ElectionResult.score_w`.
         """
         # Exception: if scores are read in rows (Schulze, Ranked pairs), this
         # needs to be redefined.
@@ -295,7 +326,7 @@ class ElectionResult(MyLog.MyLog):
     def total_utility_w(self):
         """Float. The total utility for the sincere winner
         :attr:`~svvamp.ElectionResult.w`. Be careful, this
-        makes sense only if interpersonal comparison of utilities make sense.
+        makes sense only if interpersonal comparison of utilities makes sense.
         """
         return self.pop.total_utility_c[self.w]
 
@@ -303,7 +334,7 @@ class ElectionResult(MyLog.MyLog):
     def mean_utility_w(self):
         """Float. The mean utility for the sincere winner
         :attr:`~svvamp.ElectionResult.w`. Be careful, this
-        makes sense only if interpersonal comparison of utilities make sense.
+        makes sense only if interpersonal comparison of utilities makes sense.
         """
         return self.pop.mean_utility_c[self.w]
 

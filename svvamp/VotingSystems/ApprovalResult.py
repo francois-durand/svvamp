@@ -50,8 +50,8 @@ class ApprovalResult(ElectionResult):
 
     @property
     def approval_threshold(self):
-        """Number -- Utility above which a sincere voter approves a candidate.
-        See also approval_comparator.
+        """Number. Utility above which a sincere voter approves a candidate.
+        See also :attr:`~svvamp.Approval.approval_comparator`.
         """
         return self._approval_threshold
 
@@ -62,10 +62,15 @@ class ApprovalResult(ElectionResult):
 
     @property
     def approval_comparator(self):
-        """String -- Can be '>' (default) or '>='.
-        When approval_comparator is ''>' (resp. '>='), sincere voter v approves
-        candidates c iff:
-        pop.preferences_utilities[v, c] > (resp. >=) approval_threshold.
+        """String. Can be '>' (default) or '>='.
+
+        When ``approval_comparator`` is ``>``, sincere voter
+        ``v`` approves candidates ``c`` iff
+        :attr:`~svvamp.Population.preferences_utilities`\
+        ``[v, c] >`` :attr:`~svvamp.Approval.approval_threshold`.
+
+        When ``approval_comparator`` is ``>=``, previous relation is modified
+        accordingly.
         """
         return self._approval_comparator
 
@@ -83,8 +88,11 @@ class ApprovalResult(ElectionResult):
 
     @property
     def ballots(self):
-        """2d array of {0, 1}. ballots[v, c] = 1 iff voter v votes for 
-        candidates c.
+        """2d array of values in {0, 1}. ``ballots[v, c] = 1`` iff voter ``v``
+        votes for candidates c.
+
+        .. seealso: :attr:`~svvamp.Approval.approval_comparator`,
+                    :attr:`~svvamp.Approval.approval_threshold`.
         """
         if self._ballots is None:
             self._mylog("Compute ballots", 1)
@@ -98,8 +106,8 @@ class ApprovalResult(ElectionResult):
         
     @property
     def scores(self):
-        """1d array of integers. scores[c] is the number of voters who vote
-        for candidate c.
+        """1d array of integers. ``scores[c]`` is the number of voters who vote
+        for candidate ``c``.
         """
         if self._scores is None:
             self._mylog("Compute scores", 1)
