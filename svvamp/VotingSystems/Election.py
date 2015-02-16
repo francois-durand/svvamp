@@ -3332,7 +3332,7 @@ class Election(ElectionResult):
         is_quick_escape = self._CM_main_work_c(c, optimize_bounds)
         self._CM_conclude_c(c, is_quick_escape)
 
-    def demo(self, log_depth):
+    def demo(self, log_depth=1):
         """Demonstrate the methods of Election class.
 
         Arguments:

@@ -2,7 +2,7 @@
 
 __author__ = 'François Durand'
 __email__ = 'fradurand@gmail.com'
-__version__ = '0.0.2b1'
+__version__ = '0.0.2b2'
 
 from .Preferences.Population import Population
 from .Preferences.PopulationCubicUniform import PopulationCubicUniform
@@ -20,4 +20,9 @@ from .VotingSystems.Approval import Approval
 from .VotingSystems.Baldwin import Baldwin
 from .VotingSystems.Borda import Borda
 from .VotingSystems.Bucklin import Bucklin
-
+from .VotingSystems.CondorcetAbsIRV import CondorcetAbsIRV
+from .VotingSystems.CondorcetVtbIRV import CondorcetVtbIRV
+from .VotingSystems.ExhaustiveBallot import ExhaustiveBallot
+from .VotingSystems.ICRV import ICRV
+from .VotingSystems.IRV import IRV
+from .VotingSystems.IRVDuels import IRVDuels

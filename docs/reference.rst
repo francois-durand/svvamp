@@ -29,3 +29,9 @@ Voting Systems
    VotingSystems/Baldwin
    VotingSystems/Borda
    VotingSystems/Bucklin
+   VotingSystems/CondorcetAbsIRV
+   VotingSystems/CondorcetVtbIRV
+   VotingSystems/ExhaustiveBallot
+   VotingSystems/ICRV
+   VotingSystems/IRV
+   VotingSystems/IRVDuels
