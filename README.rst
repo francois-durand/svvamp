@@ -17,14 +17,14 @@ Simulator of Various Voting Algorithms in Manipulating Populations
 * Free software: GNU General Public License version 3.
 * Documentation: https://svvamp.readthedocs.org.
 
-WARNING
--------
-
-SVVAMP is currently out of use because of a complete reorganization of my github / readthedocs / pypi accounts. Please excuse me!
-
-It should be available again before February 16th.
-
 Features
 --------
 
-* TODO
+* Several random models of populations with preferences.
+* Import preferences from an external file.
+* Several voting systems.
+* Test Condorcet notions.
+* Test Independence of Irrelevant Alternatives.
+* Test Individual Manipulation.
+* Test Coalitional Manipulation and variants (Trivial Manipulation, Ignorant-Coalition
+Manipulation, Unison Manipulation).
