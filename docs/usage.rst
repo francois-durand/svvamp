@@ -7,15 +7,15 @@ To use SVVAMP in a project::
     import svvamp
 
 Create a population of 10 voters with preferences over 5 candidates, 
-using the Impartial Culture::
+using the Spheroid model (extending Impartial Culture to utilities)::
 
     pop = svvamp.PopulationSpheroid(V=10, C=5)
 
 Demonstrate the functions of superclass :class:`~svvamp.Population`::
 
-    pop.demo()
+    pop.demo()	
 
-Define an election, using Approval voting::
+Create an election, using Approval voting::
 
     election = svvamp.Approval(pop)
 
