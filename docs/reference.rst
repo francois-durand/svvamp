@@ -26,3 +26,6 @@ Voting Systems
    VotingSystems/ElectionResult
    VotingSystems/Election
    VotingSystems/Approval
+   VotingSystems/Baldwin
+   VotingSystems/Borda
+   VotingSystems/Bucklin
