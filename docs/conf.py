@@ -24,7 +24,11 @@ class Mock(MagicMock):
     def __getattr__(cls, name):
             return Mock()
 
-MOCK_MODULES = ['numpy', 'pandas', 'matplotlib', 'mpl_toolkits', 'matplotlib.pyplot', 'mpl_toolkits.mplot3d', 'scipy', 'scipy.spatial', 'networkx', 'networkx.utils']
+MOCK_MODULES = [
+    'numpy', 'pandas', 'matplotlib', 'mpl_toolkits', 'matplotlib.pyplot', 
+    'mpl_toolkits.mplot3d', 'scipy', 'scipy.spatial',
+    'networkx', 'networkx.utils', 'networkx.utils.decorators'
+]
 sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
 
 # Automatically document __init__ methods
