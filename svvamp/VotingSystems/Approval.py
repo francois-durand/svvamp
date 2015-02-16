@@ -31,18 +31,36 @@ class Approval(ApprovalResult, Election):
     """Approval voting.
 
     Inherits functions and optional parameters from superclasses
-    :class:`svvamp.ElectionResult` and :class:`svvamp.Election`.
+    :class:`~svvamp.ElectionResult` and :class:`~svvamp.Election`.
 
-    :param approval_comparator: When ``approval_comparator`` is ``>``,
-        sincere voter ``v`` votes for candidates ``c`` iff
-        :attr:`~svvamp.Population.preferences_utilities`\
-        ``[v, c]`` > :attr:`~svvamp.Approval.approval_threshold`. If it is
-        ``>=``, previous relation is modified accordingly.
-    :param approval_threshold: Number.
+    :param approval_comparator: See attribute
+        :attr:`~svvamp.Approval.approval_comparator`.
+    :param approval_threshold: See attribute
+        :attr:`~svvamp.Approval.approval_threshold`.
 
-    Ties are broken by natural order on the candidates (lower index wins).
+    Usage::
 
-    IIA, TM, UM, etc.: A word on their performance.
+        election = svvamp.Approval(pop, approval_comparator='>', approval_threshold=0)
+
+    Each voter may vote for any number of candidates. The candidate with most
+    votes is declared the winner. In case of a tie, the tied candidate with
+    lowest index wins.
+
+    Default behavior of sincere voters: sincere voter ``v``
+    approves candidate ``c`` iff
+    :attr:`~svvamp.Population.preferences_utilities`\ ``[v, c]`` > 0.
+    To modify this behavior, use parameters or attributes
+    :attr:`~svvamp.Approval.approval_comparator` and
+    :attr:`~svvamp.Approval.approval_threshold`.
+
+    :meth:`~svvamp.Election.not_IIA`: With our assumptions, Approval
+    voting always meets IIA.
+
+    :meth:`~svvamp.Election.IM`,
+    :meth:`~svvamp.Election.ICM`,
+    :meth:`~svvamp.Election.TM`,
+    :meth:`~svvamp.Election.UM`,
+    :meth:`~svvamp.Election.CM`\ : Exact in polynomial time.
 
     Selected references:
 

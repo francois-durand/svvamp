@@ -50,7 +50,8 @@ class ApprovalResult(ElectionResult):
 
     @property
     def approval_threshold(self):
-        """Number. Utility above which a sincere voter approves a candidate.
+        """Number (default 0). Utility above which a sincere voter approves a
+        candidate.
         See also :attr:`~svvamp.Approval.approval_comparator`.
         """
         return self._approval_threshold
@@ -66,8 +67,8 @@ class ApprovalResult(ElectionResult):
 
         When ``approval_comparator`` is ``>``, sincere voter
         ``v`` approves candidates ``c`` iff
-        :attr:`~svvamp.Population.preferences_utilities`\
-        ``[v, c] >`` :attr:`~svvamp.Approval.approval_threshold`.
+        :attr:`~svvamp.Population.preferences_utilities`\ ``[v, c]`` >
+        :attr:`~svvamp.Approval.approval_threshold`.
 
         When ``approval_comparator`` is ``>=``, previous relation is modified
         accordingly.
@@ -89,10 +90,10 @@ class ApprovalResult(ElectionResult):
     @property
     def ballots(self):
         """2d array of values in {0, 1}. ``ballots[v, c] = 1`` iff voter ``v``
-        votes for candidates c.
+        votes for candidates ``c``.
 
-        .. seealso: :attr:`~svvamp.Approval.approval_comparator`,
-                    :attr:`~svvamp.Approval.approval_threshold`.
+        .. seealso:: :attr:`~svvamp.Approval.approval_comparator`,
+                     :attr:`~svvamp.Approval.approval_threshold`.
         """
         if self._ballots is None:
             self._mylog("Compute ballots", 1)
