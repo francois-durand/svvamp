@@ -20,11 +20,12 @@ Simulator of Various Voting Algorithms in Manipulating Populations
 Features
 --------
 
-* Several random models of populations with preferences.
-* Import preferences from an external file.
+* Several random models allow to generate populations of voters with preferences
+  over a set of candidates.
+* It is possible to import a profile of voters' preferences from an external file.
 * Several voting systems.
-* Test Condorcet notions.
-* Test Independence of Irrelevant Alternatives.
-* Test Individual Manipulation.
-* Test Coalitional Manipulation and variants (Trivial Manipulation, Ignorant-Coalition
-Manipulation, Unison Manipulation).
+* Decide Condorcet notions (Condorcet winner and variants).
+* Decide Independence of Irrelevant Alternatives.
+* Decide Individual Manipulation (by one voter).
+* Decide Coalitional Manipulation (by a set of voters) and variants: Trivial Manipulation, 
+  Ignorant-Coalition Manipulation, Unison Manipulation.
