@@ -559,7 +559,7 @@ class ElectionResult(MyLog.MyLog):
         return (not np.isnan(self.pop.resistant_condorcet_winner) and
                 not self.w_is_resistant_condorcet_winner)
 
-    def demo(self, log_depth):
+    def demo(self, log_depth=1):
         """Demonstrate the methods of :class:`~svvamp.ElectionResult` class.
 
         :param log_depth: Integer from 0 (basic info) to 3 (verbose).
