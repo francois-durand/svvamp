@@ -30,15 +30,44 @@ from svvamp.Preferences.Population import Population
 class Coombs(CoombsResult, Election):
     """Coombs method.
 
-    The candidate who is ranked last by most voters is eliminated. Then 
-    we iterate.
-    
-    Ties are broken in favor of lower-index candidates: in case of a tie,
-    the candidate with highest index is eliminated.
+    Inherits functions and optional parameters from superclasses
+    :class:`~svvamp.ElectionResult` and :class:`~svvamp.Election`.
 
-    Note: for this voting system, UM and CM are equivalent. So UM_option and
-    CM_option are linked to each other: modifying one modifies the other as
-    well.
+    The candidate who is ranked last by most voters is eliminated. Then
+    we iterate. Ties are broken in favor of lower-index candidates: in case
+    of a tie, the candidate with highest index is eliminated.
+
+    :meth:`~svvamp.Election.CM`:
+
+        * :attr:`~svvamp.Election.CM_option` = ``'fast'``:
+          Polynomial heuristic. Can prove CM but unable to decide non-CM.
+        * :attr:`~svvamp.Election.CM_option` = ``'exact'``:
+          Non-polynomial (:math:`C!`).
+
+    :meth:`~svvamp.Election.ICM`: Exact in polynomial time.
+
+
+    :meth:`~svvamp.Election.IM`:
+
+        * :attr:`~svvamp.Election.IM_option` = ``'fast'``:
+          Polynomial heuristic. Can prove CM but unable to decide non-IM.
+        * :attr:`~svvamp.Election.IM_option` = ``'exact'``:
+          Non-polynomial (:math:`C!`).
+
+    :meth:`~svvamp.Election.not_IIA`: Non-polynomial
+    or non-exact algorithms from superclass :class:`~svvamp.Election`.
+
+    :meth:`~svvamp.Election.TM`: Exact in polynomial time.
+
+    :meth:`~svvamp.Election.UM`: For this voting system, UM and CM are
+    equivalent. For this reason, :attr:`~svvamp.Election.UM_option` and
+    :attr:`~svvamp.Election.CM_option` are linked to each other: modifying one
+    modifies the other accordingly.
+
+    References:
+
+        'On The Complexity of Manipulating Elections', Tom Coleman
+        and Vanessa Teague, 2007.
     """
 
     _layout_name = 'Coombs'

@@ -80,8 +80,8 @@ class CoombsResult(ElectionResult):
 
     @property
     def scores(self):
-        """2d array of integers. scores[r, c] is minus the number of voters 
-        who vote against candidate c at elimination round r.
+        """2d array of integers. ``scores[r, c]`` is minus the number of voters
+        who vote against candidate ``c`` at elimination round ``r``.
         """
         if self._scores is None:
             self._count_ballots()
@@ -100,7 +100,8 @@ class CoombsResult(ElectionResult):
         """1d array of integers. Candidates are sorted according to their 
         order of elimination.
         
-        By definition / convention, candidates_by_scores_best_to_worst[0] = w.
+        By definition / convention, ``candidates_by_scores_best_to_worst[0]`` =
+        :attr:`~svvamp.Coombs.w`.
         """
         if self._candidates_by_scores_best_to_worst is None:
             self._count_ballots()
