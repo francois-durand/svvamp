@@ -61,7 +61,8 @@ class KemenyResult(ElectionResult):
 
     @property
     def score_w(self):
-        """Integer. With our convention, scores_w[r] = C - 1.
+        """Integer. With our convention, ``scores_w[r]`` =
+        :attr:`~svvamp.Population.C` - 1.
         """
         if self._score_w is None:
             self._mylog("Compute winner's score", 1)
@@ -70,8 +71,9 @@ class KemenyResult(ElectionResult):
 
     @property 
     def scores_best_to_worst(self):
-        """1d array of integers. With our convention, scores_best_to_worst
-        is the vector [C - 1, C-2, ..., 0].
+        """1d array of integers. With our convention, ``scores_best_to_worst``
+        is the vector [:attr:`~svvamp.Population.C` - 1,
+        :attr:`~svvamp.Population.C` - 2, ..., 0].
         """
         if self._scores_best_to_worst is None:
             self._mylog("Compute scores_best_to_worst", 1)
@@ -142,9 +144,9 @@ class KemenyResult(ElectionResult):
         
     @property
     def scores(self):
-        """1d array of integers. By convention, scores are integers from 1 to 
-        C, with C for the winner and 1 for the last candidate in Kemeny 
-        optimal order.
+        """1d array of integers. By convention, scores are integers from 1 to
+        :attr:`~svvamp.Population.C`, with :attr:`~svvamp.Population.C` for
+        the winner and 1 for the last candidate in Kemeny optimal order.
         """
         if self._scores is None:
             self._count_ballots()
@@ -158,7 +160,8 @@ class KemenyResult(ElectionResult):
         order is given. This implies that if several winners are possible,
         the one with lowest index is declared the winner.
         
-        By definition, candidates_by_scores_best_to_worst[0] = w.
+        By definition, ``candidates_by_scores_best_to_worst[0]`` =
+        :attr:`~svvamp.Kemeny.w`.
         """
         if self._scores is None:  # This is not a typo
             self._count_ballots()

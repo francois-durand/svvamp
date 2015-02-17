@@ -28,12 +28,54 @@ from svvamp.Preferences.Population import Population
 class Kemeny(KemenyResult, Election):
     """Kemeny method.
     
-    We find the order on candidates whose total Kendall distance to the voters
-    is minimal. The top element of this order is declared the winner.
+    Inherits functions and optional parameters from superclasses
+    :class:`~svvamp.ElectionResult` and :class:`~svvamp.Election`.
+
+    :Example:
+
+    >>> import svvamp
+    >>> pop = svvamp.PopulationSpheroid(V=100, C=5)
+    >>> election = svvamp.Kemeny(pop)
+
+    We find the order on candidates whose total Kendall tau distance to the
+    voters is minimal. The top element of this order is declared the winner.
     
     In case several orders are optimal, the first one by lexicographic
     order is given. This implies that if several winners are possible,
     the one with lowest index is declared the winner.
+
+    For this voting system, even deciding the sincere winner is NP-hard.
+
+    :meth:`~svvamp.Election.CM`: Non-polynomial or non-exact algorithms
+    from superclass :class:`~svvamp.Election`.
+
+    :meth:`~svvamp.Election.ICM`: Exact in polynomial time
+    (once the sincere winner is computed).
+
+    :meth:`~svvamp.Election.IM`: Non-polynomial
+    or non-exact algorithms from superclass :class:`~svvamp.Election`.
+
+    :meth:`~svvamp.Election.not_IIA`: Non-polynomial
+    or non-exact algorithms from superclass :class:`~svvamp.Election`.
+
+    :meth:`~svvamp.Election.TM`: Exact in the time needed to decide the winner
+    of one election, multiplied by :attr:`~svvamp.Population.C`.
+
+    :meth:`~svvamp.Election.UM`: Non-polynomial or non-exact algorithms from
+    superclass :class:`~svvamp.Election`.
+
+    References:
+
+        'Mathematics without numbers', J. G. Kemeny, 1959.
+
+        'A Consistent Extension of Condorcet’s Election Principle',
+        H. P. Young and A. Levenglick, 1978.
+
+        'On the approximability of Dodgson and Young elections',
+        Ioannis Caragiannis et al., 2009.
+
+        'Comparing and aggregating partial orders with Kendall tau distances',
+        Franz J. Brandenburg, Andreas Gleißner and Andreas Hofmeier, 2013.
     """
     
     _layout_name = 'Kemeny'

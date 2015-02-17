@@ -28,29 +28,57 @@ from svvamp.Preferences.Population import Population
 class IteratedBucklin(IteratedBucklinResult, Election):
     """Iterated Bucklin method.
 
-    The candidate with least "adjusted median Borda score" (cf. below) is 
-    eliminated. Then the new Borda scores are computed. Etc.
-    
-    Ties are broken in favor of lower-index candidates: in case of a tie,
-    the candidate with highest index is eliminated.
+    Inherits functions and optional parameters from superclasses
+    :class:`~svvamp.ElectionResult` and :class:`~svvamp.Election`.
 
-    N.B.: Unlike Baldwin method (= Iterated Borda), Iterated Bucklin does
-    not meet Condorcet criterion: a Condorcet winner may have the (strictly)
-    worst median ranking.
+    :Example:
+
+    >>> import svvamp
+    >>> pop = svvamp.PopulationSpheroid(V=100, C=5)
+    >>> election = svvamp.IteratedBucklin(pop)
+
+    The candidate with least *adjusted median Borda score* (cf. below) is
+    eliminated. Then the new Borda scores are computed. Etc. Ties are broken
+    in favor of lower-index candidates: in case of a tie, the candidate with
+    highest index is eliminated.
 
     Adjusted median Borda score:
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    Let med_c be the median Borda score for candidate c. Let x_c
-    the number of voters who put a lower Borda score to c. Then c's 
-    adjusted median is med_c - x_c / (V + 1).
-    
-    If med_c > med_d, then it is also true for the adjusted median.     
-    If med_c = med_d, then c has a better adjusted median iff x_c < x_d, 
-    i.e. if more voters give to c the Borda score med_c or higher.
-    
-    So, the best candidate by adjusted median is the Bucklin winner. Here,
-    at each round, we eliminate the candidate with lowest adjusted median
-    Borda score, which justifies the name of "Iterated Bucklin method".
+
+        Let ``med_c`` be the median Borda score for candidate ``c``. Let
+        ``x_c`` the number of voters who put a lower Borda score to ``c``.
+        Then ``c``'s adjusted median is ``med_c - x_c / (V + 1)``.
+
+        If ``med_c > med_d``, then it is also true for the adjusted median.
+        If ``med_c = med_d``, then ``c`` has a better adjusted median iff
+        ``x_c < x_d``, i.e. if more voters give to ``c`` the Borda score
+        ``med_c`` or higher.
+
+        So, the best candidate by adjusted median is the
+        :class:`~svvamp.Bucklin` winner. Here, at each round, we eliminate the
+        candidate with lowest adjusted median Borda score, which justifies the
+        name of "Iterated Bucklin method".
+
+    Unlike Baldwin method (= Iterated Borda), Iterated Bucklin does
+    not meet the Condorcet criterion. Indeed, a Condorcet winner may have the
+    (strictly) worst median ranking.
+
+    :meth:`~svvamp.Election.CM`: Non-polynomial or non-exact algorithms
+    from superclass :class:`~svvamp.Election`.
+
+    :meth:`~svvamp.Election.ICM`: The algorithm from
+    superclass :class:`~svvamp.Election` is polynomial and has a window of
+    error of 1 manipulator.
+
+    :meth:`~svvamp.Election.IM`: Non-polynomial
+    or non-exact algorithms from superclass :class:`~svvamp.Election`.
+
+    :meth:`~svvamp.Election.not_IIA`: Non-polynomial
+    or non-exact algorithms from superclass :class:`~svvamp.Election`.
+
+    :meth:`~svvamp.Election.TM`: Exact in polynomial time.
+
+    :meth:`~svvamp.Election.UM`: Non-polynomial or non-exact algorithms from
+    superclass :class:`~svvamp.Election`.
     """
 
     _layout_name = 'Iterated Bucklin'
