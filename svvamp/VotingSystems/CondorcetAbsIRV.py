@@ -44,10 +44,10 @@ class CondorcetAbsIRV(CondorcetAbsIRVResult, Election):
     strict total orders).
 
     If sincere preferences are strict total orders, then this voting system is
-    equivalent to :class:`~svvamp.CondorcetTvbIRV` for sincere voting, but
+    equivalent to :class:`~svvamp.CondorcetVtbIRV` for sincere voting, but
     manipulators have more possibilities (they can pretend to have ties in
     their preferences). In that case, it is a more 'natural' framework to use
-    :class:`~svvamp.CondorcetTvbIRV`.
+    :class:`~svvamp.CondorcetVtbIRV`.
 
     :meth:`~svvamp.Election.CM`:
 
@@ -82,7 +82,7 @@ class CondorcetAbsIRV(CondorcetAbsIRVResult, Election):
     .. seealso: :class:`svvamp.ExhaustiveBallot`,
                 :class:`svvamp.IRV`,
                 :class:`svvamp.ICRV`,
-                :class:`svvamp.CondorcetTvbIRV`.
+                :class:`svvamp.CondorcetVtbIRV`.
     """
 
     _layout_name = 'Absolute-Condorcet IRV'
