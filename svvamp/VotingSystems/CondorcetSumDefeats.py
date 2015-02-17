@@ -32,6 +32,12 @@ class CondorcetSumDefeats(CondorcetSumDefeatsResult, Election):
     Inherits functions and optional parameters from superclasses
     :class:`~svvamp.ElectionResult` and :class:`~svvamp.Election`.
 
+    :Example:
+
+    >>> import svvamp
+    >>> pop = svvamp.PopulationSpheroid(V=100, C=5)
+    >>> election = svvamp.CondorcetSumDefeats(pop)
+
     An *elementary move* consists of reversing a voter's preference about a
     pair of candidate ``(c, d)`` (without demanding that her whole relation of
     preference stays transitive). The score for candidate ``c`` is minus the
@@ -45,17 +51,19 @@ class CondorcetSumDefeats(CondorcetSumDefeatsResult, Election):
 
     .. math::
 
-        scores[c] = - \\sum_{c \\text{ does not beat } d}\\big(
-        \\text{floor}(V/2) + 1 - \\texttt{matrix_duels_vtb}[c, d]
-        \\big)
+        \\texttt{scores}[c] = - \\sum_{c \\text{ does not beat } d}\\left(
+        \\left\\lfloor\\frac{V}{2}\\right\\rfloor
+        + 1 - \\texttt{matrix_duels_vtb}[c, d]
+        \\right)
 
-    In particular, for ``V`` odd:
+    In particular, for :attr:`~svvamp.Population.V` odd:
 
     .. math::
 
-        scores[c] = - \\sum_{c \\text{ does not beat } d}\\big(
-        \\text{ceil}(V/2) - \\texttt{matrix_duels_vtb}[c, d]
-        \\big)
+        \\texttt{scores}[c] = - \\sum_{c \\text{ does not beat } d}\\left(
+        \\left\\lceil\\frac{V}{2}\\right\\rceil
+        - \\texttt{matrix_duels_vtb}[c, d]
+        \\right)
 
     :meth:`~svvamp.Election.CM`: Non-polynomial or non-exact algorithms
     from superclass :class:`~svvamp.Election`.

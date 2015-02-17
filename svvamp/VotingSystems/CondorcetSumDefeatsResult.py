@@ -59,9 +59,10 @@ class CondorcetSumDefeatsResult(ElectionResult):
 
         .. math::
 
-            scores[c] = - \\sum_{c \\text{ does not beat } d}\\big(
-            \\text{floor}(V/2) + 1 - \\texttt{matrix_duels_vtb}[c, d]
-            \\big)
+            \\texttt{scores}[c] = - \\sum_{c \\text{ does not beat } d}\\left(
+            \\left\\lfloor\\frac{V}{2}\\right\\rfloor
+            + 1 - \\texttt{matrix_duels_vtb}[c, d]
+            \\right)
         """
         if self._scores is None:
             self._mylog("Compute scores", 1)

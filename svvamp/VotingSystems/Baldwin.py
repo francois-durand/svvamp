@@ -31,6 +31,12 @@ class Baldwin(BaldwinResult, Election):
     Inherits functions and optional parameters from superclasses
     :class:`~svvamp.ElectionResult` and :class:`~svvamp.Election`.
 
+    :Example:
+
+    >>> import svvamp
+    >>> pop = svvamp.PopulationSpheroid(V=100, C=5)
+    >>> election = svvamp.Baldwin(pop)
+
     Each voter provides a strict order of preference. The candidate with
     lowest Borda score is eliminated. Then the new Borda scores are computed.
     Etc. Ties are broken in favor of lower-index candidates: in case of a tie,
@@ -62,9 +68,6 @@ class Baldwin(BaldwinResult, Election):
         'Complexity of and algorithms for the manipulation of Borda,
         Nanson's and Baldwin's voting rules', Jessica Davies,
         George Katsirelos, Nina Narodytska, Toby Walsh and Lirong Xia, 2014.
-
-        'Statistical Evaluation of Voting Rules', James Green-Armytage,
-        Nicolaus Tideman and Rafael Cosman, 2014.
     """
 
     _layout_name = 'Baldwin'

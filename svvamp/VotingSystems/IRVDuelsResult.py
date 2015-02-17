@@ -101,11 +101,14 @@ class IRVDuelsResult(ElectionResult):
     @property
     def scores(self):
         """2d array.
-        For even rounds r (including round 0), scores[r, c] is the number of
-        voters who rank c first (among non-eliminated candidates).
-        For odd rounds r, only the two candidates who are selected for the
-        elimination duels get scores. scores[r, c] is the number of voters
-        who vote for c in this elimination duel.
+
+        For even rounds ``r`` (including round 0), ``scores[r, c]`` is the
+        number of voters who rank ``c`` first (among non-eliminated
+        candidates).
+
+        For odd rounds ``r``, only the two candidates who are selected for the
+        elimination duels get scores. ``scores[r, c]`` is the number of voters
+        who vote for ``c`` in this elimination duel.
         """
         if self._scores is None:
             self._counts_ballots()
@@ -116,7 +119,8 @@ class IRVDuelsResult(ElectionResult):
         """1d array of integers.
         Candidates are sorted in the reverse order of their elimination.
 
-        By definition, candidates_by_scores_best_to_worst[0] = w.
+        By definition, ``candidates_by_scores_best_to_worst[0]`` =
+        :attr:`~svvamp.IRVDuels.w`.
         """
         if self._candidates_by_scores_best_to_worst is None:
             self._counts_ballots()

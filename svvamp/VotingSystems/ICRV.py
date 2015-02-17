@@ -28,14 +28,55 @@ from svvamp.Preferences.Population import Population
 class ICRV(ICRVResult, Election):
     """Instant-Condorcet Runoff Voting (ICRV).
 
-    Even round r (including round 0): if a candidate w has only victories
-    against all other non-eliminated candidates (i.e. is a Condorcet winner
-    in this subset, in the sense of matrix_victories_vtb), then w is declared
-    the winner.
-    Odd round r: the candidate who is ranked first (among non-eliminated
-    candidates) by least voters is eliminated, like in IRV.
+    Inherits functions and optional parameters from superclasses
+    :class:`~svvamp.ElectionResult` and :class:`~svvamp.Election`.
 
-    See also 'Condorcet-IRV' for another Condorcet variant of IRV.
+    :Example:
+
+    >>> import svvamp
+    >>> pop = svvamp.PopulationSpheroid(V=100, C=5)
+    >>> election = svvamp.ICRV(pop)
+
+    Principle: eliminate candidates as in IRV; stop as soon as there is a
+    Condorcet winner.
+
+    Even round ``r`` (including round 0): if a candidate ``w`` has only
+    victories against all other non-eliminated candidates (i.e. is a Condorcet
+    winner in this subset, in the sense of
+    :attr:`~svvamp.Population.matrix_victories_vtb`), then ``w`` is
+    declared the winner.
+
+    Odd round ``r``: the candidate who is ranked first (among non-eliminated
+    candidates) by least voters is eliminated, like in :class:`~svvamp.IRV`.
+
+    This method meets the Condorcet criterion.
+
+    :meth:`~svvamp.Election.CM`: Non-polynomial or non-exact algorithms
+    from superclass :class:`~svvamp.Election`.
+
+    :meth:`~svvamp.Election.ICM`: Exact in polynomial time.
+
+    :meth:`~svvamp.Election.IM`: Non-polynomial
+    or non-exact algorithms from superclass :class:`~svvamp.Election`.
+
+    :meth:`~svvamp.Election.not_IIA`: Non-polynomial
+    or non-exact algorithms from superclass :class:`~svvamp.Election`.
+
+    :meth:`~svvamp.Election.TM`: Exact in polynomial time.
+
+    :meth:`~svvamp.Election.UM`: Non-polynomial or non-exact algorithms from
+    superclass :class:`~svvamp.Election`.
+
+    References:
+
+        'Four Condorcet-Hare Hybrid Methods for Single-Winner Elections',
+        James Green-Armytage, 2011.
+
+    .. seealso:: :class:`~svvamp.ExhaustiveBallot`,
+                 :class:`~svvamp.IRV`,
+                 :class:`~svvamp.IRVDuels`,
+                 :class:`~svvamp.CondorcetAbsIRV`.
+                 :class:`~svvamp.CondorcetVtbIRV`.
     """
     
     _layout_name = 'ICRV'

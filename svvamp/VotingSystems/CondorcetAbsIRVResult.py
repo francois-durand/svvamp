@@ -135,7 +135,7 @@ class CondorcetAbsIRVResult(ElectionResult):
         If there is a Condorcet winner, candidates are sorted according to 
         their (scalar) score.
         
-        Otherwise, candidates_by_scores_best_to_worst is the 
+        Otherwise, ``candidates_by_scores_best_to_worst`` is the
         list of all candidates in the reverse order of their IRV elimination.
         
         By definition, ``candidates_by_scores_best_to_worst[0]`` =

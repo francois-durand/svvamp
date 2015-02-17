@@ -28,17 +28,50 @@ from svvamp.Preferences.Population import Population
 class IRVDuels(IRVDuelsResult, Election):
     """IRV with elimination duels.
 
-    Even round r (including round 0): the two non-eliminated candidates
+    Inherits functions and optional parameters from superclasses
+    :class:`~svvamp.ElectionResult` and :class:`~svvamp.Election`.
+
+    :Example:
+
+    >>> import svvamp
+    >>> pop = svvamp.PopulationSpheroid(V=100, C=5)
+    >>> election = svvamp.IRVDuels(pop)
+
+    Principle: each round, perform a duel between the two least-favorite
+    candidates and eliminate the loser of this duel.
+
+    Even round ``r`` (including round 0): the two non-eliminated candidates
     who are ranked first (among the non-eliminated candidates) by least voters
-    are selected for the elimination duels that is held in round r+1.
-    Odd round r: voters vote for the selected candidate they like most in the
-    duel. The candidate with least votes is eliminated.
+    are selected for the elimination duels that is held in round ``r+1``.
 
-    Obviously, this method meets the Condorcet criterion.
+    Odd round ``r``: voters vote for the selected candidate they like most in
+    the duel. The candidate with least votes is eliminated.
 
-    Our thanks to Laurent Viennot for the idea of voting system.
+    This method meets the Condorcet criterion.
 
-    See also 'Condorcet-IRV' and 'ICRV' for other Condorcet variants of IRV.
+    We thank Laurent Viennot for the idea of this voting system.
+
+    :meth:`~svvamp.Election.CM`: Non-polynomial or non-exact algorithms
+    from superclass :class:`~svvamp.Election`.
+
+    :meth:`~svvamp.Election.ICM`: Exact in polynomial time.
+
+    :meth:`~svvamp.Election.IM`: Non-polynomial
+    or non-exact algorithms from superclass :class:`~svvamp.Election`.
+
+    :meth:`~svvamp.Election.not_IIA`: Non-polynomial
+    or non-exact algorithms from superclass :class:`~svvamp.Election`.
+
+    :meth:`~svvamp.Election.TM`: Exact in polynomial time.
+
+    :meth:`~svvamp.Election.UM`: Non-polynomial or non-exact algorithms from
+    superclass :class:`~svvamp.Election`.
+
+    .. seealso:: :class:`~svvamp.ExhaustiveBallot`,
+                 :class:`~svvamp.IRV`,
+                 :class:`~svvamp.ICRV`,
+                 :class:`~svvamp.CondorcetAbsIRV`.
+                 :class:`~svvamp.CondorcetVtbIRV`.
     """
     
     _layout_name = 'IRV Duels'

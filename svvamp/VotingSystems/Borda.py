@@ -33,9 +33,17 @@ class Borda(BordaResult, Election):
     Inherits functions and optional parameters from superclasses
     :class:`~svvamp.ElectionResult` and :class:`~svvamp.Election`.
 
-    Voter ``v`` gives ``C - 1`` points to her top-ranked candidate,
-    ``C - 2`` to the second, ..., 0 to the last. Ties are broken by natural
-    order on the candidates (lower index wins).
+    :Example:
+
+    >>> import svvamp
+    >>> pop = svvamp.PopulationSpheroid(V=100, C=5)
+    >>> election = svvamp.Borda(pop)
+
+    Voter ``v`` gives
+    (:attr:`~svvamp.Population.C` - 1) points to her top-ranked candidate,
+    (:attr:`~svvamp.Population.C` - 2) to the second, ...,
+    0 to the last.
+    Ties are broken by natural order on the candidates (lower index wins).
 
     :meth:`~svvamp.Election.CM`: Deciding CM is NP-complete.
 

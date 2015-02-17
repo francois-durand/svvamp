@@ -31,18 +31,67 @@ from svvamp.VotingSystems.ExhaustiveBallotResult import ExhaustiveBallotResult
 class ExhaustiveBallot(ExhaustiveBallotResult, Election):
     """Exhaustive Ballot.
     
+    Inherits functions and optional parameters from superclasses
+    :class:`~svvamp.ElectionResult` and :class:`~svvamp.Election`.
+
+    :Example:
+
+    >>> import svvamp
+    >>> pop = svvamp.PopulationSpheroid(V=100, C=5)
+    >>> election = svvamp.ExhaustiveBallot(pop)
+
     At each round, voters vote for one non-eliminated candidate. The candidate
-    with least votes is eliminated. Then the next round is held. Note that
-    unlike IRV, voters actually vote at each round. This does not change
-    anything for sincere voting, but offers a bit more possibilities for the
-    manipulators.
-    
-    In case of a tie, the candidate with highest index is eliminated.
-    
-    Exact algorithms: adapted from "An Empirical Study of the Manipulability of
-    Single Transferable Voting", Walsh (2010).
-    Fast algorithm for CM/UM: Durand et al.
-    Anti-voter for IM: Durand et al.
+    with least votes is eliminated. Then the next round is held. Unlike
+    :attr:`~svvamp.IRV`, voters actually vote at each round. This does not
+    change anything for sincere voting, but offers a bit more possibilities
+    for the manipulators. In case of a tie, the candidate with highest index
+    is eliminated.
+
+    :meth:`~svvamp.Election.CM`:
+
+        * :attr:`~svvamp.Election.CM_option` = ``'fast'``:
+          Polynomial heuristic. Can prove CM but unable to decide non-CM
+          (except in rare obvious cases).
+        * :attr:`~svvamp.Election.CM_option` = ``'exact'``:
+          Non-polynomial algorithm (:math:`2^C`) adapted from Walsh, 2010.
+
+    :meth:`~svvamp.Election.ICM`: Exact in polynomial time.
+
+    :meth:`~svvamp.Election.IM`:
+
+        * :attr:`~svvamp.Election.IM_option` = ``'lazy'``:
+          Lazy algorithm from superclass :class:`~svvamp.Election`.
+        * :attr:`~svvamp.Election.IM_option` = ``'exact'``:
+          Non-polynomial algorithm (:math:`2^C`) adapted from Walsh, 2010.
+
+    :meth:`~svvamp.Election.not_IIA`: Non-polynomial
+    or non-exact algorithms from superclass :class:`~svvamp.Election`.
+
+    :meth:`~svvamp.Election.TM`: Exact in polynomial time.
+
+    :meth:`~svvamp.Election.UM`:
+
+        * :attr:`~svvamp.Election.UM_option` = ``'fast'``:
+          Polynomial heuristic. Can prove UM but unable to decide non-UM
+          (except in rare obvious cases).
+        * :attr:`~svvamp.Election.UM_option` = ``'exact'``:
+          Non-polynomial algorithm (:math:`2^C`) adapted from Walsh, 2010.
+
+    References:
+
+        'Single transferable vote resists strategic voting', John J. Bartholdi
+        and James B. Orlin, 1991.
+
+        'On The Complexity of Manipulating Elections', Tom Coleman and Vanessa
+        Teague, 2007.
+
+        'Manipulability of Single Transferable Vote', Toby Walsh, 2010.
+
+    .. seealso:: :class:`~svvamp.IRV`,
+                 :class:`~svvamp.IRVDuels`,
+                 :class:`~svvamp.ICRV`,
+                 :class:`~svvamp.CondorcetAbsIRV`.
+                 :class:`~svvamp.CondorcetVtbIRV`.
     """
     # Exceptionally, for this voting system, results are stored in the 
     # Population object, so that they can be used by IRV.

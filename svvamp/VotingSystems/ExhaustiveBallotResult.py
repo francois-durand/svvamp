@@ -202,8 +202,8 @@ class ExhaustiveBallotResult(ElectionResult):
                         
     @property
     def ballots(self):
-        """2d array of integers. ballots[v, r] is the candidate for which
-        voter v votes at round r.
+        """2d array of integers. ``ballots[v, r]`` is the candidate for which
+        voter ``v`` votes at round ``r``.
         """
         if self._ballots is None:
             self._counts_ballots()
@@ -219,12 +219,12 @@ class ExhaustiveBallotResult(ElectionResult):
         
     @property
     def scores(self):
-        """2d array. scores[r, c] is the number of voters who vote for 
-        candidate c at round r.
+        """2d array. ``scores[r, c]`` is the number of voters who vote for
+        candidate ``c`` at round ``r``.
         
-        For eliminated candidates, scores[r, c] = NaN. At the opposite, 
-        scores[r, c] = 0 means that c is present at round r but no voter votes
-        for c.
+        For eliminated candidates, ``scores[r, c] = numpy.nan``.
+        At the opposite, ``scores[r, c] = 0`` means that ``c`` is present at
+        round ``r`` but no voter votes for ``c``.
         """
         if self._scores is None:
             self._counts_ballots()
@@ -232,12 +232,12 @@ class ExhaustiveBallotResult(ElectionResult):
         
     @property
     def margins(self):
-        """2d array. margins[r, c] is the number of votes that c must lose
-        to be eliminated at round r (all other things being equal). The 
-        candidate who is eliminated at round r is the only one for which 
-        margins[r, c] = 0.
+        """2d array. ``margins[r, c]`` is the number of votes that ``c`` must
+        lose to be eliminated at round ``r`` (all other things being equal).
+        The candidate who is eliminated at round ``r`` is the only one for
+        which ``margins[r, c] = 0``.
         
-        For eliminated candidates, margins[r, c] = NaN.
+        For eliminated candidates, ``margins[r, c] = numpy.nan``.
         """
         if self._scores is None:
             self._counts_ballots()
@@ -245,10 +245,11 @@ class ExhaustiveBallotResult(ElectionResult):
         
     @property
     def candidates_by_scores_best_to_worst(self):
-        """1d array of integers. candidates_by_scores_best_to_worst is the 
+        """1d array of integers. ``candidates_by_scores_best_to_worst`` is the
         list of all candidates in the reverse order of their elimination.
         
-        By definition, candidates_by_scores_best_to_worst[0] = w.
+        By definition, ``candidates_by_scores_best_to_worst[0]`` =
+        :attr:`~svvamp.ExhaustiveBallot.w`.
         """
         if self._candidates_by_scores_best_to_worst is None:
             self._counts_ballots()
@@ -256,7 +257,8 @@ class ExhaustiveBallotResult(ElectionResult):
         
     @property
     def elimination_path(self):
-        """1d array of integers. Same as candidates_by_scores_best_to_worst,
+        """1d array of integers. Same as
+        :attr:`~svvamp.ExhaustiveBallot.candidates_by_scores_best_to_worst`,
         but in the reverse order.
         """
         if self._elimination_path is None:

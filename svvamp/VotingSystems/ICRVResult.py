@@ -104,11 +104,14 @@ class ICRVResult(ElectionResult):
     @property
     def scores(self):
         """2d array.
-        For even rounds r (including round 0), scores[r, c] is the number of
-        victories for c in matrix_victories_vtb (restricted to non-eliminated
-        candidates). Ties count for 0.5.
-        For odd rounds r, scores[r, c] is the number of voters who rank c
-        first (among non-eliminated candidates).
+
+        For even rounds ``r`` (including round 0), ``scores[r, c]`` is the
+        number of victories for ``c`` in
+        :attr:`~svvamp.Population.matrix_victories_vtb` (restricted to
+        non-eliminated candidates). Ties count for 0.5.
+
+        For odd rounds ``r``, ``scores[r, c]`` is the number of voters who
+        rank ``c`` first (among non-eliminated candidates).
         """
         if self._scores is None:
             self._counts_ballots()
@@ -117,14 +120,17 @@ class ICRVResult(ElectionResult):
     @property
     def candidates_by_scores_best_to_worst(self):
         """1d array of integers.
+
         Candidates that are not eliminated at the moment a Condorcet winner
         is detected are sorted by their number of victories in
-        matrix_victories_vtb (restricted to candidates that are not eliminated
-        at that time).
+        :attr:`~svvamp.Population.matrix_victories_vtb` (restricted to
+        candidates that are not eliminated at that time).
+
         Other candidates are sorted in the reverse order of their IRV
         elimination.
 
-        By definition, candidates_by_scores_best_to_worst[0] = w.
+        By definition, ``candidates_by_scores_best_to_worst[0]`` =
+        :attr:`~svvamp.ICRV.w`.
         """
         if self._candidates_by_scores_best_to_worst is None:
             self._counts_ballots()

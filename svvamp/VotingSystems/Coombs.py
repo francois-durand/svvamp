@@ -33,14 +33,21 @@ class Coombs(CoombsResult, Election):
     Inherits functions and optional parameters from superclasses
     :class:`~svvamp.ElectionResult` and :class:`~svvamp.Election`.
 
+    :Example:
+
+    >>> import svvamp
+    >>> pop = svvamp.PopulationSpheroid(V=100, C=5)
+    >>> election = svvamp.Coombs(pop)
+
     The candidate who is ranked last by most voters is eliminated. Then
     we iterate. Ties are broken in favor of lower-index candidates: in case
-    of a tie, the candidate with highest index is eliminated.
+    of a tie, the tied candidate with highest index is eliminated.
 
     :meth:`~svvamp.Election.CM`:
 
         * :attr:`~svvamp.Election.CM_option` = ``'fast'``:
-          Polynomial heuristic. Can prove CM but unable to decide non-CM.
+          Polynomial heuristic. Can prove CM but unable to decide non-CM
+          (except in rare obvious cases).
         * :attr:`~svvamp.Election.CM_option` = ``'exact'``:
           Non-polynomial (:math:`C!`).
 
@@ -50,7 +57,8 @@ class Coombs(CoombsResult, Election):
     :meth:`~svvamp.Election.IM`:
 
         * :attr:`~svvamp.Election.IM_option` = ``'fast'``:
-          Polynomial heuristic. Can prove CM but unable to decide non-IM.
+          Polynomial heuristic. Can prove CM but unable to decide non-IM
+          (except in rare obvious cases).
         * :attr:`~svvamp.Election.IM_option` = ``'exact'``:
           Non-polynomial (:math:`C!`).
 

@@ -79,8 +79,9 @@ class BucklinResult(ElectionResult):
     @property
     def w(self):
         """Integer (winning candidate). When at least one candidate has more 
-        than ``V``/2 votes, the candidate with most votes gets elected.
-        In case of a tie, the candidate with highest index wins.
+        than :attr:`~svvamp.Population.V`/2 votes, the candidate with most
+        votes gets elected. In case of a tie, the candidate with highest index
+        wins.
         """
         if self._w is None:
             self._count_ballots()

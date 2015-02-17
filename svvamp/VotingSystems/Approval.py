@@ -38,9 +38,11 @@ class Approval(ApprovalResult, Election):
     :param approval_threshold: See attribute
         :attr:`~svvamp.Approval.approval_threshold`.
 
-    Usage::
+    :Example:
 
-        election = svvamp.Approval(pop, approval_comparator='>', approval_threshold=0)
+    >>> import svvamp
+    >>> pop = svvamp.PopulationSpheroid(V=100, C=5)
+    >>> election = svvamp.Approval(pop, approval_comparator='>', approval_threshold=0)
 
     Each voter may vote for any number of candidates. The candidate with most
     votes is declared the winner. In case of a tie, the tied candidate with
@@ -64,7 +66,7 @@ class Approval(ApprovalResult, Election):
 
     Selected references:
 
-        Brams, Steven and Peter Fishburn. « Approval voting ». In: American
+        'Approval voting', Steven Brams and Peter Fishburn. In: American
         Political Science Review 72 (3 1978), pp. 831–847.
     """
 

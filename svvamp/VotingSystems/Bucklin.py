@@ -33,6 +33,12 @@ class Bucklin(BucklinResult, Election):
     Inherits functions and optional parameters from superclasses
     :class:`~svvamp.ElectionResult` and :class:`~svvamp.Election`.
 
+    :Example:
+
+    >>> import svvamp
+    >>> pop = svvamp.PopulationSpheroid(V=100, C=5)
+    >>> election = svvamp.Bucklin(pop)
+
     At counting round ``r``, all voters who rank candidate ``c`` in
     ``r``\ :sup:`th` position gives her an additional vote. As soon as at
     least one candidate has more than :attr:`~svvamp.Population.V`/2 votes
