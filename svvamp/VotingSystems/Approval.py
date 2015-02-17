@@ -49,18 +49,18 @@ class Approval(ApprovalResult, Election):
     Default behavior of sincere voters: sincere voter ``v``
     approves candidate ``c`` iff
     :attr:`~svvamp.Population.preferences_utilities`\ ``[v, c]`` > 0.
-    To modify this behavior, use parameters or attributes
+    To modify this behavior, use attributes
     :attr:`~svvamp.Approval.approval_comparator` and
     :attr:`~svvamp.Approval.approval_threshold`.
 
     :meth:`~svvamp.Election.not_IIA`: With our assumptions, Approval
     voting always meets IIA.
 
-    :meth:`~svvamp.Election.IM`,
+    :meth:`~svvamp.Election.CM`,
     :meth:`~svvamp.Election.ICM`,
+    :meth:`~svvamp.Election.IM`,
     :meth:`~svvamp.Election.TM`,
-    :meth:`~svvamp.Election.UM`,
-    :meth:`~svvamp.Election.CM`\ : Exact in polynomial time.
+    :meth:`~svvamp.Election.UM`: Exact in polynomial time.
 
     Selected references:
 

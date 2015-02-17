@@ -70,11 +70,11 @@ class BaldwinResult(ElectionResult):
 
     @property
     def scores(self):
-        """2d array of integers. scores[r, c] is the Borda score of candidate
-        c at elimination round r.
+        """2d array of integers. ``scores[r, c]`` is the Borda score of
+        candidate ``c`` at elimination round ``r``.
         
-        By convention, if candidate c does not participate to round r, then
-        scores[r, c] = Inf.
+        By convention, if candidate ``c`` does not participate to round ``r``,
+        then ``scores[r, c] = numpy.inf``.
         """
         if self._scores is None:
             self._mylog("Count ballots", 1)
@@ -92,10 +92,11 @@ class BaldwinResult(ElectionResult):
         
     @property
     def candidates_by_scores_best_to_worst(self):
-        """1d array of integers. candidates_by_scores_best_to_worst[-r] is the
-        candidate eliminated at elimination round r.
+        """1d array of integers. ``candidates_by_scores_best_to_worst[-r]``
+        is the candidate eliminated at elimination round ``r``.
         
-        By definition / convention, candidates_by_scores_best_to_worst[0] = w.
+        By definition / convention,
+        ``candidates_by_scores_best_to_worst[0]`` = :attr:`~svvamp.Baldwin.w`.
         """
         if self._candidates_by_scores_best_to_worst is None:
             self._mylog("Count ballots", 1)

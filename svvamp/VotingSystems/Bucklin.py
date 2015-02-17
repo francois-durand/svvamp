@@ -30,12 +30,36 @@ from svvamp.Preferences.Population import Population
 class Bucklin(BucklinResult, Election):
     """Bucklin method.
 
-    At counting round r, all voters who rank candidate c in r-th position
-    gives her an additional vote. As soon as at least one candidate has more 
-    than V/2 votes (accrued with previous rounds), the candidate with most
-    votes is declared the winner.
+    Inherits functions and optional parameters from superclasses
+    :class:`~svvamp.ElectionResult` and :class:`~svvamp.Election`.
 
-    In case of a tie, the candidate with lowest index wins.    
+    At counting round ``r``, all voters who rank candidate ``c`` in
+    ``r``\ :sup:`th` position gives her an additional vote. As soon as at
+    least one candidate has more than :attr:`~svvamp.Population.V`/2 votes
+    (accrued with previous rounds), the candidate with most votes is
+    declared the winner. In case of a tie, the candidate with lowest index
+    wins.
+
+    :meth:`~svvamp.Election.CM`: Exact in polynomial time.
+
+    :meth:`~svvamp.Election.ICM`: Exact in polynomial time.
+
+    :meth:`~svvamp.Election.IM`: Exact in polynomial time.
+
+    :meth:`~svvamp.Election.not_IIA`: Non-polynomial
+    or non-exact algorithms from superclass :class:`~svvamp.Election`.
+
+    :meth:`~svvamp.Election.TM`: Exact in polynomial time.
+
+    :meth:`~svvamp.Election.UM`: Exact in polynomial time.
+
+    References:
+
+        'The Majoritarian Compromise in large societies', Arkadii Slinko, 2002.
+
+        'Complexity of Unweighted Coalitional Manipulation under Some Common
+        Voting Rules', Lirong Xia, Michael Zuckerman, Ariel D. Procaccia,
+        Vincent Conitzer and Jeffrey S. Rosenschein, 2009.
     """
     
     _layout_name = 'Bucklin'

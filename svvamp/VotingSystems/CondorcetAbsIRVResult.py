@@ -115,13 +115,15 @@ class CondorcetAbsIRVResult(ElectionResult):
     def scores(self):
         """1d or 2d array. 
         
-        If there is a Condorcet winner, then scores[c] is the number of 
-        victories for c in matrix_victories_abs.
+        If there is a Condorcet winner, then ``scores[c]`` is the number of
+        victories for ``c`` in matrix_victories_abs.
         
-        Otherwise, scores[r, c] is defined like in IRV: it is the number of 
-        voters who vote for candidate c at round r. For eliminated candidates, 
-        scores[r, c] = NaN. At the opposite, scores[r, c] = 0 means that c is 
-        present at round r but no voter votes for c.
+        Otherwise, ``scores[r, c]`` is defined like in
+        :class:`~svvamp.IRV`: it is the number of
+        voters who vote for candidate ``c`` at round ``r``.
+        For eliminated candidates, ``scores[r, c] = numpy.nan``. At the
+        opposite, ``scores[r, c] = 0`` means that ``c`` is
+        present at round ``r`` but no voter votes for ``c``.
         """
         if self._scores is None:
             self._counts_ballots()
@@ -136,7 +138,8 @@ class CondorcetAbsIRVResult(ElectionResult):
         Otherwise, candidates_by_scores_best_to_worst is the 
         list of all candidates in the reverse order of their IRV elimination.
         
-        By definition, candidates_by_scores_best_to_worst[0] = w.
+        By definition, ``candidates_by_scores_best_to_worst[0]`` =
+        :attr:`~svvamp.CondorcetAbsIRV.w`.
         """
         if self._candidates_by_scores_best_to_worst is None:
             self._counts_ballots()

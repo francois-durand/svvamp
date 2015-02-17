@@ -27,17 +27,44 @@ from svvamp.Preferences.Population import Population
 
 class Baldwin(BaldwinResult, Election):
     """Baldwin method.
-    
-    The candidate with least Borda score is eliminated. Then the new
-    Borda scores are computed. Etc.
-    
-    Ties are broken in favor of lower-index candidates: in case of a tie,
+
+    Inherits functions and optional parameters from superclasses
+    :class:`~svvamp.ElectionResult` and :class:`~svvamp.Election`.
+
+    Each voter provides a strict order of preference. The candidate with
+    lowest Borda score is eliminated. Then the new Borda scores are computed.
+    Etc. Ties are broken in favor of lower-index candidates: in case of a tie,
     the candidate with highest index is eliminated.
-    
+
     This method meets the Condorcet criterion.
-    Deciding IM is NP-complete.
 
+    :meth:`~svvamp.Election.CM`: Non-polynomial or non-exact algorithms
+    from superclass :class:`~svvamp.Election`.
 
+    :meth:`~svvamp.Election.ICM`: Exact in polynomial time.
+
+    :meth:`~svvamp.Election.IM`: Deciding IM is NP-complete. Non-polynomial
+    or non-exact algorithms from superclass :class:`~svvamp.Election`.
+
+    :meth:`~svvamp.Election.not_IIA`: Non-polynomial
+    or non-exact algorithms from superclass :class:`~svvamp.Election`.
+
+    :meth:`~svvamp.Election.TM`: Exact in polynomial time.
+
+    :meth:`~svvamp.Election.UM`: Non-polynomial or non-exact algorithms from
+    superclass :class:`~svvamp.Election`.
+
+    References:
+
+        'Some Further Results on the Manipulability of Social Choice Rules',
+        Pierre Favardin and Dominique Lepelley, 2006.
+
+        'Complexity of and algorithms for the manipulation of Borda,
+        Nanson's and Baldwin's voting rules', Jessica Davies,
+        George Katsirelos, Nina Narodytska, Toby Walsh and Lirong Xia, 2014.
+
+        'Statistical Evaluation of Voting Rules', James Green-Armytage,
+        Nicolaus Tideman and Rafael Cosman, 2014.
     """
 
     _layout_name = 'Baldwin'

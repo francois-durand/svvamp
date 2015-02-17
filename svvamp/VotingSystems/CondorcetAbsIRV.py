@@ -32,18 +32,57 @@ from svvamp.VotingSystems.IRV import IRV
 class CondorcetAbsIRV(CondorcetAbsIRVResult, Election):
     """Abs-Condorcet-IRV.
 
+    Inherits functions and optional parameters from superclasses
+    :class:`~svvamp.ElectionResult` and :class:`~svvamp.Election`.
+
     Each voter must provide a weak order, and a strict total order that is
     coherent with this weak order (i.e., is a tie-breaking of this weak order).
 
     If there is a Condorcet winner (computed with the weak orders, i.e. in
-    the sense of matrix_victories_abs), then she is elected. Otherwise,
-    IRV is used (with the strict total orders).
+    the sense of :attr:`~svvamp.Population.matrix_victories_abs`),
+    then she is elected. Otherwise, :class:`~svvamp.IRV` is used (with the
+    strict total orders).
 
     If sincere preferences are strict total orders, then this voting system is
-    equivalent to CondorcetTvbIRV for sincere voting, but manipulators have
-    more possibilities (they can pretend to have ties in their preferences).
+    equivalent to :class:`~svvamp.CondorcetTvbIRV` for sincere voting, but
+    manipulators have more possibilities (they can pretend to have ties in
+    their preferences). In that case, it is a more 'natural' framework to use
+    :class:`~svvamp.CondorcetTvbIRV`.
 
-    See also 'ICRV' for another Condorcet variant of IRV.
+    :meth:`~svvamp.Election.CM`:
+
+        * :attr:`~svvamp.Election.CM_option` = ``'fast'``:
+          Rely on the fast algorithm for :class:`~svvamp.IRV`.
+          Polynomial heuristic. Can prove CM but unable to decide non-CM.
+        * :attr:`~svvamp.Election.CM_option` = ``'slow'``:
+          Same as fast but try also the exact algorithm for
+          :class:`~svvamp.ExhaustiveBallot` to find an elimination path.
+          Non-polynomial heuristic (:math:`2^C`). Can prove CM but unable to
+          decide non-CM.
+        * :attr:`~svvamp.Election.CM_option` = ``'almost_exact'``:
+          Rely on the exact algorithm for :class:`~svvamp.IRV`.
+          Non-polynomial heuristic (:math:`C!`). Very efficient to prove CM
+          but unable to decide non-CM.
+        * :attr:`~svvamp.Election.CM_option` = ``'exact'``:
+          Non-polynomial algorithm from superclass :class:`~svvamp.Election`.
+
+    :meth:`~svvamp.Election.ICM`: Exact in polynomial time.
+
+    :meth:`~svvamp.Election.IM`: Non-polynomial
+    or non-exact algorithms from superclass :class:`~svvamp.Election`.
+
+    :meth:`~svvamp.Election.not_IIA`: Non-polynomial
+    or non-exact algorithms from superclass :class:`~svvamp.Election`.
+
+    :meth:`~svvamp.Election.TM`: Exact in polynomial time.
+
+    :meth:`~svvamp.Election.UM`: Non-polynomial or non-exact algorithms from
+    superclass :class:`~svvamp.Election`.
+
+    .. seealso: :class:`svvamp.ExhaustiveBallot`,
+                :class:`svvamp.IRV`,
+                :class:`svvamp.ICRV`,
+                :class:`svvamp.CondorcetTvbIRV`.
     """
 
     _layout_name = 'Absolute-Condorcet IRV'

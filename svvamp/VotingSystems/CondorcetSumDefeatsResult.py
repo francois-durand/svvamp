@@ -56,8 +56,12 @@ class CondorcetSumDefeatsResult(ElectionResult):
     @property
     def scores(self):
         """1d array of integers.
-        scores[c] = - sum_{c does not beat d}{floor(V/2) + 1
-                                              - matrix_duels_vtb[c, d]}
+
+        .. math::
+
+            scores[c] = - \\sum_{c \\text{ does not beat } d}\\big(
+            \\text{floor}(V/2) + 1 - \\texttt{matrix\\_duels\\_vtb}[c, d]
+            \\big)
         """
         if self._scores is None:
             self._mylog("Compute scores", 1)

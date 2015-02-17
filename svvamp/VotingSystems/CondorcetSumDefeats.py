@@ -27,22 +27,53 @@ from svvamp.Preferences.Population import Population
 
 
 class CondorcetSumDefeats(CondorcetSumDefeatsResult, Election):
-    """'Condorcet with sum of defeats'.
-    
-    An 'elementary move' is reversing a voter's preference about a pair
-    of candidate (c, d) (without demanding that her whole relation of
-    preference stays transitive). The score for candidate c is minus the number
-    of 'elementary moves' needed so that c becomes a Condorcet winner.
+    """Condorcet with sum of defeats.
+
+    Inherits functions and optional parameters from superclasses
+    :class:`~svvamp.ElectionResult` and :class:`~svvamp.Election`.
+
+    An *elementary move* consists of reversing a voter's preference about a
+    pair of candidate ``(c, d)`` (without demanding that her whole relation of
+    preference stays transitive). The score for candidate ``c`` is minus the
+    number of *elementary moves* needed so that ``c`` becomes a Condorcet
+    winner.
 
     It is the same principle as Dodgson's method, but without looking
     for a transitive profile.
 
     In practice:
-    scores[c] = - sum_{c does not beat d}{floor(V/2) + 1
-                                          - matrix_duels_vtb[c, d]}
-    In particular, for V odd:
-    scores[c] = - sum_{c does not beat d}{ceil(V/2)
-                                          - matrix_duels_vtb[c, d]}
+
+    .. math::
+
+        scores[c] = - \\sum_{c \\text{ does not beat } d}\\big(
+        \\text{floor}(V/2) + 1 - \\texttt{matrix\\_duels\\_vtb}[c, d]
+        \\big)
+
+    In particular, for ``V`` odd:
+
+    .. math::
+
+        scores[c] = - \\sum_{c \\text{ does not beat } d}\\big(
+        \\text{ceil}(V/2) - \\texttt{matrix\\_duels\\_vtb}[c, d]
+        \\big)
+
+    :meth:`~svvamp.Election.CM`: Non-polynomial or non-exact algorithms
+    from superclass :class:`~svvamp.Election`.
+
+    :meth:`~svvamp.Election.ICM`: Algorithm from superclass
+    :class:`~svvamp.Election`. It is polynomial and has a window of error of 1
+    manipulator.
+
+    :meth:`~svvamp.Election.IM`: Non-polynomial
+    or non-exact algorithms from superclass :class:`~svvamp.Election`.
+
+    :meth:`~svvamp.Election.not_IIA`: Non-polynomial
+    or non-exact algorithms from superclass :class:`~svvamp.Election`.
+
+    :meth:`~svvamp.Election.TM`: Exact in polynomial time.
+
+    :meth:`~svvamp.Election.UM`: Non-polynomial or non-exact algorithms from
+    superclass :class:`~svvamp.Election`.
     """
     
     _layout_name = 'Condorcet Sum Defeats'

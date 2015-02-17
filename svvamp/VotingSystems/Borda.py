@@ -30,24 +30,43 @@ from svvamp.Preferences.Population import Population
 class Borda(BordaResult, Election):
     """Borda rule.
 
-    Voter v gives C - 1 points to her top-ranked candidate, C - 2 to the
-    second, ..., 0 to the last.
+    Inherits functions and optional parameters from superclasses
+    :class:`~svvamp.ElectionResult` and :class:`~svvamp.Election`.
 
-    Ties are broken by natural order on the candidates (lower index wins).
+    Voter ``v`` gives ``C - 1`` points to her top-ranked candidate,
+    ``C - 2`` to the second, ..., 0 to the last. Ties are broken by natural
+    order on the candidates (lower index wins).
 
-    Fast algorithm for CM: Zuckerman et al. (2009), Algorithms for the
-    coalitional manipulation problem. Morally, this algorithm is 'almost
-    exact', i.e. in 'most cases', it can tell whether the profile is
-    manipulable or not.
+    :meth:`~svvamp.Election.CM`: Deciding CM is NP-complete.
 
-    'Exact' algorithm for CM: exhaustive exploration of ballots with n_m
-    manipulators. It gives an exact answer to the decision problem (is is
-    manipulable for c?), but not to the question of how many manipulators
-    are needed (lower and upper bounds may be different).
+        * :attr:`~svvamp.Election.CM_option` = ``'fast'``:
+          Zuckerman et al. (2009). This approximation algorithm is
+          polynomial and has a window of error of 1 manipulator.
+        * :attr:`~svvamp.Election.CM_option` = ``'exact'``:
+          Non-polynomial algorithm from superclass :class:`~svvamp.Election`.
 
-    Fast algorithm for ICM: morally, it is 'almost exact' also (the
-    difference between necessary_coalition_size_ICM
-    and sufficient_coalition_size_ICM is at most 1).
+    :meth:`~svvamp.Election.ICM`: Algorithm is polynomial and has a window of
+    error of 1 manipulator.
+
+    :meth:`~svvamp.Election.IM`: Exact in polynomial time.
+
+    :meth:`~svvamp.Election.not_IIA`: Exact in polynomial time.
+
+    :meth:`~svvamp.Election.TM`: Exact in polynomial time.
+
+    :meth:`~svvamp.Election.UM`: Exact in polynomial time.
+
+    References:
+
+        'Algorithms for the coalitional manipulation problem',
+        M. Zuckerman, A. Procaccia and J. Rosenschein, 2009.
+
+        'Unweighted Coalitional Manipulation Under the Borda Rule is NP-Hard',
+        Nadja Betzler, Rolf Niedermeier and Gerhard Woeginger, 2011.
+
+        'Complexity of and algorithms for the manipulation of Borda,
+        Nanson's and Baldwin's voting rules', Jessica Davies,
+        George Katsirelos, Nina Narodytska, Toby Walsh and Lirong Xia, 2014.
     """
 
     _layout_name = 'Borda'

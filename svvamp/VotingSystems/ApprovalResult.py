@@ -63,14 +63,14 @@ class ApprovalResult(ElectionResult):
 
     @property
     def approval_comparator(self):
-        """String. Can be '>' (default) or '>='.
+        """String. Can be ``'>'`` (default) or ``'>='``.
 
-        When ``approval_comparator`` is ``>``, sincere voter
+        When ``approval_comparator`` is ``'>'``, sincere voter
         ``v`` approves candidates ``c`` iff
         :attr:`~svvamp.Population.preferences_utilities`\ ``[v, c]`` >
         :attr:`~svvamp.Approval.approval_threshold`.
 
-        When ``approval_comparator`` is ``>=``, previous relation is modified
+        When ``approval_comparator`` is ``'>='``, previous relation is modified
         accordingly.
         """
         return self._approval_comparator

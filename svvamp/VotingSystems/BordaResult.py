@@ -43,8 +43,8 @@ class BordaResult(ElectionResult):
     
     @property
     def ballots(self):
-        """2d array of integers. ballots[v, c] is the Borda score attributed
-        to candidate c by voter v (between 0 and C - 1).
+        """2d array of integers. ``ballots[v, c]`` is the Borda score
+        attributed to candidate ``c`` by voter ``v`` (between 0 and ``C - 1``).
         """
         if self._ballots is None:
             self._mylog("Compute ballots", 1)
@@ -53,8 +53,8 @@ class BordaResult(ElectionResult):
         
     @property
     def scores(self):
-        """1d array of integers. scores[c] is the total Borda score for 
-        candidate c.
+        """1d array of integers. ``scores[c]`` is the total Borda score for
+        candidate ``c``.
         """
         if self._scores is None:
             self._mylog("Compute scores", 1)

@@ -64,9 +64,10 @@ class BucklinResult(ElectionResult):
 
     @property
     def scores(self):
-        """2d array of integers. scores[r, c] is the accrued score of
-        candidate c at elimination round r. It is the number of voters
-        who rank c between 0-th and r-th rank on their ballot.
+        """2d array of integers. ``scores[r, c]`` is the accrued score of
+        candidate ``c`` at elimination round ``r``. It is the number of voters
+        who rank ``c`` between 0\ :sup:`th` and ``r``\ :sup:`th` rank on
+        their ballot.
 
         For information, ballot are still counted after the round where the
         decision is made (it is used for manipulation algorithms).
@@ -78,8 +79,7 @@ class BucklinResult(ElectionResult):
     @property
     def w(self):
         """Integer (winning candidate). When at least one candidate has more 
-        than V/2 votes, the candidate with most votes gets elected.
-        
+        than ``V``/2 votes, the candidate with most votes gets elected.
         In case of a tie, the candidate with highest index wins.
         """
         if self._w is None:
@@ -92,7 +92,8 @@ class BucklinResult(ElectionResult):
         scores during the counting round during which at least one candidate
         reaches majority.
         
-        By definition, candidates_by_scores_best_to_worst[0] = w.
+        By definition, ``candidates_by_scores_best_to_worst[0]`` =
+        :attr:`~svvamp.Bucklin.w`.
         """
         if self._candidates_by_scores_best_to_worst is None:
             self._count_ballots()
