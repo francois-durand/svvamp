@@ -46,7 +46,7 @@ class CondorcetSumDefeats(CondorcetSumDefeatsResult, Election):
     .. math::
 
         scores[c] = - \\sum_{c \\text{ does not beat } d}\\big(
-        \\text{floor}(V/2) + 1 - \\texttt{matrix\_duels\_vtb}[c, d]
+        \\text{floor}(V/2) + 1 - \\texttt{matrix_duels_vtb}[c, d]
         \\big)
 
     In particular, for ``V`` odd:
@@ -54,7 +54,7 @@ class CondorcetSumDefeats(CondorcetSumDefeatsResult, Election):
     .. math::
 
         scores[c] = - \\sum_{c \\text{ does not beat } d}\\big(
-        \\text{ceil}(V/2) - \\texttt{matrix\\\_duels\\\_vtb}[c, d]
+        \\text{ceil}(V/2) - \\texttt{matrix_duels_vtb}[c, d]
         \\big)
 
     :meth:`~svvamp.Election.CM`: Non-polynomial or non-exact algorithms
