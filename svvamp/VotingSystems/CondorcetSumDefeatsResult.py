@@ -60,7 +60,7 @@ class CondorcetSumDefeatsResult(ElectionResult):
         .. math::
 
             scores[c] = - \\sum_{c \\text{ does not beat } d}\\big(
-            \\text{floor}(V/2) + 1 - \\texttt{matrix\\_duels\\_vtb}[c, d]
+            \\text{floor}(V/2) + 1 - \\texttt{matrix_duels_vtb}[c, d]
             \\big)
         """
         if self._scores is None:
