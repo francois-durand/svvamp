@@ -64,7 +64,7 @@ class Approval(ApprovalResult, Election):
     :meth:`~svvamp.Election.TM`,
     :meth:`~svvamp.Election.UM`: Exact in polynomial time.
 
-    Selected references:
+    References:
 
         'Approval voting', Steven Brams and Peter Fishburn. In: American
         Political Science Review 72 (3 1978), pp. 831–847.

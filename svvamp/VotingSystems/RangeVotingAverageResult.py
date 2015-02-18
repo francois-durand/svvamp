@@ -53,7 +53,7 @@ class RangeVotingAverageResult(ElectionResult):
 
     @property
     def max_grade(self):
-        """Number -- Maximal grade allowed.
+        """Number. Maximal grade allowed.
         """
         return self._max_grade
 
@@ -64,7 +64,7 @@ class RangeVotingAverageResult(ElectionResult):
         
     @property
     def min_grade(self):
-        """Number -- Minimal grade allowed.
+        """Number. Minimal grade allowed.
         """
         return self._min_grade
 
@@ -75,9 +75,11 @@ class RangeVotingAverageResult(ElectionResult):
         
     @property
     def step_grade(self):
-        """Number -- If step_grade > 0, then grades are rounded to the 
-        closest multiple of step_grade. If step_grade = 0, then grades are 
-        not rounded (continuous set of possible grades).
+        """Number. Interval between two consecutive allowed grades.
+
+        If ``step_grade > 0``, then grades are rounded to the
+        closest multiple of ``step_grade``. If ``step_grade = 0``, then grades
+        are not rounded (continuous set of possible grades).
 
         It is allowed that max_grade is not a multiple of 
         step_grade (though it is not recommended). For sincere voters, the
@@ -117,7 +119,28 @@ class RangeVotingAverageResult(ElectionResult):
     @property
     def ballots(self):
         """2d array of integers. ballots[v, c] is the grade attributed to 
-        candidate c by voter v.
+        candidate c by voter v. (test)
+
+        1.  Attribute grades in interval
+            [:attr:`~svvamp.RangeVotingAverage.min_grade`,
+            :attr:`~svvamp.RangeVotingAverage.max_grade`].
+
+            *   If :attr:`~svvamp.RangeVotingAverage.rescale_grades` is
+                ``True``, then ``v`` applies an affine transformation to
+                her utilities
+                :attr:`~svvamp.Population.preferences_utilities`\ ``[v, :]``
+                such that her worst-like candidate receives
+                :attr:`~svvamp.RangeVotingAverage.min_grade` and her most-liked
+                candidate receives :attr:`~svvamp.RangeVotingAverage.max_grade`.
+                [Exception: if she is indifferent between all candidates, then
+                she attributes (:attr:`~svvamp.RangeVotingAverage.min_grade` +
+                :attr:`~svvamp.RangeVotingAverage.max_grade`) / 2 to all of
+                them.]
+
+            *   If :attr:`~svvamp.RangeVotingAverage.rescale_grades` is
+                ``False``, top them in the interval.
+
+        2. Round with ``step_grades``.
         """
         if self._ballots is None:
             self._mylog("Compute ballots", 1)

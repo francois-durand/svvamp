@@ -31,12 +31,44 @@ from svvamp.Preferences.Population import Population
 class RangeVotingAverage(RangeVotingAverageResult, Election):
     """Range Voting with Average.
     
-    Each voter attributes a grade to each candidate, between min_grade and
-    max_grade. The candidate with highest average grade wins. In case of a
-    tie, the candidate with lowest index is declared the winner.
-    
-    See the documentation of options min_grade, max_grade, step_grade and
-    rescale_grades.
+    Inherits functions and optional parameters from superclasses
+    :class:`~svvamp.ElectionResult` and :class:`~svvamp.Election`.
+
+    :Example:
+
+    >>> import svvamp
+    >>> pop = svvamp.PopulationSpheroid(V=100, C=5)
+    >>> election = svvamp.RangeVotingAverage(min_grade=0, max_grade=1, step_grade=0, rescale_grades=True)
+
+    Each voter attributes a grade to each candidate, between
+    :attr:`~svvamp.RangeVotingAverage.min_grade` and
+    :attr:`~svvamp.RangeVotingAverage.min_grade`. The candidate with highest
+    average grade wins. In case of a tie, the tied candidate with lowest index
+    is declared the winner.
+
+    Default behavior of sincere voters: voter ``v`` applies an affine
+    transformation to her utilities
+    :attr:`svvamp.Population.preferences_utilities` to get her grades, such
+    that her least-liked candidate receives
+    :attr:`~svvamp.RangeVotingAverage.min_grade` and her most-liked candidate
+    receives :attr:`~svvamp.RangeVotingAverage.max_grade`.
+    To modify this behavior, use attributes
+    :attr:`~svvamp.RangeVotingAverage.step_grade` and
+    :attr:`~svvamp.RangeVotingAverage.rescale_grades`.
+
+    :meth:`~svvamp.Election.not_IIA`:
+
+        * If :attr:`~svvamp.RangeVotingAverage.rescale_grades` = ``False``,
+          then Range voting always meets IIA.
+        * If :attr:`~svvamp.RangeVotingAverage.rescale_grades` = ``True``, then
+          then non-polynomial or non-exact algorithms from superclass
+          :class:`~svvamp.Election` are used.
+
+    :meth:`~svvamp.Election.CM`,
+    :meth:`~svvamp.Election.ICM`,
+    :meth:`~svvamp.Election.IM`,
+    :meth:`~svvamp.Election.TM`,
+    :meth:`~svvamp.Election.UM`: Exact in polynomial time.
     """
 
     _layout_name = 'Range voting with average'
