@@ -34,27 +34,38 @@ class RangeVotingAverage(RangeVotingAverageResult, Election):
     Inherits functions and optional parameters from superclasses
     :class:`~svvamp.ElectionResult` and :class:`~svvamp.Election`.
 
+    :param min_grade: See attribute
+        :attr:`~svvamp.RangeVotingAverage.min_grade`.
+    :param max_grade: See attribute
+        :attr:`~svvamp.RangeVotingAverage.max_grade`.
+    :param step_grade: See attribute
+        :attr:`~svvamp.RangeVotingAverage.step_grade`.
+    :param rescale_grades: See attribute
+        :attr:`~svvamp.RangeVotingAverage.rescale_grades`.
+
     :Example:
 
     >>> import svvamp
     >>> pop = svvamp.PopulationSpheroid(V=100, C=5)
     >>> election = svvamp.RangeVotingAverage(min_grade=0, max_grade=1, step_grade=0, rescale_grades=True)
 
-    Each voter attributes a grade to each candidate, between
-    :attr:`~svvamp.RangeVotingAverage.min_grade` and
-    :attr:`~svvamp.RangeVotingAverage.min_grade`. The candidate with highest
-    average grade wins. In case of a tie, the tied candidate with lowest index
-    is declared the winner.
+    Each voter attributes a grade to each candidate. By default, authorized
+    grades are all numbers in the interval
+    [:attr:`~svvamp.RangeVotingAverage.min_grade`,
+    :attr:`~svvamp.RangeVotingAverage.max_grade`]. To modify this,
+    see :attr:`~svvamp.RangeVotingAverage.step_grade`.
+
+    The candidate with highest average grade wins. In case of a tie, the tied
+    candidate with lowest index is declared the winner.
 
     Default behavior of sincere voters: voter ``v`` applies an affine
     transformation to her utilities
-    :attr:`svvamp.Population.preferences_utilities` to get her grades, such
-    that her least-liked candidate receives
+    :attr:`~svvamp.Population.preferences_utilities`\ ``[v, :]``
+    to get her grades, such that her least-liked candidate receives
     :attr:`~svvamp.RangeVotingAverage.min_grade` and her most-liked candidate
     receives :attr:`~svvamp.RangeVotingAverage.max_grade`.
-    To modify this behavior, use attributes
-    :attr:`~svvamp.RangeVotingAverage.step_grade` and
-    :attr:`~svvamp.RangeVotingAverage.rescale_grades`.
+    For other possible behaviors, see
+    :attr:`~svvamp.RangeVotingAverage.ballots`.
 
     :meth:`~svvamp.Election.not_IIA`:
 

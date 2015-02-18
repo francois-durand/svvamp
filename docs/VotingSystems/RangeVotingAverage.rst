@@ -3,4 +3,5 @@ RangeVotingAverage
 ==================
 
 .. autoclass:: svvamp.RangeVotingAverage
-   :members: ballots, scores, candidates_by_scores_best_to_worst, score_w, scores_best_to_worst, w
+   :members: ballots, scores, w, 
+             min_grade, max_grade, step_grade, rescale_grades

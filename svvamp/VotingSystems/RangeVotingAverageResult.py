@@ -77,17 +77,19 @@ class RangeVotingAverageResult(ElectionResult):
     def step_grade(self):
         """Number. Interval between two consecutive allowed grades.
 
-        If ``step_grade > 0``, then grades are rounded to the
-        closest multiple of ``step_grade``. If ``step_grade = 0``, then grades
-        are not rounded (continuous set of possible grades).
+        If ``step_grade = 0``, all grades
+        in the interval [:attr:`~svvamp.RangeVotingAverage.min_grade`,
+        :attr:`~svvamp.RangeVotingAverage.min_grade`] are allowed
+        ('continuous' set of grades).
 
-        It is allowed that max_grade is not a multiple of 
-        step_grade (though it is not recommended). For sincere voters, the
-        maximal grade actually used will be the lower rounding 
-        of max_grade to a multiple of step_grade. But manipulators are 
-        allowed to use max_grade itself.
-        
-        Similar considerations apply to min_grade, mutatis mutandis.        
+        If ``step_grade > 0``, authorized grades are the multiples of
+        :attr:`~svvamp.RangeVotingAverage.step_grade` lying in
+        the interval [:attr:`~svvamp.RangeVotingAverage.min_grade`,
+        :attr:`~svvamp.RangeVotingAverage.min_grade`]. In addition, the grades
+        :attr:`~svvamp.RangeVotingAverage.min_grade` and
+        :attr:`~svvamp.RangeVotingAverage.max_grade` are always authorized,
+        even if they are not multiples of
+        :attr:`~svvamp.RangeVotingAverage.step_grade`.
         """
         return self._step_grade
 
@@ -98,14 +100,20 @@ class RangeVotingAverageResult(ElectionResult):
         
     @property
     def rescale_grades(self):
-        """Boolean. If True, then the utilities of a voter are linearly
-        rescaled in the interval [min_grade, max_grade] then rounded with
-        step_grades. If False, then the utilities of a voter are
-        rounded with step_grades then cut off at min_grade and max_grade.        
-        
-        N.B.: If True and a voter attributes the same utility to all
-        candidates, then by convention, she will give them the grade
-        (max_grade - min_grade) / 2. 
+        """Boolean. Whether sincere voters rescale their utilities to produce
+        grades.
+
+        If ``rescale_grades`` = ``True``, then each sincere voter ``v``
+        applies an affine transformation to send her utilities into the
+        interval [:attr:`~svvamp.RangeVotingAverage.min_grade`,
+        :attr:`~svvamp.RangeVotingAverage.min_grade`].
+
+        If ``rescale_grades`` = ``False``, then each sincere voter ``v``
+        clips her utilities into the interval
+        [:attr:`~svvamp.RangeVotingAverage.min_grade`,
+        :attr:`~svvamp.RangeVotingAverage.min_grade`].
+
+        See :attr:`~svvamp.RangeVotingAverage.ballots` for more details.
         """
         return self._rescale_grades
 
@@ -118,29 +126,55 @@ class RangeVotingAverageResult(ElectionResult):
 
     @property
     def ballots(self):
-        """2d array of integers. ballots[v, c] is the grade attributed to 
-        candidate c by voter v. (test)
+        """2d array of integers. ``ballots[v, c]`` is the grade attributed to
+        candidate ``c`` by voter ``v``.
 
-        1.  Attribute grades in interval
+        The following process is used to transform utilities into `sincere'
+        grades.
+
+        1.  Send grades into interval
             [:attr:`~svvamp.RangeVotingAverage.min_grade`,
             :attr:`~svvamp.RangeVotingAverage.max_grade`].
 
-            *   If :attr:`~svvamp.RangeVotingAverage.rescale_grades` is
-                ``True``, then ``v`` applies an affine transformation to
-                her utilities
+            *   If :attr:`~svvamp.RangeVotingAverage.rescale_grades` =
+                ``True``, then each voter ``v`` applies an affine
+                transformation to her utilities
                 :attr:`~svvamp.Population.preferences_utilities`\ ``[v, :]``
                 such that her worst-like candidate receives
-                :attr:`~svvamp.RangeVotingAverage.min_grade` and her most-liked
-                candidate receives :attr:`~svvamp.RangeVotingAverage.max_grade`.
-                [Exception: if she is indifferent between all candidates, then
-                she attributes (:attr:`~svvamp.RangeVotingAverage.min_grade` +
+                :attr:`~svvamp.RangeVotingAverage.min_grade` and her
+                most-liked candidate receives
+                :attr:`~svvamp.RangeVotingAverage.max_grade`.
+
+                Exception: if she is indifferent between all candidates,
+                then she attributes
+                (:attr:`~svvamp.RangeVotingAverage.min_grade` +
                 :attr:`~svvamp.RangeVotingAverage.max_grade`) / 2 to all of
-                them.]
+                them.
 
-            *   If :attr:`~svvamp.RangeVotingAverage.rescale_grades` is
-                ``False``, top them in the interval.
+            *   If :attr:`~svvamp.RangeVotingAverage.rescale_grades` =
+                ``False``, then each voter ``v`` clips her utilities into the
+                interval [:attr:`~svvamp.RangeVotingAverage.min_grade`,
+                :attr:`~svvamp.RangeVotingAverage.max_grade`].
+                Each utility greater than
+                :attr:`~svvamp.RangeVotingAverage.max_grade` (resp. lower than
+                :attr:`~svvamp.RangeVotingAverage.min_grade`) becomes
+                :attr:`~svvamp.RangeVotingAverage.max_grade` (resp.
+                :attr:`~svvamp.RangeVotingAverage.min_grade`).
 
-        2. Round with ``step_grades``.
+        2.  If :attr:`~svvamp.RangeVotingAverage.step_grades` > 0, round each
+            grade to the closest multiple of
+            :attr:`~svvamp.RangeVotingAverage.step_grades`.
+
+            Exception: if the closest multiple of
+            :attr:`~svvamp.RangeVotingAverage.step_grades` is greater than
+            :attr:`~svvamp.RangeVotingAverage.max_grade` (resp. lower than
+            :attr:`~svvamp.RangeVotingAverage.min_grade`), then
+            :attr:`~svvamp.RangeVotingAverage.max_grade` (resp.
+            :attr:`~svvamp.RangeVotingAverage.min_grade`) is used instead.
+            This exception can only occur if
+            :attr:`~svvamp.RangeVotingAverage.max_grade` (resp.
+            :attr:`~svvamp.RangeVotingAverage.min_grade`) is not a
+            multiple of :attr:`~svvamp.RangeVotingAverage.step_grades`.
         """
         if self._ballots is None:
             self._mylog("Compute ballots", 1)
@@ -172,23 +206,28 @@ class RangeVotingAverageResult(ElectionResult):
                         self.pop.preferences_utilities))
             # Round (or not)
             if self.step_grade != 0:
-                min_grade_rounded = (np.ceil(self.min_grade / 
-                                             self.step_grade) * 
-                                     self.step_grade)
-                max_grade_rounded = (np.floor(self.max_grade / 
-                                              self.step_grade) * 
-                                     self.step_grade)
-                self._ballots = np.maximum(
-                    min_grade_rounded,
-                    np.minimum(
-                        max_grade_rounded,
-                        np.round(self._ballots/self.step_grade) *
-                        self.step_grade))
+                # min_grade_rounded = (np.ceil(self.min_grade /
+                #                              self.step_grade) *
+                #                      self.step_grade)
+                # max_grade_rounded = (np.floor(self.max_grade /
+                #                               self.step_grade) *
+                #                      self.step_grade)
+                # self._ballots = np.maximum(
+                #     min_grade_rounded,
+                #     np.minimum(
+                #         max_grade_rounded,
+                #         np.round(self._ballots/self.step_grade) *
+                #         self.step_grade))
+                self._ballots = np.clip(
+                    np.round(self._ballots/self.step_grade) * self.step_grade,
+                    self.min_grade, self.max_grade
+                )
         return self._ballots
 
     @property
     def scores(self):
-        """1d array of integers. scores[c] is the average grade of candidate c.
+        """1d array of integers. ``scores[c]`` is the average grade of
+        candidate ``c``.
         """
         # Note for developers: internally, it is Range Voting with sum. This
         # limits problems of float approximation, especially for IM method.
