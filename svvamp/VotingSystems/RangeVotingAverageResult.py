@@ -126,11 +126,10 @@ class RangeVotingAverageResult(ElectionResult):
 
     @property
     def ballots(self):
-        """2d array of integers. ``ballots[v, c]`` is the grade attributed to
-        candidate ``c`` by voter ``v``.
+        """2d array of integers. ``ballots[v, c]`` is the grade attributed by
+        voter ``v`` to candidate ``c`` (when voting sincerely).
 
-        The following process is used to transform utilities into `sincere'
-        grades.
+        The following process is used to transform utilities into grades.
 
         1.  Send grades into interval
             [:attr:`~svvamp.RangeVotingAverage.min_grade`,
@@ -140,7 +139,7 @@ class RangeVotingAverageResult(ElectionResult):
                 ``True``, then each voter ``v`` applies an affine
                 transformation to her utilities
                 :attr:`~svvamp.Population.preferences_utilities`\ ``[v, :]``
-                such that her worst-like candidate receives
+                such that her least-liked candidate receives
                 :attr:`~svvamp.RangeVotingAverage.min_grade` and her
                 most-liked candidate receives
                 :attr:`~svvamp.RangeVotingAverage.max_grade`.
@@ -162,19 +161,7 @@ class RangeVotingAverageResult(ElectionResult):
                 :attr:`~svvamp.RangeVotingAverage.min_grade`).
 
         2.  If :attr:`~svvamp.RangeVotingAverage.step_grades` > 0, round each
-            grade to the closest multiple of
-            :attr:`~svvamp.RangeVotingAverage.step_grades`.
-
-            Exception: if the closest multiple of
-            :attr:`~svvamp.RangeVotingAverage.step_grades` is greater than
-            :attr:`~svvamp.RangeVotingAverage.max_grade` (resp. lower than
-            :attr:`~svvamp.RangeVotingAverage.min_grade`), then
-            :attr:`~svvamp.RangeVotingAverage.max_grade` (resp.
-            :attr:`~svvamp.RangeVotingAverage.min_grade`) is used instead.
-            This exception can only occur if
-            :attr:`~svvamp.RangeVotingAverage.max_grade` (resp.
-            :attr:`~svvamp.RangeVotingAverage.min_grade`) is not a
-            multiple of :attr:`~svvamp.RangeVotingAverage.step_grades`.
+            grade to the closest authorized grade.
         """
         if self._ballots is None:
             self._mylog("Compute ballots", 1)
@@ -199,29 +186,30 @@ class RangeVotingAverageResult(ElectionResult):
                             (max_util - min_util)
                         )
             else:
-                self._ballots = np.maximum(
-                    self.min_grade,
-                    np.minimum(
-                        self.max_grade,
-                        self.pop.preferences_utilities))
-            # Round (or not)
-            if self.step_grade != 0:
-                # min_grade_rounded = (np.ceil(self.min_grade /
-                #                              self.step_grade) *
-                #                      self.step_grade)
-                # max_grade_rounded = (np.floor(self.max_grade /
-                #                               self.step_grade) *
-                #                      self.step_grade)
-                # self._ballots = np.maximum(
-                #     min_grade_rounded,
-                #     np.minimum(
-                #         max_grade_rounded,
-                #         np.round(self._ballots/self.step_grade) *
-                #         self.step_grade))
                 self._ballots = np.clip(
-                    np.round(self._ballots/self.step_grade) * self.step_grade,
+                    self.pop.preferences_utilities,
                     self.min_grade, self.max_grade
                 )
+            # Round (or not)
+            if self.step_grade != 0:
+                i_lowest_rung = np.int(np.ceil(
+                    self.min_grade / self.step_grade
+                ))
+                i_highest_rung = np.int(np.floor(
+                    self.max_grade / self.step_grade
+                ))
+                allowed_grades = np.concatenate((
+                    [self.min_grade],
+                    np.array(range(
+                        i_lowest_rung, i_highest_rung + 1
+                    )) * self.step_grade,
+                    [self.max_grade]
+                ))
+                frontiers = (allowed_grades[0:-1] + allowed_grades[1:]) / 2
+                for v in range(self.pop.V):
+                    self._ballots[v, :] = allowed_grades[
+                        np.digitize(self._ballots[v, :], frontiers)
+                    ]
         return self._ballots
 
     @property

@@ -47,13 +47,13 @@ class RangeVotingAverage(RangeVotingAverageResult, Election):
 
     >>> import svvamp
     >>> pop = svvamp.PopulationSpheroid(V=100, C=5)
-    >>> election = svvamp.RangeVotingAverage(min_grade=0, max_grade=1, step_grade=0, rescale_grades=True)
+    >>> election = svvamp.RangeVotingAverage(pop, min_grade=0, max_grade=1, step_grade=0, rescale_grades=True)
 
     Each voter attributes a grade to each candidate. By default, authorized
     grades are all numbers in the interval
     [:attr:`~svvamp.RangeVotingAverage.min_grade`,
-    :attr:`~svvamp.RangeVotingAverage.max_grade`]. To modify this,
-    see :attr:`~svvamp.RangeVotingAverage.step_grade`.
+    :attr:`~svvamp.RangeVotingAverage.max_grade`]. To use a discrete set of
+    notes, modify attribute :attr:`~svvamp.RangeVotingAverage.step_grade`.
 
     The candidate with highest average grade wins. In case of a tie, the tied
     candidate with lowest index is declared the winner.
