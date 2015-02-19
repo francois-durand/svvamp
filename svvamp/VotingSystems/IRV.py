@@ -39,9 +39,9 @@ class IRV(IRVResult, Election):
 
     :Example:
 
-    >>> import svvamp
-    >>> pop = svvamp.PopulationSpheroid(V=100, C=5)
-    >>> election = svvamp.IRV(pop)
+        >>> import svvamp
+        >>> pop = svvamp.PopulationSpheroid(V=100, C=5)
+        >>> election = svvamp.IRV(pop)
 
     The candidate who is ranked first by least voters is eliminated. Then
     we iterate. Ties are broken in favor of lower-index candidates: in case

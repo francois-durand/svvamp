@@ -50,7 +50,7 @@ class ElectionResult(MyLog.MyLog):
         """Create a simple election (without manipulation).
 
         This is an 'abstract' class. As an end-user, you should always use its
-        subclasses Approval, Plurality, etc.
+        subclasses :attr:`~svvamp.Approval`, :attr:`~svvamp.Plurality`, etc.
 
         :param population: A :class:`~svvamp.Population` object.
         :param kwargs: additional keyword parameters.

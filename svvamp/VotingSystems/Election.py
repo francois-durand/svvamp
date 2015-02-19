@@ -31,72 +31,28 @@ from svvamp.Preferences.Population import Population
 
 
 class Election(ElectionResult):
-    """Election with possibilities of manipulation.
 
-    The subclass implementing voting system Foobar is called Foobar. It is a
-    subclass of:
-    * Election,
-    * FoobarResult, which is a subclass of ElectionResult.
-
-    General remarks:
-    * This class is suitable for voting systems that are deterministic and
-    anonymous (treating all voters equally). Otherwise, most of its methods
-    will not be correct.
-    * As a consequence, these voting systems are not neutral (because they
-    need to break ties in totally symmetric situations).
-
-    About tie-breaking: there are essentially 3 types of tie-breaking in
-    this simulator.
-    * When a voter v is forced to provide a strict order in a specific voting
-    system, she uses preferences_ranking[v, :]. As explained in the
-    documentation of Population, if she has the same utility for candidates c
-    and d, she decides once and for all if she will provide c before d or d
-    before c in such circumstances.
-    * To know if a voter wants to manipulate for c against w, we use her
-    utilities (or equivalently, preferences_borda_novtb). If she attributes the
-    same utility to w and c, she is not interested in this manipulation.
-    * The voting system itself may need to break ties, for example if
-    candidates c and d have the same score in a score-based system. This kind
-    of tie is broken by lowest index: c is favored if c < d. [Note that this
-    behavior is not mandatory, but at the time of writing, it is the case
-    for all voting systems.] This tie-breaking rule is used for example in
-    'A note on manipulability of large voting schemes' (Peleg, 1979).
-
-    Some ordinal voting system may be adapted to accept weak orders of
-    preferences as ballots. This is future work.
-
-    About manipulation options (IM_option, CM_option, etc.): cf.
-    options_parameters to know what options are accepted for a specific
-    voting system.
-    'exact': exact algorithm. Always answers 'True' or 'False'. Other
-        algorithms may also answer np.nan, which means 'maybe'. If this
-        algorithm is polynomial, then it is the only accepted option.
-    'slow': non-polynomial algorithm, but not exact. For voting systems
-        where this option is accepted, it is however quite faster than
-        'exact' and quite more precise than 'fast'.
-    'fast': polynomial algorithm, no exact.
-    'lazy': perform only some preliminary checks. May answer 'True' of
-        'False' anyway, but will answer 'np.nan' quite often.
-    The default option should always be the most precise polynomial
-    algorithm (except for IIA_subset_maximum_size, cf. its documentation).
-
-    Note for developers:
-    In the code of this class, some special values are used.
-    * -np.inf (or None) means "I have not started to compute this value".
-    * np.nan means "I tried to compute this value, and I decided that I don't
-    know".
-    As for np.inf, it really means + Infinity.
-
-    Another note for developers:
-    1) Methods for IM have an architecture of their own.
-    2) Methods for TM and UM have essentially the same architecture and work
-    on variables _candidates_.. and _is_..
-    3) Methods for ICM and CM have essentially the same structure and focus
-    on _sufficient_coalition_size_.. and _necessary_coalition_size_CM..,
-    then on _candidates_.. and _is_..
-    However, there are subtle differences of architecture between 1, 2 and 3
-    (cf. their docstrings).
-    """
+    # Notes for developers
+    #
+    # The subclass implementing voting system Foobar is called Foobar. It is a
+    # subclass of:
+    # * Election,
+    # * FoobarResult, which is a subclass of ElectionResult.
+    #
+    # In the code of this class, some special values are used.
+    # * -np.inf (or None) means "I have not started to compute this value".
+    # * np.nan means "I tried to compute this value, and I decided that I don't
+    # know".
+    # As for np.inf, it really means + Infinity.
+    #
+    # 1) Methods for IM have an architecture of their own.
+    # 2) Methods for TM and UM have essentially the same architecture and work
+    # on variables _candidates_.. and _is_..
+    # 3) Methods for ICM and CM have essentially the same structure and focus
+    # on _sufficient_coalition_size_.. and _necessary_coalition_size_CM..,
+    # then on _candidates_.. and _is_..
+    # However, there are subtle differences of architecture between 1, 2 and 3
+    # (cf. their docstrings).
 
     # This name should be redefined for each voting system. It is used in the
     # csv file when registering simulation results.
@@ -119,10 +75,139 @@ class Election(ElectionResult):
 
     def __init__(self, population, **kwargs):
         """Create an election with possibilities of manipulation.
-        
-        Arguments:
-        population -- a Population object representing preferences.
-        Other arguments -- option1=value1, option2=value2, etc.
+
+        Inherits functions from superclass :class:`~svvamp.ElectionResult`.
+
+        This is an 'abstract' class. As an end-user, you should always use its
+        subclasses :attr:`~svvamp.Approval`, :attr:`~svvamp.Plurality`, etc.
+
+        :param population: A :class:`~svvamp.Population` object.
+        :param kwargs: additional keyword parameters.
+
+        :Example:
+
+        >>> import svvamp
+        >>> pop = svvamp.PopulationSpheroid(V=100, C=5)
+        >>> election = svvamp.IRV(pop, CM_option='exact')
+
+        This class and its subclasses are suitable for voting systems that
+        are deterministic and anonymous (treating all voters equally).
+        Hence, they are not neutral (because they need to break ties in
+        totally symmetric situations). As of now, SVVAMP does not support
+        other kinds of voting systems.
+
+        **Tie-breaking issues**
+
+        There are essentially 2 types of tie-breaking in SVVAMP.
+
+            *   When a sincere voter ``v`` is forced to provide a strict order
+                in a specific voting system, she uses
+                :attr:`svvamp.Population.preferences_ranking`\ ``[v, :]``.
+                As explained in :attr:`svvamp.Population`, if she has the same
+                utility for candidates ``c`` and ``d``, then she uses Voter
+                Tie-Breaking (VTB): she decides once and for all if she will
+                provide ``c`` before ``d`` or ``d`` before ``c`` in such
+                voting systems.
+            *   The voting system itself may need to break ties, for example if
+                candidates ``c`` and ``d`` have the same score in a score-based
+                system. The standard tie-breaking in SVVAMP, referred to as
+                Candidate Tie-Breaking (CTB), consists of breaking ties by
+                lowest index: ``c`` is favored over ``d`` if ``c`` < ``d``.
+                This tie-breaking rule is used for example in 'A note on
+                manipulability of large voting schemes' (Peleg, 1979). Future
+                voting systems implemented as a subclass of ``Election`` may
+                use another tie-breaking rule.
+
+        In contrast, to know if a voter ``v`` wants to manipulate for a
+        candidate ``c`` against ``w``, we do not break ``v``'s possible tie
+        in her preferences. We use her utilities
+        :attr:`svvamp.Population.preferences_utilities` (or equivalently,
+        :attr:`svvamp.Population.preferences_borda_novtb`). If she
+        attributes the same utility to ``w`` and ``c``, she is not interested
+        in this manipulation.
+
+        Some ordinal voting systems in SVVAMP may be adapted to accept weak
+        orders of preferences as ballots. This is future work.
+
+        **Options for manipulation**
+
+        Attributes allow to choose the algorithm used to compute different
+        kinds of manipulation:
+        :attr:`~svvamp.Election.CM_option`,
+        :attr:`~svvamp.Election.ICM_option`,
+        :attr:`~svvamp.Election.IM_option`,
+        :attr:`~svvamp.Election.TM_option` and
+        :attr:`~svvamp.Election.UM_option`.
+
+        To know what options are accepted for a given voting system, use
+        :attr:`~svvamp.Election.options_parameters`.
+
+        :Example:
+
+        ::
+
+            import svvamp
+            pop = svvamp.PopulationSpheroid(V=100, C=5)
+            election = svvamp.IRV(pop, CM_option='exact')
+            print(election.CM())
+            print(election.options_parameters)
+            election.CM_option = 'fast'
+            print(election.CM())
+
+        Here is a non-exhaustive list of typical values for these options.
+
+            *   ``'exact'``: Exact algorithm. Can always decide
+                manipulation: it answers ``True`` or ``False``. Other
+                algorithms may also answer ``numpy.nan``, which is the
+                SVVAMP convention meaning that the algorithm was not able to
+                decide. For a given voting system, if the exact algorithm
+                runs in polynomial time, then it is the only accepted option.
+            *   ``'slow'``: Non-polynomial algorithm, but not exact. For
+                voting systems accepting this option, it is however
+                faster than 'exact' (in a little-o sense) and quite more
+                precise than 'fast'.
+            *   ``'fast'``: Polynomial algorithm, no exact.
+            *   ``'lazy'``: Perform only some preliminary checks. Run in
+                polynomial time (unless deciding the winner of the election
+                is not polynomial, like for :class:`~svvamp.Kemeny`). Like
+                other non-exact algorithms, it can decide manipulation to
+                ``True``, ``False`` or return ``numpy.nan`` (undecided).
+
+        For a given voting system, the default option is the most precise
+        algorithm running in polynomial time.
+
+        **Option for Independence of Irrelevant Alternatives (IIA)**
+
+        The default algorithm for :attr:`~svvamp.Election.not_IIA` is a
+        brute force algorithm. It can be non-polynomial or non-exact,
+        depending on the attribute
+        :attr:`svvamp.Election.IIA_subset_maximum_size`.
+
+        **Implication diagram between criteria**
+
+        Cf. corresponding attributes below for the definition of these
+        criteria. See working paper, Durand et al. (2014):
+        'Condorcet Criterion and Reduction in Coalitional Manipulability'.
+
+        ::
+
+            Condorcet_c_rel_ctb               ==>               Condorcet_c_rel
+            ||           Condorcet_c_vtb_ctb ==>      Condorcet_c_vtb       ||
+            ||           ||        ||                   ||         ||       ||
+            V            V         ||                   ||         V        V
+            Condorcet_c_ctb                   ==>                   Condorcet_c
+            ||                     ||                   ||                  ||
+            ||                     V                    V                   ||
+            ||   majority_favorite_c_vtb_ctb ==> majority_favorite_c_vtb    ||
+            ||            ||                                  ||            ||
+            V             V                                   V             V
+            majority_favorite_c_ctb           ==>           majority_favorite_c
+            ||                                                              ||
+            V                                                               V
+            IgnMC_c_ctb                       ==>                       IgnMC_c
+            ||                                                              ||
+            V                                                               V
+            InfMC_c_ctb                       ==>                       InfMC_c
         """
         # Whether we need to do a preliminary check on UM, TM, ICM before
         # computing CM.
@@ -156,28 +241,7 @@ class Election(ElectionResult):
         # ICM will not do better than other basic prechecks.
 
         # Manipulation criteria for the voting system
-        # Implication diagram between criteria
-        #
-        # Condorcet_c_rel_ctb               ==>               Condorcet_c_rel
-        #  ||           Condorcet_c_vtb_ctb ==>      Condorcet_c_vtb       ||
-        #  ||           ||        ||                   ||         ||       ||
-        #  V            V         ||                   ||         V        V
-        # Condorcet_c_ctb                   ==>                   Condorcet_c
-        #  ||                     ||                   ||                  ||
-        #  ||                     V                    V                   ||
-        #  ||   majority_favorite_c_vtb_ctb ==> majority_favorite_c_vtb    ||
-        #  ||            ||                                  ||            ||
-        #  V             V                                   V             V
-        # majority_favorite_c_ctb           ==>           majority_favorite_c
-        #  ||                                                              ||
-        #  V                                                               V
-        # IgnMC_c_ctb                       ==>                       IgnMC_c
-        #  ||                                                              ||
-        #  V                                                               V
-        # InfMC_c_ctb                       ==>                       InfMC_c
-        #
-        # For all these criteria, see Durand et al. (2014).
-        # In the subclass corresponding to a specific voting system, 
+        # In the subclass corresponding to a specific voting system,
         # it is sufficient to set to True only the strongest criteria that 
         # are met by the voting system. 
         self._meets_Condorcet_c_rel = None
@@ -286,9 +350,11 @@ class Election(ElectionResult):
            
     @property
     def IIA_subset_maximum_size(self):
-        """Integer or +np.inf. Maximum size of subset of candidates that is
-        used to compute IIA, except for voting systems where there is a
-        polynomial exact algorithm implemented in the simulator.
+        """Integer or ``numpy.inf``. Maximum size of any subset of candidates
+        that is used to compute :meth:`~svvamp.Election.not_IIA` (and
+        related methods). For a given voting system, has no
+        effect if there is an exact algorithm running in polynomial time
+        implemented in SVVAMP.
         """
         return self._IIA_subset_maximum_size
            
@@ -309,6 +375,12 @@ class Election(ElectionResult):
        
     @property
     def IM_option(self):
+        """String. Option used to compute :meth:`~svvamp.Election.IM` and
+        related methods.
+
+        To know what options are accepted for a given voting system, use
+        :attr:`~svvamp.ElectionResult.options_parameters`.
+        """
         return self._IM_option
            
     @IM_option.setter
@@ -327,6 +399,12 @@ class Election(ElectionResult):
        
     @property
     def TM_option(self):
+        """String. Option used to compute :meth:`~svvamp.Election.TM` and
+        related methods.
+
+        To know what options are accepted for a given voting system, use
+        :attr:`~svvamp.ElectionResult.options_parameters`.
+        """
         return self._TM_option
            
     @TM_option.setter
@@ -348,6 +426,12 @@ class Election(ElectionResult):
        
     @property
     def UM_option(self):
+        """String. Option used to compute :meth:`~svvamp.Election.UM` and
+        related methods.
+
+        To know what options are accepted for a given voting system, use
+        :attr:`~svvamp.ElectionResult.options_parameters`.
+        """
         return self._UM_option
            
     @UM_option.setter
@@ -369,6 +453,12 @@ class Election(ElectionResult):
        
     @property
     def ICM_option(self):
+        """String. Option used to compute :meth:`~svvamp.Election.ICM` and
+        related methods.
+
+        To know what options are accepted for a given voting system, use
+        :attr:`~svvamp.ElectionResult.options_parameters`.
+        """
         return self._ICM_option
            
     @ICM_option.setter
@@ -390,6 +480,12 @@ class Election(ElectionResult):
        
     @property
     def CM_option(self):
+        """String. Option used to compute :meth:`~svvamp.Election.CM` and
+        related methods.
+
+        To know what options are accepted for a given voting system, use
+        :attr:`~svvamp.ElectionResult.options_parameters`.
+        """
         return self._CM_option
            
     @CM_option.setter
@@ -410,44 +506,46 @@ class Election(ElectionResult):
 
     @property
     def with_two_candidates_reduces_to_plurality(self):
-        """Boolean. True iff the simulator knows that, when using this voting
-        system with only two candidates, it amounts to Plurality (with voter
-        and candidate tie-breaking).
+        """Boolean. ``'True'`` iff, when using this voting system with only
+        two candidates, it amounts to Plurality (with voter and candidate
+        tie-breaking).
         """
         return self._with_two_candidates_reduces_to_plurality
 
     @property
     def is_based_on_strict_rankings(self):
-        """Boolean. True iff the simulator knows that this voting system is
-        based only on strict rankings (no cardinal information; indifference
-        not allowed).
+        """Boolean. ``'True'`` iff this voting system is based only on
+        strict rankings (no cardinal information, indifference not allowed).
         """
         return self._is_based_on_strict_rankings
 
     @property
     def is_based_on_utilities_minus1_1(self):
-        """Boolean. True iff the simulator knows that:
+        """Boolean. ``'True'`` iff:
         * This voting system is based only on utilities (not strict ranking,
         i.e. does not depend on the voter's tie-breaking),
-        * And for a c-manipulator (IM or CM), it is optimal to pretend that c
-        has utility 1 and other candidates have utility -1.
+        * And for a ``c``-manipulator (IM or CM), it is optimal to pretend
+        that c has utility 1 and other candidates have utility -1.
         """
         return self._is_based_on_utilities_minus1_1
 
     @property
     def meets_IIA(self):
-        """Boolean. True iff the simulator knows that the voting system meets
-        Independence of Irrelevant Alternatives.
+        """Boolean. ``'True'`` iff this voting system meets Independence of
+        Irrelevant Alternatives.
         """
         return self._meets_IIA
            
     @property
     def meets_Condorcet_c_rel_ctb(self):
-        """Boolean. True iff the simulator knows that the voting system meets
+        """Boolean. ``'True'`` iff the voting system meets
         the 'relative Condorcet criterion with ctb'. I.e.: if a
         candidate is 'relative Condorcet winner with ctb', she wins.
+        Cf. :attr:`~svvamp.Population.condorcet_winner_rel_ctb`.
 
-        Implies: relative Condorcet criterion, Condorcet criterion with ctb.
+        Implies:
+        :attr:`~svvamp.Election.meets_Condorcet_c_rel`,
+        :attr:`~svvamp.Election.meets_Condorcet_c_ctb`,
         """
         if self._meets_Condorcet_c_rel_ctb is None:
             self._meets_Condorcet_c_rel_ctb = False
@@ -455,12 +553,15 @@ class Election(ElectionResult):
 
     @property
     def meets_Condorcet_c_vtb_ctb(self):
-        """Boolean. True iff the simulator knows that the voting system meets
+        """Boolean. ``'True'`` iff the voting system meets
         the 'Condorcet criterion with vtb and ctb'. I.e.: if a candidate is
         'Condorcet winner with vtb and ctb', she wins.
+        Cf. :attr:`~svvamp.Population.condorcet_winner_vtb_ctb`.
 
-        Implies: Condorcet criterion with vtb, Condorcet criterion with ctb,
-        majority favorite criterion with vtb and ctb.
+        Implies:
+        :attr:`~svvamp.Election.meets_Condorcet_c_vtb`,
+        :attr:`~svvamp.Election.meets_Condorcet_c_ctb`,
+        :attr:`~svvamp.Election.meets_majority_favorite_c_vtb_ctb`,
         """
         if self._meets_Condorcet_c_vtb_ctb is None:
             self._meets_Condorcet_c_vtb_ctb = False
@@ -468,13 +569,18 @@ class Election(ElectionResult):
 
     @property
     def meets_Condorcet_c_ctb(self):
-        """Boolean. True iff the simulator knows that the voting system meets
+        """Boolean. ``'True'`` iff the voting system meets
         the 'Condorcet criterion with ctb'. I.e.: if a candidate is
         'Condorcet winner with ctb', she wins.
+        Cf. :attr:`~svvamp.Population.condorcet_winner_ctb`.
 
-        Is implied by: Condorcet criterion with vtb and ctb, relative
-        Condorcet criterion with ctb.
-        Implies: Condorcet criterion, majority favorite criterion with ctb.
+        Is implied by:
+        :attr:`~svvamp.Election.meets_Condorcet_c_vtb_ctb`,
+        :attr:`~svvamp.Election.meets_Condorcet_c_rel_ctb`,
+
+        Implies:
+        :attr:`~svvamp.Election.meets_Condorcet_c`,
+        :attr:`~svvamp.Election.meets_majority_favorite_c_ctb`,
         """
         if self._meets_Condorcet_c_ctb is None:
             self._meets_Condorcet_c_ctb = (
@@ -484,14 +590,17 @@ class Election(ElectionResult):
            
     @property
     def meets_majority_favorite_c_vtb_ctb(self):
-        """Boolean. True iff the simulator knows that the voting systems meets
+        """Boolean. ``'True'`` iff the voting system meets
         the 'majority favorite criterion with vtb and ctb'. I.e.:
         * It meets the majority favorite criterion with vtb,
         * And if V/2 voters rank candidate 0 first (with vtb), she wins.
-        
-        Is implied by: Condorcet criterion with vtb and ctb.
-        Implies: majority criterion with ctb, majority favorite criterion
-        with vtb.
+
+        Is implied by:
+        :attr:`~svvamp.Election.meets_Condorcet_c_vtb_ctb`,
+
+        Implies:
+        :attr:`~svvamp.Election.meets_majority_favorite_c_ctb`,
+        :attr:`~svvamp.Election.meets_majority_favorite_c_vtb`,
         """
         if self._meets_majority_favorite_c_vtb_ctb is None:
             self._meets_majority_favorite_c_vtb_ctb = \
@@ -500,15 +609,19 @@ class Election(ElectionResult):
 
     @property
     def meets_majority_favorite_c_ctb(self):
-        """Boolean. True iff the simulator knows that the voting systems meets
+        """Boolean. ``'True'`` iff the voting system meets
         the 'majority favorite criterion with ctb'. I.e.:
         * It meets the majority favorite criterion,
         * And if V/2 voters strictly prefer candidate 0 to all other
         candidates, she wins.
 
-        Is implied by: Condorcet criterion with ctb, majority favorite
-        criterion with vtb and ctb.
-        Implies: IgnMC with ctb, majority favorite criterion.
+        Is implied by:
+        :attr:`~svvamp.Election.meets_Condorcet_c_ctb`,
+        :attr:`~svvamp.Election.meets_majority_favorite_c_vtb_ctb`,
+
+        Implies:
+        :attr:`~svvamp.Election.meets_IgnMC_c_ctb`,
+        :attr:`~svvamp.Election.meets_majority_favorite_c`,
         """
         if self._meets_majority_favorite_c_ctb is None:
             self._meets_majority_favorite_c_ctb = (
@@ -518,13 +631,17 @@ class Election(ElectionResult):
 
     @property
     def meets_IgnMC_c_ctb(self):
-        """Boolean. True iff the simulator knows that the voting systems meets
+        """Boolean. ``'True'`` iff the voting system meets
         the 'ignorant majority coalition criterion with ctb'. I.e.:
         * It meets IgnMC,
         * And any ignorant coalition of size V/2 can make candidate 0 win.
-        
-        Is implied by: majority favorite criterion with ctb.
-        Implies: InfMC with ctb, IgnMC.
+
+        Is implied by:
+        :attr:`~svvamp.Election.meets_majority_favorite_c_ctb`,
+
+        Implies:
+        :attr:`~svvamp.Election.meets_InfMC_c_ctb`,
+        :attr:`~svvamp.Election.meets_IgnMC_c`,
         """
         if self._meets_IgnMC_c_ctb is None:
             self._meets_IgnMC_c_ctb = self.meets_majority_favorite_c_ctb
@@ -532,13 +649,16 @@ class Election(ElectionResult):
 
     @property
     def meets_InfMC_c_ctb(self):
-        """Boolean. True iff the simulator knows that the voting systems meets
+        """Boolean. ``'True'`` iff the voting system meets
         the 'informed majority coalition criterion with ctb'. I.e.:
         * It meets InfMC,
         * And any informed coalition of size V/2 can make candidate 0 win.
         
-        Is implied by: IgnMC with ctb.
-        Implies: InfMC.
+        Is implied by:
+        :attr:`~svvamp.Election.meets_IgnMC_c_ctb`,
+
+        Implies:
+        :attr:`~svvamp.Election.meets_InfMC_c`,
         """
         if self._meets_InfMC_c_ctb is None:
             self._meets_InfMC_c_ctb = self.meets_IgnMC_c_ctb
@@ -546,12 +666,16 @@ class Election(ElectionResult):
         
     @property
     def meets_Condorcet_c_rel(self):
-        """Boolean. True iff the simulator knows that the voting systems meets
+        """Boolean. ``'True'`` iff the voting system meets
         the relative Condorcet criterion. I.e. if a candidate is a
         relative Condorcet winner, then she wins.
+        Cf. :attr:`~svvamp.Population.condorcet_winner_rel`.
 
-        Is implied by: relative Condorcet criterion with ctb.
-        Implies: Condorcet criterion.
+        Is implied by:
+        :attr:`~svvamp.Election.meets_Condorcet_c_rel_ctb`,
+
+        Implies:
+        :attr:`~svvamp.Election.meets_Condorcet_c`,
         """
         if self._meets_Condorcet_c_rel is None:
             self._meets_Condorcet_c_rel = self.meets_Condorcet_c_rel_ctb
@@ -559,12 +683,17 @@ class Election(ElectionResult):
 
     @property
     def meets_Condorcet_c_vtb(self):
-        """Boolean. True iff the simulator knows that the voting systems meets
+        """Boolean. ``'True'`` iff the voting system meets
         the Condorcet criterion with vtb. I.e. if a candidate is a Condorcet
         winner with vtb, then she wins.
-        
-        Is implied by: Condorcet criterion with vtb and ctb.
-        Implies: Condorcet criterion, majority criterion with vtb.
+        Cf. :attr:`~svvamp.Population.condorcet_winner_vtb`.
+
+        Is implied by:
+        :attr:`~svvamp.Election.meets_Condorcet_c_vtb_ctb`,
+
+        Implies:
+        :attr:`~svvamp.Election.meets_Condorcet_c`,
+        :attr:`~svvamp.Election.meets_majority_favorite_c_vtb`,
         """
         if self._meets_Condorcet_c_vtb is None:
             self._meets_Condorcet_c_vtb = self.meets_Condorcet_c_vtb_ctb
@@ -572,13 +701,18 @@ class Election(ElectionResult):
 
     @property
     def meets_Condorcet_c(self):
-        """Boolean. True iff the simulator knows that the voting systems meets
+        """Boolean. ``'True'`` iff the voting system meets
         the Condorcet criterion. I.e. if a candidate is a Condorcet winner,
         then she wins.
+        Cf. :attr:`~svvamp.Population.condorcet_winner`.
 
-        Is implied by: Condorcet criterion with vtb, relative
-        Condorcet criterion, Condorcet criterion with ctb.
-        Implies: majority favorite criterion.
+        Is implied by:
+        :attr:`~svvamp.Election.meets_Condorcet_c_vtb`,
+        :attr:`~svvamp.Election.meets_Condorcet_c_rel`,
+        :attr:`~svvamp.Election.meets_Condorcet_c_ctb`,
+
+        Implies:
+        :attr:`~svvamp.Election.meets_majority_favorite_c`,
         """
         if self._meets_Condorcet_c is None:
             self._meets_Condorcet_c = (
@@ -589,13 +723,16 @@ class Election(ElectionResult):
 
     @property
     def meets_majority_favorite_c_vtb(self):
-        """Boolean. True iff the simulator knows that the voting systems meets
+        """Boolean. ``'True'`` iff the voting system meets
         the majority favorite criterion with vtb. I.e. if > V/2 voters rank
         a candidate first (with vtb), she wins.
-        
-        Is implied by: Condorcet criterion with vtb, majority favorite
-        criterion with vtb and ctb.
-        Implies: IgnMC.
+
+        Is implied by:
+        :attr:`~svvamp.Election.meets_Condorcet_c_vtb`,
+        :attr:`~svvamp.Election.meets_majority_favorite_c_vtb_ctb`,
+
+        Implies:
+        :attr:`~svvamp.Election.meets_IgnMC_c`,
         """
         if self._meets_majority_favorite_c_vtb is None:
             self._meets_majority_favorite_c_vtb = (
@@ -605,13 +742,17 @@ class Election(ElectionResult):
 
     @property
     def meets_majority_favorite_c(self):
-        """Boolean. True iff the simulator knows that the voting systems meets
+        """Boolean. ``'True'`` iff the voting system meets
         the majority favorite criterion. I.e. if > V/2 voters strictly
         prefer a candidate to all others, she wins.
 
-        Is implied by: Condorcet criterion, majority favorite criterion with
-        ctb, majority favorite criterion with vtb.
-        Implies: IgnMC.
+        Is implied by:
+        :attr:`~svvamp.Election.meets_Condorcet_c`,
+        :attr:`~svvamp.Election.meets_majority_favorite_c_ctb`,
+        :attr:`~svvamp.Election.meets_majority_favorite_c_vtb`,
+
+        Implies:
+        :attr:`~svvamp.Election.meets_IgnMC_c`,
         """
         if self._meets_majority_favorite_c is None:
             self._meets_majority_favorite_c = (
@@ -622,12 +763,16 @@ class Election(ElectionResult):
 
     @property
     def meets_IgnMC_c(self):
-        """Boolean. True iff the simulator knows that the voting systems meets
+        """Boolean. ``'True'`` iff the voting system meets
         the ignorant majority coalition criterion. I.e. any ignorant coalition 
         of size > V/2 can make any candidate win (cf. Durand et al. 2014).
         
-        Is implied by: majority favorite criterion, IgnMC with ctb.
-        Implies: InfMC.
+        Is implied by:
+        :attr:`~svvamp.Election.meets_majority_favorite_c`,
+        :attr:`~svvamp.Election.meets_IgnMC_c_ctb`,
+
+        Implies:
+        :attr:`~svvamp.Election.meets_InfMC_c`,
         """
         if self._meets_IgnMC_c is None:
             self._meets_IgnMC_c = (
@@ -637,11 +782,13 @@ class Election(ElectionResult):
 
     @property
     def meets_InfMC_c(self):
-        """Boolean. True iff the simulator knows that the voting systems meets
+        """Boolean. ``'True'`` iff the voting system meets
         the informed majority coalition criterion. I.e. any informed coalition 
         of size > V/2 can make any candidate win (cf. Durand et al. 2014).
         
-        Is implied by: IgnMC, InfMC with ctb.
+        Is implied by:
+        :attr:`~svvamp.Election.meets_IgnMC_c`,
+        :attr:`~svvamp.Election.meets_InfMC_c_ctb`,
         """
         if self._meets_InfMC_c is None:
             self._meets_InfMC_c = (

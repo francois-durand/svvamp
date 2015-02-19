@@ -55,7 +55,7 @@ class Schulze(SchulzeResult, Election):
         In the original Schulze method, ties are broken at random. However,
         this feature is not supported by SVVAMP because it leads to
         difficulties for the *definition* of manipulation itself
-        (and all the more for implementation).
+        (and all the more for its implementation).
 
     :meth:`~svvamp.Election.CM`:
 

@@ -43,7 +43,7 @@ class Plurality(PluralityResult, Election):
     votes is declared the winner. In case of a tie, the tied candidate with
     lowest index wins.
 
-    Sincere voters votes for their top-ranked candidate.
+    Sincere voters vote for their top-ranked candidate.
 
     :meth:`~svvamp.Election.not_IIA`: Non-polynomial
     or non-exact algorithms from superclass :class:`~svvamp.Election`.

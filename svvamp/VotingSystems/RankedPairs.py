@@ -50,7 +50,7 @@ class RankedPairs(RankedPairsResult, Election):
     
     At the end, we has a transitive connected directed graph, whose adjacency
     relation is included in the relation of victories (with ties broken), 
-    :attr:`svvamp.Population.matrix_victories_vtb_ctb`. The maximal node of
+    :attr:`~svvamp.Population.matrix_victories_vtb_ctb`. The maximal node of
     this graph (by topological order) is declared the winner.
 
     This method meets the Condorcet criterion.

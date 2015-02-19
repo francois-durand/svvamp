@@ -43,7 +43,7 @@ class Veto(VetoResult, Election):
     vetos is declared the winner. In case of a tie, the tied candidate with
     lowest index wins.
 
-    Sincere voters votes against their least-liked candidate.
+    Sincere voters vote against their least-liked candidate.
 
     :meth:`~svvamp.Election.not_IIA`: Non-polynomial
     or non-exact algorithms from superclass :class:`~svvamp.Election`.
