@@ -30,10 +30,29 @@ from svvamp.Preferences.Population import Population
 class Plurality(PluralityResult, Election):
     """Plurality.
 
-    Each voter votes for her top-ranked candidate. The candidate with most
-    votes is declared the winner.
+    Inherits functions and optional parameters from superclasses
+    :class:`~svvamp.ElectionResult` and :class:`~svvamp.Election`.
 
-    Ties are broken by natural order on the candidates (lower index wins).
+    :Example:
+
+    >>> import svvamp
+    >>> pop = svvamp.PopulationSpheroid(V=100, C=5)
+    >>> election = svvamp.Plurality(pop)
+
+    Each voter votes for one candidate. The candidate with most
+    votes is declared the winner. In case of a tie, the tied candidate with
+    lowest index wins.
+
+    Sincere voters votes for their top-ranked candidate.
+
+    :meth:`~svvamp.Election.not_IIA`: Non-polynomial
+    or non-exact algorithms from superclass :class:`~svvamp.Election`.
+
+    :meth:`~svvamp.Election.CM`,
+    :meth:`~svvamp.Election.ICM`,
+    :meth:`~svvamp.Election.IM`,
+    :meth:`~svvamp.Election.TM`,
+    :meth:`~svvamp.Election.UM`: Exact in polynomial time.
     """
 
     _layout_name = 'Plurality'

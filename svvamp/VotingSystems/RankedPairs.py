@@ -28,10 +28,20 @@ from svvamp.Preferences.Population import Population
 class RankedPairs(RankedPairsResult, Election):
     """Tideman's Ranked Pairs.
     
-    In the matrix of duels, victories (and ties) are sorted by decreasing 
-    amplitude. If two duels have the same score, we take first the one where
-    the winner has the smallest index; if there is still a choice to make,
-    we take first the duel where the loser has the highest index.
+    Inherits functions and optional parameters from superclasses
+    :class:`~svvamp.ElectionResult` and :class:`~svvamp.Election`.
+
+    :Example:
+
+    >>> import svvamp
+    >>> pop = svvamp.PopulationSpheroid(V=100, C=5)
+    >>> election = svvamp.RankedPairs(pop)
+
+    In the matrix of duels :attr:`~svvamp.Population.matrix_duels_vtb`,
+    victories (and ties) are sorted by decreasing amplitude. If two duels
+    have the same score, we take first the one where the winner has the
+    smallest index; if there is still a choice to make, we take first the
+    duel where the loser has the highest index.
     
     Starting with the largest victory, we build a directed graph whose 
     nodes are the candidates and edges are victories. But if a victory
@@ -40,8 +50,41 @@ class RankedPairs(RankedPairsResult, Election):
     
     At the end, we has a transitive connected directed graph, whose adjacency
     relation is included in the relation of victories (with ties broken), 
-    matrix_victories_vtb_ctb. The maximal node of this graph (by topological
-    order) is declared the winner.
+    :attr:`svvamp.Population.matrix_victories_vtb_ctb`. The maximal node of
+    this graph (by topological order) is declared the winner.
+
+    This method meets the Condorcet criterion.
+
+    :meth:`~svvamp.Election.CM`: Deciding CM is NP-complete. Non-polynomial
+    or non-exact algorithms from superclass :class:`~svvamp.Election`.
+
+    :meth:`~svvamp.Election.ICM`: Exact in polynomial time.
+
+    :meth:`~svvamp.Election.IM`: Deciding IM is NP-complete. Non-polynomial
+    or non-exact algorithms from superclass :class:`~svvamp.Election`.
+
+    :meth:`~svvamp.Election.not_IIA`: Non-polynomial
+    or non-exact algorithms from superclass :class:`~svvamp.Election`.
+
+    :meth:`~svvamp.Election.TM`: Exact in polynomial time.
+
+    :meth:`~svvamp.Election.UM`: Non-polynomial or non-exact algorithms from
+    superclass :class:`~svvamp.Election`.
+
+    References:
+
+        'Independence of clones as a criterion for voting rules', Nicolaus
+        Tideman, 1987.
+
+        'Complexity of Unweighted Coalitional Manipulation under Some Common
+        Voting Rules', Lirong Xia et al., 2009.
+
+        'Schulze and Ranked-Pairs Voting are Fixed-Parameter Tractable to
+        Bribe, Manipulate, and Control', Lane A. Hemaspaandra, Rahman Lavaee
+        and Curtis Menton, 2012.
+
+        'A Complexity-of-Strategic-Behavior Comparison between Schulze’s Rule
+        and Ranked Pairs', David Parkes and Lirong Xia, 2012.
     """
     
     _layout_name = 'Ranked Pairs'
