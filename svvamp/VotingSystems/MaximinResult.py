@@ -29,7 +29,7 @@ from svvamp.Preferences.Population import Population
 class MaximinResult(ElectionResult):
     """Results of an election using Maximin method.
 
-    scores[c] is the minimum of the row matrix_duels[c, :] (except the
+    scores[c] is the minimum of the row matrix_duels_vtb[c, :] (except the
     diagonal term), i.e. the result of candidate c for her worst duel. The
     candidate with highest score is declared the winner. In case of a tie,
     the candidate with lowest index wins.
@@ -43,9 +43,9 @@ class MaximinResult(ElectionResult):
         
     @property
     def scores(self):
-        """1d array of integers. scores[c] is the minimum of the row
-        matrix_duels[c, :] (except the diagonal term), i.e. the result of
-        candidate c for her worst duel.
+        """1d array of integers. ``scores[c]`` is the minimum of the row
+        :attr:`~svvamp.Population.matrix_duels_vtb`\ ``[c, :]`` (except the
+        diagonal term), i.e. the result of candidate ``c`` for her worst duel.
         """
         if self._scores is None:
             self._mylog("Compute scores", 1)

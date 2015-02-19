@@ -114,9 +114,11 @@ class NansonResult(ElectionResult):
 
     @property
     def scores(self):
-        """2d array of integers. scores[r, c] is c's Borda score at 
-        elimination round r. When a candidate is eliminated, her score is 
-        +inf.
+        """2d array of integers. ``scores[r, c]`` is the Borda score of
+        candidate ``c`` at elimination round ``r``.
+
+        By convention, if candidate ``c`` does not participate to round ``r``,
+        then ``scores[r, c] = numpy.inf``.
         """
         if self._scores is None:
             self._mylog("Count ballots", 1)
@@ -134,13 +136,14 @@ class NansonResult(ElectionResult):
         
     @property
     def candidates_by_scores_best_to_worst(self):
-        """1d array of integers. Candidates are sorted according to their 
+        """1d array of integers. Candidates are sorted according to their
         order of elimination. When several candidates are eliminated during
         the same round, they are sorted by Borda score at that round and,
         in case of a tie, by their index (highest indexes are eliminated 
         first).
         
-        By definition / convention, candidates_by_scores_best_to_worst[0] = w.
+        By definition / convention,
+        ``candidates_by_scores_best_to_worst[0]`` = :attr:`~svvamp.Nanson.w`.
         """
         if self._candidates_by_scores_best_to_worst is None:
             self._mylog("Count ballots", 1)

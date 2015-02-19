@@ -42,7 +42,8 @@ class Baldwin(BaldwinResult, Election):
     Etc. Ties are broken in favor of lower-index candidates: in case of a tie,
     the candidate with highest index is eliminated.
 
-    This method meets the Condorcet criterion.
+    Since a Condorcet winner has always a Borda score higher than average,
+    Baldwin method meets the Condorcet criterion.
 
     :meth:`~svvamp.Election.CM`: Non-polynomial or non-exact algorithms
     from superclass :class:`~svvamp.Election`.
@@ -61,9 +62,6 @@ class Baldwin(BaldwinResult, Election):
     superclass :class:`~svvamp.Election`.
 
     References:
-
-        'Some Further Results on the Manipulability of Social Choice Rules',
-        Pierre Favardin and Dominique Lepelley, 2006.
 
         'Complexity of and algorithms for the manipulation of Borda,
         Nanson's and Baldwin's voting rules', Jessica Davies,

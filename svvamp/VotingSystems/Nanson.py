@@ -27,17 +27,48 @@ from svvamp.Preferences.Population import Population
 
 class Nanson(NansonResult, Election):
     """Nanson method.
-    
-    At each round, all candidates with a Borda score strictly lower than 
-    average are simultaneously eliminated. When all remaining candidates have 
+
+    Inherits functions and optional parameters from superclasses
+    :class:`~svvamp.ElectionResult` and :class:`~svvamp.Election`.
+
+    :Example:
+
+    >>> import svvamp
+    >>> pop = svvamp.PopulationSpheroid(V=100, C=5)
+    >>> election = svvamp.Nanson(pop)
+
+    At each round, all candidates with a Borda score strictly lower than
+    average are simultaneously eliminated. When all remaining candidates have
     the same Borda score, it means that the matrix of duels (for this subset
-    of candidates) has only ties. Then the candidate with lowest index is 
+    of candidates) has only ties. Then the candidate with lowest index is
     declared the winner.
-    
+
     Since a Condorcet winner has always a Borda score higher than average,
     Nanson method meets the Condorcet criterion.
+
+    :meth:`~svvamp.Election.CM`: Deciding CM is NP-complete. Non-polynomial
+    or non-exact algorithms from superclass :class:`~svvamp.Election`.
+
+    :meth:`~svvamp.Election.ICM`: Exact in polynomial time.
+
+    :meth:`~svvamp.Election.IM`: Deciding IM is NP-complete. Non-polynomial
+    or non-exact algorithms from superclass :class:`~svvamp.Election`.
+
+    :meth:`~svvamp.Election.not_IIA`: Non-polynomial
+    or non-exact algorithms from superclass :class:`~svvamp.Election`.
+
+    :meth:`~svvamp.Election.TM`: Exact in polynomial time.
+
+    :meth:`~svvamp.Election.UM`: Non-polynomial or non-exact algorithms from
+    superclass :class:`~svvamp.Election`.
+
+    References:
+
+        'Complexity of and algorithms for the manipulation of Borda,
+        Nanson's and Baldwin's voting rules', Jessica Davies,
+        George Katsirelos, Nina Narodytska, Toby Walsh and Lirong Xia, 2014.
     """
-    
+
     _layout_name = 'Nanson'
     _options_parameters = Election._options_parameters.copy()
     _options_parameters.update(NansonResult._options_parameters)
