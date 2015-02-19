@@ -58,11 +58,14 @@ class MajorityJudgment(MajorityJudgmentResult, Election):
 
         Majority Judgement, as promoted by its authors, uses a
         discrete set of non-numerical grades. For our purpose, using a
-        discrete set of numerical grades is isomorphic to this voting system.
-        In contrast, using a continuous set of grades is a variant of this
-        voting system, which has the advantage of being canonical, in the sense
-        that there is no need to choose the number of authorized grades more or
-        less arbitrarily.
+        discrete set of numerical grades
+        (:attr:`~svvamp.MajorityJudgment.step_grade` > 0)
+        is isomorphic to this voting system.
+        In contrast, using a continuous set of grades
+        (:attr:`~svvamp.MajorityJudgment.step_grade` = 0)
+        is a variant of this voting system, which has the advantage of being
+        canonical, in the sense that there is no need to choose the number
+        of authorized grades more or less arbitrarily.
 
     The candidate with highest median grade wins. For the tie-breaking rule,
     see :attr:`~svvamp.MajorityJudgment.scores`.
