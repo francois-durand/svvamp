@@ -195,7 +195,8 @@ class ElectionResult(MyLog.MyLog):
         Default behavior in superclass :class:`~svvamp.ElectionResult`\ :
             The candidate with highest value in vector
             :attr:`~svvamp.ElectionResult.scores` is declared the
-            winner. In case of a tie, the candidate with lowest index wins.
+            winner. In case of a tie, the tied candidate with lowest index
+            wins.
         """
         # This general method works only if scores are scalar and the best
         # score wins.
