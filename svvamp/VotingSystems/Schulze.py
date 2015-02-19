@@ -32,18 +32,87 @@ from svvamp.VotingSystems.SchulzeResult import SchulzeResult
 class Schulze(SchulzeResult, Election):
     """Schulze method.
 
-    scores[c, d] is equal to the width of the widest path from c to d (in the
-    capacited graph defined by matrix_duels_vtb).
-    We say that c is better than d if scores[c, d] > scores[d, c], or if there
-    is an equality and c < d. The candidate who is "better" than all the 
-    others is declared the winner.
-    
-    Manipulation algorithm: "Coalitional Manipulation for Schulze’s Rule" 
-    (Gaspers, Kalinowski, Narodytska and Walsh 2013).
+    Inherits functions and optional parameters from superclasses
+    :class:`~svvamp.ElectionResult` and :class:`~svvamp.Election`.
 
-    Note: for this voting system, UM and CM are almost equivalent (up to
-    tie-breaking). So UM_option and CM_option are linked to each other:
-    modifying one modifies the other as well.
+    :Example:
+
+    >>> import svvamp
+    >>> pop = svvamp.PopulationSpheroid(V=100, C=5)
+    >>> election = svvamp.Schulze(pop)
+
+    :attr:`~svvamp.Schulze.scores`\ ``[c, d]`` is equal to the width of the
+    widest path from candidate ``c`` to candidate ``d`` in the capacited graph
+    defined by :attr:`~svvamp.Population.matrix_duels_vtb`. We say that ``c``
+    is *better* than ``d`` if ``scores[c, d]`` > ``scores[d, c]``. Candidate
+    ``c`` is a *potential winner* if no candidate ``d`` is *better* than ``c``.
+
+    Among the potential winners, the candidate with lowest index is declared
+    the winner.
+
+    .. note::
+
+        In the original Schulze method, ties are broken at random. However,
+        this feature is not supported by SVVAMP because it leads to
+        difficulties for the *definition* of manipulation itself
+        (and all the more for implementation).
+
+    :meth:`~svvamp.Election.CM`:
+
+        * :attr:`~svvamp.Election.CM_option` = ``'fast'``:
+          Gaspers et al. (2013). This algorithm is polynomial and has a
+          window of error of 1 manipulator (due to the tie-breaking rule).
+        * :attr:`~svvamp.Election.CM_option` = ``'exact'``:
+          Non-polynomial algorithm from superclass :class:`~svvamp.Election`.
+
+    :meth:`~svvamp.Election.ICM`: Exact in polynomial time.
+
+    :meth:`~svvamp.Election.IM`:
+
+        * :attr:`~svvamp.Election.IM_option` = ``'fast'``:
+          Gaspers et al. (2013). This algorithm is polynomial and may not be
+          able to decide IM (due to the tie-breaking rule).
+        * :attr:`~svvamp.Election.IM_option` = ``'exact'``:
+          Non-polynomial algorithm from superclass :class:`~svvamp.Election`.
+
+    :meth:`~svvamp.Election.not_IIA`: Non-polynomial
+    or non-exact algorithms from superclass :class:`~svvamp.Election`.
+
+    :meth:`~svvamp.Election.TM`: Exact in polynomial time.
+
+    :meth:`~svvamp.Election.UM`:
+
+        * :attr:`~svvamp.Election.UM_option` = ``'fast'``:
+          Gaspers et al. (2013). This algorithm is polynomial and has a
+          window of error of 1 manipulator (due to the tie-breaking rule).
+        * :attr:`~svvamp.Election.UM_option` = ``'exact'``:
+          Non-polynomial algorithm from superclass :class:`~svvamp.Election`.
+
+    .. note:
+
+        For this voting system, UM and CM are almost equivalent up to
+        tie-breaking. For this reason, :attr:`~svvamp.Election.UM_option` and
+        :attr:`~svvamp.Election.CM_option` are linked to each other: modifying
+        one modifies the other accordingly.
+
+    References:
+
+        'A new monotonic, clone-independent, reversal symmetric, and
+        Condorcet-consistent single-winner election method ', Markus Schulze,
+        2011.
+
+        'Schulze and Ranked-Pairs Voting are Fixed-Parameter Tractable to
+        Bribe, Manipulate, and Control', Lane A. Hemaspaandra, Rahman Lavaee
+        and Curtis Menton, 2012.
+
+        'Manipulation and Control Complexity of Schulze Voting', Curtis Menton
+        and Preetjot Singh, 2012.
+
+        'A Complexity-of-Strategic-Behavior Comparison between Schulze’s Rule
+        and Ranked Pairs', David Parkes and Lirong Xia, 2012.
+
+        'Coalitional Manipulation for Schulze’s Rule', Serge Gaspers, Thomas
+        Kalinowski, Nina Narodytska and Toby Walsh, 2013.
     """
     
     _layout_name = 'Schulze'

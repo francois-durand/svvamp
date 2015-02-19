@@ -110,7 +110,8 @@ class RankedPairsResult(ElectionResult):
         .. note::
 
             Unlike for most other voting systems, ``scores`` matrix must be
-            read in rows: ``c``'s score vector is ``scores[c, :]``.
+            read in rows, in order to comply with our convention for the
+            matrix of duels: ``c``'s score vector is ``scores[c, :]``.
         """
         if self._scores is None:
             self._count_ballots()

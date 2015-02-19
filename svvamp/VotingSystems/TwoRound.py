@@ -30,11 +30,30 @@ from svvamp.Preferences.Population import Population
 class TwoRound(TwoRoundResult, Election):
     """Two Round System.
 
+    Inherits functions and optional parameters from superclasses
+    :class:`~svvamp.ElectionResult` and :class:`~svvamp.Election`.
+
+    :Example:
+
+    >>> import svvamp
+    >>> pop = svvamp.PopulationSpheroid(V=100, C=5)
+    >>> election = svvamp.TwoRound(pop)
+
     Two rounds are actually held, which means that manipulators can change
-    their vote between the first and second round. Hence for C = 3,
-    this voting system is Exhaustive Ballot (not IRV).
+    their vote between the first and second round. Hence for
+    :attr:`~svvamp.Population.C` = 3, this voting system is equivalent to
+    :class:`~svvamp.ExhaustiveBallot` (not :class:`~svvamp.IRV`).
     
     In case of a tie, candidates with lowest index are privileged.
+
+    :meth:`~svvamp.Election.not_IIA`: Non-polynomial
+    or non-exact algorithms from superclass :class:`~svvamp.Election`.
+
+    :meth:`~svvamp.Election.CM`,
+    :meth:`~svvamp.Election.ICM`,
+    :meth:`~svvamp.Election.IM`,
+    :meth:`~svvamp.Election.TM`,
+    :meth:`~svvamp.Election.UM`: Exact in polynomial time.
     """
     
     _layout_name = 'Two Round'

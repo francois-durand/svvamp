@@ -28,12 +28,31 @@ from svvamp.Preferences.Population import Population
 
 
 class Veto(VetoResult, Election):
-    """Veto (antiplurality).
+    """Veto. Also called Antiplurality.
     
-    Each voter votes again her last-ranked candidate. The candidate with least
-    votes against her is declared the winner.
-    
-    Ties are broken by natural order on the candidates (lower index wins).
+    Inherits functions and optional parameters from superclasses
+    :class:`~svvamp.ElectionResult` and :class:`~svvamp.Election`.
+
+    :Example:
+
+    >>> import svvamp
+    >>> pop = svvamp.PopulationSpheroid(V=100, C=5)
+    >>> election = svvamp.Veto(pop)
+
+    Each voter votes against one candidate (veto). The candidate with least
+    vetos is declared the winner. In case of a tie, the tied candidate with
+    lowest index wins.
+
+    Sincere voters votes against their least-liked candidate.
+
+    :meth:`~svvamp.Election.not_IIA`: Non-polynomial
+    or non-exact algorithms from superclass :class:`~svvamp.Election`.
+
+    :meth:`~svvamp.Election.CM`,
+    :meth:`~svvamp.Election.ICM`,
+    :meth:`~svvamp.Election.IM`,
+    :meth:`~svvamp.Election.TM`,
+    :meth:`~svvamp.Election.UM`: Exact in polynomial time.
     """
 
     _layout_name = 'Veto'
