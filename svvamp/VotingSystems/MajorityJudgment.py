@@ -30,13 +30,72 @@ from svvamp.Preferences.Population import Population
 class MajorityJudgment(MajorityJudgmentResult, Election):
     """Majority Judgment.
     
-    Each voter attributes a grade to each candidate, between min_grade and
-    max_grade. The candidate with highest median grade wins.
+    Inherits functions and optional parameters from superclasses
+    :class:`~svvamp.ElectionResult` and :class:`~svvamp.Election`.
+
+    :param min_grade: See attribute
+        :attr:`~svvamp.MajorityJudgment.min_grade`.
+    :param max_grade: See attribute
+        :attr:`~svvamp.MajorityJudgment.max_grade`.
+    :param step_grade: See attribute
+        :attr:`~svvamp.MajorityJudgment.step_grade`.
+    :param rescale_grades: See attribute
+        :attr:`~svvamp.MajorityJudgment.rescale_grades`.
+
+    :Example:
+
+    >>> import svvamp
+    >>> pop = svvamp.PopulationSpheroid(V=100, C=5)
+    >>> election = svvamp.MajorityJudgment(pop, min_grade=0, max_grade=1, step_grade=0, rescale_grades=True)
+
+    Each voter attributes a grade to each candidate. By default, authorized
+    grades are all numbers in the interval
+    [:attr:`~svvamp.MajorityJudgment.min_grade`,
+    :attr:`~svvamp.MajorityJudgment.max_grade`]. To use a discrete set of
+    notes, modify attribute :attr:`~svvamp.MajorityJudgment.step_grade`.
+
+    .. note::
+
+        Majority Judgement, as promoted by its authors, uses a
+        discrete set of non-numerical grades. For our purpose, using a
+        discrete set of numerical grades is isomorphic to this voting system.
+        In contrast, using a continuous set of grades is a variant of this
+        voting system, which has the advantage of being canonical, in the sense
+        that there is no need to choose the number of authorized grades more or
+        less arbitrarily.
+
+    The candidate with highest median grade wins. For the tie-breaking rule,
+    see :attr:`~svvamp.MajorityJudgment.scores`.
+
+    Default behavior of sincere voters: voter ``v`` applies an affine
+    transformation to her utilities
+    :attr:`~svvamp.Population.preferences_utilities`\ ``[v, :]``
+    to get her grades, such that her least-liked candidate receives
+    :attr:`~svvamp.MajorityJudgment.min_grade` and her most-liked candidate
+    receives :attr:`~svvamp.MajorityJudgment.max_grade`.
+    To modify this behavior, use attribute
+    :attr:`~svvamp.MajorityJudgment.rescale_grades`.
+    For more details about the behavior of sincere voters, see
+    :attr:`~svvamp.MajorityJudgment.ballots`.
+
+    :meth:`~svvamp.Election.not_IIA`:
+
+        * If :attr:`~svvamp.MajorityJudgment.rescale_grades` = ``False``,
+          then Majority Judgment always meets IIA.
+        * If :attr:`~svvamp.MajorityJudgment.rescale_grades` = ``True``, then
+          then non-polynomial or non-exact algorithms from superclass
+          :class:`~svvamp.Election` are used.
+
+    :meth:`~svvamp.Election.CM`,
+    :meth:`~svvamp.Election.ICM`,
+    :meth:`~svvamp.Election.IM`,
+    :meth:`~svvamp.Election.TM`,
+    :meth:`~svvamp.Election.UM`: Exact in polynomial time.
+
+    References:
     
-    See the documentation of scores for the tie-breaking rule.
-    
-    See the documentation of options min_grade, max_grade, step_grade and
-    rescale_grades.
+        Majority Judgment : Measuring, Ranking, and Electing. Michel
+        Balinski and Rida Laraki, 2010.
     """
     
     _layout_name = 'Majority Judgment'
