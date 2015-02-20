@@ -86,7 +86,7 @@ class Population(MyLog.MyLog):
         iff ``c < d``.
 
         Implications between majority favorite and Condorcet criteria (cf.
-        corresponding functions below).
+        corresponding attributes below).
 
         ::
 

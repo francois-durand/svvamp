@@ -82,7 +82,8 @@ class Election(ElectionResult):
         subclasses :attr:`~svvamp.Approval`, :attr:`~svvamp.Plurality`, etc.
 
         :param population: A :class:`~svvamp.Population` object.
-        :param kwargs: additional keyword parameters.
+        :param kwargs: additional keyword parameters. See
+            :attr:`~svvamp.ElectionResult.options_parameters`.
 
         :Example:
 
@@ -92,22 +93,22 @@ class Election(ElectionResult):
 
         This class and its subclasses are suitable for voting systems that
         are deterministic and anonymous (treating all voters equally).
-        Hence, they are not neutral (because they need to break ties in
-        totally symmetric situations). As of now, SVVAMP does not support
-        other kinds of voting systems.
+        As a consequence, they are not neutral (because they need to break
+        ties in totally symmetric situations). As of now, SVVAMP does not
+        support other kinds of voting systems.
 
-        **Tie-breaking issues**
+        **Tie-breaking**
 
         There are essentially 2 types of tie-breaking in SVVAMP.
 
-            *   When a sincere voter ``v`` is forced to provide a strict order
+            *   When a sincere voter ``v`` must provide a strict order
                 in a specific voting system, she uses
-                :attr:`svvamp.Population.preferences_ranking`\ ``[v, :]``.
-                As explained in :attr:`svvamp.Population`, if she has the same
+                :attr:`~svvamp.Population.preferences_ranking`\ ``[v, :]``.
+                As explained in :attr:`~svvamp.Population`, if she has the same
                 utility for candidates ``c`` and ``d``, then she uses Voter
                 Tie-Breaking (VTB): she decides once and for all if she will
-                provide ``c`` before ``d`` or ``d`` before ``c`` in such
-                voting systems.
+                provide ``c`` before ``d`` or ``d`` before ``c`` in
+                voting systems requiring a strict order.
             *   The voting system itself may need to break ties, for example if
                 candidates ``c`` and ``d`` have the same score in a score-based
                 system. The standard tie-breaking in SVVAMP, referred to as
@@ -121,8 +122,9 @@ class Election(ElectionResult):
         In contrast, to know if a voter ``v`` wants to manipulate for a
         candidate ``c`` against ``w``, we do not break ``v``'s possible tie
         in her preferences. We use her utilities
-        :attr:`svvamp.Population.preferences_utilities` (or equivalently,
-        :attr:`svvamp.Population.preferences_borda_novtb`). If she
+        :attr:`~svvamp.Population.preferences_utilities`\ ``[v, :]`` (or
+        equivalently,
+        :attr:`~svvamp.Population.preferences_borda_novtb`\ ``[v, :]``). If she
         attributes the same utility to ``w`` and ``c``, she is not interested
         in this manipulation.
 
@@ -140,7 +142,7 @@ class Election(ElectionResult):
         :attr:`~svvamp.Election.UM_option`.
 
         To know what options are accepted for a given voting system, use
-        :attr:`~svvamp.Election.options_parameters`.
+        :attr:`~svvamp.ElectionResult.options_parameters`.
 
         :Example:
 
@@ -164,9 +166,11 @@ class Election(ElectionResult):
                 runs in polynomial time, then it is the only accepted option.
             *   ``'slow'``: Non-polynomial algorithm, but not exact. For
                 voting systems accepting this option, it is however
-                faster than 'exact' (in a little-o sense) and quite more
+                faster than 'exact' (in a little-o sense) and more
                 precise than 'fast'.
-            *   ``'fast'``: Polynomial algorithm, no exact.
+            *   ``'fast'``: Polynomial algorithm, not exact. If the exact
+                algorithm runs in polynomial time, this option is not
+                available.
             *   ``'lazy'``: Perform only some preliminary checks. Run in
                 polynomial time (unless deciding the winner of the election
                 is not polynomial, like for :class:`~svvamp.Kemeny`). Like
@@ -178,10 +182,18 @@ class Election(ElectionResult):
 
         **Option for Independence of Irrelevant Alternatives (IIA)**
 
-        The default algorithm for :attr:`~svvamp.Election.not_IIA` is a
-        brute force algorithm. It can be non-polynomial or non-exact,
-        depending on the attribute
-        :attr:`svvamp.Election.IIA_subset_maximum_size`.
+        The default algorithm for :attr:`~svvamp.Election.not_IIA` first
+        performs some preliminary checks based on the known properties of the
+        voting system under study. For example, if it meets the Condorcet
+        criterion, then the algorithm exploits if. If it meets the majority
+        favorite criterion (see below) and if :attr:`~svvamp.ElectionResult.w`
+        is a majority favorite, then it decides IIA immediately.
+
+        If the preliminary checks do not allow to decide, the default algorithm
+        then uses brute force to test subsets of candidates including
+        the sincere winner :attr:`~svvamp.ElectionResult.w`. This can be
+        non-polynomial or non-exact, depending on the attribute
+        :attr:`~svvamp.Election.IIA_subset_maximum_size`.
 
         **Implication diagram between criteria**
 
@@ -352,7 +364,7 @@ class Election(ElectionResult):
     def IIA_subset_maximum_size(self):
         """Integer or ``numpy.inf``. Maximum size of any subset of candidates
         that is used to compute :meth:`~svvamp.Election.not_IIA` (and
-        related methods). For a given voting system, has no
+        related methods). For a given voting system, this attribute has no
         effect if there is an exact algorithm running in polynomial time
         implemented in SVVAMP.
         """
@@ -506,7 +518,7 @@ class Election(ElectionResult):
 
     @property
     def with_two_candidates_reduces_to_plurality(self):
-        """Boolean. ``'True'`` iff, when using this voting system with only
+        """Boolean. ``True`` iff, when using this voting system with only
         two candidates, it amounts to Plurality (with voter and candidate
         tie-breaking).
         """
@@ -514,31 +526,33 @@ class Election(ElectionResult):
 
     @property
     def is_based_on_strict_rankings(self):
-        """Boolean. ``'True'`` iff this voting system is based only on
+        """Boolean. ``True`` iff this voting system is based only on
         strict rankings (no cardinal information, indifference not allowed).
         """
         return self._is_based_on_strict_rankings
 
     @property
     def is_based_on_utilities_minus1_1(self):
-        """Boolean. ``'True'`` iff:
-        * This voting system is based only on utilities (not strict ranking,
-        i.e. does not depend on the voter's tie-breaking),
-        * And for a ``c``-manipulator (IM or CM), it is optimal to pretend
-        that c has utility 1 and other candidates have utility -1.
+        """Boolean. ``True`` iff:
+
+            *   This voting system is based only on utilities (not strict
+                ranking, i.e. does not depend on the voter's tie-breaking),
+            *   And for a ``c``-manipulator (IM or CM), it is optimal to
+                pretend that ``c`` has utility 1 and other candidates have
+                utility -1.
         """
         return self._is_based_on_utilities_minus1_1
 
     @property
     def meets_IIA(self):
-        """Boolean. ``'True'`` iff this voting system meets Independence of
+        """Boolean. ``True`` iff this voting system meets Independence of
         Irrelevant Alternatives.
         """
         return self._meets_IIA
            
     @property
     def meets_Condorcet_c_rel_ctb(self):
-        """Boolean. ``'True'`` iff the voting system meets
+        """Boolean. ``True`` iff the voting system meets
         the 'relative Condorcet criterion with ctb'. I.e.: if a
         candidate is 'relative Condorcet winner with ctb', she wins.
         Cf. :attr:`~svvamp.Population.condorcet_winner_rel_ctb`.
@@ -553,7 +567,7 @@ class Election(ElectionResult):
 
     @property
     def meets_Condorcet_c_vtb_ctb(self):
-        """Boolean. ``'True'`` iff the voting system meets
+        """Boolean. ``True`` iff the voting system meets
         the 'Condorcet criterion with vtb and ctb'. I.e.: if a candidate is
         'Condorcet winner with vtb and ctb', she wins.
         Cf. :attr:`~svvamp.Population.condorcet_winner_vtb_ctb`.
@@ -569,7 +583,7 @@ class Election(ElectionResult):
 
     @property
     def meets_Condorcet_c_ctb(self):
-        """Boolean. ``'True'`` iff the voting system meets
+        """Boolean. ``True`` iff the voting system meets
         the 'Condorcet criterion with ctb'. I.e.: if a candidate is
         'Condorcet winner with ctb', she wins.
         Cf. :attr:`~svvamp.Population.condorcet_winner_ctb`.
@@ -590,7 +604,7 @@ class Election(ElectionResult):
            
     @property
     def meets_majority_favorite_c_vtb_ctb(self):
-        """Boolean. ``'True'`` iff the voting system meets
+        """Boolean. ``True`` iff the voting system meets
         the 'majority favorite criterion with vtb and ctb'. I.e.:
 
             *   It :attr:`~svvamp.Election.meets_majority_favorite_c_vtb`,
@@ -611,7 +625,7 @@ class Election(ElectionResult):
 
     @property
     def meets_majority_favorite_c_ctb(self):
-        """Boolean. ``'True'`` iff the voting system meets
+        """Boolean. ``True`` iff the voting system meets
         the 'majority favorite criterion with ctb'. I.e.:
 
             *   It :attr:`~svvamp.Election.meets_majority_favorite_c`,
@@ -634,7 +648,7 @@ class Election(ElectionResult):
 
     @property
     def meets_IgnMC_c_ctb(self):
-        """Boolean. ``'True'`` iff the voting system meets
+        """Boolean. ``True`` iff the voting system meets
         the 'ignorant majority coalition criterion with ctb'. I.e.:
 
             *   It :attr:`~svvamp.Election.meets_IgnMC_c`,
@@ -654,7 +668,7 @@ class Election(ElectionResult):
 
     @property
     def meets_InfMC_c_ctb(self):
-        """Boolean. ``'True'`` iff the voting system meets
+        """Boolean. ``True`` iff the voting system meets
         the 'informed majority coalition criterion with ctb'. I.e.:
 
             *   It :attr:`~svvamp.Election.meets_InfMC_c`,
@@ -673,7 +687,7 @@ class Election(ElectionResult):
         
     @property
     def meets_Condorcet_c_rel(self):
-        """Boolean. ``'True'`` iff the voting system meets
+        """Boolean. ``True`` iff the voting system meets
         the relative Condorcet criterion. I.e. if a candidate is a
         relative Condorcet winner, then she wins.
         Cf. :attr:`~svvamp.Population.condorcet_winner_rel`.
@@ -690,7 +704,7 @@ class Election(ElectionResult):
 
     @property
     def meets_Condorcet_c_vtb(self):
-        """Boolean. ``'True'`` iff the voting system meets
+        """Boolean. ``True`` iff the voting system meets
         the Condorcet criterion with vtb. I.e. if a candidate is a Condorcet
         winner with vtb, then she wins.
         Cf. :attr:`~svvamp.Population.condorcet_winner_vtb`.
@@ -708,7 +722,7 @@ class Election(ElectionResult):
 
     @property
     def meets_Condorcet_c(self):
-        """Boolean. ``'True'`` iff the voting system meets
+        """Boolean. ``True`` iff the voting system meets
         the Condorcet criterion. I.e. if a candidate is a Condorcet winner,
         then she wins.
         Cf. :attr:`~svvamp.Population.condorcet_winner`.
@@ -730,7 +744,7 @@ class Election(ElectionResult):
 
     @property
     def meets_majority_favorite_c_vtb(self):
-        """Boolean. ``'True'`` iff the voting system meets
+        """Boolean. ``True`` iff the voting system meets
         the majority favorite criterion with vtb. I.e. if strictly more than
         :attr:`~svvamp.Population.V`/2 voters rank a candidate first (with
         vtb), she wins.
@@ -750,7 +764,7 @@ class Election(ElectionResult):
 
     @property
     def meets_majority_favorite_c(self):
-        """Boolean. ``'True'`` iff the voting system meets
+        """Boolean. ``True`` iff the voting system meets
         the majority favorite criterion. I.e. if strictly more than
         :attr:`~svvamp.Population.V`/2 voters strictly prefer a candidate to
         all others (without vtb), she wins.
@@ -772,7 +786,7 @@ class Election(ElectionResult):
 
     @property
     def meets_IgnMC_c(self):
-        """Boolean. ``'True'`` iff the voting system meets
+        """Boolean. ``True`` iff the voting system meets
         the ignorant majority coalition criterion. I.e. any ignorant coalition 
         of size strictly more than :attr:`~svvamp.Population.V`/2 can make
         any candidate win. See working paper, Durand et al. (2014):
@@ -796,7 +810,7 @@ class Election(ElectionResult):
 
     @property
     def meets_InfMC_c(self):
-        """Boolean. ``'True'`` iff the voting system meets
+        """Boolean. ``True`` iff the voting system meets
         the informed majority coalition criterion. I.e. any informed coalition 
         of size strictly more than :attr:`~svvamp.Population.V`/2 can make
         any candidate win. See working paper, Durand et al. (2014):
@@ -857,8 +871,8 @@ class Election(ElectionResult):
         
     @property
     def log_IIA(self):
-        """String. Parameters used to compute :meth:`~svvamp.not_IIA` and
-        related methods.
+        """String. Parameters used to compute :meth:`~svvamp.Election.not_IIA`
+        and related methods.
         """
         return "IIA_subset_maximum_size = " + format(
             self.IIA_subset_maximum_size)
@@ -2662,10 +2676,10 @@ class Election(ElectionResult):
         For information only, the result of SVVAMP's computations about
         :math:`x_c` is given in outputs ``necessary_coalition_size_ICM`` and
         ``sufficient_coalition_size_ICM`` (cf. below). By definition, we have
-        ``necessary_coalition_size_ICM`` :math:`\leq x_c \leq`
-        ``sufficient_coalition_size_ICM``.
+        ``necessary_coalition_size_ICM[c]`` :math:`\leq x_c \leq`
+        ``sufficient_coalition_size_ICM[c]``.
 
-        When :attr:`~svvamp.Election.ICM_option` = ``exact``, the exactness
+        When :attr:`~svvamp.Election.ICM_option` = ``'exact'``, the exactness
         concerns the ICM decision problems (boolean results below),
         not the numerical evaluation of :math:`x_c`. It means that for all
         boolean answers below, SVVAMP will not answer ``numpy.nan`` (
@@ -2681,7 +2695,7 @@ class Election(ElectionResult):
         ``False`` otherwise. If the algorithm cannot decide,
         then ``numpy.nan``.
 
-        ``log_ICM`` -- String. Parameters used to compute ICM.
+        ``log_ICM``: String. Parameters used to compute ICM.
 
         ``candidates_ICM``: 1d array of booleans (or ``numpy.nan``).
         ``candidates_ICM[c]`` is ``True`` if ICM for candidate ``c`` is
@@ -3129,10 +3143,10 @@ class Election(ElectionResult):
         For information only, the result of SVVAMP's computations about
         :math:`x_c` is given in outputs ``necessary_coalition_size_CM`` and
         ``sufficient_coalition_size_CM`` (cf. below). By definition, we have
-        ``necessary_coalition_size_CM`` :math:`\leq x_c \leq`
-        ``sufficient_coalition_size_CM``.
+        ``necessary_coalition_size_CM[c]`` :math:`\leq x_c \leq`
+        ``sufficient_coalition_size_CM[c]``.
 
-        When :attr:`~svvamp.Election.CM_option` = ``exact``, the exactness
+        When :attr:`~svvamp.Election.CM_option` = ``'exact'``, the exactness
         concerns the CM decision problems (boolean results below),
         not the numerical evaluation of :math:`x_c`. It means that for all
         boolean answers below, SVVAMP will not answer ``numpy.nan`` (
@@ -3148,7 +3162,7 @@ class Election(ElectionResult):
         ``False`` otherwise. If the algorithm cannot decide,
         then ``numpy.nan``.
 
-        ``log_CM`` -- String. Parameters used to compute CM.
+        ``log_CM``: String. Parameters used to compute CM.
 
         ``candidates_CM``: 1d array of booleans (or ``numpy.nan``).
         ``candidates_CM[c]`` is ``True`` if CM for candidate ``c`` is
@@ -3668,10 +3682,9 @@ class Election(ElectionResult):
         self._CM_conclude_c(c, is_quick_escape)
 
     def demo(self, log_depth=1):
-        """Demonstrate the methods of Election class.
+        """Demonstrate the methods of :class:`~svvamp.Election` class.
 
-        Arguments:
-        log_depth -- Integer from 0 (basic info) to 3 (verbose).
+        :param log_depth: Integer from 0 (basic info) to 3 (verbose).
         """
         super().demo(log_depth=log_depth)
         old_log_depth = self._log_depth

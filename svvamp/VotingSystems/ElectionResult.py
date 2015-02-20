@@ -53,7 +53,12 @@ class ElectionResult(MyLog.MyLog):
         subclasses :attr:`~svvamp.Approval`, :attr:`~svvamp.Plurality`, etc.
 
         :param population: A :class:`~svvamp.Population` object.
-        :param kwargs: additional keyword parameters.
+        :param kwargs: additional keyword parameters. See
+            :attr:`~svvamp.ElectionResult.options_parameters`.
+
+        >>> import svvamp
+        >>> pop = svvamp.PopulationSpheroid(V=100, C=5)
+        >>> election = svvamp.Approval(pop, approval_comparator='>=')
         """
         super().__init__()
         self._log_identity = "ELECTION_RESULT"
@@ -130,7 +135,7 @@ class ElectionResult(MyLog.MyLog):
 
     @property
     def pop(self):
-        """A :class:`~svvamp.Population object`. The population running the
+        """A :class:`~svvamp.Population` object. The population running the
         election.
         """
         return self._pop
