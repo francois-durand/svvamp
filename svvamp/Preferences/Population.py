@@ -203,6 +203,10 @@ class Population(MyLog.MyLog):
             self._labels_candidates = [str(x) for x in range(self._C)]
         return self._labels_candidates
 
+    @labels_candidates.setter
+    def labels_candidates(self, value):
+        self._labels_candidates = value
+
     @property
     def C(self):
         """Integer (number of candidates)."""

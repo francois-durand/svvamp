@@ -62,7 +62,7 @@ class Election(ElectionResult):
     # When there is a polynomial exact algorithm, it should be the only option.
     # The default option should be the most precise algorithm among those
     # running in polynomial time.
-    # Exception: for IIA_subset_maximum_size, default option is +inf.
+    # Exception: for IIA_subset_maximum_size, default option is 2.
     _options_parameters = {
         'IIA_subset_maximum_size': {'allowed': TypeChecker.is_number,
                                     'default': 2},
