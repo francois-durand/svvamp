@@ -1727,17 +1727,18 @@ class Election(ElectionResult):
 
     @property
     def log_TM(self):
-        """String. Parameters used to compute TM."""
+        """String. Parameters used to compute :meth:`~svvamp.Election.TM`
+        and related methods.
+        """
         # noinspection PyTypeChecker
         return "TM_option = " + self.TM_option
     
     def TM(self):
         """Trivial manipulation.
 
-        Returns: 
-        is_TM -- Boolean (or NaN). True if TM is possible, False otherwise. If
-            the algorithm cannot decide, then NaN.
-        log_TM -- String. Parameters used to compute TM.
+        :returns: (``is_TM``, ``log_TM``).
+
+        Cf. :meth:`~svvamp.Election.TM_with_candidates`.
         """
         if not self._TM_was_initialized:
             self._TM_initialize_general(with_candidates=False)
@@ -1748,13 +1749,11 @@ class Election(ElectionResult):
     def TM_c(self, c):
         """Trivial manipulation, focus on one candidate.
 
-        Arguments:
-        c -- Integer. The candidate for whom we want to manipulate.
+        :param c: Integer (candidate).
 
-        Returns:
-        is_TM_c -- Boolean (or NaN). True if TM for candidate c is possible,
-            False otherwise. If the algorithm cannot decide, then NaN.
-        log_TM -- String. Parameters used to compute TM.
+        :returns: (``candidates_TM[c]``, ``log_TM``).
+
+        Cf. :meth:`~svvamp.Election.TM_with_candidates`.
         """
         if not self._TM_was_initialized:
             self._TM_initialize_general(with_candidates=False)
@@ -1765,30 +1764,44 @@ class Election(ElectionResult):
     def TM_with_candidates(self):
         """Trivial manipulation, full mode.
 
-        For ordinal voting systems, we call 'trivial manipulation' for
-        candidate c against w the fact of putting c on top (compromising), w 
+        For ordinal voting systems, we call *trivial manipulation* for
+        candidate ``c`` against :attr:`~svvamp.ElectionResult.w` the fact of
+        putting ``c`` on top (compromising), :attr:`~svvamp.ElectionResult.w`
         at bottom (burying), while keeping a sincere order on other candidates.
         
-        For cardinal voting systems, we call 'trivial manipulation' for c
-        (against w) the fact of putting the maximum grade for c and the
-        minimum grade for other candidates.
+        For cardinal voting systems, we call *trivial manipulation* for ``c``
+        (against :attr:`~svvamp.ElectionResult.w`) the fact of putting the
+        maximum grade for ``c`` and the minimum grade for other candidates.
 
         In both cases, the intuitive idea is the following: if I want to 
-        make c win and I only know that candidate w is 'dangerous' (but I know 
+        make ``c`` win and I only know that candidate
+        :attr:`~svvamp.ElectionResult.w` is 'dangerous' (but I know
         nothing else), then trivial manipulation is my 'best' strategy.
         
-        We say that a situation is "trivially manipulable" for c (implicitly: 
-        by coalition) iff, when all voters preferring c to the sincere winner w
-        use trivial manipulation, candidate c wins.
+        We say that a situation is *trivially manipulable* for ``c``
+        (implicitly: by coalition) iff, when all voters preferring ``c`` to
+        the sincere winner :attr:`~svvamp.ElectionResult.w` use trivial
+        manipulation, candidate ``c`` wins.
         
-        Returns: 
-        is_TM -- Boolean (or NaN). True if TM is possible, False otherwise. If
-            the algorithm cannot decide, then NaN.
-        log_TM -- String. Parameters used to compute TM.
-        candidates_TM -- 1d array of booleans (or NaN). candidates_TM[c]
-            is True if a TM for candidate c is possible, False otherwise. If
-            the algorithm cannot decide, then NaN. By convention,
-            candidates_TM[w] = False.
+        :returns: (``is_TM``, ``log_TM``, ``candidates_TM``).
+
+        ``is_TM``: Boolean (or ``numpy.nan``). ``True`` if TM is possible,
+        ``False`` otherwise. If the algorithm cannot decide,
+        then ``numpy.nan`` (but as of now, this value is never used for TM).
+
+        ``log_TM``: String. Parameters used to compute TM.
+
+        ``candidates_TM``: 1d array of booleans (or ``numpy.nan``).
+        ``candidates_TM[c]`` is ``True`` if a TM for candidate ``c`` is
+        possible, ``False`` otherwise. If the algorithm cannot decide, then
+        ``numpy.nan`` (but as of now, this value is not never for TM). For the
+        sincere winner :attr:`~svvamp.ElectionResult.w`, we have by convention
+        ``candidates_TM[w] = False``.
+
+        .. seealso::
+
+            :meth:`~svvamp.Election.TM`,
+            :meth:`~svvamp.Election.TM_c`.
         """
         if not self._TM_was_initialized:
             self._TM_initialize_general(with_candidates=True)
@@ -2129,17 +2142,18 @@ class Election(ElectionResult):
 
     @property
     def log_UM(self):
-        """String. Parameters used to compute UM."""
+        """String. Parameters used to compute :meth:`~svvamp.Election.UM`
+        and related methods.
+        """
         # noinspection PyTypeChecker
         return "UM_option = " + self.UM_option
     
     def UM(self):
         """Unison manipulation.
 
-        Returns: 
-        is_UM -- Boolean (or NaN). True if UM is possible, False otherwise. If
-            the algorithm cannot decide, then NaN.
-        log_UM -- String. Parameters used to compute UM.
+        :returns: (``is_UM``, ``log_UM``).
+
+        Cf. :meth:`~svvamp.Election.UM_with_candidates`.
         """
         if not self._UM_was_initialized:
             self._UM_initialize_general(with_candidates=False)
@@ -2150,13 +2164,11 @@ class Election(ElectionResult):
     def UM_c(self, c):
         """Unison manipulation, focus on one candidate.
 
-        Arguments:
-        c -- Integer. The candidate for whom we want to manipulate.
+        :param c: Integer (candidate).
 
-        Returns:
-        is_UM_c -- Boolean (or NaN). True if UM for candidate c is possible,
-            False otherwise. If the algorithm cannot decide, then NaN.
-        log_UM -- String. Parameters used to compute UM.
+        :returns: (``candidates_UM[c]``, ``log_UM``).
+
+        Cf. :meth:`~svvamp.Election.UM_with_candidates`.
         """
         if not self._UM_was_initialized:
             self._UM_initialize_general(with_candidates=False)
@@ -2167,18 +2179,31 @@ class Election(ElectionResult):
     def UM_with_candidates(self):
         """Unison manipulation, full mode.
 
-        We say that a situation is unison-manipulable for a candidate c != w
-        iff all voters who prefer c to the sincere winner w can cast the SAME
-        ballot so that c is elected (while other voters still vote sincerely).
+        We say that a situation is *unison-manipulable* for a candidate
+        ``c`` ``!=`` :attr:`~svvamp.ElectionResult.w` iff all voters who
+        prefer ``c`` to the sincere winner :attr:`~svvamp.ElectionResult.w`
+        can cast the **same** ballot so that ``c`` is elected (while other
+        voters still vote sincerely).
 
-        Returns: 
-        is_UM -- Boolean (or NaN). True if UM is possible, False otherwise. If
-            the algorithm cannot decide, then NaN.
-        log_UM -- String. Parameters used to compute UM.
-        candidates_UM -- 1d array of booleans (or NaN). candidates_UM[c]
-            is True if UM for candidate c is possible, False otherwise. If
-            the algorithm cannot decide, then NaN. By convention,
-            candidates_UM[w] = False.
+        :returns: (``is_UM``, ``log_UM``, ``candidates_UM``).
+
+        ``is_UM``: Boolean (or ``numpy.nan``). ``True`` if UM is possible,
+        ``False`` otherwise. If the algorithm cannot decide,
+        then ``numpy.nan``.
+
+        ``log_UM``: String. Parameters used to compute UM.
+
+        ``candidates_UM``: 1d array of booleans (or ``numpy.nan``).
+        ``candidates_UM[c]`` is ``True`` if UM for candidate ``c`` is
+        possible, ``False`` otherwise. If the algorithm cannot decide, then
+        ``numpy.nan``. For the sincere winner
+        :attr:`~svvamp.ElectionResult.w`, we have by convention
+        ``candidates_UM[w] = False``.
+
+        .. seealso::
+
+            :meth:`~svvamp.Election.UM`,
+            :meth:`~svvamp.Election.UM_c`.
         """
         if not self._UM_was_initialized:
             self._UM_initialize_general(with_candidates=True)
@@ -2549,17 +2574,18 @@ class Election(ElectionResult):
 
     @property
     def log_ICM(self):
-        """String. Parameters used to compute ICM."""
+        """String. Parameters used to compute :meth:`~svvamp.Election.ICM`
+        and related methods.
+        """
         # noinspection PyTypeChecker
         return "ICM_option = " + self.ICM_option
     
     def ICM(self):
-        """Ignorant-Coalition Manipulation, incomplete mode.
+        """Ignorant-Coalition Manipulation.
 
-        Returns: 
-        is_ICM -- Boolean (or NaN). True if a ICM is possible,
-            False otherwise. If the  algorithm cannot decide, then NaN.
-        log_ICM -- String. Parameters used to compute ICM.
+        :returns: (``is_ICM``, ``log_ICM``).
+
+        Cf. :meth:`~svvamp.Election.ICM_full`.
         """
         if not self._ICM_was_initialized:
             self._ICM_initialize_general(with_candidates=False)
@@ -2570,11 +2596,11 @@ class Election(ElectionResult):
     def ICM_c(self, c):
         """Ignorant-Coalition Manipulation, focus on one candidate.
 
-        Returns:
-        is_ICM_c -- Boolean (or NaN). True if ICM for candidate c is
-            possible, False otherwise. If the algorithm cannot decide,
-            then NaN.
-        log_ICM -- String. Parameters used to compute ICM.
+        :param c: Integer (candidate).
+
+        :returns: (``candidates_ICM[c]``, ``log_ICM``).
+
+        Cf. :meth:`~svvamp.Election.ICM_full`.
         """
         if not self._ICM_was_initialized:
             self._ICM_initialize_general(with_candidates=False)
@@ -2585,16 +2611,14 @@ class Election(ElectionResult):
     def ICM_c_with_bounds(self, c):
         """Ignorant-Coalition Manipulation, focus on one candidate, with
         bounds.
-        
-        Returns: 
-        is_ICM_c -- Boolean (or NaN). True if ICM for candidate c is
-            possible, False otherwise. If the algorithm cannot decide,
-            then NaN.
-        log_ICM -- String. Parameters used to compute ICM.
-        necessary_coalition_size_ICM_c -- Integer. 
-        sufficient_coalition_size_ICM_c -- Integer or +Inf. 
 
-        Cf. documentation of ICM_full.
+        :param c: Integer (candidate).
+
+        :returns: (``candidates_ICM[c]``, ``log_ICM``,
+                  ``necessary_coalition_size_ICM[c]``,
+                  ``sufficient_coalition_size_ICM[c]``).
+
+        Cf. :meth:`~svvamp.Election.ICM_full`.
         """
         if not self._ICM_was_initialized:
             self._ICM_initialize_general(with_candidates=False)
@@ -2608,18 +2632,9 @@ class Election(ElectionResult):
     def ICM_with_candidates(self):
         """Ignorant-Coalition Manipulation, with candidates.
 
-        We say that a situation is ICM (Ignorant-Coalition Manipulation) for
-        c != w iff voters who prefer c to w can cast ballots so that c is
-        elected, whatever the other voters do.
+        :returns: (``is_ICM``, ``log_ICM``, ``candidates_ICM``).
 
-        Returns:
-        is_ICM -- Boolean (or NaN). True if a ICM is possible,
-            False otherwise. If the  algorithm cannot decide, then NaN.
-        log_ICM -- String. Parameters used to compute ICM.
-        candidates_ICM -- 1d array of booleans (or NaN). candidates_ICM[c] 
-            is True if a ICM for candidate c is possible, False otherwise.
-            If the algorithm cannot decide, then NaN. By convention,
-            candidates_ICM[w] = False.
+        Cf. :meth:`~svvamp.Election.ICM_full`.
         """
         if not self._ICM_was_initialized:
             self._ICM_initialize_general(with_candidates=True)
@@ -2631,35 +2646,68 @@ class Election(ElectionResult):
     def ICM_full(self):
         """Ignorant-Coalition Manipulation, full mode.
 
-        We say that a situation is ICM (Ignorant-Coalition Manipulation) for
-        c != w iff voters who prefer c to w can cast ballots so that c is
-        elected, whatever the other voters do.
+        We say that a situation is *Ignorant-Coalition Manipulable* (ICM) for
+        ``c`` ``!=`` :attr:`~svvamp.ElectionResult.w` iff voters who prefer
+        ``c`` to :attr:`~svvamp.ElectionResult.w` can cast ballots so that,
+        whatever the other voters do, ``c`` is elected, .
 
-        We study the following question. When considering the sub-population
-        of voters who do not prefer c to w (sincere voters), what is the
-        minimal number x[c] of c-manipulators needed to perform ICM?
-        Note: in most voting systems (understand: all reasonable ones),
-        it means that if there are x[c] voters or more who prefer c to w,
-        then ICM is possible (the condition on the voting system is a kind
-        of monotonicity on the ability to ICM w.r.t. the number of
-        manipulators).
+        Internally, to decide the problem, SVVAMP studies the following
+        question. When considering the sub-population of voters who do not
+        prefer ``c`` to :attr:`~svvamp.ElectionResult.w` (sincere voters),
+        what is the minimal number :math:`x_c` of ``c``-manipulators needed to
+        perform ICM? For all voting system currently implemented in SVVAMP,
+        it means that ICM is possible iff there are :math:`x_c` voters or
+        more who prefer ``c`` to :attr:`~svvamp.ElectionResult.w`.
 
-        Returns:
-        is_ICM -- Boolean (or NaN). True if a ICM is possible,
-            False otherwise. If the  algorithm cannot decide, then NaN.
-        log_ICM -- String. Parameters used to compute ICM.
-        candidates_ICM -- 1d array of booleans (or NaN). candidates_ICM[c]
-            is True if a ICM for candidate c is possible, False otherwise.
-            If the algorithm cannot decide, then NaN. By convention,
-            candidates_ICM[w] = False.
-        necessary_coalition_size_ICM -- Integer.
-            necessary_coalition_size_ICM[c] is the lower bound found by the
-            algorithm for x[c]. By convention,
-            necessary_coalition_size_ICM[w] = 0.
-        sufficient_coalition_size_ICM -- Integer or +Inf.
-            sufficient_coalition_size_ICM[c] is the upper bound found by the
-            algorithm for x[c].By convention,
-            sufficient_coalition_size_ICM[w] = 0.
+        For information only, the result of SVVAMP's computations about
+        :math:`x_c` is given in outputs ``necessary_coalition_size_ICM`` and
+        ``sufficient_coalition_size_ICM`` (cf. below). By definition, we have
+        ``necessary_coalition_size_ICM`` :math:`\leq x_c \leq`
+        ``sufficient_coalition_size_ICM``.
+
+        When :attr:`~svvamp.Election.ICM_option` = ``exact``, the exactness
+        concerns the ICM decision problems (boolean results below),
+        not the numerical evaluation of :math:`x_c`. It means that for all
+        boolean answers below, SVVAMP will not answer ``numpy.nan`` (
+        undecided). But it is possible that
+        ``necessary_coalition_size_ICM[c]`` <
+        ``sufficient_coalition_size_ICM[c]``.
+
+        :returns: (``is_ICM``, ``log_ICM``, ``candidates_ICM``,
+                  ``necessary_coalition_size_ICM``,
+                  ``sufficient_coalition_size_ICM``).
+
+        ``is_ICM``: Boolean (or ``numpy.nan``). ``True`` if a ICM is possible,
+        ``False`` otherwise. If the algorithm cannot decide,
+        then ``numpy.nan``.
+
+        ``log_ICM`` -- String. Parameters used to compute ICM.
+
+        ``candidates_ICM``: 1d array of booleans (or ``numpy.nan``).
+        ``candidates_ICM[c]`` is ``True`` if ICM for candidate ``c`` is
+        possible, ``False`` otherwise. If the algorithm cannot decide, then
+        ``numpy.nan``. For the sincere winner
+        :attr:`~svvamp.ElectionResult.w`, we have by convention
+        ``candidates_ICM[w] = False``.
+
+        ``necessary_coalition_size_ICM``: Integer.
+        ``necessary_coalition_size_ICM[c]`` is the lower bound found by the
+        algorithm for :math:`x_c`. For the sincere winner
+        :attr:`~svvamp.ElectionResult.w`, we have by convention
+        ``necessary_coalition_size_ICM[w] = 0``.
+
+        ``sufficient_coalition_size_ICM``: Integer or ``numpy.inf``.
+        ``sufficient_coalition_size_ICM[c]`` is the upper bound found by the
+        algorithm for :math:`x_c`. For the sincere winner
+        :attr:`~svvamp.ElectionResult.w`, we have by convention
+        ``sufficient_coalition_size_ICM[w] = 0``.
+
+        .. seealso::
+
+            :meth:`~svvamp.Election.ICM`,
+            :meth:`~svvamp.Election.ICM_c`,
+            :meth:`~svvamp.Election.ICM_c_with_bounds`,
+            :meth:`~svvamp.Election.ICM_with_candidates`.
         """
         if not self._ICM_was_initialized:
             self._ICM_initialize_general(with_candidates=True)
@@ -2986,7 +3034,9 @@ class Election(ElectionResult):
 
     @property
     def log_CM(self):
-        """String. Parameters used to compute CM."""
+        """String. Parameters used to compute :meth:`~svvamp.Election.CM`
+        and related methods.
+        """
         # noinspection PyTypeChecker
         if self.CM_option == 'exact':
             return "CM_option = exact"
@@ -2999,10 +3049,9 @@ class Election(ElectionResult):
     def CM(self):
         """Coalition Manipulation.
 
-        Returns: 
-        is_CM -- Boolean (or NaN). True if CM is possible, False otherwise. If
-            the algorithm cannot decide, then NaN.
-        log_CM -- String. Parameters used to compute CM.
+        :returns: (``is_CM``, ``log_CM``).
+
+        Cf. :meth:`~svvamp.Election.CM_full`.
         """
         if not self._CM_was_initialized:
             self._CM_initialize_general(with_candidates=False)
@@ -3013,10 +3062,11 @@ class Election(ElectionResult):
     def CM_c(self, c):
         """Coalition Manipulation, focus on one candidate.
 
-        Returns:
-        is_CM_c -- Boolean (or NaN). True if CM for candidate c is possible,
-            False otherwise. If the algorithm cannot decide, then NaN.
-        log_CM -- String. Parameters used to compute CM.
+        :param c: Integer (candidate).
+
+        :returns: (``candidates_CM[c]``, ``log_CM``).
+
+        Cf. :meth:`~svvamp.Election.CM_full`.
         """
         if not self._CM_was_initialized:
             self._CM_initialize_general(with_candidates=False)
@@ -3026,15 +3076,14 @@ class Election(ElectionResult):
 
     def CM_c_with_bounds(self, c):
         """Coalition Manipulation, focus on one candidate, with bounds.
-        
-        Returns: 
-        is_CM_c -- Boolean (or NaN). True if CM for candidate c is possible,
-            False otherwise. If the algorithm cannot decide, then NaN.
-        log_CM -- String. Parameters used to compute CM.
-        necessary_coalition_size_CM_c -- Integer. 
-        sufficient_coalition_size_CM_c -- Integer or +Inf. 
 
-        Cf. documentation of CM_full.
+        :param c: Integer (candidate).
+
+        :returns: (``candidates_CM[c]``, ``log_CM``,
+                  ``necessary_coalition_size_CM[c]``,
+                  ``sufficient_coalition_size_CM[c]``).
+
+        Cf. :meth:`~svvamp.Election.CM_full`.
         """
         if not self._CM_was_initialized:
             self._CM_initialize_general(with_candidates=False)
@@ -3045,20 +3094,11 @@ class Election(ElectionResult):
                np.float(self._sufficient_coalition_size_CM[c])
 
     def CM_with_candidates(self):
-        """Coalition Manipulation, complete mode.
+        """Coalition Manipulation, with candidates.
 
-        We say that a situation is CM (Coalitionaly Manipulable) for c != w 
-        iff voters who prefer c to w can cast ballots so that c is elected
-        (while other voters still vote sincerely).
+        :returns: (``is_CM``, ``log_CM``, ``candidates_CM``).
 
-        Returns: 
-        is_CM -- Boolean (or NaN). True if CM is possible, False otherwise. If
-            the algorithm cannot decide, then NaN.
-        log_CM -- String. Parameters used to compute CM.
-        candidates_CM -- 1d array of booleans (or NaN). candidates_CM[c] 
-            is True if a CM for candidate c is possible, False otherwise. If
-            the algorithm cannot decide, then NaN. By convention,
-            candidates_CM[w] = False.
+        Cf. :meth:`~svvamp.Election.CM_full`.
         """
         if not self._CM_was_initialized:
             self._CM_initialize_general(with_candidates=True)
@@ -3070,35 +3110,71 @@ class Election(ElectionResult):
     def CM_full(self):
         """Coalition Manipulation, full mode.
 
-        We say that a situation is CM (Coalitionaly Manipulable) for c != w 
-        iff voters who prefer c to w can cast ballots so that c is elected
-        (while other voters still vote sincerely).
+        We say that a situation is *Coalitionaly Manipulable* (CM) for
+        ``c`` ``!=`` :attr:`~svvamp.ElectionResult.w` iff voters who prefer
+        ``c`` to :attr:`~svvamp.ElectionResult.w` can cast ballots so that
+        ``c`` is elected (while other voters still vote sincerely).
 
-        We study the following question. When considering the sub-population
-        of voters who do not prefer c to w (sincere voters), what is the
-        minimal number x[c] of c-manipulators needed to perform CM?
-        Note: in most voting systems (understand: all reasonable ones),
-        it means that if there are x[c] voters or more who prefer c to w,
-        then manipulation is possible (a sufficient condition on the voting
-        system is that, if a population elects c, then an additional voter
-        may always cast a ballot so that c stays elected).
+        Internally, to decide the problem, SVVAMP studies the following
+        question. When considering the sub-population of voters who do not
+        prefer ``c`` to :attr:`~svvamp.ElectionResult.w` (sincere voters),
+        what is the minimal number :math:`x_c` of ``c``-manipulators needed to
+        perform CM? For all voting system currently implemented in SVVAMP,
+        it means that CM is possible iff there are :math:`x_c` voters or
+        more who prefer ``c`` to :attr:`~svvamp.ElectionResult.w`. (A
+        sufficient condition on the voting system is that, if a population
+        elects ``c``, then an additional voter may always cast a ballot so that
+        ``c`` stays elected)
 
-        Returns: 
-        is_CM -- Boolean (or NaN). True if CM is possible, False otherwise. If
-            the algorithm cannot decide, then NaN.
-        log_CM -- String. Parameters used to compute CM.
-        candidates_CM -- 1d array of booleans (or NaN). candidates_CM[c] 
-            is True if a CM for candidate c is possible, False otherwise. If
-            the algorithm cannot decide, then NaN. By convention,
-            candidates_CM[w] = False.
-        necessary_coalition_size_CM -- Integer. 
-            necessary_coalition_size_CM[c] is the lower bound found by the
-            algorithm for x[c]. By convention,
-            necessary_coalition_size_CM[w] = 0.
-        sufficient_coalition_size_CM -- Integer or +Inf. 
-            sufficient_coalition_size_CM[c] is the upper bound found by the 
-            algorithm for x[c].By convention, 
-            sufficient_coalition_size_CM[w] = 0.
+        For information only, the result of SVVAMP's computations about
+        :math:`x_c` is given in outputs ``necessary_coalition_size_CM`` and
+        ``sufficient_coalition_size_CM`` (cf. below). By definition, we have
+        ``necessary_coalition_size_CM`` :math:`\leq x_c \leq`
+        ``sufficient_coalition_size_CM``.
+
+        When :attr:`~svvamp.Election.CM_option` = ``exact``, the exactness
+        concerns the CM decision problems (boolean results below),
+        not the numerical evaluation of :math:`x_c`. It means that for all
+        boolean answers below, SVVAMP will not answer ``numpy.nan`` (
+        undecided). But it is possible that
+        ``necessary_coalition_size_CM[c]`` <
+        ``sufficient_coalition_size_CM[c]``.
+
+        :returns: (``is_CM``, ``log_CM``, ``candidates_CM``,
+                  ``necessary_coalition_size_CM``,
+                  ``sufficient_coalition_size_CM``).
+
+        ``is_CM``: Boolean (or ``numpy.nan``). ``True`` if a CM is possible,
+        ``False`` otherwise. If the algorithm cannot decide,
+        then ``numpy.nan``.
+
+        ``log_CM`` -- String. Parameters used to compute CM.
+
+        ``candidates_CM``: 1d array of booleans (or ``numpy.nan``).
+        ``candidates_CM[c]`` is ``True`` if CM for candidate ``c`` is
+        possible, ``False`` otherwise. If the algorithm cannot decide, then
+        ``numpy.nan``. For the sincere winner
+        :attr:`~svvamp.ElectionResult.w`, we have by convention
+        ``candidates_CM[w] = False``.
+
+        ``necessary_coalition_size_CM``: Integer.
+        ``necessary_coalition_size_CM[c]`` is the lower bound found by the
+        algorithm for :math:`x_c`. For the sincere winner
+        :attr:`~svvamp.ElectionResult.w`, we have by convention
+        ``necessary_coalition_size_CM[w] = 0``.
+
+        ``sufficient_coalition_size_CM``: Integer or ``numpy.inf``.
+        ``sufficient_coalition_size_CM[c]`` is the upper bound found by the
+        algorithm for :math:`x_c`. For the sincere winner
+        :attr:`~svvamp.ElectionResult.w`, we have by convention
+        ``sufficient_coalition_size_CM[w] = 0``.
+
+        .. seealso::
+
+            :meth:`~svvamp.Election.CM`,
+            :meth:`~svvamp.Election.CM_c`,
+            :meth:`~svvamp.Election.CM_c_with_bounds`,
+            :meth:`~svvamp.Election.CM_with_candidates`.
         """
         if not self._CM_was_initialized:
             self._CM_initialize_general(with_candidates=True)
