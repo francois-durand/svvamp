@@ -53,8 +53,7 @@ class Baldwin(BaldwinResult, Election):
     :meth:`~svvamp.Election.IM`: Deciding IM is NP-complete. Non-polynomial
     or non-exact algorithms from superclass :class:`~svvamp.Election`.
 
-    :meth:`~svvamp.Election.not_IIA`: Non-polynomial
-    or non-exact algorithms from superclass :class:`~svvamp.Election`.
+    :meth:`~svvamp.Election.not_IIA`: Exact in polynomial time.
 
     :meth:`~svvamp.Election.TM`: Exact in polynomial time.
 
