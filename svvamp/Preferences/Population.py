@@ -940,6 +940,7 @@ class Population(MyLog.MyLog):
 
             | \\text{non } c > w \\text{ and } w > d | \\leq
             \\frac{| \\text{non } c > w | + n_m}{2}.
+
         I.e.:
 
         .. math::
