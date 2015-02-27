@@ -10,8 +10,8 @@ using the Spheroid model (extending Impartial Culture to utilities)::
 
 Print the preference rankings of the population::
 
-    pop.ensure_voters_sorted_by_ordinal_preferences()
-    print(pop.preferences_ranking)
+    pop.ensure_voters_sorted_by_rk()
+    print(pop.preferences_rk)
 
 Create an election, using Plurality::
 

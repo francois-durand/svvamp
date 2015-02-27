@@ -105,7 +105,7 @@ class RangeVotingAverage(RangeVotingAverageResult, Election):
         self._with_two_candidates_reduces_to_plurality = False
         # Even if rescale_grades = True, a voter who has the same utility
         # for c and d will not vote the same in Range Voting and in Plurality.
-        self._is_based_on_strict_rankings = False
+        self._is_based_on_rk = False
         self._meets_IgnMC_c_ctb = True
 
         self._precheck_UM = False
@@ -125,7 +125,7 @@ class RangeVotingAverage(RangeVotingAverageResult, Election):
         return not self.rescale_grades
 
     @property
-    def is_based_on_utilities_minus1_1(self):
+    def is_based_on_ut_minus1_1(self):
         return self._rescale_grades
         
     #%% Individual manipulation (IM)

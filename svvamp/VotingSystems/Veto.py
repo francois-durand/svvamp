@@ -75,7 +75,7 @@ class Veto(VetoResult, Election):
         self._class_result = Veto
 
         self._with_two_candidates_reduces_to_plurality = True
-        self._is_based_on_strict_rankings = True
+        self._is_based_on_rk = True
 
         # Just as a reminder...
         self._meets_InfMC_c = False

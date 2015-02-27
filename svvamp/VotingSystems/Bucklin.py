@@ -87,8 +87,8 @@ class Bucklin(BucklinResult, Election):
         self._log_identity = "BUCKLIN"
         self._class_result = Bucklin
         self._with_two_candidates_reduces_to_plurality = True
-        self._is_based_on_strict_rankings = True
-        self._meets_majority_favorite_c_vtb = True
+        self._is_based_on_rk = True
+        self._meets_majority_favorite_c_rk = True
         # N.B.: majority_favorite_c_ctb is not met.
         self._precheck_ICM = False
         # Bucklin does not meet InfMC_c_ctb, but precheck on ICM is not

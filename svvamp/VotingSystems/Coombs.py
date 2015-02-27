@@ -96,7 +96,7 @@ class Coombs(CoombsResult, Election):
         self._log_identity = "COOMBS"
         self._class_result = CoombsResult
         self._with_two_candidates_reduces_to_plurality = True
-        self._is_based_on_strict_rankings = True
+        self._is_based_on_rk = True
         self._meets_IgnMC_c_ctb = True
         self._precheck_UM = False  # No UM precheck before CM
         self._precheck_ICM = False

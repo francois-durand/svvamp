@@ -90,8 +90,8 @@ class IteratedBucklin(IteratedBucklinResult, Election):
         self._log_identity = "ITERATED_BUCKLIN"
         self._class_result = IteratedBucklinResult
         self._with_two_candidates_reduces_to_plurality = True
-        self._is_based_on_strict_rankings = True
-        self._meets_majority_favorite_c_vtb = True
+        self._is_based_on_rk = True
+        self._meets_majority_favorite_c_rk = True
 
 
 if __name__ == '__main__':

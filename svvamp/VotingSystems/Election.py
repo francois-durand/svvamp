@@ -203,17 +203,17 @@ class Election(ElectionResult):
 
         ::
 
-            Condorcet_c_rel_ctb               ==>               Condorcet_c_rel
-            ||           Condorcet_c_vtb_ctb ==>      Condorcet_c_vtb       ||
+            Condorcet_c_ut_rel_ctb            ==>            Condorcet_c_ut_rel
+            ||             Condorcet_c_rk_ctb ==>      Condorcet_c_rk       ||
             ||           ||        ||                   ||         ||       ||
             V            V         ||                   ||         V        V
-            Condorcet_c_ctb                   ==>                   Condorcet_c
+            Condorcet_c_ut_abs_ctb            ==>            Condorcet_c_ut_abs
             ||                     ||                   ||                  ||
             ||                     V                    V                   ||
-            ||   majority_favorite_c_vtb_ctb ==> majority_favorite_c_vtb    ||
+            ||     majority_favorite_c_rk_ctb ==> majority_favorite_c_rk    ||
             ||            ||                                  ||            ||
             V             V                                   V             V
-            majority_favorite_c_ctb           ==>           majority_favorite_c
+            majority_favorite_c_ut_ctb        ==>        majority_favorite_ut_c
             ||                                                              ||
             V                                                               V
             IgnMC_c_ctb                       ==>                       IgnMC_c
@@ -242,8 +242,8 @@ class Election(ElectionResult):
         # For the definition of these criteria, see the corresponding getter
         # methods.
         self._with_two_candidates_reduces_to_plurality = False
-        self._is_based_on_strict_rankings = False
-        self._is_based_on_utilities_minus1_1 = False
+        self._is_based_on_rk = False
+        self._is_based_on_ut_minus1_1 = False
         self._meets_IIA = False
 
         self._precheck_UM = True
@@ -256,18 +256,18 @@ class Election(ElectionResult):
         # In the subclass corresponding to a specific voting system,
         # it is sufficient to set to True only the strongest criteria that 
         # are met by the voting system. 
-        self._meets_Condorcet_c_rel = None
-        self._meets_Condorcet_c_vtb = None
-        self._meets_Condorcet_c = None
-        self._meets_majority_favorite_c_vtb = None
-        self._meets_majority_favorite_c = None
+        self._meets_Condorcet_c_ut_rel = None
+        self._meets_Condorcet_c_rk = None
+        self._meets_Condorcet_c_ut_abs = None
+        self._meets_majority_favorite_c_rk = None
+        self._meets_majority_favorite_c_ut = None
         self._meets_IgnMC_c = None
         self._meets_InfMC_c = None
-        self._meets_Condorcet_c_vtb_ctb = None
-        self._meets_Condorcet_c_rel_ctb = None
-        self._meets_Condorcet_c_ctb = None
-        self._meets_majority_favorite_c_vtb_ctb = None
-        self._meets_majority_favorite_c_ctb = None
+        self._meets_Condorcet_c_rk_ctb = None
+        self._meets_Condorcet_c_ut_rel_ctb = None
+        self._meets_Condorcet_c_ut_abs_ctb = None
+        self._meets_majority_favorite_c_rk_ctb = None
+        self._meets_majority_favorite_c_ut_ctb = None
         self._meets_IgnMC_c_ctb = None
         self._meets_InfMC_c_ctb = None
 
@@ -291,7 +291,7 @@ class Election(ElectionResult):
         Typically used when the population is modified: all manipulation
         computations are initialized then.
         """
-        self.pop.ensure_voters_sorted_by_ordinal_preferences()
+        self.pop.ensure_voters_sorted_by_rk()
         self._v_wants_to_help_c = None
         self._c_has_supporters = None
         self._losing_candidates = None
@@ -525,14 +525,14 @@ class Election(ElectionResult):
         return self._with_two_candidates_reduces_to_plurality
 
     @property
-    def is_based_on_strict_rankings(self):
+    def is_based_on_rk(self):
         """Boolean. ``True`` iff this voting system is based only on
         strict rankings (no cardinal information, indifference not allowed).
         """
-        return self._is_based_on_strict_rankings
+        return self._is_based_on_rk
 
     @property
-    def is_based_on_utilities_minus1_1(self):
+    def is_based_on_ut_minus1_1(self):
         """Boolean. ``True`` iff:
 
             *   This voting system is based only on utilities (not strict
@@ -541,7 +541,7 @@ class Election(ElectionResult):
                 pretend that ``c`` has utility 1 and other candidates have
                 utility -1.
         """
-        return self._is_based_on_utilities_minus1_1
+        return self._is_based_on_ut_minus1_1
 
     @property
     def meets_IIA(self):
@@ -551,100 +551,98 @@ class Election(ElectionResult):
         return self._meets_IIA
            
     @property
-    def meets_Condorcet_c_rel_ctb(self):
+    def meets_Condorcet_c_ut_rel_ctb(self):
         """Boolean. ``True`` iff the voting system meets
         the 'relative Condorcet criterion with ctb'. I.e.: if a
-        candidate is 'relative Condorcet winner with ctb', she wins.
-        Cf. :attr:`~svvamp.Population.condorcet_winner_ut_rel_ctb`.
+        candidate is a :attr:`~svvamp.Population.condorcet_winner_ut_rel_ctb`,
+        she wins.
 
         Implies:
-        :attr:`~svvamp.Election.meets_Condorcet_c_rel`,
-        :attr:`~svvamp.Election.meets_Condorcet_c_ctb`.
+        :attr:`~svvamp.Election.meets_Condorcet_c_ut_rel`,
+        :attr:`~svvamp.Election.meets_Condorcet_c_ut_abs_ctb`.
         """
-        if self._meets_Condorcet_c_rel_ctb is None:
-            self._meets_Condorcet_c_rel_ctb = False
-        return self._meets_Condorcet_c_rel_ctb
+        if self._meets_Condorcet_c_ut_rel_ctb is None:
+            self._meets_Condorcet_c_ut_rel_ctb = False
+        return self._meets_Condorcet_c_ut_rel_ctb
 
     @property
-    def meets_Condorcet_c_vtb_ctb(self):
+    def meets_Condorcet_c_rk_ctb(self):
         """Boolean. ``True`` iff the voting system meets
-        the 'Condorcet criterion with vtb and ctb'. I.e.: if a candidate is
-        'Condorcet winner with vtb and ctb', she wins.
-        Cf. :attr:`~svvamp.Population.condorcet_winner_rk_ctb`.
+        the 'Condorcet criterion (rk) with ctb'. I.e.: if a candidate is
+        a :attr:`~svvamp.Population.condorcet_winner_rk_ctb`, she wins.
 
         Implies:
-        :attr:`~svvamp.Election.meets_Condorcet_c_vtb`,
-        :attr:`~svvamp.Election.meets_Condorcet_c_ctb`,
-        :attr:`~svvamp.Election.meets_majority_favorite_c_vtb_ctb`.
+        :attr:`~svvamp.Election.meets_Condorcet_c_rk`,
+        :attr:`~svvamp.Election.meets_Condorcet_c_ut_abs_ctb`,
+        :attr:`~svvamp.Election.meets_majority_favorite_c_rk_ctb`.
         """
-        if self._meets_Condorcet_c_vtb_ctb is None:
-            self._meets_Condorcet_c_vtb_ctb = False
-        return self._meets_Condorcet_c_vtb_ctb
+        if self._meets_Condorcet_c_rk_ctb is None:
+            self._meets_Condorcet_c_rk_ctb = False
+        return self._meets_Condorcet_c_rk_ctb
 
     @property
-    def meets_Condorcet_c_ctb(self):
+    def meets_Condorcet_c_ut_abs_ctb(self):
         """Boolean. ``True`` iff the voting system meets
-        the 'Condorcet criterion with ctb'. I.e.: if a candidate is
-        'Condorcet winner with ctb', she wins.
-        Cf. :attr:`~svvamp.Population.condorcet_winner_ut_abs_ctb`.
+        the 'absolute Condorcet criterion with ctb'. I.e.: if a candidate is
+        a :attr:`~svvamp.Population.condorcet_winner_ut_abs_ctb`, she wins.
 
         Is implied by:
-        :attr:`~svvamp.Election.meets_Condorcet_c_vtb_ctb`,
-        :attr:`~svvamp.Election.meets_Condorcet_c_rel_ctb`.
+        :attr:`~svvamp.Election.meets_Condorcet_c_rk_ctb`,
+        :attr:`~svvamp.Election.meets_Condorcet_c_ut_rel_ctb`.
 
         Implies:
-        :attr:`~svvamp.Election.meets_Condorcet_c`,
-        :attr:`~svvamp.Election.meets_majority_favorite_c_ctb`.
+        :attr:`~svvamp.Election.meets_Condorcet_c_ut_abs`,
+        :attr:`~svvamp.Election.meets_majority_favorite_c_ut_ctb`.
         """
-        if self._meets_Condorcet_c_ctb is None:
-            self._meets_Condorcet_c_ctb = (
-                self.meets_Condorcet_c_vtb_ctb or
-                self.meets_Condorcet_c_rel_ctb)
-        return self._meets_Condorcet_c_ctb
+        if self._meets_Condorcet_c_ut_abs_ctb is None:
+            self._meets_Condorcet_c_ut_abs_ctb = (
+                self.meets_Condorcet_c_rk_ctb or
+                self.meets_Condorcet_c_ut_rel_ctb)
+        return self._meets_Condorcet_c_ut_abs_ctb
            
     @property
-    def meets_majority_favorite_c_vtb_ctb(self):
+    def meets_majority_favorite_c_rk_ctb(self):
         """Boolean. ``True`` iff the voting system meets
-        the 'majority favorite criterion with vtb and ctb'. I.e.:
+        the 'majority favorite criterion (rk) with ctb'. I.e.:
 
-            *   It :attr:`~svvamp.Election.meets_majority_favorite_c_vtb`,
+            *   It :attr:`~svvamp.Election.meets_majority_favorite_c_rk`,
             *   And if :attr:`~svvamp.Population.V`/2 voters rank candidate 0
-                first (with vtb), she wins.
+                first (rk), she wins.
 
         Is implied by:
-        :attr:`~svvamp.Election.meets_Condorcet_c_vtb_ctb`.
+        :attr:`~svvamp.Election.meets_Condorcet_c_rk_ctb`.
 
         Implies:
-        :attr:`~svvamp.Election.meets_majority_favorite_c_ctb`,
-        :attr:`~svvamp.Election.meets_majority_favorite_c_vtb`.
+        :attr:`~svvamp.Election.meets_majority_favorite_c_ut_ctb`,
+        :attr:`~svvamp.Election.meets_majority_favorite_c_rk`.
         """
-        if self._meets_majority_favorite_c_vtb_ctb is None:
-            self._meets_majority_favorite_c_vtb_ctb = \
-                self.meets_Condorcet_c_vtb_ctb
-        return self._meets_majority_favorite_c_vtb_ctb
+        if self._meets_majority_favorite_c_rk_ctb is None:
+            self._meets_majority_favorite_c_rk_ctb = \
+                self.meets_Condorcet_c_rk_ctb
+        return self._meets_majority_favorite_c_rk_ctb
 
     @property
-    def meets_majority_favorite_c_ctb(self):
+    def meets_majority_favorite_c_ut_ctb(self):
         """Boolean. ``True`` iff the voting system meets
-        the 'majority favorite criterion with ctb'. I.e.:
+        the 'majority favorite criterion (ut) with ctb'. I.e.:
 
-            *   It :attr:`~svvamp.Election.meets_majority_favorite_c`,
+            *   It :attr:`~svvamp.Election.meets_majority_favorite_c_ut`,
             *   And if :attr:`~svvamp.Population.V`/2 voters strictly prefer
                 candidate 0 to all other candidates, she wins.
 
         Is implied by:
-        :attr:`~svvamp.Election.meets_Condorcet_c_ctb`,
-        :attr:`~svvamp.Election.meets_majority_favorite_c_vtb_ctb`.
+        :attr:`~svvamp.Election.meets_Condorcet_c_ut_abs_ctb`,
+        :attr:`~svvamp.Election.meets_majority_favorite_c_rk_ctb`.
 
         Implies:
         :attr:`~svvamp.Election.meets_IgnMC_c_ctb`,
-        :attr:`~svvamp.Election.meets_majority_favorite_c`.
+        :attr:`~svvamp.Election.meets_majority_favorite_c_ut`.
         """
-        if self._meets_majority_favorite_c_ctb is None:
-            self._meets_majority_favorite_c_ctb = (
-                self.meets_Condorcet_c_ctb or
-                self.meets_majority_favorite_c_vtb_ctb)
-        return self._meets_majority_favorite_c_ctb
+        if self._meets_majority_favorite_c_ut_ctb is None:
+            self._meets_majority_favorite_c_ut_ctb = (
+                self.meets_Condorcet_c_ut_abs_ctb or
+                self.meets_majority_favorite_c_rk_ctb)
+        return self._meets_majority_favorite_c_ut_ctb
 
     @property
     def meets_IgnMC_c_ctb(self):
@@ -656,14 +654,14 @@ class Election(ElectionResult):
                 :attr:`~svvamp.Population.V`/2 can make candidate 0 win.
 
         Is implied by:
-        :attr:`~svvamp.Election.meets_majority_favorite_c_ctb`.
+        :attr:`~svvamp.Election.meets_majority_favorite_c_ut_ctb`.
 
         Implies:
         :attr:`~svvamp.Election.meets_InfMC_c_ctb`,
         :attr:`~svvamp.Election.meets_IgnMC_c`.
         """
         if self._meets_IgnMC_c_ctb is None:
-            self._meets_IgnMC_c_ctb = self.meets_majority_favorite_c_ctb
+            self._meets_IgnMC_c_ctb = self.meets_majority_favorite_c_ut_ctb
         return self._meets_IgnMC_c_ctb
 
     @property
@@ -686,103 +684,100 @@ class Election(ElectionResult):
         return self._meets_InfMC_c_ctb
         
     @property
-    def meets_Condorcet_c_rel(self):
+    def meets_Condorcet_c_ut_rel(self):
         """Boolean. ``True`` iff the voting system meets
         the relative Condorcet criterion. I.e. if a candidate is a
-        relative Condorcet winner, then she wins.
-        Cf. :attr:`~svvamp.Population.condorcet_winner_ut_rel`.
+        :attr:`~svvamp.Population.condorcet_winner_ut_rel`, then she wins.
 
         Is implied by:
-        :attr:`~svvamp.Election.meets_Condorcet_c_rel_ctb`.
+        :attr:`~svvamp.Election.meets_Condorcet_c_ut_rel_ctb`.
 
         Implies:
-        :attr:`~svvamp.Election.meets_Condorcet_c`.
+        :attr:`~svvamp.Election.meets_Condorcet_c_ut_abs`.
         """
-        if self._meets_Condorcet_c_rel is None:
-            self._meets_Condorcet_c_rel = self.meets_Condorcet_c_rel_ctb
-        return self._meets_Condorcet_c_rel
+        if self._meets_Condorcet_c_ut_rel is None:
+            self._meets_Condorcet_c_ut_rel = self.meets_Condorcet_c_ut_rel_ctb
+        return self._meets_Condorcet_c_ut_rel
 
     @property
-    def meets_Condorcet_c_vtb(self):
+    def meets_Condorcet_c_rk(self):
         """Boolean. ``True`` iff the voting system meets
-        the Condorcet criterion with vtb. I.e. if a candidate is a Condorcet
-        winner with vtb, then she wins.
-        Cf. :attr:`~svvamp.Population.condorcet_winner_rk`.
+        the Condorcet criterion (rk). I.e. if a candidate is a
+        :attr:`~svvamp.Population.condorcet_winner_rk`, then she wins.
 
         Is implied by:
-        :attr:`~svvamp.Election.meets_Condorcet_c_vtb_ctb`.
+        :attr:`~svvamp.Election.meets_Condorcet_c_rk_ctb`.
 
         Implies:
-        :attr:`~svvamp.Election.meets_Condorcet_c`,
-        :attr:`~svvamp.Election.meets_majority_favorite_c_vtb`.
+        :attr:`~svvamp.Election.meets_Condorcet_c_ut_abs`,
+        :attr:`~svvamp.Election.meets_majority_favorite_c_rk`.
         """
-        if self._meets_Condorcet_c_vtb is None:
-            self._meets_Condorcet_c_vtb = self.meets_Condorcet_c_vtb_ctb
-        return self._meets_Condorcet_c_vtb
+        if self._meets_Condorcet_c_rk is None:
+            self._meets_Condorcet_c_rk = self.meets_Condorcet_c_rk_ctb
+        return self._meets_Condorcet_c_rk
 
     @property
-    def meets_Condorcet_c(self):
+    def meets_Condorcet_c_ut_abs(self):
         """Boolean. ``True`` iff the voting system meets
-        the Condorcet criterion. I.e. if a candidate is a Condorcet winner,
+        the absolute Condorcet criterion. I.e. if a candidate is a
+        :attr:`~svvamp.Population.condorcet_winner_ut_abs`, then she wins.
+
+        Is implied by:
+        :attr:`~svvamp.Election.meets_Condorcet_c_rk`,
+        :attr:`~svvamp.Election.meets_Condorcet_c_ut_rel`,
+        :attr:`~svvamp.Election.meets_Condorcet_c_ut_abs_ctb`.
+
+        Implies:
+        :attr:`~svvamp.Election.meets_majority_favorite_c_ut`.
+        """
+        if self._meets_Condorcet_c_ut_abs is None:
+            self._meets_Condorcet_c_ut_abs = (
+                self.meets_Condorcet_c_rk or
+                self.meets_Condorcet_c_ut_rel or
+                self.meets_Condorcet_c_ut_abs_ctb)
+        return self._meets_Condorcet_c_ut_abs
+
+    @property
+    def meets_majority_favorite_c_rk(self):
+        """Boolean. ``True`` iff the voting system meets
+        the majority favorite criterion (rk). I.e. if strictly more than
+        :attr:`~svvamp.Population.V`/2 voters rank a candidate first (rk),
         then she wins.
-        Cf. :attr:`~svvamp.Population.condorcet_winner_ut_abs`.
 
         Is implied by:
-        :attr:`~svvamp.Election.meets_Condorcet_c_vtb`,
-        :attr:`~svvamp.Election.meets_Condorcet_c_rel`,
-        :attr:`~svvamp.Election.meets_Condorcet_c_ctb`.
+        :attr:`~svvamp.Election.meets_Condorcet_c_rk`,
+        :attr:`~svvamp.Election.meets_majority_favorite_c_rk_ctb`.
 
         Implies:
-        :attr:`~svvamp.Election.meets_majority_favorite_c`.
+        :attr:`~svvamp.Election._meets_majority_favorite_c_ut`.
         """
-        if self._meets_Condorcet_c is None:
-            self._meets_Condorcet_c = (
-                self.meets_Condorcet_c_vtb or
-                self.meets_Condorcet_c_rel or
-                self.meets_Condorcet_c_ctb)
-        return self._meets_Condorcet_c
+        if self._meets_majority_favorite_c_rk is None:
+            self._meets_majority_favorite_c_rk = (
+                self.meets_Condorcet_c_rk or
+                self.meets_majority_favorite_c_rk_ctb)
+        return self._meets_majority_favorite_c_rk
 
     @property
-    def meets_majority_favorite_c_vtb(self):
+    def meets_majority_favorite_c_ut(self):
         """Boolean. ``True`` iff the voting system meets
-        the majority favorite criterion with vtb. I.e. if strictly more than
-        :attr:`~svvamp.Population.V`/2 voters rank a candidate first (with
-        vtb), she wins.
-
-        Is implied by:
-        :attr:`~svvamp.Election.meets_Condorcet_c_vtb`,
-        :attr:`~svvamp.Election.meets_majority_favorite_c_vtb_ctb`.
-
-        Implies:
-        :attr:`~svvamp.Election._meets_majority_favorite_c`.
-        """
-        if self._meets_majority_favorite_c_vtb is None:
-            self._meets_majority_favorite_c_vtb = (
-                self.meets_Condorcet_c_vtb or
-                self.meets_majority_favorite_c_vtb_ctb)
-        return self._meets_majority_favorite_c_vtb
-
-    @property
-    def meets_majority_favorite_c(self):
-        """Boolean. ``True`` iff the voting system meets
-        the majority favorite criterion. I.e. if strictly more than
+        the majority favorite criterion (ut). I.e. if strictly more than
         :attr:`~svvamp.Population.V`/2 voters strictly prefer a candidate to
-        all others (without vtb), she wins.
+        all others (ut), she wins.
 
         Is implied by:
-        :attr:`~svvamp.Election.meets_Condorcet_c`,
-        :attr:`~svvamp.Election.meets_majority_favorite_c_ctb`,
-        :attr:`~svvamp.Election.meets_majority_favorite_c_vtb`.
+        :attr:`~svvamp.Election.meets_Condorcet_c_ut_abs`,
+        :attr:`~svvamp.Election.meets_majority_favorite_c_ut_ctb`,
+        :attr:`~svvamp.Election.meets_majority_favorite_c_rk`.
 
         Implies:
         :attr:`~svvamp.Election.meets_IgnMC_c`.
         """
-        if self._meets_majority_favorite_c is None:
-            self._meets_majority_favorite_c = (
-                self.meets_Condorcet_c or
-                self.meets_majority_favorite_c_vtb or
-                self.meets_majority_favorite_c_ctb)
-        return self._meets_majority_favorite_c
+        if self._meets_majority_favorite_c_ut is None:
+            self._meets_majority_favorite_c_ut = (
+                self.meets_Condorcet_c_ut_abs or
+                self.meets_majority_favorite_c_rk or
+                self.meets_majority_favorite_c_ut_ctb)
+        return self._meets_majority_favorite_c_ut
 
     @property
     def meets_IgnMC_c(self):
@@ -796,7 +791,7 @@ class Election(ElectionResult):
         what other voters will do.
         
         Is implied by:
-        :attr:`~svvamp.Election.meets_majority_favorite_c`,
+        :attr:`~svvamp.Election.meets_majority_favorite_c_ut`,
         :attr:`~svvamp.Election.meets_IgnMC_c_ctb`.
 
         Implies:
@@ -804,7 +799,7 @@ class Election(ElectionResult):
         """
         if self._meets_IgnMC_c is None:
             self._meets_IgnMC_c = (
-                self.meets_majority_favorite_c or
+                self.meets_majority_favorite_c_ut or
                 self.meets_IgnMC_c_ctb)
         return self._meets_IgnMC_c
 
@@ -846,8 +841,8 @@ class Election(ElectionResult):
     def _basic_version(self, **kwargs):
 
         class_result = self._class_result
-        is_based_on_strict_rankings = self.is_based_on_strict_rankings
-        is_based_on_utilities_minus1_1 = self.is_based_on_utilities_minus1_1
+        is_based_on_strict_rankings = self.is_based_on_rk
+        is_based_on_utilities_minus1_1 = self.is_based_on_ut_minus1_1
 
         class _BasicVersion(class_result, Election):
 
@@ -857,9 +852,9 @@ class Election(ElectionResult):
             def __init__(self, population, **kwargs):
                 super().__init__(population, **kwargs)
                 self._log_identity = "BASIC"
-                self._is_based_on_strict_rankings = (
+                self._is_based_on_rk = (
                     is_based_on_strict_rankings)
-                self._is_based_on_utilities_minus1_1 = (
+                self._is_based_on_ut_minus1_1 = (
                     is_based_on_utilities_minus1_1)
 
             def _create_result(self, pop_test):
@@ -950,47 +945,47 @@ class Election(ElectionResult):
         if self.meets_IIA:
             self._IIA_impossible("IIA is guaranteed for this voting system.")
             return
-        if self.meets_Condorcet_c and self.w_is_condorcet_winner:
+        if self.meets_Condorcet_c_ut_abs and self.w_is_condorcet_winner_ut_abs:
             self._IIA_impossible("IIA guaranteed: w is a Condorcet winner.")
             return
-        if self.meets_Condorcet_c_ctb and self.w_is_condorcet_winner_ctb:
+        if self.meets_Condorcet_c_ut_abs_ctb and self.w_is_condorcet_winner_ut_abs_ctb:
             self._IIA_impossible("IIA guaranteed: w is a Condorcet winner "
                                  "with candidate tie-breaking.")
             return
-        if self.meets_Condorcet_c_rel and self.w_is_condorcet_winner_rel:
+        if self.meets_Condorcet_c_ut_rel and self.w_is_condorcet_winner_ut_rel:
             self._IIA_impossible("IIA guaranteed: w is a relative Condorcet "
                                  "winner.")
             return
-        if (self.meets_Condorcet_c_rel_ctb and
-                self.w_is_condorcet_winner_rel_ctb):
+        if (self.meets_Condorcet_c_ut_rel_ctb and
+                self.w_is_condorcet_winner_ut_rel_ctb):
             self._IIA_impossible("IIA guaranteed: w is a relative Condorcet "
                                  "winner with candidate tie-breaking.")
             return
-        if self.meets_Condorcet_c_vtb and self.w_is_condorcet_winner_vtb:
+        if self.meets_Condorcet_c_rk and self.w_is_condorcet_winner_rk:
             self._IIA_impossible("IIA guaranteed: w is a Condorcet winner "
                                  "with voter tie-breaking.")
             return
-        if (self.meets_Condorcet_c_vtb_ctb and
-                self.w_is_condorcet_winner_vtb_ctb):
+        if (self.meets_Condorcet_c_rk_ctb and
+                self.w_is_condorcet_winner_rk_ctb):
             self._IIA_impossible("IIA guaranteed: w is a Condorcet winner "
                                  "with voter and candidate tie-breaking.")
             return
-        if (self.meets_majority_favorite_c and
+        if (self.meets_majority_favorite_c_ut and
                 self.pop.plurality_scores_ut[self.w] > self.pop.V / 2):
             self._IIA_impossible("IIA guaranteed: w is a majority favorite.")
             return
-        if (self.meets_majority_favorite_c_vtb and
+        if (self.meets_majority_favorite_c_rk and
                 self.pop.plurality_scores_rk[self.w] > self.pop.V / 2):
             self._IIA_impossible("IIA guaranteed: w is a majority favorite "
                                  "with voter tie-breaking.")
             return
-        if (self.meets_majority_favorite_c_ctb and
+        if (self.meets_majority_favorite_c_ut_ctb and
                 self.w == 0 and
                 self.pop.plurality_scores_ut[self.w] >= self.pop.V / 2):
             self._IIA_impossible("IIA guaranteed: w is a majority favorite "
                                  "with candidate tie-breaking (w = 0).")
             return
-        if (self.meets_majority_favorite_c_vtb_ctb and
+        if (self.meets_majority_favorite_c_rk_ctb and
                 self.w == 0 and
                 self.pop.plurality_scores_rk[self.w] >= self.pop.V / 2):
             self._IIA_impossible("IIA guaranteed: w is a majority favorite "
@@ -998,11 +993,11 @@ class Election(ElectionResult):
                                  "(w = 0).")
             return
         if self._with_two_candidates_reduces_to_plurality:
-            if self.w_is_not_condorcet_winner_vtb_ctb:
+            if self.w_is_not_condorcet_winner_rk_ctb:
                 # For subsets of 2 candidates, we use the matrix of victories 
                 # to gain time.
-                self._mylog("IIA failure found by Condorcet failure (with "
-                            "vtb and ctb)", 2)
+                self._mylog("IIA failure found by Condorcet failure "
+                            "(rk, ctb)", 2)
                 self._is_IIA = False
                 self._example_winner_IIA = np.nonzero(
                     self.pop.matrix_victories_rk_ctb[:, self.w])[0][0]
@@ -1011,7 +1006,7 @@ class Election(ElectionResult):
                 self._example_subset_IIA[self._example_winner_IIA] = True
             else:
                 self._mylog("IIA: subsets of size 2 are ok because w is a "
-                            "Condorcet winner (with vtb and ctb)", 2)
+                            "Condorcet winner (rk, ctb)", 2)
                 self._compute_IIA_aux(subset_minimum_size=3)
         else:
             self._compute_IIA_aux(subset_minimum_size=2)
@@ -1466,7 +1461,7 @@ class Election(ElectionResult):
         """
         self._mylogv("IM: Voter =", v, 3)
         # Check if v is identical to previous voter
-        if (self._is_based_on_strict_rankings and
+        if (self._is_based_on_rk and
                 self.pop.v_has_same_ordinal_preferences_as_previous_voter[v]):
             self._mylog("IM: Identical to previous voter", 3)
             decided_previous_v = np.logical_not(np.isneginf(
@@ -1551,10 +1546,10 @@ class Election(ElectionResult):
 
         Same specifications as _IM_main_work_v.
         """
-        if self.is_based_on_strict_rankings:
+        if self.is_based_on_rk:
             self._IM_main_work_v_exact_rankings(
                 v, c_is_wanted, nb_wanted_undecided, stop_if_true)
-        elif self.is_based_on_utilities_minus1_1:
+        elif self.is_based_on_ut_minus1_1:
             self._IM_main_work_v_exact_utilities_minus1_1(
                 v, c_is_wanted, nb_wanted_undecided, stop_if_true)
         else:
@@ -1863,14 +1858,14 @@ class Election(ElectionResult):
         # 1) Preliminary checks that may improve _candidates_TM (all must be
         # done, except if everything is decided).
         # Majority favorite criterion
-        if (self.meets_majority_favorite_c and
+        if (self.meets_majority_favorite_c_ut and
                 self.pop.plurality_scores_ut[self.w] > self.pop.V / 2):
             self._mylog("TM impossible (w is a majority favorite).", 2)
             self._is_TM = False
             self._candidates_TM[:] = False
             self._TM_was_computed_with_candidates = True
             return
-        if (self.meets_majority_favorite_c_ctb and
+        if (self.meets_majority_favorite_c_ut_ctb and
                 self.w == 0 and
                 self.pop.plurality_scores_ut[self.w] >= self.pop.V / 2):
             self._mylog("TM impossible (w=0 is a majority favorite with " +
@@ -1879,7 +1874,7 @@ class Election(ElectionResult):
             self._candidates_TM[:] = False
             self._TM_was_computed_with_candidates = True
             return
-        if (self.meets_majority_favorite_c_vtb and
+        if (self.meets_majority_favorite_c_rk and
                 self.pop.plurality_scores_rk[self.w] > self.pop.V / 2):
             self._mylog("TM impossible (w is a majority favorite with "
                         "voter tie-breaking).", 2)
@@ -1887,7 +1882,7 @@ class Election(ElectionResult):
             self._candidates_TM[:] = False
             self._TM_was_computed_with_candidates = True
             return
-        if (self.meets_majority_favorite_c_vtb_ctb and
+        if (self.meets_majority_favorite_c_rk_ctb and
                 self.w == 0 and
                 self.pop.plurality_scores_rk[self.w] >= self.pop.V / 2):
             self._mylog("TM impossible (w=0 is a majority favorite with " +
@@ -2008,9 +2003,9 @@ class Election(ElectionResult):
         Must decide _candidates_TM[c] (to True, False or NaN).
         Do not update _is_TM.
         """
-        if self.is_based_on_strict_rankings:
+        if self.is_based_on_rk:
             self._TM_main_work_c_exact_rankings(c)
-        elif self.is_based_on_utilities_minus1_1:
+        elif self.is_based_on_ut_minus1_1:
             self._TM_main_work_c_exact_utilities_minus1_1(c)
         else:
             raise NotImplementedError("TM: Exact manipulation is not "
@@ -2262,14 +2257,14 @@ class Election(ElectionResult):
         # 1) Preliminary checks that may improve _candidates_UM (all must be
         # done, except if everything is decided).
         # Majority favorite criterion
-        if (self.meets_majority_favorite_c and
+        if (self.meets_majority_favorite_c_ut and
                 self.pop.plurality_scores_ut[self.w] > self.pop.V / 2):
             self._mylog("UM impossible (w is a majority favorite).", 2)
             self._is_UM = False
             self._candidates_UM[:] = False
             self._UM_was_computed_with_candidates = True
             return
-        if (self.meets_majority_favorite_c_ctb and
+        if (self.meets_majority_favorite_c_ut_ctb and
                 self.w == 0 and
                 self.pop.plurality_scores_ut[self.w] >= self.pop.V / 2):
             self._mylog("UM impossible (w=0 is a majority favorite with " +
@@ -2278,7 +2273,7 @@ class Election(ElectionResult):
             self._candidates_UM[:] = False
             self._UM_was_computed_with_candidates = True
             return
-        if (self.meets_majority_favorite_c_vtb and
+        if (self.meets_majority_favorite_c_rk and
                 self.pop.plurality_scores_rk[self.w] > self.pop.V / 2):
             self._mylog("UM impossible (w is a majority favorite with "
                         "voter tie-breaking).", 2)
@@ -2286,7 +2281,7 @@ class Election(ElectionResult):
             self._candidates_UM[:] = False
             self._UM_was_computed_with_candidates = True
             return
-        if (self.meets_majority_favorite_c_vtb_ctb and
+        if (self.meets_majority_favorite_c_rk_ctb and
                 self.w == 0 and
                 self.pop.plurality_scores_rk[self.w] >= self.pop.V / 2):
             self._mylog("UM impossible (w=0 is a majority favorite with " +
@@ -2296,7 +2291,7 @@ class Election(ElectionResult):
             self._UM_was_computed_with_candidates = True
             return
         # Condorcet resistance
-        if (self.meets_Condorcet_c and
+        if (self.meets_Condorcet_c_ut_abs and
                 self.w_is_resistant_condorcet_winner):
             self._mylog("UM impossible (w is a Resistant Condorcet winner)", 2)
             self._is_UM = False
@@ -2316,7 +2311,7 @@ class Election(ElectionResult):
             return
         # 3) Preliminary checks that gives only global information on _is_UM
         # (may return as soon as decision is made).
-        if (self.meets_majority_favorite_c_vtb and
+        if (self.meets_majority_favorite_c_rk and
                 self.w_is_not_condorcet_admissible):
             self._mylog("UM found (w is not Condorcet-admissible)", 2)
             self._is_UM = True
@@ -2383,12 +2378,12 @@ class Election(ElectionResult):
         n_m = self.pop.matrix_duels_ut[c, self.w]  # Number of manipulators
         n_s = self.pop.V - n_m                  # Number of sincere voters
         # Positive pretest based on the majority favorite criterion
-        if (self.meets_majority_favorite_c_vtb and
+        if (self.meets_majority_favorite_c_rk and
                 n_m > self.pop.V / 2):
             self._mylog('UM: Preliminary checks: n_m > V / 2', 3)
             self._candidates_UM[c] = True
             return
-        if (self.meets_majority_favorite_c_vtb_ctb and c == 0 and
+        if (self.meets_majority_favorite_c_rk_ctb and c == 0 and
                 n_m >= self.pop.V / 2):
             self._mylog('UM: Preliminary checks: n_m >= V / 2 and c == 0', 3)
             self._candidates_UM[c] = True
@@ -2396,36 +2391,35 @@ class Election(ElectionResult):
         # Negative pretest based on the majority favorite criterion
         # If plurality_scores_ut[w] > (n_s + n_m) / 2, then CM impossible.
         # Necessary condition: n_m >= 2 * plurality_scores_ut[w] - n_s.
-        if self.meets_majority_favorite_c:
+        if self.meets_majority_favorite_c_ut:
             if n_m < 2 * self.pop.plurality_scores_ut[self.w] - n_s:
                 self._mylog('UM: Preliminary checks: even with n_m '
-                            'manipulators, w stays plurality winner (no tvb)',
+                            'manipulators, w stays plurality winner (ut)',
                             3)
                 self._candidates_UM[c] = False
                 return
-        if self.meets_majority_favorite_c_ctb and self.w == 0:
+        if self.meets_majority_favorite_c_ut_ctb and self.w == 0:
             if n_m < 2 * self.pop.plurality_scores_ut[self.w] - n_s + 1:
                 self._mylog('UM: Preliminary checks: even with n_m '
-                            'manipulators, w stays plurality winner (ctb but '
-                            'no vtb)', 3)
+                            'manipulators, w stays plurality winner (ut, ctb)',
+                            3)
                 self._candidates_UM[c] = False
                 return
-        if self.meets_majority_favorite_c_vtb:
+        if self.meets_majority_favorite_c_rk:
             if n_m < 2 * self.pop.plurality_scores_rk[self.w] - n_s:
                 self._mylog('UM: Preliminary checks: even with n_m '
-                            'manipulators, w stays plurality winner (with '
-                            'vtb)', 3)
+                            'manipulators, w stays plurality winner (rk)', 3)
                 self._candidates_UM[c] = False
                 return
-        if self.meets_majority_favorite_c_vtb_ctb and self.w == 0:
+        if self.meets_majority_favorite_c_rk_ctb and self.w == 0:
             if n_m < 2 * self.pop.plurality_scores_rk[self.w] - n_s + 1:
                 self._mylog('UM: Preliminary checks: even with n_m '
-                            'manipulators, w stays plurality winner (with '
-                            'vtb and ctb)', 3)
+                            'manipulators, w stays plurality winner (rk, ctb)',
+                            3)
                 self._candidates_UM[c] = False
                 return
         # Pretest based on the same idea as Condorcet resistance
-        if self.meets_Condorcet_c:
+        if self.meets_Condorcet_c_ut_abs:
             if n_m < self.pop.threshold_c_prevents_w_Condorcet_ut_abs[c, self.w]:
                 self._mylog('UM: Preliminary checks: c-manipulators cannot '
                             'prevent w from being a Condorcet winner', 3)
@@ -2468,9 +2462,9 @@ class Election(ElectionResult):
         Must decide _candidates_UM[c] (to True, False or NaN).
         Do not update _is_UM.
         """
-        if self.is_based_on_strict_rankings:
+        if self.is_based_on_rk:
             self._UM_main_work_c_exact_rankings(c)
-        elif self.is_based_on_utilities_minus1_1:
+        elif self.is_based_on_ut_minus1_1:
             self._UM_main_work_c_exact_utilities_minus1_1(c)
         else:
             raise NotImplementedError("UM: Exact manipulation is not "
@@ -2776,7 +2770,7 @@ class Election(ElectionResult):
         False, then _ICM_was_computed_with_candidates should become True (not
         mandatory but recommended).
         """
-        if self.meets_InfMC_c and self.w_is_condorcet_winner:
+        if self.meets_InfMC_c and self.w_is_condorcet_winner_ut_abs:
             self._mylog("ICM impossible (w is a Condorcet winner)", 2)
             self._is_ICM = False
             self._candidates_ICM[:] = False
@@ -3243,14 +3237,14 @@ class Election(ElectionResult):
         # 1) Preliminary checks that may improve _candidates_CM (all must be
         # done, except if everything is decided).
         # Majority favorite criterion
-        if (self.meets_majority_favorite_c and
+        if (self.meets_majority_favorite_c_ut and
                 self.pop.plurality_scores_ut[self.w] > self.pop.V / 2):
             self._mylog("CM impossible (w is a majority favorite).", 2)
             self._is_CM = False
             self._candidates_CM[:] = False
             self._CM_was_computed_with_candidates = True
             return
-        if (self.meets_majority_favorite_c_ctb and
+        if (self.meets_majority_favorite_c_ut_ctb and
                 self.w == 0 and
                 self.pop.plurality_scores_ut[self.w] >= self.pop.V / 2):
             self._mylog("CM impossible (w=0 is a majority favorite with " +
@@ -3259,7 +3253,7 @@ class Election(ElectionResult):
             self._candidates_CM[:] = False
             self._CM_was_computed_with_candidates = True
             return
-        if (self.meets_majority_favorite_c_vtb and
+        if (self.meets_majority_favorite_c_rk and
                 self.pop.plurality_scores_rk[self.w] > self.pop.V / 2):
             self._mylog("CM impossible (w is a majority favorite with "
                         "voter tie-breaking).", 2)
@@ -3267,7 +3261,7 @@ class Election(ElectionResult):
             self._candidates_CM[:] = False
             self._CM_was_computed_with_candidates = True
             return
-        if (self.meets_majority_favorite_c_vtb_ctb and
+        if (self.meets_majority_favorite_c_rk_ctb and
                 self.w == 0 and
                 self.pop.plurality_scores_rk[self.w] >= self.pop.V / 2):
             self._mylog("CM impossible (w=0 is a majority favorite with " +
@@ -3277,7 +3271,7 @@ class Election(ElectionResult):
             self._CM_was_computed_with_candidates = True
             return
         # Condorcet resistance
-        if (self.meets_Condorcet_c and
+        if (self.meets_Condorcet_c_ut_abs and
                 self.w_is_resistant_condorcet_winner):
             self._mylog("CM impossible (w is a Resistant Condorcet winner)", 2)
             self._is_CM = False
@@ -3428,48 +3422,48 @@ class Election(ElectionResult):
         # Pretest based on the majority favorite criterion
         # If plurality_scores_ut[w] > (n_s + n_m) / 2, then CM impossible.
         # Necessary condition: n_m >= 2 * plurality_scores_ut[w] - n_s.
-        if self.meets_majority_favorite_c_vtb_ctb and self.w == 0:
+        if self.meets_majority_favorite_c_rk_ctb and self.w == 0:
             self._update_necessary(
                 self._necessary_coalition_size_CM, c,
                 2 * self.pop.plurality_scores_rk[self.w] - n_s + 1,
-                'CM: Preliminary checks: majority_favorite_c_vtb_ctb => \n    '
+                'CM: Preliminary checks: majority_favorite_c_rk_ctb => \n    '
                 'necessary_coalition_size_CM[c] = '
                 '2 * plurality_scores_rk[w] - n_s + 1 =')
             if not optimize_bounds and (
                     self._necessary_coalition_size_CM[c] > n_m):
                 return
-        if self.meets_majority_favorite_c_vtb:
+        if self.meets_majority_favorite_c_rk:
             self._update_necessary(
                 self._necessary_coalition_size_CM, c,
                 2 * self.pop.plurality_scores_rk[self.w] - n_s,
-                'CM: Preliminary checks: majority_favorite_c_vtb => \n    '
+                'CM: Preliminary checks: majority_favorite_c_rk => \n    '
                 'necessary_coalition_size_CM[c] = '
                 '2 * plurality_scores_rk[w] - n_s =')
             if not optimize_bounds and (
                     self._necessary_coalition_size_CM[c] > n_m):
                 return
-        if self.meets_majority_favorite_c_ctb and self.w == 0:
+        if self.meets_majority_favorite_c_ut_ctb and self.w == 0:
             self._update_necessary(
                 self._necessary_coalition_size_CM, c,
                 2 * self.pop.plurality_scores_ut[self.w] - n_s + 1,
-                'CM: Preliminary checks: majority_favorite_c_ctb => \n    '
+                'CM: Preliminary checks: majority_favorite_c_ut_ctb => \n    '
                 'necessary_coalition_size_CM[c] ='
                 '2 * plurality_scores_ut[w] - n_s + 1 =')
             if not optimize_bounds and (
                     self._necessary_coalition_size_CM[c] > n_m):
                 return
-        if self.meets_majority_favorite_c:
+        if self.meets_majority_favorite_c_ut:
             self._update_necessary(
                 self._necessary_coalition_size_CM, c,
                 2 * self.pop.plurality_scores_ut[self.w] - n_s,
-                'CM: Preliminary checks: majority_favorite_c => \n    '
+                'CM: Preliminary checks: majority_favorite_c_ut => \n    '
                 'necessary_coalition_size_CM[c] = '
                 '2 * plurality_scores_ut[w] - n_s =')
             if not optimize_bounds and (
                     self._necessary_coalition_size_CM[c] > n_m):
                 return
         # Pretest based on the same idea as Condorcet resistance
-        if self.meets_Condorcet_c:
+        if self.meets_Condorcet_c_ut_abs:
             self._update_necessary(
                 self._necessary_coalition_size_CM, c,
                 self.pop.threshold_c_prevents_w_Condorcet_ut_abs[c, self.w],
@@ -3568,13 +3562,13 @@ class Election(ElectionResult):
         """Do the main work in CM loop for candidate c, with option 'exact'.
         Same specifications as _CM_main_work_c.
         """
-        if self.is_based_on_utilities_minus1_1:
+        if self.is_based_on_ut_minus1_1:
             # TM was already checked during preliminary checks.
             # If TM was not True, then CM impossible.
             self._update_necessary(self._necessary_coalition_size_CM, c,
                                    self.pop.matrix_duels_ut[c, self.w] + 1)
             return
-        if not self.is_based_on_strict_rankings:
+        if not self.is_based_on_rk:
             raise NotImplementedError("CM: Exact manipulation is not "
                                       "implemented for this voting system.")
         n_m = self.pop.matrix_duels_ut[c, self.w]
@@ -3695,26 +3689,26 @@ class Election(ElectionResult):
         MyLog.print_title("Basic properties of the voting system")
         print("with_two_candidates_reduces_to_plurality = ",
               self.with_two_candidates_reduces_to_plurality)
-        print("is_based_on_strict_rankings = ",
-              self.is_based_on_strict_rankings)
-        print("is_based_on_utilities_minus1_1 = ",
-              self.is_based_on_utilities_minus1_1)
+        print("is_based_on_rk = ",
+              self.is_based_on_rk)
+        print("is_based_on_ut_minus1_1 = ",
+              self.is_based_on_ut_minus1_1)
         print("meets_IIA = ",
               self.meets_IIA)
 
         MyLog.print_title("Manipulation properties of the voting system")
-        # Condorcet_c_rel_ctb (False)        ==>        Condorcet_c_rel (False)
+        # Condorcet_c_ut_rel_ctb (False)     ==>     Condorcet_c_ut_rel (False)
         #  ||                                                               ||
-        #  ||    Condorcet_c_vtb_ctb (False) ==> Condorcet_c_vtb (False)    ||
-        #  ||           ||           ||               ||         ||         ||
-        #  V            V            ||               ||         V          V
-        # Condorcet_c_ctb (False)            ==>            Condorcet_c (False)
-        #  ||                        ||               ||                    ||
-        #  ||                        V                V                     ||
-        #  ||      maj_fav_c_vtb_ctb (False) ==> maj_fav_c_vtb (False)      ||
+        #  ||     Condorcet_c_rk_ctb (False) ==> Condorcet_c_rk (False)     ||
+        #  ||           ||               ||       ||             ||         ||
+        #  V            V                ||       ||             V          V
+        # Condorcet_c_ut_abs_ctb (False)     ==>     Condorcet_ut_abs_c (False)
+        #  ||                            ||       ||                        ||
+        #  ||                            V        V                         ||
+        #  ||       maj_fav_c_rk_ctb (False) ==> maj_fav_c_rk (False)       ||
         #  ||           ||                                       ||         ||
         #  V            V                                        V          V
-        # majority_favorite_c_ctb (False)    ==>    majority_favorite_c (False)
+        # majority_favorite_c_ut_ctb (False) ==> majority_favorite_c_ut (False)
         #  ||                                                               ||
         #  V                                                                V
         # IgnMC_c_ctb (False)                ==>                IgnMC_c (False)
@@ -3726,42 +3720,42 @@ class Election(ElectionResult):
                 return '(True) '
             else:
                 return '(False)'
-        print('Condorcet_c_rel_ctb ' +
-              display_bool(self.meets_Condorcet_c_rel_ctb) +
-              '        ==>        Condorcet_c_rel ' +
-              display_bool(self.meets_Condorcet_c_rel))
+        print('Condorcet_c_ut_rel_ctb ' +
+              display_bool(self.meets_Condorcet_c_ut_rel_ctb) +
+              '     ==>     Condorcet_c_ut_rel ' +
+              display_bool(self.meets_Condorcet_c_ut_rel))
         print(' ||                               '
               '                                ||')
-        print(' ||    Condorcet_c_vtb_ctb ' +
-              display_bool(self.meets_Condorcet_c_vtb_ctb) +
-              ' ==> Condorcet_c_vtb ' +
-              display_bool(self.meets_Condorcet_c_vtb) +
-              '    ||')
-        print(' ||           ||           ||      '
-              '         ||         ||         ||')
-        print(' V            V            ||      '
-              '         ||         V          V')
-        print('Condorcet_c_ctb ' +
-              display_bool(self.meets_Condorcet_c_ctb) +
-              '            ==>            Condorcet_c ' +
-              display_bool(self.meets_Condorcet_c))
-        print(' ||                        ||      '
-              '         ||                    ||')
-        print(' ||                        V       '
-              '         V                     ||')
-        print(' ||      maj_fav_c_vtb_ctb ' +
-              display_bool(self.meets_majority_favorite_c_vtb_ctb) +
-              ' ==> maj_fav_c_vtb ' +
-              display_bool(self.meets_majority_favorite_c_vtb) +
-              '      ||')
+        print(' ||     Condorcet_c_rk_ctb ' +
+              display_bool(self.meets_Condorcet_c_rk_ctb) +
+              ' ==> Condorcet_c_rk ' +
+              display_bool(self.meets_Condorcet_c_rk) +
+              '     ||')
+        print(' ||           ||               ||  '
+              '     ||             ||         ||')
+        print(' V            V                ||  '
+              '     ||             V          V')
+        print('Condorcet_c_ut_abs_ctb ' +
+              display_bool(self.meets_Condorcet_c_ut_abs_ctb) +
+              '     ==>     Condorcet_ut_abs_c ' +
+              display_bool(self.meets_Condorcet_c_ut_abs))
+        print(' ||                            ||  '
+              '     ||                        ||')
+        print(' ||                            V   '
+              '     V                         ||')
+        print(' ||       maj_fav_c_rk_ctb ' +
+              display_bool(self.meets_majority_favorite_c_rk_ctb) +
+              ' ==> maj_fav_c_rk ' +
+              display_bool(self.meets_majority_favorite_c_rk) +
+              '       ||')
         print(' ||           ||                   '
               '                    ||         ||')
         print(' V            V                    '
               '                    V          V')
-        print('majority_favorite_c_ctb ' +
-              display_bool(self.meets_majority_favorite_c_ctb) +
-              '    ==>    majority_favorite_c ' +
-              display_bool(self.meets_majority_favorite_c))
+        print('majority_favorite_c_ut_ctb ' +
+              display_bool(self.meets_majority_favorite_c_ut_ctb) +
+              ' ==> majority_favorite_c_ut ' +
+              display_bool(self.meets_majority_favorite_c_ut))
         print(' ||                                '
               '                               ||')
         print(' V                                 '

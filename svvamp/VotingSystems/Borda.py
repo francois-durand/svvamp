@@ -96,7 +96,7 @@ class Borda(BordaResult, Election):
         self._log_identity = "BORDA"
         self._class_result = Borda
         self._with_two_candidates_reduces_to_plurality = True
-        self._is_based_on_strict_rankings = True
+        self._is_based_on_rk = True
         self._meets_InfMC_c_ctb = True
         self._precheck_ICM = False
 

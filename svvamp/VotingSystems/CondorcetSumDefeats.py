@@ -96,8 +96,8 @@ class CondorcetSumDefeats(CondorcetSumDefeatsResult, Election):
         self._log_identity = "CONDORCET_SUM_DEFEATS"
         self._class_result = CondorcetSumDefeatsResult
         self._with_two_candidates_reduces_to_plurality = True
-        self._is_based_on_strict_rankings = True
-        self._meets_Condorcet_c_vtb = True
+        self._is_based_on_rk = True
+        self._meets_Condorcet_c_rk = True
         self._meets_InfMC_c_ctb = True
         self._precheck_ICM = False
 

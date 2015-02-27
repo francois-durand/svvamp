@@ -402,203 +402,197 @@ class ElectionResult(MyLog.MyLog):
                 not self.w_is_weak_condorcet_winner)
 
     @property
-    def w_is_condorcet_winner_vtb_ctb(self):
+    def w_is_condorcet_winner_rk_ctb(self):
         """Boolean. True iff the sincere winner
-        :attr:`~svvamp.ElectionResult.w` is a 'Condorcet winner
-        with vtb and ctb'.
-        Cf. :attr:`svvamp.Population.condorcet_winner_rk_ctb`.
+        :attr:`~svvamp.ElectionResult.w` is a
+        :attr:`svvamp.Population.condorcet_winner_rk_ctb`.
         """
         return self.w == self.pop.condorcet_winner_rk_ctb
 
     @property
-    def w_is_not_condorcet_winner_vtb_ctb(self):
+    def w_is_not_condorcet_winner_rk_ctb(self):
         """Boolean. True iff the sincere winner
-        :attr:`~svvamp.ElectionResult.w` is not a 'Condorcet winner
-        with vtb and ctb' (whether one exists or not).
-        Cf. :attr:`svvamp.Population.condorcet_winner_rk_ctb`.
+        :attr:`~svvamp.ElectionResult.w` is not a
+        :attr:`svvamp.Population.condorcet_winner_rk_ctb`
+        (whether one exists or not).
         """
-        return not self.w_is_condorcet_winner_vtb_ctb
+        return not self.w_is_condorcet_winner_rk_ctb
 
     @property
-    def w_missed_condorcet_winner_vtb_ctb(self):
+    def w_missed_condorcet_winner_rk_ctb(self):
         """Boolean. True iff the sincere winner
-        :attr:`~svvamp.ElectionResult.w` is not the 'Condorcet winner
-        with vtb and ctb', despite the fact that she exists.
-        Cf. :attr:`svvamp.Population.condorcet_winner_rk_ctb`.
+        :attr:`~svvamp.ElectionResult.w` is not the
+        :attr:`svvamp.Population.condorcet_winner_rk_ctb`,
+        despite the fact that she exists.
         """
         return (not np.isnan(self.pop.condorcet_winner_rk_ctb) and
-                not self.w_is_condorcet_winner_vtb_ctb)
+                not self.w_is_condorcet_winner_rk_ctb)
 
     @property
-    def w_is_condorcet_winner_vtb(self):
+    def w_is_condorcet_winner_rk(self):
         """Boolean. True iff the sincere winner
-        :attr:`~svvamp.ElectionResult.w` is a 'Condorcet winner with
-        vtb'.
-        Cf. :attr:`svvamp.Population.condorcet_winner_rk`.
+        :attr:`~svvamp.ElectionResult.w` is a
+        :attr:`svvamp.Population.condorcet_winner_rk`.
         """
         return self.w == self.pop.condorcet_winner_rk
 
     @property
-    def w_is_not_condorcet_winner_vtb(self):
+    def w_is_not_condorcet_winner_rk(self):
         """Boolean. True iff the sincere winner
-        :attr:`~svvamp.ElectionResult.w` is not a 'Condorcet winner
-        with vtb' (whether one exists or not).
-        Cf. :attr:`svvamp.Population.condorcet_winner_rk`.
+        :attr:`~svvamp.ElectionResult.w` is not a
+        :attr:`svvamp.Population.condorcet_winner_rk`
+        (whether one exists or not).
         """
-        return not self.w_is_condorcet_winner_vtb
+        return not self.w_is_condorcet_winner_rk
 
     @property
-    def w_missed_condorcet_winner_vtb(self):
+    def w_missed_condorcet_winner_rk(self):
         """Boolean. True iff the sincere winner
-        :attr:`~svvamp.ElectionResult.w` is not the 'Condorcet winner
-        with vtb', despite the fact that she exists.
-        Cf. :attr:`svvamp.Population.condorcet_winner_rk`.
+        :attr:`~svvamp.ElectionResult.w` is not the
+        :attr:`svvamp.Population.condorcet_winner_rk`,
+        despite the fact that she exists.
         """
         return (not np.isnan(self.pop.condorcet_winner_rk) and
-                not self.w_is_condorcet_winner_vtb)
+                not self.w_is_condorcet_winner_rk)
 
     @property
-    def w_is_condorcet_winner_rel_ctb(self):
+    def w_is_condorcet_winner_ut_rel_ctb(self):
         """Boolean. True iff the sincere winner
-        :attr:`~svvamp.ElectionResult.w` is a 'relative Condorcet
-        winner with ties broken'.
-        Cf. :attr:`svvamp.Population.condorcet_winner_ut_abs_ctb`.
+        :attr:`~svvamp.ElectionResult.w` is a
+        :attr:`svvamp.Population.condorcet_winner_ut_abs_ctb`.
         """
         return self.w == self.pop.condorcet_winner_ut_rel_ctb
 
     @property
-    def w_is_not_condorcet_winner_rel_ctb(self):
+    def w_is_not_condorcet_winner_ut_rel_ctb(self):
         """Boolean. True iff the sincere winner
-        :attr:`~svvamp.ElectionResult.w` is not a 'relative
-        Condorcet winner with ties broken' (whether one exists or not).
-        Cf. :attr:`svvamp.Population.condorcet_winner_ut_abs_ctb`.
+        :attr:`~svvamp.ElectionResult.w` is not a
+        :attr:`svvamp.Population.condorcet_winner_ut_abs_ctb`
+        (whether one exists or not).
         """
-        return not self.w_is_condorcet_winner_rel_ctb
+        return not self.w_is_condorcet_winner_ut_rel_ctb
 
     @property
-    def w_missed_condorcet_winner_rel_ctb(self):
+    def w_missed_condorcet_winner_ut_rel_ctb(self):
         """Boolean. True iff the sincere winner
-        :attr:`~svvamp.ElectionResult.w` is not the 'relative
-        Condorcet winner with ties broken', despite the fact that she exists.
-        Cf. :attr:`svvamp.Population.condorcet_winner_ut_abs_ctb`.
+        :attr:`~svvamp.ElectionResult.w` is not the
+        :attr:`svvamp.Population.condorcet_winner_ut_abs_ctb`,
+        despite the fact that she exists.
         """
         return (not np.isnan(self.pop.condorcet_winner_ut_rel_ctb) and
-                not self.w_is_condorcet_winner_rel_ctb)
+                not self.w_is_condorcet_winner_ut_rel_ctb)
 
     @property
-    def w_is_condorcet_winner_rel(self):
+    def w_is_condorcet_winner_ut_rel(self):
         """Boolean. True iff the sincere winner
-        :attr:`~svvamp.ElectionResult.w` is a relative Condorcet
-        winner.
-        Cf. :attr:`svvamp.Population.condorcet_winner_ut_rel`.
+        :attr:`~svvamp.ElectionResult.w` is a
+        :attr:`svvamp.Population.condorcet_winner_ut_rel`.
         """
         return self.w == self.pop.condorcet_winner_ut_rel
 
     @property
-    def w_is_not_condorcet_winner_rel(self):
+    def w_is_not_condorcet_winner_ut_rel(self):
         """Boolean. True iff the sincere winner
-        :attr:`~svvamp.ElectionResult.w` is not a relative Condorcet
-        winner (whether one exists or not).
-        Cf. :attr:`svvamp.Population.condorcet_winner_ut_rel`.
+        :attr:`~svvamp.ElectionResult.w` is not a
+        :attr:`svvamp.Population.condorcet_winner_ut_rel`
+        (whether one exists or not).
         """
-        return not self.w_is_condorcet_winner_rel
+        return not self.w_is_condorcet_winner_ut_rel
 
     @property
-    def w_missed_condorcet_winner_rel(self):
+    def w_missed_condorcet_winner_ut_rel(self):
         """Boolean. True iff the sincere winner
-        :attr:`~svvamp.ElectionResult.w` is not the relative
-        Condorcet winner, despite the fact that she exists.
-        Cf. :attr:`svvamp.Population.condorcet_winner_ut_rel`.
+        :attr:`~svvamp.ElectionResult.w` is not the
+        :attr:`svvamp.Population.condorcet_winner_ut_rel`,
+        despite the fact that she exists.
         """
         return (not np.isnan(self.pop.condorcet_winner_ut_rel) and
-                not self.w_is_condorcet_winner_rel)
+                not self.w_is_condorcet_winner_ut_rel)
 
     @property
-    def w_is_condorcet_winner_ctb(self):
+    def w_is_condorcet_winner_ut_abs_ctb(self):
         """Boolean. True iff the sincere winner
-        :attr:`~svvamp.ElectionResult.w` is a 'Condorcet winner with
-        ties broken'.
-        Cf. :attr:`svvamp.Population.condorcet_winner_ut_abs_ctb`.
+        :attr:`~svvamp.ElectionResult.w` is a
+        :attr:`svvamp.Population.condorcet_winner_ut_abs_ctb`.
         """
         return self.w == self.pop.condorcet_winner_ut_abs_ctb
 
     @property
-    def w_is_not_condorcet_winner_ctb(self):
+    def w_is_not_condorcet_winner_ut_abs_ctb(self):
         """Boolean. True iff the sincere winner
-        :attr:`~svvamp.ElectionResult.w` is not a 'Condorcet winner
-        with ties broken' (whether one exists or not).
-        Cf. :attr:`svvamp.Population.condorcet_winner_ut_abs_ctb`.
+        :attr:`~svvamp.ElectionResult.w` is not a
+        :attr:`svvamp.Population.condorcet_winner_ut_abs_ctb`
+        (whether one exists or not).
         """
-        return not self.w_is_condorcet_winner_ctb
+        return not self.w_is_condorcet_winner_ut_abs_ctb
 
     @property
-    def w_missed_condorcet_winner_ctb(self):
+    def w_missed_condorcet_winner_ut_abs_ctb(self):
         """Boolean. True iff the sincere winner
-        :attr:`~svvamp.ElectionResult.w` is not the 'Condorcet winner
-        with ties broken', despite the fact that she exists.
-        Cf. :attr:`svvamp.Population.condorcet_winner_ut_abs_ctb`.
+        :attr:`~svvamp.ElectionResult.w` is not the
+        :attr:`svvamp.Population.condorcet_winner_ut_abs_ctb`,
+        despite the fact that she exists.
         """
         return (not np.isnan(self.pop.condorcet_winner_ut_abs_ctb) and
-                not self.w_is_condorcet_winner_ctb)
+                not self.w_is_condorcet_winner_ut_abs_ctb)
                 
     @property
-    def w_is_condorcet_winner(self):
+    def w_is_condorcet_winner_ut_abs(self):
         """Boolean. True iff the sincere winner
-        :attr:`~svvamp.ElectionResult.w` is a Condorcet winner.
-        Cf. :attr:`svvamp.Population.condorcet_winner_ut_abs`.
+        :attr:`~svvamp.ElectionResult.w` is a
+        :attr:`svvamp.Population.condorcet_winner_ut_abs`.
         """
         return self.w == self.pop.condorcet_winner_ut_abs
 
     @property
-    def w_is_not_condorcet_winner(self):
+    def w_is_not_condorcet_winner_ut_abs(self):
         """Boolean. True iff the sincere winner
-        :attr:`~svvamp.ElectionResult.w` is not a Condorcet winner
+        :attr:`~svvamp.ElectionResult.w` is not a
+        :attr:`svvamp.Population.condorcet_winner_ut_abs`
         (whether one exists or not).
-        Cf. :attr:`svvamp.Population.condorcet_winner_ut_abs`.
         """
-        return not self.w_is_condorcet_winner
+        return not self.w_is_condorcet_winner_ut_abs
 
     @property
-    def w_missed_condorcet_winner(self):
+    def w_missed_condorcet_winner_ut_abs(self):
         """Boolean. True iff the sincere winner
-        :attr:`~svvamp.ElectionResult.w` is not the Condorcet winner,
+        :attr:`~svvamp.ElectionResult.w` is not the
+        :attr:`svvamp.Population.condorcet_winner_ut_abs`,
         despite the fact that she exists.
-        Cf. :attr:`svvamp.Population.condorcet_winner_ut_abs`.
         """
         return (not np.isnan(self.pop.condorcet_winner_ut_abs) and
-                not self.w_is_condorcet_winner)
+                not self.w_is_condorcet_winner_ut_abs)
                 
     @property
     def w_is_resistant_condorcet_winner(self):
         """Boolean. True iff the sincere winner
-        :attr:`~svvamp.ElectionResult.w` is a Resistant Condorcet
-        winner.
-        Cf. :attr:`svvamp.Population.resistant_condorcet_winner`.
+        :attr:`~svvamp.ElectionResult.w` is a
+        :attr:`svvamp.Population.resistant_condorcet_winner`.
         """
         return self.w == self.pop.resistant_condorcet_winner
 
     @property
     def w_is_not_resistant_condorcet_winner(self):
         """Boolean. True iff the sincere winner
-        :attr:`~svvamp.ElectionResult.w` is not a Resistant Condorcet
-        winner (whether one exists or not).
-        Cf. :attr:`svvamp.Population.resistant_condorcet_winner`.
+        :attr:`~svvamp.ElectionResult.w` is not a
+        :attr:`svvamp.Population.resistant_condorcet_winner`
+        (whether one exists or not).
         """
         return not self.w_is_resistant_condorcet_winner
 
     @property
     def w_missed_resistant_condorcet_winner(self):
         """Boolean. True iff the sincere winner
-        :attr:`~svvamp.ElectionResult.w` is not the Resistant
-        Condorcet winner, despite the fact that she exists.
-        Cf. :attr:`svvamp.Population.resistant_condorcet_winner`.
+        :attr:`~svvamp.ElectionResult.w` is not the
+        :attr:`svvamp.Population.resistant_condorcet_winner`,
+        despite the fact that she exists.
         """
         return (not np.isnan(self.pop.resistant_condorcet_winner) and
                 not self.w_is_resistant_condorcet_winner)
 
     def demo(self, log_depth=1):
         """Demonstrate the methods of :class:`~svvamp.ElectionResult` class.
-
+s
         :param log_depth: Integer from 0 (basic info) to 3 (verbose).
         """
 
@@ -628,28 +622,28 @@ class ElectionResult(MyLog.MyLog):
         print("score_w =", self.score_w)
         print("total_utility_w =", self.total_utility_w)
 
-        MyLog.print_title("Condorcet efficiency (vtb)")
+        MyLog.print_title("Condorcet efficiency (rk)")
         print("w (reminder) =", self.w)
         print("")
 
         print("condorcet_winner_rk_ctb =",
               self.pop.condorcet_winner_rk_ctb)
-        print("w_is_condorcet_winner_vtb_ctb =",
-              self.w_is_condorcet_winner_vtb_ctb)
-        print("w_is_not_condorcet_winner_vtb_ctb =",
-              self.w_is_not_condorcet_winner_vtb_ctb)
-        print("w_missed_condorcet_winner_vtb_ctb =",
-              self.w_missed_condorcet_winner_vtb_ctb)
+        print("w_is_condorcet_winner_rk_ctb =",
+              self.w_is_condorcet_winner_rk_ctb)
+        print("w_is_not_condorcet_winner_rk_ctb =",
+              self.w_is_not_condorcet_winner_rk_ctb)
+        print("w_missed_condorcet_winner_rk_ctb =",
+              self.w_missed_condorcet_winner_rk_ctb)
         print("")
 
         print("condorcet_winner_rk =",
               self.pop.condorcet_winner_rk)
-        print("w_is_condorcet_winner_vtb =",
-              self.w_is_condorcet_winner_vtb)
-        print("w_is_not_condorcet_winner_vtb =",
-              self.w_is_not_condorcet_winner_vtb)
-        print("w_missed_condorcet_winner_vtb =",
-              self.w_missed_condorcet_winner_vtb)
+        print("w_is_condorcet_winner_rk =",
+              self.w_is_condorcet_winner_rk)
+        print("w_is_not_condorcet_winner_rk =",
+              self.w_is_not_condorcet_winner_rk)
+        print("w_missed_condorcet_winner_rk =",
+              self.w_missed_condorcet_winner_rk)
 
         MyLog.print_title("Condorcet efficiency (relative)")
         print("w (reminder) =", self.w)
@@ -657,22 +651,22 @@ class ElectionResult(MyLog.MyLog):
 
         print("condorcet_winner_ut_rel_ctb =",
               self.pop.condorcet_winner_ut_rel_ctb)
-        print("w_is_condorcet_winner_rel_ctb =",
-              self.w_is_condorcet_winner_rel_ctb)
-        print("w_is_not_condorcet_winner_rel_ctb =",
-              self.w_is_not_condorcet_winner_rel_ctb)
-        print("w_missed_condorcet_winner_rel_ctb =",
-              self.w_missed_condorcet_winner_rel_ctb)
+        print("w_is_condorcet_winner_ut_rel_ctb =",
+              self.w_is_condorcet_winner_ut_rel_ctb)
+        print("w_is_not_condorcet_winner_ut_rel_ctb =",
+              self.w_is_not_condorcet_winner_ut_rel_ctb)
+        print("w_missed_condorcet_winner_ut_rel_ctb =",
+              self.w_missed_condorcet_winner_ut_rel_ctb)
         print("")
 
         print("condorcet_winner_ut_rel =",
               self.pop.condorcet_winner_ut_rel)
-        print("w_is_condorcet_winner_rel =",
-              self.w_is_condorcet_winner_rel)
-        print("w_is_not_condorcet_winner_rel =",
-              self.w_is_not_condorcet_winner_rel)
-        print("w_missed_condorcet_winner_rel =",
-              self.w_missed_condorcet_winner_rel)
+        print("w_is_condorcet_winner_ut_rel =",
+              self.w_is_condorcet_winner_ut_rel)
+        print("w_is_not_condorcet_winner_ut_rel =",
+              self.w_is_not_condorcet_winner_ut_rel)
+        print("w_missed_condorcet_winner_ut_rel =",
+              self.w_missed_condorcet_winner_ut_rel)
 
         MyLog.print_title("Condorcet efficiency (absolute)")
         print("w (reminder) =", self.w)
@@ -700,22 +694,22 @@ class ElectionResult(MyLog.MyLog):
 
         print("condorcet_winner_ut_abs_ctb =",
               self.pop.condorcet_winner_ut_abs_ctb)
-        print("w_is_condorcet_winner_ctb =",
-              self.w_is_condorcet_winner_ctb)
-        print("w_is_not_condorcet_winner_ctb =",
-              self.w_is_not_condorcet_winner_ctb)
-        print("w_missed_condorcet_winner_ctb =",
-              self.w_missed_condorcet_winner_ctb)
+        print("w_is_condorcet_winner_ut_abs_ctb =",
+              self.w_is_condorcet_winner_ut_abs_ctb)
+        print("w_is_not_condorcet_winner_ut_abs_ctb =",
+              self.w_is_not_condorcet_winner_ut_abs_ctb)
+        print("w_missed_condorcet_winner_ut_abs_ctb =",
+              self.w_missed_condorcet_winner_ut_abs_ctb)
         print("")
 
         print("condorcet_winner_ut_abs =",
               self.pop.condorcet_winner_ut_abs)
-        print("w_is_condorcet_winner =",
-              self.w_is_condorcet_winner)
-        print("w_is_not_condorcet_winner =",
-              self.w_is_not_condorcet_winner)
-        print("w_missed_condorcet_winner =",
-              self.w_missed_condorcet_winner)
+        print("w_is_condorcet_winner_ut_abs =",
+              self.w_is_condorcet_winner_ut_abs)
+        print("w_is_not_condorcet_winner_ut_abs =",
+              self.w_is_not_condorcet_winner_ut_abs)
+        print("w_missed_condorcet_winner_ut_abs =",
+              self.w_missed_condorcet_winner_ut_abs)
         print("")
 
         print("resistant_condorcet_winner =",

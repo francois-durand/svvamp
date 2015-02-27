@@ -120,8 +120,8 @@ class ExhaustiveBallot(ExhaustiveBallotResult, Election):
         self._log_identity = "EXHAUSTIVE_BALLOT"
         self._class_result = ExhaustiveBallotResult
         self._with_two_candidates_reduces_to_plurality = True
-        self._is_based_on_strict_rankings = True
-        self._meets_majority_favorite_c_vtb_ctb = True
+        self._is_based_on_rk = True
+        self._meets_majority_favorite_c_rk_ctb = True
         self._precheck_UM = False
         self._precheck_ICM = False
 

@@ -90,8 +90,8 @@ class Approval(ApprovalResult, Election):
         self._class_result = ApprovalResult
         self._log_depth = 0
         self._with_two_candidates_reduces_to_plurality = False
-        self._is_based_on_strict_rankings = False
-        self._is_based_on_utilities_minus1_1 = True
+        self._is_based_on_rk = False
+        self._is_based_on_ut_minus1_1 = True
         self._meets_IIA = True
         self._meets_IgnMC_c_ctb = True
         self._precheck_ICM = False
