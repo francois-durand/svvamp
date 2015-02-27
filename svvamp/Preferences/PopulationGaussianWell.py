@@ -71,6 +71,7 @@ class PopulationGaussianWell(Population):
         preferences_utilities -= np.average(preferences_utilities)
         log_creation = ['Gaussian well', C, V,
                         'Sigma', sigma,
+                        'Shift', shift,
                         'Number of dimensions', d]
         super().__init__(preferences_ut=preferences_utilities,
                          log_creation=log_creation)

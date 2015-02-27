@@ -32,21 +32,26 @@ class PopulationEuclideanBox(Population):
 
     _layout_name = 'Euclidean box'
 
-    def __init__(self, V, C, box_dimensions):
+    def __init__(self, V, C, box_dimensions, shift):
         """Population with 'Euclidean box' model.
 
         :param V: Integer. Number of voters.
         :param C: Integer. Number of candidates.
         :param box_dimensions: 1d array of numbers. The length of the
             Euclidean box along each axis.
+        :param shift: 1d array of numbers, same dimension as
+            ``box_dimensions``. Shift for the mean position of the candidates.
 
         :return: A :class:`~svvamp.Population` object.
 
+        Let us note ``n_dim`` the number of elements in ``sigma``.
         For each voter and each candidate, a position is independently and
         uniformly drawn in a rectangular box of dimensions
-        ``box_dimensions[0]``,... , ``box_dimensions[n_dim - 1]``, where
-        ``n_dim`` is the number of elements in box_dimensions. Let
-        ``d[v, c]`` denote the Euclidean distance between voter ``v`` and
+        ``box_dimensions[0]``,... , ``box_dimensions[n_dim - 1]``. If
+        ``shift`` is used, the distribution of positions for candidates is
+        displaced by this vector.
+
+        Let ``d[v, c]`` denote the Euclidean distance between voter ``v`` and
         candidate ``c``. Then
         ``preferences_ut[v, c] = A - d[v, c]``,
         where ``A`` is such that the average utility is 0 over the whole
@@ -56,12 +61,17 @@ class PopulationEuclideanBox(Population):
         """
         d = len(box_dimensions)
         voters_positions = np.random.rand(V, d) * box_dimensions
-        candidates_positions = np.random.rand(C, d) * box_dimensions
+        if shift is None:
+            shift = np.zeros(len(box_dimensions))
+        else:
+            shift = np.array(shift)
+        candidates_positions = shift + np.random.rand(C, d) * box_dimensions
         preferences_utilities = - distance.cdist(
             voters_positions, candidates_positions, 'euclidean')
         preferences_utilities -= np.average(preferences_utilities)
         log_creation = ['Euclidean box', C, V,
                         'Box dimensions', box_dimensions,
+                        'Shift', shift,
                         'Number of dimensions', d]
         super().__init__(preferences_ut=preferences_utilities,
                          log_creation=log_creation)
@@ -78,10 +88,13 @@ class PopulationEuclideanBox(Population):
             log_csv = ['Euclidean box',
                        'Box dimensions', culture_parameters['box_dimensions'],
                        'Number of dimensions',
-                       len(culture_parameters['box_dimensions'])]
+                       len(culture_parameters['box_dimensions']),
+                       'Shift', culture_parameters['shift']]
             log_print = ('Euclidean box, V = ' + str(V) + ', C = ' + str(C) +
                          ', box dimensions = ' +
-                         format(culture_parameters['box_dimensions']))
+                         format(culture_parameters['box_dimensions']) +
+                         ', shift = ' +
+                         format(culture_parameters['shift']))
             yield log_csv, log_print, PopulationEuclideanBox.iterator(
                 C, V, culture_parameters, nb_populations)
 
