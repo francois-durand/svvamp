@@ -644,8 +644,8 @@ class IRV(IRVResult, Election):
         ballot_m_begin_r = -np.ones(self.pop.C - 1, dtype=np.int)
         scores_tot_begin_r = np.zeros((self.pop.C - 1, self.pop.C))
         scores_tot_begin_r[0, :] = np.sum(np.equal(
-            self.pop.preferences_borda_vtb[other_voters, :],
-            np.max(self.pop.preferences_borda_vtb[other_voters, :], 1)[
+            self.pop.preferences_borda_rk[other_voters, :],
+            np.max(self.pop.preferences_borda_rk[other_voters, :], 1)[
                 :, np.newaxis]
         ), 0)
         self._mylogv("IM_aux_exact: r =", r, 3)
@@ -736,9 +736,9 @@ class IRV(IRVResult, Election):
             scores_tot_begin_r[r+1, :] = np.full(self.pop.C, np.nan) 
             scores_tot_begin_r[r+1, is_candidate_alive_begin_r[r+1, :]] = (
                 np.sum(np.equal(
-                    self.pop.preferences_borda_vtb[other_voters, :][
+                    self.pop.preferences_borda_rk[other_voters, :][
                         :, is_candidate_alive_begin_r[r+1, :]],
-                    np.max(self.pop.preferences_borda_vtb[other_voters, :][
+                    np.max(self.pop.preferences_borda_rk[other_voters, :][
                         :, is_candidate_alive_begin_r[r+1, :]], 1
                     )[:, np.newaxis]
                 ), 0))
@@ -1144,10 +1144,10 @@ class IRV(IRVResult, Election):
 
     def _UM_main_work_c(self, c):
         exact = (self.UM_option == "exact")
-        n_m = self.pop.matrix_duels[c, self.w]
+        n_m = self.pop.matrix_duels_ut[c, self.w]
         manip_found_fast, example_path_fast = self._UM_aux_fast(
             c, n_m,
-            preferences_borda_s=self.pop.preferences_borda_vtb[
+            preferences_borda_s=self.pop.preferences_borda_rk[
                 np.logical_not(self.v_wants_to_help_c[:, c]), :])
         self._mylogv("UM: manip_found_fast =", manip_found_fast, 3)
         if manip_found_fast:
@@ -1170,7 +1170,7 @@ class IRV(IRVResult, Election):
             return
         manip_found_exact, example_path_exact = self._UM_aux_exact(
             c, n_m,
-            preferences_borda_s=self.pop.preferences_borda_vtb[
+            preferences_borda_s=self.pop.preferences_borda_rk[
                 np.logical_not(self.v_wants_to_help_c[:, c]), :])
         self._mylogv("UM: manip_found_exact =", manip_found_exact)
         if manip_found_exact:
@@ -1614,7 +1614,7 @@ class IRV(IRVResult, Election):
                          '= _example_path_TM[c] =',
                          self._example_path_TM[c], 3)
             self._example_path_CM[c] = self._example_path_TM[c]
-        n_m = self.pop.matrix_duels[c, self.w]  # Number of manipulators
+        n_m = self.pop.matrix_duels_ut[c, self.w]  # Number of manipulators
         if not optimize_bounds and (
                 n_m >= self._sufficient_coalition_size_CM[c]):
             return
@@ -1646,7 +1646,7 @@ class IRV(IRVResult, Election):
         if optimize_bounds and exact:
             n_max = self._sufficient_coalition_size_CM[c] - 1
         else:
-            n_max = self.pop.matrix_duels[c, self.w]
+            n_max = self.pop.matrix_duels_ut[c, self.w]
         self._mylogv("CM: n_max =", n_max, 3)
         if fast and self._necessary_coalition_size_CM[c] > n_max:
             self._mylog("CM: Fast algorithm will not do better than " +
@@ -1654,7 +1654,7 @@ class IRV(IRVResult, Election):
             return False
         n_manip_fast, example_path_fast = self._CM_aux_fast(
             c, n_max,
-            preferences_borda_s=self.pop.preferences_borda_vtb[
+            preferences_borda_s=self.pop.preferences_borda_rk[
                 np.logical_not(self.v_wants_to_help_c[:, c]), :])
         self._mylogv("CM: n_manip_fast =", n_manip_fast, 3)
         if n_manip_fast < self._sufficient_coalition_size_CM[c]:
@@ -1672,7 +1672,7 @@ class IRV(IRVResult, Election):
         if self._sufficient_coalition_size_CM[c] == (
                 self._necessary_coalition_size_CM[c]):
             return False
-        if not optimize_bounds and (self.pop.matrix_duels[c, self.w] >=
+        if not optimize_bounds and (self.pop.matrix_duels_ut[c, self.w] >=
                                     self._sufficient_coalition_size_CM[c]):
             # This is a quick escape: since we have the option 'exact', if
             # we come back with optimize_bounds, we will try to be more
@@ -1704,7 +1704,7 @@ class IRV(IRVResult, Election):
         if slow:
             n_manip_slow = self._CM_aux_slow(
                 suggested_path,
-                preferences_borda_s=self.pop.preferences_borda_vtb[
+                preferences_borda_s=self.pop.preferences_borda_rk[
                     np.logical_not(self.v_wants_to_help_c[:, c]), :])
             self._mylogv("CM: n_manip_slow =", n_manip_slow, 3)
             if n_manip_slow < self._sufficient_coalition_size_CM[c]:
@@ -1718,7 +1718,7 @@ class IRV(IRVResult, Election):
                 self._CM_aux_exact(
                     c, n_max_updated, self._necessary_coalition_size_CM[c],
                     optimize_bounds, suggested_path,
-                    preferences_borda_s=self.pop.preferences_borda_vtb[
+                    preferences_borda_s=self.pop.preferences_borda_rk[
                         np.logical_not(self.v_wants_to_help_c[:, c]), :])
             self._mylogv("CM: n_manip_exact =", n_manip_exact, 3)
             if n_manip_exact < self._sufficient_coalition_size_CM[c]:
@@ -1735,7 +1735,7 @@ class IRV(IRVResult, Election):
                     'sufficient_coalition_size_CM[c] =')
                 return False
             else:
-                if self.pop.matrix_duels[c, self.w] >= \
+                if self.pop.matrix_duels_ut[c, self.w] >= \
                         self._sufficient_coalition_size_CM[c]:
                     # Manipulation worked. By design of _CM_aux_exact when
                     # running without optimize_bounds, we have not explored
@@ -1748,7 +1748,7 @@ class IRV(IRVResult, Election):
                     # is a quick escape.
                     self._update_necessary(
                         self._necessary_coalition_size_CM, c,
-                        self.pop.matrix_duels[c, self.w] + 1,
+                        self.pop.matrix_duels_ut[c, self.w] + 1,
                         'CM: Update necessary_coalition_size_CM[c] = '
                         'n_m + 1 =')
                     return True

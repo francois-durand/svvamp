@@ -50,12 +50,12 @@ class KemenyResult(ElectionResult):
         super().__init__(population, **kwargs)
         self._log_identity = "KEMENY_RESULT"
 
-        self.G = nx.DiGraph(self.pop.matrix_victories_vtb > 0)
+        self.G = nx.DiGraph(self.pop.matrix_victories_rk > 0)
         self.condensed = sc.condensation(self.G)
         self.sorted_condensed = nx.topological_sort(self.condensed)
 
     def _forget_results_subclass(self):
-        self.G = nx.DiGraph(self.pop.matrix_victories_vtb > 0)
+        self.G = nx.DiGraph(self.pop.matrix_victories_rk > 0)
         self.condensed = sc.condensation(self.G)
         self.sorted_condensed = nx.topological_sort(self.condensed)
 
@@ -95,7 +95,7 @@ class KemenyResult(ElectionResult):
         while order is not None:
             self._mylogv("order =", order, 3)
             score = np.sum(
-                self.pop.matrix_duels_vtb[:, order][order, :][np.triu_indices(
+                self.pop.matrix_duels_rk[:, order][order, :][np.triu_indices(
                     size_component)])
             self._mylogv("score =", score, 3)
             if score > best_score:
@@ -120,7 +120,7 @@ class KemenyResult(ElectionResult):
             while order is not None:
                 self._mylogv("order =", order, 3)
                 score = np.sum(
-                    self.pop.matrix_duels_vtb[:, order][order, :][
+                    self.pop.matrix_duels_rk[:, order][order, :][
                         np.triu_indices(size_component)])
                 self._mylogv("score =", score, 3)
                 if score > best_score:

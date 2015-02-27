@@ -80,21 +80,21 @@ class Baldwin(BaldwinResult, Election):
         self._with_two_candidates_reduces_to_plurality = True
         self._is_based_on_strict_rankings = True
         # Consider vtb case. If c is a Condorcet winner with vtb and ctb, then
-        # she has at worst ties in matrix_duels_vtb, so she has at least the
+        # she has at worst ties in matrix_duels_rk, so she has at least the
         # average Borda score. Can she be eliminated? For that, it is
         # necessary that all other candidates have exactly the average,
-        # i.e. matrix_duels_vtb is a general tie.
+        # i.e. matrix_duels_rk is a general tie.
         # Since she is Condorcet winner vtb/ctb, she must be candidate 0,
         # so our tie-breaking rule eliminates another candidate.
         # Conclusion: this voting system meets Condorcet criterion vtb/ctb.
         self._meets_Condorcet_c_vtb_ctb = True
         # Let us consider the following example.
-        # preferences_borda_novtb:
+        # preferences_borda_ut:
         # [ 1   0 ]
         # [0.5 0.5]
         # [0.5 0.5]
         # ==> candidate 0 is a relative Condorcet winner.
-        # preferences_borda_vtb (with vtb):
+        # preferences_borda_rk (with vtb):
         # [ 1   0 ]
         # [ 0   1 ]
         # [ 0   1 ]

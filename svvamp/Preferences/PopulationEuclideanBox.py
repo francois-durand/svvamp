@@ -48,7 +48,7 @@ class PopulationEuclideanBox(Population):
         ``n_dim`` is the number of elements in box_dimensions. Let
         ``d[v, c]`` denote the Euclidean distance between voter ``v`` and
         candidate ``c``. Then
-        ``preferences_utilities[v, c] = A - d[v, c]``,
+        ``preferences_ut[v, c] = A - d[v, c]``,
         where ``A`` is such that the average utility is 0 over the whole
         population.
 
@@ -63,7 +63,7 @@ class PopulationEuclideanBox(Population):
         log_creation = ['Euclidean box', C, V,
                         'Box dimensions', box_dimensions,
                         'Number of dimensions', d]
-        super().__init__(preferences_utilities=preferences_utilities,
+        super().__init__(preferences_ut=preferences_utilities,
                          log_creation=log_creation)
 
     @staticmethod

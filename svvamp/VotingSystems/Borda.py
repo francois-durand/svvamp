@@ -104,12 +104,12 @@ class Borda(BordaResult, Election):
 
     def _compute_IIA(self):
         self._mylog("Compute IIA", 1)
-        # If we remove candidate d, candidate c loses matrix_duels_vtb[c, d]
-        # Borda points and w loses matrix_duels_vtb[w, d]. So, candidate c
+        # If we remove candidate d, candidate c loses matrix_duels_rk[c, d]
+        # Borda points and w loses matrix_duels_rk[w, d]. So, candidate c
         # gains the difference, when compared to w.
         impact_removal_d_on_c = np.add(
-            - self.pop.matrix_duels_vtb,
-            + self.pop.matrix_duels_vtb[self.w, :][np.newaxis, :])
+            - self.pop.matrix_duels_rk,
+            + self.pop.matrix_duels_rk[self.w, :][np.newaxis, :])
         impact_removal_d_on_c[np.diag_indices(self.pop.C)] = 0
         impact_removal_d_on_c[:, self.w] = 0  # Forbidden to remove w
 
@@ -216,7 +216,7 @@ class Borda(BordaResult, Election):
         ballot -= np.greater(ballot, ballot[c])
         ballot[c] = self.pop.C - 1
         # New scores = old scores + n_manipulators * ballot.
-        scores_test += np.multiply(self.pop.matrix_duels[c, self.w], ballot)
+        scores_test += np.multiply(self.pop.matrix_duels_ut[c, self.w], ballot)
         w_test = np.argmax(scores_test)
         self._candidates_UM[c] = (w_test == c)
 
@@ -224,7 +224,7 @@ class Borda(BordaResult, Election):
 
     def _ICM_main_work_c_fast(self, c, optimize_bounds):
         # n_s: number of sincere voters (= counter-manipulators)
-        n_s = self.pop.V - self.pop.matrix_duels[c, self.w]
+        n_s = self.pop.V - self.pop.matrix_duels_ut[c, self.w]
         C = self.pop.C
         # Necessary condition:
         # ^^^^^^^^^^^^^^^^^^^^
@@ -324,7 +324,7 @@ class Borda(BordaResult, Election):
         if (self._necessary_coalition_size_CM[c] ==
                 self._sufficient_coalition_size_CM[c]):
             return False
-        if (not optimize_bounds and self.pop.matrix_duels[c, self.w] <
+        if (not optimize_bounds and self.pop.matrix_duels_ut[c, self.w] <
                 self._necessary_coalition_size_CM[c]):
             # This is a quick escape: we have not optimized the bounds the
             # best we could.

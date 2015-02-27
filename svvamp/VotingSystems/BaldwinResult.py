@@ -47,7 +47,7 @@ class BaldwinResult(ElectionResult):
     def _count_ballots(self):
         self._scores = np.zeros((self.pop.C - 1, self.pop.C))
         worst_to_best = []
-        preferences_borda_temp = self.pop.preferences_borda_vtb.astype(float)
+        preferences_borda_temp = self.pop.preferences_borda_rk.astype(float)
         for r in range(self.pop.C - 1):  # Round r
             self._scores[r, :] = np.sum(preferences_borda_temp, 0)
             loser = np.where(

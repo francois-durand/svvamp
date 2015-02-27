@@ -750,7 +750,7 @@ class ExhaustiveBallot(ExhaustiveBallotResult, Election):
         # whole population, then we'll know that IM is impossible.
         candidates_IM_aux = self._IM_aux(
             anti_voter_allowed=True,
-            preferences_borda_s=self.pop.preferences_borda_vtb)
+            preferences_borda_s=self.pop.preferences_borda_rk)
         candidates_IM_aux[self.w] = False
         for c in self.losing_candidates:
             if candidates_IM_aux[c] == False:
@@ -766,7 +766,7 @@ class ExhaustiveBallot(ExhaustiveBallotResult, Election):
             return
         candidates_IM_aux = self._IM_aux(
             anti_voter_allowed=False,
-            preferences_borda_s=self.pop.preferences_borda_vtb[
+            preferences_borda_s=self.pop.preferences_borda_rk[
                 np.array(range(self.pop.V)) != v, :])
         for c in self.losing_candidates:
             if not np.isneginf(self._v_IM_for_c[v, c]):
@@ -1119,10 +1119,10 @@ class ExhaustiveBallot(ExhaustiveBallotResult, Election):
         for r in range(self.pop.C - 1):
             scores_tot = np.full(self.pop.C, np.nan)
             scores_tot[is_alive] = np.sum(np.equal(
-                self.pop.preferences_borda_vtb[
+                self.pop.preferences_borda_rk[
                     np.logical_not(self.v_wants_to_help_c[:, c]), :][
                         :, is_alive],
-                np.max(self.pop.preferences_borda_vtb[
+                np.max(self.pop.preferences_borda_rk[
                     np.logical_not(self.v_wants_to_help_c[:, c]), :][
                         :, is_alive], 1)[:, np.newaxis]
             ), 0)
@@ -1143,7 +1143,7 @@ class ExhaustiveBallot(ExhaustiveBallotResult, Election):
         self._example_path_TM[c] = np.array(example_path)
         self._mylogv('TM: example_path_TM[c] =',
                      self._example_path_TM[c], 2)
-        if self.pop.matrix_duels[c, self.w] >= \
+        if self.pop.matrix_duels_ut[c, self.w] >= \
                 self._sufficient_coalition_size_TM[c]:
             self._candidates_TM[c] = True
             self._is_TM = True
@@ -1157,11 +1157,11 @@ class ExhaustiveBallot(ExhaustiveBallotResult, Election):
 
     def _UM_main_work_c(self, c):
         exact = (self.UM_option == "exact")
-        n_m = self.pop.matrix_duels[c, self.w]
+        n_m = self.pop.matrix_duels_ut[c, self.w]
         self._mylogv("UM: n_m =", n_m, 3)
         n_manip_fast, example_path_fast = self._CM_aux_fast(
             c, n_max=n_m, unison=True,
-            preferences_borda_s=self.pop.preferences_borda_vtb[
+            preferences_borda_s=self.pop.preferences_borda_rk[
                 np.logical_not(self.v_wants_to_help_c[:, c]), :])
         self._mylogv("UM: n_manip_fast =", n_manip_fast, 3)
         if n_manip_fast <= n_m:
@@ -1177,7 +1177,7 @@ class ExhaustiveBallot(ExhaustiveBallotResult, Election):
         # not found a manipulation for c yet).
         n_manip_exact, example_path_exact = self._CM_aux_exact(
             c, n_m, unison=True,
-            preferences_borda_s=self.pop.preferences_borda_vtb[
+            preferences_borda_s=self.pop.preferences_borda_rk[
                 np.logical_not(self.v_wants_to_help_c[:, c]), :])
         self._mylogv("UM: n_manip_exact =", n_manip_exact)
         if n_manip_exact <= n_m:
@@ -1224,7 +1224,7 @@ class ExhaustiveBallot(ExhaustiveBallotResult, Election):
         if optimize_bounds and exact:
             n_max = self._sufficient_coalition_size_CM[c] - 1
         else:
-            n_max = self.pop.matrix_duels[c, self.w]
+            n_max = self.pop.matrix_duels_ut[c, self.w]
         self._mylogv("CM: n_max =", n_max, 3)
         if not exact and self._necessary_coalition_size_CM[c] > n_max:
             self._mylog("CM: Fast algorithm will not do better than " +
@@ -1232,7 +1232,7 @@ class ExhaustiveBallot(ExhaustiveBallotResult, Election):
             return
         n_manip_fast, example_path_fast = self._CM_aux_fast(
             c, n_max, unison=False,
-            preferences_borda_s=self.pop.preferences_borda_vtb[
+            preferences_borda_s=self.pop.preferences_borda_rk[
                 np.logical_not(self.v_wants_to_help_c[:, c]), :])
         self._mylogv("CM: n_manip_fast =", n_manip_fast, 3)
         if n_manip_fast < self._sufficient_coalition_size_CM[c]:
@@ -1250,7 +1250,7 @@ class ExhaustiveBallot(ExhaustiveBallotResult, Election):
         if self._sufficient_coalition_size_CM[c] == (
                 self._necessary_coalition_size_CM[c]):
             return False
-        if not optimize_bounds and (self.pop.matrix_duels[c, self.w] >=
+        if not optimize_bounds and (self.pop.matrix_duels_ut[c, self.w] >=
                                     self._sufficient_coalition_size_CM[c]):
             # This is a quick escape: since we have the option 'exact', if 
             # we come back with optimize_bounds, we will try to be more
@@ -1263,7 +1263,7 @@ class ExhaustiveBallot(ExhaustiveBallotResult, Election):
         self._mylogv("CM: n_max_updated =", n_max_updated)
         n_manip_exact, example_path_exact = self._CM_aux_exact(
             c, n_max_updated, unison=False,
-            preferences_borda_s=self.pop.preferences_borda_vtb[
+            preferences_borda_s=self.pop.preferences_borda_rk[
                 np.logical_not(self.v_wants_to_help_c[:, c]), :])
         self._mylogv("CM: n_manip_exact =", n_manip_exact)
         if n_manip_exact < self._sufficient_coalition_size_CM[c]:
@@ -1280,7 +1280,7 @@ class ExhaustiveBallot(ExhaustiveBallotResult, Election):
                 'sufficient_coalition_size_CM[c] =')
             return False
         else:
-            if self.pop.matrix_duels[c, self.w] >= \
+            if self.pop.matrix_duels_ut[c, self.w] >= \
                     self._sufficient_coalition_size_CM[c]:
                 # We have optimized the size of the coalition.
                 self._update_necessary(
@@ -1296,7 +1296,7 @@ class ExhaustiveBallot(ExhaustiveBallotResult, Election):
                 # is a quick escape.
                 self._update_necessary(
                     self._necessary_coalition_size_CM, c,
-                    self.pop.matrix_duels[c, self.w] + 1,
+                    self.pop.matrix_duels_ut[c, self.w] + 1,
                     'CM: Update necessary_coalition_size_CM[c] = n_m + 1 =')
                 return True
 

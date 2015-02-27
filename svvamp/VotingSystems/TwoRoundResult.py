@@ -49,14 +49,14 @@ class TwoRoundResult(ElectionResult):
     def _counts_ballots(self):
         self._mylog("Count ballots", 1)
         # First round
-        scores_r = np.copy(self.pop.plurality_scores_vtb)
+        scores_r = np.copy(self.pop.plurality_scores_rk)
         c = np.argmax(scores_r)
         self._selected_one = c
         scores_r[c] = 0
         d = np.argmax(scores_r)
         self._selected_two = d
         # Second round
-        if self.pop.matrix_victories_vtb_ctb[c, d]:
+        if self.pop.matrix_victories_rk_ctb[c, d]:
             self._w = c
         else:
             self._w = d
@@ -93,13 +93,13 @@ class TwoRoundResult(ElectionResult):
         """
         if self._ballots is None:
             self._ballots = np.zeros((self.pop.V, 2), dtype=np.int)
-            self._ballots[:, 0] = self.pop.preferences_ranking[:, 0]
+            self._ballots[:, 0] = self.pop.preferences_rk[:, 0]
             c = self.selected_one
             d = self.selected_two
-            self._ballots[self.pop.preferences_borda_vtb[:, c] >
-                          self.pop.preferences_borda_vtb[:, d], 1] = c
-            self._ballots[self.pop.preferences_borda_vtb[:, d] >
-                          self.pop.preferences_borda_vtb[:, c], 1] = d
+            self._ballots[self.pop.preferences_borda_rk[:, c] >
+                          self.pop.preferences_borda_rk[:, d], 1] = c
+            self._ballots[self.pop.preferences_borda_rk[:, d] >
+                          self.pop.preferences_borda_rk[:, c], 1] = d
         return self._ballots
 
     @property
@@ -110,11 +110,11 @@ class TwoRoundResult(ElectionResult):
         """
         if self._scores is None:
             self._scores = np.zeros((2, self.pop.C))
-            self._scores[0, :] = self.pop.plurality_scores_vtb
+            self._scores[0, :] = self.pop.plurality_scores_rk
             c = self.selected_one
             d = self.selected_two
-            self._scores[1, c] = self.pop.matrix_duels_vtb[c, d]
-            self._scores[1, d] = self.pop.matrix_duels_vtb[d, c]
+            self._scores[1, c] = self.pop.matrix_duels_rk[c, d]
+            self._scores[1, d] = self.pop.matrix_duels_rk[d, c]
         return self._scores
         
     @property

@@ -72,7 +72,7 @@ class MajorityJudgment(MajorityJudgmentResult, Election):
 
     Default behavior of sincere voters: voter ``v`` applies an affine
     transformation to her utilities
-    :attr:`~svvamp.Population.preferences_utilities`\ ``[v, :]``
+    :attr:`~svvamp.Population.preferences_ut`\ ``[v, :]``
     to get her grades, such that her least-liked candidate receives
     :attr:`~svvamp.MajorityJudgment.min_grade` and her most-liked candidate
     receives :attr:`~svvamp.MajorityJudgment.max_grade`.
@@ -217,7 +217,7 @@ class MajorityJudgment(MajorityJudgmentResult, Election):
         q = np.sum(sorted_sincere[:-1, :] < medians, 0)
         self._mylogm("CM: q (sincere only) =", q, 3)
 
-        n_s = self.pop.V - self.pop.matrix_duels[c, self.w]
+        n_s = self.pop.V - self.pop.matrix_duels_ut[c, self.w]
         self._mylogv("CM: n_s =", n_s, 3)
         n_m = 0
         i_median = (n_s - 1) / 2

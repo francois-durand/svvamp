@@ -21,7 +21,7 @@ This file is part of SVVAMP.
 """
 
 from svvamp.Preferences.Population import \
-    preferences_utilities_to_preferences_ranking
+    preferences_ut_to_preferences_rk
 from svvamp.Preferences.Population import Population
 
 
@@ -48,13 +48,13 @@ class PopulationSubsetCandidates(Population):
         """
         Population.__init__(
             self,
-            preferences_utilities=mother.preferences_utilities[
+            preferences_ut=mother.preferences_ut[
                 :, candidates_subset]
         )
         self._mother = mother
         self._candidates_subset = candidates_subset
         if self.mother._voters_sorted_by_ranking:
-            self._voters_sorted_by_ranking = True
+            self._voters_sorted_by_rk = True
 
     @property
     def mother(self):
@@ -72,78 +72,78 @@ class PopulationSubsetCandidates(Population):
         return self._candidates_subset
 
     @property
-    def preferences_ranking(self):
+    def preferences_rk(self):
         """This is the essential function of this class: instead of using a
         new voter tie-breaking rule, we use the sub-rankings of the mother
         population.
         """
-        if self._preferences_ranking is None:
-            self._preferences_ranking = (
-                preferences_utilities_to_preferences_ranking(
-                    self.mother.preferences_borda_vtb[
+        if self._preferences_rk is None:
+            self._preferences_rk = (
+                preferences_ut_to_preferences_rk(
+                    self.mother.preferences_borda_rk[
                         :, self.candidates_subset]))
-        return self._preferences_ranking
+        return self._preferences_rk
 
     #%% Matrix of duels
 
     @property
-    def matrix_duels(self):
-        if self._matrix_duels is None:
-            self._matrix_duels = self.mother.matrix_duels[
+    def matrix_duels_ut(self):
+        if self._matrix_duels_ut is None:
+            self._matrix_duels_ut = self.mother.matrix_duels_ut[
                 self.candidates_subset, :][:, self.candidates_subset]
-        return self._matrix_duels
+        return self._matrix_duels_ut
 
     @property
-    def matrix_duels_vtb(self):
-        if self._matrix_duels_vtb is None:
-            self._matrix_duels_vtb = self.mother.matrix_duels_vtb[
+    def matrix_duels_rk(self):
+        if self._matrix_duels_rk is None:
+            self._matrix_duels_rk = self.mother.matrix_duels_rk[
                 self.candidates_subset, :][:, self.candidates_subset]
-        return self._matrix_duels_vtb
+        return self._matrix_duels_rk
 
     @property
-    def matrix_victories_abs(self):
-        if self._matrix_victories_abs is None:
-            self._matrix_victories_abs = self.mother.matrix_victories_abs[
+    def matrix_victories_ut_abs(self):
+        if self._matrix_victories_ut_abs is None:
+            self._matrix_victories_ut_abs = self.mother.matrix_victories_ut_abs[
                 self.candidates_subset, :][:, self.candidates_subset]
-        return self._matrix_victories_abs
+        return self._matrix_victories_ut_abs
 
     @property
-    def matrix_victories_abs_ctb(self):
-        if self._matrix_victories_abs_vtb is None:
-            self._matrix_victories_abs_vtb = \
+    def matrix_victories_ut_abs_ctb(self):
+        if self._matrix_victories_ut_abs_ctb is None:
+            self._matrix_victories_ut_abs_ctb = \
                 self.mother.matrix_victories_abs_vtb[
                     self.candidates_subset, :][:, self.candidates_subset]
-        return self._matrix_victories_abs_vtb
+        return self._matrix_victories_ut_abs_ctb
 
     @property
-    def matrix_victories_rel(self):
-        if self._matrix_victories_rel is None:
-            self._matrix_victories_rel = self.mother.matrix_victories_rel[
+    def matrix_victories_ut_rel(self):
+        if self._matrix_victories_ut_rel is None:
+            self._matrix_victories_ut_rel = self.mother.matrix_victories_ut_rel[
                 self.candidates_subset, :][:, self.candidates_subset]
-        return self._matrix_victories_rel
+        return self._matrix_victories_ut_rel
 
     @property
-    def matrix_victories_rel_ctb(self):
-        if self._matrix_victories_rel_ctb is None:
-            self._matrix_victories_rel_ctb = \
-                self.mother.matrix_victories_rel_ctb[
+    def matrix_victories_ut_rel_ctb(self):
+        if self._matrix_victories_ut_rel_ctb is None:
+            self._matrix_victories_ut_rel_ctb = \
+                self.mother.matrix_victories_ut_rel_ctb[
                     self.candidates_subset, :][:, self.candidates_subset]
-        return self._matrix_victories_rel_ctb
+        return self._matrix_victories_ut_rel_ctb
 
     @property
-    def matrix_victories_vtb(self):
-        if self._matrix_victories_vtb is None:
-            self._matrix_victories_vtb = self.mother.matrix_victories_vtb[
+    def matrix_victories_rk(self):
+        if self._matrix_victories_rk is None:
+            self._matrix_victories_rk = self.mother.matrix_victories_rk[
                 self.candidates_subset, :][:, self.candidates_subset]
-        return self._matrix_victories_vtb
+        return self._matrix_victories_rk
 
     @property
-    def matrix_victories_vtb_ctb(self):
-        if self._matrix_victories_vtb_ctb is None:
-            self._matrix_victories_vtb_ctb = \
-                self.mother.matrix_victories_vtb_ctb[
+    def matrix_victories_rk_ctb(self):
+        if self._matrix_victories_rk_ctb is None:
+            self._matrix_victories_rk_ctb = \
+                self.mother.matrix_victories_rk_ctb[
                     self.candidates_subset, :][:, self.candidates_subset]
-        return self._matrix_victories_vtb_ctb
+        return self._matrix_victories_rk_ctb
 
     #%% Total utilities
 

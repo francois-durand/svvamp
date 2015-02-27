@@ -32,7 +32,7 @@ class CondorcetVtbIRVResult(ElectionResult):
 
     Each voter must provide a strict total order.
 
-    If there is a Condorcet winner (in the sense of matrix_victories_vtb), then
+    If there is a Condorcet winner (in the sense of matrix_victories_rk), then
     she is elected. Otherwise, IRV is used.
 
     If sincere preferences are strict total orders, then this voting system is
@@ -55,20 +55,20 @@ class CondorcetVtbIRVResult(ElectionResult):
 
     def _counts_ballots(self):
         self._mylog("Count ballots", 1)
-        if not np.isnan(self.pop.condorcet_winner_vtb):
-            self._w = self.pop.condorcet_winner_vtb
-            self._scores = np.sum(self.pop.matrix_victories_vtb, 1)
+        if not np.isnan(self.pop.condorcet_winner_rk):
+            self._w = self.pop.condorcet_winner_rk
+            self._scores = np.sum(self.pop.matrix_victories_rk, 1)
             self._candidates_by_scores_best_to_worst = (
                 np.argsort(-self.scores, kind='mergesort'))
             self._v_might_be_pivotal = np.zeros(self.pop.V)
-            for c in np.where(self.pop.matrix_duels_vtb[self.w, :] <=
+            for c in np.where(self.pop.matrix_duels_rk[self.w, :] <=
                               self.pop.V / 2 + 1)[0]:
                 if c == self._w:
                     continue
                 # Search voters who can prevent the victory for w against c.
                 self._v_might_be_pivotal[
-                    self.pop.preferences_borda_vtb[:, self._w] >
-                    self.pop.preferences_borda_vtb[:, c]
+                    self.pop.preferences_borda_rk[:, self._w] >
+                    self.pop.preferences_borda_rk[:, c]
                 ] = True
         else:
             self.EB = ExhaustiveBallotResult(self.pop)
@@ -80,22 +80,22 @@ class CondorcetVtbIRVResult(ElectionResult):
             self._v_might_be_pivotal = np.copy(self.EB._v_might_be_pivotal)
             # Another way of being (maybe) pivotal: create a Condorcet winner.
             for c in range(self.pop.C):
-                if np.any(self.pop.matrix_duels_vtb[:, c] >=
+                if np.any(self.pop.matrix_duels_rk[:, c] >=
                           self.pop.V / 2 + 1):
                     # c cannot become a Condorcet winner.
                     continue
                 # close_candidates are the candidates against which c does
                 # not have a victory.
                 close_candidates = np.less_equal(
-                    self.pop.matrix_duels_vtb[c, :], self.pop.V / 2)
+                    self.pop.matrix_duels_rk[c, :], self.pop.V / 2)
                 # Voter v can make c become a Condorcet winner iff, among
                 # close_candidates, she vtb-likes c the least (this way,
                 # she can improve c's scores in all these duels, compared to
                 # her sincere voting).
                 self._v_might_be_pivotal[
                     np.all(np.less(
-                        self.pop.preferences_borda_vtb[:, c][:, np.newaxis],
-                        self.pop.preferences_borda_vtb[:, close_candidates]
+                        self.pop.preferences_borda_rk[:, c][:, np.newaxis],
+                        self.pop.preferences_borda_rk[:, close_candidates]
                     ), 1)
                 ] = True
 
@@ -112,7 +112,7 @@ class CondorcetVtbIRVResult(ElectionResult):
         """1d or 2d array. 
         
         If there is a Condorcet winner, then ``scores[c]`` is the number of
-        victories for ``c`` in :attr:`~svvamp.Population.matrix_duels_vtb`.
+        victories for ``c`` in :attr:`~svvamp.Population.matrix_duels_rk`.
         
         Otherwise, ``scores[r, c]`` is defined like in
         :class:`~svvamp.IRV`: it is the number of

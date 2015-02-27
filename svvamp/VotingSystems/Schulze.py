@@ -24,7 +24,7 @@ import numpy as np
 import networkx as nx
 
 from svvamp.Preferences.Population import Population
-from svvamp.Preferences.Population import preferences_utilities_to_matrix_duels
+from svvamp.Preferences.Population import preferences_ut_to_matrix_duels_ut
 from svvamp.VotingSystems.Election import Election
 from svvamp.VotingSystems.SchulzeResult import SchulzeResult
 
@@ -43,7 +43,7 @@ class Schulze(SchulzeResult, Election):
 
     :attr:`~svvamp.Schulze.scores`\ ``[c, d]`` is equal to the width of the
     widest path from candidate ``c`` to candidate ``d`` in the capacited graph
-    defined by :attr:`~svvamp.Population.matrix_duels_vtb`. We say that ``c``
+    defined by :attr:`~svvamp.Population.matrix_duels_rk`. We say that ``c``
     is *better* than ``d`` if ``scores[c, d]`` > ``scores[d, c]``. Candidate
     ``c`` is a *potential winner* if no candidate ``d`` is *better* than ``c``.
 
@@ -308,11 +308,11 @@ class Schulze(SchulzeResult, Election):
             # Maybe we will not decide, but we will have done the 'fast' job
             # for c anyway.
 
-            matrix_duels_s = np.copy(self.pop.matrix_duels_vtb)
+            matrix_duels_s = np.copy(self.pop.matrix_duels_rk)
             for x in range(self.pop.C):
                 for y in range(x+1, self.pop.C):
-                    if (self.pop.preferences_borda_vtb[v, x] >
-                            self.pop.preferences_borda_vtb[v, y]):
+                    if (self.pop.preferences_borda_rk[v, x] >
+                            self.pop.preferences_borda_rk[v, y]):
                         matrix_duels_s[x, y] -= 1
                     else:
                         matrix_duels_s[y, x] -= 1
@@ -384,10 +384,10 @@ class Schulze(SchulzeResult, Election):
     #%% Coalition Manipulation (CM)
         
     def _CM_main_work_c(self, c, optimize_bounds):
-        matrix_duels_s = preferences_utilities_to_matrix_duels(
-            self.pop.preferences_borda_vtb[
+        matrix_duels_s = preferences_ut_to_matrix_duels_ut(
+            self.pop.preferences_borda_rk[
                 np.logical_not(self.v_wants_to_help_c[:, c]), :])
-        n_m = self.pop.matrix_duels[c, self.w]
+        n_m = self.pop.matrix_duels_ut[c, self.w]
         n_s = self.pop.V - n_m
         w, widest_path, _ = SchulzeResult._count_ballot_aux(matrix_duels_s)
         S = 2 * (widest_path - n_s / 2)
@@ -466,7 +466,7 @@ class Schulze(SchulzeResult, Election):
         self._candidates_UM[np.equal(self._candidates_CM, False)] = False
 
     def _UM_main_work_c(self, c):
-        n_m = self.pop.matrix_duels[c, self.w]
+        n_m = self.pop.matrix_duels_ut[c, self.w]
         if self._sufficient_coalition_size_CM[c] + 1 <= n_m:
             self._candidates_UM[c] = True
             return
@@ -475,8 +475,8 @@ class Schulze(SchulzeResult, Election):
             return
         if not self._UM_fast_tested[c]:
             # We must try the fast algo first.
-            matrix_duels_s = preferences_utilities_to_matrix_duels(
-                self.pop.preferences_borda_vtb[
+            matrix_duels_s = preferences_ut_to_matrix_duels_ut(
+                self.pop.preferences_borda_rk[
                     np.logical_not(self.v_wants_to_help_c[:, c]), :])
             n_s = self.pop.V - n_m
             w, widest_path, _ = SchulzeResult._count_ballot_aux(matrix_duels_s)

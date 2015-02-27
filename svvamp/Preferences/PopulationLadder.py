@@ -40,7 +40,7 @@ class PopulationLadder(Population):
 
         :return: A :class:`~svvamp.Population` object.
 
-        Each utility ``preferences_utilities[v, c]`` is drawn independently and
+        Each utility ``preferences_ut[v, c]`` is drawn independently and
         equiprobably between ``n_rungs`` values that divide the interval
         [-1, 1] equally. For example, if ``n_rungs = 21``, then values in
         {-1, -0.9, ..., 1} are used.
@@ -54,7 +54,7 @@ class PopulationLadder(Population):
         ) * 2 / (n_rungs - 1) - 1
         log_creation = ['Ladder', C, V,
                         'Number of rungs', n_rungs]
-        super().__init__(preferences_utilities=preferences_utilities,
+        super().__init__(preferences_ut=preferences_utilities,
                          log_creation=log_creation)
 
     @staticmethod

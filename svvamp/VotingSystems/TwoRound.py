@@ -136,12 +136,12 @@ class TwoRound(TwoRoundResult, Election):
                 scores_first_temp[selected_one_m] = -1
                 selected_two_m = np.argmax(scores_first_temp)
                 # Second round
-                score_one_without_v = self.pop.matrix_duels_vtb[
+                score_one_without_v = self.pop.matrix_duels_rk[
                     selected_one_m, selected_two_m]
-                score_two_without_v = self.pop.matrix_duels_vtb[
+                score_two_without_v = self.pop.matrix_duels_rk[
                     selected_two_m, selected_one_m]
-                if (self.pop.preferences_borda_vtb[v, selected_one_m] >
-                        self.pop.preferences_borda_vtb[v, selected_two_m]):
+                if (self.pop.preferences_borda_rk[v, selected_one_m] >
+                        self.pop.preferences_borda_rk[v, selected_two_m]):
                     score_one_without_v -= 1
                 else:
                     score_two_without_v -= 1
@@ -174,7 +174,7 @@ class TwoRound(TwoRoundResult, Election):
     #%% Unison manipulation (UM)
 
     def _UM_main_work_c(self, c):
-        n_m = self.pop.matrix_duels.astype(int)[c, self.w]
+        n_m = self.pop.matrix_duels_ut.astype(int)[c, self.w]
         n_s = self.pop.V - n_m
         ballots_first_round_s = self.ballots[
             np.logical_not(self.v_wants_to_help_c[:, c]), 0]
@@ -199,9 +199,9 @@ class TwoRound(TwoRoundResult, Election):
             # Second round
             d = selected_one_s
             d_vs_c = np.sum(
-                self.pop.preferences_borda_vtb[
+                self.pop.preferences_borda_rk[
                     np.logical_not(self.v_wants_to_help_c[:, c]), d] >
-                self.pop.preferences_borda_vtb[
+                self.pop.preferences_borda_rk[
                     np.logical_not(self.v_wants_to_help_c[:, c]), c])
             c_vs_d = n_s - d_vs_c
             if c_vs_d + n_m < d_vs_c + (d < c):
@@ -222,9 +222,9 @@ class TwoRound(TwoRoundResult, Election):
                 continue
             # Second round
             d_vs_c = np.sum(
-                self.pop.preferences_borda_vtb[
+                self.pop.preferences_borda_rk[
                     np.logical_not(self.v_wants_to_help_c[:, c]), d] >
-                self.pop.preferences_borda_vtb[
+                self.pop.preferences_borda_rk[
                     np.logical_not(self.v_wants_to_help_c[:, c]), c])
             c_vs_d = n_s - d_vs_c
             if c_vs_d + n_m < d_vs_c + (d < c):
@@ -241,7 +241,7 @@ class TwoRound(TwoRoundResult, Election):
     #%% Coalition Manipulation (CM)
 
     def _CM_main_work_c(self, c, optimize_bounds):
-        n_s = self.pop.V - self.pop.matrix_duels.astype(int)[c, self.w]
+        n_s = self.pop.V - self.pop.matrix_duels_ut.astype(int)[c, self.w]
         ballots_first_round_s = self.ballots[
             np.logical_not(self.v_wants_to_help_c[:, c]), 0]
         scores_first_round_s = np.bincount(ballots_first_round_s,
@@ -269,9 +269,9 @@ class TwoRound(TwoRoundResult, Election):
                 )
             # Second round.
             d_vs_c = np.sum(
-                self.pop.preferences_borda_vtb[
+                self.pop.preferences_borda_rk[
                     np.logical_not(self.v_wants_to_help_c[:, c]), d] > 
-                self.pop.preferences_borda_vtb[
+                self.pop.preferences_borda_rk[
                     np.logical_not(self.v_wants_to_help_c[:, c]), c])
             c_vs_d = n_s - d_vs_c
             n_m_second = max(0, d_vs_c - c_vs_d + (d < c))

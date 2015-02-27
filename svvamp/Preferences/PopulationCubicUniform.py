@@ -39,14 +39,14 @@ class PopulationCubicUniform(Population):
 
         :return: A :class:`~svvamp.Population` object.
 
-        Each coefficient ``preferences_utilities[v, c]`` is drawn independently
+        Each coefficient ``preferences_ut[v, c]`` is drawn independently
         and uniformly in the interval [-1, 1].
 
         The ordinal part of this distribution is the Impartial Culture.
         """
         preferences_utilities = 2 * np.random.rand(V, C) - 1
         log_creation = ['Cubic uniform', C, V]
-        super().__init__(preferences_utilities=preferences_utilities,
+        super().__init__(preferences_ut=preferences_utilities,
                          log_creation=log_creation)
 
     @staticmethod

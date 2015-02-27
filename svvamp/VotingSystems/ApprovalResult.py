@@ -31,7 +31,7 @@ class ApprovalResult(ElectionResult):
     """Results of an election using Approval voting.
 
     If approval_comparator is '>' (resp. '>='), then sincere voter v votes for
-    candidates c iff preferences_utilities[v, c] > approval_threshold.
+    candidates c iff preferences_ut[v, c] > approval_threshold.
 
     Ties are broken by natural order on the candidates (lower index wins).
     """
@@ -67,7 +67,7 @@ class ApprovalResult(ElectionResult):
 
         When ``approval_comparator`` is ``'>'``, sincere voter
         ``v`` approves candidates ``c`` iff
-        :attr:`~svvamp.Population.preferences_utilities`\ ``[v, c]`` >
+        :attr:`~svvamp.Population.preferences_ut`\ ``[v, c]`` >
         :attr:`~svvamp.Approval.approval_threshold`.
 
         When ``approval_comparator`` is ``'>='``, previous relation is modified
@@ -99,10 +99,10 @@ class ApprovalResult(ElectionResult):
             self._mylog("Compute ballots", 1)
             if self.approval_comparator == '>':
                 self._ballots = np.greater(
-                    self.pop.preferences_utilities, self.approval_threshold)
+                    self.pop.preferences_ut, self.approval_threshold)
             else:
                 self._ballots = np.greater_equal(
-                    self.pop.preferences_utilities, self.approval_threshold)
+                    self.pop.preferences_ut, self.approval_threshold)
         return self._ballots
         
     @property

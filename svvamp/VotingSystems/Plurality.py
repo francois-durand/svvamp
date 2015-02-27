@@ -85,7 +85,7 @@ class Plurality(PluralityResult, Election):
     def _compute_winner_of_subset(self, candidates_r):
         self._mylogv("IIA: Compute winner of subset ", candidates_r, 3)
         scores_r = np.bincount(
-            np.argmax(self.pop.preferences_borda_vtb[:, candidates_r], 1),
+            np.argmax(self.pop.preferences_borda_rk[:, candidates_r], 1),
             minlength=candidates_r.shape[0])
         index_w_r_in_subset = np.argmax(scores_r)
         w_r = candidates_r[index_w_r_in_subset]
@@ -124,7 +124,7 @@ class Plurality(PluralityResult, Election):
             close_races[np.newaxis, :],
             np.logical_and(
                 self.v_wants_to_help_c,
-                self.pop.preferences_borda_vtb != self.pop.C - 1
+                self.pop.preferences_borda_rk != self.pop.C - 1
             )
         )
 
@@ -240,7 +240,7 @@ class Plurality(PluralityResult, Election):
 
     def _CM_main_work_c_exact(self, c, optimize_bounds):
         scores_s = np.bincount(
-            self.pop.preferences_ranking[np.logical_not(
+            self.pop.preferences_rk[np.logical_not(
                 self.v_wants_to_help_c[:, c]), 0],
             minlength=self.pop.C)
         # We need as many manipulators as scores_s[w] - scores_s[c],

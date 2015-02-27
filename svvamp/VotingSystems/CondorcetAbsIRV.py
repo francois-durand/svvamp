@@ -23,7 +23,7 @@ This file is part of SVVAMP.
 import numpy as np
 
 from svvamp.Preferences.Population import Population
-from svvamp.Preferences.Population import preferences_utilities_to_matrix_duels
+from svvamp.Preferences.Population import preferences_ut_to_matrix_duels_ut
 from svvamp.VotingSystems.Election import Election
 from svvamp.VotingSystems.CondorcetAbsIRVResult import CondorcetAbsIRVResult
 from svvamp.VotingSystems.IRV import IRV
@@ -51,7 +51,7 @@ class CondorcetAbsIRV(CondorcetAbsIRVResult, Election):
     coherent with this weak order (i.e., is a tie-breaking of this weak order).
 
     If there is a Condorcet winner (computed with the weak orders, i.e. in
-    the sense of :attr:`~svvamp.Population.matrix_victories_abs`),
+    the sense of :attr:`~svvamp.Population.matrix_victories_ut_abs`),
     then she is elected. Otherwise, :class:`~svvamp.IRV` is used (with the
     strict total orders).
 
@@ -155,7 +155,7 @@ class CondorcetAbsIRV(CondorcetAbsIRVResult, Election):
     @property
     def losing_candidates(self):
         """If IRV.w does not win, then we put her first. Other losers are
-        sorted as usual. (scores in matrix_duels).
+        sorted as usual. (scores in matrix_duels_ut).
         """
         if self._losing_candidates is None:
             self._mylog("Compute ordered list of losing candidates", 1)
@@ -166,7 +166,7 @@ class CondorcetAbsIRV(CondorcetAbsIRVResult, Election):
                     np.array(range(self.w+1, self.pop.C), dtype=int)
                 ))
                 self._losing_candidates = self._losing_candidates[np.argsort(
-                    -self.pop.matrix_duels[self._losing_candidates, self.w],
+                    -self.pop.matrix_duels_ut[self._losing_candidates, self.w],
                     kind='mergesort')]
             else:
                 # Put IRV.w first.
@@ -175,7 +175,7 @@ class CondorcetAbsIRV(CondorcetAbsIRVResult, Election):
                      if c != self.w and c != self.IRV.w]
                 ).astype(np.int)
                 self._losing_candidates = self._losing_candidates[np.argsort(
-                    -self.pop.matrix_duels[self._losing_candidates, self.w],
+                    -self.pop.matrix_duels_ut[self._losing_candidates, self.w],
                     kind='mergesort')]
                 self._losing_candidates = np.concatenate((
                     [self.IRV.w], self._losing_candidates))
@@ -229,13 +229,13 @@ class CondorcetAbsIRV(CondorcetAbsIRVResult, Election):
         #   * If incomplete: cf. 1), in fact it is the same.
         # When do we calculate IRV? It can be after we examine IRV.w; so,
         # not at the very beginning
-        n_m = self.pop.matrix_duels[c, self.w]
+        n_m = self.pop.matrix_duels_ut[c, self.w]
         n_s = self.pop.V - n_m
         candidates = np.array(range(self.pop.C))
-        preferences_utilities_s = self.pop.preferences_utilities[
+        preferences_utilities_s = self.pop.preferences_ut[
             np.logical_not(self.v_wants_to_help_c[:, c]), :]
         matrix_duels_temp = (
-            preferences_utilities_to_matrix_duels(preferences_utilities_s))
+            preferences_ut_to_matrix_duels_ut(preferences_utilities_s))
         self._mylogm("CM: matrix_duels_temp =", matrix_duels_temp, 3)
         # More preliminary checks
         # It's more convenient to put them in that method, because we need
@@ -325,7 +325,7 @@ class CondorcetAbsIRV(CondorcetAbsIRVResult, Election):
         #              "sufficient_coalition_size_CM[c] =",
         #              self._sufficient_coalition_size_CM[c], 3)
         # self._mylogv("CM: Preliminary checks.2: " +
-        #              "n_m =", self.pop.matrix_duels[c, self.w], 3)
+        #              "n_m =", self.pop.matrix_duels_ut[c, self.w], 3)
         # if self._necessary_coalition_size_CM[c] > n_m:
         #     self._mylogv("CM: Preliminary checks.2: CM is False for c =",
         #                  c, 2)

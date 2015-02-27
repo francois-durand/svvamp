@@ -43,7 +43,7 @@ class ICRV(ICRVResult, Election):
     Even round ``r`` (including round 0): if a candidate ``w`` has only
     victories against all other non-eliminated candidates (i.e. is a Condorcet
     winner in this subset, in the sense of
-    :attr:`~svvamp.Population.matrix_victories_vtb`), then ``w`` is
+    :attr:`~svvamp.Population.matrix_victories_rk`), then ``w`` is
     declared the winner.
 
     Odd round ``r``: the candidate who is ranked first (among non-eliminated

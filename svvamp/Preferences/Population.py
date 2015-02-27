@@ -36,26 +36,26 @@ class Population(MyLog.MyLog):
 
     #TODO: implement majority_favorite and co, since they are in doc
 
-    def __init__(self, preferences_utilities=None, preferences_ranking=None,
+    def __init__(self, preferences_ut=None, preferences_rk=None,
                  log_creation=None, labels_candidates=None):
         """Create a population with preferences. 
 
-        :param preferences_utilities: 2d array of floats.
-            ``preferences_utilities[v, c]`` is the utility of candidate ``c``
+        :param preferences_ut: 2d array of floats.
+            ``preferences_ut[v, c]`` is the utility of candidate ``c``
             as seen by voter ``v``.
-        :param preferences_ranking: 2d array of integers.
-            ``preferences_ranking[v, k]`` is the candidate at rank ``k`` for
+        :param preferences_rk: 2d array of integers.
+            ``preferences_rk[v, k]`` is the candidate at rank ``k`` for
             voter ``v``.
         :param log_creation: Any type (string, list...). Some comments.
         :param labels_candidates: List of strings. Names of the candidates.
 
-        You may enter either ``preferences_utilities`` or
-        ``preferences_ranking`` to define the preferences of the population.
-        If you provide both, then only ``preferences_utilities`` is used.
+        You may enter either ``preferences_ut`` or
+        ``preferences_rk`` to define the preferences of the population.
+        If you provide both, then only ``preferences_ut`` is used.
         
         If voter ``v`` attributes the same utility to several candidates:
 
-            * The first time the attribute ``preferences_ranking`` is
+            * The first time the attribute ``preferences_rk`` is
               called, a random ranking will be decided for these tied
               candidates (once and for all). This strict ranking will be used
               for sincere voting when a voting system accepts only strict
@@ -66,10 +66,10 @@ class Population(MyLog.MyLog):
               sincere winner in an election, then ``v`` is not interested in
               a manipulation for ``c``.
 
-        If you provide ``preferences_ranking`` only,
-        then ``preferences_utilities`` is set to the corresponding Borda
-        scores (:attr:`~svvamp.Population.preferences_borda_novtb` or
-        :attr:`~svvamp.Population.preferences_borda_vtb`, which are equivalent
+        If you provide ``preferences_rk`` only,
+        then ``preferences_ut`` is set to the corresponding Borda
+        scores (:attr:`~svvamp.Population.preferences_borda_ut` or
+        :attr:`~svvamp.Population.preferences_borda_rk`, which are equivalent
         in that case).
 
         If all voters have a strict order of preference, either because you
@@ -90,18 +90,18 @@ class Population(MyLog.MyLog):
 
         ::
 
-            majority_favorite             ==>            majority_favorite_ctb
+            majority_favorite_ut          ==>         majority_favorite_ut_ctb
             ||              ||                                ||            ||
             V               ||                                ||            ||
             Resistant Cond. V                                 V             ||
-            ||      majority_favorite_vtb ==> majority_favorite_vtb_ctb     ||
-            ||                     ||                   ||                  ||
-            V                      ||                   ||                  V
-            Condorcet                     ==>                    Condorcet_ctb
-            ||      ||             ||                   ||         ||       ||
-            ||      V              V                    V          V        ||
-            V         Condorcet_vtb       ==>         Condorcet_vtb_ctb     V
-            Condorcet_rel                 ==>                Condorcet_rel_ctb
+            ||       majority_favorite_rk ==> majority_favorite_rk_ctb      ||
+            ||                     ||                ||                     ||
+            V                      ||                ||                     V
+            Condorcet_ut_abs              ==>             Condorcet_ut_abs_ctb
+            ||      ||             ||                ||            ||       ||
+            ||      V              V                 V             V        ||
+            V         Condorcet_rk        ==>        Condorcet_rk_ctb       V
+            Condorcet_ut_rel              ==>             Condorcet_ut_rel_ctb
             ||
             V
             Weak Condorcet
@@ -112,31 +112,32 @@ class Population(MyLog.MyLog):
         If all voters have strict orders of preference and if there is an
         odd number of voters, then:
 
-            * ``majority_favorite``, ``majority_favorite_vtb``,
-              ``majority_favorite_ctb`` and ``majority_favorite_vtb_ctb``
-              are equivalent,
-            * ``Condorcet``, ``Condorcet_ctb``, ``Condorcet_vtb``,
-              ``Condorcet_vtb_ctb``, ``Condorcet_rel``, ``Condorcet_rel_ctb``,
-              ``Weak Condorcet`` and ``Condorcet-admissible`` are equivalent.
+            *   ``majority_favorite_ut``, ``majority_favorite_rk``,
+                ``majority_favorite_ut_ctb`` and ``majority_favorite_rk_ctb``
+                are equivalent,
+            *   ``Condorcet_ut_abs``, ``Condorcet_ut_abs_ctb``,
+                ``Condorcet_rk``, ``Condorcet_rk_ctb``,
+                ``Condorcet_ut_rel``, ``Condorcet_ut_rel_ctb``,
+                ``Weak Condorcet`` and ``Condorcet-admissible`` are equivalent.
         """
         super().__init__()
         self._log_identity = "POPULATION"
 
         # Basic variables
-        if preferences_utilities is not None:
-            self._preferences_utilities = np.array(preferences_utilities)
-            self._preferences_ranking = None
-            self._V, self._C = self._preferences_utilities.shape
+        if preferences_ut is not None:
+            self._preferences_ut = np.array(preferences_ut)
+            self._preferences_rk = None
+            self._V, self._C = self._preferences_ut.shape
         else:
-            self._preferences_utilities = None
-            self._preferences_ranking = np.array(preferences_ranking)
-            self._V, self._C = self._preferences_ranking.shape
+            self._preferences_ut = None
+            self._preferences_rk = np.array(preferences_rk)
+            self._V, self._C = self._preferences_rk.shape
         self._labels_candidates = labels_candidates
         # Missing matrices will be computed this way (on demand):
-        # If preferences_utilities is provided:
-        #       utilities -> rankings  -> borda_vtb
-        # If preferences_ranking is provided:
-        #       rankings  -> borda_vtb -> utilities
+        # If preferences_ut is provided:
+        #       utilities -> rankings  -> borda_rk
+        # If preferences_rk is provided:
+        #       rankings  -> borda_rk -> utilities
 
         self.log_creation = log_creation
         if self.V < 2 or self.C < 2:
@@ -144,30 +145,30 @@ class Population(MyLog.MyLog):
                              "2 candidates.")
 
         # Other variables
-        self._preferences_borda_vtb = None
-        self._preferences_borda_novtb = None
-        self._voters_sorted_by_ranking = False
+        self._preferences_borda_rk = None
+        self._preferences_borda_ut = None
+        self._voters_sorted_by_rk = False
         self._v_has_same_ordinal_preferences_as_previous_voter = None
-        self._matrix_duels = None
-        self._matrix_duels_vtb = None
-        self._matrix_victories_vtb = None
-        self._matrix_victories_vtb_ctb = None
-        self._matrix_victories_rel = None
-        self._matrix_victories_rel_ctb = None
-        self._matrix_victories_abs = None
-        self._matrix_victories_abs_vtb = None
+        self._matrix_duels_ut = None
+        self._matrix_duels_rk = None
+        self._matrix_victories_rk = None
+        self._matrix_victories_rk_ctb = None
+        self._matrix_victories_ut_rel = None
+        self._matrix_victories_ut_rel_ctb = None
+        self._matrix_victories_ut_abs = None
+        self._matrix_victories_ut_abs_ctb = None
         self._condorcet_admissible_candidates = None
         self._nb_condorcet_admissible_candidates = None
         self._weak_condorcet_winners = None
         self._nb_weak_condorcet_winners = None
-        self._condorcet_winner_vtb_ctb = None
-        self._condorcet_winner_vtb = None
-        self._condorcet_winner_rel_ctb = None
-        self._condorcet_winner_rel = None
-        self._condorcet_winner_ctb = None
-        self._condorcet_winner = None
+        self._condorcet_winner_rk_ctb = None
+        self._condorcet_winner_rk = None
+        self._condorcet_winner_ut_rel_ctb = None
+        self._condorcet_winner_ut_rel = None
+        self._condorcet_winner_ut_abs_ctb = None
+        self._condorcet_winner_ut_abs = None
         self._resistant_condorcet_winner = None
-        self._threshold_c_prevents_w_Condorcet = None
+        self._threshold_c_prevents_w_Condorcet_ut_abs = None
         self._total_utility_c = None
         self._total_utility_min = None
         self._total_utility_mean = None
@@ -178,14 +179,14 @@ class Population(MyLog.MyLog):
         self._mean_utility_mean = None
         self._mean_utility_max = None
         self._mean_utility_std = None
-        self._plurality_scores_vtb = None
-        self._plurality_scores_novtb = None
-        self._borda_score_c_vtb = None
-        self._decreasing_borda_scores_vtb = None
-        self._candidates_by_decreasing_borda_score_vtb = None
-        self._borda_score_c_novtb = None
-        self._decreasing_borda_scores_novtb = None
-        self._candidates_by_decreasing_borda_score_novtb = None
+        self._plurality_scores_rk = None
+        self._plurality_scores_ut = None
+        self._borda_score_c_rk = None
+        self._decreasing_borda_scores_rk = None
+        self._candidates_by_decreasing_borda_score_rk = None
+        self._borda_score_c_ut = None
+        self._decreasing_borda_scores_ut = None
+        self._candidates_by_decreasing_borda_score_ut = None
         self._eb_result = None  # Storage for Exhaustive Ballot
         self._eb_manip = None  # Storage for Exhaustive Ballot
         self._eb_options = None  # Storage for Exhaustive Ballot
@@ -218,66 +219,66 @@ class Population(MyLog.MyLog):
         return self._V
 
     @property
-    def preferences_utilities(self):
-        """2d array of floats. ``preferences_utilities[v, c]`` is the utility
+    def preferences_ut(self):
+        """2d array of floats. ``preferences_ut[v, c]`` is the utility
         of  candidate ``c`` as seen by voter ``v``.
         """
-        if self._preferences_utilities is None:
+        if self._preferences_ut is None:
             self._mylog("Compute preference utilities", 1)
-            self._preferences_utilities = self.preferences_borda_vtb
-        return self._preferences_utilities
+            self._preferences_ut = self.preferences_borda_rk
+        return self._preferences_ut
 
     @property
-    def preferences_ranking(self):
-        """2d array of integers. ``preferences_ranking[v, k]`` is the
+    def preferences_rk(self):
+        """2d array of integers. ``preferences_rk[v, k]`` is the
         candidate at rank ``k`` for voter ``v``.
 
-        For example, ``preferences_ranking[v, 0]`` is ``v``'s preferred
+        For example, ``preferences_rk[v, 0]`` is ``v``'s preferred
         candidate.
         """
-        if self._preferences_ranking is None:
+        if self._preferences_rk is None:
             self._mylog("Compute preference rankings", 1)
-            self._preferences_ranking = \
-                preferences_utilities_to_preferences_ranking(
-                    self._preferences_utilities)
-        return self._preferences_ranking
+            self._preferences_rk = \
+                preferences_ut_to_preferences_rk(
+                    self._preferences_ut)
+        return self._preferences_rk
 
     @property
-    def preferences_borda_vtb(self):
-        """2d array of integers. ``preferences_borda_vtb[v, c]`` is the Borda
+    def preferences_borda_rk(self):
+        """2d array of integers. ``preferences_borda_rk[v, c]`` is the Borda
         score (between ``0`` and ``C - 1``) of candidate ``c`` for voter ``v``,
         with voter tie-breaking.
         """
-        if self._preferences_borda_vtb is None:
-            self._mylog("Compute preferences in Borda format with vtb", 1)
-            self._preferences_borda_vtb = \
-                preferences_ranking_to_preferences_borda_vtb(
-                    self.preferences_ranking)
-        return self._preferences_borda_vtb
+        if self._preferences_borda_rk is None:
+            self._mylog("Compute preference rankings in Borda format", 1)
+            self._preferences_borda_rk = \
+                preferences_rk_to_preferences_borda_rk(
+                    self.preferences_rk)
+        return self._preferences_borda_rk
 
     @property
-    def preferences_borda_novtb(self):
-        """2d array of integers. ``preferences_borda_novtb[v, c]`` gains 1
+    def preferences_borda_ut(self):
+        """2d array of integers. ``preferences_borda_ut[v, c]`` gains 1
         point for each ``d`` such that ``v`` prefers ``c`` to ``d``, and
         0.5 point for each ``d`` such that ``v`` is indifferent between ``c``
         and ``d``.
         """
-        if self._preferences_borda_novtb is None:
+        if self._preferences_borda_ut is None:
             self._mylog("Compute preference weak orders in Borda format", 1)
-            self._preferences_borda_novtb = \
-                preferences_utilities_to_preferences_borda_novtb(
-                    self.preferences_utilities)
-        return self._preferences_borda_novtb
+            self._preferences_borda_ut = \
+                preferences_ut_to_preferences_borda_ut(
+                    self.preferences_ut)
+        return self._preferences_borda_ut
 
     #%% Sort voters
 
-    def ensure_voters_sorted_by_ordinal_preferences(self):
+    def ensure_voters_sorted_by_rk(self):
         """Ensure that voters are sorted.
         
         This function sorts voters first by their strict order of preference
-        (their row in :attr:`~svvamp.Population.preferences_ranking`), then
+        (their row in :attr:`~svvamp.Population.preferences_rk`), then
         by their weak order of preference (their row in
-        :attr:`~svvamp.Population.preferences_borda_novtb`). Note
+        :attr:`~svvamp.Population.preferences_borda_ut`). Note
         that two voters having the same strict order may have different weak
         orders, and vice versa.
 
@@ -288,33 +289,33 @@ class Population(MyLog.MyLog):
         This function actually performs the sort only when it is called on a
         Population object for the first time.
         """
-        if self._voters_sorted_by_ranking:
+        if self._voters_sorted_by_rk:
             return
-        self._voters_sorted_by_ranking = True
+        self._voters_sorted_by_rk = True
         self._v_has_same_ordinal_preferences_as_previous_voter = None
         self._mylog('Sort voters by ranking', 1)
         # Ensure that tables are computed beforehand
-        _ = self.preferences_ranking
-        _ = self.preferences_utilities
-        _ = self.preferences_borda_vtb
-        _ = self.preferences_borda_novtb
+        _ = self.preferences_rk
+        _ = self.preferences_ut
+        _ = self.preferences_borda_rk
+        _ = self.preferences_borda_ut
         # Sort by weak order
-        list_borda_novtb = self.preferences_borda_novtb.tolist()
-        indexes = sorted(range(len(list_borda_novtb)),
-                         key=list_borda_novtb.__getitem__)
-        self._preferences_ranking = self.preferences_ranking[indexes, ::]
-        self._preferences_utilities = self.preferences_utilities[indexes, ::]
-        self._preferences_borda_vtb = self.preferences_borda_vtb[indexes, ::]
-        self._preferences_borda_novtb = self.preferences_borda_novtb[indexes,
+        list_borda_ut = self.preferences_borda_ut.tolist()
+        indexes = sorted(range(len(list_borda_ut)),
+                         key=list_borda_ut.__getitem__)
+        self._preferences_rk = self.preferences_rk[indexes, ::]
+        self._preferences_ut = self.preferences_ut[indexes, ::]
+        self._preferences_borda_rk = self.preferences_borda_rk[indexes, ::]
+        self._preferences_borda_ut = self.preferences_borda_ut[indexes,
                                                                      ::]
         # Sort by strict ranking
-        list_rankings = self.preferences_ranking.tolist()
+        list_rankings = self.preferences_rk.tolist()
         indexes = sorted(range(len(list_rankings)),
                          key=list_rankings.__getitem__)
-        self._preferences_ranking = self.preferences_ranking[indexes, ::]
-        self._preferences_utilities = self.preferences_utilities[indexes, ::]
-        self._preferences_borda_vtb = self.preferences_borda_vtb[indexes, ::]
-        self._preferences_borda_novtb = self.preferences_borda_novtb[indexes,
+        self._preferences_rk = self.preferences_rk[indexes, ::]
+        self._preferences_ut = self.preferences_ut[indexes, ::]
+        self._preferences_borda_rk = self.preferences_borda_rk[indexes, ::]
+        self._preferences_borda_ut = self.preferences_borda_ut[indexes,
                                                                      ::]
 
     @property
@@ -322,9 +323,9 @@ class Population(MyLog.MyLog):
         """1d array of booleans.
         ``v_has_same_ordinal_preferences_as_previous_voter[v]`` is
         ``True`` iff voter ``v`` has the same preference strict order (row in
-        :attr:`~svvamp.Population.preferences_ranking`) and the same
+        :attr:`~svvamp.Population.preferences_rk`) and the same
         preference weak order (row in
-        :attr:`~svvamp.Population.preferences_borda_novtb`) as voter ``v-1``.
+        :attr:`~svvamp.Population.preferences_borda_ut`) as voter ``v-1``.
 
         By convention, it is ``False`` for voter ``0``.
         """
@@ -336,12 +337,12 @@ class Population(MyLog.MyLog):
                     [False],
                     np.logical_and(
                         np.all(
-                            self.preferences_ranking[range(self.V - 1), :] ==
-                            self.preferences_ranking[range(1, self.V), :], 1),
+                            self.preferences_rk[range(self.V - 1), :] ==
+                            self.preferences_rk[range(1, self.V), :], 1),
                         np.all(
-                            self._preferences_borda_novtb[range(self.V - 1),
+                            self._preferences_borda_ut[range(self.V - 1),
                                                           :] ==
-                            self._preferences_borda_novtb[range(1, self.V), :],
+                            self._preferences_borda_ut[range(1, self.V), :],
                             1)
                     )
                 ))
@@ -350,222 +351,222 @@ class Population(MyLog.MyLog):
     #%% Plurality scores
 
     @property
-    def plurality_scores_vtb(self):
-        """1d array of booleans. ``plurality_scores_vtb[c]`` is the number of
+    def plurality_scores_rk(self):
+        """1d array of booleans. ``plurality_scores_rk[c]`` is the number of
         voters for whom ``c`` is the top-ranked candidate (with voter
         tie-breaking).
         """
-        if self._plurality_scores_vtb is None:
-            self._mylog("Compute Plurality scores (with vtb)", 1)
-            self._plurality_scores_vtb = np.bincount(
-                self.preferences_ranking[:, 0],
+        if self._plurality_scores_rk is None:
+            self._mylog("Compute Plurality scores (rk)", 1)
+            self._plurality_scores_rk = np.bincount(
+                self.preferences_rk[:, 0],
                 minlength=self.C
             )
-        return self._plurality_scores_vtb
+        return self._plurality_scores_rk
 
     @property
-    def plurality_scores_novtb(self):
-        """1d array of booleans. ``plurality_scores_novtb[c]`` is the number of
+    def plurality_scores_ut(self):
+        """1d array of booleans. ``plurality_scores_ut[c]`` is the number of
         voters who strictly prefer ``c`` to all other candidates.
 
-        No vtb is used. If a voter has several candidates with maximal utility,
+        If a voter has several candidates with maximal utility,
         then none of them receives any point.
         """
-        if self._plurality_scores_novtb is None:
-            self._mylog("Compute Plurality scores (with no vtb)", 1)
-            self._plurality_scores_novtb = np.zeros(self.C)
+        if self._plurality_scores_ut is None:
+            self._mylog("Compute Plurality scores (ut)", 1)
+            self._plurality_scores_ut = np.zeros(self.C)
             for v in range(self.V):
-                c = np.argmax(self.preferences_utilities[v, :])
+                c = np.argmax(self.preferences_ut[v, :])
                 if np.all(np.greater(
-                    self.preferences_utilities[v, c],
-                    self.preferences_utilities[v, np.array(range(self.C)) != c]
+                    self.preferences_ut[v, c],
+                    self.preferences_ut[v, np.array(range(self.C)) != c]
                 )):
-                    self._plurality_scores_novtb[c] += 1
-        return self._plurality_scores_novtb
+                    self._plurality_scores_ut[c] += 1
+        return self._plurality_scores_ut
 
     #%% Matrix of duels
 
     @property
-    def matrix_duels(self):
-        """2d array of integers. ``matrix_duels[c, d]`` is the number of voters
+    def matrix_duels_ut(self):
+        """2d array of integers. ``matrix_duels_ut[c, d]`` is the number of voters
         who strictly prefer candidate ``c`` to ``d`` (using
-        :attr:`~svvamp.Population.preferences_borda_novtb`, i.e indifference
+        :attr:`~svvamp.Population.preferences_borda_ut`, i.e indifference
         is allowed). By convention, diagonal coefficients are set to ``0``.
         """
-        if self._matrix_duels is None:
+        if self._matrix_duels_ut is None:
             self._mylog("Compute matrix of duels", 1)
-            self._matrix_duels = \
-                preferences_utilities_to_matrix_duels(
-                    self.preferences_borda_novtb)
-        return self._matrix_duels
+            self._matrix_duels_ut = \
+                preferences_ut_to_matrix_duels_ut(
+                    self.preferences_borda_ut)
+        return self._matrix_duels_ut
 
     @property
-    def matrix_duels_vtb(self):
-        """2d array of integers. ``matrix_duels_vtb[c, d]`` is the number of
+    def matrix_duels_rk(self):
+        """2d array of integers. ``matrix_duels_rk[c, d]`` is the number of
         voters who strictly prefer candidate ``c`` to ``d``, or who break a
         tie in favor of ``c`` over ``d`` (which means we use
-        :attr:`~svvamp.Population.preferences_borda_vtb`). By convention,
+        :attr:`~svvamp.Population.preferences_borda_rk`). By convention,
         diagonal coefficients are set to 0.
         """
-        if self._matrix_duels_vtb is None:
+        if self._matrix_duels_rk is None:
             self._mylog("Compute matrix of duels (with strict orders)", 1)
-            self._matrix_duels_vtb = \
-                preferences_utilities_to_matrix_duels(
-                    self.preferences_borda_vtb)
-        return self._matrix_duels_vtb
+            self._matrix_duels_rk = \
+                preferences_ut_to_matrix_duels_ut(
+                    self.preferences_borda_rk)
+        return self._matrix_duels_rk
 
     @property
-    def matrix_victories_abs(self):
+    def matrix_victories_ut_abs(self):
         """2d array of values in {0, 0.5, 1}. Matrix of absolute victories
-        based on :attr:`~svvamp.Population.matrix_duels`.
+        based on :attr:`~svvamp.Population.matrix_duels_ut`.
 
-        ``matrix_victories_abs[c, d]`` is:
+        ``matrix_victories_ut_abs[c, d]`` is:
 
-            * 1   iff ``matrix_duels[c, d] > V / 2``.
-            * 0.5 iff ``matrix_duels[c, d] = V / 2``.
-            * 0   iff ``matrix_duels[c, d] < V / 2``.
+            * 1   iff ``matrix_duels_ut[c, d] > V / 2``.
+            * 0.5 iff ``matrix_duels_ut[c, d] = V / 2``.
+            * 0   iff ``matrix_duels_ut[c, d] < V / 2``.
 
         By convention, diagonal coefficients are set to 0.
         """
-        if self._matrix_victories_abs is None:
-            self._mylog("Compute matrix_victories_abs", 1)
-            self._matrix_victories_abs = (
-                np.multiply(0.5, self.matrix_duels >= self.V / 2) +
-                np.multiply(0.5, self.matrix_duels > self.V / 2)
+        if self._matrix_victories_ut_abs is None:
+            self._mylog("Compute matrix_victories_ut_abs", 1)
+            self._matrix_victories_ut_abs = (
+                np.multiply(0.5, self.matrix_duels_ut >= self.V / 2) +
+                np.multiply(0.5, self.matrix_duels_ut > self.V / 2)
             )
-        return self._matrix_victories_abs
+        return self._matrix_victories_ut_abs
 
     @property
-    def matrix_victories_abs_ctb(self):
+    def matrix_victories_ut_abs_ctb(self):
         """2d array of values in {0, 1}. Matrix of absolute victories
-        based on :attr:`~svvamp.Population.matrix_duels`, with tie-breaks on
+        based on :attr:`~svvamp.Population.matrix_duels_ut`, with tie-breaks on
         candidates.
 
-        ``matrix_victories_abs_ctb[c, d]`` is:
+        ``matrix_victories_ut_abs_ctb[c, d]`` is:
 
-            * 1   iff ``matrix_duels[c, d] > V / 2``, or
-              ``matrix_duels[c, d] = V / 2`` and ``c < d``.
-            * 0   iff ``matrix_duels[c, d] < V / 2``, or
-              ``matrix_duels[c, d] = V / 2`` and ``d < c``.
+            * 1   iff ``matrix_duels_ut[c, d] > V / 2``, or
+              ``matrix_duels_ut[c, d] = V / 2`` and ``c < d``.
+            * 0   iff ``matrix_duels_ut[c, d] < V / 2``, or
+              ``matrix_duels_ut[c, d] = V / 2`` and ``d < c``.
 
         By convention, diagonal coefficients are set to 0.
         """
-        if self._matrix_victories_abs_vtb is None:
-            self._mylog("Compute matrix_victories_abs_ctb", 1)
-            self._matrix_victories_abs_vtb = np.zeros((self.C, self.C))
+        if self._matrix_victories_ut_abs_ctb is None:
+            self._mylog("Compute matrix_victories_ut_abs_ctb", 1)
+            self._matrix_victories_ut_abs_ctb = np.zeros((self.C, self.C))
             for c in range(self.C):
                 for d in range(self.C):
                     if c == d:
                         continue
-                    if self.matrix_duels[c, d] > self.V / 2 or (
-                            self.matrix_duels[c, d] == self.V / 2 and c < d):
-                        self._matrix_victories_abs_vtb[c, d] = 1
-        return self._matrix_victories_abs_vtb
+                    if self.matrix_duels_ut[c, d] > self.V / 2 or (
+                            self.matrix_duels_ut[c, d] == self.V / 2 and c < d):
+                        self._matrix_victories_ut_abs_ctb[c, d] = 1
+        return self._matrix_victories_ut_abs_ctb
 
     @property
-    def matrix_victories_rel(self):
+    def matrix_victories_ut_rel(self):
         """2d array of values in {0, 0.5, 1}. Matrix of relative victories
-        based on :attr:`~svvamp.Population.matrix_duels`.
+        based on :attr:`~svvamp.Population.matrix_duels_ut`.
 
-        ``matrix_victories_rel[c, d]`` is:
+        ``matrix_victories_ut_rel[c, d]`` is:
 
-            * 1   iff ``matrix_duels[c, d] > matrix_duels[d, c]``.
-            * 0.5 iff ``matrix_duels[c, d] = matrix_duels[d, c]``.
-            * 0   iff ``matrix_duels[c, d] < matrix_duels[d, c]``.
+            * 1   iff ``matrix_duels_ut[c, d] > matrix_duels_ut[d, c]``.
+            * 0.5 iff ``matrix_duels_ut[c, d] = matrix_duels_ut[d, c]``.
+            * 0   iff ``matrix_duels_ut[c, d] < matrix_duels_ut[d, c]``.
 
         By convention, diagonal coefficients are set to 0.
         """
-        if self._matrix_victories_rel is None:
-            self._mylog("Compute matrix_victories_rel", 1)
-            self._matrix_victories_rel = (
-                np.multiply(0.5, self.matrix_duels >= self.matrix_duels.T) +
-                np.multiply(0.5, self.matrix_duels > self.matrix_duels.T) -
+        if self._matrix_victories_ut_rel is None:
+            self._mylog("Compute matrix_victories_ut_rel", 1)
+            self._matrix_victories_ut_rel = (
+                np.multiply(0.5, self.matrix_duels_ut >= self.matrix_duels_ut.T) +
+                np.multiply(0.5, self.matrix_duels_ut > self.matrix_duels_ut.T) -
                 np.multiply(0.5, np.eye(self.C))
             )
-        return self._matrix_victories_rel
+        return self._matrix_victories_ut_rel
 
     @property
-    def matrix_victories_rel_ctb(self):
+    def matrix_victories_ut_rel_ctb(self):
         """2d array of values in {0, 1}. Matrix of relative victories
-        based on :attr:`~svvamp.Population.matrix_duels`, with tie-breaks on
+        based on :attr:`~svvamp.Population.matrix_duels_ut`, with tie-breaks on
         candidates.
 
-        ``matrix_victories_rel_ctb[c, d]`` is:
+        ``matrix_victories_ut_rel_ctb[c, d]`` is:
 
-            * 1   iff ``matrix_duels[c, d] > matrix_duels[d, c]``, or
-              ``matrix_duels[c, d] = matrix_duels[d, c]`` and ``c < d``.
-            * 0   iff ``matrix_duels[c, d] < matrix_duels[d, c]``, or
-              ``matrix_duels[c, d] = matrix_duels[d, c]`` and ``d < c``.
+            * 1   iff ``matrix_duels_ut[c, d] > matrix_duels_ut[d, c]``, or
+              ``matrix_duels_ut[c, d] = matrix_duels_ut[d, c]`` and ``c < d``.
+            * 0   iff ``matrix_duels_ut[c, d] < matrix_duels_ut[d, c]``, or
+              ``matrix_duels_ut[c, d] = matrix_duels_ut[d, c]`` and ``d < c``.
 
         By convention, diagonal coefficients are set to 0.
         """
-        if self._matrix_victories_rel_ctb is None:
-            self._mylog("Compute matrix_victories_rel_ctb", 1)
-            self._matrix_victories_rel_ctb = np.zeros((self.C, self.C))
+        if self._matrix_victories_ut_rel_ctb is None:
+            self._mylog("Compute matrix_victories_ut_rel_ctb", 1)
+            self._matrix_victories_ut_rel_ctb = np.zeros((self.C, self.C))
             for c in range(self.C):
                 for d in range(c + 1, self.C):
-                    if self.matrix_duels[c, d] >= self.matrix_duels[d, c]:
-                        self._matrix_victories_rel_ctb[c, d] = 1
-                        self._matrix_victories_rel_ctb[d, c] = 0
+                    if self.matrix_duels_ut[c, d] >= self.matrix_duels_ut[d, c]:
+                        self._matrix_victories_ut_rel_ctb[c, d] = 1
+                        self._matrix_victories_ut_rel_ctb[d, c] = 0
                     else:
-                        self._matrix_victories_rel_ctb[c, d] = 0
-                        self._matrix_victories_rel_ctb[d, c] = 1
-        return self._matrix_victories_rel_ctb
+                        self._matrix_victories_ut_rel_ctb[c, d] = 0
+                        self._matrix_victories_ut_rel_ctb[d, c] = 1
+        return self._matrix_victories_ut_rel_ctb
 
     @property
-    def matrix_victories_vtb(self):
+    def matrix_victories_rk(self):
         """2d array of values in {0, 0.5, 1}. Matrix of victories
-        based on :attr:`~svvamp.Population.matrix_duels_vtb` (i.e. each voter
+        based on :attr:`~svvamp.Population.matrix_duels_rk` (i.e. each voter
         breaks her own ties).
 
-        ``matrix_victories_vtb[c, d]`` is:
+        ``matrix_victories_rk[c, d]`` is:
 
-            * 1   iff ``matrix_duels_vtb[c, d] > matrix_duels_vtb[d, c]``,
-              i.e. iff ``matrix_duels_vtb[c, d] > V / 2``.
-            * 0.5 iff ``matrix_duels_vtb[c, d] = matrix_duels_vtb[d, c]``,
-              i.e. iff ``matrix_duels_vtb[c, d] = V / 2``.
-            * 0   iff ``matrix_duels_vtb[c, d] < matrix_duels_vtb[d, c]``,
-              i.e. iff ``matrix_duels_vtb[c, d] < V / 2``.
+            * 1   iff ``matrix_duels_rk[c, d] > matrix_duels_rk[d, c]``,
+              i.e. iff ``matrix_duels_rk[c, d] > V / 2``.
+            * 0.5 iff ``matrix_duels_rk[c, d] = matrix_duels_rk[d, c]``,
+              i.e. iff ``matrix_duels_rk[c, d] = V / 2``.
+            * 0   iff ``matrix_duels_rk[c, d] < matrix_duels_rk[d, c]``,
+              i.e. iff ``matrix_duels_rk[c, d] < V / 2``.
 
         By convention, diagonal coefficients are set to 0.
         """
-        if self._matrix_victories_vtb is None:
-            self._mylog("Compute matrix_victories_vtb", 1)
-            self._matrix_victories_vtb = (
-                np.multiply(0.5, self.matrix_duels_vtb >= self.V / 2) +
-                np.multiply(0.5, self.matrix_duels_vtb > self.V / 2)
+        if self._matrix_victories_rk is None:
+            self._mylog("Compute matrix_victories_rk", 1)
+            self._matrix_victories_rk = (
+                np.multiply(0.5, self.matrix_duels_rk >= self.V / 2) +
+                np.multiply(0.5, self.matrix_duels_rk > self.V / 2)
             )
-        return self._matrix_victories_vtb
+        return self._matrix_victories_rk
 
     @property
-    def matrix_victories_vtb_ctb(self):
+    def matrix_victories_rk_ctb(self):
         """2d array of values in {0, 1}. Matrix of victories based on
-        :attr:`~svvamp.Population.matrix_duels_vtb` (i.e. each voter breaks
+        :attr:`~svvamp.Population.matrix_duels_rk` (i.e. each voter breaks
         her own ties), with tie-breaks on candidates.
 
-        ``matrix_victories_vtb_ctb[c, d]`` is:
+        ``matrix_victories_rk_ctb[c, d]`` is:
 
-            * 1   iff ``matrix_duels_vtb[c, d] > matrix_duels_vtb[d, c]``, or
-              ``matrix_duels_vtb[c, d] = matrix_duels_vtb[d, c]`` and
+            * 1   iff ``matrix_duels_rk[c, d] > matrix_duels_rk[d, c]``, or
+              ``matrix_duels_rk[c, d] = matrix_duels_rk[d, c]`` and
               ``c < d``.
-            * 0   iff ``matrix_duels_vtb[c, d] < matrix_duels_vtb[d, c]``, or
-              ``matrix_duels_vtb[c, d] = matrix_duels_vtb[d, c]`` and
+            * 0   iff ``matrix_duels_rk[c, d] < matrix_duels_rk[d, c]``, or
+              ``matrix_duels_rk[c, d] = matrix_duels_rk[d, c]`` and
               ``d < c``.
 
         By convention, diagonal coefficients are set to 0.
         """
-        if self._matrix_victories_vtb_ctb is None:
-            self._mylog("Compute matrix_victories_vtb_ctb", 1)
-            self._matrix_victories_vtb_ctb = np.zeros((self.C, self.C))
+        if self._matrix_victories_rk_ctb is None:
+            self._mylog("Compute matrix_victories_rk_ctb", 1)
+            self._matrix_victories_rk_ctb = np.zeros((self.C, self.C))
             for c in range(self.C):
                 for d in range(c + 1, self.C):
-                    if self.matrix_duels_vtb[c, d] >= self.V / 2:
-                        self._matrix_victories_vtb_ctb[c, d] = 1
-                        self._matrix_victories_vtb_ctb[d, c] = 0
+                    if self.matrix_duels_rk[c, d] >= self.V / 2:
+                        self._matrix_victories_rk_ctb[c, d] = 1
+                        self._matrix_victories_rk_ctb[d, c] = 0
                     else:
-                        self._matrix_victories_vtb_ctb[c, d] = 0
-                        self._matrix_victories_vtb_ctb[d, c] = 1
-        return self._matrix_victories_vtb_ctb
+                        self._matrix_victories_rk_ctb[c, d] = 0
+                        self._matrix_victories_rk_ctb[d, c] = 1
+        return self._matrix_victories_rk_ctb
 
     #%% Condorcet winner and variants
 
@@ -574,7 +575,7 @@ class Population(MyLog.MyLog):
         """1d array of booleans. ``condorcet_admissible_candidates[c]`` is
         ``True`` iff candidate ``c`` is Condorcet-admissible, i.e. iff no
         candidate ``d`` has an absolute victory against ``c`` (in
-        the sense of :attr:`~svvamp.Population.matrix_victories_abs`).
+        the sense of :attr:`~svvamp.Population.matrix_victories_ut_abs`).
 
         .. seealso:: :attr:`~svvamp.Population.nb_condorcet_admissible`,
                      :attr:`~svvamp.Population.exists_condorcet_admissible`,
@@ -583,7 +584,7 @@ class Population(MyLog.MyLog):
         if self._condorcet_admissible_candidates is None:
             self._mylog("Compute Condorcet-admissible candidates", 1)
             self._condorcet_admissible_candidates = np.all(
-                self.matrix_victories_abs <= 0.5, 0)
+                self.matrix_victories_ut_abs <= 0.5, 0)
         return self._condorcet_admissible_candidates
 
     @property
@@ -616,7 +617,7 @@ class Population(MyLog.MyLog):
         """1d array of booleans. ``weak_condorcet_winners[c]`` is ``True`` iff
         candidate ``c`` is a weak Condorcet winner, i.e. iff no candidate
         ``d`` has a relative victory against ``c`` (in the sense of
-        :attr:`~svvamp.Population.matrix_victories_rel`).
+        :attr:`~svvamp.Population.matrix_victories_ut_rel`).
 
         .. seealso:
 
@@ -627,7 +628,7 @@ class Population(MyLog.MyLog):
         if self._weak_condorcet_winners is None:
             self._mylog("Compute weak Condorcet winners", 1)
             self._weak_condorcet_winners = np.all(
-                self.matrix_victories_rel <= 0.5, 0)
+                self.matrix_victories_ut_rel <= 0.5, 0)
         return self._weak_condorcet_winners
 
     @property
@@ -656,225 +657,225 @@ class Population(MyLog.MyLog):
         return self.nb_weak_condorcet_winners == 0
 
     @property
-    def condorcet_winner_vtb_ctb(self):
+    def condorcet_winner_rk_ctb(self):
         """Integer or ``NaN``. Candidate who has only victories in
-        :attr:`~svvamp.Population.matrix_victories_vtb_ctb`. If there is no
+        :attr:`~svvamp.Population.matrix_victories_rk_ctb`. If there is no
         such candidate, then ``NaN``.
 
         .. seealso::
 
-            :attr:`~svvamp.Population.exists_condorcet_winner_vtb_ctb`,
-            :attr:`~svvamp.Population.not_exists_condorcet_winner_vtb_ctb`.
+            :attr:`~svvamp.Population.exists_condorcet_winner_rk_ctb`,
+            :attr:`~svvamp.Population.not_exists_condorcet_winner_rk_ctb`.
         """
-        if self._condorcet_winner_vtb_ctb is None:
-            self._mylog("Compute condorcet_winner_vtb_ctb", 1)
+        if self._condorcet_winner_rk_ctb is None:
+            self._mylog("Compute condorcet_winner_rk_ctb", 1)
             for c in range(self.C):
                 # The whole COLUMN must be 0.
-                if np.array_equiv(self.matrix_victories_vtb_ctb[:, c], 0):
-                    self._condorcet_winner_vtb_ctb = c
+                if np.array_equiv(self.matrix_victories_rk_ctb[:, c], 0):
+                    self._condorcet_winner_rk_ctb = c
                     break
             else:
-                self._condorcet_winner_vtb_ctb = np.nan
-        return self._condorcet_winner_vtb_ctb
+                self._condorcet_winner_rk_ctb = np.nan
+        return self._condorcet_winner_rk_ctb
 
     @property
-    def exists_condorcet_winner_vtb_ctb(self):
-        """Boolean (``True`` iff there is a Condorcet winner with vtb and
-        ctb, :attr:`~svvamp.Population.condorcet_winner_vtb_ctb`).
+    def exists_condorcet_winner_rk_ctb(self):
+        """Boolean (``True`` iff there is a
+        :attr:`~svvamp.Population.condorcet_winner_rk_ctb`).
         """
-        return not np.isnan(self.condorcet_winner_vtb_ctb)
+        return not np.isnan(self.condorcet_winner_rk_ctb)
 
     @property
-    def not_exists_condorcet_winner_vtb_ctb(self):
-        """Boolean (``True`` iff there is no Condorcet winner with vtb and ctb,
-        :attr:`~svvamp.Population.condorcet_winner_vtb_ctb`).
+    def not_exists_condorcet_winner_rk_ctb(self):
+        """Boolean (``True`` iff there is no
+        :attr:`~svvamp.Population.condorcet_winner_rk_ctb`).
         """
-        return np.isnan(self.condorcet_winner_vtb_ctb)
+        return np.isnan(self.condorcet_winner_rk_ctb)
 
     @property
-    def condorcet_winner_vtb(self):
+    def condorcet_winner_rk(self):
         """Integer or ``NaN``. Candidate who has only victories in
-        :attr:`~svvamp.Population.matrix_victories_vtb`. If there is no such
+        :attr:`~svvamp.Population.matrix_victories_rk`. If there is no such
         candidate, then ``NaN``.
 
-        .. seealso:: :attr:`~svvamp.Population.exists_condorcet_winner_vtb`,
-                     :attr:`~svvamp.Population.not_exists_condorcet_winner_vtb`.
+        .. seealso:: :attr:`~svvamp.Population.exists_condorcet_winner_rk`,
+                     :attr:`~svvamp.Population.not_exists_condorcet_winner_rk`.
         """
-        if self._condorcet_winner_vtb is None:
-            self._mylog("Compute condorcet_winner_vtb", 1)
+        if self._condorcet_winner_rk is None:
+            self._mylog("Compute condorcet_winner_rk", 1)
             for c in range(self.C):
                 # The whole COLUMN must be 0.
-                if np.array_equiv(self.matrix_victories_vtb[:, c], 0):
-                    self._condorcet_winner_vtb = c
+                if np.array_equiv(self.matrix_victories_rk[:, c], 0):
+                    self._condorcet_winner_rk = c
                     break
             else:
-                self._condorcet_winner_vtb = np.nan
-        return self._condorcet_winner_vtb
+                self._condorcet_winner_rk = np.nan
+        return self._condorcet_winner_rk
 
     @property
-    def exists_condorcet_winner_vtb(self):
-        """Boolean (``True`` iff there is a Condorcet winner with vtb,
-        :attr:`~svvamp.Population.condorcet_winner_vtb`).
+    def exists_condorcet_winner_rk(self):
+        """Boolean (``True`` iff there is a
+        :attr:`~svvamp.Population.condorcet_winner_rk`).
         """
-        return not np.isnan(self.condorcet_winner_vtb)
+        return not np.isnan(self.condorcet_winner_rk)
 
     @property
-    def not_exists_condorcet_winner_vtb(self):
-        """Boolean (``True`` iff there is no Condorcet winner with vtb,
-        :attr:`~svvamp.Population.condorcet_winner_vtb`).
+    def not_exists_condorcet_winner_rk(self):
+        """Boolean (``True`` iff there is no
+        :attr:`~svvamp.Population.condorcet_winner_rk`).
         """
-        return np.isnan(self.condorcet_winner_vtb)
+        return np.isnan(self.condorcet_winner_rk)
 
     @property
-    def condorcet_winner_rel_ctb(self):
+    def condorcet_winner_ut_rel_ctb(self):
         """Integer or ``NaN``.
         Candidate who has only victories in
-        :attr:`~svvamp.Population.matrix_victories_rel_ctb`. If there is no
+        :attr:`~svvamp.Population.matrix_victories_ut_rel_ctb`. If there is no
         such candidate, then ``NaN``.
 
         .. seealso::
 
-            :attr:`~svvamp.Population.exists_condorcet_winner_rel_ctb`,
-            :attr:`~svvamp.Population.not_exists_condorcet_winner_rel_ctb`.
+            :attr:`~svvamp.Population.exists_condorcet_winner_ut_rel_ctb`,
+            :attr:`~svvamp.Population.not_exists_condorcet_winner_ut_rel_ctb`.
         """
-        if self._condorcet_winner_rel_ctb is None:
-            self._mylog("Compute condorcet_winner_rel_ctb", 1)
+        if self._condorcet_winner_ut_rel_ctb is None:
+            self._mylog("Compute condorcet_winner_ut_rel_ctb", 1)
             for c in range(self.C):
                 # The whole COLUMN must be 0.
-                if np.array_equiv(self.matrix_victories_rel_ctb[:, c], 0):
-                    self._condorcet_winner_rel_ctb = c
+                if np.array_equiv(self.matrix_victories_ut_rel_ctb[:, c], 0):
+                    self._condorcet_winner_ut_rel_ctb = c
                     break
             else:
-                self._condorcet_winner_rel_ctb = np.nan
-        return self._condorcet_winner_rel_ctb
+                self._condorcet_winner_ut_rel_ctb = np.nan
+        return self._condorcet_winner_ut_rel_ctb
 
     @property
-    def exists_condorcet_winner_rel_ctb(self):
-        """Boolean (``True`` iff there is a relative Condorcet winner with ctb,
-        :attr:`~svvamp.Population.condorcet_winner_rel_ctb`).
+    def exists_condorcet_winner_ut_rel_ctb(self):
+        """Boolean (``True`` iff there is a
+        :attr:`~svvamp.Population.condorcet_winner_ut_rel_ctb`).
         """
-        return not np.isnan(self.condorcet_winner_rel_ctb)
+        return not np.isnan(self.condorcet_winner_ut_rel_ctb)
 
     @property
-    def not_exists_condorcet_winner_rel_ctb(self):
-        """Boolean (``True`` iff there is no relative Condorcet winner with
-        ctb, :attr:`~svvamp.Population.condorcet_winner_rel_ctb`).
+    def not_exists_condorcet_winner_ut_rel_ctb(self):
+        """Boolean (``True`` iff there is no
+        :attr:`~svvamp.Population.condorcet_winner_ut_rel_ctb`).
         """
-        return np.isnan(self.condorcet_winner_rel_ctb)
+        return np.isnan(self.condorcet_winner_ut_rel_ctb)
 
     @property
-    def condorcet_winner_rel(self):
+    def condorcet_winner_ut_rel(self):
         """Integer or ``NaN``. Candidate who has only victories in
-        :attr:`~svvamp.Population.matrix_victories_rel`. If there is no such
+        :attr:`~svvamp.Population.matrix_victories_ut_rel`. If there is no such
         candidate, then ``NaN``.
 
-        .. seealso:: :attr:`~svvamp.Population.exists_condorcet_winner_rel`,
-                     :attr:`~svvamp.Population.not_exists_condorcet_winner_rel`.
+        .. seealso:: :attr:`~svvamp.Population.exists_condorcet_winner_ut_rel`,
+                     :attr:`~svvamp.Population.not_exists_condorcet_winner_ut_rel`.
         """
-        if self._condorcet_winner_rel is None:
-            self._mylog("Compute condorcet_winner_rel", 1)
+        if self._condorcet_winner_ut_rel is None:
+            self._mylog("Compute condorcet_winner_ut_rel", 1)
             for c in range(self.C):
                 # The whole COLUMN must be 0.
-                if np.array_equiv(self.matrix_victories_rel[:, c], 0):
-                    self._condorcet_winner_rel = c
+                if np.array_equiv(self.matrix_victories_ut_rel[:, c], 0):
+                    self._condorcet_winner_ut_rel = c
                     break
             else:
-                self._condorcet_winner_rel = np.nan
-        return self._condorcet_winner_rel
+                self._condorcet_winner_ut_rel = np.nan
+        return self._condorcet_winner_ut_rel
 
     @property
-    def exists_condorcet_winner_rel(self):
-        """Boolean (``True`` iff there is a relative Condorcet winner,
-        :attr:`~svvamp.Population.condorcet_winner_rel`).
+    def exists_condorcet_winner_ut_rel(self):
+        """Boolean (``True`` iff there is a
+        :attr:`~svvamp.Population.condorcet_winner_ut_rel`).
         """
-        return not np.isnan(self.condorcet_winner_rel)
+        return not np.isnan(self.condorcet_winner_ut_rel)
 
     @property
-    def not_exists_condorcet_winner_rel(self):
-        """Boolean (``True`` iff there is no relative Condorcet winner,
-        :attr:`~svvamp.Population.condorcet_winner_rel`).
+    def not_exists_condorcet_winner_ut_rel(self):
+        """Boolean (``True`` iff there is no
+        :attr:`~svvamp.Population.condorcet_winner_ut_rel`).
         """
-        return np.isnan(self.condorcet_winner_rel)
+        return np.isnan(self.condorcet_winner_ut_rel)
 
     @property
-    def condorcet_winner_ctb(self):
+    def condorcet_winner_ut_abs_ctb(self):
         """Integer or ``NaN``.
         Candidate who has only victories in
-        :attr:`~svvamp.Population.matrix_victories_abs_ctb`. If there is no
+        :attr:`~svvamp.Population.matrix_victories_ut_abs_ctb`. If there is no
         such candidate, then ``NaN``.
 
-        .. seealso:: :attr:`~svvamp.Population.exists_condorcet_winner_ctb`,
-                     :attr:`~svvamp.Population.not_exists_condorcet_winner_ctb`
+        .. seealso:: :attr:`~svvamp.Population.exists_condorcet_winner_ut_abs_ctb`,
+                     :attr:`~svvamp.Population.not_exists_condorcet_winner_ut_abs_ctb`
         """
-        if self._condorcet_winner_ctb is None:
-            self._mylog("Compute condorcet_winner_ctb", 1)
+        if self._condorcet_winner_ut_abs_ctb is None:
+            self._mylog("Compute condorcet_winner_ut_abs_ctb", 1)
             for c in range(self.C):
-                if np.array_equiv(self.matrix_victories_abs_ctb[c,
+                if np.array_equiv(self.matrix_victories_ut_abs_ctb[c,
                                   np.array(range(self.C)) != c],
                                   1):
-                    self._condorcet_winner_ctb = c
+                    self._condorcet_winner_ut_abs_ctb = c
                     break
             else:
-                self._condorcet_winner_ctb = np.nan
-        return self._condorcet_winner_ctb
+                self._condorcet_winner_ut_abs_ctb = np.nan
+        return self._condorcet_winner_ut_abs_ctb
 
     @property
-    def exists_condorcet_winner_ctb(self):
-        """Boolean (``True`` iff there is a Condorcet winner with ctb,
-        :attr:`~svvamp.Population.condorcet_winner_ctb`).
+    def exists_condorcet_winner_ut_abs_ctb(self):
+        """Boolean (``True`` iff there is a
+        :attr:`~svvamp.Population.condorcet_winner_ut_abs_ctb`).
         """
-        return not np.isnan(self.condorcet_winner_ctb)
+        return not np.isnan(self.condorcet_winner_ut_abs_ctb)
 
     @property
-    def not_exists_condorcet_winner_ctb(self):
-        """Boolean (``True`` iff there is no Condorcet winner with ctb,
-        :attr:`~svvamp.Population.condorcet_winner_ctb`).
+    def not_exists_condorcet_winner_ut_abs_ctb(self):
+        """Boolean (``True`` iff there is no
+        :attr:`~svvamp.Population.condorcet_winner_ut_abs_ctb`).
         """
-        return np.isnan(self.condorcet_winner_ctb)
+        return np.isnan(self.condorcet_winner_ut_abs_ctb)
 
     @property
-    def condorcet_winner(self):
+    def condorcet_winner_ut_abs(self):
         """Integer or ``NaN``. Candidate who has only victories in
-        :attr:`~svvamp.Population.matrix_victories_abs`. If there is no such
+        :attr:`~svvamp.Population.matrix_victories_ut_abs`. If there is no such
         candidate, then ``NaN``.
 
-        .. seealso:: :attr:`~svvamp.Population.exists_condorcet_winner`,
-                     :attr:`~svvamp.Population.not_exists_condorcet_winner`.
+        .. seealso:: :attr:`~svvamp.Population.exists_condorcet_winner_ut_abs`,
+                     :attr:`~svvamp.Population.not_exists_condorcet_winner_ut_abs`.
         """
-        if self._condorcet_winner is None:
+        if self._condorcet_winner_ut_abs is None:
             self._mylog("Compute Condorcet winner", 1)
             for c in range(self.C):
-                if np.array_equiv(self.matrix_victories_abs[c,
+                if np.array_equiv(self.matrix_victories_ut_abs[c,
                                   np.array(range(self.C)) != c],
                                   1):
-                    self._condorcet_winner = c
+                    self._condorcet_winner_ut_abs = c
                     break
             else:
-                self._condorcet_winner = np.nan
-        return self._condorcet_winner
+                self._condorcet_winner_ut_abs = np.nan
+        return self._condorcet_winner_ut_abs
 
     @property
-    def exists_condorcet_winner(self):
-        """Boolean (``True`` iff there is a Condorcet winner,
-        :attr:`~svvamp.Population.condorcet_winner`).
+    def exists_condorcet_winner_ut_abs(self):
+        """Boolean (``True`` iff there is a
+        :attr:`~svvamp.Population.condorcet_winner_ut_abs`).
         """
-        return not np.isnan(self.condorcet_winner)
+        return not np.isnan(self.condorcet_winner_ut_abs)
 
     @property
-    def not_exists_condorcet_winner(self):
-        """Boolean (``True`` iff there is no Condorcet winner,
-        :attr:`~svvamp.Population.condorcet_winner`).
+    def not_exists_condorcet_winner_ut_abs(self):
+        """Boolean (``True`` iff there is no
+        :attr:`~svvamp.Population.condorcet_winner_ut_abs`).
         """
-        return np.isnan(self.condorcet_winner)
+        return np.isnan(self.condorcet_winner_ut_abs)
 
     @property
     def resistant_condorcet_winner(self):
         """Integer or ``NaN``. Resistant Condorcet Winner. If there is no such
         candidate, then ``NaN``.
         
-        A Condorcet winner ``w`` is resistant iff in any Condorcet voting
-        system, the profile is not manipulable (cf. Durand et al., working
-        paper 2014).
+        A Condorcet winner ``w`` (_ut_abs) is resistant iff in any Condorcet
+        voting system, the profile is not manipulable (cf. Durand et al.,
+        working paper 2014).
         This is equivalent to say that for any pair ``(c, d)`` of other
         distinct candidates, there is a strict majority of voters who
         simultaneously:
@@ -889,31 +890,31 @@ class Population(MyLog.MyLog):
         """
         if self._resistant_condorcet_winner is None:
             self._mylog("Compute Resistant Condorcet winner", 1)
-            if is_resistant_condorcet(self.condorcet_winner,
-                                      self.preferences_utilities):
-                self._resistant_condorcet_winner = self.condorcet_winner
+            if is_resistant_condorcet(self.condorcet_winner_ut_abs,
+                                      self.preferences_ut):
+                self._resistant_condorcet_winner = self.condorcet_winner_ut_abs
             else:
                 self._resistant_condorcet_winner = np.nan
         return self._resistant_condorcet_winner
 
     @property
     def exists_resistant_condorcet_winner(self):
-        """Boolean (True iff there is a resistant Condorcet winner,
+        """Boolean (True iff there is a
         :attr:`~svvamp.Population.resistant_condorcet_winner`).
         """
         return not np.isnan(self.resistant_condorcet_winner)
 
     @property
     def not_exists_resistant_condorcet_winner(self):
-        """Boolean (``True`` iff there is no resistant Condorcet winner,
+        """Boolean (``True`` iff there is no
         :attr:`~svvamp.Population.resistant_condorcet_winner`).
         """
         return np.isnan(self.resistant_condorcet_winner)
 
     @property
-    def threshold_c_prevents_w_Condorcet(self):
+    def threshold_c_prevents_w_Condorcet_ut_abs(self):
         """2d array of integers. Threshold for ``c``-manipulators to prevent
-        ``w`` from being a Condorcet winner.
+        ``w`` from being a Condorcet winner (_ut_abs).
 
         Intuitively, the question is the following: in an election where ``w``
         is the winner, how many ``c``-manipulators are needed to prevent ``w``
@@ -950,7 +951,7 @@ class Population(MyLog.MyLog):
 
         One candidate ``d`` is enough, so:
 
-        ``threshold_c_prevents_w_Condorcet[c, w]`` :math:`=
+        ``threshold_c_prevents_w_Condorcet_ut_abs[c, w]`` :math:`=
         2 \\cdot \\min_{d \\neq w} |w \geq c \\text{ and } w > d|
         - |w \geq c|`.
 
@@ -958,25 +959,25 @@ class Population(MyLog.MyLog):
         ``c``-manipulators, ``w`` is not a Condorcet winner. In that case,
         threshold is set to 0 instead.
         """
-        if self._threshold_c_prevents_w_Condorcet is None:
-            self._mylog("Compute threshold_c_prevents_w_Condorcet", 1)
-            self._threshold_c_prevents_w_Condorcet = np.full((self.C, self.C),
+        if self._threshold_c_prevents_w_Condorcet_ut_abs is None:
+            self._mylog("Compute threshold_c_prevents_w_Condorcet_ut_abs", 1)
+            self._threshold_c_prevents_w_Condorcet_ut_abs = np.full((self.C, self.C),
                                                              np.inf)
             for w in range(self.C):
                 for c in range(self.C):
                     if c == w:
-                        self._threshold_c_prevents_w_Condorcet[c, w] = 0
+                        self._threshold_c_prevents_w_Condorcet_ut_abs[c, w] = 0
                         continue
                     v_does_not_prefer_c_to_w = (
-                        self.preferences_utilities[:, w] >=
-                        self.preferences_utilities[:, c])
+                        self.preferences_ut[:, w] >=
+                        self.preferences_ut[:, c])
                     for d in range(self.C):
                         if d == w:
                             continue
                             # But d == c is allowed (useful if self.C == 2)
                         v_prefers_w_to_d = (
-                            self.preferences_utilities[:, w] >
-                            self.preferences_utilities[:, d])
+                            self.preferences_ut[:, w] >
+                            self.preferences_ut[:, d])
                         threshold_c_makes_w_not_win_against_d = (
                             np.multiply(2, np.sum(np.logical_and(
                                 v_does_not_prefer_c_to_w,
@@ -984,14 +985,14 @@ class Population(MyLog.MyLog):
                             )))
                             - np.sum(v_does_not_prefer_c_to_w)
                         )
-                        self._threshold_c_prevents_w_Condorcet[
+                        self._threshold_c_prevents_w_Condorcet_ut_abs[
                             c, w] = np.minimum(
-                                self._threshold_c_prevents_w_Condorcet[c, w],
+                                self._threshold_c_prevents_w_Condorcet_ut_abs[c, w],
                                 threshold_c_makes_w_not_win_against_d
                             )
-                    self._threshold_c_prevents_w_Condorcet = np.maximum(
-                        self._threshold_c_prevents_w_Condorcet, 0)
-        return self._threshold_c_prevents_w_Condorcet
+                    self._threshold_c_prevents_w_Condorcet_ut_abs = np.maximum(
+                        self._threshold_c_prevents_w_Condorcet_ut_abs, 0)
+        return self._threshold_c_prevents_w_Condorcet_ut_abs
 
     #%% Total utilities        
 
@@ -999,11 +1000,11 @@ class Population(MyLog.MyLog):
     def total_utility_c(self):
         """1d array of floats. ``total_utility_c[c]`` is the total utility for
         candidate ``c`` (i.e. the sum of ``c``'s column in matrix
-        :attr:`~svvamp.Population.preferences_utilities`).
+        :attr:`~svvamp.Population.preferences_ut`).
         """
         if self._total_utility_c is None:
             self._mylog("Compute total utility of candidates", 1)
-            self._total_utility_c = np.sum(self.preferences_utilities, 0)
+            self._total_utility_c = np.sum(self.preferences_ut, 0)
         return self._total_utility_c
 
     @property
@@ -1052,11 +1053,11 @@ class Population(MyLog.MyLog):
     def mean_utility_c(self):
         """1d array of floats. ``mean_utility_c[c]`` is the mean utility for
         candidate ``c`` (i.e. the mean of ``c``'s column in matrix
-        :attr:`~svvamp.Population.preferences_utilities`).
+        :attr:`~svvamp.Population.preferences_ut`).
         """
         if self._mean_utility_c is None:
             self._mylog("Compute mean utility of candidates", 1)
-            self._mean_utility_c = np.mean(self.preferences_utilities, 0)
+            self._mean_utility_c = np.mean(self.preferences_ut, 0)
         return self._mean_utility_c
 
     @property
@@ -1102,104 +1103,104 @@ class Population(MyLog.MyLog):
     #%% Borda scores
 
     @property
-    def borda_score_c_vtb(self):
-        """1d array of integers. ``borda_score_c_vtb[c]`` is the total Borda
+    def borda_score_c_rk(self):
+        """1d array of integers. ``borda_score_c_rk[c]`` is the total Borda
         score of candidate ``c`` (using
-        :attr:`~svvamp.Population.preferences_borda_vtb`, i.e. strict
+        :attr:`~svvamp.Population.preferences_borda_rk`, i.e. strict
         preferences).
         """
-        if self._borda_score_c_vtb is None:
-            self._mylog("Compute Borda scores of the candidates with vtb", 1)
-            self._borda_score_c_vtb = np.sum(self.matrix_duels_vtb, 1)
-        return self._borda_score_c_vtb
+        if self._borda_score_c_rk is None:
+            self._mylog("Compute Borda scores of the candidates (rankings)", 1)
+            self._borda_score_c_rk = np.sum(self.matrix_duels_rk, 1)
+        return self._borda_score_c_rk
 
     @property
-    def borda_score_c_novtb(self):
-        """1d array of integers. ``borda_score_c_novtb[c]`` is the total Borda
+    def borda_score_c_ut(self):
+        """1d array of integers. ``borda_score_c_ut[c]`` is the total Borda
         score of candidate ``c`` (using
-        :attr:`~svvamp.Population.preferences_borda_novtb`, i.e. weak
+        :attr:`~svvamp.Population.preferences_borda_ut`, i.e. weak
         preferences).
         """
-        if self._borda_score_c_novtb is None:
+        if self._borda_score_c_ut is None:
             self._mylog("Compute Borda scores of the candidates (weak "
                         "orders)", 1)
-            self._borda_score_c_novtb = np.sum(self.preferences_borda_novtb, 0)
-        return self._borda_score_c_novtb
+            self._borda_score_c_ut = np.sum(self.preferences_borda_ut, 0)
+        return self._borda_score_c_ut
 
     @property
-    def candidates_by_decreasing_borda_score_vtb(self):
+    def candidates_by_decreasing_borda_score_rk(self):
         """1d array of integers.
-        ``candidates_by_decreasing_borda_score_vtb[k]`` is
+        ``candidates_by_decreasing_borda_score_rk[k]`` is
         the candidate ranked ``k``\ :sup:`th` by decreasing Borda score
-        (using :attr:`~svvamp.Population.borda_score_c_vtb`, i.e. strict
+        (using :attr:`~svvamp.Population.borda_score_c_rk`, i.e. strict
         preferences).
 
-        For example, ``candidates_by_decreasing_borda_score_vtb[0]`` is the
-        candidate with highest Borda score (with vtb).
+        For example, ``candidates_by_decreasing_borda_score_rk[0]`` is the
+        candidate with highest Borda score (rk).
         """
-        if self._candidates_by_decreasing_borda_score_vtb is None:
-            self._mylog("Compute candidates_by_decreasing_borda_score_vtb", 1)
-            self._candidates_by_decreasing_borda_score_vtb = \
-                np.argsort(-self.borda_score_c_vtb, kind='mergesort')
-            self._decreasing_borda_scores_vtb = self.borda_score_c_vtb[
-                self._candidates_by_decreasing_borda_score_vtb]
-        return self._candidates_by_decreasing_borda_score_vtb
+        if self._candidates_by_decreasing_borda_score_rk is None:
+            self._mylog("Compute candidates_by_decreasing_borda_score_rk", 1)
+            self._candidates_by_decreasing_borda_score_rk = \
+                np.argsort(-self.borda_score_c_rk, kind='mergesort')
+            self._decreasing_borda_scores_rk = self.borda_score_c_rk[
+                self._candidates_by_decreasing_borda_score_rk]
+        return self._candidates_by_decreasing_borda_score_rk
 
     @property
-    def decreasing_borda_scores_vtb(self):
-        """1d array of integers. ``decreasing_borda_scores_vtb[k]`` is the
+    def decreasing_borda_scores_rk(self):
+        """1d array of integers. ``decreasing_borda_scores_rk[k]`` is the
         ``k``\ :sup:`th` Borda score (using
-        :attr:`~svvamp.Population.borda_score_c_vtb`, i.e. strict
+        :attr:`~svvamp.Population.borda_score_c_rk`, i.e. strict
         preferences) by decreasing order.
 
-        For example, ``decreasing_borda_scores_vtb[0]`` is the highest
-        Borda score for a candidate (with vtb).
+        For example, ``decreasing_borda_scores_rk[0]`` is the highest
+        Borda score for a candidate (rk).
         """
-        if self._decreasing_borda_scores_vtb is None:
-            self._mylog("Compute decreasing_borda_scores_vtb", 1)
-            self._candidates_by_decreasing_borda_score_vtb = \
-                np.argsort(-self.borda_score_c_vtb, kind='mergesort')
-            self._decreasing_borda_scores_vtb = self.borda_score_c_vtb[
-                self._candidates_by_decreasing_borda_score_vtb]
-        return self._decreasing_borda_scores_vtb
+        if self._decreasing_borda_scores_rk is None:
+            self._mylog("Compute decreasing_borda_scores_rk", 1)
+            self._candidates_by_decreasing_borda_score_rk = \
+                np.argsort(-self.borda_score_c_rk, kind='mergesort')
+            self._decreasing_borda_scores_rk = self.borda_score_c_rk[
+                self._candidates_by_decreasing_borda_score_rk]
+        return self._decreasing_borda_scores_rk
 
     @property
-    def candidates_by_decreasing_borda_score_novtb(self):
+    def candidates_by_decreasing_borda_score_ut(self):
         """1d array of integers.
-        ``candidates_by_decreasing_borda_score_novtb[k]``
+        ``candidates_by_decreasing_borda_score_ut[k]``
         is the candidate ranked ``k``\ :sup:`th` by decreasing Borda score
-        (using :attr:`~svvamp.Population.borda_score_c_novtb`, i.e. weak
+        (using :attr:`~svvamp.Population.borda_score_c_ut`, i.e. weak
         preferences).
 
-        For example, ``candidates_by_decreasing_borda_score_novtb[0]`` is the
-        candidate with highest Borda score (without vtb).
+        For example, ``candidates_by_decreasing_borda_score_ut[0]`` is the
+        candidate with highest Borda score (ut).
         """
-        if self._candidates_by_decreasing_borda_score_novtb is None:
-            self._mylog("Compute candidates_by_decreasing_borda_score_novtb",
+        if self._candidates_by_decreasing_borda_score_ut is None:
+            self._mylog("Compute candidates_by_decreasing_borda_score_ut",
                         1)
-            self._candidates_by_decreasing_borda_score_novtb = \
-                np.argsort(-self.borda_score_c_novtb, kind='mergesort')
-            self._decreasing_borda_scores_novtb = self.borda_score_c_novtb[
-                self._candidates_by_decreasing_borda_score_novtb]
-        return self._candidates_by_decreasing_borda_score_novtb
+            self._candidates_by_decreasing_borda_score_ut = \
+                np.argsort(-self.borda_score_c_ut, kind='mergesort')
+            self._decreasing_borda_scores_ut = self.borda_score_c_ut[
+                self._candidates_by_decreasing_borda_score_ut]
+        return self._candidates_by_decreasing_borda_score_ut
 
     @property
-    def decreasing_borda_scores_novtb(self):
-        """1d array of integers. ``decreasing_borda_scores_novtb[k]`` is the
+    def decreasing_borda_scores_ut(self):
+        """1d array of integers. ``decreasing_borda_scores_ut[k]`` is the
         ``k``\ :sup:`th` Borda score (using
-        :attr:`~svvamp.Population.borda_score_c_novtb`, i.e. weak
+        :attr:`~svvamp.Population.borda_score_c_ut`, i.e. weak
         preferences) by decreasing order.
 
-        For example, ``decreasing_borda_scores_novtb[0]`` is the highest
-        Borda score for a candidate (without vtb).
+        For example, ``decreasing_borda_scores_ut[0]`` is the highest
+        Borda score for a candidate (rk).
         """
-        if self._decreasing_borda_scores_novtb is None:
-            self._mylog("Compute decreasing_borda_scores_novtb", 1)
-            self._candidates_by_decreasing_borda_score_novtb = \
-                np.argsort(-self.borda_score_c_novtb, kind='mergesort')
-            self._decreasing_borda_scores_novtb = self.borda_score_c_novtb[
-                self._candidates_by_decreasing_borda_score_novtb]
-        return self._decreasing_borda_scores_novtb
+        if self._decreasing_borda_scores_ut is None:
+            self._mylog("Compute decreasing_borda_scores_ut", 1)
+            self._candidates_by_decreasing_borda_score_ut = \
+                np.argsort(-self.borda_score_c_ut, kind='mergesort')
+            self._decreasing_borda_scores_ut = self.borda_score_c_ut[
+                self._candidates_by_decreasing_borda_score_ut]
+        return self._decreasing_borda_scores_ut
 
     #%% Plot a population
 
@@ -1214,7 +1215,7 @@ class Population(MyLog.MyLog):
             represented by their index.
 
         Each red point of the plot represents a voter ``v``. Its position is
-        :attr:`~svvamp.Population.preferences_utilities`\ ``[v, indexes]``. If
+        :attr:`~svvamp.Population.preferences_ut`\ ``[v, indexes]``. If
         ``normalize`` is ``True``, then each position is normalized before
         plotting so that its Euclidean norm is equal to 1.
 
@@ -1257,7 +1258,7 @@ class Population(MyLog.MyLog):
             zs = np.cos(theta)*pole[2] + np.sin(theta)*ortho[2]
             ax.scatter(xs, ys, zs, s=7, c='b')
         # Voters
-        mat_temp = np.copy(self.preferences_utilities[:, _indexes]).astype(
+        mat_temp = np.copy(self.preferences_ut[:, _indexes]).astype(
             np.float)
         self._mylogm('mat_temp =', mat_temp, 3)
         if normalize:
@@ -1308,7 +1309,7 @@ class Population(MyLog.MyLog):
 
         Each red point of the plot represents a voter ``v``.
 
-            * :attr:`~svvamp.Population.preferences_utilities`\ ``[v, indexes]``
+            * :attr:`~svvamp.Population.preferences_ut`\ ``[v, indexes]``
               is sent to the hyperplane that
               is orthogonal to [1, 1, 1, 1] (by orthogonal projection),
               which discards information related to approval limit and keeps
@@ -1336,7 +1337,7 @@ class Population(MyLog.MyLog):
         # Voters
         # We transform the population matrix to send it to R^3
         # 0. Keep only the specified candidates
-        mat_temp = np.copy(self.preferences_utilities[:, _indexes]).astype(
+        mat_temp = np.copy(self.preferences_ut[:, _indexes]).astype(
             np.float)
         # 1. Send each voter to the hyperplane orthogonal to (1, 1, 1, 1)
         mat_temp -= np.mean(mat_temp, 1)[:, np.newaxis]
@@ -1434,7 +1435,7 @@ class Population(MyLog.MyLog):
         """
         old_log_depth = self._log_depth
         self._log_depth = log_depth
-        self.ensure_voters_sorted_by_ordinal_preferences()
+        self.ensure_voters_sorted_by_rk()
         def printm(variable_name, variable_value):
             print(variable_name)
             print(variable_value)
@@ -1443,100 +1444,100 @@ class Population(MyLog.MyLog):
         print("V =", self.V)
         print("C =", self.C)
         print("labels_candidates =", self.labels_candidates)
-        MyLog.printm("preferences_utilities =", self.preferences_utilities)
-        MyLog.printm("preferences_borda_novtb =", self.preferences_borda_novtb)
-        MyLog.printm("preferences_borda_vtb =", self.preferences_borda_vtb)
-        MyLog.printm("preferences_ranking =", self.preferences_ranking)
+        MyLog.printm("preferences_ut =", self.preferences_ut)
+        MyLog.printm("preferences_borda_ut =", self.preferences_borda_ut)
+        MyLog.printm("preferences_borda_rk =", self.preferences_borda_rk)
+        MyLog.printm("preferences_rk =", self.preferences_rk)
     
         MyLog.printm("v_has_same_ordinal_preferences_as_previous_voter =",
                  self.v_has_same_ordinal_preferences_as_previous_voter)
     
         MyLog.print_title("Plurality scores")
-        MyLog.printm("preferences_ranking (reminder) =",
-                     self.preferences_ranking)
-        print("plurality_scores_vtb =", self.plurality_scores_vtb)
+        MyLog.printm("preferences_rk (reminder) =",
+                     self.preferences_rk)
+        print("plurality_scores_rk =", self.plurality_scores_rk)
         print("")
-        MyLog.printm("preferences_borda_novtb (reminder) =",
-               self.preferences_borda_novtb)
-        print("plurality_scores_novtb =", self.plurality_scores_novtb)
+        MyLog.printm("preferences_borda_ut (reminder) =",
+               self.preferences_borda_ut)
+        print("plurality_scores_ut =", self.plurality_scores_ut)
     
         MyLog.print_title("Borda scores")
-        MyLog.printm("preferences_borda_vtb (reminder) =",
-               self.preferences_borda_vtb)
-        MyLog.printm("borda_score_c_vtb =", self.borda_score_c_vtb)
+        MyLog.printm("preferences_borda_rk (reminder) =",
+               self.preferences_borda_rk)
+        MyLog.printm("borda_score_c_rk =", self.borda_score_c_rk)
         print("Remark: Borda scores above are computed with the "
               "matrix of duels.")
-        MyLog.printm("Check: np.sum(self.preferences_borda_vtb, 0) =",
-              np.sum(self.preferences_borda_vtb, 0))
-        MyLog.printm("decreasing_borda_scores_vtb =",
-               self.decreasing_borda_scores_vtb)
-        MyLog.printm("candidates_by_decreasing_borda_score_vtb =",
-                 self.candidates_by_decreasing_borda_score_vtb)
+        MyLog.printm("Check: np.sum(self.preferences_borda_rk, 0) =",
+              np.sum(self.preferences_borda_rk, 0))
+        MyLog.printm("decreasing_borda_scores_rk =",
+               self.decreasing_borda_scores_rk)
+        MyLog.printm("candidates_by_decreasing_borda_score_rk =",
+                 self.candidates_by_decreasing_borda_score_rk)
         print("")
-        MyLog.printm("preferences_borda_novtb (reminder) =",
-                 self.preferences_borda_novtb)
-        MyLog.printm("borda_score_c_novtb =", self.borda_score_c_novtb)
-        MyLog.printm("decreasing_borda_scores_novtb =",
-                 self.decreasing_borda_scores_novtb)
-        MyLog.printm("candidates_by_decreasing_borda_score_novtb =",
-                 self.candidates_by_decreasing_borda_score_novtb)
+        MyLog.printm("preferences_borda_ut (reminder) =",
+                 self.preferences_borda_ut)
+        MyLog.printm("borda_score_c_ut =", self.borda_score_c_ut)
+        MyLog.printm("decreasing_borda_scores_ut =",
+                 self.decreasing_borda_scores_ut)
+        MyLog.printm("candidates_by_decreasing_borda_score_ut =",
+                 self.candidates_by_decreasing_borda_score_ut)
 
         MyLog.print_title("Utilities")
-        MyLog.printm("preferences_utilities (reminder) =",
-               self.preferences_utilities)
+        MyLog.printm("preferences_ut (reminder) =",
+               self.preferences_ut)
         MyLog.printm("total_utility_c = ", self.total_utility_c)
         print("total_utility_min =", self.total_utility_min)
         print("total_utility_max =", self.total_utility_max)
         print("total_utility_mean =", self.total_utility_mean)
         print("total_utility_std =", self.total_utility_std)
 
-        MyLog.print_title("Condorcet notions with vtb")
-        MyLog.printm("preferences_ranking (reminder) =", self.preferences_ranking)
-        MyLog.printm("matrix_duels_vtb =", self.matrix_duels_vtb)
+        MyLog.print_title("Condorcet notions based on rankings")
+        MyLog.printm("preferences_rk (reminder) =", self.preferences_rk)
+        MyLog.printm("matrix_duels_rk =", self.matrix_duels_rk)
     
-        MyLog.printm("matrix_victories_vtb =", self.matrix_victories_vtb)
-        print("condorcet_winner_vtb =", self.condorcet_winner_vtb)
+        MyLog.printm("matrix_victories_rk =", self.matrix_victories_rk)
+        print("condorcet_winner_rk =", self.condorcet_winner_rk)
     
-        MyLog.printm("matrix_victories_vtb_ctb =", self.matrix_victories_vtb_ctb)
-        print("condorcet_winner_vtb_ctb =", self.condorcet_winner_vtb_ctb)
+        MyLog.printm("matrix_victories_rk_ctb =", self.matrix_victories_rk_ctb)
+        print("condorcet_winner_rk_ctb =", self.condorcet_winner_rk_ctb)
     
-        MyLog.print_title("Relative Condorcet notions")
-        MyLog.printm("preferences_borda_novtb (reminder) =",
-                 self.preferences_borda_novtb)
-        MyLog.printm("matrix_duels =", self.matrix_duels)
+        MyLog.print_title("Relative Condorcet notions (ut)")
+        MyLog.printm("preferences_borda_ut (reminder) =",
+                 self.preferences_borda_ut)
+        MyLog.printm("matrix_duels_ut =", self.matrix_duels_ut)
     
-        MyLog.printm("matrix_victories_rel =", self.matrix_victories_rel)
-        print("condorcet_winner_rel =", self.condorcet_winner_rel)
+        MyLog.printm("matrix_victories_ut_rel =", self.matrix_victories_ut_rel)
+        print("condorcet_winner_ut_rel =", self.condorcet_winner_ut_rel)
     
-        MyLog.printm("matrix_victories_rel_ctb =", self.matrix_victories_rel_ctb)
-        print("condorcet_winner_rel_ctb =", self.condorcet_winner_rel_ctb)
+        MyLog.printm("matrix_victories_ut_rel_ctb =", self.matrix_victories_ut_rel_ctb)
+        print("condorcet_winner_ut_rel_ctb =", self.condorcet_winner_ut_rel_ctb)
     
-        MyLog.print_title("Absolute Condorcet notions")
-        MyLog.printm("matrix_duels (reminder) =", self.matrix_duels)
-        MyLog.printm("matrix_victories_abs =", self.matrix_victories_abs)
+        MyLog.print_title("Absolute Condorcet notions (ut)")
+        MyLog.printm("matrix_duels_ut (reminder) =", self.matrix_duels_ut)
+        MyLog.printm("matrix_victories_ut_abs =", self.matrix_victories_ut_abs)
         MyLog.printm("condorcet_admissible_candidates = ",
               self.condorcet_admissible_candidates)
         print("nb_condorcet_admissible =", self.nb_condorcet_admissible)
         MyLog.printm("weak_condorcet_winners =", self.weak_condorcet_winners)
         print("nb_weak_condorcet_winners =", self.nb_weak_condorcet_winners)
-        print("condorcet_winner =", self.condorcet_winner)
+        print("condorcet_winner_ut_abs =", self.condorcet_winner_ut_abs)
         print("resistant_condorcet_winner =", self.resistant_condorcet_winner)
-        MyLog.printm("threshold_c_prevents_w_Condorcet =",
-                 self.threshold_c_prevents_w_Condorcet)
+        MyLog.printm("threshold_c_prevents_w_Condorcet_ut_abs =",
+                 self.threshold_c_prevents_w_Condorcet_ut_abs)
 
-        MyLog.printm("matrix_victories_abs_ctb =", self.matrix_victories_abs_ctb)
-        print("condorcet_winner_ctb =", self.condorcet_winner_ctb)
+        MyLog.printm("matrix_victories_ut_abs_ctb =", self.matrix_victories_ut_abs_ctb)
+        print("condorcet_winner_ut_abs_ctb =", self.condorcet_winner_ut_abs_ctb)
 
         MyLog.print_title("Implications between Condorcet notions")
         # Resistant Condorcet (False)
         #  ||
         #  V
-        # Condorcet (False)              ==>             Condorcet_ctb (False)
+        # Condorcet_ut_abs (False)       ==>      Condorcet_ut_abs_ctb (False)
         #  ||          ||                                     ||           ||
         #  ||          V                                      V            ||
-        #  ||      Condorcet_vtb (False) ==> Condorcet_vtb_ctb (False)     ||
+        #  ||       Condorcet_rk (False) ==> Condorcet_rk_ctb (False)      ||
         #  V                                                               V
-        # Condorcet_rel (False)          ==>         Condorcet_rel_ctb (False)
+        # Condorcet_ut_rel (False)       ==>      Condorcet_ut_rel_ctb (False)
         #  ||
         #  V
         # Weak Condorcet (False)
@@ -1551,24 +1552,25 @@ class Population(MyLog.MyLog):
         print('Resistant Condorcet ' +
               display_bool(self.exists_resistant_condorcet_winner))
         print(' ||\n V')
-        print('Condorcet ' + display_bool(self.exists_condorcet_winner) +
-              '              ==>             Condorcet_ctb ' +
-              display_bool(self.exists_condorcet_winner_ctb))
+        print('Condorcet_ut_abs ' + display_bool(
+            self.exists_condorcet_winner_ut_abs) +
+              '       ==>      Condorcet_ut_abs_ctb ' +
+              display_bool(self.exists_condorcet_winner_ut_abs_ctb))
         print(' ||          ||                  '
               '                   ||           ||')
         print(' ||          V                   '
               '                   V            ||')
-        print(' ||      Condorcet_vtb ' +
-              display_bool(self.exists_condorcet_winner_vtb) +
-              ' ==> Condorcet_vtb_ctb ' +
-              display_bool(self.exists_condorcet_winner_vtb_ctb) +
-              '     ||')
+        print(' ||       Condorcet_rk ' +
+              display_bool(self.exists_condorcet_winner_rk) +
+              ' ==> Condorcet_rk_ctb ' +
+              display_bool(self.exists_condorcet_winner_rk_ctb) +
+              '      ||')
         print(' V                               '
               '                                V')
-        print('Condorcet_rel ' +
-              display_bool(self.exists_condorcet_winner_rel) +
-              '          ==>         Condorcet_rel_ctb ' +
-              display_bool(self.exists_condorcet_winner_rel_ctb))
+        print('Condorcet_ut_rel ' +
+              display_bool(self.exists_condorcet_winner_ut_rel) +
+              '       ==>      Condorcet_ut_rel_ctb ' +
+              display_bool(self.exists_condorcet_winner_ut_rel_ctb))
         print(' ||')
         print(' V')
         print('Weak Condorcet ' +
@@ -1581,101 +1583,100 @@ class Population(MyLog.MyLog):
         self._log_depth = old_log_depth
 
 
-def preferences_utilities_to_preferences_ranking(preferences_utilities):
+def preferences_ut_to_preferences_rk(preferences_ut):
     """Convert utilities to rankings.
 
     Arguments:
-    preferences_utilities -- 2d array of floats.
-        preferences_utilities[v, c] is the utility of candidate c as
+    preferences_ut -- 2d array of floats.
+        preferences_ut[v, c] is the utility of candidate c as
         seen by voter v.
 
     Returns:
-    preferences_ranking -- 2d array of integers. preferences_ranking[v, k]
+    preferences_rk -- 2d array of integers. preferences_rk[v, k]
         is the candidate at rank k for voter v.
 
-    If preferences_utilities[v,c] == preferences_utilities[v,d], then it is
+    If preferences_ut[v,c] == preferences_ut[v,d], then it is
     drawn at random whether c prefers c to d or d to c.
     """
-    V, C = preferences_utilities.shape
+    V, C = preferences_ut.shape
     tiebreaker = np.random.rand(V, C)
-    return np.lexsort((tiebreaker, -preferences_utilities), 1)
+    return np.lexsort((tiebreaker, -preferences_ut), 1)
 
 
-def preferences_ranking_to_preferences_borda_vtb(preferences_ranking):
+def preferences_rk_to_preferences_borda_rk(preferences_rk):
     """Convert rankings to Borda scores (with voter tie-breaking).
 
     Arguments:
-    preferences_ranking -- 2d array of integers. preferences_ranking[v, k]
+    preferences_rk -- 2d array of integers. preferences_rk[v, k]
         is the candidate at rank k for voter v.
 
     Returns:
-    preferences_borda_vtb -- 2d array of integers.
-        preferences_borda_vtb[v, c] is the Borda score (between 0 and C - 1)
+    preferences_borda_rk -- 2d array of integers.
+        preferences_borda_rk[v, c] is the Borda score (between 0 and C - 1)
         of candidate c for voter v.
     """
-    _, C = preferences_ranking.shape
-    return C - 1 - np.argsort(preferences_ranking, 1)
+    _, C = preferences_rk.shape
+    return C - 1 - np.argsort(preferences_rk, 1)
 
 
-def preferences_utilities_to_preferences_borda_novtb(
-        preferences_utilities):
+def preferences_ut_to_preferences_borda_ut(preferences_ut):
     """Convert utilities to Borda scores, with equalities.
 
     Arguments:
-    preferences_utilities -- 2d array of floats.
-        preferences_utilities[v, c] is the utility of candidate c as
+    preferences_ut -- 2d array of floats.
+        preferences_ut[v, c] is the utility of candidate c as
         seen by voter v.
 
     Returns:
-    preferences_borda_novtb -- 2d array of integers.
-        preferences_borda_vtb[v, c] gains 1 point for each d such that v
+    preferences_borda_ut -- 2d array of integers.
+        preferences_borda_rk[v, c] gains 1 point for each d such that v
         prefers c to d, and 0.5 point for each d such that v is
         indifferent between c and d.
     """
-    V, C = preferences_utilities.shape
-    preference_borda_novtb = np.zeros((V, C))
+    V, C = preferences_ut.shape
+    preference_borda_ut = np.zeros((V, C))
     for c in range(C):
-        preference_borda_novtb[:, c] = np.sum(
-            0.5 * (preferences_utilities[:, c][:, np.newaxis] >=
-                   preferences_utilities) +
-            0.5 * (preferences_utilities[:, c][:, np.newaxis] >
-                   preferences_utilities),
+        preference_borda_ut[:, c] = np.sum(
+            0.5 * (preferences_ut[:, c][:, np.newaxis] >=
+                   preferences_ut) +
+            0.5 * (preferences_ut[:, c][:, np.newaxis] >
+                   preferences_ut),
             1) - 0.5
-    return preference_borda_novtb
+    return preference_borda_ut
 
 
-def preferences_utilities_to_matrix_duels(preferences_utilities):
+def preferences_ut_to_matrix_duels_ut(preferences_ut):
     """Compute the matrix of duels.
 
     Arguments:
-    preferences_utilities -- 2d array of floats.
-        preferences_utilities[v, c] is the utility of candidate c as
+    preferences_ut -- 2d array of floats.
+        preferences_ut[v, c] is the utility of candidate c as
         seen by voter v.
 
     Returns:
-    matrix_duels -- 2d array of integers.
-        matrix_duels[c, d] is the number of voters who strictly prefer
+    matrix_duels_ut -- 2d array of integers.
+        matrix_duels_ut[c, d] is the number of voters who strictly prefer
         candidate c to d. By convention, diagonal coefficients are set to
         0.
     """
-    n, m = preferences_utilities.shape
+    n, m = preferences_ut.shape
     matrix_duels = np.zeros((m, m), dtype=np.int)
     for c in range(m):
         for d in range(c + 1, m):
-            matrix_duels[c, d] = np.sum(preferences_utilities[:, c] >
-                                        preferences_utilities[:, d])
-            matrix_duels[d, c] = np.sum(preferences_utilities[:, d] >
-                                        preferences_utilities[:, c])
+            matrix_duels[c, d] = np.sum(preferences_ut[:, c] >
+                                        preferences_ut[:, d])
+            matrix_duels[d, c] = np.sum(preferences_ut[:, d] >
+                                        preferences_ut[:, c])
     return matrix_duels
 
 
-def is_resistant_condorcet(w, preferences_utilities):
+def is_resistant_condorcet(w, preferences_ut):
     """Test for Resistant Condorcet winner.
 
     Arguments:
     w -- Integer (candidate). For compatibility reasons, NaN is allowed.
-    preferences_utilities -- 2d array of floats.
-        preferences_utilities[v, c] is the utility of candidate c as
+    preferences_ut -- 2d array of floats.
+        preferences_ut[v, c] is the utility of candidate c as
         seen by voter v.
 
     Returns:
@@ -1692,48 +1693,48 @@ def is_resistant_condorcet(w, preferences_utilities):
     """
     if np.isnan(w):
         return False
-    V, C = preferences_utilities.shape
+    V, C = preferences_ut.shape
     for c in range(C):
         if c == w:
             continue
-        v_does_not_prefer_c_to_w = (preferences_utilities[:, w] >=
-                                    preferences_utilities[:, c])
+        v_does_not_prefer_c_to_w = (preferences_ut[:, w] >=
+                                    preferences_ut[:, c])
         for d in range(C):
             if d == w:
                 continue
-            v_prefers_w_to_d = (preferences_utilities[:, w] >
-                                preferences_utilities[:, d])
+            v_prefers_w_to_d = (preferences_ut[:, w] >
+                                preferences_ut[:, d])
             if np.sum(np.logical_and(v_does_not_prefer_c_to_w,
                                      v_prefers_w_to_d)) <= V / 2:
                 return False
     return True
 
 
-# def compute_condorcet_quick(preferences_utilities):
+# def compute_condorcet_quick(preferences_ut):
 #     """Compute Condorcet winner.
 #
 #     Arguments:
-#     preferences_utilities -- 2d array of floats.
-#         preferences_utilities[v, c] is the utility of candidate c as
+#     preferences_ut -- 2d array of floats.
+#         preferences_ut[v, c] is the utility of candidate c as
 #         seen by voter v.
 #
 #     Returns:
-#     condorcet_winner_ctb -- Integer or NaN. 'tb' stands for 'ties
+#     condorcet_winner_ut_abs_ctb -- Integer or NaN. 'tb' stands for 'ties
 # broken'.
 #         Candidate who has only victories in matrix_victories_ctb.
 #         If there is no such candidate, then NaN.
-#     condorcet_winner -- Integer or NaN. Candidate who has only victories
+#     condorcet_winner_ut_abs -- Integer or NaN. Candidate who has only victories
 #         in matrix_victories. If there is no such candidate, then NaN.
 #     """
-#     n, m = preferences_utilities.shape
+#     n, m = preferences_ut.shape
 #
 #     # Step 1 : we move forward in the list of candidates, always keeping
 #     # the winner
 #     w_provisional = 0
 #     has_used_tie_break = False
 #     for d in range(1, m):
-#         voters_d_vs_w = sum(preferences_utilities[:, d] >
-#                             preferences_utilities[:, w_provisional])
+#         voters_d_vs_w = sum(preferences_ut[:, d] >
+#                             preferences_ut[:, w_provisional])
 #         if voters_d_vs_w > n / 2:
 #             w_provisional = d
 #             has_used_tie_break = False  # We do not know a tie for d
@@ -1746,21 +1747,21 @@ def is_resistant_condorcet(w, preferences_utilities):
 #     # her. But does she win against those before her?
 #     for c in range(0, w_provisional):
 #         # Since c < w, c needs only some >= and not some > to win.
-#         if sum(preferences_utilities[:, c] >=
-#                 preferences_utilities[:, w_provisional]) >= n / 2:
+#         if sum(preferences_ut[:, c] >=
+#                 preferences_ut[:, w_provisional]) >= n / 2:
 #             return np.nan, np.nan
-#     condorcet_winner_ctb = w_provisional
+#     condorcet_winner_ut_abs_ctb = w_provisional
 #     if has_used_tie_break:
-#         condorcet_winner = np.nan
+#         condorcet_winner_ut_abs = np.nan
 #     else:
-#         condorcet_winner = condorcet_winner_ctb
-#     return condorcet_winner_ctb, condorcet_winner
+#         condorcet_winner_ut_abs = condorcet_winner_ut_abs_ctb
+#     return condorcet_winner_ut_abs_ctb, condorcet_winner_ut_abs
 
 
 if __name__ == '__main__':
     # A quick demo
-    preferences_utilities = np.random.randint(-5, 5, (10, 5))
-    pop = Population(preferences_utilities=preferences_utilities,
+    preferences_ut = np.random.randint(-5, 5, (10, 5))
+    pop = Population(preferences_ut=preferences_ut,
                      labels_candidates=['Adélaïde', 'Bartholomé', 'Cunégonde',
                                         'Dagobert', 'Eugénie'])
     pop.demo(log_depth=1)

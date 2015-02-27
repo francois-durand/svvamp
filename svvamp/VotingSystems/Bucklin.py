@@ -101,7 +101,7 @@ class Bucklin(BucklinResult, Election):
         scores_without_v = np.copy(self.scores)
         for k in range(self.pop.C):
             scores_without_v[range(k, self.pop.C), 
-                             self.pop.preferences_ranking[v, k]] -= 1
+                             self.pop.preferences_rk[v, k]] -= 1
         for c in range(self.pop.C):
             if not c_is_wanted[c]:
                 continue
@@ -175,7 +175,7 @@ class Bucklin(BucklinResult, Election):
     #%% Unison manipulation (UM)
 
     def _UM_main_work_c(self, c):
-        n_m = self.pop.matrix_duels[c, self.w]
+        n_m = self.pop.matrix_duels_ut[c, self.w]
         scores_r = np.zeros(self.pop.C)
         # Manipulators put c in first position anyway.
         scores_r[c] = n_m
@@ -187,7 +187,7 @@ class Bucklin(BucklinResult, Election):
         for r in range(self.pop.C):
             scores_prev = np.copy(scores_r)
             scores_r += np.bincount(
-                self.pop.preferences_ranking[np.logical_not(
+                self.pop.preferences_rk[np.logical_not(
                     self.v_wants_to_help_c[:, c]), r],
                 minlength=self.pop.C)
             if scores_r[c] > self.pop.V / 2:  # It is the last round
@@ -226,7 +226,7 @@ class Bucklin(BucklinResult, Election):
         # the counter-manipulators put c last, then c cannot be elected
         # (except if there are 2 candidates and c == 0).
         # So exactly V/2 manipulators is not enough.
-        n_s = self.pop.V - self.pop.matrix_duels[c, self.w]
+        n_s = self.pop.V - self.pop.matrix_duels_ut[c, self.w]
         if self.pop.C == 2 and c == 0:
             self._update_sufficient(
                 self._sufficient_coalition_size_ICM, c, n_s,
@@ -244,7 +244,7 @@ class Bucklin(BucklinResult, Election):
         # We do not try to find optimal bounds. We just check whether it
         # is possible to manipulate with the number of manipulators that
         # we have.
-        n_m = self.pop.matrix_duels[c, self.w]
+        n_m = self.pop.matrix_duels_ut[c, self.w]
         if n_m < self._necessary_coalition_size_CM[c]:
             # This algorithm will not do better (so, this is not a
             # quick escape).
@@ -262,7 +262,7 @@ class Bucklin(BucklinResult, Election):
         for r in range(self.pop.C):
             scores_prev = np.copy(scores_r)
             scores_r += np.bincount(
-                self.pop.preferences_ranking[np.logical_not(
+                self.pop.preferences_rk[np.logical_not(
                     self.v_wants_to_help_c[:, c]), r],
                 minlength=self.pop.C)
             if scores_r[c] > self.pop.V / 2:

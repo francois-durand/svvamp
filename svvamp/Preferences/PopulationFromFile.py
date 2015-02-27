@@ -24,7 +24,7 @@ import numpy as np
 import pandas as pd
 
 from svvamp.Preferences.Population import \
-    preferences_utilities_to_preferences_borda_novtb
+    preferences_ut_to_preferences_borda_ut
 from svvamp.Preferences.Population import Population
 
 
@@ -50,11 +50,11 @@ class PopulationFromFile(Population):
 
         Otherwise, the file is considered as a PrefLib file. In that case,
         since information is ordinal only,
-        ``preferences_utilities[v, c]`` is set to the Borda score
+        ``preferences_ut[v, c]`` is set to the Borda score
         (with no vtb) minus ``(C - 1) / 2``. This way, utilities are between
         ``- (C - 1) / 2`` and ``(C - 1) / 2``.
 
-        To each ``preferences_utilities[v, c]``, a random noise is added which
+        To each ``preferences_ut[v, c]``, a random noise is added which
         is drawn independently and uniformly in the interval
         ``[- relative_noise * amplitude, relative_noise * amplitude]``,
         where ``amplitude`` is the difference between the lowest and the
@@ -73,9 +73,9 @@ class PopulationFromFile(Population):
                 preferences_utilities = df.values
                 labels_candidates = df.columns.values.astype(np.str)
             pop_temp = Population(preferences_utilities)
-            nb_victories_temp = np.sum(pop_temp.matrix_victories_rel, 1)
+            nb_victories_temp = np.sum(pop_temp.matrix_victories_ut_rel, 1)
             scores_temp = (nb_victories_temp +
-                           pop_temp.borda_score_c_novtb / pop_temp.C /
+                           pop_temp.borda_score_c_ut / pop_temp.C /
                            pop_temp.V)
             candidates_best_to_worst = np.argsort(- scores_temp,
                                                   kind='mergesort')
@@ -100,7 +100,7 @@ class PopulationFromFile(Population):
                         'File name', file_name,
                         'Relative noise', relative_noise,
                         'Absolute noise', absolute_noise]
-        super().__init__(preferences_utilities=preferences_utilities,
+        super().__init__(preferences_ut=preferences_utilities,
                          log_creation=log_creation,
                          labels_candidates=labels_candidates)
 
@@ -175,7 +175,7 @@ def preflib_to_preferences_utilities(file_name):
                         crank += 1
         preferences_utilities[
             start_index:start_index + count, :] = \
-            preferences_utilities_to_preferences_borda_novtb(
+            preferences_ut_to_preferences_borda_ut(
                 ballot_temp[np.newaxis, :]) - (C - 1) / 2
         start_index += count
     input_file.close()
@@ -185,9 +185,9 @@ def preflib_to_preferences_utilities(file_name):
 if __name__ == '__main__':
     pop = PopulationFromFile('../In/example_ballots.t.csv',
                              absolute_noise=0.5)
-    # preferences_utilities = pop.preferences_utilities[:, 0:3]
-    # preferences_utilities -= np.mean(preferences_utilities, 1)[:, np.newaxis]
-    # pop_temp = Population(preferences_utilities)
+    # preferences_ut = pop.preferences_ut[:, 0:3]
+    # preferences_ut -= np.mean(preferences_ut, 1)[:, np.newaxis]
+    # pop_temp = Population(preferences_ut)
     pop.demo()
     pop.plot3(use_labels=True)
     pop.plot4(use_labels=True)

@@ -54,7 +54,7 @@ class NansonResult(ElectionResult):
         candidates_worst_to_best = []
         self._one_v_might_be_pivotal = False
         # borda_temp[c] will be inf when c is eliminated
-        borda_temp = np.copy(self.pop.borda_score_c_vtb).astype(float)
+        borda_temp = np.copy(self.pop.borda_score_c_rk).astype(float)
         borda_average = self.pop.V * (self.pop.C - 1) / 2
         while True:  # This is a round
             self._scores.append(np.copy(borda_temp))
@@ -96,7 +96,7 @@ class NansonResult(ElectionResult):
                     len(losing_candidates) * (self.pop.V) / 2)
                 borda_for_next_round[losing_candidates] = np.inf
                 borda_for_next_round = borda_for_next_round - np.sum(
-                    self.pop.matrix_duels_vtb[:, losing_candidates], 1)
+                    self.pop.matrix_duels_rk[:, losing_candidates], 1)
                 borda_temp[losing_candidates] = np.inf
                 least_borda = np.min(borda_temp)
 #                self._mylogv("borda_temp =", borda_temp, 2)

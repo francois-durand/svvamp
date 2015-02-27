@@ -33,10 +33,10 @@ def population_vmf_aux(C, V, concentration, pole=None):
     pole -- 1d array of size C. Center of the VMF distribution.
 
     Returns:
-    preferences_utilities -- 2d array of size (V, C). Preferences of the
+    preferences_ut -- 2d array of size (V, C). Preferences of the
         population.
 
-    Each row (voter) of preferences_utilities is drawn according to a Von
+    Each row (voter) of preferences_ut is drawn according to a Von
     Mises-Fisher law, using Ulrich's method modified by Wood. We work on the
     'C-1'-sphere (in R^C).
 
@@ -98,7 +98,7 @@ def population_vmf_aux(C, V, concentration, pole=None):
         np.sqrt(1 - w_store**2)[:, np.newaxis] * vectors_v,
         w_store[:, np.newaxis]
     ), axis=1)
-    # print(preferences_utilities)
+    # print(preferences_ut)
 
     # At this stage (end of Wood's algorithm), we have used a law of pole
     # (0, ..., 0, 1). We are going to use a reflection that exchanges this
@@ -112,8 +112,8 @@ def population_vmf_aux(C, V, concentration, pole=None):
         # print('Change pole')
         unitary_parallel = unitary_parallel / np.sqrt(np.sum(
             unitary_parallel**2))
-        # print(preferences_utilities * unitary_parallel[np.newaxis, :])
-        # print(np.sum(preferences_utilities * unitary_parallel[np.newaxis,
+        # print(preferences_ut * unitary_parallel[np.newaxis, :])
+        # print(np.sum(preferences_ut * unitary_parallel[np.newaxis,
         #                                      :], 1))
         # print('unitary_parallel =', unitary_parallel)
         x_parallel = np.outer(

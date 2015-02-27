@@ -65,7 +65,7 @@ class IteratedBucklinResult(ElectionResult):
         self._scores = np.zeros((self.pop.C - 1, self.pop.C))
         worst_to_best = []
         is_eliminated = np.zeros(self.pop.C, dtype=np.bool)
-        preferences_borda_temp = np.copy(self.pop.preferences_borda_vtb)
+        preferences_borda_temp = np.copy(self.pop.preferences_borda_rk)
         for r in range(self.pop.C - 1):
             for c in range(self.pop.C):
                 if is_eliminated[c]:
@@ -121,7 +121,7 @@ class IteratedBucklinResult(ElectionResult):
         if self._one_v_might_be_pivotal is None:
             scores_r = np.zeros(self.pop.C)
             is_eliminated = np.zeros(self.pop.C, dtype=np.bool)
-            preferences_borda_temp = np.copy(self.pop.preferences_borda_vtb)
+            preferences_borda_temp = np.copy(self.pop.preferences_borda_rk)
             for r in range(self.pop.C - 1):
                 self._mylogv("Pre-testing pivotality: round r =", r, 3)                
                 loser_sincere = (

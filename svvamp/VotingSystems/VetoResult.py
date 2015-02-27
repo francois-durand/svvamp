@@ -48,7 +48,7 @@ class VetoResult(ElectionResult):
         """
         if self._ballots is None:
             self._mylog("Compute ballots", 1)
-            self._ballots = self.pop.preferences_ranking[:, -1]
+            self._ballots = self.pop.preferences_rk[:, -1]
         return self._ballots
         
     @property

@@ -37,7 +37,7 @@ class RankedPairs(RankedPairsResult, Election):
     >>> pop = svvamp.PopulationSpheroid(V=100, C=5)
     >>> election = svvamp.RankedPairs(pop)
 
-    In the matrix of duels :attr:`~svvamp.Population.matrix_duels_vtb`,
+    In the matrix of duels :attr:`~svvamp.Population.matrix_duels_rk`,
     victories (and ties) are sorted by decreasing amplitude. If two duels
     have the same score, we take first the one where the winner has the
     smallest index; if there is still a choice to make, we take first the
@@ -50,7 +50,7 @@ class RankedPairs(RankedPairsResult, Election):
     
     At the end, we has a transitive connected directed graph, whose adjacency
     relation is included in the relation of victories (with ties broken), 
-    :attr:`~svvamp.Population.matrix_victories_vtb_ctb`. The maximal node of
+    :attr:`~svvamp.Population.matrix_victories_rk_ctb`. The maximal node of
     this graph (by topological order) is declared the winner.
 
     This method meets the Condorcet criterion.
