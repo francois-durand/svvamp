@@ -52,7 +52,7 @@ class BucklinResult(ElectionResult):
         self._scores = np.zeros((self.pop.C, self.pop.C))
         scores_r = np.zeros(self.pop.C, dtype=np.int)
         for r in range(self.pop.C):
-            scores_r += np.bincount(self.pop.preferences_ranking[:, r],
+            scores_r += np.bincount(self.pop.preferences_rk[:, r],
                                     minlength=self.pop.C)
             self._scores[r, :] = np.copy(scores_r)
             if self._w is None:

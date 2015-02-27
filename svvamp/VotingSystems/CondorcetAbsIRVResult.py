@@ -34,7 +34,7 @@ class CondorcetAbsIRVResult(ElectionResult):
     coherent with this weak order (i.e., is a tie-breaking of this weak order).
 
     If there is a Condorcet winner (computed with the weak orders, i.e. in
-    the sense of matrix_victories_abs), then she is elected. Otherwise,
+    the sense of matrix_victories_ut_abs), then she is elected. Otherwise,
     IRV is used (with the strict total orders).
 
     If sincere preferences are strict total orders, then this voting system is
@@ -57,20 +57,20 @@ class CondorcetAbsIRVResult(ElectionResult):
 
     def _counts_ballots(self):
         self._mylog("Count ballots", 1)
-        if not np.isnan(self.pop.condorcet_winner):
-            self._w = self.pop.condorcet_winner
-            self._scores = np.sum(self.pop.matrix_victories_abs, 1)
+        if not np.isnan(self.pop.condorcet_winner_ut_abs):
+            self._w = self.pop.condorcet_winner_ut_abs
+            self._scores = np.sum(self.pop.matrix_victories_ut_abs, 1)
             self._candidates_by_scores_best_to_worst = (
                 np.argsort(-self.scores, kind='mergesort'))
             self._v_might_be_pivotal = np.zeros(self.pop.V)
-            for c in np.where(self.pop.matrix_duels[self.w, :] <=
+            for c in np.where(self.pop.matrix_duels_ut[self.w, :] <=
                               self.pop.V / 2 + 1)[0]:
                 if c == self._w:
                     continue
                 # Search voters who can prevent the victory for w against c.
                 self._v_might_be_pivotal[
-                    self.pop.preferences_utilities[:, self._w] >
-                    self.pop.preferences_utilities[:, c]
+                    self.pop.preferences_ut[:, self._w] >
+                    self.pop.preferences_ut[:, c]
                 ] = True
         else:
             self.EB = ExhaustiveBallotResult(self.pop)
@@ -82,7 +82,7 @@ class CondorcetAbsIRVResult(ElectionResult):
             self._v_might_be_pivotal = np.copy(self.EB._v_might_be_pivotal)
             # Another way of being (maybe) pivotal: create a Condorcet winner.
             for c in range(self.pop.C):
-                if np.any(self.pop.matrix_duels[c, np.not_equal(
+                if np.any(self.pop.matrix_duels_ut[c, np.not_equal(
                         np.array(range(self.pop.C)), c)]
                         <= self.pop.V / 2 - 1):
                     # c cannot become a Condorcet winner.
@@ -90,7 +90,7 @@ class CondorcetAbsIRVResult(ElectionResult):
                 # close_candidates are the candidates against which c does
                 # not have a victory.
                 close_candidates = np.less_equal(
-                    self.pop.matrix_duels[c, :], self.pop.V / 2)
+                    self.pop.matrix_duels_ut[c, :], self.pop.V / 2)
                 close_candidates[c] = False
                 # Voter v can make c become a Condorcet winner iff, among
                 # close_candidates, she likes c the least (this way, she can
@@ -98,8 +98,8 @@ class CondorcetAbsIRVResult(ElectionResult):
                 # sincere voting).
                 self._v_might_be_pivotal[
                     np.all(np.less(
-                        self.pop.preferences_utilities[:, c][:, np.newaxis],
-                        self.pop.preferences_utilities[:, close_candidates]
+                        self.pop.preferences_ut[:, c][:, np.newaxis],
+                        self.pop.preferences_ut[:, close_candidates]
                     ), 1)
                 ] = True
 
@@ -116,7 +116,7 @@ class CondorcetAbsIRVResult(ElectionResult):
         """1d or 2d array. 
         
         If there is a Condorcet winner, then ``scores[c]`` is the number of
-        victories for ``c`` in matrix_victories_abs.
+        victories for ``c`` in matrix_victories_ut_abs.
         
         Otherwise, ``scores[r, c]`` is defined like in
         :class:`~svvamp.IRV`: it is the number of

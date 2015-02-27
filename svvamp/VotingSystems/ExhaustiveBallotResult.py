@@ -149,7 +149,7 @@ class ExhaustiveBallotResult(ElectionResult):
             self._mylogv("worst_to_best =", worst_to_best, 3)
             alive_candidates = candidates[is_alive]
             self._ballots[:, r] = alive_candidates[
-                np.argmax(self.pop.preferences_borda_vtb[:, is_alive], 1)
+                np.argmax(self.pop.preferences_borda_rk[:, is_alive], 1)
             ]
             self._mylogv("ballots[:, r] =", self._ballots[:, r], 3)
             self._scores[r, :] = np.bincount(self._ballots[:, r],
@@ -157,8 +157,8 @@ class ExhaustiveBallotResult(ElectionResult):
             self._scores[r, np.logical_not(is_alive)] = np.nan
             # self._scores[r, is_alive] = np.sum(
             #     np.equal(
-            #         self.pop.preferences_borda_vtb[is_alive],
-            #         np.max(self.pop.preferences_borda_vtb[:, is_alive], 1)[
+            #         self.pop.preferences_borda_rk[is_alive],
+            #         np.max(self.pop.preferences_borda_rk[:, is_alive], 1)[
             #             :, np.newaxis]),
             #     0)
             self._mylogv("scores[r, :] =", self._scores[r, :], 3)

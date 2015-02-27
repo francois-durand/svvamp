@@ -48,12 +48,12 @@ class Election(ElectionResult):
     About tie-breaking: there are essentially 3 types of tie-breaking in
     this simulator.
     * When a voter v is forced to provide a strict order in a specific voting
-    system, she uses preferences_ranking[v, :]. As explained in the
+    system, she uses preferences_rk[v, :]. As explained in the
     documentation of Population, if she has the same utility for candidates c
     and d, she decides once and for all if she will provide c before d or d
     before c in such circumstances.
     * To know if a voter wants to manipulate for c against w, we use her
-    utilities (or equivalently, preferences_borda_novtb). If she attributes the
+    utilities (or equivalently, preferences_borda_ut). If she attributes the
     same utility to w and c, she is not interested in this manipulation.
     * The voting system itself may need to break ties, for example if
     candidates c and d have the same score in a score-based system. This kind
@@ -215,7 +215,7 @@ class Election(ElectionResult):
         Typically used when the population is modified: all manipulation
         computations are initialized then.
         """
-        self.pop.ensure_voters_sorted_by_ordinal_preferences()
+        self.pop.ensure_voters_sorted_by_rk()
         self._v_wants_to_help_c = None
         self._c_has_supporters = None
         self._losing_candidates = None
@@ -785,23 +785,23 @@ class Election(ElectionResult):
                                  "with voter and candidate tie-breaking.")
             return
         if (self.meets_majority_favorite_c and
-                self.pop.plurality_scores_novtb[self.w] > self.pop.V / 2):
+                self.pop.plurality_scores_ut[self.w] > self.pop.V / 2):
             self._IIA_impossible("IIA guaranteed: w is a majority favorite.")
             return
         if (self.meets_majority_favorite_c_vtb and
-                self.pop.plurality_scores_vtb[self.w] > self.pop.V / 2):
+                self.pop.plurality_scores_rk[self.w] > self.pop.V / 2):
             self._IIA_impossible("IIA guaranteed: w is a majority favorite "
                                  "with voter tie-breaking.")
             return
         if (self.meets_majority_favorite_c_ctb and
                 self.w == 0 and
-                self.pop.plurality_scores_novtb[self.w] >= self.pop.V / 2):
+                self.pop.plurality_scores_ut[self.w] >= self.pop.V / 2):
             self._IIA_impossible("IIA guaranteed: w is a majority favorite "
                                  "with candidate tie-breaking (w = 0).")
             return
         if (self.meets_majority_favorite_c_vtb_ctb and
                 self.w == 0 and
-                self.pop.plurality_scores_vtb[self.w] >= self.pop.V / 2):
+                self.pop.plurality_scores_rk[self.w] >= self.pop.V / 2):
             self._IIA_impossible("IIA guaranteed: w is a majority favorite "
                                  "with voter and candidate tie-breaking "
                                  "(w = 0).")
@@ -814,7 +814,7 @@ class Election(ElectionResult):
                             "vtb and ctb)", 2)
                 self._is_IIA = False
                 self._example_winner_IIA = np.nonzero(
-                    self.pop.matrix_victories_vtb_ctb[:, self.w])[0][0]
+                    self.pop.matrix_victories_rk_ctb[:, self.w])[0][0]
                 self._example_subset_IIA = np.zeros(self.pop.C, dtype=bool)
                 self._example_subset_IIA[self.w] = True
                 self._example_subset_IIA[self._example_winner_IIA] = True
@@ -900,8 +900,8 @@ class Election(ElectionResult):
         if self._v_wants_to_help_c is None:
             self._mylog("Compute v_wants_to_help_c", 1)
             self._v_wants_to_help_c = np.greater(
-                self.pop.preferences_utilities,
-                self.pop.preferences_utilities[:, self.w][:, np.newaxis]
+                self.pop.preferences_ut,
+                self.pop.preferences_ut[:, self.w][:, np.newaxis]
             )
         return self._v_wants_to_help_c
         
@@ -926,7 +926,7 @@ class Election(ElectionResult):
                 np.array(range(self.w+1, self.pop.C), dtype=int)
             ))
             self._losing_candidates = self._losing_candidates[np.argsort(
-                -self.pop.matrix_duels[self._losing_candidates, self.w],
+                -self.pop.matrix_duels_ut[self._losing_candidates, self.w],
                 kind='mergesort')]
         return self._losing_candidates
         
@@ -1295,13 +1295,13 @@ class Election(ElectionResult):
 
         Same specifications as _IM_main_work_v.
         """
-        preferences_borda_test = np.copy(self.pop.preferences_borda_vtb)
+        preferences_borda_test = np.copy(self.pop.preferences_borda_rk)
         ballot = np.array(range(self.pop.C))
         ballot_favorite = self.pop.C - 1
         while ballot is not None:  # Loop on possible ballots
             self._mylogv("IM: Ballot =", ballot, 3)
             preferences_borda_test[v, :] = ballot
-            pop_test = Population(preferences_utilities=preferences_borda_test)
+            pop_test = Population(preferences_ut=preferences_borda_test)
             result_test = self._create_result(pop_test)
             w_test = result_test.w
             if np.isneginf(self._v_IM_for_c[v, w_test]):
@@ -1335,7 +1335,7 @@ class Election(ElectionResult):
 
         Same specifications as _IM_main_work_v.
         """
-        preferences_utilities_test = np.copy(self.pop.preferences_utilities)
+        preferences_utilities_test = np.copy(self.pop.preferences_ut)
         for c in range(self.pop.C):
             if not c_is_wanted[c]:
                 continue
@@ -1346,7 +1346,7 @@ class Election(ElectionResult):
             preferences_utilities_test[v, :] = -1
             preferences_utilities_test[v, c] = 1
             pop_test = Population(
-                preferences_utilities=preferences_utilities_test)
+                preferences_ut=preferences_utilities_test)
             result_test = self._create_result(pop_test)
             w_test = result_test.w
             if w_test == c:
@@ -1578,7 +1578,7 @@ class Election(ElectionResult):
         # done, except if everything is decided).
         # Majority favorite criterion
         if (self.meets_majority_favorite_c and
-                self.pop.plurality_scores_novtb[self.w] > self.pop.V / 2):
+                self.pop.plurality_scores_ut[self.w] > self.pop.V / 2):
             self._mylog("TM impossible (w is a majority favorite).", 2)
             self._is_TM = False
             self._candidates_TM[:] = False
@@ -1586,7 +1586,7 @@ class Election(ElectionResult):
             return
         if (self.meets_majority_favorite_c_ctb and
                 self.w == 0 and
-                self.pop.plurality_scores_novtb[self.w] >= self.pop.V / 2):
+                self.pop.plurality_scores_ut[self.w] >= self.pop.V / 2):
             self._mylog("TM impossible (w=0 is a majority favorite with " +
                         "candidate tie-breaking).", 2)
             self._is_TM = False
@@ -1594,7 +1594,7 @@ class Election(ElectionResult):
             self._TM_was_computed_with_candidates = True
             return
         if (self.meets_majority_favorite_c_vtb and
-                self.pop.plurality_scores_vtb[self.w] > self.pop.V / 2):
+                self.pop.plurality_scores_rk[self.w] > self.pop.V / 2):
             self._mylog("TM impossible (w is a majority favorite with "
                         "voter tie-breaking).", 2)
             self._is_TM = False
@@ -1603,7 +1603,7 @@ class Election(ElectionResult):
             return
         if (self.meets_majority_favorite_c_vtb_ctb and
                 self.w == 0 and
-                self.pop.plurality_scores_vtb[self.w] >= self.pop.V / 2):
+                self.pop.plurality_scores_rk[self.w] >= self.pop.V / 2):
             self._mylog("TM impossible (w=0 is a majority favorite with " +
                         "voter and candidate tie-breaking).", 2)
             self._is_TM = False
@@ -1738,7 +1738,7 @@ class Election(ElectionResult):
         """
         # Manipulators put c on top and w at bottom.
         preferences_borda_test = self._compute_trivial_strategy_ordinal(c)
-        pop_test = Population(preferences_utilities=preferences_borda_test)
+        pop_test = Population(preferences_ut=preferences_borda_test)
         result_test = self._create_result(pop_test)
         w_test = result_test.w
         self._mylogv("TM: w_test =", w_test)
@@ -1753,10 +1753,10 @@ class Election(ElectionResult):
         Do not update _is_TM.
         """
         # Manipulators give -1 to all candidates, except 1 for c.
-        preferences_test = np.copy(self.pop.preferences_utilities)
+        preferences_test = np.copy(self.pop.preferences_ut)
         preferences_test[self.v_wants_to_help_c[:, c], :] = -1
         preferences_test[self.v_wants_to_help_c[:, c], c] = 1
-        pop_test = Population(preferences_utilities=preferences_test)
+        pop_test = Population(preferences_ut=preferences_test)
         result_test = self._create_result(pop_test)
         w_test = result_test.w
         self._candidates_TM[c] = (w_test == c)
@@ -1844,20 +1844,20 @@ class Election(ElectionResult):
             population. For each voter preferring c to w, she now puts c on 
             top, w at bottom, and other Borda scores are modified accordingly.
         """
-        preferences_test = np.copy(self.pop.preferences_borda_vtb)
+        preferences_test = np.copy(self.pop.preferences_borda_rk)
         self._mylogm("Borda scores (sincere) =",
                      preferences_test, 3)
         # For manipulators: all candidates that were above c lose 1 point.
         preferences_test[np.logical_and(
             self.v_wants_to_help_c[:, c][:, np.newaxis],
-            self.pop.preferences_borda_vtb >
-            self.pop.preferences_borda_vtb[:, c][:, np.newaxis]
+            self.pop.preferences_borda_rk >
+            self.pop.preferences_borda_rk[:, c][:, np.newaxis]
         )] -= 1
         # For manipulators: all candidates that were below w gain 1 point.
         preferences_test[np.logical_and(
             self.v_wants_to_help_c[:, c][:, np.newaxis],
-            self.pop.preferences_borda_vtb <
-            self.pop.preferences_borda_vtb[:, self.w][:, np.newaxis]
+            self.pop.preferences_borda_rk <
+            self.pop.preferences_borda_rk[:, self.w][:, np.newaxis]
         )] += 1
         # For manipulators: c gets score C and w gets score 1.
         preferences_test[self.v_wants_to_help_c[:, c], c] = self.pop.C - 1
@@ -1965,7 +1965,7 @@ class Election(ElectionResult):
         # done, except if everything is decided).
         # Majority favorite criterion
         if (self.meets_majority_favorite_c and
-                self.pop.plurality_scores_novtb[self.w] > self.pop.V / 2):
+                self.pop.plurality_scores_ut[self.w] > self.pop.V / 2):
             self._mylog("UM impossible (w is a majority favorite).", 2)
             self._is_UM = False
             self._candidates_UM[:] = False
@@ -1973,7 +1973,7 @@ class Election(ElectionResult):
             return
         if (self.meets_majority_favorite_c_ctb and
                 self.w == 0 and
-                self.pop.plurality_scores_novtb[self.w] >= self.pop.V / 2):
+                self.pop.plurality_scores_ut[self.w] >= self.pop.V / 2):
             self._mylog("UM impossible (w=0 is a majority favorite with " +
                         "candidate tie-breaking).", 2)
             self._is_UM = False
@@ -1981,7 +1981,7 @@ class Election(ElectionResult):
             self._UM_was_computed_with_candidates = True
             return
         if (self.meets_majority_favorite_c_vtb and
-                self.pop.plurality_scores_vtb[self.w] > self.pop.V / 2):
+                self.pop.plurality_scores_rk[self.w] > self.pop.V / 2):
             self._mylog("UM impossible (w is a majority favorite with "
                         "voter tie-breaking).", 2)
             self._is_UM = False
@@ -1990,7 +1990,7 @@ class Election(ElectionResult):
             return
         if (self.meets_majority_favorite_c_vtb_ctb and
                 self.w == 0 and
-                self.pop.plurality_scores_vtb[self.w] >= self.pop.V / 2):
+                self.pop.plurality_scores_rk[self.w] >= self.pop.V / 2):
             self._mylog("UM impossible (w=0 is a majority favorite with " +
                         "voter and candidate tie-breaking).", 2)
             self._is_UM = False
@@ -2082,7 +2082,7 @@ class Election(ElectionResult):
         Try to decide _candidates_UM[c] to True or False (instead of -inf). Do
         not update _is_UM.
         """
-        n_m = self.pop.matrix_duels[c, self.w]  # Number of manipulators
+        n_m = self.pop.matrix_duels_ut[c, self.w]  # Number of manipulators
         n_s = self.pop.V - n_m                  # Number of sincere voters
         # Positive pretest based on the majority favorite criterion
         if (self.meets_majority_favorite_c_vtb and
@@ -2096,31 +2096,31 @@ class Election(ElectionResult):
             self._candidates_UM[c] = True
             return
         # Negative pretest based on the majority favorite criterion
-        # If plurality_scores_novtb[w] > (n_s + n_m) / 2, then CM impossible.
-        # Necessary condition: n_m >= 2 * plurality_scores_novtb[w] - n_s.
+        # If plurality_scores_ut[w] > (n_s + n_m) / 2, then CM impossible.
+        # Necessary condition: n_m >= 2 * plurality_scores_ut[w] - n_s.
         if self.meets_majority_favorite_c:
-            if n_m < 2 * self.pop.plurality_scores_novtb[self.w] - n_s:
+            if n_m < 2 * self.pop.plurality_scores_ut[self.w] - n_s:
                 self._mylog('UM: Preliminary checks: even with n_m '
                             'manipulators, w stays plurality winner (no tvb)',
                             3)
                 self._candidates_UM[c] = False
                 return
         if self.meets_majority_favorite_c_ctb and self.w == 0:
-            if n_m < 2 * self.pop.plurality_scores_novtb[self.w] - n_s + 1:
+            if n_m < 2 * self.pop.plurality_scores_ut[self.w] - n_s + 1:
                 self._mylog('UM: Preliminary checks: even with n_m '
                             'manipulators, w stays plurality winner (ctb but '
                             'no vtb)', 3)
                 self._candidates_UM[c] = False
                 return
         if self.meets_majority_favorite_c_vtb:
-            if n_m < 2 * self.pop.plurality_scores_vtb[self.w] - n_s:
+            if n_m < 2 * self.pop.plurality_scores_rk[self.w] - n_s:
                 self._mylog('UM: Preliminary checks: even with n_m '
                             'manipulators, w stays plurality winner (with '
                             'vtb)', 3)
                 self._candidates_UM[c] = False
                 return
         if self.meets_majority_favorite_c_vtb_ctb and self.w == 0:
-            if n_m < 2 * self.pop.plurality_scores_vtb[self.w] - n_s + 1:
+            if n_m < 2 * self.pop.plurality_scores_rk[self.w] - n_s + 1:
                 self._mylog('UM: Preliminary checks: even with n_m '
                             'manipulators, w stays plurality winner (with '
                             'vtb and ctb)', 3)
@@ -2128,7 +2128,7 @@ class Election(ElectionResult):
                 return
         # Pretest based on the same idea as Condorcet resistance
         if self.meets_Condorcet_c:
-            if n_m < self.pop.threshold_c_prevents_w_Condorcet[c, self.w]:
+            if n_m < self.pop.threshold_c_prevents_w_Condorcet_ut_abs[c, self.w]:
                 self._mylog('UM: Preliminary checks: c-manipulators cannot '
                             'prevent w from being a Condorcet winner', 3)
                 self._candidates_UM[c] = False
@@ -2184,13 +2184,13 @@ class Election(ElectionResult):
         Must decide _candidates_UM[c] (to True, False or NaN).
         Do not update _is_UM.
         """
-        preferences_borda_test = np.copy(self.pop.preferences_borda_vtb)
+        preferences_borda_test = np.copy(self.pop.preferences_borda_rk)
         ballot = np.array(range(self.pop.C))
         ballot_favorite = self.pop.C - 1
         while ballot is not None:  # Loop on possible ballots
             self._mylogv("UM: Ballot =", ballot, 3)
             preferences_borda_test[self.v_wants_to_help_c[:, c], :] = ballot
-            pop_test = Population(preferences_utilities=preferences_borda_test)
+            pop_test = Population(preferences_ut=preferences_borda_test)
             result_test = self._create_result(pop_test)
             w_test = result_test.w
             if w_test == c:
@@ -2521,7 +2521,7 @@ class Election(ElectionResult):
         self._ICM_preliminary_checks_c(c, optimize_bounds)
         # Conclude what we can
         # Some log
-        n_m = self.pop.matrix_duels[c, self.w]
+        n_m = self.pop.matrix_duels_ut[c, self.w]
         self._mylogv("ICM: Preliminary checks: " +
                      "necessary_coalition_size_ICM[c] =",
                      self._necessary_coalition_size_ICM[c], 3)
@@ -2564,7 +2564,7 @@ class Election(ElectionResult):
         _necessary_coalition_size_ICM[c] > n_m (where n_m is the number or
         manipulators).
         """
-        n_m = self.pop.matrix_duels[c, self.w]  # Number of manipulators
+        n_m = self.pop.matrix_duels_ut[c, self.w]  # Number of manipulators
         n_s = self.pop.V - n_m                  # Number of sincere voters
         if self.meets_InfMC_c_ctb and c != 0:
             self._update_necessary(
@@ -2674,7 +2674,7 @@ class Election(ElectionResult):
         """
         if not is_quick_escape:
             self._bounds_optimized_ICM[c] = True
-        n_m = self.pop.matrix_duels[c, self.w]
+        n_m = self.pop.matrix_duels_ut[c, self.w]
         if n_m >= self._sufficient_coalition_size_ICM[c]:
             self._mylogv("ICM: Final answer: ICM is True for c =", c, 2)
             self._candidates_ICM[c] = True
@@ -2895,7 +2895,7 @@ class Election(ElectionResult):
         # done, except if everything is decided).
         # Majority favorite criterion
         if (self.meets_majority_favorite_c and
-                self.pop.plurality_scores_novtb[self.w] > self.pop.V / 2):
+                self.pop.plurality_scores_ut[self.w] > self.pop.V / 2):
             self._mylog("CM impossible (w is a majority favorite).", 2)
             self._is_CM = False
             self._candidates_CM[:] = False
@@ -2903,7 +2903,7 @@ class Election(ElectionResult):
             return
         if (self.meets_majority_favorite_c_ctb and
                 self.w == 0 and
-                self.pop.plurality_scores_novtb[self.w] >= self.pop.V / 2):
+                self.pop.plurality_scores_ut[self.w] >= self.pop.V / 2):
             self._mylog("CM impossible (w=0 is a majority favorite with " +
                         "candidate tie-breaking).", 2)
             self._is_CM = False
@@ -2911,7 +2911,7 @@ class Election(ElectionResult):
             self._CM_was_computed_with_candidates = True
             return
         if (self.meets_majority_favorite_c_vtb and
-                self.pop.plurality_scores_vtb[self.w] > self.pop.V / 2):
+                self.pop.plurality_scores_rk[self.w] > self.pop.V / 2):
             self._mylog("CM impossible (w is a majority favorite with "
                         "voter tie-breaking).", 2)
             self._is_CM = False
@@ -2920,7 +2920,7 @@ class Election(ElectionResult):
             return
         if (self.meets_majority_favorite_c_vtb_ctb and
                 self.w == 0 and
-                self.pop.plurality_scores_vtb[self.w] >= self.pop.V / 2):
+                self.pop.plurality_scores_rk[self.w] >= self.pop.V / 2):
             self._mylog("CM impossible (w=0 is a majority favorite with " +
                         "voter and candidate tie-breaking).", 2)
             self._is_CM = False
@@ -3017,7 +3017,7 @@ class Election(ElectionResult):
         self._CM_preliminary_checks_c(c, optimize_bounds)
         # Conclude what we can
         # Some log
-        n_m = self.pop.matrix_duels[c, self.w]
+        n_m = self.pop.matrix_duels_ut[c, self.w]
         self._mylogv("CM: Preliminary checks: " + 
                      "necessary_coalition_size_CM[c] =",
                      self._necessary_coalition_size_CM[c], 3)
@@ -3057,7 +3057,7 @@ class Election(ElectionResult):
         _necessary_coalition_size_CM[c] > n_m (where n_m is the number or
         manipulators).
         """
-        n_m = self.pop.matrix_duels[c, self.w]  # Number of manipulators
+        n_m = self.pop.matrix_duels_ut[c, self.w]  # Number of manipulators
         n_s = self.pop.V - n_m                  # Number of sincere voters
         # Pretest based on Informed Majority Coalition Criterion
         if self.meets_InfMC_c_ctb and c == 0:
@@ -3077,45 +3077,45 @@ class Election(ElectionResult):
                     n_m >= self._sufficient_coalition_size_CM[c]):
                 return
         # Pretest based on the majority favorite criterion
-        # If plurality_scores_novtb[w] > (n_s + n_m) / 2, then CM impossible.
-        # Necessary condition: n_m >= 2 * plurality_scores_novtb[w] - n_s.
+        # If plurality_scores_ut[w] > (n_s + n_m) / 2, then CM impossible.
+        # Necessary condition: n_m >= 2 * plurality_scores_ut[w] - n_s.
         if self.meets_majority_favorite_c_vtb_ctb and self.w == 0:
             self._update_necessary(
                 self._necessary_coalition_size_CM, c,
-                2 * self.pop.plurality_scores_vtb[self.w] - n_s + 1,
+                2 * self.pop.plurality_scores_rk[self.w] - n_s + 1,
                 'CM: Preliminary checks: majority_favorite_c_vtb_ctb => \n    '
                 'necessary_coalition_size_CM[c] = '
-                '2 * plurality_scores_vtb[w] - n_s + 1 =')
+                '2 * plurality_scores_rk[w] - n_s + 1 =')
             if not optimize_bounds and (
                     self._necessary_coalition_size_CM[c] > n_m):
                 return
         if self.meets_majority_favorite_c_vtb:
             self._update_necessary(
                 self._necessary_coalition_size_CM, c,
-                2 * self.pop.plurality_scores_vtb[self.w] - n_s,
+                2 * self.pop.plurality_scores_rk[self.w] - n_s,
                 'CM: Preliminary checks: majority_favorite_c_vtb => \n    '
                 'necessary_coalition_size_CM[c] = '
-                '2 * plurality_scores_vtb[w] - n_s =')
+                '2 * plurality_scores_rk[w] - n_s =')
             if not optimize_bounds and (
                     self._necessary_coalition_size_CM[c] > n_m):
                 return
         if self.meets_majority_favorite_c_ctb and self.w == 0:
             self._update_necessary(
                 self._necessary_coalition_size_CM, c,
-                2 * self.pop.plurality_scores_novtb[self.w] - n_s + 1,
+                2 * self.pop.plurality_scores_ut[self.w] - n_s + 1,
                 'CM: Preliminary checks: majority_favorite_c_ctb => \n    '
                 'necessary_coalition_size_CM[c] ='
-                '2 * plurality_scores_novtb[w] - n_s + 1 =')
+                '2 * plurality_scores_ut[w] - n_s + 1 =')
             if not optimize_bounds and (
                     self._necessary_coalition_size_CM[c] > n_m):
                 return
         if self.meets_majority_favorite_c:
             self._update_necessary(
                 self._necessary_coalition_size_CM, c,
-                2 * self.pop.plurality_scores_novtb[self.w] - n_s,
+                2 * self.pop.plurality_scores_ut[self.w] - n_s,
                 'CM: Preliminary checks: majority_favorite_c => \n    '
                 'necessary_coalition_size_CM[c] = '
-                '2 * plurality_scores_novtb[w] - n_s =')
+                '2 * plurality_scores_ut[w] - n_s =')
             if not optimize_bounds and (
                     self._necessary_coalition_size_CM[c] > n_m):
                 return
@@ -3123,10 +3123,10 @@ class Election(ElectionResult):
         if self.meets_Condorcet_c:
             self._update_necessary(
                 self._necessary_coalition_size_CM, c,
-                self.pop.threshold_c_prevents_w_Condorcet[c, self.w],
+                self.pop.threshold_c_prevents_w_Condorcet_ut_abs[c, self.w],
                 'CM: Preliminary checks: Condorcet_c => \n    '
                 'necessary_coalition_size_CM[c] = '
-                'threshold_c_prevents_w_Condorcet[c, w] =')
+                'threshold_c_prevents_w_Condorcet_ut_abs[c, w] =')
             if not optimize_bounds and (
                     self._necessary_coalition_size_CM[c] > n_m):
                 return
@@ -3223,12 +3223,12 @@ class Election(ElectionResult):
             # TM was already checked during preliminary checks.
             # If TM was not True, then CM impossible.
             self._update_necessary(self._necessary_coalition_size_CM, c,
-                                   self.pop.matrix_duels[c, self.w] + 1)
+                                   self.pop.matrix_duels_ut[c, self.w] + 1)
             return
         if not self.is_based_on_strict_rankings:
             raise NotImplementedError("CM: Exact manipulation is not "
                                       "implemented for this voting system.")
-        n_m = self.pop.matrix_duels[c, self.w]
+        n_m = self.pop.matrix_duels_ut[c, self.w]
         if n_m < self._necessary_coalition_size_CM[c]:
             # This exhaustive algorithm will not do better (so, this is not a
             # quick escape).
@@ -3238,14 +3238,14 @@ class Election(ElectionResult):
             return
         preferences_borda_temp = np.concatenate((
             np.tile(range(self.pop.C), (n_m, 1)),
-            self.pop.preferences_borda_vtb[np.logical_not(
+            self.pop.preferences_borda_rk[np.logical_not(
                 self._v_wants_to_help_c[:, c]), :],
         ))
         manipulator_favorite = np.full(n_m, self.pop.C - 1)
         while preferences_borda_temp is not None:
             # self._mylogm('preferences_borda_temp =',
             #              preferences_borda_temp, 3)
-            pop_test = Population(preferences_utilities=preferences_borda_temp)
+            pop_test = Population(preferences_ut=preferences_borda_temp)
             result_test = self._create_result(pop_test)
             w_test = result_test.w
             if w_test == c:
@@ -3286,7 +3286,7 @@ class Election(ElectionResult):
         """
         if not is_quick_escape:
             self._bounds_optimized_CM[c] = True
-        n_m = self.pop.matrix_duels[c, self.w]
+        n_m = self.pop.matrix_duels_ut[c, self.w]
         if n_m >= self._sufficient_coalition_size_CM[c]:
             self._mylogv("CM: Final answer: CM is True for c =", c, 2)
             self._candidates_CM[c] = True
@@ -3442,8 +3442,8 @@ class Election(ElectionResult):
 
         MyLog.print_title("c-Manipulators")
         MyLog.printm("w (reminder) =", self.w)
-        MyLog.printm("preferences_utilities (reminder) =",
-                     self.pop.preferences_utilities)
+        MyLog.printm("preferences_ut (reminder) =",
+                     self.pop.preferences_ut)
         MyLog.printm("v_wants_to_help_c = ", self.v_wants_to_help_c)
 
         MyLog.print_title("Individual Manipulation (IM)")

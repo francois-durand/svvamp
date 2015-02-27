@@ -323,7 +323,7 @@ class Coombs(CoombsResult, Election):
 
     def _IM_main_work_v(self, v, c_is_wanted,
                         nb_wanted_undecided, stop_if_true):
-        preferences_borda_s = self.pop.preferences_borda_vtb[
+        preferences_borda_s = self.pop.preferences_borda_rk[
             np.array(range(self.pop.V)) != v, :]
         for c in range(self.pop.C):
             if not c_is_wanted[c]:
@@ -414,7 +414,7 @@ class Coombs(CoombsResult, Election):
     #%% Coalition Manipulation (CM)
 
     def _CM_main_work_c(self, c, optimize_bounds):
-        n_m = self.pop.matrix_duels[c, self.w]
+        n_m = self.pop.matrix_duels_ut[c, self.w]
         exact = (self.CM_option == "exact")
         if optimize_bounds and exact:
             n_max = self._sufficient_coalition_size_CM[c] - 1
@@ -427,7 +427,7 @@ class Coombs(CoombsResult, Election):
             return
         n_manip_fast = self._CM_aux_fast(
             c, n_max,
-            preferences_borda_s=self.pop.preferences_borda_vtb[
+            preferences_borda_s=self.pop.preferences_borda_rk[
                 np.logical_not(self.v_wants_to_help_c[:, c]), :]
         )
         self._mylogv("CM: n_manip_fast =", n_manip_fast, 3)
@@ -454,7 +454,7 @@ class Coombs(CoombsResult, Election):
         self._mylogv("CM: n_max_updated =", n_max_updated, 3)
         n_manip_exact = self._CM_aux_exact(
             c, n_max_updated,
-            preferences_borda_s=self.pop.preferences_borda_vtb[
+            preferences_borda_s=self.pop.preferences_borda_rk[
                 np.logical_not(self.v_wants_to_help_c[:, c]), :])
         self._mylogv("CM: n_manip_exact =", n_manip_exact)
         n_manip = min(n_manip_fast, n_manip_exact)

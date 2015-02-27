@@ -31,7 +31,7 @@ class ICRVResult(ElectionResult):
 
     Even round r (including round 0): if a candidate w has only victories
     against all other non-eliminated candidates (i.e. is a Condorcet winner
-    in this subset, in the sense of matrix_victories_vtb), then w is declared
+    in this subset, in the sense of matrix_victories_rk), then w is declared
     the winner.
     Odd round r: the candidate who is ranked first (among non-eliminated
     candidates) by least voters is eliminated, like in IRV.
@@ -58,7 +58,7 @@ class ICRVResult(ElectionResult):
             # to alive candidates).
             scores_r = np.full(self.pop.C, np.nan)
             scores_r[is_candidate_alive] = np.sum(
-                self.pop.matrix_victories_vtb[
+                self.pop.matrix_victories_rk[
                     is_candidate_alive, :][:, is_candidate_alive],
                 1)
             self._scores.append(scores_r)
@@ -81,8 +81,8 @@ class ICRVResult(ElectionResult):
             # Now, scores_r is the Plurality score (IRV-style)
             scores_r = np.full(self.pop.C, np.nan)
             scores_r[is_candidate_alive] = np.sum(
-                self.pop.preferences_borda_vtb[:, is_candidate_alive] ==
-                np.max(self.pop.preferences_borda_vtb[:, is_candidate_alive],
+                self.pop.preferences_borda_rk[:, is_candidate_alive] ==
+                np.max(self.pop.preferences_borda_rk[:, is_candidate_alive],
                        1)[:, np.newaxis],
                 0)
             self._scores.append(scores_r)
@@ -107,7 +107,7 @@ class ICRVResult(ElectionResult):
 
         For even rounds ``r`` (including round 0), ``scores[r, c]`` is the
         number of victories for ``c`` in
-        :attr:`~svvamp.Population.matrix_victories_vtb` (restricted to
+        :attr:`~svvamp.Population.matrix_victories_rk` (restricted to
         non-eliminated candidates). Ties count for 0.5.
 
         For odd rounds ``r``, ``scores[r, c]`` is the number of voters who
@@ -123,7 +123,7 @@ class ICRVResult(ElectionResult):
 
         Candidates that are not eliminated at the moment a Condorcet winner
         is detected are sorted by their number of victories in
-        :attr:`~svvamp.Population.matrix_victories_vtb` (restricted to
+        :attr:`~svvamp.Population.matrix_victories_rk` (restricted to
         candidates that are not eliminated at that time).
 
         Other candidates are sorted in the reverse order of their IRV

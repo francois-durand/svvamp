@@ -149,7 +149,7 @@ class PopulationVMFHypersphere(Population):
                         'VMF Probability', vmf_probability,
                         'VMF Pole', vmf_pole,
                         'Stretching', stretching]
-        super().__init__(preferences_utilities=preferences_utilities,
+        super().__init__(preferences_ut=preferences_utilities,
                          log_creation=log_creation)
 
     @staticmethod

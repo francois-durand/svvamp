@@ -88,7 +88,7 @@ class PopulationSpheroid(Population):
                     :, np.newaxis] * (1 - 1/stretching) / C)
         log_creation = ['Spheroid', C, V,
                         'Stretching', stretching]
-        super().__init__(preferences_utilities=preferences_utilities,
+        super().__init__(preferences_ut=preferences_utilities,
                          log_creation=log_creation)
 
     @staticmethod

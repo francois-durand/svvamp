@@ -70,7 +70,7 @@ class Veto(VetoResult, Election):
     def _compute_winner_of_subset(self, candidates_r):
         self._mylogv("IIA: Compute winner of subset ", candidates_r, 3)
         scores_r = - np.bincount(
-            np.argmin(self.pop.preferences_borda_vtb[:, candidates_r], 1),
+            np.argmin(self.pop.preferences_borda_rk[:, candidates_r], 1),
             minlength=candidates_r.shape[0])
         index_w_r_in_subset = np.argmax(scores_r)
         w_r = candidates_r[index_w_r_in_subset]
@@ -104,13 +104,13 @@ class Veto(VetoResult, Election):
     def _TM_main_work_c(self, c):
         # Sincere voters:
         scores_test = - np.bincount(
-            self.pop.preferences_ranking[
+            self.pop.preferences_rk[
                 np.logical_not(self.v_wants_to_help_c[:, c]), -1],
             minlength=self.pop.C
         )
         # Manipulators vote against w:
         # Remark: for Veto, the trivial strategy is far from the best one!
-        scores_test[self.w] -= self.pop.matrix_duels[c, self.w]
+        scores_test[self.w] -= self.pop.matrix_duels_ut[c, self.w]
         # Conclude
         w_test = np.argmax(scores_test)
         self._candidates_TM[c] = (w_test == c)
@@ -174,7 +174,7 @@ class Veto(VetoResult, Election):
         # additional veto (because of the tie-breaking rule). This makes
         # c additional manipulators needed.
         # Hence sufficient_...[c] = (C - 1) * n_s + c.
-        n_s = self.pop.V - self.pop.matrix_duels[c, self.w]
+        n_s = self.pop.V - self.pop.matrix_duels_ut[c, self.w]
         self._sufficient_coalition_size_ICM[c] = (self.pop.C - 1) * n_s + c
         self._necessary_coalition_size_ICM[c] = (
             self._sufficient_coalition_size_ICM[c])
@@ -184,7 +184,7 @@ class Veto(VetoResult, Election):
     def _CM_main_work_c(self, c, optimize_bounds):
         # Sincere voters:
         scores_test = - np.bincount(
-            self.pop.preferences_ranking[
+            self.pop.preferences_rk[
                 np.logical_not(self.v_wants_to_help_c[:, c]), -1],
             minlength=self.pop.C
         )

@@ -52,7 +52,7 @@ class CoombsResult(ElectionResult):
         worst_to_best = []
         self._one_v_might_be_pivotal = False
         # preferences_borda_temp : we will put C+1 for eliminated candidates
-        preferences_borda_temp = np.copy(self.pop.preferences_borda_vtb)
+        preferences_borda_temp = np.copy(self.pop.preferences_borda_rk)
         for r in range(self.pop.C - 1):
             self._scores[r, :] = - np.bincount(np.argmin(
                 preferences_borda_temp, 1), minlength=self.pop.C)

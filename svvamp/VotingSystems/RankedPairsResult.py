@@ -42,7 +42,7 @@ class RankedPairsResult(ElectionResult):
 
     At the end, we have a transitive connected directed graph, whose adjacency
     relation is included in the relation of victories (with ties broken),
-    matrix_victories_vtb_ctb. The maximal node of this graph (by topological
+    matrix_victories_rk_ctb. The maximal node of this graph (by topological
     order) is declared the winner.
     """
     
@@ -60,7 +60,7 @@ class RankedPairsResult(ElectionResult):
 
     def _count_ballots(self):
         self._mylog("Count ballots", 1)
-        matrix_duels_vtb_temp = np.copy(self.pop.matrix_duels_vtb)
+        matrix_duels_vtb_temp = np.copy(self.pop.matrix_duels_rk)
         G = nx.DiGraph()
         G.add_nodes_from(range(self.pop.C))
         while True:
@@ -75,7 +75,7 @@ class RankedPairsResult(ElectionResult):
             matrix_duels_vtb_temp[c, d] = 0
             matrix_duels_vtb_temp[d, c] = 0
             if not nx.has_path(G, d, c):
-                G.add_edge(c, d, weight=self.pop.matrix_duels_vtb[c, d])
+                G.add_edge(c, d, weight=self.pop.matrix_duels_rk[c, d])
         self._candidates_by_scores_best_to_worst = nx.topological_sort(G)   
         self._w = self._candidates_by_scores_best_to_worst[0]
         self._scores = nx.to_numpy_matrix(G)
@@ -102,7 +102,7 @@ class RankedPairsResult(ElectionResult):
 
     @property
     def scores(self):
-        """2d array of integers. scores[c, d] is equal to matrix_duels_vtb[
+        """2d array of integers. scores[c, d] is equal to matrix_duels_rk[
         c, d] iff this duel was validated in Ranked Pairs, 0 otherwise.
 
         N.B. Unlike for most other voting systems, scores matrix must be
@@ -128,7 +128,7 @@ class RankedPairsResult(ElectionResult):
         
         scores_best_to_worst[k, j] is the score of the k-th best
         candidate of the election against the j-th. I.e. it is 
-        the result in matrix_duels_vtb iff this duels was validated by Ranked
+        the result in matrix_duels_rk iff this duels was validated by Ranked
         Pairs, 0 otherwise.
         """
         if self._scores_best_to_worst is None:
@@ -148,8 +148,8 @@ class RankedPairsResult(ElectionResult):
         # changing a defeat into a victory)
         if self._one_v_might_be_pivotal is None:
             scores_duels = np.sort(np.concatenate((
-                self.pop.matrix_duels_vtb[np.triu_indices(self.pop.C, 1)],
-                self.pop.matrix_duels_vtb[np.tril_indices(self.pop.C, -1)]
+                self.pop.matrix_duels_rk[np.triu_indices(self.pop.C, 1)],
+                self.pop.matrix_duels_rk[np.tril_indices(self.pop.C, -1)]
             )))
             self._one_v_might_be_pivotal = np.any(scores_duels[:-1] + 2 >= 
                                                   scores_duels[1:])

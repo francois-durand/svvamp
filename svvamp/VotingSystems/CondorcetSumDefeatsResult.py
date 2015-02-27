@@ -39,10 +39,10 @@ class CondorcetSumDefeatsResult(ElectionResult):
 
     In practice:
     scores[c] = - sum_{c does not beat d}{floor(V/2) + 1
-                                          - matrix_duels_vtb[c, d]}
+                                          - matrix_duels_rk[c, d]}
     In particular, for V odd:
     scores[c] = - sum_{c does not beat d}{ceil(V/2)
-                                          - matrix_duels_vtb[c, d]}
+                                          - matrix_duels_rk[c, d]}
     """
 
     _options_parameters = ElectionResult._options_parameters.copy()
@@ -61,7 +61,7 @@ class CondorcetSumDefeatsResult(ElectionResult):
 
             \\texttt{scores}[c] = - \\sum_{c \\text{ does not beat } d}\\left(
             \\left\\lfloor\\frac{V}{2}\\right\\rfloor
-            + 1 - \\texttt{matrix_duels_vtb}[c, d]
+            + 1 - \\texttt{matrix_duels_rk}[c, d]
             \\right)
         """
         if self._scores is None:
@@ -70,8 +70,8 @@ class CondorcetSumDefeatsResult(ElectionResult):
             for c in range(self.pop.C):
                 self._scores[c] = - np.sum(
                     np.floor(self.pop.V / 2) + 1
-                    - self.pop.matrix_duels_vtb[
-                        c, self.pop.matrix_victories_vtb[:, c] > 0]
+                    - self.pop.matrix_duels_rk[
+                        c, self.pop.matrix_victories_rk[:, c] > 0]
                 )
         return self._scores
 

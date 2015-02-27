@@ -26,13 +26,13 @@ import networkx as nx
 from svvamp.VotingSystems.Election import Election
 from svvamp.VotingSystems.MaximinResult import MaximinResult
 from svvamp.Preferences.Population import Population
-from svvamp.Preferences.Population import preferences_utilities_to_matrix_duels
+from svvamp.Preferences.Population import preferences_ut_to_matrix_duels_ut
 
 
 class Maximin(MaximinResult, Election):
     """Maximin method.
     
-    scores[c] is the minimum of the row matrix_duels[c, :] (except the
+    scores[c] is the minimum of the row matrix_duels_ut[c, :] (except the
     diagonal term), i.e. the result of candidate c for her worst duel. The
     candidate with highest score is declared the winner. In case of a tie,
     the candidate with lowest index wins.
@@ -212,12 +212,12 @@ class Maximin(MaximinResult, Election):
             self._mylogv("IM: c =", c, 3)
             nb_wanted_undecided -= 1
             
-            matrix_duels_r = np.copy(self.pop.matrix_duels).astype(np.float)
+            matrix_duels_r = np.copy(self.pop.matrix_duels_ut).astype(np.float)
             for x in range(self.pop.C):
                 matrix_duels_r[x, x] = np.inf
                 for y in range(x+1, self.pop.C):
-                    if (self.pop.preferences_borda_vtb[v, x] >
-                            self.pop.preferences_borda_vtb[v, y]):
+                    if (self.pop.preferences_borda_rk[v, x] >
+                            self.pop.preferences_borda_rk[v, y]):
                         matrix_duels_r[x, y] -= 1
                     else:
                         matrix_duels_r[y, x] -= 1
@@ -279,14 +279,14 @@ class Maximin(MaximinResult, Election):
     #%% Unison manipulation (UM)
 
     def _UM_main_work_c(self, c):
-        matrix_duels_temp = preferences_utilities_to_matrix_duels(
-            self.pop.preferences_borda_vtb[
+        matrix_duels_temp = preferences_ut_to_matrix_duels_ut(
+            self.pop.preferences_borda_rk[
                 np.logical_not(self.v_wants_to_help_c[:, c]), :]
         ).astype(float)
         for x in range(self.pop.C):
             matrix_duels_temp[x, x] = np.inf
         scores_temp = np.min(matrix_duels_temp, 1)
-        n_m = self.pop.matrix_duels[c, self.w]
+        n_m = self.pop.matrix_duels_ut[c, self.w]
                 
         w_temp = np.argmax(scores_temp)
         if w_temp == c:
@@ -312,8 +312,8 @@ class Maximin(MaximinResult, Election):
     #%% Coalition Manipulation (CM)
 
     def _CM_main_work_c_fast(self, c, optimize_bounds):
-        matrix_duels_temp = preferences_utilities_to_matrix_duels(
-            self.pop.preferences_borda_vtb[
+        matrix_duels_temp = preferences_ut_to_matrix_duels_ut(
+            self.pop.preferences_borda_rk[
                 np.logical_not(self.v_wants_to_help_c[:, c]), :]
         ).astype(float)
         for x in range(self.pop.C):
@@ -330,7 +330,7 @@ class Maximin(MaximinResult, Election):
             'CM: Update necessary_coalition_size_CM = '
             'scores_s[w_s] - scores_s[c] + (c > w_s) =')
         if not optimize_bounds and (self._necessary_coalition_size_CM[c] >
-                                    self.pop.matrix_duels[c, self.w]):
+                                    self.pop.matrix_duels_ut[c, self.w]):
             return True  # is_quick_escape
 
         while w_temp != c:

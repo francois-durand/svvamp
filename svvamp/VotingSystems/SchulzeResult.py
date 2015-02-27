@@ -30,7 +30,7 @@ class SchulzeResult(ElectionResult):
     """Results of an election using Schulze Method.
 
     scores[c, d] is equal to the width of the widest path from c to d (in the
-    capacited graph defined by matrix_duels_vtb).
+    capacited graph defined by matrix_duels_rk).
     We say that c is better than d if scores[c, d] > scores[d, c], or if there
     is an equality and c < d. The candidate who is "better" than all the
     others is declared the winner.
@@ -74,7 +74,7 @@ class SchulzeResult(ElectionResult):
     def _count_ballots(self):
         self._mylog("Count ballots", 1)
         self._w, self._scores, self._candidates_by_scores_best_to_worst = (
-            SchulzeResult._count_ballot_aux(self.pop.matrix_duels_vtb))
+            SchulzeResult._count_ballot_aux(self.pop.matrix_duels_rk))
             
     @property
     def w(self):

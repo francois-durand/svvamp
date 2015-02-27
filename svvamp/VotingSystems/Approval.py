@@ -50,7 +50,7 @@ class Approval(ApprovalResult, Election):
 
     Default behavior of sincere voters: sincere voter ``v``
     approves candidate ``c`` iff
-    :attr:`~svvamp.Population.preferences_utilities`\ ``[v, c]`` > 0.
+    :attr:`~svvamp.Population.preferences_ut`\ ``[v, c]`` > 0.
     To modify this behavior, use attributes
     :attr:`~svvamp.Approval.approval_comparator` and
     :attr:`~svvamp.Approval.approval_threshold`.

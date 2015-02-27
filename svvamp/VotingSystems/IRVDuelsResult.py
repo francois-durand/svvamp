@@ -58,8 +58,8 @@ class IRVDuelsResult(ElectionResult):
         for r in range(self.pop.C - 1):
             # Select the two worst scores
             self._scores[2*r, is_candidate_alive] = np.sum(
-                self.pop.preferences_borda_vtb[:, is_candidate_alive] ==
-                np.max(self.pop.preferences_borda_vtb[:, is_candidate_alive],
+                self.pop.preferences_borda_rk[:, is_candidate_alive] ==
+                np.max(self.pop.preferences_borda_rk[:, is_candidate_alive],
                        1)[:, np.newaxis],
                 0)
             selected_one = np.where(
@@ -74,11 +74,11 @@ class IRVDuelsResult(ElectionResult):
             self._mylogv("selected_one =", selected_one, 3)
             self._mylogv("selected_two =", selected_two, 3)
             # Do the duel
-            self._scores[2*r + 1, selected_one] = self.pop.matrix_duels_vtb[
+            self._scores[2*r + 1, selected_one] = self.pop.matrix_duels_rk[
                 selected_one, selected_two]
-            self._scores[2*r + 1, selected_two] = self.pop.matrix_duels_vtb[
+            self._scores[2*r + 1, selected_two] = self.pop.matrix_duels_rk[
                 selected_two, selected_one]
-            if self.pop.matrix_victories_vtb_ctb[
+            if self.pop.matrix_victories_rk_ctb[
                     selected_one, selected_two] == 1:
                 loser = selected_two
             else:

@@ -40,7 +40,7 @@ class RankedPairs(RankedPairsResult, Election):
     
     At the end, we has a transitive connected directed graph, whose adjacency
     relation is included in the relation of victories (with ties broken), 
-    matrix_victories_vtb_ctb. The maximal node of this graph (by topological
+    matrix_victories_rk_ctb. The maximal node of this graph (by topological
     order) is declared the winner.
     """
     

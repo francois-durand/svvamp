@@ -126,8 +126,8 @@ class MajorityJudgmentResult(ElectionResult):
             if self.rescale_grades:
                 self._ballots = np.zeros((self.pop.V, self.pop.C))
                 for v in range(self.pop.V):
-                    max_util = np.max(self.pop.preferences_utilities[v, :])
-                    min_util = np.min(self.pop.preferences_utilities[v, :])
+                    max_util = np.max(self.pop.preferences_ut[v, :])
+                    min_util = np.min(self.pop.preferences_ut[v, :])
                     if min_util == max_util:
                         # Same utilities for all candidates
                         self._ballots[v, :] = (
@@ -138,7 +138,7 @@ class MajorityJudgmentResult(ElectionResult):
                         self._ballots[v, :] = (
                             self.min_grade +
                             (self.max_grade - self.min_grade) *
-                            (self.pop.preferences_utilities[v, :] -
+                            (self.pop.preferences_ut[v, :] -
                                 min_util) /
                             (max_util - min_util)
                         )
@@ -147,7 +147,7 @@ class MajorityJudgmentResult(ElectionResult):
                     self.min_grade,
                     np.minimum(
                         self.max_grade,
-                        self.pop.preferences_utilities))
+                        self.pop.preferences_ut))
             # Round (or not)
             if self.step_grade != 0:
                 min_grade_rounded = (np.ceil(self.min_grade /

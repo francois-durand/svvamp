@@ -46,7 +46,7 @@ class PluralityResult(ElectionResult):
         """
         if self._ballots is None:
             self._mylog("Compute ballots", 1)
-            self._ballots = self.pop.preferences_ranking[:, 0]
+            self._ballots = self.pop.preferences_rk[:, 0]
         return self._ballots
         
     @property
@@ -56,7 +56,7 @@ class PluralityResult(ElectionResult):
         """
         if self._scores is None:
             self._mylog("Compute scores", 1)
-            self._scores = self.pop.plurality_scores_vtb
+            self._scores = self.pop.plurality_scores_rk
         return self._scores
 
 

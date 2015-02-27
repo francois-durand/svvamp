@@ -161,7 +161,7 @@ class PopulationVMFHypercircle(Population):
                         'VMF Concentration', vmf_concentration,
                         'VMF Probability', vmf_probability,
                         'VMF Pole', vmf_pole]
-        super().__init__(preferences_utilities=preferences_utilities,
+        super().__init__(preferences_ut=preferences_utilities,
                          log_creation=log_creation)
 
     @staticmethod

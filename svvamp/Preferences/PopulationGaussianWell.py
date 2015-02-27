@@ -53,7 +53,7 @@ class PopulationGaussianWell(Population):
 
         Let ``d[v, c]`` denote the Euclidean distance between voter ``v``'s
         position ``x[v]`` and candidate ``c``'s position ``y[c]``. Then
-        ``preferences_utilities[v, c] = A - d[v, c]``,
+        ``preferences_ut[v, c] = A - d[v, c]``,
         where ``A`` is such that the average utility is 0 over the whole
         population.
 
@@ -72,7 +72,7 @@ class PopulationGaussianWell(Population):
         log_creation = ['Gaussian well', C, V,
                         'Sigma', sigma,
                         'Number of dimensions', d]
-        super().__init__(preferences_utilities=preferences_utilities,
+        super().__init__(preferences_ut=preferences_utilities,
                          log_creation=log_creation)
 
     @staticmethod

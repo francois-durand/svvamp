@@ -48,7 +48,7 @@ class BordaResult(ElectionResult):
         """
         if self._ballots is None:
             self._mylog("Compute ballots", 1)
-            self._ballots = self.pop.preferences_borda_vtb
+            self._ballots = self.pop.preferences_borda_rk
         return self._ballots
         
     @property
@@ -58,7 +58,7 @@ class BordaResult(ElectionResult):
         """
         if self._scores is None:
             self._mylog("Compute scores", 1)
-            self._scores = self.pop.borda_score_c_vtb
+            self._scores = self.pop.borda_score_c_rk
         return self._scores
 
 

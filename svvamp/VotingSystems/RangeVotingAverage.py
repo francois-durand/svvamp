@@ -60,7 +60,7 @@ class RangeVotingAverage(RangeVotingAverageResult, Election):
 
     Default behavior of sincere voters: voter ``v`` applies an affine
     transformation to her utilities
-    :attr:`~svvamp.Population.preferences_utilities`\ ``[v, :]``
+    :attr:`~svvamp.Population.preferences_ut`\ ``[v, :]``
     to get her grades, such that her least-liked candidate receives
     :attr:`~svvamp.RangeVotingAverage.min_grade` and her most-liked candidate
     receives :attr:`~svvamp.RangeVotingAverage.max_grade`.
