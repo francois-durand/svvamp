@@ -86,7 +86,7 @@ class Population(MyLog.MyLog):
         iff ``c < d``.
 
         Implications between majority favorite and Condorcet criteria (cf.
-        corresponding functions below).
+        corresponding attributes below).
 
         ::
 
@@ -220,6 +220,10 @@ class Population(MyLog.MyLog):
         if self._labels_candidates is None:
             self._labels_candidates = [str(x) for x in range(self._C)]
         return self._labels_candidates
+
+    @labels_candidates.setter
+    def labels_candidates(self, value):
+        self._labels_candidates = value
 
     @property
     def C(self):
@@ -954,6 +958,7 @@ class Population(MyLog.MyLog):
 
             | \\text{non } c > w \\text{ and } w > d | \\leq
             \\frac{| \\text{non } c > w | + n_m}{2}.
+
         I.e.:
 
         .. math::

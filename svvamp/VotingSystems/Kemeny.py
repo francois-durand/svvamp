@@ -55,8 +55,8 @@ class Kemeny(KemenyResult, Election):
     :meth:`~svvamp.Election.IM`: Non-polynomial
     or non-exact algorithms from superclass :class:`~svvamp.Election`.
 
-    :meth:`~svvamp.Election.not_IIA`: Non-polynomial
-    or non-exact algorithms from superclass :class:`~svvamp.Election`.
+    :meth:`~svvamp.Election.not_IIA`: Exact in polynomial time
+    (once the sincere winner is computed).
 
     :meth:`~svvamp.Election.TM`: Exact in the time needed to decide the winner
     of one election, multiplied by :attr:`~svvamp.Population.C`.

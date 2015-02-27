@@ -41,8 +41,8 @@ class PluralityResult(ElectionResult):
     
     @property
     def ballots(self):
-        """1d array of integers. ballots[v] is the candidate on voter v's 
-        ballot.
+        """1d array of integers. ``ballots[v]`` is the candidate on voter
+        ``v``'s ballot.
         """
         if self._ballots is None:
             self._mylog("Compute ballots", 1)
@@ -51,8 +51,8 @@ class PluralityResult(ElectionResult):
         
     @property
     def scores(self):
-        """1d array of integers. scores[c] is the number of voters who vote
-        for candidate c.
+        """1d array of integers. ``scores[c]`` is the number of voters who vote
+        for candidate ``c``.
         """
         if self._scores is None:
             self._mylog("Compute scores", 1)

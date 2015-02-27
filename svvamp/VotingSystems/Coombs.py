@@ -53,7 +53,6 @@ class Coombs(CoombsResult, Election):
 
     :meth:`~svvamp.Election.ICM`: Exact in polynomial time.
 
-
     :meth:`~svvamp.Election.IM`:
 
         * :attr:`~svvamp.Election.IM_option` = ``'fast'``:

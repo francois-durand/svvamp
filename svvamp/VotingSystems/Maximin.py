@@ -31,14 +31,58 @@ from svvamp.Preferences.Population import preferences_ut_to_matrix_duels_ut
 
 class Maximin(MaximinResult, Election):
     """Maximin method.
+<<<<<<< HEAD
     
     scores[c] is the minimum of the row matrix_duels_ut[c, :] (except the
     diagonal term), i.e. the result of candidate c for her worst duel. The
     candidate with highest score is declared the winner. In case of a tie,
+=======
+
+    Inherits functions and optional parameters from superclasses
+    :class:`~svvamp.ElectionResult` and :class:`~svvamp.Election`.
+
+    :Example:
+
+    >>> import svvamp
+    >>> pop = svvamp.PopulationSpheroid(V=100, C=5)
+    >>> election = svvamp.Maximin(pop)
+
+    Candidate ``c``'s score is the minimum of the row
+    :attr:`~svvamp.Population.matrix_duels_vtb`\ ``[c, :]`` (except the
+    diagonal term), i.e. the result of candidate ``c`` for her worst duel.
+    The candidate with highest score is declared the winner. In case of a tie,
+>>>>>>> origin/master
     the candidate with lowest index wins.
-    
-    Manipulation algorithms: cf. Zuckerman et al., "An Algorithm for the 
-    Coalitional Manipulation Problem under Maximin" (2011).
+
+    This method meets the Condorcet criterion.
+
+    :meth:`~svvamp.Election.CM`: Deciding CM is NP-complete, even for 2
+    manipulators.
+
+        * :attr:`~svvamp.Election.CM_option` = ``'fast'``:
+          Zuckerman et al. (2011). This approximation algorithm is
+          polynomial and has a multiplicative factor of error of 5/3 on the
+          number of manipulators needed.
+        * :attr:`~svvamp.Election.CM_option` = ``'exact'``:
+          Non-polynomial algorithm from superclass :class:`~svvamp.Election`.
+
+    :meth:`~svvamp.Election.ICM`: Exact in polynomial time.
+
+    :meth:`~svvamp.Election.IM`: Exact in polynomial time.
+
+    :meth:`~svvamp.Election.not_IIA`: Exact in polynomial time.
+
+    :meth:`~svvamp.Election.TM`: Exact in polynomial time.
+
+    :meth:`~svvamp.Election.UM`: Exact in polynomial time.
+
+    References:
+
+        'Complexity of Unweighted Coalitional Manipulation under Some Common
+        Voting Rules', Lirong Xia et al., 2009.
+
+        'An algorithm for the coalitional manipulation problem under Maximin',
+        Michael Zuckerman, Omer Lev and Jeffrey S. Rosenschein, 2011.
     """
 
     _layout_name = 'Maximin'

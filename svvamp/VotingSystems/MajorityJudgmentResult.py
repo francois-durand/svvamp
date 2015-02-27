@@ -54,7 +54,7 @@ class MajorityJudgmentResult(ElectionResult):
 
     @property
     def max_grade(self):
-        """Number -- Maximal grade allowed.
+        """Number. Maximal grade allowed.
         """
         return self._max_grade
 
@@ -65,7 +65,7 @@ class MajorityJudgmentResult(ElectionResult):
         
     @property
     def min_grade(self):
-        """Number -- Minimal grade allowed.
+        """Number. Minimal grade allowed.
         """
         return self._min_grade
 
@@ -76,17 +76,21 @@ class MajorityJudgmentResult(ElectionResult):
         
     @property
     def step_grade(self):
-        """Number -- If step_grade > 0, then grades are rounded to the 
-        closest multiple of step_grade. If step_grade = 0, then grades are 
-        not rounded (continuous set of possible grades).
+        """Number. Interval between two consecutive allowed grades.
 
-        It is allowed that max_grade is not a multiple of 
-        step_grade (though it is not recommended). For sincere voters, the
-        maximal grade actually used will be the lower rounding 
-        of max_grade to a multiple of step_grade. But manipulators are 
-        allowed to use max_grade itself.
-        
-        Similar considerations apply to min_grade, mutatis mutandis.        
+        If ``step_grade = 0``, all grades
+        in the interval [:attr:`~svvamp.MajorityJudgment.min_grade`,
+        :attr:`~svvamp.MajorityJudgment.max_grade`] are allowed
+        ('continuous' set of grades).
+
+        If ``step_grade > 0``, authorized grades are the multiples of
+        :attr:`~svvamp.MajorityJudgment.step_grade` lying in
+        the interval [:attr:`~svvamp.MajorityJudgment.min_grade`,
+        :attr:`~svvamp.MajorityJudgment.max_grade`]. In addition, the grades
+        :attr:`~svvamp.MajorityJudgment.min_grade` and
+        :attr:`~svvamp.MajorityJudgment.max_grade` are always authorized,
+        even if they are not multiples of
+        :attr:`~svvamp.MajorityJudgment.step_grade`.
         """
         return self._step_grade
 
@@ -97,14 +101,20 @@ class MajorityJudgmentResult(ElectionResult):
         
     @property
     def rescale_grades(self):
-        """Boolean. If True, then the utilities of a voter are linearly
-        rescaled in the interval [min_grade, max_grade] then rounded with
-        step_grades. If False, then the utilities of a voter are
-        rounded with step_grades then cut off at min_grade and max_grade.        
-        
-        N.B.: If True and a voter attributes the same utility to all
-        candidates, then by convention, she give them the grade
-        (max_grade - min_grade) / 2. 
+        """Boolean. Whether sincere voters rescale their utilities to produce
+        grades.
+
+        If ``rescale_grades`` = ``True``, then each sincere voter ``v``
+        applies an affine transformation to send her utilities into the
+        interval [:attr:`~svvamp.MajorityJudgment.min_grade`,
+        :attr:`~svvamp.MajorityJudgment.max_grade`].
+
+        If ``rescale_grades`` = ``False``, then each sincere voter ``v``
+        clips her utilities into the interval
+        [:attr:`~svvamp.MajorityJudgment.min_grade`,
+        :attr:`~svvamp.MajorityJudgment.max_grade`].
+
+        See :attr:`~svvamp.MajorityJudgment.ballots` for more details.
         """
         return self._rescale_grades
 
@@ -117,8 +127,41 @@ class MajorityJudgmentResult(ElectionResult):
 
     @property
     def ballots(self):
-        """2d array of integers. ballots[v, c] is the grade attributed to 
-        candidate c by voter v.
+        """2d array of integers. ``ballots[v, c]`` is the grade attributed by
+        voter ``v`` to candidate ``c`` (when voting sincerely). The
+        following process is used.
+
+        1.  Convert utilities into grades in interval
+            [:attr:`~svvamp.MajorityJudgment.min_grade`,
+            :attr:`~svvamp.MajorityJudgment.max_grade`].
+
+            *   If :attr:`~svvamp.MajorityJudgment.rescale_grades` =
+                ``True``, then each voter ``v`` applies an affine
+                transformation to
+                :attr:`~svvamp.Population.preferences_utilities`\ ``[v, :]``
+                such that her least-liked candidate receives
+                :attr:`~svvamp.MajorityJudgment.min_grade` and her
+                most-liked candidate receives
+                :attr:`~svvamp.MajorityJudgment.max_grade`.
+
+                Exception: if she is indifferent between all candidates,
+                then she attributes
+                (:attr:`~svvamp.MajorityJudgment.min_grade` +
+                :attr:`~svvamp.MajorityJudgment.max_grade`) / 2 to all of
+                them.
+
+            *   If :attr:`~svvamp.MajorityJudgment.rescale_grades` =
+                ``False``, then each voter ``v`` clips her utilities into the
+                interval [:attr:`~svvamp.MajorityJudgment.min_grade`,
+                :attr:`~svvamp.MajorityJudgment.max_grade`]:
+                each utility greater than
+                :attr:`~svvamp.MajorityJudgment.max_grade` (resp. lower than
+                :attr:`~svvamp.MajorityJudgment.min_grade`) becomes
+                :attr:`~svvamp.MajorityJudgment.max_grade` (resp.
+                :attr:`~svvamp.MajorityJudgment.min_grade`).
+
+        2.  If :attr:`~svvamp.MajorityJudgment.step_grades` > 0 (discrete
+            set of grades), round each grade to the closest authorized grade.
         """
         if self._ballots is None:
             self._mylog("Compute ballots", 1)
@@ -143,34 +186,49 @@ class MajorityJudgmentResult(ElectionResult):
                             (max_util - min_util)
                         )
             else:
+<<<<<<< HEAD
                 self._ballots = np.maximum(
                     self.min_grade,
                     np.minimum(
                         self.max_grade,
                         self.pop.preferences_ut))
+=======
+                self._ballots = np.clip(
+                    self.pop.preferences_utilities,
+                    self.min_grade, self.max_grade
+                )
+>>>>>>> origin/master
             # Round (or not)
             if self.step_grade != 0:
-                min_grade_rounded = (np.ceil(self.min_grade /
-                                             self.step_grade) *
-                                     self.step_grade)
-                max_grade_rounded = (np.floor(self.max_grade /
-                                              self.step_grade) *
-                                     self.step_grade)
-                self._ballots = np.maximum(
-                    min_grade_rounded,
-                    np.minimum(
-                        max_grade_rounded,
-                        np.round(self._ballots/self.step_grade) *
-                        self.step_grade))
+                i_lowest_rung = np.int(np.ceil(
+                    self.min_grade / self.step_grade
+                ))
+                i_highest_rung = np.int(np.floor(
+                    self.max_grade / self.step_grade
+                ))
+                allowed_grades = np.concatenate((
+                    [self.min_grade],
+                    np.array(range(
+                        i_lowest_rung, i_highest_rung + 1
+                    )) * self.step_grade,
+                    [self.max_grade]
+                ))
+                frontiers = (allowed_grades[0:-1] + allowed_grades[1:]) / 2
+                for v in range(self.pop.V):
+                    self._ballots[v, :] = allowed_grades[
+                        np.digitize(self._ballots[v, :], frontiers)
+                    ]
         return self._ballots
 
     @property
     def scores(self):
         """2d array of integers.
-        scores[0, c] is the median grade of candidate c.
-        Let us note p (resp. q) the number of voter who attribute to c a grade 
-        higher (resp. lower) than the median. If p > q, then scores[1, c] = p.
-        Otherwise, scores[1, c] = -q.
+
+        ``scores[0, c]`` is the median grade of candidate ``c``.
+
+        Let us note ``p`` (resp. ``q``) the number of voter who attribute to
+        ``c`` a grade higher (resp. lower) than the median. If ``p`` > ``q``,
+        then ``scores[1, c]`` = ``p``. Otherwise, ``scores[1, c]`` = ``-q``.
         """
         if self._scores is None:
             self._mylog("Compute scores", 1)
@@ -187,12 +245,17 @@ class MajorityJudgmentResult(ElectionResult):
         
     @property
     def candidates_by_scores_best_to_worst(self):
-        """1d array of integers. candidates_by_scores_best_to_worst[k] is the
-        candidate. Candidates are sorted lexicographically by their median 
-        (scores[0, c]) then their p or -q (scores[1, c]). If there is still a
-        tie, the candidate with lower index is declared the winner.
+        """1d array of integers. ``candidates_by_scores_best_to_worst[k] is the
+        candidate ranked ``k``\ :sup:`th`.
+
+        Candidates are sorted lexicographically by their median
+        (:attr:`svvamp.MajorityJudgment.scores`\ ``[0, c]``) then their
+        ``p`` or ``-q`` (:attr:`svvamp.MajorityJudgment.scores`\ ``[1, c]``).
+        If there is still a tie, the tied candidate with lower index is
+        favored.
         
-        By definition, candidates_by_scores_best_to_worst[0] = w.
+        By definition, ``candidates_by_scores_best_to_worst[0]`` =
+        :attr:`~svvamp.MajorityJudgment.w`.
         """
         if self._candidates_by_scores_best_to_worst is None:
             self._mylog("Compute candidates_by_scores_best_to_worst", 1)
@@ -209,6 +272,12 @@ class MajorityJudgmentResult(ElectionResult):
     @property
     def w(self):
         """Integer (winning candidate).
+
+        Candidates are sorted lexicographically by their median
+        (:attr:`~svvamp.MajorityJudgment.scores`\ ``[0, c]``) then their
+        ``p`` or ``-q`` (:attr:`~svvamp.MajorityJudgment.scores`\ ``[1, c]``).
+        If there is still a tie, the tied candidate with lower index is
+        declared the winner.
         """
         if self._w is None:
             self._mylog("Compute winner", 1)

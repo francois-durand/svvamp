@@ -2,6 +2,8 @@
 Usage
 ========
 
+**First steps**
+
 To use SVVAMP in a project::
 
     import svvamp
@@ -22,3 +24,13 @@ Create an election, using Approval voting::
 Demonstrate the functions of superclass :class:`~svvamp.Election`::
 
     election.demo()
+
+**Tutorials**
+
+.. toctree::
+   :maxdepth: 3
+
+   Tutorials/tutorial_pop
+   Tutorials/tutorial_election_result
+   Tutorials/tutorial_election
+   Tutorials/tutorial_pop_models

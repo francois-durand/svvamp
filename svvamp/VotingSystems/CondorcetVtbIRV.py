@@ -83,6 +83,9 @@ class CondorcetVtbIRV(CondorcetVtbIRVResult, Election):
 
     :meth:`~svvamp.Election.not_IIA`: Non-polynomial
     or non-exact algorithms from superclass :class:`~svvamp.Election`.
+    If :attr:`~svvamp.Election.IIA_subset_maximum_size` = 2, it runs in
+    polynomial time and is exact up to ties (which can occur only if
+    :attr:`~svvamp.Population.V` is even).
 
     :meth:`~svvamp.Election.TM`: Exact in polynomial time.
 

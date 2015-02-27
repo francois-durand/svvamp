@@ -64,7 +64,9 @@ class RangeVotingAverage(RangeVotingAverageResult, Election):
     to get her grades, such that her least-liked candidate receives
     :attr:`~svvamp.RangeVotingAverage.min_grade` and her most-liked candidate
     receives :attr:`~svvamp.RangeVotingAverage.max_grade`.
-    For other possible behaviors, see
+    To modify this behavior, use attribute
+    :attr:`~svvamp.RangeVotingAverage.rescale_grades`.
+    For more details about the behavior of sincere voters, see
     :attr:`~svvamp.RangeVotingAverage.ballots`.
 
     :meth:`~svvamp.Election.not_IIA`:
@@ -280,6 +282,9 @@ class RangeVotingAverage(RangeVotingAverageResult, Election):
 
 
 if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
+
     # A quick demo
     preferences_utilities = np.random.randint(-5, 5, (10, 5))
     pop = Population(preferences_utilities)

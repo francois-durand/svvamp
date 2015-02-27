@@ -50,10 +50,15 @@ class ElectionResult(MyLog.MyLog):
         """Create a simple election (without manipulation).
 
         This is an 'abstract' class. As an end-user, you should always use its
-        subclasses Approval, Plurality, etc.
+        subclasses :attr:`~svvamp.Approval`, :attr:`~svvamp.Plurality`, etc.
 
         :param population: A :class:`~svvamp.Population` object.
-        :param kwargs: additional keyword parameters.
+        :param kwargs: additional keyword parameters. See
+            :attr:`~svvamp.ElectionResult.options_parameters`.
+
+        >>> import svvamp
+        >>> pop = svvamp.PopulationSpheroid(V=100, C=5)
+        >>> election = svvamp.Approval(pop, approval_comparator='>=')
         """
         super().__init__()
         self._log_identity = "ELECTION_RESULT"
@@ -130,7 +135,7 @@ class ElectionResult(MyLog.MyLog):
 
     @property
     def pop(self):
-        """A :class:`~svvamp.Population object`. The population running the
+        """A :class:`~svvamp.Population` object. The population running the
         election.
         """
         return self._pop
@@ -195,7 +200,8 @@ class ElectionResult(MyLog.MyLog):
         Default behavior in superclass :class:`~svvamp.ElectionResult`\ :
             The candidate with highest value in vector
             :attr:`~svvamp.ElectionResult.scores` is declared the
-            winner. In case of a tie, the candidate with lowest index wins.
+            winner. In case of a tie, the tied candidate with lowest index
+            wins.
         """
         # This general method works only if scores are scalar and the best
         # score wins.

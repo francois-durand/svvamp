@@ -86,10 +86,12 @@ class SchulzeResult(ElectionResult):
 
     @property
     def candidates_by_scores_best_to_worst(self):
-        """1d array of integers. candidates_by_scores_best_to_worst[k] is the
-        k-th candidate by number of Schulze-victories.
+        """1d array of integers. ``candidates_by_scores_best_to_worst[k]`` is
+        the ``k``\ :sup:`th` candidate by number of Schulze-victories, i.e.
+        the number of candidates ``d`` such that ``c`` is *better* than ``d``.
         
-        By definition, candidates_by_scores_best_to_worst[0] = w.
+        By definition, ``candidates_by_scores_best_to_worst[0]`` =
+        :attr:`~svvamp.Schulze.w`.
         """
         if self._candidates_by_scores_best_to_worst is None:
             self._count_ballots()
@@ -97,11 +99,14 @@ class SchulzeResult(ElectionResult):
 
     @property
     def scores(self):
-        """2d array of integers. scores[c, d] is equal to the width of the 
-        widest path from c to d.
+        """2d array of integers. ``scores[c, d]`` is equal to the width of the
+        widest path from ``c`` to ``d``.
 
-        N.B. Unlike for most other voting systems, scores matrix must be
-        read in rows: c's score vector is scores[c, :].
+        .. note::
+
+            Unlike for most other voting systems, ``scores`` matrix must be
+            read in rows, in order to comply with our convention for the
+            matrix of duels: ``c``'s score vector is ``scores[c, :]``.
         """
         if self._scores is None:
             self._count_ballots()
@@ -109,7 +114,9 @@ class SchulzeResult(ElectionResult):
         
     @property
     def score_w(self):
-        """score_w is w's score vector. I.e. score_w = scores[w, :].
+        """1d array. ``score_w`` is :attr:`~svvamp.RankedPairs.w`'s score
+        vector: ``score_w`` =
+        :attr:`~svvamp.RankedPairs.scores`\ ``[``:attr:`~svvamp.RankedPairs.w`\ ``, :]``.
         """
         if self._score_w is None:
             self._mylog("Compute winner's score", 1)
@@ -118,11 +125,12 @@ class SchulzeResult(ElectionResult):
 
     @property 
     def scores_best_to_worst(self):
-        """2d array. scores_best_to_worst is the scores of the candidates, 
+        """2d array. ``scores_best_to_worst`` is the scores of the candidates,
         from the winner to the last candidate of the election.
         
-        scores_best_to_worst[k, j] is the width of the widest path from the 
-        k-th best candidate of the election to the j-th.
+        ``scores_best_to_worst[k, j]`` is the width of the widest path from the
+        ``k``\ :sup:`th` best candidate of the election to the
+        ``j``\ :sup:`th`.
         """
         if self._scores_best_to_worst is None:
             self._mylog("Compute scores_best_to_worst", 1)

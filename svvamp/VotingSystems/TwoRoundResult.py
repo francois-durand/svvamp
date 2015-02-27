@@ -63,7 +63,7 @@ class TwoRoundResult(ElectionResult):
 
     @property
     def selected_one(self):
-        """Integer. The candidate with highest score at round 1.
+        """Integer. The candidate with highest score at first round.
         """
         if self._selected_one is None:
             self._counts_ballots()
@@ -71,7 +71,7 @@ class TwoRoundResult(ElectionResult):
 
     @property
     def selected_two(self):
-        """Integer. The candidate with second highest score at round 1.
+        """Integer. The candidate with second highest score at first round.
         """
         if self._selected_two is None:
             self._counts_ballots()
@@ -79,8 +79,7 @@ class TwoRoundResult(ElectionResult):
 
     @property
     def w(self):
-        """Integer (winning candidate). In case of a tie, the candidate with
-        lowest index wins.
+        """Integer (winning candidate).
         """
         if self._w is None:
             self._counts_ballots()
@@ -88,8 +87,9 @@ class TwoRoundResult(ElectionResult):
 
     @property
     def ballots(self):
-        """2d array of integers. ballots[v, r] is the candidate for which
-        voter v votes at round r (= 0 or 1).
+        """2d array of integers. ``ballots[v, r]`` is the candidate for which
+        voter ``v`` votes at round ``r``, where ``r`` = 0 (first round) or
+        ``r`` = 1 (second round).
         """
         if self._ballots is None:
             self._ballots = np.zeros((self.pop.V, 2), dtype=np.int)
@@ -104,8 +104,9 @@ class TwoRoundResult(ElectionResult):
 
     @property
     def scores(self):
-        """2d array. scores[r, c] is the number of voters who vote for 
-        candidate c at round r (= 0 or 1).
+        """2d array. ``scores[r, c]`` is the number of voters who vote for
+        candidate ``c`` at round ``r``, where ``r`` = 0 (first round) or
+        ``r`` = 1 (second round).
         """
         if self._scores is None:
             self._scores = np.zeros((2, self.pop.C))
@@ -118,11 +119,13 @@ class TwoRoundResult(ElectionResult):
         
     @property
     def candidates_by_scores_best_to_worst(self):
-        """1d array of integers. candidates_by_scores_best_to_worst[k] is the
-        candidate with k-th best score. Finalist are sorted by their score 
-        at second round. Other are sorted by their score at first round.
+        """1d array of integers. ``candidates_by_scores_best_to_worst[k]`` is
+        the candidate with ``k``\ :sup:`th` best score. Finalists are sorted by
+        their score at second round. Other candidates are sorted by their
+        score at first round.
         
-        By definition, candidates_by_scores_best_to_worst[0] = w.
+        By definition, ``candidates_by_scores_best_to_worst[0]`` =
+        :attr:`~svvamp.TwoRound.w`.
         """
         if self._candidates_by_scores_best_to_worst is None:
             self._mylog("Count candidates_by_scores_best_to_worst", 1)

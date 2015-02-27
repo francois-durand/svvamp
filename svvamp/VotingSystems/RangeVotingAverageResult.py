@@ -79,13 +79,13 @@ class RangeVotingAverageResult(ElectionResult):
 
         If ``step_grade = 0``, all grades
         in the interval [:attr:`~svvamp.RangeVotingAverage.min_grade`,
-        :attr:`~svvamp.RangeVotingAverage.min_grade`] are allowed
+        :attr:`~svvamp.RangeVotingAverage.max_grade`] are allowed
         ('continuous' set of grades).
 
         If ``step_grade > 0``, authorized grades are the multiples of
         :attr:`~svvamp.RangeVotingAverage.step_grade` lying in
         the interval [:attr:`~svvamp.RangeVotingAverage.min_grade`,
-        :attr:`~svvamp.RangeVotingAverage.min_grade`]. In addition, the grades
+        :attr:`~svvamp.RangeVotingAverage.max_grade`]. In addition, the grades
         :attr:`~svvamp.RangeVotingAverage.min_grade` and
         :attr:`~svvamp.RangeVotingAverage.max_grade` are always authorized,
         even if they are not multiples of
@@ -106,12 +106,12 @@ class RangeVotingAverageResult(ElectionResult):
         If ``rescale_grades`` = ``True``, then each sincere voter ``v``
         applies an affine transformation to send her utilities into the
         interval [:attr:`~svvamp.RangeVotingAverage.min_grade`,
-        :attr:`~svvamp.RangeVotingAverage.min_grade`].
+        :attr:`~svvamp.RangeVotingAverage.max_grade`].
 
         If ``rescale_grades`` = ``False``, then each sincere voter ``v``
         clips her utilities into the interval
         [:attr:`~svvamp.RangeVotingAverage.min_grade`,
-        :attr:`~svvamp.RangeVotingAverage.min_grade`].
+        :attr:`~svvamp.RangeVotingAverage.max_grade`].
 
         See :attr:`~svvamp.RangeVotingAverage.ballots` for more details.
         """
@@ -127,18 +127,22 @@ class RangeVotingAverageResult(ElectionResult):
     @property
     def ballots(self):
         """2d array of integers. ``ballots[v, c]`` is the grade attributed by
-        voter ``v`` to candidate ``c`` (when voting sincerely).
+        voter ``v`` to candidate ``c`` (when voting sincerely). The
+        following process is used.
 
-        The following process is used to transform utilities into grades.
-
-        1.  Send grades into interval
+        1.  Convert utilities into grades in interval
             [:attr:`~svvamp.RangeVotingAverage.min_grade`,
             :attr:`~svvamp.RangeVotingAverage.max_grade`].
 
             *   If :attr:`~svvamp.RangeVotingAverage.rescale_grades` =
                 ``True``, then each voter ``v`` applies an affine
+<<<<<<< HEAD
                 transformation to her utilities
                 :attr:`~svvamp.Population.preferences_ut`\ ``[v, :]``
+=======
+                transformation to
+                :attr:`~svvamp.Population.preferences_utilities`\ ``[v, :]``
+>>>>>>> origin/master
                 such that her least-liked candidate receives
                 :attr:`~svvamp.RangeVotingAverage.min_grade` and her
                 most-liked candidate receives
@@ -153,15 +157,15 @@ class RangeVotingAverageResult(ElectionResult):
             *   If :attr:`~svvamp.RangeVotingAverage.rescale_grades` =
                 ``False``, then each voter ``v`` clips her utilities into the
                 interval [:attr:`~svvamp.RangeVotingAverage.min_grade`,
-                :attr:`~svvamp.RangeVotingAverage.max_grade`].
-                Each utility greater than
+                :attr:`~svvamp.RangeVotingAverage.max_grade`]:
+                each utility greater than
                 :attr:`~svvamp.RangeVotingAverage.max_grade` (resp. lower than
                 :attr:`~svvamp.RangeVotingAverage.min_grade`) becomes
                 :attr:`~svvamp.RangeVotingAverage.max_grade` (resp.
                 :attr:`~svvamp.RangeVotingAverage.min_grade`).
 
-        2.  If :attr:`~svvamp.RangeVotingAverage.step_grades` > 0, round each
-            grade to the closest authorized grade.
+        2.  If :attr:`~svvamp.RangeVotingAverage.step_grades` > 0 (discrete
+            set of grades), round each grade to the closest authorized grade.
         """
         if self._ballots is None:
             self._mylog("Compute ballots", 1)
