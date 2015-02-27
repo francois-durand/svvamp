@@ -25,7 +25,7 @@ test_requirements = [
 
 setup(
     name='svvamp',
-    version='0.0.2',
+    version='0.0.3rc1',
     description="Simulator of Various Voting Algorithms in Manipulating Populations",
     long_description=readme + '\n\n' + history,
     author="François Durand",
