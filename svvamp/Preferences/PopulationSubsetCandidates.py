@@ -53,7 +53,7 @@ class PopulationSubsetCandidates(Population):
         )
         self._mother = mother
         self._candidates_subset = candidates_subset
-        if self.mother._voters_sorted_by_ranking:
+        if self.mother._voters_sorted_by_rk:
             self._voters_sorted_by_rk = True
 
     @property

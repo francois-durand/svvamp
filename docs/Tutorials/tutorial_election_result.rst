@@ -38,4 +38,4 @@ Print the winner, her score and her total utility::
 
 Print whether the winner of the election is a Condorcet winner::
 
-    print(election.w_is_condorcet_winner)
+    print(election.w_is_condorcet_winner_ut_abs)

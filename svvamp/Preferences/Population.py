@@ -49,34 +49,39 @@ class Population(MyLog.MyLog):
         :param log_creation: Any type (string, list...). Some comments.
         :param labels_candidates: List of strings. Names of the candidates.
 
-        You may enter either ``preferences_ut`` or
-        ``preferences_rk`` to define the preferences of the population.
-        If you provide both, then only ``preferences_ut`` is used.
-        
-        If voter ``v`` attributes the same utility to several candidates:
-
-            * The first time the attribute ``preferences_rk`` is
-              called, a random ranking will be decided for these tied
-              candidates (once and for all). This strict ranking will be used
-              for sincere voting when a voting system accepts only strict
-              orders. This process is called **voter tie-breaking** or **VTB**.
-            * In contrast, for manipulation purposes, indifference is taken
-              into account as such. If voter ``v`` attributes the same
-              utility to candidates ``w`` and ``c``, and if ``w`` is the
-              sincere winner in an election, then ``v`` is not interested in
-              a manipulation for ``c``.
+        You may enter ``preferences_ut``, ``preferences_rk`` or both
+        to define the preferences of the population.
 
         If you provide ``preferences_rk`` only,
         then ``preferences_ut`` is set to the corresponding Borda
-        scores (:attr:`~svvamp.Population.preferences_borda_ut` or
-        :attr:`~svvamp.Population.preferences_borda_rk`, which are equivalent
-        in that case).
+        scores (:attr:`~svvamp.Population.preferences_borda_rk`).
 
-        If all voters have a strict order of preference, either because you
-        provided utilities without ties for each voter, or because you
-        provided preference rankings only, then VTB does not matter. In
-        that case, each function below without VTB is equivalent to its
-        variant with VTB.
+        If you provide ``preferences_ut`` only, then ``preferences_rk`` is
+        naturally derived from utilities. If voter ``v`` has a greater utility
+        for candidate ``c`` than for candidate ``d``, then she ranks ``c``
+        before ``d``. If voter ``v`` attributes the same utility to several
+        candidates, then the first time the attribute ``preferences_rk`` is
+        called, a random ranking will be decided for these tied candidates
+        (once and for all).
+
+        If you provide both, then SVVAMP checks that they are coherent,
+        in the sense that if ``v`` ranks ``c`` before ``d``, then she her
+        utility for ``c`` must be at least equal to her utility for ``d``. If
+        it is not the case, an error is raised.
+
+        ``preferences_rk`` will be used for sincere voting when a voting
+        system accepts only strict orders.
+
+        In contrast, ``preferences_ut`` is always used for manipulation
+        purposes, which means that indifference is taken
+        into account as such to determine the interest in manipulation. If
+        voter ``v`` attributes the same utility to candidates ``w`` and
+        ``c``, and if ``w`` is the sincere winner in an election, then ``v``
+        is not interested in a manipulation for ``c``.
+
+        If all voters have a strict order of preference (in the sense of ut),
+        then for functions below having variants with suffix ``_ut`` or
+        ``_rk``, the two variants are equivalent.
 
         In some voting systems and in some of the attributes below,
         we use a process referred as **candidate tie-breaking** or **CTB** in
@@ -109,8 +114,8 @@ class Population(MyLog.MyLog):
             V
             Condorcet-admissible
 
-        If all voters have strict orders of preference and if there is an
-        odd number of voters, then:
+        If all voters have strict orders of preference (in the sense of
+        ut) and if there is an odd number of voters, then:
 
             *   ``majority_favorite_ut``, ``majority_favorite_rk``,
                 ``majority_favorite_ut_ctb`` and ``majority_favorite_rk_ctb``
@@ -262,9 +267,11 @@ class Population(MyLog.MyLog):
 
     @property
     def preferences_borda_rk(self):
-        """2d array of integers. ``preferences_borda_rk[v, c]`` is the Borda
-        score (between ``0`` and ``C - 1``) of candidate ``c`` for voter ``v``,
-        with voter tie-breaking.
+        """2d array of integers. ``preferences_borda_rk[v, c]`` gains 1 point
+        for each candidate ``d`` such that voter ``v`` ranks ``c`` before
+        ``d``.
+
+        So, these Borda scores are between ``0`` and ``C - 1``.
         """
         if self._preferences_borda_rk is None:
             self._mylog("Compute preference rankings in Borda format", 1)
@@ -276,9 +283,11 @@ class Population(MyLog.MyLog):
     @property
     def preferences_borda_ut(self):
         """2d array of integers. ``preferences_borda_ut[v, c]`` gains 1
-        point for each ``d`` such that ``v`` prefers ``c`` to ``d``, and
-        0.5 point for each ``d`` such that ``v`` is indifferent between ``c``
-        and ``d``.
+        point for each ``d`` such that ``v`` strictly prefers ``c`` to ``d``
+        (in the sense of utilities), and 0.5 point for each ``d`` such that
+        ``v`` is indifferent between ``c`` and ``d``.
+
+        So, these Borda scores are between ``0`` and ``C - 1``.
         """
         if self._preferences_borda_ut is None:
             self._mylog("Compute preference weak orders in Borda format", 1)
@@ -405,10 +414,9 @@ class Population(MyLog.MyLog):
 
     @property
     def matrix_duels_ut(self):
-        """2d array of integers. ``matrix_duels_ut[c, d]`` is the number of voters
-        who strictly prefer candidate ``c`` to ``d`` (using
-        :attr:`~svvamp.Population.preferences_borda_ut`, i.e indifference
-        is allowed). By convention, diagonal coefficients are set to ``0``.
+        """2d array of integers. ``matrix_duels_ut[c, d]`` is the number of
+        voters who have a strictly greater utility for ``c`` than for ``d``.
+        By convention, diagonal coefficients are set to ``0``.
         """
         if self._matrix_duels_ut is None:
             self._mylog("Compute matrix of duels", 1)
@@ -420,9 +428,8 @@ class Population(MyLog.MyLog):
     @property
     def matrix_duels_rk(self):
         """2d array of integers. ``matrix_duels_rk[c, d]`` is the number of
-        voters who strictly prefer candidate ``c`` to ``d``, or who break a
-        tie in favor of ``c`` over ``d`` (which means we use
-        :attr:`~svvamp.Population.preferences_borda_rk`). By convention,
+        voters who rank candidate ``c`` before ``d`` (in the sense of
+        :attr:`~svvamp.Population.preferences_rk`). By convention,
         diagonal coefficients are set to 0.
         """
         if self._matrix_duels_rk is None:
@@ -533,8 +540,7 @@ class Population(MyLog.MyLog):
     @property
     def matrix_victories_rk(self):
         """2d array of values in {0, 0.5, 1}. Matrix of victories
-        based on :attr:`~svvamp.Population.matrix_duels_rk` (i.e. each voter
-        breaks her own ties).
+        based on :attr:`~svvamp.Population.matrix_duels_rk`.
 
         ``matrix_victories_rk[c, d]`` is:
 
@@ -558,8 +564,8 @@ class Population(MyLog.MyLog):
     @property
     def matrix_victories_rk_ctb(self):
         """2d array of values in {0, 1}. Matrix of victories based on
-        :attr:`~svvamp.Population.matrix_duels_rk` (i.e. each voter breaks
-        her own ties), with tie-breaks on candidates.
+        :attr:`~svvamp.Population.matrix_duels_rk`,
+        with tie-breaks on candidates.
 
         ``matrix_victories_rk_ctb[c, d]`` is:
 
@@ -890,9 +896,11 @@ class Population(MyLog.MyLog):
         """Integer or ``NaN``. Resistant Condorcet Winner. If there is no such
         candidate, then ``NaN``.
         
-        A Condorcet winner ``w`` (_ut_abs) is resistant iff in any Condorcet
-        voting system, the profile is not manipulable (cf. Durand et al.,
-        working paper 2014).
+        A Condorcet winner ``w`` (in the sense of
+        :attr:`~svvamp.Population.condorcet_winner_ut_abs`) is resistant iff
+        in any Condorcet voting system (in the same sense), the profile is not
+        manipulable (cf.
+        Durand et al., working paper 2014).
         This is equivalent to say that for any pair ``(c, d)`` of other
         distinct candidates, there is a strict majority of voters who
         simultaneously:
@@ -916,7 +924,7 @@ class Population(MyLog.MyLog):
 
     @property
     def exists_resistant_condorcet_winner(self):
-        """Boolean (True iff there is a
+        """Boolean (``True`` iff there is a
         :attr:`~svvamp.Population.resistant_condorcet_winner`).
         """
         return not np.isnan(self.resistant_condorcet_winner)
@@ -931,7 +939,8 @@ class Population(MyLog.MyLog):
     @property
     def threshold_c_prevents_w_Condorcet_ut_abs(self):
         """2d array of integers. Threshold for ``c``-manipulators to prevent
-        ``w`` from being a Condorcet winner (_ut_abs).
+        ``w`` from being a Condorcet winner (in the sense of
+        :attr:`~svvamp.Population.condorcet_winner_ut_abs`).
 
         Intuitively, the question is the following: in an election where ``w``
         is the winner, how many ``c``-manipulators are needed to prevent ``w``

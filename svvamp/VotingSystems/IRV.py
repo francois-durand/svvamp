@@ -213,7 +213,7 @@ class IRV(IRVResult, Election):
         # we must not forget them.
         if self.pop._irv_manip is None:
             self.pop._irv_manip = _Storage()
-            self.pop.ensure_voters_sorted_by_ordinal_preferences()
+            self.pop.ensure_voters_sorted_by_rk()
             self.EB = ExhaustiveBallot(self.pop, freeze_options=True)
             # All commented lines are managed by Exhaustive Ballot
             # self._v_wants_to_help_c = None

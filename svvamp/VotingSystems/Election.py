@@ -97,39 +97,33 @@ class Election(ElectionResult):
         ties in totally symmetric situations). As of now, SVVAMP does not
         support other kinds of voting systems.
 
-        **Tie-breaking**
+        **Ties in a voter's utilities**
 
-        There are essentially 2 types of tie-breaking in SVVAMP.
-
-            *   When a sincere voter ``v`` must provide a strict order
-                in a specific voting system, she uses
-                :attr:`~svvamp.Population.preferences_rk`\ ``[v, :]``.
-                As explained in :attr:`~svvamp.Population`, if she has the same
-                utility for candidates ``c`` and ``d``, then she uses Voter
-                Tie-Breaking (VTB): she decides once and for all if she will
-                provide ``c`` before ``d`` or ``d`` before ``c`` in
-                voting systems requiring a strict order.
-            *   The voting system itself may need to break ties, for example if
-                candidates ``c`` and ``d`` have the same score in a score-based
-                system. The standard tie-breaking in SVVAMP, referred to as
-                Candidate Tie-Breaking (CTB), consists of breaking ties by
-                lowest index: ``c`` is favored over ``d`` if ``c`` < ``d``.
-                This tie-breaking rule is used for example in 'A note on
-                manipulability of large voting schemes' (Peleg, 1979). Future
-                voting systems implemented as a subclass of ``Election`` may
-                use another tie-breaking rule.
+        When a sincere voter ``v`` must provide a strict order
+        in a specific voting system, she uses
+        :attr:`~svvamp.Population.preferences_rk`\ ``[v, :]``
+        (which breaks possible ties in her utilities).
 
         In contrast, to know if a voter ``v`` wants to manipulate for a
-        candidate ``c`` against ``w``, we do not break ``v``'s possible tie
-        in her preferences. We use her utilities
-        :attr:`~svvamp.Population.preferences_ut`\ ``[v, :]`` (or
-        equivalently,
-        :attr:`~svvamp.Population.preferences_borda_ut`\ ``[v, :]``). If she
+        candidate ``c`` against ``w``, we always use her utilities
+        :attr:`~svvamp.Population.preferences_ut`\ ``[v, :]``. If she
         attributes the same utility to ``w`` and ``c``, she is not interested
         in this manipulation.
 
         Some ordinal voting systems in SVVAMP may be adapted to accept weak
         orders of preferences as ballots. This is future work.
+
+        **Ties in the result of an election**
+
+        The voting system itself may need to break ties, for example if
+        candidates ``c`` and ``d`` have the same score in a score-based
+        system. The standard tie-breaking in SVVAMP, referred to as
+        Candidate Tie-Breaking (CTB), consists of breaking ties by
+        lowest index: ``c`` is favored over ``d`` if ``c`` < ``d``.
+        This tie-breaking rule is used for example in 'A note on
+        manipulability of large voting schemes' (Peleg, 1979). Future
+        voting systems implemented as a subclass of ``Election`` may
+        use another tie-breaking rule.
 
         **Options for manipulation**
 
@@ -535,8 +529,9 @@ class Election(ElectionResult):
     def is_based_on_ut_minus1_1(self):
         """Boolean. ``True`` iff:
 
-            *   This voting system is based only on utilities (not strict
-                ranking, i.e. does not depend on the voter's tie-breaking),
+            *   This voting system is based only on utilities (not
+                rankings, i.e. does not depend on how voters break
+                ties in their own preferences),
             *   And for a ``c``-manipulator (IM or CM), it is optimal to
                 pretend that ``c`` has utility 1 and other candidates have
                 utility -1.
@@ -877,7 +872,7 @@ class Election(ElectionResult):
 
         :return: (``is_not_IIA``, ``log_IIA``).
 
-        Cf. :meth:`~svvamp.Election.not_IIA_complete` for more details.
+        Cf. :meth:`~svvamp.Election.not_IIA_full` for more details.
         """
         if self._is_IIA is None:
             self._compute_IIA()
@@ -886,7 +881,7 @@ class Election(ElectionResult):
         else:
             return (not self._is_IIA), self.log_IIA
 
-    def not_IIA_complete(self):
+    def not_IIA_full(self):
         """Independence of Irrelevant Alternatives, complete mode.
 
         :return: (``is_not_IIA``, ``log_IIA``, ``example_subset_IIA``,
@@ -3776,7 +3771,7 @@ class Election(ElectionResult):
         MyLog.print_title("Independence of Irrelevant Alternatives (IIA)")
         print("w (reminder) =", self.w)
         not_is_IIA, log_IIA, example_subset_IIA, example_winner_IIA = (
-            self.not_IIA_complete())
+            self.not_IIA_full())
         print("is_IIA =", not not_is_IIA)
         print("log_IIA:", log_IIA)
         print("example_winner_IIA =", example_winner_IIA)

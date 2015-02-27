@@ -350,7 +350,7 @@ class ElectionResult(MyLog.MyLog):
     def w_is_condorcet_admissible(self):
         """Boolean. ``True`` iff the sincere winner
         :attr:`~svvamp.ElectionResult.w` is Condorcet-admissible.
-        Cf. :attr:`svvamp.Population.condorcet_admissible_candidates`.
+        Cf. :attr:`~svvamp.Population.condorcet_admissible_candidates`.
         """
         return self.pop.condorcet_admissible_candidates[self.w]
 
@@ -359,7 +359,7 @@ class ElectionResult(MyLog.MyLog):
         """Boolean. ``True`` iff the sincere winner
         :attr:`~svvamp.ElectionResult.w` is not a Condorcet-admissible
         candidate (whether some exist or not).
-        Cf. :attr:`svvamp.Population.condorcet_admissible_candidates`.
+        Cf. :attr:`~svvamp.Population.condorcet_admissible_candidates`.
         """
         return not self.w_is_condorcet_admissible
 
@@ -369,7 +369,7 @@ class ElectionResult(MyLog.MyLog):
         :attr:`~svvamp.ElectionResult.w` is not a
         Condorcet-admissible candidate, despite the fact that at least one
         exists.
-        Cf. :attr:`svvamp.Population.condorcet_admissible_candidates`.
+        Cf. :attr:`~svvamp.Population.condorcet_admissible_candidates`.
         """
         return (self.pop.nb_condorcet_admissible > 0 and
                 not self.w_is_condorcet_admissible)
@@ -378,7 +378,7 @@ class ElectionResult(MyLog.MyLog):
     def w_is_weak_condorcet_winner(self):
         """Boolean. True iff the sincere winner
         :attr:`~svvamp.ElectionResult.w` is a Weak Condorcet winner.
-        Cf. :attr:`svvamp.Population.weak_condorcet_winners`.
+        Cf. :attr:`~svvamp.Population.weak_condorcet_winners`.
         """
         return self.pop.weak_condorcet_winners[self.w]
 
@@ -387,7 +387,7 @@ class ElectionResult(MyLog.MyLog):
         """Boolean. True iff the sincere winner
         :attr:`~svvamp.ElectionResult.w` is not a Weak Condorcet
         winner (whether some exist or not).
-        Cf. :attr:`svvamp.Population.weak_condorcet_winners`.
+        Cf. :attr:`~svvamp.Population.weak_condorcet_winners`.
         """
         return not self.w_is_weak_condorcet_winner
 
@@ -396,7 +396,7 @@ class ElectionResult(MyLog.MyLog):
         """Boolean. True iff the sincere winner
         :attr:`~svvamp.ElectionResult.w` is not a Weak Condorcet
         winner, despite the fact that at least one exists.
-        Cf. :attr:`svvamp.Population.weak_condorcet_winners`.
+        Cf. :attr:`~svvamp.Population.weak_condorcet_winners`.
         """
         return (self.pop.nb_weak_condorcet_winners > 0 and 
                 not self.w_is_weak_condorcet_winner)
@@ -405,7 +405,7 @@ class ElectionResult(MyLog.MyLog):
     def w_is_condorcet_winner_rk_ctb(self):
         """Boolean. True iff the sincere winner
         :attr:`~svvamp.ElectionResult.w` is a
-        :attr:`svvamp.Population.condorcet_winner_rk_ctb`.
+        :attr:`~svvamp.Population.condorcet_winner_rk_ctb`.
         """
         return self.w == self.pop.condorcet_winner_rk_ctb
 
@@ -413,7 +413,7 @@ class ElectionResult(MyLog.MyLog):
     def w_is_not_condorcet_winner_rk_ctb(self):
         """Boolean. True iff the sincere winner
         :attr:`~svvamp.ElectionResult.w` is not a
-        :attr:`svvamp.Population.condorcet_winner_rk_ctb`
+        :attr:`~svvamp.Population.condorcet_winner_rk_ctb`
         (whether one exists or not).
         """
         return not self.w_is_condorcet_winner_rk_ctb
@@ -422,7 +422,7 @@ class ElectionResult(MyLog.MyLog):
     def w_missed_condorcet_winner_rk_ctb(self):
         """Boolean. True iff the sincere winner
         :attr:`~svvamp.ElectionResult.w` is not the
-        :attr:`svvamp.Population.condorcet_winner_rk_ctb`,
+        :attr:`~svvamp.Population.condorcet_winner_rk_ctb`,
         despite the fact that she exists.
         """
         return (not np.isnan(self.pop.condorcet_winner_rk_ctb) and
@@ -432,7 +432,7 @@ class ElectionResult(MyLog.MyLog):
     def w_is_condorcet_winner_rk(self):
         """Boolean. True iff the sincere winner
         :attr:`~svvamp.ElectionResult.w` is a
-        :attr:`svvamp.Population.condorcet_winner_rk`.
+        :attr:`~svvamp.Population.condorcet_winner_rk`.
         """
         return self.w == self.pop.condorcet_winner_rk
 
@@ -440,7 +440,7 @@ class ElectionResult(MyLog.MyLog):
     def w_is_not_condorcet_winner_rk(self):
         """Boolean. True iff the sincere winner
         :attr:`~svvamp.ElectionResult.w` is not a
-        :attr:`svvamp.Population.condorcet_winner_rk`
+        :attr:`~svvamp.Population.condorcet_winner_rk`
         (whether one exists or not).
         """
         return not self.w_is_condorcet_winner_rk
@@ -449,7 +449,7 @@ class ElectionResult(MyLog.MyLog):
     def w_missed_condorcet_winner_rk(self):
         """Boolean. True iff the sincere winner
         :attr:`~svvamp.ElectionResult.w` is not the
-        :attr:`svvamp.Population.condorcet_winner_rk`,
+        :attr:`~svvamp.Population.condorcet_winner_rk`,
         despite the fact that she exists.
         """
         return (not np.isnan(self.pop.condorcet_winner_rk) and
@@ -459,7 +459,7 @@ class ElectionResult(MyLog.MyLog):
     def w_is_condorcet_winner_ut_rel_ctb(self):
         """Boolean. True iff the sincere winner
         :attr:`~svvamp.ElectionResult.w` is a
-        :attr:`svvamp.Population.condorcet_winner_ut_abs_ctb`.
+        :attr:`~svvamp.Population.condorcet_winner_ut_abs_ctb`.
         """
         return self.w == self.pop.condorcet_winner_ut_rel_ctb
 
@@ -467,7 +467,7 @@ class ElectionResult(MyLog.MyLog):
     def w_is_not_condorcet_winner_ut_rel_ctb(self):
         """Boolean. True iff the sincere winner
         :attr:`~svvamp.ElectionResult.w` is not a
-        :attr:`svvamp.Population.condorcet_winner_ut_abs_ctb`
+        :attr:`~svvamp.Population.condorcet_winner_ut_abs_ctb`
         (whether one exists or not).
         """
         return not self.w_is_condorcet_winner_ut_rel_ctb
@@ -476,7 +476,7 @@ class ElectionResult(MyLog.MyLog):
     def w_missed_condorcet_winner_ut_rel_ctb(self):
         """Boolean. True iff the sincere winner
         :attr:`~svvamp.ElectionResult.w` is not the
-        :attr:`svvamp.Population.condorcet_winner_ut_abs_ctb`,
+        :attr:`~svvamp.Population.condorcet_winner_ut_abs_ctb`,
         despite the fact that she exists.
         """
         return (not np.isnan(self.pop.condorcet_winner_ut_rel_ctb) and
@@ -486,7 +486,7 @@ class ElectionResult(MyLog.MyLog):
     def w_is_condorcet_winner_ut_rel(self):
         """Boolean. True iff the sincere winner
         :attr:`~svvamp.ElectionResult.w` is a
-        :attr:`svvamp.Population.condorcet_winner_ut_rel`.
+        :attr:`~svvamp.Population.condorcet_winner_ut_rel`.
         """
         return self.w == self.pop.condorcet_winner_ut_rel
 
@@ -494,7 +494,7 @@ class ElectionResult(MyLog.MyLog):
     def w_is_not_condorcet_winner_ut_rel(self):
         """Boolean. True iff the sincere winner
         :attr:`~svvamp.ElectionResult.w` is not a
-        :attr:`svvamp.Population.condorcet_winner_ut_rel`
+        :attr:`~svvamp.Population.condorcet_winner_ut_rel`
         (whether one exists or not).
         """
         return not self.w_is_condorcet_winner_ut_rel
@@ -503,7 +503,7 @@ class ElectionResult(MyLog.MyLog):
     def w_missed_condorcet_winner_ut_rel(self):
         """Boolean. True iff the sincere winner
         :attr:`~svvamp.ElectionResult.w` is not the
-        :attr:`svvamp.Population.condorcet_winner_ut_rel`,
+        :attr:`~svvamp.Population.condorcet_winner_ut_rel`,
         despite the fact that she exists.
         """
         return (not np.isnan(self.pop.condorcet_winner_ut_rel) and
@@ -513,7 +513,7 @@ class ElectionResult(MyLog.MyLog):
     def w_is_condorcet_winner_ut_abs_ctb(self):
         """Boolean. True iff the sincere winner
         :attr:`~svvamp.ElectionResult.w` is a
-        :attr:`svvamp.Population.condorcet_winner_ut_abs_ctb`.
+        :attr:`~svvamp.Population.condorcet_winner_ut_abs_ctb`.
         """
         return self.w == self.pop.condorcet_winner_ut_abs_ctb
 
@@ -521,7 +521,7 @@ class ElectionResult(MyLog.MyLog):
     def w_is_not_condorcet_winner_ut_abs_ctb(self):
         """Boolean. True iff the sincere winner
         :attr:`~svvamp.ElectionResult.w` is not a
-        :attr:`svvamp.Population.condorcet_winner_ut_abs_ctb`
+        :attr:`~svvamp.Population.condorcet_winner_ut_abs_ctb`
         (whether one exists or not).
         """
         return not self.w_is_condorcet_winner_ut_abs_ctb
@@ -530,7 +530,7 @@ class ElectionResult(MyLog.MyLog):
     def w_missed_condorcet_winner_ut_abs_ctb(self):
         """Boolean. True iff the sincere winner
         :attr:`~svvamp.ElectionResult.w` is not the
-        :attr:`svvamp.Population.condorcet_winner_ut_abs_ctb`,
+        :attr:`~svvamp.Population.condorcet_winner_ut_abs_ctb`,
         despite the fact that she exists.
         """
         return (not np.isnan(self.pop.condorcet_winner_ut_abs_ctb) and
@@ -540,7 +540,7 @@ class ElectionResult(MyLog.MyLog):
     def w_is_condorcet_winner_ut_abs(self):
         """Boolean. True iff the sincere winner
         :attr:`~svvamp.ElectionResult.w` is a
-        :attr:`svvamp.Population.condorcet_winner_ut_abs`.
+        :attr:`~svvamp.Population.condorcet_winner_ut_abs`.
         """
         return self.w == self.pop.condorcet_winner_ut_abs
 
@@ -548,7 +548,7 @@ class ElectionResult(MyLog.MyLog):
     def w_is_not_condorcet_winner_ut_abs(self):
         """Boolean. True iff the sincere winner
         :attr:`~svvamp.ElectionResult.w` is not a
-        :attr:`svvamp.Population.condorcet_winner_ut_abs`
+        :attr:`~svvamp.Population.condorcet_winner_ut_abs`
         (whether one exists or not).
         """
         return not self.w_is_condorcet_winner_ut_abs
@@ -557,7 +557,7 @@ class ElectionResult(MyLog.MyLog):
     def w_missed_condorcet_winner_ut_abs(self):
         """Boolean. True iff the sincere winner
         :attr:`~svvamp.ElectionResult.w` is not the
-        :attr:`svvamp.Population.condorcet_winner_ut_abs`,
+        :attr:`~svvamp.Population.condorcet_winner_ut_abs`,
         despite the fact that she exists.
         """
         return (not np.isnan(self.pop.condorcet_winner_ut_abs) and
@@ -567,7 +567,7 @@ class ElectionResult(MyLog.MyLog):
     def w_is_resistant_condorcet_winner(self):
         """Boolean. True iff the sincere winner
         :attr:`~svvamp.ElectionResult.w` is a
-        :attr:`svvamp.Population.resistant_condorcet_winner`.
+        :attr:`~svvamp.Population.resistant_condorcet_winner`.
         """
         return self.w == self.pop.resistant_condorcet_winner
 
@@ -575,7 +575,7 @@ class ElectionResult(MyLog.MyLog):
     def w_is_not_resistant_condorcet_winner(self):
         """Boolean. True iff the sincere winner
         :attr:`~svvamp.ElectionResult.w` is not a
-        :attr:`svvamp.Population.resistant_condorcet_winner`
+        :attr:`~svvamp.Population.resistant_condorcet_winner`
         (whether one exists or not).
         """
         return not self.w_is_resistant_condorcet_winner
@@ -584,7 +584,7 @@ class ElectionResult(MyLog.MyLog):
     def w_missed_resistant_condorcet_winner(self):
         """Boolean. True iff the sincere winner
         :attr:`~svvamp.ElectionResult.w` is not the
-        :attr:`svvamp.Population.resistant_condorcet_winner`,
+        :attr:`~svvamp.Population.resistant_condorcet_winner`,
         despite the fact that she exists.
         """
         return (not np.isnan(self.pop.resistant_condorcet_winner) and

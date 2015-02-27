@@ -15,7 +15,7 @@ Create an election, using Instant-Runoff Voting::
 Ask SVVAMP whether the voting system meets the Condorcet criterion (in
 general, not for this particular population)::
 
-    print(election.meets_Condorcet_c)
+    print(election.meets_Condorcet_c_rk)
 
 ------------------------
 Coalitional Manipulation
@@ -118,7 +118,7 @@ whether ``v`` can and want to manipulate for ``c``.
 Independence of Irrelevant Alternatives
 ---------------------------------------
 
-Cf. :meth:`~svvamp.Election.not_IIA_complete` for a definition of this notion.
+Cf. :meth:`~svvamp.Election.not_IIA_full` for a definition of this notion.
 
 Modify the option in order to compute IIA with an exact (non-polynomial)
 algorithm::
@@ -135,7 +135,7 @@ SVVAMP returns a boolean (whether the election violates IIA) and a string
 
 You can ask more information about IIA::
 
-    print(election.not_IIA_complete())
+    print(election.not_IIA_full())
 
 If the election violates IIA, then SVVAMP provides an example of subset of
 candidates violating IIA and the corresponding winner.
