@@ -124,14 +124,31 @@ class Population(MyLog.MyLog):
         self._log_identity = "POPULATION"
 
         # Basic variables
-        if preferences_ut is not None:
+        if preferences_ut is None:
+            # Population defined by rankings only
+            self._preferences_ut = None
+            self._preferences_rk = np.array(preferences_rk)
+            self._V, self._C = self._preferences_rk.shape
+        elif preferences_rk is None:
+            # Population defined by utilities only
             self._preferences_ut = np.array(preferences_ut)
             self._preferences_rk = None
             self._V, self._C = self._preferences_ut.shape
         else:
-            self._preferences_ut = None
+            # Population defined by both
+            self._preferences_ut = np.array(preferences_ut)
             self._preferences_rk = np.array(preferences_rk)
-            self._V, self._C = self._preferences_rk.shape
+            self._V, self._C = self._preferences_ut.shape
+            V_temp, C_temp = self._preferences_rk.shape
+            if self._V != V_temp or self._C != C_temp:
+                raise ValueError('Dimensions of preferences_ut and '
+                                 'preferences_rk do not match.')
+            for v in range(self._V):
+                if np.any(self._preferences_ut[0, self._preferences_rk[0, :-1]]
+                          < self._preferences_ut[0, self._preferences_rk[0, 1:]]):
+                    raise ValueError('preferences_ut and preferences_rk '
+                                     'are not coherent.')
+
         self._labels_candidates = labels_candidates
         # Missing matrices will be computed this way (on demand):
         # If preferences_ut is provided:
