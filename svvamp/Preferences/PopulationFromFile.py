@@ -18,6 +18,46 @@ This file is part of SVVAMP.
 
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
+
+==============
+
+The function preflib_to_preferences_utilities below is adapted from
+PreflibUtils.py by Nicholas Mattei. We reproduce its license here.
+
+	File: 	PrefLibUtilities.py
+	Author:	Nicholas Mattei (nicholas.mattei@nicta.com.au)
+	Date:	April 4, 2013
+			November 6th, 2013
+
+  * Copyright (c) 2014, Nicholas Mattei and NICTA
+  * All rights reserved.
+  *
+  * Developed by: Nicholas Mattei
+  *               NICTA
+  *               http://www.nickmattei.net
+  *               http://www.preflib.org
+  *
+  * Redistribution and use in source and binary forms, with or without
+  * modification, are permitted provided that the following conditions are met:
+  *     * Redistributions of source code must retain the above copyright
+  *       notice, this list of conditions and the following disclaimer.
+  *     * Redistributions in binary form must reproduce the above copyright
+  *       notice, this list of conditions and the following disclaimer in the
+  *       documentation and/or other materials provided with the distribution.
+  *     * Neither the name of NICTA nor the
+  *       names of its contributors may be used to endorse or promote products
+  *       derived from this software without specific prior written permission.
+  *
+  * THIS SOFTWARE IS PROVIDED BY NICTA ''AS IS'' AND ANY
+  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+  * DISCLAIMED. IN NO EVENT SHALL NICTA BE LIABLE FOR ANY
+  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
 import numpy as np
@@ -126,7 +166,8 @@ class PopulationFromFile(Population):
 
 
 def preflib_to_preferences_utilities(file_name):
-    # TODO: Add precise copyright, license, etc. Cf. PreflibUtils.py
+    # TODO: Is the copyright mention above enough? Ask Nicholas Mattei.
+    # PreflibUtils.py
     input_file = open(file_name, 'r')
     # Number of candidates
     l = input_file.readline()
@@ -183,7 +224,8 @@ def preflib_to_preferences_utilities(file_name):
 
 
 if __name__ == '__main__':
-    pop = PopulationFromFile('../In/example_ballots.t.csv',
+    # pop = PopulationFromFile('ED-00001-00000001.soi')
+    pop = PopulationFromFile('example_ballots.t.csv',
                              absolute_noise=0.5)
     # preferences_ut = pop.preferences_ut[:, 0:3]
     # preferences_ut -= np.mean(preferences_ut, 1)[:, np.newaxis]

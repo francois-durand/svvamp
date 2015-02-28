@@ -32,7 +32,7 @@ class PopulationEuclideanBox(Population):
 
     _layout_name = 'Euclidean box'
 
-    def __init__(self, V, C, box_dimensions, shift):
+    def __init__(self, V, C, box_dimensions, shift=None):
         """Population with 'Euclidean box' model.
 
         :param V: Integer. Number of voters.
