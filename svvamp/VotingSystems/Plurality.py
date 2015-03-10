@@ -129,6 +129,7 @@ class Plurality(PluralityResult, Election):
         )
 
         self._candidates_IM = np.any(self._v_IM_for_c, 0)
+        self._voters_IM = np.any(self._v_IM_for_c, 1)
         self._is_IM = np.any(self._candidates_IM)
 
     def _compute_IM_v(self, v, c_is_wanted, stop_if_true):
