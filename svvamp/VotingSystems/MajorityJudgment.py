@@ -127,7 +127,7 @@ class MajorityJudgment(MajorityJudgmentResult, Election):
         self._meets_IgnMC_c_ctb = True
 
         self._precheck_UM = False
-        self._precheck_TM = False
+        self._precheck_TM = True
         self._precheck_ICM = False
 
     def _create_result(self, pop_test):
@@ -194,6 +194,13 @@ class MajorityJudgment(MajorityJudgmentResult, Election):
                 return
 
     #%% Coalition Manipulation (CM)
+
+    def _CM_preliminary_checks_c_subclass(self, c, optimize_bounds):
+        if self.TM_c(c)[0] == False:
+            self._update_necessary(self._necessary_coalition_size_CM,c,
+                                   self.pop.matrix_duels_ut[c, self.w] + 1,
+                                   'CM: Preliminary checks: not TM => \n    '
+                                   '_necessary_coalition_size_CM[c] = n_m+1 =')
 
     def _CM_main_work_c(self, c, optimize_bounds):
         # In fact, in sorted_sincere, there will be sincere voters and one
@@ -279,58 +286,80 @@ class MajorityJudgment(MajorityJudgmentResult, Election):
 
     #%% Trivial Manipulation (TM)
 
-    def TM(self):
-        """Trivial manipulation, incomplete mode.
+    # def TM(self):
+    #     """Trivial manipulation, incomplete mode.
+    #
+    #     Returns:
+    #     is_TM -- Boolean (or NaN). True if TM is possible, False otherwise. If
+    #         the algorithm cannot decide, then NaN.
+    #     log_TM -- String. Parameters used to compute TM.
+    #     """
+    #     return self.CM()
+    #
+    # def TM_c(self, c):
+    #     """Trivial manipulation, focus on one candidate.
+    #
+    #     Arguments:
+    #     c -- Integer. The candidate for whom we want to manipulate.
+    #
+    #     Returns:
+    #     is_TM_c -- Boolean (or NaN). True if TM for candidate c is possible,
+    #         False otherwise. If the algorithm cannot decide, then NaN.
+    #     log_TM -- String. Parameters used to compute TM.
+    #     """
+    #     return self.CM_c(c)
+    #
+    # def TM_with_candidates(self):
+    #     """Trivial manipulation, complete mode.
+    #
+    #     For ordinal voting systems, we call 'trivial manipulation' for
+    #     candidate c against w the fact of putting c on top (compromising), w
+    #     at bottom (burying), while keeping a sincere order on other candidates.
+    #
+    #     For cardinal voting systems, we call 'trivial manipulation' for c
+    #     (against w) the fact of putting the maximum grade for c and the
+    #     minimum grade for other candidates.
+    #
+    #     In both cases, the intuitive idea is the following: if I want to
+    #     make c win and I only know that candidate w is 'dangerous' (but I know
+    #     nothing else), then trivial manipulation is my 'best' strategy.
+    #
+    #     We say that a situation is "trivially manipulable" for c (implicitly:
+    #     by coalition) iff, when all voters preferring c to the sincere winner w
+    #     use trivial manipulation, candidate c wins.
+    #
+    #     Returns:
+    #     is_TM -- Boolean (or NaN). True if TM is possible, False otherwise. If
+    #         the algorithm cannot decide, then NaN.
+    #     log_TM -- String. Parameters used to compute TM.
+    #     candidates_TM -- 1d array of booleans (or NaN). candidates_TM[c]
+    #         is True if a TM for candidate c is possible, False otherwise. If
+    #         the algorithm cannot decide, then NaN. By convention,
+    #         candidates_TM[w] = False.
+    #     """
+    #     return self.CM_with_candidates()
 
-        Returns:
-        is_TM -- Boolean (or NaN). True if TM is possible, False otherwise. If
-            the algorithm cannot decide, then NaN.
-        log_TM -- String. Parameters used to compute TM.
-        """
-        return self.CM()
-
-    def TM_c(self, c):
-        """Trivial manipulation, focus on one candidate.
-
-        Arguments:
-        c -- Integer. The candidate for whom we want to manipulate.
-
-        Returns:
-        is_TM_c -- Boolean (or NaN). True if TM for candidate c is possible,
-            False otherwise. If the algorithm cannot decide, then NaN.
-        log_TM -- String. Parameters used to compute TM.
-        """
-        return self.CM_c(c)
-
-    def TM_with_candidates(self):
-        """Trivial manipulation, complete mode.
-
-        For ordinal voting systems, we call 'trivial manipulation' for
-        candidate c against w the fact of putting c on top (compromising), w
-        at bottom (burying), while keeping a sincere order on other candidates.
-
-        For cardinal voting systems, we call 'trivial manipulation' for c
-        (against w) the fact of putting the maximum grade for c and the
-        minimum grade for other candidates.
-
-        In both cases, the intuitive idea is the following: if I want to
-        make c win and I only know that candidate w is 'dangerous' (but I know
-        nothing else), then trivial manipulation is my 'best' strategy.
-
-        We say that a situation is "trivially manipulable" for c (implicitly:
-        by coalition) iff, when all voters preferring c to the sincere winner w
-        use trivial manipulation, candidate c wins.
-
-        Returns:
-        is_TM -- Boolean (or NaN). True if TM is possible, False otherwise. If
-            the algorithm cannot decide, then NaN.
-        log_TM -- String. Parameters used to compute TM.
-        candidates_TM -- 1d array of booleans (or NaN). candidates_TM[c]
-            is True if a TM for candidate c is possible, False otherwise. If
-            the algorithm cannot decide, then NaN. By convention,
-            candidates_TM[w] = False.
-        """
-        return self.CM_with_candidates()
+    def _TM_main_work_c(self, c):
+        ballots_test = np.copy(self.ballots)
+        ballots_test[self.v_wants_to_help_c[:, c], :] = self.min_grade
+        ballots_test[self.v_wants_to_help_c[:, c], c] = self.max_grade
+        scores_test = np.zeros((2, self.pop.C))
+        scores_test[0, :] = np.median(ballots_test, 0)
+        for d in range(self.pop.C):
+            p = np.sum(ballots_test[:, d] > scores_test[0, d])
+            q = np.sum(ballots_test[:, d] < scores_test[0, d])
+            if q >= p:
+                scores_test[1, d] = -q
+            else:
+                scores_test[1, d] = p
+        candidates_by_scores_best_to_worst_test = \
+                        np.lexsort((
+                            np.array(range(self.pop.C))[::-1],
+                            scores_test[1, :],
+                            scores_test[0, :]
+                        ))[::-1]
+        w_test = candidates_by_scores_best_to_worst_test[0]
+        self._candidates_TM[c] = (w_test == c)
 
     #%% Unison Manipulation (UM)
 
