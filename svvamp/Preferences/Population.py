@@ -34,8 +34,6 @@ class _Storage:
 
 class Population(MyLog.MyLog):
 
-    #TODO: implement majority_favorite and co, since they are in doc
-
     def __init__(self, preferences_ut=None, preferences_rk=None,
                  log_creation=None, labels_candidates=None):
         """Create a population with preferences. 
@@ -191,6 +189,10 @@ class Population(MyLog.MyLog):
         self._condorcet_winner_ut_abs = None
         self._resistant_condorcet_winner = None
         self._threshold_c_prevents_w_Condorcet_ut_abs = None
+        self._majority_favorite_rk_ctb = None
+        self._majority_favorite_rk = None
+        self._majority_favorite_ut = None
+        self._majority_favorite_ut_ctb = None
         self._total_utility_c = None
         self._total_utility_min = None
         self._total_utility_mean = None
@@ -1020,6 +1022,140 @@ class Population(MyLog.MyLog):
                         self._threshold_c_prevents_w_Condorcet_ut_abs, 0)
         return self._threshold_c_prevents_w_Condorcet_ut_abs
 
+    #%% Majority favorite
+
+    @property
+    def majority_favorite_rk_ctb(self):
+        """Integer or ``NaN``. Candidate who has stricly more than V/2 in 
+        :attr:`~svvamp.Population.plurality_scores_rk`. Can also be candidate 0
+        with exactly V/2. If there is no such candidate, then ``NaN``.
+        
+        .. seealso:: :attr:`~svvamp.Population.exists_majority_favorite_rk_ctb`,
+                     :attr:`~svvamp.Population.not_exists_majority_favorite_rk_ctb`.
+        """
+        if self._majority_favorite_rk_ctb is None:
+            self._mylog("Compute majority favorite (rk_ctb)", 1)
+            c = np.argmax(self.plurality_scores_rk)
+            score_c = self.plurality_scores_rk[c]
+            if score_c > self.V / 2 or (c == 0 and score_c == self.V / 2):
+                self._majority_favorite_rk_ctb = c
+            else:
+                self._majority_favorite_rk_ctb = np.nan
+        return self._majority_favorite_rk_ctb
+
+    @property
+    def exists_majority_favorite_rk_ctb(self):
+        """Boolean (``True`` iff there is a
+        :attr:`~svvamp.Population.majority_favorite_rk_ctb`).
+        """
+        return not np.isnan(self.majority_favorite_rk_ctb)
+
+    @property
+    def not_exists_majority_favorite_rk_ctb(self):
+        """Boolean (``True`` iff there is no
+        :attr:`~svvamp.Population.majority_favorite_rk_ctb`).
+        """
+        return np.isnan(self.majority_favorite_rk_ctb)
+
+    @property
+    def majority_favorite_ut_ctb(self):
+        """Integer or ``NaN``. Candidate who has stricly more than V/2 in 
+        :attr:`~svvamp.Population.plurality_scores_ut`. Can also be candidate 0
+        with exactly V/2. If there is no such candidate, then ``NaN``.
+        
+        .. seealso:: :attr:`~svvamp.Population.exists_majority_favorite_ut_ctb`,
+                     :attr:`~svvamp.Population.not_exists_majority_favorite_ut_ctb`.
+        """
+        if self._majority_favorite_ut_ctb is None:
+            self._mylog("Compute majority favorite (ut_ctb)", 1)
+            c = np.argmax(self.plurality_scores_ut)
+            score_c = self.plurality_scores_ut[c]
+            if score_c > self.V / 2 or (c == 0 and score_c == self.V / 2):
+                self._majority_favorite_ut_ctb = c
+            else:
+                self._majority_favorite_ut_ctb = np.nan
+        return self._majority_favorite_ut_ctb
+
+    @property
+    def exists_majority_favorite_ut_ctb(self):
+        """Boolean (``True`` iff there is a
+        :attr:`~svvamp.Population.majority_favorite_ut_ctb`).
+        """
+        return not np.isnan(self.majority_favorite_ut_ctb)
+
+    @property
+    def not_exists_majority_favorite_ut_ctb(self):
+        """Boolean (``True`` iff there is no
+        :attr:`~svvamp.Population.majority_favorite_ut_ctb`).
+        """
+        return np.isnan(self.majority_favorite_ut_ctb)
+    
+    @property
+    def majority_favorite_rk(self):
+        """Integer or ``NaN``. Candidate who has stricly more than V/2 in 
+        :attr:`~svvamp.Population.plurality_scores_rk`. If there is no such 
+        candidate, then ``NaN``.
+        
+        .. seealso:: :attr:`~svvamp.Population.exists_majority_favorite_rk`,
+                     :attr:`~svvamp.Population.not_exists_majority_favorite_rk`.
+        """
+        if self._majority_favorite_rk is None:
+            self._mylog("Compute majority favorite (rk)", 1)
+            c = np.argmax(self.plurality_scores_rk)
+            score_c = self.plurality_scores_rk[c]
+            if score_c > self.V / 2:
+                self._majority_favorite_rk = c
+            else:
+                self._majority_favorite_rk = np.nan
+        return self._majority_favorite_rk
+
+    @property
+    def exists_majority_favorite_rk(self):
+        """Boolean (``True`` iff there is a
+        :attr:`~svvamp.Population.majority_favorite_rk`).
+        """
+        return not np.isnan(self.majority_favorite_rk)
+
+    @property
+    def not_exists_majority_favorite_rk(self):
+        """Boolean (``True`` iff there is no
+        :attr:`~svvamp.Population.majority_favorite_rk`).
+        """
+        return np.isnan(self.majority_favorite_rk)
+    
+    @property
+    def majority_favorite_ut(self):
+        """Integer or ``NaN``. Candidate who has stricly more than V/2 in 
+        :attr:`~svvamp.Population.plurality_scores_ut`. If there is no such 
+        candidate, then ``NaN``.
+        
+        .. seealso:: :attr:`~svvamp.Population.exists_majority_favorite_ut`,
+                     :attr:`~svvamp.Population.not_exists_majority_favorite_ut`.
+        """
+        if self._majority_favorite_ut is None:
+            self._mylog("Compute majority favorite (ut)", 1)
+            c = np.argmax(self.plurality_scores_ut)
+            score_c = self.plurality_scores_ut[c]
+            if score_c > self.V / 2:
+                self._majority_favorite_ut = c
+            else:
+                self._majority_favorite_ut = np.nan
+        return self._majority_favorite_ut
+
+    @property
+    def exists_majority_favorite_ut(self):
+        """Boolean (``True`` iff there is a
+        :attr:`~svvamp.Population.majority_favorite_ut`).
+        """
+        return not np.isnan(self.majority_favorite_ut)
+
+    @property
+    def not_exists_majority_favorite_ut(self):
+        """Boolean (``True`` iff there is no
+        :attr:`~svvamp.Population.majority_favorite_ut`).
+        """
+        return np.isnan(self.majority_favorite_ut)
+    
     #%% Total utilities        
 
     @property
@@ -1482,11 +1618,15 @@ class Population(MyLog.MyLog):
         MyLog.printm("preferences_rk (reminder) =",
                      self.preferences_rk)
         print("plurality_scores_rk =", self.plurality_scores_rk)
+        print("majority_favorite_rk =", self.majority_favorite_rk)
+        print("majority_favorite_rk_ctb =", self.majority_favorite_rk_ctb)
         print("")
         MyLog.printm("preferences_borda_ut (reminder) =",
                self.preferences_borda_ut)
         print("plurality_scores_ut =", self.plurality_scores_ut)
-    
+        print("majority_favorite_ut =", self.majority_favorite_ut)
+        print("majority_favorite_ut_ctb =", self.majority_favorite_ut_ctb)
+
         MyLog.print_title("Borda scores")
         MyLog.printm("preferences_borda_rk (reminder) =",
                self.preferences_borda_rk)
@@ -1555,12 +1695,17 @@ class Population(MyLog.MyLog):
         print("condorcet_winner_ut_abs_ctb =", self.condorcet_winner_ut_abs_ctb)
 
         MyLog.print_title("Implications between Condorcet notions")
-        # Resistant Condorcet (False)
-        #  ||
-        #  V
-        # Condorcet_ut_abs (False)       ==>      Condorcet_ut_abs_ctb (False)
+        # maj_fav_ut (False)             ==>            maj_fav_ut_ctb (False)
         #  ||          ||                                     ||           ||
         #  ||          V                                      V            ||
+        #  ||         maj_fav_rk (False) ==> maj_fav_rk_ctb (False)        ||
+        #  V                         ||       ||                           ||
+        # Resistant Condorcet (False)                                      ||
+        #  ||                        ||       ||                           ||
+        #  V                         ||       ||                           V
+        # Condorcet_ut_abs (False)       ==>      Condorcet_ut_abs_ctb (False)
+        #  ||          ||            ||       ||              ||           ||
+        #  ||          V             V        V               V            ||
         #  ||       Condorcet_rk (False) ==> Condorcet_rk_ctb (False)      ||
         #  V                                                               V
         # Condorcet_ut_rel (False)       ==>      Condorcet_ut_rel_ctb (False)
@@ -1575,17 +1720,24 @@ class Population(MyLog.MyLog):
                 return '(True) '
             else:
                 return '(False)'
-        print('Resistant Condorcet ' +
-              display_bool(self.exists_resistant_condorcet_winner))
-        print(' ||\n V')
+        print('maj_fav_ut ' + display_bool(self.majority_favorite_ut) + '             ==>            '
+                                  'maj_fav_ut_ctb ' + display_bool(self.majority_favorite_ut_ctb))
+        print(' ||          ||                                     ||           ||')
+        print(' ||          V                                      V            ||')
+        print(' ||         maj_fav_rk ' + display_bool(self.majority_favorite_rk) + ' ==> '
+                                                            'maj_fav_rk_ctb '
+                                                            '' +
+              display_bool(self.majority_favorite_rk_ctb) + '        ||')
+        print(' V                         ||       ||                           ||')
+        print('Resistant Condorcet ' + display_bool(self.resistant_condorcet_winner) + '                                      ||')
+        print(' ||                        ||       ||                           ||')
+        print(' V                         ||       ||                           V')
         print('Condorcet_ut_abs ' + display_bool(
-            self.exists_condorcet_winner_ut_abs) +
-              '       ==>      Condorcet_ut_abs_ctb ' +
-              display_bool(self.exists_condorcet_winner_ut_abs_ctb))
-        print(' ||          ||                  '
-              '                   ||           ||')
-        print(' ||          V                   '
-              '                   V            ||')
+            self.condorcet_winner_ut_abs) + '       ==>      '
+                                            'Condorcet_ut_abs_ctb ' +
+              display_bool(self.condorcet_winner_ut_abs_ctb) + '')
+        print(' ||          ||            ||       ||              ||           ||')
+        print(' ||          V             V        V               V            ||')
         print(' ||       Condorcet_rk ' +
               display_bool(self.exists_condorcet_winner_rk) +
               ' ==> Condorcet_rk_ctb ' +
