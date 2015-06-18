@@ -177,6 +177,12 @@ class Population(MyLog.MyLog):
         self._matrix_victories_ut_rel_ctb = None
         self._matrix_victories_ut_abs = None
         self._matrix_victories_ut_abs_ctb = None
+        self._exists_condorcet_order_rk = None
+        self._exists_condorcet_order_rk_ctb = None
+        self._exists_condorcet_order_ut_rel = None
+        self._exists_condorcet_order_ut_rel_ctb = None
+        self._exists_condorcet_order_ut_abs = None
+        self._exists_condorcet_order_ut_abs_ctb = None
         self._condorcet_admissible_candidates = None
         self._nb_condorcet_admissible_candidates = None
         self._weak_condorcet_winners = None
@@ -593,6 +599,140 @@ class Population(MyLog.MyLog):
                         self._matrix_victories_rk_ctb[d, c] = 1
         return self._matrix_victories_rk_ctb
 
+    #%% Existence of Condorcet order
+
+    @property
+    def exists_condorcet_order_rk_ctb(self):
+        """Boolean. True iff in matrix
+        :attr:`~svvamp.Population.matrix_victories_rk_ctb`, there is a candidate
+        with C-1 victories, a candidate with C-2 victories, etc.
+
+        .. seealso:: :attr:`~svvamp.Population.not_exists_condorcet_order_rk_ctb`.
+        """
+        if self._exists_condorcet_order_rk_ctb is None:
+            self._mylog("Compute exists_condorcet_order_rk_ctb", 1)
+            temp = np.copy(self.matrix_victories_rk_ctb.sum(1))
+            temp.sort()
+            self._exists_condorcet_order_rk_ctb = np.array_equal(
+                range(self.C), temp)
+        return self._exists_condorcet_order_rk_ctb
+
+    @property
+    def not_exists_condorcet_order_rk_ctb(self):
+        """Boolean. Cf. :attr:`~svvamp.Population.exists_condorcet_order_rk_ctb`.
+        """
+        return not self.exists_condorcet_order_rk_ctb
+
+    @property
+    def exists_condorcet_order_rk(self):
+        """Boolean. True iff in matrix
+        :attr:`~svvamp.Population.matrix_victories_rk`, there is a candidate
+        with C-1 victories, a candidate with C-2 victories, etc.
+
+        .. seealso:: :attr:`~svvamp.Population.not_exists_condorcet_order_rk`.
+        """
+        if self._exists_condorcet_order_rk is None:
+            self._mylog("Compute exists_condorcet_order_rk", 1)
+            temp = np.copy(self.matrix_victories_rk.sum(1))
+            temp.sort()
+            self._exists_condorcet_order_rk = np.array_equal(
+                range(self.C), temp)
+        return self._exists_condorcet_order_rk
+
+    @property
+    def not_exists_condorcet_order_rk(self):
+        """Boolean. Cf. :attr:`~svvamp.Population.exists_condorcet_order_rk`.
+        """
+        return not self.exists_condorcet_order_rk
+
+    @property
+    def exists_condorcet_order_ut_abs(self):
+        """Boolean. True iff in matrix
+        :attr:`~svvamp.Population.matrix_victories_ut_abs`, there is a candidate
+        with C-1 victories, a candidate with C-2 victories, etc.
+
+        .. seealso:: :attr:`~svvamp.Population.not_exists_condorcet_order_ut_abs`.
+        """
+        if self._exists_condorcet_order_ut_abs is None:
+            self._mylog("Compute exists_condorcet_order_ut_abs", 1)
+            temp = np.copy(self.matrix_victories_ut_abs.sum(1))
+            temp.sort()
+            self._exists_condorcet_order_ut_abs = np.array_equal(
+                range(self.C), temp)
+        return self._exists_condorcet_order_ut_abs
+    
+    @property
+    def not_exists_condorcet_order_ut_abs(self):
+        """Boolean. Cf. :attr:`~svvamp.Population.exists_condorcet_order_ut_abs`.
+        """
+        return not self.exists_condorcet_order_ut_abs
+
+    @property
+    def exists_condorcet_order_ut_abs_ctb(self):
+        """Boolean. True iff in matrix
+        :attr:`~svvamp.Population.matrix_victories_ut_abs_ctb`, there is a candidate
+        with C-1 victories, a candidate with C-2 victories, etc.
+
+        .. seealso:: :attr:`~svvamp.Population.not_exists_condorcet_order_ut_abs_ctb`.
+        """
+        if self._exists_condorcet_order_ut_abs_ctb is None:
+            self._mylog("Compute exists_condorcet_order_ut_abs_ctb", 1)
+            temp = np.copy(self.matrix_victories_ut_abs_ctb.sum(1))
+            temp.sort()
+            self._exists_condorcet_order_ut_abs_ctb = np.array_equal(
+                range(self.C), temp)
+        return self._exists_condorcet_order_ut_abs_ctb
+
+    @property
+    def not_exists_condorcet_order_ut_abs_ctb(self):
+        """Boolean. Cf. :attr:`~svvamp.Population.exists_condorcet_order_ut_abs_ctb`.
+        """
+        return not self.exists_condorcet_order_ut_abs_ctb
+
+    @property
+    def exists_condorcet_order_ut_rel(self):
+        """Boolean. True iff in matrix
+        :attr:`~svvamp.Population.matrix_victories_ut_rel`, there is a candidate
+        with C-1 victories, a candidate with C-2 victories, etc.
+
+        .. seealso:: :attr:`~svvamp.Population.not_exists_condorcet_order_ut_rel`.
+        """
+        if self._exists_condorcet_order_ut_rel is None:
+            self._mylog("Compute exists_condorcet_order_ut_rel", 1)
+            temp = np.copy(self.matrix_victories_ut_rel.sum(1))
+            temp.sort()
+            self._exists_condorcet_order_ut_rel = np.array_equal(
+                range(self.C), temp)
+        return self._exists_condorcet_order_ut_rel
+    
+    @property
+    def not_exists_condorcet_order_ut_rel(self):
+        """Boolean. Cf. :attr:`~svvamp.Population.exists_condorcet_order_ut_rel`.
+        """
+        return not self.exists_condorcet_order_ut_rel
+
+    @property
+    def exists_condorcet_order_ut_rel_ctb(self):
+        """Boolean. True iff in matrix
+        :attr:`~svvamp.Population.matrix_victories_ut_rel_ctb`, there is a candidate
+        with C-1 victories, a candidate with C-2 victories, etc.
+
+        .. seealso:: :attr:`~svvamp.Population.not_exists_condorcet_order_ut_rel_ctb`.
+        """
+        if self._exists_condorcet_order_ut_rel_ctb is None:
+            self._mylog("Compute exists_condorcet_order_ut_rel_ctb", 1)
+            temp = np.copy(self.matrix_victories_ut_rel_ctb.sum(1))
+            temp.sort()
+            self._exists_condorcet_order_ut_rel_ctb = np.array_equal(
+                range(self.C), temp)
+        return self._exists_condorcet_order_ut_rel_ctb
+
+    @property
+    def not_exists_condorcet_order_ut_rel_ctb(self):
+        """Boolean. Cf. :attr:`~svvamp.Population.exists_condorcet_order_ut_rel_ctb`.
+        """
+        return not self.exists_condorcet_order_ut_rel_ctb
+    
     #%% Condorcet winner and variants
 
     @property
@@ -1663,9 +1803,12 @@ class Population(MyLog.MyLog):
     
         MyLog.printm("matrix_victories_rk =", self.matrix_victories_rk)
         print("condorcet_winner_rk =", self.condorcet_winner_rk)
+        print("exists_condorcet_order_rk =", self.exists_condorcet_order_rk)
     
         MyLog.printm("matrix_victories_rk_ctb =", self.matrix_victories_rk_ctb)
         print("condorcet_winner_rk_ctb =", self.condorcet_winner_rk_ctb)
+        print("exists_condorcet_order_rk_ctb =", 
+              self.exists_condorcet_order_rk_ctb)
     
         MyLog.print_title("Relative Condorcet notions (ut)")
         MyLog.printm("preferences_borda_ut (reminder) =",
@@ -1674,9 +1817,13 @@ class Population(MyLog.MyLog):
     
         MyLog.printm("matrix_victories_ut_rel =", self.matrix_victories_ut_rel)
         print("condorcet_winner_ut_rel =", self.condorcet_winner_ut_rel)
+        print("exists_condorcet_order_ut_rel =", 
+              self.exists_condorcet_order_ut_rel)
     
         MyLog.printm("matrix_victories_ut_rel_ctb =", self.matrix_victories_ut_rel_ctb)
         print("condorcet_winner_ut_rel_ctb =", self.condorcet_winner_ut_rel_ctb)
+        print("exists_condorcet_order_ut_rel_ctb =", 
+              self.exists_condorcet_order_ut_rel_ctb)
     
         MyLog.print_title("Absolute Condorcet notions (ut)")
         MyLog.printm("matrix_duels_ut (reminder) =", self.matrix_duels_ut)
@@ -1687,12 +1834,16 @@ class Population(MyLog.MyLog):
         MyLog.printm("weak_condorcet_winners =", self.weak_condorcet_winners)
         print("nb_weak_condorcet_winners =", self.nb_weak_condorcet_winners)
         print("condorcet_winner_ut_abs =", self.condorcet_winner_ut_abs)
+        print("exists_condorcet_order_ut_abs =", 
+              self.exists_condorcet_order_ut_abs)
         print("resistant_condorcet_winner =", self.resistant_condorcet_winner)
         MyLog.printm("threshold_c_prevents_w_Condorcet_ut_abs =",
                  self.threshold_c_prevents_w_Condorcet_ut_abs)
 
         MyLog.printm("matrix_victories_ut_abs_ctb =", self.matrix_victories_ut_abs_ctb)
         print("condorcet_winner_ut_abs_ctb =", self.condorcet_winner_ut_abs_ctb)
+        print("exists_condorcet_order_ut_abs_ctb =", 
+              self.exists_condorcet_order_ut_abs_ctb)
 
         MyLog.print_title("Implications between Condorcet notions")
         # maj_fav_ut (False)             ==>            maj_fav_ut_ctb (False)
