@@ -184,10 +184,15 @@ def compute_next_subset_with_w(prev_subset, n_c, n_c_r, w):
 
     Examples
     --------
-        >>> compute_next_subset_with_w(prev_subset = [0, 2, 7, 8, 9], n_c=10, n_c_r=5, w=0)
+        >>> compute_next_subset_with_w(prev_subset=[0, 2, 7, 8, 9], n_c=10, n_c_r=5, w=0)
         [0, 3, 4, 5, 6]
-        >>> compute_next_subset_with_w(prev_subset = [0, 2, 7, 8, 9], n_c=10, n_c_r=5, w=8)
+        >>> compute_next_subset_with_w(prev_subset=[0, 2, 7, 8, 9], n_c=10, n_c_r=5, w=8)
         [0, 3, 4, 5, 8]
+
+    If we have already the last subset, then the result is None:
+
+        >>> print(compute_next_subset_with_w(prev_subset=[0, 6, 7, 8, 9], n_c=10, n_c_r=5, w=0))
+        None
     """
     # TODO: this could be rewritten with an iterator.
     max_allowed_value = n_c
@@ -300,6 +305,11 @@ def compute_next_borda_clever(prev_permutation, prev_favorite, n_c):
         (array([0, 4, 1, 2, 3]), 1)
         >>> compute_next_borda_clever(prev_permutation=[4, 0, 1, 2, 3], prev_favorite=0, n_c=5)
         (array([0, 1, 3, 2, 4]), 4)
+
+    At the end of the iteration, we return (None, None):
+
+        >>> compute_next_borda_clever(prev_permutation=[4, 3, 2, 1, 0], prev_favorite=0, n_c=5)
+        (None, None)
     """
     # TODO: this could be rewritten with an iterator.
     if prev_favorite > 0:

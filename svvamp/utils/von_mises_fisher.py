@@ -55,8 +55,32 @@ def profile_vmf_aux(n_c, n_v, concentration, pole=None):
 
     Examples
     --------
-        >>> profile_vmf_aux(n_v=10, n_c=3, concentration=5, pole=[1, 0, 0]).shape
+    Typical usage:
+
+        >>> preferences_ut = profile_vmf_aux(n_v=10, n_c=3, concentration=5, pole=[1, 0, 0])
+        >>> preferences_ut.shape
         (10, 3)
+
+    If the pole is not given, it is drawn at random:
+
+        >>> preferences_ut = profile_vmf_aux(n_v=10, n_c=3, concentration=5)
+        >>> preferences_ut.shape
+        (10, 3)
+
+    With a concentration of 0, it amounts to the uniform model:
+
+        >>> preferences_ut = profile_vmf_aux(n_v=10, n_c=3, concentration=0, pole=[1, 0, 0])
+        >>> preferences_ut.shape
+        (10, 3)
+
+    With an infinite concentration, all voters are on the pole:
+
+        >>> profile_vmf_aux(n_v=5, n_c=3, concentration=np.inf, pole=[1, 0, 0])
+        array([[1, 0, 0],
+               [1, 0, 0],
+               [1, 0, 0],
+               [1, 0, 0],
+               [1, 0, 0]])
 
     References
     ----------

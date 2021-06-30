@@ -77,6 +77,13 @@ class DeleteCacheMixin:
         >>> a.x
         Big computation...
         42
+        >>> a.delete_cache(contains='x')
+        >>> a.x
+        Big computation...
+        42
+        >>> a.delete_cache(contains='blabla')
+        >>> a.x
+        42
     """
 
     # noinspection PyAttributeOutsideInit
@@ -98,7 +105,7 @@ class DeleteCacheMixin:
         cached_properties_new = self._cached_properties.copy()
         for p in self._cached_properties:
             if contains in p and p.endswith(suffix):
-                cached_properties_new.remove(p)
+                del cached_properties_new[p]
         # noinspection PyAttributeOutsideInit
         self._cached_properties = cached_properties_new
 
@@ -137,6 +144,10 @@ def property_deleting_cache(hidden_variable_name, doc=''):
         >>> my_object.my_cached_property
         Computing my_cached_property...
         'Hello everybody!'
+        >>> del my_object.some_parameter
+        >>> my_object.my_cached_property
+        Traceback (most recent call last):
+        AttributeError: 'MyClass' object has no attribute '_some_parameter'
     """
 
     def getter(self):
