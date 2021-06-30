@@ -28,15 +28,21 @@ from svvamp.preferences.profile import Profile
 class GeneratorProfileCubicUniform(GeneratorProfile):
     """Profile generator using the 'Cubic uniform' model.
 
-    :param n_v: Integer. Number of voters.
-    :param n_c: Integer. Number of candidates.
-
     Each coefficient ``preferences_ut[v, c]`` is drawn independently and uniformly in the interval [-1, 1]. The
     ordinal part of this distribution is the Impartial Culture.
 
-    >>> generator = GeneratorProfileCubicUniform(n_v=10, n_c=3)
-    >>> generator().profile_.preferences_rk.shape
-    (10, 3)
+    Parameters
+    ----------
+    n_v : int
+        Number of voters.
+    n_c : int
+        Number of candidates.
+
+    Examples
+    --------
+        >>> generator = GeneratorProfileCubicUniform(n_v=10, n_c=3)
+        >>> generator().profile_.preferences_rk.shape
+        (10, 3)
     """
 
     def __init__(self, n_v, n_c):

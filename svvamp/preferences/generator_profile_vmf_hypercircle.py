@@ -29,15 +29,23 @@ from svvamp.preferences.profile import Profile
 class GeneratorProfileVMFHypercircle(GeneratorProfile):
     """Profile generator using the Von Mises-Fisher distribution on the ``n_c - 2``-sphere
 
-    :param n_v: Integer. Number of voters.
-    :param n_c: Integer. Number of candidates.
-    :param vmf_concentration: 1d array. Denote ``k`` its size (number of 'groups'). ``vmf_concentration[i]`` is
-        the VMF concentration of group ``i``.
-    :param vmf_probability: 1d array of size ``k``. ``vmf_probability[i]`` is the probability, for a voter,
-        to be in group ``i`` (up to normalization). If ``None``, then the groups have equal probabilities.
-    :param vmf_pole: 2d array of size ``(k, n_c)``. ``vmf_pole[i, :]`` is the pole of the VMF distribution for group
-        ``i``.
+    Parameters
+    ----------
+    n_v : int
+        Number of voters.
+    n_c : int
+        Number of candidates.
+    vmf_concentration : list or ndarray
+        1d array. Denote ``k`` its size (number of 'groups'). ``vmf_concentration[i]`` is the VMF concentration of
+        group ``i``.
+    vmf_probability : list or ndarray
+        1d array of size ``k``. ``vmf_probability[i]`` is the probability, for a voter, to be in group ``i``
+        (up to normalization). If ``None``, then the groups have equal probabilities.
+    vmf_pole : ndarray
+        2d array of size ``(k, n_c)``. ``vmf_pole[i, :]`` is the pole of the VMF distribution for group ``i``.
 
+    Notes
+    -----
     We work on the ``n_c - 2``-sphere: vectors of :math:`\mathbb{R}^n_c` with Euclidean norm equal to 1 and that are
     orthogonal to [1, ...,  1]. It is a representation of the classical Von Neumann-Morgenstern utility space. Cf.
     Durand et al., 'Geometry on the Utility Sphere'.
@@ -53,15 +61,17 @@ class GeneratorProfileVMFHypercircle(GeneratorProfile):
     Once group ``i`` is chosen, then up to a normalization constant, the density of probability for a unit vector
     ``x`` is ``exp(vmf_concentration[i] vmf.pole[i, :].x)``, where ``vmf.pole[i, :].x`` is a dot product.
 
-    References:
-
-        Ulrich (1984) - Computer Generation of Distributions on the m-Sphere
-
-        Wood (1994) - Simulation of the von Mises Fisher distribution
-
+    Examples
+    --------
     >>> generator = GeneratorProfileVMFHypercircle(n_v=10, n_c=3, vmf_concentration=5)
     >>> generator().profile_.preferences_rk.shape
     (10, 3)
+
+    References
+    ----------
+        Ulrich (1984) - Computer Generation of Distributions on the m-Sphere
+
+        Wood (1994) - Simulation of the von Mises Fisher distribution
     """
 
     def __init__(self, n_v, n_c, vmf_concentration, vmf_probability=None, vmf_pole=None):

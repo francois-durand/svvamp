@@ -25,7 +25,9 @@ from svvamp.utils.cache import cached_property, DeleteCacheMixin
 class GeneratorProfile(DeleteCacheMixin):
     """A generator of profiles.
 
-    For examples, cf. :class:`GeneratorProfileEuclideanBox`.
+    Examples
+    --------
+    Cf. :class:`GeneratorProfileEuclideanBox`.
     """
 
     def __init__(self):
@@ -36,7 +38,10 @@ class GeneratorProfile(DeleteCacheMixin):
     def __call__(self):
         """Erase the cache (in particular, the last generated profile).
 
-        :return: the generator itself.
+        Returns
+        -------
+        GeneratorProfile
+            The generator itself.
         """
         self.delete_cache()
         return self
@@ -45,6 +50,9 @@ class GeneratorProfile(DeleteCacheMixin):
     def profile_(self):
         """The profile generated.
 
-        :return: A :class:`~svvamp.Profile` object.
+        Returns
+        -------
+        Profile
+            The generated profile.
         """
         raise NotImplementedError

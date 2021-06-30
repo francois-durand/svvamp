@@ -28,10 +28,17 @@ from svvamp.preferences.profile import Profile
 class GeneratorProfileSpheroid(GeneratorProfile):
     """Profile generator using the 'Spheroid' model.
 
-    :param n_v: Integer. Number of voters.
-    :param n_c: Integer. Number of candidates.
-    :param stretching: Number between 0 and ``numpy.inf`` (both included).
+    Parameters
+    ----------
+    n_v : int
+        Number of voters.
+    n_c : int
+        Number of candidates.
+    stretching : number
+        Number between 0 and ``numpy.inf`` (both included).
 
+    Notes
+    -----
     The utility vector of each voter is drawn independently and uniformly on a sphere in :math:`\\mathbb{R}^n_c`. Then,
     it is sent on the spheroid that is the image of the sphere by a dilatation of factor ``stretching`` in direction
     [1, ..., 1]. Cf. Durand et al., 'Geometry on the Utility Sphere'.
@@ -49,9 +56,11 @@ class GeneratorProfileSpheroid(GeneratorProfile):
 
     N.B.: This model gives is equivalent to a Von Mises-Fisher model with concentration = 0.
 
-    >>> generator = GeneratorProfileSpheroid(n_v=10, n_c=3, stretching=1)
-    >>> generator().profile_.preferences_rk.shape
-    (10, 3)
+    Examples
+    --------
+        >>> generator = GeneratorProfileSpheroid(n_v=10, n_c=3, stretching=1)
+        >>> generator().profile_.preferences_rk.shape
+        (10, 3)
     """
 
     def __init__(self, n_v, n_c, stretching=1):

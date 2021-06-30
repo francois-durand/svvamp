@@ -28,19 +28,28 @@ from svvamp.preferences.profile import Profile
 class GeneratorProfileLadder(GeneratorProfile):
     """Profile generator using the 'Ladder' model.
 
-    :param n_v: Integer. Number of voters.
-    :param n_c: Integer. Number of candidates.
-    :param n_rungs: Integer. Number of rungs of the ladder.
+    Parameters
+    ----------
+    n_v : int
+        Number of voters.
+    n_c : int
+        Number of candidates.
+    n_rungs : int
+        Number of rungs of the ladder.
 
+    Notes
+    -----
     Each utility ``preferences_ut[v, c]`` is drawn independently and equiprobably between ``n_rungs`` values that
     divide the interval [-1, 1] equally. For example, if ``n_rungs = 21``, then values in {-1, -0.9, ..., 1} are used.
 
     The ordinal part of this distribution is **not** the Impartial Culture. Indeed, weak orders of preference come
     with non-zero probability. This model is interesting the study the effect of voters' ties.
 
-    >>> generator = GeneratorProfileLadder(n_v=10, n_c=3, n_rungs=5)
-    >>> generator().profile_.preferences_rk.shape
-    (10, 3)
+    Examples
+    --------
+        >>> generator = GeneratorProfileLadder(n_v=10, n_c=3, n_rungs=5)
+        >>> generator().profile_.preferences_rk.shape
+        (10, 3)
     """
 
     def __init__(self, n_v, n_c, n_rungs):

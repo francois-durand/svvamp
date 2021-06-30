@@ -26,10 +26,17 @@ from svvamp.preferences.profile_from_file import ProfileFromFile
 class ProfileGeneratorNoisedFile(GeneratorProfileNoise):
     """Profile generator loading a file, then adding noise
 
-    :param file_name: String. The file for the initial profile.
-    :param relative_noise: Number.
-    :param absolute_noise: Number.
+    Parameters
+    ----------
+    file_name : str
+        The file for the initial profile.
+    relative_noise : number
+        The relative noise.
+    absolute_noise : number
+        The absolute noise
 
+    Notes
+    -----
     This class is just a combination of :class:`ProfileFromFile` and :class:`GeneratorProfileNoise`.
     """
 

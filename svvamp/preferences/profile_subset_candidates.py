@@ -27,10 +27,16 @@ from svvamp.preferences.profile import Profile
 class ProfileSubsetCandidates(Profile):
     """Sub-profile for a subset of the original candidates
 
-    :param parent_profile: A Profile.
-    :param candidates_subset: Normally a list of candidates indexes, like [0, 2, 3], but a list of booleans like
+    Parameters
+    ----------
+    parent_profile : Profile
+        The initial profile.
+    candidates_subset : list
+        Normally a list of candidates indexes, like [0, 2, 3], but a list of booleans like
         [True False True True False] should work as well. Candidates belonging to the subset.
 
+    Notes
+    -----
     N.B.: if candidates_subset is a list of integers, it must be sorted in ascending order.
 
     N.B.: in this object, candidates are re-numbered, for example [0, 1, 2]. So, if the winner of an election is w in

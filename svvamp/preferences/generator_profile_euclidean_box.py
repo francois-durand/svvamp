@@ -29,12 +29,19 @@ from svvamp.preferences.profile import Profile
 class GeneratorProfileEuclideanBox(GeneratorProfile):
     """Profile generator using the 'Euclidean box' model.
 
-    :param n_v: Integer. Number of voters.
-    :param n_c: Integer. Number of candidates.
-    :param box_dimensions: 1d array of numbers. The length of the Euclidean box along each axis.
-    :param shift: 1d array of numbers, same dimension as ``box_dimensions``. Shift for the mean position of the
-        candidates.
+    Parameters
+    ----------
+    n_v : int
+        Number of voters.
+    n_c : int
+        Number of candidates.
+    box_dimensions : list or ndarray
+        1d array of numbers. The length of the Euclidean box along each axis.
+    shift : list or ndarray
+        1d array of numbers, same dimension as ``box_dimensions``. Shift for the mean position of the candidates.
 
+    Notes
+    -----
     Denote ``n_dim`` the number of elements in ``box_dimensions``. For each voter and each candidate, a position is
     independently and uniformly drawn in a rectangular box of dimensions ``box_dimensions[0]``,... ,
     ``box_dimensions[n_dim - 1]``. If ``shift`` is used, the distribution of positions for candidates is displaced by
@@ -45,9 +52,11 @@ class GeneratorProfileEuclideanBox(GeneratorProfile):
 
     Remark: if ``n_dim = 1``, then the profile is single-peaked.
 
-    >>> generator = GeneratorProfileEuclideanBox(n_v=10, n_c=3, box_dimensions=[1])
-    >>> generator().profile_.preferences_rk.shape
-    (10, 3)
+    Examples
+    --------
+        >>> generator = GeneratorProfileEuclideanBox(n_v=10, n_c=3, box_dimensions=[1])
+        >>> generator().profile_.preferences_rk.shape
+        (10, 3)
     """
 
     def __init__(self, n_v, n_c, box_dimensions, shift=None):

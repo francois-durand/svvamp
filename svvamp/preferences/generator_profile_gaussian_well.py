@@ -29,11 +29,19 @@ from svvamp.preferences.profile import Profile
 class GeneratorProfileGaussianWell(GeneratorProfile):
     """Profile generator using the 'Gaussian well' model.
 
-    :param n_v: Integer. Number of voters.
-    :param n_c: Integer. Number of candidates.
-    :param sigma: 1d array of numbers. The variance of the gaussian distribution along each dimension.
-    :param shift: 1d array of numbers, same dimension as ``sigma``. Shift for the mean position of the candidates.
+    Parameters
+    ----------
+    n_v : int
+        Number of voters.
+    n_c : int
+        Number of candidates.
+    sigma : list or ndarray
+        1d array of numbers. The variance of the gaussian distribution along each dimension.
+    shift : list or ndarray
+        1d array of numbers, same dimension as ``sigma``. Shift for the mean position of the candidates.
 
+    Notes
+    -----
     Let us note ``n_dim`` the number of elements in ``sigma``. For voter ``v`` (resp. each candidate ``c``) and each
     axis ``i`` in ``range(n_dim)``, a position ``x_i[v]`` (resp. ``y_i[c]``) is independently drawn according to a
     normal distribution of mean 0 and variance ``sigma[i]``. If ``shift`` is used, the distribution of positions for
@@ -45,9 +53,11 @@ class GeneratorProfileGaussianWell(GeneratorProfile):
 
     Remark: if ``n_dim = 1``, the population is single-peaked.
 
-    >>> generator = GeneratorProfileGaussianWell(n_v=10, n_c=3, sigma=[1], shift=[10])
-    >>> generator().profile_.preferences_rk.shape
-    (10, 3)
+    Examples
+    --------
+        >>> generator = GeneratorProfileGaussianWell(n_v=10, n_c=3, sigma=[1], shift=[10])
+        >>> generator().profile_.preferences_rk.shape
+        (10, 3)
     """
 
     def __init__(self, n_v, n_c, sigma, shift=None):

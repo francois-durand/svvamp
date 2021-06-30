@@ -29,16 +29,25 @@ from svvamp.preferences.profile import Profile
 class GeneratorProfileVMFHypersphere(GeneratorProfile):
     """Profile generator using the Von Mises-Fisher distribution on the ``n_c - 1``-sphere
 
-    :param n_v: Integer. Number of voters.
-    :param n_c: Integer. Number of candidates.
-    :param stretching: Number between 0 and ``numpy.inf`` (both included).
-    :param vmf_concentration: 1d array. Denote ``k`` its size (number of 'groups'). ``vmf_concentration[i]`` is
-        the VMF concentration of group ``i``.
-    :param vmf_probability: 1d array of size ``k``. ``vmf_probability[i]`` is the probability, for a voter,
-        to be in group ``i`` (up to normalization). If ``None``, then the groups have equal probabilities.
-    :param vmf_pole: 2d array of size ``(k, n_c)``. ``vmf_pole[i, :]`` is the pole of the VMF distribution for group
-        ``i``.
+    Parameters
+    ----------
+    n_v : int
+        Number of voters.
+    n_c : int
+        Number of candidates.
+    stretching : number
+        Number between 0 and ``numpy.inf`` (both included).
+    vmf_concentration : list or ndarray
+        1d array. Denote ``k`` its size (number of 'groups'). ``vmf_concentration[i]`` is the VMF concentration of
+        group ``i``.
+    vmf_probability : list or ndarray
+        1d array of size ``k``. ``vmf_probability[i]`` is the probability, for a voter, to be in group ``i``
+        (up to normalization). If ``None``, then the groups have equal probabilities.
+    vmf_pole : ndarray
+        2d array of size ``(k, n_c)``. ``vmf_pole[i, :]`` is the pole of the VMF distribution for group ``i``.
 
+    Notes
+    -----
     For each voter ``c``, we draw a group ``i`` at random, according to ``vmf_probability`` (normalized beforehand if
     necessary). Then, ``v``'s utility vector is drawn according to a Von Mises-Fisher distribution of pole
     ``vmf_pole[i, :]`` and concentration ``vmf_concentration[i]``, using Ulrich's method modified by Wood.
@@ -57,15 +66,17 @@ class GeneratorProfileVMFHypersphere(GeneratorProfile):
     ``vmf_concentration[i]``, not the norm of ``vmf_pole[i]``. If ``vmf_pole`` is ``None``, then each pole is drawn
     independently and uniformly on the sphere.
 
-    References:
+    Examples
+    --------
+        >>> generator = GeneratorProfileVMFHypersphere(n_v=10, n_c=3, vmf_concentration=5)
+        >>> generator().profile_.preferences_rk.shape
+        (10, 3)
 
+    References
+    ----------
         Ulrich (1984) - Computer Generation of Distributions on the m-Sphere
 
         Wood (1994) - Simulation of the von Mises Fisher distribution
-
-    >>> generator = GeneratorProfileVMFHypersphere(n_v=10, n_c=3, vmf_concentration=5)
-    >>> generator().profile_.preferences_rk.shape
-    (10, 3)
     """
 
     def __init__(self, n_v, n_c, vmf_concentration, vmf_probability=None, vmf_pole=None, stretching=1):

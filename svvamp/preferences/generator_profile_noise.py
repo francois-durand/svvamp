@@ -28,18 +28,27 @@ from svvamp.preferences.profile import Profile
 class GeneratorProfileNoise(GeneratorProfile):
     """Profile generator adding noise to a given profile
 
-    :param base_profile: Profile. The initial profile.
-    :param relative_noise: Number.
-    :param absolute_noise: Number.
+    Parameters
+    ----------
+    base_profile : Profile
+        The initial profile.
+    relative_noise : number
+        The relative noise.
+    absolute_noise : number
+        The absolute noise
 
+    Notes
+    -----
     We compute ``total_noise = absolute_noise + relative_noise * amplitude``, where ``amplitude`` is the difference
     between the lowest and the highest utility. Then to each ``preferences_ut[v, c]``, a random noise is added which
     is drawn independently and uniformly in the interval ``[- total_noise, total_noise]``.
 
-    >>> generator = GeneratorProfileNoise(base_profile=Profile(preferences_ut=[[5, 1, 2], [4, 10, 1]]),
-    ...                                   absolute_noise=.1)
-    >>> generator().profile_.preferences_rk.shape
-    (2, 3)
+    Examples
+    --------
+        >>> generator = GeneratorProfileNoise(base_profile=Profile(preferences_ut=[[5, 1, 2], [4, 10, 1]]),
+        ...                                   absolute_noise=.1)
+        >>> generator().profile_.preferences_rk.shape
+        (2, 3)
     """
 
     def __init__(self, base_profile, relative_noise=0., absolute_noise=0.):

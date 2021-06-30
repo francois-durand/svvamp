@@ -32,9 +32,15 @@ class ProfileFromFile(Profile):
     def __init__(self, file_name, sort_voters=True):
         """Profile from a file.
 
-        :param file_name: String. The name of the file.
-        :param sort_voters: Boolean. Whether the voters should be sorted. Cf. :class:`Profile`.
+        Parameters
+        ----------
+        file_name : str
+            The name of the file.
+        sort_voters : bool
+            Whether the voters should be sorted. Cf. :class:`Profile`.
 
+        Notes
+        -----
         * If the file name ends with '.t.csv' (t = transposed format): simple table of utilities with candidates
           declared in the first column and voters declared in the first row.
         * If the file name ends with '.csv' (but not '.t.csv'), candidates must be declared in the first row and voters

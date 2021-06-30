@@ -44,18 +44,25 @@ class Profile(my_log.MyLog):
                  sort_voters=True):
         """Create a profile of voters with preferences over some candidates.
 
-        :param preferences_ut: 2d array of floats. ``preferences_ut[v, c]`` is the utility of candidate ``c`` as seen
-            by voter ``v``.
-        :param preferences_rk: 2d array of integers. ``preferences_rk[v, k]`` is the candidate at rank ``k`` for voter
-            ``v``.
-        :param log_creation: Any type (string, list...). Some comments.
-        :param labels_candidates: List of strings. Names of the candidates.
-        :param sort_voters: If True, then when the profile is created, voters are immediately sorted, first by their
+        Parameters
+        ----------
+        preferences_ut : ndarray
+            2d array of floats. ``preferences_ut[v, c]`` is the utility of candidate ``c`` as seen by voter ``v``.
+        preferences_rk : ndarray
+            2d array of integers. ``preferences_rk[v, k]`` is the candidate at rank ``k`` for voter ``v``.
+        log_creation : object
+            Any type (string, list...). Some comments.
+        labels_candidates : list of str
+            Names of the candidates.
+        sort_voters : bool
+            If True, then when the profile is created, voters are immediately sorted, first by their
             strict order of preference (their row in :attr:`~svvamp.Population.preferences_rk`), then by their weak
             order of preference (their row in :attr:`~svvamp.Population.preferences_borda_ut`). Note that two voters
             having the same strict order may have different weak orders, and vice versa. The objective of this
             sorting is to accelerate some algorithms (typically Individual Manipulation).
 
+        Notes
+        -----
         You may enter ``preferences_ut``, ``preferences_rk`` or both to define the preferences of the population.
 
         If you provide ``preferences_rk`` only, then ``preferences_ut`` is set to the corresponding Borda scores
@@ -117,8 +124,12 @@ class Profile(my_log.MyLog):
                ``Condorcet_ut_rel``, ``Condorcet_ut_rel_ctb``, ``Weak Condorcet`` and ``Condorcet-admissible`` are
                equivalent.
 
-        :attr n_c: Integer (number of candidates).
-        :attr n_v: Integer (number of voters).
+        Attributes
+        ----------
+        n_c : int
+            Number of candidates.
+        n_v : int
+            Number of voters.
         """
         super().__init__(log_identity="PROFILE")
 
@@ -1395,11 +1406,18 @@ class Profile(my_log.MyLog):
     def plot3(self, indexes=None, normalize=True, use_labels=True):
         """Plot utilities for 3 candidates (with approval limit).
 
-        :param indexes: List of 3 candidates. If None, defaults to [0, 1, 2].
-        :param normalize: Boolean. Cf. below.
-        :param use_labels: Boolean. If ``True``, then :attr:`~svvamp.Population.labels_candidates` is used to label
+        Parameters
+        ----------
+        indexes : list
+            List of 3 candidates. If None, defaults to [0, 1, 2].
+        normalize : bool
+            Cf. below.
+        use_labels : bool
+            If ``True``, then :attr:`~svvamp.Population.labels_candidates` is used to label
             the plot. Otherwise, candidates are simply represented by their index.
 
+        Notes
+        -----
         Each red point of the plot represents a voter ``v``. Its position is
         :attr:`~svvamp.Population.preferences_ut`\ ``[v, indexes]``. If ``normalize`` is ``True``, then each position
         is normalized before plotting so that its Euclidean norm is equal to 1.
@@ -1409,7 +1427,9 @@ class Profile(my_log.MyLog):
 
         Other blue circles are the frontiers between the 6 different strict total orders on the candidates.
 
-        Cf. Durand et al., 'Geometry on the Utility Space'.
+        References
+        ----------
+        Durand et al., 'Geometry on the Utility Space'.
         """
         if indexes is None:
             _indexes = [0, 1, 2]
@@ -1471,11 +1491,18 @@ class Profile(my_log.MyLog):
     def plot4(self, indexes=None, normalize=True, use_labels=True):
         """Plot utilities for 4 candidates (without approval limit).
 
-        :param indexes: List of 4 candidates. If None, defaults to [0, 1, 2, 3].
-        :param normalize: Boolean. Cf. below.
-        :param use_labels: Boolean. If ``True``, then :attr:`~svvamp.Population.labels_candidates` is used to label
+        Parameters
+        ----------
+        indexes : list
+            List of 4 candidates. If None, defaults to [0, 1, 2, 3].
+        normalize : bool
+            Cf. below.
+        use_labels : bool
+            If ``True``, then :attr:`~svvamp.Population.labels_candidates` is used to label
             the plot. Otherwise, candidates are simply represented by their index.
 
+        Notes
+        -----
         Each red point of the plot represents a voter ``v``.
 
             * :attr:`~svvamp.Population.preferences_ut`\ ``[v, indexes]`` is sent to the hyperplane that is
@@ -1489,7 +1516,9 @@ class Profile(my_log.MyLog):
 
         Blue lines are the frontiers between the 24 different strict total orders on the candidates ('permutohedron').
 
-        Cf. Durand et al., 'Geometry on the Utility Space'.
+        References
+        ----------
+        Durand et al., 'Geometry on the Utility Space'.
         """
         if indexes is None:
             _indexes = [0, 1, 2, 3]
@@ -1589,7 +1618,10 @@ class Profile(my_log.MyLog):
     def demo(self, log_depth=1):
         """Demonstrate the methods of :class:`~svvamp.Population` class.
 
-        :param log_depth: Integer from 0 (basic info) to 3 (verbose).
+        Parameters
+        ----------
+        log_depth : int
+            Integer from 0 (basic info) to 3 (verbose).
         """
         old_log_depth = self.log_depth
         self.log_depth = log_depth
