@@ -1,5 +1,5 @@
 import numpy as np
-from svvamp.Utils.Misc import is_resistant_condorcet
+from svvamp.utils.misc import is_resistant_condorcet
 
 
 def test():

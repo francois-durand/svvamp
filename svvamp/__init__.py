@@ -6,48 +6,48 @@ __version__ = '0.1.0'
 
 
 # Profile
-from .Preferences.Profile import Profile
-from .Preferences.ProfileFromFile import ProfileFromFile
-from .Preferences.ProfileSubsetCandidates import ProfileSubsetCandidates
+from .preferences.profile import Profile
+from .preferences.profile_from_file import ProfileFromFile
+from .preferences.profile_subset_candidates import ProfileSubsetCandidates
 
 # Profile Generator
-from .Preferences.GeneratorProfile import GeneratorProfile
-from .Preferences.GeneratorProfileCubicUniform import GeneratorProfileCubicUniform
-from .Preferences.GeneratorProfileEuclideanBox import GeneratorProfileEuclideanBox
-from .Preferences.GeneratorProfileGaussianWell import GeneratorProfileGaussianWell
-from .Preferences.GeneratorProfileLadder import GeneratorProfileLadder
-from .Preferences.GeneratorProfileNoise import GeneratorProfileNoise
-from .Preferences.GeneratorProfileNoisedFile import ProfileGeneratorNoisedFile
-from .Preferences.GeneratorProfileSpheroid import GeneratorProfileSpheroid
-from .Preferences.GeneratorProfileVMFHypercircle import GeneratorProfileVMFHypercircle
-from .Preferences.GeneratorProfileVMFHypersphere import GeneratorProfileVMFHypersphere
+from .preferences.generator_profile import GeneratorProfile
+from .preferences.generator_profile_cubic_uniform import GeneratorProfileCubicUniform
+from .preferences.generator_profile_euclidean_box import GeneratorProfileEuclideanBox
+from .preferences.generator_profile_gaussian_well import GeneratorProfileGaussianWell
+from .preferences.generator_profile_ladder import GeneratorProfileLadder
+from .preferences.generator_profile_noise import GeneratorProfileNoise
+from .preferences.generator_profile_noised_file import ProfileGeneratorNoisedFile
+from .preferences.generator_profile_spheroid import GeneratorProfileSpheroid
+from .preferences.generator_profile_vmf_hypercircle import GeneratorProfileVMFHypercircle
+from .preferences.generator_profile_vmf_hypersphere import GeneratorProfileVMFHypersphere
 
 # Voting Rule
-from .Rules.Rule import Rule
-from .Rules.RuleApproval import RuleApproval
-from .Rules.RuleBaldwin import RuleBaldwin
-from .Rules.RuleBorda import RuleBorda
-from .Rules.RuleBucklin import RuleBucklin
-from .Rules.RuleCondorcetSumDefeats import RuleCondorcetSumDefeats
-from .Rules.RuleCoombs import RuleCoombs
-from .Rules.RuleICRV import RuleICRV
-from .Rules.RuleIRVAverage import RuleIRVAverage
-from .Rules.RuleIRVDuels import RuleIRVDuels
-from .Rules.RuleIteratedBucklin import RuleIteratedBucklin
-from .Rules.RuleKemeny import RuleKemeny
-from .Rules.RuleKimRoush import RuleKimRoush
-from .Rules.RuleMajorityJudgment import RuleMajorityJudgment
-from .Rules.RuleMaximin import RuleMaximin
-from .Rules.RuleNanson import RuleNanson
-from .Rules.RulePlurality import RulePlurality
-from .Rules.RuleRangeVoting import RuleRangeVoting
-from .Rules.RuleRankedPairs import RuleRankedPairs
-from .Rules.RuleSchulze import RuleSchulze
-from .Rules.RuleTwoRound import RuleTwoRound
-from .Rules.RuleVeto import RuleVeto
+from .rules.rule import Rule
+from .rules.rule_approval import RuleApproval
+from .rules.rule_baldwin import RuleBaldwin
+from .rules.rule_borda import RuleBorda
+from .rules.rule_bucklin import RuleBucklin
+from .rules.rule_condorcet_sum_defeats import RuleCondorcetSumDefeats
+from .rules.rule_coombs import RuleCoombs
+from .rules.rule_icrv import RuleICRV
+from .rules.rule_irv_average import RuleIRVAverage
+from .rules.rule_irv_duels import RuleIRVDuels
+from .rules.rule_iterated_bucklin import RuleIteratedBucklin
+from .rules.rule_kemeny import RuleKemeny
+from .rules.rule_kim_roush import RuleKimRoush
+from .rules.rule_majority_judgment import RuleMajorityJudgment
+from .rules.rule_maximin import RuleMaximin
+from .rules.rule_nanson import RuleNanson
+from .rules.rule_plurality import RulePlurality
+from .rules.rule_range_voting import RuleRangeVoting
+from .rules.rule_ranked_pairs import RuleRankedPairs
+from .rules.rule_schulze import RuleSchulze
+from .rules.rule_two_round import RuleTwoRound
+from .rules.rule_veto import RuleVeto
 
 # Voting Rule: IRV Family
-from .Rules.RuleExhaustiveBallot import RuleExhaustiveBallot
-from .Rules.RuleIRV import RuleIRV
-from .Rules.RuleCondorcetAbsIRV import RuleCondorcetAbsIRV
-from .Rules.RuleCondorcetVtbIRV import RuleCondorcetVtbIRV
+from .rules.rule_exhaustive_ballot import RuleExhaustiveBallot
+from .rules.rule_irv import RuleIRV
+from .rules.rule_condorcet_abs_irv import RuleCondorcetAbsIRV
+from .rules.rule_condorcet_vtb_irv import RuleCondorcetVtbIRV
