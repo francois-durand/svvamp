@@ -23,7 +23,7 @@ import numpy as np
 import networkx as nx
 from svvamp.rules.rule import Rule
 from svvamp.utils.misc import preferences_ut_to_matrix_duels_ut
-from svvamp.utils.cache import cached_property
+from svvamp.utils.util_cache import cached_property
 from svvamp.preferences.profile import Profile
 
 

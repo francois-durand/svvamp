@@ -20,7 +20,7 @@ This file is part of SVVAMP.
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
 import numpy as np
-from svvamp.utils.cache import cached_property
+from svvamp.utils.util_cache import cached_property
 from svvamp.utils.von_mises_fisher import profile_vmf_aux
 from svvamp.preferences.generator_profile import GeneratorProfile
 from svvamp.preferences.profile import Profile

@@ -19,7 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
-from svvamp.utils.cache import cached_property
+from svvamp.utils.util_cache import cached_property
 from svvamp.preferences.profile import preferences_ut_to_preferences_rk
 from svvamp.preferences.profile import Profile
 

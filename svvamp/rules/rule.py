@@ -20,7 +20,7 @@ This file is part of SVVAMP.
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
 import numpy as np
-from svvamp.utils.cache import cached_property, DeleteCacheMixin
+from svvamp.utils.util_cache import cached_property, DeleteCacheMixin
 from svvamp.utils import my_log, type_checker
 from svvamp.utils.printing import printm, print_title, print_big_title
 from svvamp.utils.misc import compute_next_subset_with_w, compute_next_borda_clever

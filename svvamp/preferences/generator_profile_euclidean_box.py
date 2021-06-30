@@ -21,7 +21,7 @@ This file is part of SVVAMP.
 """
 import numpy as np
 from scipy.spatial import distance
-from svvamp.utils.cache import cached_property
+from svvamp.utils.util_cache import cached_property
 from svvamp.preferences.generator_profile import GeneratorProfile
 from svvamp.preferences.profile import Profile
 

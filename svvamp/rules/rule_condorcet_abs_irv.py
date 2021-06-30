@@ -21,7 +21,7 @@ This file is part of SVVAMP.
 """
 import numpy as np
 from svvamp.rules.rule import Rule
-from svvamp.utils.cache import cached_property
+from svvamp.utils.util_cache import cached_property
 from svvamp.preferences.profile import Profile
 from svvamp.utils.misc import preferences_ut_to_matrix_duels_ut
 from svvamp.rules.rule_irv import RuleIRV

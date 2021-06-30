@@ -24,7 +24,7 @@ from math import floor, ceil
 from fractions import Fraction
 from svvamp.rules.rule import Rule
 from svvamp.utils import type_checker
-from svvamp.utils.cache import cached_property
+from svvamp.utils.util_cache import cached_property
 from svvamp.preferences.profile import Profile
 
 

@@ -23,7 +23,7 @@ import numpy as np
 from math import floor, ceil
 from svvamp.rules.rule import Rule
 from svvamp.utils import type_checker
-from svvamp.utils.cache import cached_property
+from svvamp.utils.util_cache import cached_property
 from svvamp.preferences.profile import Profile
 
 

@@ -27,7 +27,7 @@ from mpl_toolkits.mplot3d import Axes3D
 
 from svvamp.utils.printing import printm, print_title
 from svvamp.utils import my_log
-from svvamp.utils.cache import cached_property
+from svvamp.utils.util_cache import cached_property
 from svvamp.utils.misc import preferences_ut_to_preferences_rk, preferences_rk_to_preferences_borda_rk, \
     preferences_ut_to_preferences_borda_ut, preferences_ut_to_matrix_duels_ut, is_resistant_condorcet
 
