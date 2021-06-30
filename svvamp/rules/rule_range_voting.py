@@ -30,9 +30,14 @@ from svvamp.preferences.profile import Profile
 class RuleRangeVoting(Rule):
     """Range Voting with Average.
 
-    :param min_grade: Number. Minimal grade allowed.
-    :param max_grade: Number. Maximal grade allowed.
-    :param step_grade: Number. Interval between two consecutive allowed grades.
+    Parameters
+    ----------
+    min_grade : number
+        Minimal grade allowed.
+    max_grade : number
+        Maximal grade allowed.
+    step_grade : number
+        Interval between two consecutive allowed grades.
 
         * If ``step_grade = 0``, all grades in the interval [:attr:`min_grade`, :attr:`max_grade`] are allowed
           ('continuous' set of grades).
@@ -40,7 +45,8 @@ class RuleRangeVoting(Rule):
           [:attr:`min_grade`, :attr:`max_grade`]. In addition, the grades :attr:`min_grade` and :attr:`max_grade` are
           always authorized, even if they are not multiples of :attr:`step_grade`.
 
-    :param rescale_grades: Boolean. Whether sincere voters rescale their utilities to produce grades.
+    rescale_grades : bool
+        Whether sincere voters rescale their utilities to produce grades.
 
         * If ``rescale_grades`` = ``True``, then each sincere voter ``v`` applies an affine transformation to send
           her utilities into the interval [:attr:`min_grade`, :attr:`max_grade`].
@@ -49,16 +55,20 @@ class RuleRangeVoting(Rule):
 
         See :attr:`ballots` for more details.
 
-    >>> import svvamp
-    >>> profile = svvamp.Profile(preferences_ut=[[10, 4, -10], [10, -10, 0], [-2, 10, -10], [-10, 10, 0], [-10, 4, 10]])
-    >>> rule = svvamp.RuleRangeVoting(min_grade=0, max_grade=1, step_grade=0, rescale_grades=True)(profile)
-    >>> print(rule.scores_)
-    [0.48 0.68 0.4 ]
-    >>> print(rule.candidates_by_scores_best_to_worst_)
-    [1 0 2]
-    >>> rule.w_
-    1
+    Examples
+    --------
+        >>> import svvamp
+        >>> profile = svvamp.Profile(preferences_ut=[[10, 4, -10], [10, -10, 0], [-2, 10, -10], [-10, 10, 0], [-10, 4, 10]])
+        >>> rule = svvamp.RuleRangeVoting(min_grade=0, max_grade=1, step_grade=0, rescale_grades=True)(profile)
+        >>> print(rule.scores_)
+        [0.48 0.68 0.4 ]
+        >>> print(rule.candidates_by_scores_best_to_worst_)
+        [1 0 2]
+        >>> rule.w_
+        1
 
+    Notes
+    -----
     Each voter attributes a grade to each candidate. By default, authorized grades are all numbers in the interval
     [:attr:`min_grade`, :attr:`max_grade`]. To use a discrete set of notes, modify attribute :attr:`step_grade`.
 

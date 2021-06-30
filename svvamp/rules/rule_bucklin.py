@@ -29,6 +29,8 @@ from svvamp.preferences.profile import Profile
 class RuleBucklin(Rule):
     """Bucklin method.
 
+    Examples
+    --------
     >>> import svvamp
     >>> profile = svvamp.Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [2, 0, 1], [2, 1, 0], [2, 1, 0]])
     >>> rule = svvamp.RuleBucklin()(profile)
@@ -41,6 +43,8 @@ class RuleBucklin(Rule):
     >>> rule.w_
     2
 
+    Notes
+    -----
     At counting round ``r``, all voters who rank candidate ``c`` in ``r``\ :sup:`th` position gives her an additional
     vote. As soon as at least one candidate has more than :attr:`n_v`/2 votes (accrued with previous rounds),
     the candidate with most votes is declared the winner. In case of a tie, the candidate with lowest index wins.
@@ -52,12 +56,12 @@ class RuleBucklin(Rule):
     * :meth:`is_tm_`: Exact in polynomial time.
     * :meth:`is_um_`: Exact in polynomial time.
 
-    References:
+    References
+    ----------
+    'The Majoritarian Compromise in large societies', Arkadii Slinko, 2002.
 
-        'The Majoritarian Compromise in large societies', Arkadii Slinko, 2002.
-
-        'Complexity of Unweighted Coalitional Manipulation under Some Common Voting Rules', Lirong Xia,
-        Michael Zuckerman, Ariel D. Procaccia, Vincent Conitzer and Jeffrey S. Rosenschein, 2009.
+    'Complexity of Unweighted Coalitional Manipulation under Some Common Voting Rules', Lirong Xia,
+    Michael Zuckerman, Ariel D. Procaccia, Vincent Conitzer and Jeffrey S. Rosenschein, 2009.
     """
 
     def __init__(self, **kwargs):

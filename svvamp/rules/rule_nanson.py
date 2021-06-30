@@ -28,18 +28,22 @@ from svvamp.preferences.profile import Profile
 class RuleNanson(Rule):
     """Nanson method.
 
-    >>> import svvamp
-    >>> profile = svvamp.Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [2, 0, 1], [2, 1, 0], [2, 1, 0]])
-    >>> rule = svvamp.RuleNanson()(profile)
-    >>> print(rule.scores_)
-    [[ 5.  2.  8.]
-     [ 2. inf  3.]
-     [inf inf  0.]]
-    >>> print(rule.candidates_by_scores_best_to_worst_)
-    [2 0 1]
-    >>> rule.w_
-    2
+    Examples
+    --------
+        >>> import svvamp
+        >>> profile = svvamp.Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [2, 0, 1], [2, 1, 0], [2, 1, 0]])
+        >>> rule = svvamp.RuleNanson()(profile)
+        >>> print(rule.scores_)
+        [[ 5.  2.  8.]
+         [ 2. inf  3.]
+         [inf inf  0.]]
+        >>> print(rule.candidates_by_scores_best_to_worst_)
+        [2 0 1]
+        >>> rule.w_
+        2
 
+    Notes
+    -----
     At each round, all candidates with a Borda score strictly lower than average are simultaneously eliminated. When
     all remaining candidates have the same Borda score, it means that the matrix of duels (for this subset of
     candidates) has only ties. Then the candidate with lowest index is declared the winner. Since a Condorcet winner
@@ -52,10 +56,10 @@ class RuleNanson(Rule):
     * :meth:`is_tm_`: Exact in polynomial time.
     * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
 
-    References:
-
-        'Complexity of and algorithms for the manipulation of Borda, Nanson's and Baldwin's voting rules',
-        Jessica Davies, George Katsirelos, Nina Narodytska, Toby Walsh and Lirong Xia, 2014.
+    References
+    ----------
+    'Complexity of and algorithms for the manipulation of Borda, Nanson's and Baldwin's voting rules',
+    Jessica Davies, George Katsirelos, Nina Narodytska, Toby Walsh and Lirong Xia, 2014.
     """
 
     def __init__(self, **kwargs):

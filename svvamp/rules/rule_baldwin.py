@@ -28,6 +28,8 @@ from svvamp.preferences.profile import Profile
 class RuleBaldwin(Rule):
     """Baldwin method.
 
+    Examples
+    --------
     >>> import svvamp
     >>> profile = svvamp.Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [2, 0, 1], [2, 1, 0], [2, 1, 0]])
     >>> rule = svvamp.RuleBaldwin()(profile)
@@ -39,6 +41,8 @@ class RuleBaldwin(Rule):
     >>> rule.w_
     2
 
+    Notes
+    -----
     Each voter provides a strict order of preference. The candidate with lowest Borda score is eliminated. Then the
     new Borda scores are computed. Etc. Ties are broken in favor of lower-index candidates: in case of a tie,
     the candidate with highest index is eliminated.
@@ -53,10 +57,10 @@ class RuleBaldwin(Rule):
     * :meth:`is_tm_`: Exact in polynomial time.
     * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
 
-    References:
-
-        'Complexity of and algorithms for the manipulation of Borda, Nanson's and Baldwin's voting rules',
-        Jessica Davies, George Katsirelos, Nina Narodytska, Toby Walsh and Lirong Xia, 2014.
+    References
+    ----------
+    'Complexity of and algorithms for the manipulation of Borda, Nanson's and Baldwin's voting rules',
+    Jessica Davies, George Katsirelos, Nina Narodytska, Toby Walsh and Lirong Xia, 2014.
     """
     def __init__(self, **kwargs):
         super().__init__(
@@ -68,7 +72,10 @@ class RuleBaldwin(Rule):
     @cached_property
     def _count_ballots_(self):
         """
-        :return: a dictionary with ``scores``, ``w``, ``candidates_by_scores_best_to_worst``
+        Returns
+        -------
+        dict
+            A dictionary with ``scores``, ``w``, ``candidates_by_scores_best_to_worst``
         """
         self.mylog("Count ballots", 1)
         scores = np.zeros((self.profile_.n_c - 1, self.profile_.n_c))

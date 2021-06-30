@@ -29,6 +29,8 @@ from svvamp.preferences.profile import Profile
 class RuleCondorcetSumDefeats(Rule):
     """Condorcet with sum of defeats.
 
+    Examples
+    --------
     >>> import svvamp
     >>> profile = svvamp.Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [2, 0, 1], [2, 1, 0], [2, 1, 0]])
     >>> rule = svvamp.RuleCondorcetSumDefeats()(profile)
@@ -39,6 +41,8 @@ class RuleCondorcetSumDefeats(Rule):
     >>> rule.w_
     2
 
+    Notes
+    -----
     An *elementary move* consists of reversing a voter's preference about a pair of candidate ``(c, d)`` (without
     demanding that her whole relation of preference stays transitive). The score for candidate ``c`` is minus the
     number of *elementary moves* needed so that ``c`` becomes a Condorcet winner. It is the same principle as

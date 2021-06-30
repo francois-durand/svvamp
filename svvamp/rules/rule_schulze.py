@@ -31,18 +31,22 @@ from svvamp.preferences.profile import Profile
 class RuleSchulze(Rule):
     """Schulze method.
 
-    >>> import svvamp
-    >>> profile = svvamp.Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [2, 0, 1], [2, 1, 0], [2, 1, 0]])
-    >>> rule = svvamp.RuleSchulze()(profile)
-    >>> print(rule.scores_)
-    [[0 3 2]
-     [2 0 2]
-     [3 5 0]]
-    >>> print(rule.candidates_by_scores_best_to_worst_)
-    [2 0 1]
-    >>> rule.w_
-    2
+    Examples
+    --------
+        >>> import svvamp
+        >>> profile = svvamp.Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [2, 0, 1], [2, 1, 0], [2, 1, 0]])
+        >>> rule = svvamp.RuleSchulze()(profile)
+        >>> print(rule.scores_)
+        [[0 3 2]
+         [2 0 2]
+         [3 5 0]]
+        >>> print(rule.candidates_by_scores_best_to_worst_)
+        [2 0 1]
+        >>> rule.w_
+        2
 
+    Notes
+    -----
     :attr:`scores_`\ ``[c, d]`` is equal to the width of the widest path from candidate ``c`` to candidate ``d`` in
     the capacited graph defined by :attr:`matrix_duels_rk`. We say that ``c`` is *better* than ``d`` if ``scores_[c,
     d]`` > ``scores_[d, c]``. Candidate ``c`` is a *potential winner* if no candidate ``d`` is *better* than ``c``.
@@ -81,21 +85,21 @@ class RuleSchulze(Rule):
         For this voting system, UM and CM are almost equivalent up to tie-breaking. For this reason,
         :attr:`um_option` and :attr:`cm_option` are linked to each other: modifying one modifies the other accordingly.
 
-    References:
+    References
+    ----------
+    'A new monotonic, clone-independent, reversal symmetric, and Condorcet-consistent single-winner election
+    method ', Markus Schulze, 2011.
 
-        'A new monotonic, clone-independent, reversal symmetric, and Condorcet-consistent single-winner election
-        method ', Markus Schulze, 2011.
+    'Schulze and Ranked-Pairs Voting are Fixed-Parameter Tractable to Bribe, Manipulate, and Control',
+    Lane A. Hemaspaandra, Rahman Lavaee and Curtis Menton, 2012.
 
-        'Schulze and Ranked-Pairs Voting are Fixed-Parameter Tractable to Bribe, Manipulate, and Control',
-        Lane A. Hemaspaandra, Rahman Lavaee and Curtis Menton, 2012.
+    'Manipulation and Control Complexity of Schulze Voting', Curtis Menton and Preetjot Singh, 2012.
 
-        'Manipulation and Control Complexity of Schulze Voting', Curtis Menton and Preetjot Singh, 2012.
+    'A Complexity-of-Strategic-Behavior Comparison between Schulze’s Rule and Ranked Pairs', David Parkes and
+    Lirong Xia, 2012.
 
-        'A Complexity-of-Strategic-Behavior Comparison between Schulze’s Rule and Ranked Pairs', David Parkes and
-        Lirong Xia, 2012.
-
-        'Coalitional Manipulation for Schulze’s Rule', Serge Gaspers, Thomas Kalinowski, Nina Narodytska and Toby
-        Walsh, 2013.
+    'Coalitional Manipulation for Schulze’s Rule', Serge Gaspers, Thomas Kalinowski, Nina Narodytska and Toby
+    Walsh, 2013.
     """
 
     def __init__(self, **kwargs):
@@ -229,13 +233,19 @@ class RuleSchulze(Rule):
         """ Manipulation algorithm: "Coalitional Manipulation for Schulze’s Rule" (Gaspers, Kalinowski, Narodytska
         and Walsh 2013).
 
-        :param matrix_duels_s: 2d array. Matrix of duels for sincere voters.
-        :param strength: 2d array. ``S[c, d]`` is the strength of the widest path from ``c`` to ``d`` (with sincere
+        Parameters
+        ----------
+        matrix_duels_s : list of list
+            2d array. Matrix of duels for sincere voters.
+        strength : list of list
+            2d array. ``S[c, d]`` is the strength of the widest path from ``c`` to ``d`` (with sincere
             voters only). Be careful, it is based on the antisymmetric matrix of duels. I.e. while
             ``_count_ballot_aux`` provides ``widest_path_s``, we need to take ``S = 2 * (widest_path_s - n_s / 2)``,
             then set ``S``'s diagonal coefficients to 0.
-        :param c: Integer (candidate). Our challenger.
-        :param n_m: Integer. Number of manipulators.
+        c : int
+            Candidate. Our challenger.
+        n_m : int
+            Number of manipulators.
         """
         candidates_not_c = np.concatenate((np.array(range(c), dtype=int),
                                            np.array(range(c + 1, self.profile_.n_c), dtype=int)))

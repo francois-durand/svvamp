@@ -28,16 +28,20 @@ from svvamp.preferences.profile import Profile
 class RulePlurality(Rule):
     """Plurality.
 
-    >>> import svvamp
-    >>> profile = svvamp.Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [2, 0, 1], [2, 1, 0], [2, 1, 0]])
-    >>> rule = svvamp.RulePlurality()(profile)
-    >>> print(rule.scores_)
-    [2 0 3]
-    >>> print(rule.candidates_by_scores_best_to_worst_)
-    [2 0 1]
-    >>> rule.w_
-    2
+    Examples
+    --------
+        >>> import svvamp
+        >>> profile = svvamp.Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [2, 0, 1], [2, 1, 0], [2, 1, 0]])
+        >>> rule = svvamp.RulePlurality()(profile)
+        >>> print(rule.scores_)
+        [2 0 3]
+        >>> print(rule.candidates_by_scores_best_to_worst_)
+        [2 0 1]
+        >>> rule.w_
+        2
 
+    Notes
+    -----
     Each voter votes for one candidate. The candidate with most votes is declared the winner. In case of a tie,
     the tied candidate with lowest index wins.
 

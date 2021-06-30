@@ -28,19 +28,23 @@ from svvamp.preferences.profile import Profile
 class RuleIRVDuels(Rule):
     """IRV with elimination duels.
 
-    >>> import svvamp
-    >>> profile = svvamp.Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [2, 0, 1], [2, 1, 0], [2, 1, 0]])
-    >>> rule = svvamp.RuleIRVDuels()(profile)
-    >>> print(rule.scores_)
-    [[ 2.  0.  3.]
-     [ 3.  2. nan]
-     [ 2. nan  3.]
-     [ 2. nan  3.]]
-    >>> print(rule.candidates_by_scores_best_to_worst_)
-    [2 0 1]
-    >>> rule.w_
-    2
+    Examples
+    --------
+        >>> import svvamp
+        >>> profile = svvamp.Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [2, 0, 1], [2, 1, 0], [2, 1, 0]])
+        >>> rule = svvamp.RuleIRVDuels()(profile)
+        >>> print(rule.scores_)
+        [[ 2.  0.  3.]
+         [ 3.  2. nan]
+         [ 2. nan  3.]
+         [ 2. nan  3.]]
+        >>> print(rule.candidates_by_scores_best_to_worst_)
+        [2 0 1]
+        >>> rule.w_
+        2
 
+    Notes
+    -----
     Principle: each round, perform a duel between the two least-favorite candidates and eliminate the loser of this
     duel.
 
@@ -61,8 +65,10 @@ class RuleIRVDuels(Rule):
     * :meth:`is_tm_`: Exact in polynomial time.
     * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
 
-    .. seealso:: :class:`RuleExhaustiveBallot`, :class:`RuleIRV`, :class:`RuleICRV`, :class:`RuleCondorcetAbsIRV`,
-                 :class:`RuleCondorcetVtbIRV`.
+    See Also
+    --------
+    :class:`RuleExhaustiveBallot`, :class:`RuleIRV`, :class:`RuleICRV`, :class:`RuleCondorcetAbsIRV`,
+    :class:`RuleCondorcetVtbIRV`.
     """
 
     def __init__(self, **kwargs):

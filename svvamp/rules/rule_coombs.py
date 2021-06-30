@@ -28,6 +28,8 @@ from svvamp.preferences.profile import Profile
 class RuleCoombs(Rule):
     """Coombs method.
 
+    Examples
+    --------
     >>> import svvamp
     >>> profile = svvamp.Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [2, 0, 1], [2, 1, 0], [2, 1, 0]])
     >>> rule = svvamp.RuleCoombs()(profile)
@@ -39,6 +41,8 @@ class RuleCoombs(Rule):
     >>> rule.w_
     2
 
+    Notes
+    -----
     The candidate who is ranked last by most voters is eliminated. Then we iterate. Ties are broken in favor of
     lower-index candidates: in case of a tie, the tied candidate with highest index is eliminated.
 
@@ -60,9 +64,9 @@ class RuleCoombs(Rule):
     * :meth:`is_um_`: For this voting system, UM and CM are equivalent. For this reason, :attr:`um_option` and
       :attr:`cm_option` are linked to each other: modifying one modifies the other accordingly.
 
-    References:
-
-        'On The Complexity of Manipulating Elections', Tom Coleman and Vanessa Teague, 2007.
+    References
+    ----------
+    'On The Complexity of Manipulating Elections', Tom Coleman and Vanessa Teague, 2007.
     """
 
     def __init__(self, **kwargs):
@@ -182,17 +186,26 @@ class RuleCoombs(Rule):
     def _cm_aux_fast(self, c, n_max, preferences_borda_s):
         """Fast algorithm used for IM and CM (which is equivalent to UM)
 
-        :param c: Integer. Candidate for which we want to manipulate.
-        :param n_max: Integer or inf. Maximum number of manipulators allowed.
+        Parameters
+        ----------
+        c : int
+            Candidate for which we want to manipulate.
+        n_max : int or inf
+            Maximum number of manipulators allowed.
 
             * IM --> put 1.
             * CM, complete and exact --> put the current value of ``sufficient_coalition_size[c] - 1`` (we want to find
                 the best value for ``sufficient_coalition_size[c]``, even if it exceeds the number of manipulators).
             * CM, otherwise --> put the number of manipulators.
 
-        :param preferences_borda_s: 2d integer. Preferences of the sincere voters (in Borda format with vtb).
-        :return: Integer or +inf, ``n_manip_fast``. If a manipulation is found with n_max manipulators or less,
-            then a sufficient number of manipulators is returned. Otherwise, it is +inf.
+        preferences_borda_s : list of list
+            Preferences of the sincere voters (in Borda format with vtb).
+
+        Returns
+        -------
+        int or inf
+            ``n_manip_fast``. If a manipulation is found with n_max manipulators or less, then a sufficient number
+            of manipulators is returned. Otherwise, it is +inf.
         """
         # Each step of the loop:
         # ^^^^^^^^^^^^^^^^^^^^^^
@@ -242,17 +255,26 @@ class RuleCoombs(Rule):
     def _cm_aux_exact(self, c, n_max, preferences_borda_s):
         """Exact algorithm used for IM and CM (which is equivalent to UM)
 
-        :param c: Integer. Candidate for which we want to manipulate.
-        :param n_max: Integer. Maximum number of manipulators allowed.
+        Parameters
+        ----------
+        c : int
+            Candidate for which we want to manipulate.
+        n_max : int
+            Maximum number of manipulators allowed.
 
             * IM --> put 1.
             * CM, complete and exact --> put the current value of ``sufficient_coalition_size[c] - 1`` (we want to find
                 the best value for ``sufficient_coalition_size[c]``, even if it exceeds the number of manipulators).
             * CM, otherwise --> put the number of manipulators.
 
-        :param preferences_borda_s: 2d integer. Preferences of the sincere voters (in Borda format).
-        :return: Integer or +inf, ``n_manip_exact``. If a manipulation is found with ``n_max`` manipulators or less,
-            the minimal sufficient number of manipulators is returned. Otherwise, it is +inf.
+        preferences_borda_s : list of list
+            Preferences of the sincere voters (in Borda format).
+
+        Returns
+        -------
+        int or inf
+            ``n_manip_exact``. If a manipulation is found with ``n_max`` manipulators or less, the minimal sufficient
+            number of manipulators is returned. Otherwise, it is +inf.
         """
         # Explore subsets that are reachable with less than the upper bound.
         # ``situations_end_r`` is a dictionary.

@@ -31,17 +31,21 @@ from svvamp.rules.rule_exhaustive_ballot import RuleExhaustiveBallot
 class RuleIRV(Rule):
     """Instant-Runoff Voting (IRV). Also known as Single Transferable Voting, Alternative Vote, Hare method.
 
-    >>> import svvamp
-    >>> profile = svvamp.Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [2, 0, 1], [2, 1, 0], [2, 1, 0]])
-    >>> rule = svvamp.RuleIRV()(profile)
-    >>> print(rule.scores_)
-    [[ 2.  0.  3.]
-     [ 2. nan  3.]]
-    >>> print(rule.candidates_by_scores_best_to_worst_)
-    [2 0 1]
-    >>> rule.w_
-    2
+    Examples
+    --------
+        >>> import svvamp
+        >>> profile = svvamp.Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [2, 0, 1], [2, 1, 0], [2, 1, 0]])
+        >>> rule = svvamp.RuleIRV()(profile)
+        >>> print(rule.scores_)
+        [[ 2.  0.  3.]
+         [ 2. nan  3.]]
+        >>> print(rule.candidates_by_scores_best_to_worst_)
+        [2 0 1]
+        >>> rule.w_
+        2
 
+    Notes
+    -----
     The candidate who is ranked first by least voters is eliminated. Then we iterate. Ties are broken in favor of
     lower-index candidates: in case of a tie, the tied candidate with highest index is eliminated.
 
@@ -67,13 +71,13 @@ class RuleIRV(Rule):
           rare obvious cases).
         * :attr:`um_option` = ``'exact'``: Non-polynomial algorithm (:math:`n_c!`) adapted from Walsh, 2010.
 
-    References:
+    References
+    ----------
+    'Single transferable vote resists strategic voting', John J. Bartholdi and James B. Orlin, 1991.
 
-        'Single transferable vote resists strategic voting', John J. Bartholdi and James B. Orlin, 1991.
+    'On The Complexity of Manipulating Elections', Tom Coleman and Vanessa Teague, 2007.
 
-        'On The Complexity of Manipulating Elections', Tom Coleman and Vanessa Teague, 2007.
-
-        'Manipulability of Single Transferable Vote', Toby Walsh, 2010.
+    'Manipulability of Single Transferable Vote', Toby Walsh, 2010.
     """
     # Exceptionally, for this voting system, we establish a pointer from the Profile object, so that the
     # manipulation results can be used by Condorcet-IRV.
@@ -96,7 +100,9 @@ class RuleIRV(Rule):
 
     def __call__(self, profile):
         """
-        :param profile: A :class:`~svvamp.Profile`.
+        Parameters
+        ----------
+        profile : Profile.
         """
         # Unplug this irv from the old profile
         if self.profile_ is not None:
@@ -467,11 +473,19 @@ class RuleIRV(Rule):
     def _um_aux_fast(self, c, n_m, preferences_borda_s):
         """Fast algorithm used for UM.
 
-        Arguments:
-        :param c: Integer. Candidate for which we want to manipulate.
-        :param n_m: Integer. Number of manipulators.
-        :param preferences_borda_s: 2d integer. Preferences of the sincere voters (in Borda format).
-        :return: tuple ``(manip_found_fast, example_path_fast)``.
+        Parameters
+        ----------
+        c : int
+            Candidate for which we want to manipulate.
+        n_m : int
+            Number of manipulators.
+        preferences_borda_s : list of list
+            Preferences of the sincere voters (in Borda format).
+
+        Returns
+        -------
+        tuple
+            ``(manip_found_fast, example_path_fast)``.
 
             * ``manip_found_fast``: Boolean. Whether a manipulation was found or not.
             * ``example_path_fast``: An example of elimination path that realizes the manipulation with ``n_m``
@@ -592,10 +606,19 @@ class RuleIRV(Rule):
     def _um_aux_exact(self, c, n_m, preferences_borda_s):
         """Exact algorithm used for UM.
 
-        :param c: Integer. Candidate for which we want to manipulate.
-        :param n_m: Integer. Number of manipulators.
-        :param preferences_borda_s: 2d integer. Preferences of the sincere voters (in Borda format).
-        :return: tuple ``(manip_found_exact, example_path)``.
+        Parameters
+        ----------
+        c : int
+            Candidate for which we want to manipulate.
+        n_m : int
+            Number of manipulators.
+        preferences_borda_s : list of list
+            Preferences of the sincere voters (in Borda format).
+
+        Returns
+        -------
+        tuple
+            ``(manip_found_exact, example_path)``.
 
             * ``manip_found_exact``: Boolean. Whether a manipulation was found or not.
             * ``example_path``: An example of elimination path that realizes the manipulation with ``n_m`` manipulators.
@@ -773,16 +796,24 @@ class RuleIRV(Rule):
     def _cm_aux_fast(self, c, n_max, preferences_borda_s):
         """Fast algorithm used for CM.
 
-        Arguments:
-        :param c: Integer. Candidate for which we want to manipulate.
-        :param n_max: Integer. Maximum number of manipulators allowed.
+        Parameters
+        ----------
+        c : int
+            Candidate for which we want to manipulate.
+        n_max : int
+            Maximum number of manipulators allowed.
 
             * CM, complete and exact --> put the current value of ``sufficient_coalition_size[c] - 1`` (we want to find
               the best value for ``sufficient_coalition_size[c]``, even if it exceeds the number of manipulators)
             * CM, otherwise --> put the number of manipulators.
 
-        :param preferences_borda_s: 2d integer. Preferences of the sincere voters (in Borda format).
-        :return: tuple ``(n_manip_fast, example_path_fast)``.
+        preferences_borda_s : list of list
+            Preferences of the sincere voters (in Borda format).
+
+        Returns
+        -------
+        tuple
+            ``(n_manip_fast, example_path_fast)``.
 
             * ``n_manip_fast``: Integer or inf. If a manipulation is found, a sufficient number of manipulators is
               returned. If no manipulation is found, it is +inf.
@@ -896,9 +927,17 @@ class RuleIRV(Rule):
     def _cm_aux_slow(self, suggested_path, preferences_borda_s):
         """'Slow' algorithm used for CM. Checks only if suggested_path works.
 
-        :param suggested_path: A suggested path of elimination.
-        :param preferences_borda_s: 2d integer. Preferences of the sincere voters (in Borda format).
-        :return: Integer, ``n_manip_slow``. Number of manipulators needed to manipulate with ``suggested_path``.
+        Parameters
+        ----------
+        suggested_path : list
+            A suggested path of elimination.
+        preferences_borda_s : list of list
+            Preferences of the sincere voters (in Borda format).
+
+        Returns
+        -------
+        n_manip_slow : int
+            Number of manipulators needed to manipulate with ``suggested_path``.
         """
         candidates = np.array(range(self.profile_.n_c))
         is_candidate_alive = np.ones(self.profile_.n_c, dtype=np.bool)
@@ -937,19 +976,31 @@ class RuleIRV(Rule):
     def _cm_aux_exact(self, c, n_max, n_min, optimize_bounds, suggested_path, preferences_borda_s):
         """Exact algorithm used for CM.
 
-        :param c: Integer. Candidate for which we want to manipulate.
-        :param n_max: Integer. Maximum number of manipulators allowed.
+        Parameters
+        ----------
+        c : int
+            Candidate for which we want to manipulate.
+        n_max : int
+            Maximum number of manipulators allowed.
 
             * CM, optimize_bounds and exact --> put the current value of ``sufficient_coalition_size[c] - 1`` (we want
               to find the best value for ``sufficient_coalition_size[c]``, even if it exceeds the number of
               manipulators)
             * CM, otherwise --> put the number of manipulators.
 
-        :param n_min: Integer. When we know that ``n_min`` manipulators are needed (necessary coalition size).
-        :param optimize_bounds: Boolean. True iff we need to continue, even after a manipulation is found.
-        :param suggested_path: A suggested path of elimination.
-        :param preferences_borda_s: 2d integer. Preferences of the sincere voters (in Borda format).
-        :return: a tuple ``(n_manip_final, example_path, quick_escape)``.
+        n_min : int
+            When we know that ``n_min`` manipulators are needed (necessary coalition size).
+        optimize_bounds : bool
+            True iff we need to continue, even after a manipulation is found.
+        suggested_path : list
+            A suggested path of elimination.
+        preferences_borda_s : list of list
+            Preferences of the sincere voters (in Borda format).
+
+        Returns
+        -------
+        tuple
+            ``(n_manip_final, example_path, quick_escape)``.
 
             * ``n_manip_final``: Integer or +inf. If manipulation is impossible with ``<= n_max`` manipulators, it is
               +inf. If manipulation is possible (with ``<= n_max``):

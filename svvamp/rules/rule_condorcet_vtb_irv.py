@@ -31,6 +31,8 @@ from svvamp.rules.rule_irv import RuleIRV
 class RuleCondorcetVtbIRV(Rule):
     """Condorcet Instant Runoff Voting
 
+    Examples
+    --------
     >>> import svvamp
     >>> profile = svvamp.Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [2, 0, 1], [2, 1, 0], [2, 1, 0]])
     >>> rule = svvamp.RuleCondorcetVtbIRV()(profile)
@@ -41,6 +43,8 @@ class RuleCondorcetVtbIRV(Rule):
     >>> rule.w_
     2
 
+    Notes
+    -----
     Each voter must provide a strict total order. If there is a Condorcet winner (in the sense of
     :attr:`matrix_victories_rk`), then she is elected. Otherwise, :class:`IRV` is used.
 
@@ -70,10 +74,10 @@ class RuleCondorcetVtbIRV(Rule):
     * :meth:`is_tm_`: Exact in polynomial time.
     * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
 
-    References:
-
-        'Condorcet criterion, ordinality and reduction of coalitional manipulability', François Durand,
-        Fabien Mathieu and Ludovic Noirie, 2014.
+    References
+    ----------
+    'Condorcet criterion, ordinality and reduction of coalitional manipulability', François Durand,
+    Fabien Mathieu and Ludovic Noirie, 2014.
     """
 
     def __init__(self, **kwargs):
@@ -227,12 +231,21 @@ class RuleCondorcetVtbIRV(Rule):
     def _cm_aux_almost_exact(self, c, n_m, suggested_path, preferences_borda_s, matrix_duels_temp):
         """'Almost exact' algorithm used for CM.
 
-        :param c: Integer. Candidate for which we want to manipulate.
-        :param n_m: Integer. The exact number of manipulators.
-        :param suggested_path: A suggested path of elimination (for the IRV part). It must work with ``n_m``
-            manipulators.
-        :param preferences_borda_s: 2d integer. Preferences of the sincere voters (in Borda format).
-        :return: Boolean, ``manipulation_found``.
+        Parameters
+        ----------
+        c : int
+            Candidate for which we want to manipulate.
+        n_m : int
+            The exact number of manipulators.
+        suggested_path : list
+            A suggested path of elimination (for the IRV part). It must work with ``n_m`` manipulators.
+        preferences_borda_s : list of list (or ndarray)
+            Preferences of the sincere voters (in Borda format).
+
+        Returns
+        -------
+        bool
+            ``manipulation_found``.
         """
         candidates = np.array(range(self.profile_.n_c))
 

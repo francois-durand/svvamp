@@ -33,31 +33,43 @@ from svvamp.preferences.profile_subset_candidates import ProfileSubsetCandidates
 class Rule(DeleteCacheMixin, my_log.MyLog):
     """A voting rule.
 
-    :param options_parameters: it is a dictionary of allowed and default options. Allowed is a minimal check that will
+    Parameters
+    ----------
+    options_parameters : dict
+        It is a dictionary of allowed and default options. Allowed is a minimal check that will
         be performed before launching big simulations, but other checks might be performed when setting the option.
         Allowed is either a list of values, like ['lazy', 'fast', 'exact'], or a function checking if the parameter
         is correct. Example: ``{'max_grade': dict(allowed=np.isfinite, default=1), 'option_example': dict(allowed=[42,
         51], default=42)}``.
-    :param kwargs: additional keyword parameters. See :attr:`options_parameters` for
-        allowed and default options.
-    :param with_two_candidates_reduces_to_plurality: Boolean. ``True`` iff, when using this voting system with only
-        two candidates, it amounts to Plurality (with voter and candidate tie-breaking).
-    :param is_based_on_rk: Boolean. ``True`` iff this voting system is based only on strict rankings (no cardinal
-        information, indifference not allowed).
-    :param is_based_on_ut_minus1_1: Boolean. ``True`` iff:
+    kwargs
+        Additional keyword parameters. See :attr:`options_parameters` for allowed and default options.
+    with_two_candidates_reduces_to_plurality : bool
+        ``True`` iff, when using this voting system with only two candidates, it amounts to Plurality (with voter and
+        candidate tie-breaking).
+    is_based_on_rk : bool
+        ``True`` iff this voting system is based only on strict rankings (no cardinal information, indifference not
+        allowed).
+    is_based_on_ut_minus1_1 : bool
+        ``True`` iff:
 
             *   This voting system is based only on utilities (not rankings, i.e. does not depend on how voters break
                 ties in their own preferences),
             *   And for a ``c``-manipulator (IM or CM), it is optimal to pretend that ``c`` has utility 1 and other
                 candidates have utility -1.
-    :param meets_iia: Boolean. ``True`` iff this voting system meets Independence of Irrelevant Alternatives.
-    :param precheck_um: Boolean. If ``True``, then before computing CM, we check whether there is UM.
-    :param precheck_tm: Boolean. If ``True``, then before computing CM, we check whether there is TM.
-    :param precheck_icm:  Boolean. If ``True``, then before computing CM, we check whether there is ICM.
-        Remark: when the voting system meets InfMC_c_ctb, then precheck on ICM will not do better than other basic
-        prechecks.
-    :param log_identity: String. Cf. :class:`MyLog`.
+    meets_iia : bool
+        ``True`` iff this voting system meets Independence of Irrelevant Alternatives.
+    precheck_um : bool
+        If ``True``, then before computing CM, we check whether there is UM.
+    precheck_tm : bool
+        If ``True``, then before computing CM, we check whether there is TM.
+    precheck_icm : bool
+        If ``True``, then before computing CM, we check whether there is ICM. Remark: when the voting system meets
+        InfMC_c_ctb, then precheck on ICM will not do better than other basic prechecks.
+    log_identity : str
+        Cf. :class:`MyLog`.
 
+    Notes
+    -----
     This is an 'abstract' class. As an end-user, you should always use its subclasses :attr:`~svvamp.Approval`,
     :attr:`~svvamp.Plurality`, etc.
 
@@ -230,7 +242,9 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
 
     def __call__(self, profile):
         """
-        :param profile: A :class:`~svvamp.Profile`.
+        Parameters
+        ----------
+        profile : Profile
         """
         self.delete_cache(suffix='_')
         self.profile_ = profile
@@ -727,7 +741,10 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     def demo_results_(self, log_depth=1):
         """Demonstrate the methods related to the result of the election (without manipulation).
 
-        :param log_depth: Integer from 0 (basic info) to 3 (verbose).
+        Parameters
+        ----------
+        log_depth : int
+            Integer from 0 (basic info) to 3 (verbose).
         """
         old_log_depth = self.log_depth
         self.log_depth = log_depth
@@ -1018,8 +1035,15 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     def _compute_iia_aux_when_guaranteed_(self, message):
         """Auxiliary function of _compute_iia_, used when IIA is guaranteed.
 
-        :param message: String. A log message explaining why IIA is guaranteed.
-        :return: a dictionary whose keys are 'is_iia', 'example_subset_iia', 'example_winner_iia'.
+        Parameters
+        ----------
+        message : str
+            A log message explaining why IIA is guaranteed.
+
+        Returns
+        -------
+        dict
+            A dictionary whose keys are 'is_iia', 'example_subset_iia', 'example_winner_iia'.
         """
         self.mylog(message, 1)
         return {'is_iia': True, 'example_subset_iia': np.nan, 'example_winner_iia': np.nan}
@@ -1027,9 +1051,17 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     def _compute_iia_aux_(self, subset_minimum_size):
         """Auxiliary function of _compute_iia_: real work.
 
-        :param subset_minimum_size: Integer.
-        :return: a dictionary whose keys are 'is_iia', 'example_subset_iia', 'example_winner_iia'.
+        Parameters
+        ----------
+        subset_minimum_size : int
 
+        Returns
+        -------
+        dict
+            A dictionary whose keys are 'is_iia', 'example_subset_iia', 'example_winner_iia'.
+
+        Notes
+        -----
         Tests all subsets from size ``subset_minimum_size`` to ``self.iia_subset_maximum_size``. If
         ``self.iia_subset_maximum_size`` < ``C - 1``, then the algorithm may not be able to decide whether
         the election is IIA or not: in this case, we may have is_iia = NaN.
@@ -1061,11 +1093,18 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     def _compute_winner_of_subset_(self, candidates_r):
         """Compute the winner for a subset of candidates.
 
-        :param candidates_r: 1d array of integers. ``candidates_r[k]`` is the ``k``-th candidate of the subset. This
-            vector must be sorted in ascending order.
-        :return: Integer (``w_r``). Candidate who wins the sub-election defined by ``candidates_r``.
-
         This function is internally used to compute Independence of Irrelevant Alternatives (IIA).
+
+        Parameters
+        ----------
+        candidates_r : list or ndarray
+            1d array of integers. ``candidates_r[k]`` is the ``k``-th candidate of the subset. This vector must be
+            sorted in ascending order.
+
+        Returns
+        -------
+        w_r : int
+            Candidate who wins the sub-election defined by ``candidates_r``.
         """
         self.mylogv("IIA: Compute winner of subset ", candidates_r, 3)
         return candidates_r[self._copy(profile=ProfileSubsetCandidates(self.profile_, candidates_r)).w_]
@@ -1111,11 +1150,19 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     def _update_sufficient(self, sufficient_array, c, value, message=None):
         """Update an array _sufficient_coalition_size_.. for candidate c.
 
-        :param sufficient_array: An array like ``_sufficient_coalition_size_cm`` or ``_sufficient_coalition_size_icm``.
-        :param c: Integer (candidate).
-        :param value: Integer. If the number of manipulators is >= value, then manipulation (CM or ICM) is possible.
-        :param message: String. A message that can be displayed if ``sufficient_array[c]`` is actually updated.
+        Parameters
+        ----------
+        sufficient_array : list or ndaray
+            An array like ``_sufficient_coalition_size_cm`` or ``_sufficient_coalition_size_icm``.
+        c : int
+            Candidate.
+        value : int
+            If the number of manipulators is >= value, then manipulation (CM or ICM) is possible.
+        message : str
+            A message that can be displayed if ``sufficient_array[c]`` is actually updated.
 
+        Notes
+        -----
         Perform ``sufficient_array[c] = min(sufficient_array[c], value)``. If ``sufficient_array[c]`` is actually
         updated, i.e. iff ``value`` is strictly lower that the former value of ``sufficient_array[c]``, then:
         send ``message`` and ``value`` to ``self.mylogv (with detail level=3)``.
@@ -1128,11 +1175,19 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     def _update_necessary(self, necessary_array, c, value, message=None):
         """Update an array _necessary_coalition_size_.. for candidate c.
 
-        :param necessary_array: An array like ``_necessary_coalition_size_cm`` or ``_necessary_coalition_size_icm``.
-        :param c: Integer (candidate).
-        :param value: Integer. If the number of manipulators is < value, then manipulation (CM or ICM) is impossible.
-        :message: String. A message that can be displayed if ``necessary_array[c]`` is actually updated.
+        Parameters
+        ----------
+        necessary_array : list or ndarray
+            An array like ``_necessary_coalition_size_cm`` or ``_necessary_coalition_size_icm``.
+        c : int
+            Candidate.
+        value : int
+            If the number of manipulators is < value, then manipulation (CM or ICM) is impossible.
+        message : str
+            A message that can be displayed if ``necessary_array[c]`` is actually updated.
 
+        Notes
+        -----
         Perform ``necessary_array[c] = max(necessary_array[c], value)``. If ``necessary_array[c]`` is actually updated,
         i.e. iff ``value`` is strictly greater that the former value of ``necessary_array[c]``, then: send ``message``
         and ``value`` to ``self.mylogv (with detail level = 3)``.
@@ -1167,8 +1222,15 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     def is_im_c_(self, c):
         """Individual manipulation, focus on one candidate.
 
-        :param c: Integer (candidate).
-        :return: ``candidates_im[c]``.
+        Parameters
+        ----------
+        c : int
+            Candidate.
+
+        Returns
+        -------
+        bool or nan
+            ``candidates_im[c]``.
         """
         _ = self._im_is_initialized_general_
         if np.isneginf(self._candidates_im[c]):
@@ -1178,8 +1240,15 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     def is_im_c_with_voters(self, c):
         """Individual manipulation, focus on one candidate, with details.
 
-        :param c: Integer (candidate).
-        :return: (``candidates_im[c]``, ``v_im_for_c[:, c]``).
+        Parameters
+        ----------
+        c : int
+            Candidate.
+
+        Returns
+        -------
+        tuple
+            (``candidates_im[c]``, ``v_im_for_c[:, c]``).
         """
         _ = self._im_is_initialized_general_
         if np.any(np.isneginf(self._v_im_for_c[:, c])):
@@ -1221,8 +1290,15 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     def is_im_v(self, v):
         """Individual manipulation, focus on one voter.
 
-        :param v: Integer (voter).
-        :return: ``voters_im[v]``.
+        Parameters
+        ----------
+        v : int
+            Voter.
+
+        Returns
+        -------
+        bool or nan
+            ``voters_im[v]``.
         """
         _ = self._im_is_initialized_general_
         if np.isneginf(self._voters_im[v]):
@@ -1232,8 +1308,15 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     def is_im_v_with_candidates(self, v):
         """Individual manipulation, focus on one voter, with details.
 
-        :param v: Integer (voter).
-        :return: ``voters_im[v]``, ``v_im_for_c[v, :]``.
+        Parameters
+        ----------
+        v : int
+            Voter.
+
+        Returns
+        -------
+        tuple
+            (``voters_im[v]``, ``v_im_for_c[v, :]``).
         """
         _ = self._im_is_initialized_general_
         if np.any(np.isneginf(self._v_im_for_c[v, :])):
@@ -1365,14 +1448,20 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     def _im_main_work_v_(self, v, c_is_wanted, nb_wanted_undecided, stop_if_true):
         """Do the main work in IM loop for voter v.
 
-        :param v: Integer (voter).
-        :param c_is_wanted: 1d array of booleans. If for all ``c`` such that ``c_is_wanted[c]`` is True,
-            ``_v_im_for_c[v, c]`` is decided, then we are authorized to get out.
-        :param nb_wanted_undecided: Integer. Number of 'wanted' candidates ``c`` such that ``_v_im_for_c[v, c]`` is not
-            decided yet.
-        :param stop_if_true: Boolean. If True, then as soon as a True is found for a 'wanted' candidate, we are
-            authorized to get out.
+        Parameters
+        ----------
+        v : int
+            Voter.
+        c_is_wanted : list or ndarray
+            1d array of booleans. If for all ``c`` such that ``c_is_wanted[c]`` is True, ``_v_im_for_c[v, c]`` is
+            decided, then we are authorized to get out.
+        nb_wanted_undecided : int
+            Number of 'wanted' candidates ``c`` such that ``_v_im_for_c[v, c]`` is not decided yet.
+        stop_if_true : bool
+            If True, then as soon as a True is found for a 'wanted' candidate, we are authorized to get out.
 
+        Notes
+        -----
         Try to decide ``_v_im_for_c[v, :]``. At the end, ``_v_im_for_c[v, c]`` can be True, False, NaN or -inf (we may
         not have decided for all candidates).
 
@@ -1466,8 +1555,12 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     def _compute_im_(self, mode, c=None):
         """Compute IM.
 
-        :param mode: String. Name of the method calling _compute_im.
-        :param c: Integer or None. If integer, then we only want to study IM for this candidate.
+        Parameters
+        ----------
+        mode : str
+            Name of the method calling _compute_im.
+        c : int or None
+            If integer, then we only want to study IM for this candidate.
         """
         self.mylog("Compute IM", 1)
         for v in range(self.profile_.n_v):
@@ -1527,12 +1620,18 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     def _compute_im_v_(self, v, c_is_wanted, stop_if_true):
         """Compute IM for voter v.
 
-        :param v: Integer (voter).
-        :param c_is_wanted: 1d array of booleans. If for all ``c`` such that ``c_is_wanted[c]`` is True,
-            ``_v_im_for_c[v, c]`` is decided, then we are authorized to get out.
-        :param stop_if_true: Boolean. If True, then as soon as a True is found for a 'wanted' candidate,
-            we are authorized to get out.
+        Parameters
+        ----------
+        v : int
+            Voter.
+        c_is_wanted : list or ndarray
+            1d array of booleans. If for all ``c`` such that ``c_is_wanted[c]`` is True, ``_v_im_for_c[v, c]`` is
+            decided, then we are authorized to get out.
+        stop_if_true : bool
+            If True, then as soon as a True is found for a 'wanted' candidate, we are authorized to get out.
 
+        Notes
+        -----
         Try to decide ``_v_im_for_c[v, :]``. At the end, ``_v_im_for_c[v, c]`` can be True, False, NaN or -inf (we may
         have not decided for all candidates). At the end, ``_voters_im[v]`` must be consistent with what we know about
         ``_v_im_for_c[v, :]`` (True, False, NaN or -inf).
@@ -1588,8 +1687,15 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     def is_tm_c_(self, c):
         """Trivial manipulation, focus on one candidate.
 
-        :param c: Integer (candidate).
-        :return: ``candidates_tm[c]``.
+        Parameters
+        ----------
+        c : int
+            Candidate.
+
+        Returns
+        -------
+        bool or nan
+            ``candidates_tm[c]``.
         """
         _ = self._tm_is_initialized_general_
         if np.isneginf(self._candidates_tm[c]):
@@ -1860,8 +1966,15 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     def _compute_trivial_strategy_ordinal_(self, c):
         """Compute trivial strategy for an voting system based on strict rankings.
 
-        :param c: Integer. The candidate for whom we want to manipulate.
-        :return: 2d array of integers, ``preferences_test``. New Borda scores of the population. For each voter
+        Parameters
+        ----------
+        c : int
+            The candidate for whom we want to manipulate.
+
+        Returns
+        -------
+        list of list (or ndarray)
+            2d array of integers, ``preferences_test``. New Borda scores of the population. For each voter
             preferring ``c`` to ``w``, she now puts ``c`` on top, ``w`` at the bottom, and other Borda scores are
             modified accordingly.
         """
@@ -1908,8 +2021,15 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     def is_um_c_(self, c):
         """Unison manipulation, focus on one candidate.
 
-        :param c: Integer (candidate).
-        :returns: ``candidates_um[c]``
+        Parameters
+        ----------
+        c : int
+            Candidate.
+
+        Returns
+        -------
+        bool or nan
+            ``candidates_um[c]``
         """
         _ = self._um_is_initialized_general_
         if np.isneginf(self._candidates_um[c]):
@@ -2255,8 +2375,15 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     def is_icm_c_(self, c):
         """Ignorant-Coalition Manipulation, focus on one candidate.
 
-        :param c: Integer (candidate).
-        :return: ``candidates_icm[c]_``.
+        Parameters
+        ----------
+        c : int
+            Candidate.
+
+        Returns
+        -------
+        bool or nan
+            ``candidates_icm[c]_``.
         """
         _ = self._icm_is_initialized_general_
         if np.isneginf(self._candidates_icm[c]):
@@ -2266,8 +2393,15 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     def is_icm_c_with_bounds_(self, c):
         """Ignorant-Coalition Manipulation, focus on one candidate, with bounds.
 
-        :param c: Integer (candidate).
-        :return: (``candidates_icm_[c]``, ``necessary_coalition_size_icm_[c]``, ``sufficient_coalition_size_icm_[c]``).
+        Parameters
+        ----------
+        c : int
+            Candidate.
+
+        Returns
+        -------
+        tuple
+            (``candidates_icm_[c]``, ``necessary_coalition_size_icm_[c]``, ``sufficient_coalition_size_icm_[c]``).
         """
         _ = self._icm_is_initialized_general_
         if self._bounds_optimized_icm[c] == False:
@@ -2623,8 +2757,15 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     def is_cm_c_(self, c):
         """Coalition Manipulation, focus on one candidate.
 
-        :param c: Integer (candidate).
-        :returns: ``candidates_cm[c]``.
+        Parameters
+        ----------
+        c : int
+            Candidate.
+
+        Returns
+        -------
+        bool or nan
+            ``candidates_cm[c]``.
         """
         _ = self._cm_is_initialized_general_
         if np.isneginf(self._candidates_cm[c]):
@@ -2634,8 +2775,15 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     def is_cm_c_with_bounds_(self, c):
         """Coalition Manipulation, focus on one candidate, with bounds.
 
-        :param c: Integer (candidate).
-        :returns: ``candidates_cm[c]``, ``necessary_coalition_size_cm[c]``, ``sufficient_coalition_size_cm[c]``.
+        Parameters
+        ----------
+        c : int
+            Candidate.
+
+        Returns
+        -------
+        tuple
+            (``candidates_cm[c]``, ``necessary_coalition_size_cm[c]``, ``sufficient_coalition_size_cm[c]``).
         """
         _ = self._cm_is_initialized_general_
         if self._bounds_optimized_cm[c] == False:
@@ -3110,7 +3258,10 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     def demo_(self, log_depth=1):
         """Demonstrate the methods of :class:`Rule` class.
 
-        :param log_depth: Integer from 0 (basic info) to 3 (verbose).
+        Parameters
+        ----------
+        log_depth : int
+            Integer from 0 (basic info) to 3 (verbose).
         """
         self.demo_results_(log_depth=log_depth)
         old_log_depth = self.log_depth

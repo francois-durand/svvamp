@@ -31,16 +31,20 @@ from svvamp.preferences.profile import Profile
 class RuleMaximin(Rule):
     """Maximin method.
 
-    >>> import svvamp
-    >>> profile = svvamp.Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [2, 0, 1], [2, 1, 0], [2, 1, 0]])
-    >>> rule = svvamp.RuleMaximin()(profile)
-    >>> print(rule.scores_)
-    [2 0 3]
-    >>> print(rule.candidates_by_scores_best_to_worst_)
-    [2 0 1]
-    >>> rule.w_
-    2
+    Examples
+    --------
+        >>> import svvamp
+        >>> profile = svvamp.Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [2, 0, 1], [2, 1, 0], [2, 1, 0]])
+        >>> rule = svvamp.RuleMaximin()(profile)
+        >>> print(rule.scores_)
+        [2 0 3]
+        >>> print(rule.candidates_by_scores_best_to_worst_)
+        [2 0 1]
+        >>> rule.w_
+        2
 
+    Notes
+    -----
     Candidate ``c``'s score is the minimum of the row :attr:`matrix_duels_rk`\ ``[c, :]`` (except the diagonal term),
     i.e. the result of candidate ``c`` for her worst duel. The candidate with highest score is declared the winner.
     In case of a tie, the candidate with lowest index wins.
@@ -59,12 +63,12 @@ class RuleMaximin(Rule):
     * :meth:`is_tm_`: Exact in polynomial time.
     * :meth:`is_um_`: Exact in polynomial time.
 
-    References:
+    References
+    ----------
+    'Complexity of Unweighted Coalitional Manipulation under Some Common Voting Rules', Lirong Xia et al., 2009.
 
-        'Complexity of Unweighted Coalitional Manipulation under Some Common Voting Rules', Lirong Xia et al., 2009.
-
-        'An algorithm for the coalitional manipulation problem under Maximin', Michael Zuckerman, Omer Lev and
-        Jeffrey S. Rosenschein, 2011.
+    'An algorithm for the coalitional manipulation problem under Maximin', Michael Zuckerman, Omer Lev and
+    Jeffrey S. Rosenschein, 2011.
     """
 
     def __init__(self, **kwargs):
@@ -99,13 +103,25 @@ class RuleMaximin(Rule):
     def _vote_strategically_(self, matrix_duels_r, scores_r, c, weight=1):
         """Strategic vote by one elector, in favor of candidate ``c``.
 
-        :param matrix_duels_r: 2d array of integers. Diagonal coefficients must have an arbitrary value that is greater
-            than all the other ones (``+ inf`` is a good idea).
-        :param scores_r: 1d array of integers. Scores corresponding to ``matrix_duels_r``.
-        :param c: Integer (candidate).
-        :param weight: Integer. Weight of the voter (used for UM, 1 otherwise).
-        :return: None. This method modifies ``matrix_duels_r`` and ``scores_r`` IN PLACE.
+        Parameters
+        ----------
+        matrix_duels_r : list of list (or ndarray)
+            2d array of integers. Diagonal coefficients must have an arbitrary value that is greater than all the
+            other ones (``+ inf`` is a good idea).
+        scores_r : list
+            1d array of integers. Scores corresponding to ``matrix_duels_r``.
+        c : int
+            Candidate.
+        weight : int
+            Weight of the voter (used for UM, 1 otherwise).
 
+        Returns
+        -------
+        None
+            This method modifies ``matrix_duels_r`` and ``scores_r`` IN PLACE.
+
+        References
+        ----------
         Algorithm from Zuckerman et al. : An Algorithm for the Coalitional Manipulation Problem under Maximin. For
         only one elector (or unison manipulation), this algorithm is optimal.
         """

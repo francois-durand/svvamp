@@ -28,16 +28,20 @@ from svvamp.preferences.profile import Profile
 class RuleICRV(Rule):
     """Instant-Condorcet Runoff Voting (ICRV).
 
-    >>> import svvamp
-    >>> profile = svvamp.Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [2, 0, 1], [2, 1, 0], [2, 1, 0]])
-    >>> rule = svvamp.RuleICRV()(profile)
-    >>> print(rule.scores_)
-    [[1. 0. 2.]]
-    >>> print(rule.candidates_by_scores_best_to_worst_)
-    [2 0 1]
-    >>> rule.w_
-    2
+    Examples
+    --------
+        >>> import svvamp
+        >>> profile = svvamp.Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [2, 0, 1], [2, 1, 0], [2, 1, 0]])
+        >>> rule = svvamp.RuleICRV()(profile)
+        >>> print(rule.scores_)
+        [[1. 0. 2.]]
+        >>> print(rule.candidates_by_scores_best_to_worst_)
+        [2 0 1]
+        >>> rule.w_
+        2
 
+    Notes
+    -----
     Principle: eliminate candidates as in IRV; stop as soon as there is a Condorcet winner.
 
     * Even round ``r`` (including round 0): if a candidate ``w`` has only victories against all other non-eliminated
@@ -55,12 +59,14 @@ class RuleICRV(Rule):
     * :meth:`is_tm_`: Exact in polynomial time.
     * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
 
-    References:
+    References
+    ----------
+    'Four Condorcet-Hare Hybrid Methods for Single-Winner Elections', James Green-Armytage, 2011.
 
-        'Four Condorcet-Hare Hybrid Methods for Single-Winner Elections', James Green-Armytage, 2011.
-
-    .. seealso:: :class:`RuleExhaustiveBallot`, :class:`RuleIRV`, :class:`RuleIRVDuels`,
-                 :class:`RuleCondorcetAbsIRV`, :class:`RuleCondorcetVtbIRV`.
+    See Also
+    --------
+    :class:`RuleExhaustiveBallot`, :class:`RuleIRV`, :class:`RuleIRVDuels`, :class:`RuleCondorcetAbsIRV`,
+    :class:`RuleCondorcetVtbIRV`.
     """
 
     def __init__(self, **kwargs):

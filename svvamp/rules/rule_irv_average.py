@@ -28,18 +28,22 @@ from svvamp.preferences.profile import Profile
 class RuleIRVAverage(Rule):
     """Instant Runoff Voting based on Average Score (Nanson-like).
 
-    >>> import svvamp
-    >>> profile = svvamp.Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [2, 0, 1], [2, 1, 0], [2, 1, 0]])
-    >>> rule = svvamp.RuleIRVAverage()(profile)
-    >>> print(rule.scores_)
-    [[ 2.  0.  3.]
-     [ 2. inf  3.]
-     [inf inf  5.]]
-    >>> print(rule.candidates_by_scores_best_to_worst_)
-    [2 0 1]
-    >>> rule.w_
-    2
+    Examples
+    --------
+        >>> import svvamp
+        >>> profile = svvamp.Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [2, 0, 1], [2, 1, 0], [2, 1, 0]])
+        >>> rule = svvamp.RuleIRVAverage()(profile)
+        >>> print(rule.scores_)
+        [[ 2.  0.  3.]
+         [ 2. inf  3.]
+         [inf inf  5.]]
+        >>> print(rule.candidates_by_scores_best_to_worst_)
+        [2 0 1]
+        >>> rule.w_
+        2
 
+    Notes
+    -----
     At each round, all candidates with a Plurality score strictly lower than average are simultaneously eliminated.
     When all remaining candidates have the same Plurality score, the candidate with lowest index is declared the
     winner.

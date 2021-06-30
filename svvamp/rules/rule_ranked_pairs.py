@@ -29,18 +29,22 @@ from svvamp.preferences.profile import Profile
 class RuleRankedPairs(Rule):
     """Tideman's Ranked Pairs.
 
-    >>> import svvamp
-    >>> profile = svvamp.Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [2, 0, 1], [2, 1, 0], [2, 1, 0]])
-    >>> rule = svvamp.RuleRankedPairs()(profile)
-    >>> print(rule.scores_)
-    [[0. 3. 0.]
-     [0. 0. 0.]
-     [3. 5. 0.]]
-    >>> print(rule.candidates_by_scores_best_to_worst_)
-    [2, 0, 1]
-    >>> rule.w_
-    2
+    Examples
+    --------
+        >>> import svvamp
+        >>> profile = svvamp.Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [2, 0, 1], [2, 1, 0], [2, 1, 0]])
+        >>> rule = svvamp.RuleRankedPairs()(profile)
+        >>> print(rule.scores_)
+        [[0. 3. 0.]
+         [0. 0. 0.]
+         [3. 5. 0.]]
+        >>> print(rule.candidates_by_scores_best_to_worst_)
+        [2, 0, 1]
+        >>> rule.w_
+        2
 
+    Notes
+    -----
     In the matrix of duels :attr:`matrix_duels_rk`, victories (and ties) are sorted by decreasing amplitude. If two
     duels have the same score, we take first the one where the winner has the smallest index; if there is still a
     choice to make, we take first the duel where the loser has the highest index.
@@ -61,17 +65,17 @@ class RuleRankedPairs(Rule):
     * :meth:`is_tm_`: Exact in polynomial time.
     * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
 
-    References:
+    References
+    ----------
+    'Independence of clones as a criterion for voting rules', Nicolaus Tideman, 1987.
 
-        'Independence of clones as a criterion for voting rules', Nicolaus Tideman, 1987.
+    'Complexity of Unweighted Coalitional Manipulation under Some Common Voting Rules', Lirong Xia et al., 2009.
 
-        'Complexity of Unweighted Coalitional Manipulation under Some Common Voting Rules', Lirong Xia et al., 2009.
+    'Schulze and Ranked-Pairs Voting are Fixed-Parameter Tractable to Bribe, Manipulate, and Control',
+    Lane A. Hemaspaandra, Rahman Lavaee and Curtis Menton, 2012.
 
-        'Schulze and Ranked-Pairs Voting are Fixed-Parameter Tractable to Bribe, Manipulate, and Control',
-        Lane A. Hemaspaandra, Rahman Lavaee and Curtis Menton, 2012.
-
-        'A Complexity-of-Strategic-Behavior Comparison between Schulze’s Rule and Ranked Pairs', David Parkes and
-        Lirong Xia, 2012.
+    'A Complexity-of-Strategic-Behavior Comparison between Schulze’s Rule and Ranked Pairs', David Parkes and
+    Lirong Xia, 2012.
     """
 
     def __init__(self, **kwargs):

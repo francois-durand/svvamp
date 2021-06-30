@@ -29,16 +29,20 @@ from svvamp.preferences.profile import Profile
 class RuleKemeny(Rule):
     """Kemeny method.
 
-    >>> import svvamp
-    >>> profile = svvamp.Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [2, 0, 1], [2, 1, 0], [2, 1, 0]])
-    >>> rule = svvamp.RuleKemeny()(profile)
-    >>> print(rule.scores_)
-    [1 0 2]
-    >>> print(rule.candidates_by_scores_best_to_worst_)
-    [2 0 1]
-    >>> rule.w_
-    2
+    Examples
+    --------
+        >>> import svvamp
+        >>> profile = svvamp.Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [2, 0, 1], [2, 1, 0], [2, 1, 0]])
+        >>> rule = svvamp.RuleKemeny()(profile)
+        >>> print(rule.scores_)
+        [1 0 2]
+        >>> print(rule.candidates_by_scores_best_to_worst_)
+        [2 0 1]
+        >>> rule.w_
+        2
 
+    Notes
+    -----
     We find the order on candidates whose total Kendall tau distance to the voters is minimal. The top element of
     this order is declared the winner. In case several orders are optimal, the first one by lexicographic order is
     given. This implies that if several winners are possible, the one with lowest index is declared the winner.
@@ -52,16 +56,16 @@ class RuleKemeny(Rule):
     * :meth:`is_tm_`: Exact in the time needed to decide the winner of one election, multiplied by :attr:`n_c`.
     * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
 
-    References:
+    References
+    ----------
+    'Mathematics without numbers', J. G. Kemeny, 1959.
 
-        'Mathematics without numbers', J. G. Kemeny, 1959.
+    'A Consistent Extension of Condorcet’s Election Principle', H. P. Young and A. Levenglick, 1978.
 
-        'A Consistent Extension of Condorcet’s Election Principle', H. P. Young and A. Levenglick, 1978.
+    'On the approximability of Dodgson and Young elections', Ioannis Caragiannis et al., 2009.
 
-        'On the approximability of Dodgson and Young elections', Ioannis Caragiannis et al., 2009.
-
-        'Comparing and aggregating partial orders with Kendall tau distances', Franz J. Brandenburg, Andreas Gleißner
-        and Andreas Hofmeier, 2013.
+    'Comparing and aggregating partial orders with Kendall tau distances', Franz J. Brandenburg, Andreas Gleißner
+    and Andreas Hofmeier, 2013.
     """
 
     def __init__(self, **kwargs):

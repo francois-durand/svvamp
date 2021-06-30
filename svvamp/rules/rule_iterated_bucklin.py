@@ -28,17 +28,21 @@ from svvamp.preferences.profile import Profile
 class RuleIteratedBucklin(Rule):
     """Iterated Bucklin method.
 
-    >>> import svvamp
-    >>> profile = svvamp.Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [2, 0, 1], [2, 1, 0], [2, 1, 0]])
-    >>> rule = svvamp.RuleIteratedBucklin()(profile)
-    >>> print(rule.scores_)
-    [[0.66666667 0.         1.66666667]
-     [1.                inf 1.66666667]]
-    >>> print(rule.candidates_by_scores_best_to_worst_)
-    [2, 0, 1]
-    >>> rule.w_
-    2
+    Examples
+    --------
+        >>> import svvamp
+        >>> profile = svvamp.Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [2, 0, 1], [2, 1, 0], [2, 1, 0]])
+        >>> rule = svvamp.RuleIteratedBucklin()(profile)
+        >>> print(rule.scores_)
+        [[0.66666667 0.         1.66666667]
+         [1.                inf 1.66666667]]
+        >>> print(rule.candidates_by_scores_best_to_worst_)
+        [2, 0, 1]
+        >>> rule.w_
+        2
 
+    Notes
+    -----
     The candidate with least *adjusted median Borda score* (cf. below) is eliminated. Then the new Borda scores are
     computed. Etc. Ties are broken in favor of lower-index candidates: in case of a tie, the candidate with highest
     index is eliminated.

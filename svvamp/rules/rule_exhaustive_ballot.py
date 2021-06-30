@@ -29,17 +29,21 @@ from svvamp.preferences.profile import Profile
 class RuleExhaustiveBallot(Rule):
     """Exhaustive Ballot.
 
-    >>> import svvamp
-    >>> profile = svvamp.Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [2, 0, 1], [2, 1, 0], [2, 1, 0]])
-    >>> rule = svvamp.RuleExhaustiveBallot()(profile)
-    >>> print(rule.scores_)
-    [[ 2.  0.  3.]
-     [ 2. nan  3.]]
-    >>> print(rule.candidates_by_scores_best_to_worst_)
-    [2 0 1]
-    >>> rule.w_
-    2
+    Examples
+    --------
+        >>> import svvamp
+        >>> profile = svvamp.Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [2, 0, 1], [2, 1, 0], [2, 1, 0]])
+        >>> rule = svvamp.RuleExhaustiveBallot()(profile)
+        >>> print(rule.scores_)
+        [[ 2.  0.  3.]
+         [ 2. nan  3.]]
+        >>> print(rule.candidates_by_scores_best_to_worst_)
+        [2 0 1]
+        >>> rule.w_
+        2
 
+    Notes
+    -----
     At each round, voters vote for one non-eliminated candidate. The candidate with least votes is eliminated. Then
     the next round is held. Unlike :class:`RuleIRV`, voters actually vote at each round. This does not change
     anything for sincere voting, but offers a bit more possibilities for the manipulators. In case of a tie,
@@ -59,19 +63,19 @@ class RuleExhaustiveBallot(Rule):
 
     * :meth:`is_iia`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
     * :meth:`is_tm_`: Exact in polynomial time.
-    :meth:`is_um_`:
+    * :meth:`is_um_`:
 
         * :attr:`um_option` = ``'fast'``: Polynomial heuristic. Can prove UM but unable to decide non-UM (except in
           rare obvious cases).
         * :attr:`um_option` = ``'exact'``: Non-polynomial algorithm (:math:`2^{n_c}`) adapted from Walsh, 2010.
 
-    References:
+    References
+    ----------
+    'Single transferable vote resists strategic voting', John J. Bartholdi and James B. Orlin, 1991.
 
-        'Single transferable vote resists strategic voting', John J. Bartholdi and James B. Orlin, 1991.
+    'On The Complexity of Manipulating Elections', Tom Coleman and Vanessa Teague, 2007.
 
-        'On The Complexity of Manipulating Elections', Tom Coleman and Vanessa Teague, 2007.
-
-        'Manipulability of Single Transferable Vote', Toby Walsh, 2010.
+    'Manipulability of Single Transferable Vote', Toby Walsh, 2010.
     """
     # Exceptionally, for this voting system, we establish a pointer from the Profile object, so that the
     # manipulation results can be used by IRV.
@@ -93,7 +97,9 @@ class RuleExhaustiveBallot(Rule):
 
     def __call__(self, profile):
         """
-        :param profile: A :class:`~svvamp.Profile`.
+        Parameters
+        ----------
+        profile : Profile
         """
         # Unplug this exhaustive_ballot from the old profile
         if self.profile_ is not None:
@@ -268,10 +274,18 @@ class RuleExhaustiveBallot(Rule):
 
     def _im_aux(self, anti_voter_allowed, preferences_borda_s):
         """
-        :param anti_voter_allowed: Boolean. If True, we manipulate with one voter but also an anti-voter (who may
-            decrease one candidate's score by 1 point at each round). If False, we manipulate only with one voter.
-        :param preferences_borda_s: 2d integer. Preferences of the sincere voters (in Borda format with vtb).
-        :return: 1d array of booleans, ``candidates_im_aux``. ``candidates_im_aux[c]`` is True if manipulation for
+        Parameters
+        ----------
+        anti_voter_allowed : bool
+            If True, we manipulate with one voter but also an anti-voter (who may decrease one candidate's score by
+            1 point at each round). If False, we manipulate only with one voter.
+        preferences_borda_s : list of list
+            Preferences of the sincere voters (in Borda format with vtb).
+
+        Returns
+        -------
+        list of bool
+            1d array of booleans, ``candidates_im_aux``. ``candidates_im_aux[c]`` is True if manipulation for
             ``c`` is possible (whether desired or not).
         """
         # Explore subsets that are reachable. ``situations_begin_r`` is a dictionary.
@@ -392,8 +406,12 @@ class RuleExhaustiveBallot(Rule):
     def _cm_aux_fast(self, c, n_max, unison, preferences_borda_s):
         """Fast algorithm used for CM and UM.
 
-        :param c: Integer. Candidate for which we want to manipulate.
-        :param n_max: Integer. Maximum number of manipulators allowed.
+        Parameters
+        ----------
+        c : int
+            Candidate for which we want to manipulate.
+        n_max : int
+            Maximum number of manipulators allowed.
 
             * UM --> put the number of manipulators.
             * CM, with candidates and exact --> put the current value of ``sufficient_coalition_size[c] - 1`` (we want
@@ -401,9 +419,15 @@ class RuleExhaustiveBallot(Rule):
               manipulators)
             * CM, otherwise --> put the number of manipulators.
 
-        :param unison: Boolean. Must be True when computing UM, False for CM.
-        :param preferences_borda_s: 2d integer. Preferences of the sincere voters (in Borda format with vtb).
-        :return: a tuple ``(n_manip_fast, example_path_fast)``.
+        unison : bool
+            Must be True when computing UM, False for CM.
+        preferences_borda_s : list of list
+            Preferences of the sincere voters (in Borda format with vtb).
+
+        Returns
+        -------
+        tuple
+            ``(n_manip_fast, example_path_fast)``.
 
             * ``n_manip_fast``: Integer or +inf. If a manipulation is found, a sufficient number of manipulators
               is returned (if unison is True, this number will always be ``n_max``). If no manipulation is found,
@@ -520,8 +544,12 @@ class RuleExhaustiveBallot(Rule):
     def _cm_aux_exact(self, c, n_max, unison, preferences_borda_s):
         """Exact algorithm used for CM and UM.
 
-        :param c: Integer. Candidate for which we want to manipulate.
-        :param n_max: Integer. Maximum number of manipulators allowed.
+        Parameters
+        ----------
+        c : int
+            Candidate for which we want to manipulate.
+        n_max : int
+            Maximum number of manipulators allowed.
 
             * UM --> put the number of manipulators.
             * CM, with candidates and exact --> put the current value of ``sufficient_coalition_size[c] - 1`` (we want
@@ -529,9 +557,15 @@ class RuleExhaustiveBallot(Rule):
               manipulators)
             * CM, otherwise --> put the number of manipulators.
 
-        :param unison: Boolean. Must be True when computing UM, False for CM.
-        :param preferences_borda_s: 2d integer. Preferences of the sincere voters (in Borda format).
-        :return: a tuple ``(n_manip_final, example_path)``.
+        unison : bool
+            Must be True when computing UM, False for CM.
+        preferences_borda_s : list of list
+            Preferences of the sincere voters (in Borda format).
+
+        Returns
+        -------
+        tuple
+            ``(n_manip_final, example_path)``.
 
             * ``n_manip_final``: Integer or +inf. If manipulation is impossible with ``<= n_max`` manipulators, it is
               +inf. If manipulation is possible (with ``<= n_max``):

@@ -28,26 +28,34 @@ from svvamp.utils.cache import cached_property
 class RuleApproval(Rule):
     """Approval voting.
 
-    :param approval_comparator: String. Can be ``'>'`` (default) or ``'>='``. When ``approval_comparator`` is
+    Parameters
+    ----------
+    approval_comparator : str
+        Can be ``'>'`` (default) or ``'>='``. When ``approval_comparator`` is
         ``'>'``, sincere voter ``v`` approves of candidates ``c`` iff :attr:`~svvamp.Profile.preferences_ut`\ ``[
         v, c]`` > :attr:`approval_threshold`. When ``approval_comparator`` is ``'>='``, previous relation is modified
         accordingly.
-    :param approval_threshold: Number (default 0). Utility above which a sincere voter approves of a candidate.
+    approval_threshold : number
+        Number (default 0). Utility above which a sincere voter approves of a candidate.
 
-    >>> import svvamp
-    >>> profile = svvamp.Profile(preferences_ut=[[8, 4, 2], [8, -4, 0], [-2, 4, -8], [-10, 6, 0], [-6, 4, 8]])
-    >>> rule = svvamp.RuleApproval(approval_comparator='>', approval_threshold=0)(profile)
-    >>> print(rule.ballots_)
-    [[ True  True  True]
-     [ True False False]
-     [False  True False]
-     [False  True False]
-     [False  True  True]]
-    >>> print(rule.scores_)
-    [2 4 2]
-    >>> rule.w_
-    1
+    Examples
+    --------
+        >>> import svvamp
+        >>> profile = svvamp.Profile(preferences_ut=[[8, 4, 2], [8, -4, 0], [-2, 4, -8], [-10, 6, 0], [-6, 4, 8]])
+        >>> rule = svvamp.RuleApproval(approval_comparator='>', approval_threshold=0)(profile)
+        >>> print(rule.ballots_)
+        [[ True  True  True]
+         [ True False False]
+         [False  True False]
+         [False  True False]
+         [False  True  True]]
+        >>> print(rule.scores_)
+        [2 4 2]
+        >>> rule.w_
+        1
 
+    Notes
+    -----
     Each voter may vote for any number of candidates. The candidate with most votes is declared the winner. In case
     of a tie, the tied candidate with lowest index wins.
 
@@ -55,10 +63,9 @@ class RuleApproval(Rule):
 
     :meth:`is_cm_`, :meth:`is_icm_`, :meth:`is_im_`, :meth:`is_tm_`, :meth:`is_um_`: Exact in polynomial time.
 
-    References:
-
-        'Approval voting', Steven Brams and Peter Fishburn. In: American Political Science Review 72 (3 1978),
-        pp. 831–847.
+    References
+    ----------
+    'Approval voting', Steven Brams and Peter Fishburn. In: American Political Science Review 72 (3 1978), pp. 831–847.
     """
 
     def __init__(self, approval_comparator='>', approval_threshold=0., **kwargs):

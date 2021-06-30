@@ -28,6 +28,8 @@ from svvamp.preferences.profile import Profile
 class RuleBorda(Rule):
     """Borda rule.
 
+    Examples
+    --------
     >>> import svvamp
     >>> profile = svvamp.Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [2, 0, 1], [2, 1, 0], [2, 1, 0]])
     >>> rule = svvamp.RuleBorda()(profile)
@@ -38,6 +40,8 @@ class RuleBorda(Rule):
     >>> rule.w_
     2
 
+    Notes
+    -----
     Voter ``v`` gives (:attr:`n_c` - 1) points to her top-ranked candidate, (:attr:`n_c` - 2) to the second, ..., 0 to
     the last. Ties are broken by natural order on the candidates (lower index wins).
 
@@ -53,15 +57,15 @@ class RuleBorda(Rule):
     * :meth:`is_tm_`: Exact in polynomial time.
     * :meth:`is_um_`: Exact in polynomial time.
 
-    References:
+    References
+    ----------
+    'Algorithms for the coalitional manipulation problem', M. Zuckerman, A. Procaccia and J. Rosenschein, 2009.
 
-        'Algorithms for the coalitional manipulation problem', M. Zuckerman, A. Procaccia and J. Rosenschein, 2009.
+    'Unweighted Coalitional Manipulation Under the Borda Rule is NP-Hard', Nadja Betzler, Rolf Niedermeier and
+    Gerhard Woeginger, 2011.
 
-        'Unweighted Coalitional Manipulation Under the Borda Rule is NP-Hard', Nadja Betzler, Rolf Niedermeier and
-        Gerhard Woeginger, 2011.
-
-        'Complexity of and algorithms for the manipulation of Borda, Nanson's and Baldwin's voting rules',
-        Jessica Davies, George Katsirelos, Nina Narodytska, Toby Walsh and Lirong Xia, 2014.
+    'Complexity of and algorithms for the manipulation of Borda, Nanson's and Baldwin's voting rules',
+    Jessica Davies, George Katsirelos, Nina Narodytska, Toby Walsh and Lirong Xia, 2014.
     """
 
     def __init__(self, **kwargs):

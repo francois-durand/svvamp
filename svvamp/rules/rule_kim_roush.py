@@ -28,17 +28,21 @@ from svvamp.preferences.profile import Profile
 class RuleKimRoush(Rule):
     """Kim-Roush method.
 
-    >>> import svvamp
-    >>> profile = svvamp.Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [2, 0, 1], [2, 1, 0], [2, 1, 0]])
-    >>> rule = svvamp.RuleKimRoush()(profile)
-    >>> print(rule.scores_)
-    [[-2. -3. -0.]
-     [inf inf -5.]]
-    >>> print(rule.candidates_by_scores_best_to_worst_)
-    [2 0 1]
-    >>> rule.w_
-    2
+    Examples
+    --------
+        >>> import svvamp
+        >>> profile = svvamp.Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [2, 0, 1], [2, 1, 0], [2, 1, 0]])
+        >>> rule = svvamp.RuleKimRoush()(profile)
+        >>> print(rule.scores_)
+        [[-2. -3. -0.]
+         [inf inf -5.]]
+        >>> print(rule.candidates_by_scores_best_to_worst_)
+        [2 0 1]
+        >>> rule.w_
+        2
 
+    Notes
+    -----
     At each round, all candidates with a Veto score strictly lower than average are simultaneously eliminated. When
     all remaining candidates have the same Veto score, the candidate with lowest index is declared the winner.
 
@@ -51,9 +55,9 @@ class RuleKimRoush(Rule):
     * :meth:`is_tm_`: Exact in polynomial time.
     * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
 
-    References:
-
-        'Statistical Manipulability of Social Choice Functions', K.H. Kim and F.W. Roush, 1996.
+    References
+    ----------
+    'Statistical Manipulability of Social Choice Functions', K.H. Kim and F.W. Roush, 1996.
     """
 
     def __init__(self, **kwargs):

@@ -31,6 +31,8 @@ from svvamp.rules.rule_irv import RuleIRV
 class RuleCondorcetAbsIRV(Rule):
     """Absolute-Condorcet Instant Runoff Voting.
 
+    Examples
+    --------
     >>> import svvamp
     >>> profile = svvamp.Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [2, 0, 1], [2, 1, 0], [2, 1, 0]])
     >>> rule = svvamp.RuleCondorcetAbsIRV()(profile)
@@ -41,6 +43,8 @@ class RuleCondorcetAbsIRV(Rule):
     >>> rule.w_
     2
 
+    Notes
+    -----
     .. note::
 
         When in doubt between ``CondorcetAbsIRV`` and :class:`CondorcetVtbIRV`, we suggest to use
@@ -77,10 +81,10 @@ class RuleCondorcetAbsIRV(Rule):
     * :meth:`is_tm_`: Exact in polynomial time.
     * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
 
-    References:
-
-        'Condorcet criterion, ordinality and reduction of coalitional manipulability', François Durand,
-        Fabien Mathieu and Ludovic Noirie, 2014.
+    References
+    ----------
+    'Condorcet criterion, ordinality and reduction of coalitional manipulability', François Durand,
+    Fabien Mathieu and Ludovic Noirie, 2014.
     """
 
     def __init__(self, **kwargs):

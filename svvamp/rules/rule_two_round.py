@@ -28,17 +28,21 @@ from svvamp.preferences.profile import Profile
 class RuleTwoRound(Rule):
     """Two Round System.
 
-    >>> import svvamp
-    >>> profile = svvamp.Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [2, 0, 1], [2, 1, 0], [2, 1, 0]])
-    >>> rule = svvamp.RuleTwoRound()(profile)
-    >>> print(rule.scores_)
-    [[2. 0. 3.]
-     [2. 0. 3.]]
-    >>> print(rule.candidates_by_scores_best_to_worst_)
-    [2 0 1]
-    >>> rule.w_
-    2
+    Examples
+    --------
+        >>> import svvamp
+        >>> profile = svvamp.Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [2, 0, 1], [2, 1, 0], [2, 1, 0]])
+        >>> rule = svvamp.RuleTwoRound()(profile)
+        >>> print(rule.scores_)
+        [[2. 0. 3.]
+         [2. 0. 3.]]
+        >>> print(rule.candidates_by_scores_best_to_worst_)
+        [2 0 1]
+        >>> rule.w_
+        2
 
+    Notes
+    -----
     Two rounds are actually held, which means that manipulators can change their vote between the first and second
     round. Hence for :attr:`n_c` = 3, this voting system is equivalent to :class:`RuleExhaustiveBallot` (not
     :class:`RuleIRV`). In case of a tie, candidates with lowest index are privileged.

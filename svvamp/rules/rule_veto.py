@@ -28,16 +28,20 @@ from svvamp.preferences.profile import Profile
 class RuleVeto(Rule):
     """Veto. Also called Antiplurality.
 
-    >>> import svvamp
-    >>> profile = svvamp.Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [2, 0, 1], [2, 1, 0], [2, 1, 0]])
-    >>> rule = svvamp.RuleVeto()(profile)
-    >>> print(rule.scores_)
-    [-2 -3  0]
-    >>> print(rule.candidates_by_scores_best_to_worst_)
-    [2 0 1]
-    >>> rule.w_
-    2
+    Examples
+    --------
+        >>> import svvamp
+        >>> profile = svvamp.Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [2, 0, 1], [2, 1, 0], [2, 1, 0]])
+        >>> rule = svvamp.RuleVeto()(profile)
+        >>> print(rule.scores_)
+        [-2 -3  0]
+        >>> print(rule.candidates_by_scores_best_to_worst_)
+        [2 0 1]
+        >>> rule.w_
+        2
 
+    Notes
+    -----
     Each voter votes against one candidate (veto). The candidate with least vetos is declared the winner. In case of
     a tie, the tied candidate with lowest index wins. Sincere voters vote against their least-liked candidate.
 
