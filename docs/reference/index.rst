@@ -1,9 +1,50 @@
-=========
 Reference
 =========
 
-.. toctree::
+Preferences
+-----------
 
-   my_class_1
-   my_class_2
-   my_class_3
+.. toctree::
+   :maxdepth: 3
+
+   Preferences/Population
+   Preferences/PopulationCubicUniform
+   Preferences/PopulationEuclideanBox
+   Preferences/PopulationGaussianWell
+   Preferences/PopulationLadder
+   Preferences/PopulationSpheroid
+   Preferences/PopulationVMFHypercircle
+   Preferences/PopulationVMFHypersphere
+   Preferences/PopulationFromFile
+
+Voting Systems
+--------------
+
+.. toctree::
+   :maxdepth: 3
+
+   VotingSystems/ElectionResult
+   VotingSystems/Election
+   VotingSystems/Approval
+   VotingSystems/Baldwin
+   VotingSystems/Borda
+   VotingSystems/Bucklin
+   VotingSystems/CondorcetAbsIRV
+   VotingSystems/CondorcetSumDefeats
+   VotingSystems/CondorcetVtbIRV
+   VotingSystems/Coombs
+   VotingSystems/ExhaustiveBallot
+   VotingSystems/ICRV
+   VotingSystems/IRV
+   VotingSystems/IRVDuels
+   VotingSystems/IteratedBucklin
+   VotingSystems/Kemeny
+   VotingSystems/MajorityJudgment
+   VotingSystems/Maximin
+   VotingSystems/Nanson
+   VotingSystems/Plurality
+   VotingSystems/RangeVotingAverage
+   VotingSystems/RankedPairs
+   VotingSystems/Schulze
+   VotingSystems/TwoRound
+   VotingSystems/Veto

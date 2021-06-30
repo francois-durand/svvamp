@@ -1,3 +1,5 @@
+networkx
+numpy
 sphinx>=1.4
 nbsphinx
 ipykernel
