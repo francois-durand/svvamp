@@ -5,8 +5,15 @@ import numpy as np
 def pseudo_bool(value):
     """Convert to pseudo-Boolean.
 
-    :param value: True (or 1, 1., etc.), False (or 0, 0., etc.) or np.nan.
-    :return: True, False (as booleans) or np.nan.
+    Parameters
+    ----------
+    value : bool or nan
+        True (or 1, 1., etc.), False (or 0, 0., etc.) or np.nan.
+
+    Returns
+    -------
+    bool or nan
+        True, False (as booleans) or np.nan.
     """
     if np.isnan(value):
         return np.nan
@@ -21,11 +28,16 @@ def pseudo_bool(value):
 def neginf_to_nan(variable):
     """Convert -inf to NaN.
 
-    :param variable: Number or array.
-    :return: Number or array.
-
     If ``variable = -inf``, then ``variable`` is converted to ``NaN``. If ``variable`` is a numpy array, it is
     converted element-wise and IN PLACE (the original array is modified).
+
+    Parameters
+    ----------
+    variable : number or array
+
+    Returns
+    -------
+    number or array.
     """
     if isinstance(variable, np.ndarray):
         variable[np.isneginf(variable)] = np.nan
@@ -37,11 +49,16 @@ def neginf_to_nan(variable):
 def neginf_to_zero(variable):
     """Convert -inf to 0 / False.
 
-    :param variable: Number or array.
-    :return: Number of array.
-
     If ``variable = -inf``, then ``variable`` is converted to 0. If ``variable`` is a numpy array, it is
     converted element-wise and IN PLACE (the original array is modified).
+
+    Parameters
+    ----------
+    variable: number or array
+
+    Returns
+    -------
+    number of array.
     """
     if isinstance(variable, np.ndarray):
         variable[np.isneginf(variable)] = 0

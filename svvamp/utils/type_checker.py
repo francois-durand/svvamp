@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on oct. 20, 2014, 11:03 
+Created on oct. 20, 2014, 11:03
 Copyright François Durand 2014
 fradurand@gmail.com
 
@@ -26,13 +26,22 @@ import numbers
 def is_bool(value):
     """Test whether it is a Boolean.
 
-    :param value: value to be tested.
-    :return: True iff ``value`` is a Boolean.
+    Parameters
+    ----------
+    value : obj
+        Value to be tested.
 
-    >>> is_bool(False)
-    True
-    >>> is_bool(1)
-    False
+    Returns
+    -------
+    bool
+        True iff ``value`` is a Boolean.
+
+    Examples
+    --------
+        >>> is_bool(False)
+        True
+        >>> is_bool(1)
+        False
     """
     return isinstance(value, bool)
 
@@ -40,14 +49,23 @@ def is_bool(value):
 def is_number(value):
     """Test whether it is a Boolean.
 
-    :param value: value to be tested.
-    :return: True iff ``value`` is a Boolean.
+    Parameters
+    ----------
+    value : obj
+        Value to be tested.
 
-    >>> is_number(3)
-    True
-    >>> is_number(3.)
-    True
-    >>> is_number('3')
-    False
+    Returns
+    -------
+    bool
+        True iff ``value`` is a Boolean.
+
+    Examples
+    --------
+        >>> is_number(3)
+        True
+        >>> is_number(3.)
+        True
+        >>> is_number('3')
+        False
     """
     return isinstance(value, numbers.Number)

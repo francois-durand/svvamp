@@ -1,17 +1,22 @@
 def printm(message="Variable =", variable=None):
     """Print a message and the value of a variable, typically a matrix.
 
-    :param message: String.
-    :param variable: the variable to be displayed.
-
     This method is well suited for a matrix because it skips to next line before printing the variable.
 
-    >>> import numpy as np
-    >>> printm("A nice matrix:", np.array([[2, 7, 6], [9, 5, 1], [4, 3, 8]]))
-    A nice matrix:
-    [[2 7 6]
-     [9 5 1]
-     [4 3 8]]
+    Parameters
+    ----------
+    message : str
+    variable : object
+        The variable to be displayed.
+
+    Examples
+    --------
+        >>> import numpy as np
+        >>> printm("A nice matrix:", np.array([[2, 7, 6], [9, 5, 1], [4, 3, 8]]))
+        A nice matrix:
+        [[2 7 6]
+         [9 5 1]
+         [4 3 8]]
     """
     print(message)
     print(variable)
@@ -20,13 +25,17 @@ def printm(message="Variable =", variable=None):
 def print_title(s):
     """Print a title nicely.
 
-    :param s: String.
+    Parameters
+    ----------
+    s : str
 
-    >>> print_title('A title')
-    <BLANKLINE>
-    ***************
-    *   A title   *
-    ***************
+    Examples
+    --------
+        >>> print_title('A title')
+        <BLANKLINE>
+        ***************
+        *   A title   *
+        ***************
     """
     length = len(s)
     print('')
@@ -38,15 +47,19 @@ def print_title(s):
 def print_big_title(s):
     """Print a big title nicely.
 
-    :param s: String.
+    Examples
+    --------
+    s : str
 
-    >>> print_big_title('A big title')
-    <BLANKLINE>
-    *******************
-    *                 *
-    *   A big title   *
-    *                 *
-    *******************
+    Examples
+    --------
+        >>> print_big_title('A big title')
+        <BLANKLINE>
+        *******************
+        *                 *
+        *   A big title   *
+        *                 *
+        *******************
     """
     length = len(s)
     print('')

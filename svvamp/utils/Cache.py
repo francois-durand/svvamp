@@ -83,10 +83,12 @@ class DeleteCacheMixin:
     def delete_cache(self, contains='', suffix='') -> None:
         """Delete the cache (possibly only for some selected variables).
 
-        :param contains: String. If specified, only the cached variables whose name contains this string will be
-            removed from the cache.
-        :param suffix: String. If specified, only the cached variables whose name finishes with this string will be
-            removed from the cache.
+        Parameters
+        ----------
+        contains : str
+            If specified, only the cached variables whose name contains this string will be removed from the cache.
+        suffix : str
+            If specified, only the cached variables whose name finishes with this string will be removed from the cache.
         """
         if not hasattr(self, '_cached_properties'):
             return
@@ -117,25 +119,24 @@ def property_deleting_cache(hidden_variable_name, doc=''):
 
     Examples
     --------
-
-    >>> class MyClass(DeleteCacheMixin):
-    ...     def __init__(self, some_parameter):
-    ...         self.some_parameter = some_parameter
-    ...     some_parameter = property_deleting_cache('_some_parameter')
-    ...     @cached_property
-    ...     def my_cached_property(self):
-    ...         print('Computing my_cached_property...')
-    ...         return 'Hello %s!' % self.some_parameter
-    >>> my_object = MyClass(some_parameter='World')
-    >>> my_object.my_cached_property
-    Computing my_cached_property...
-    'Hello World!'
-    >>> my_object.my_cached_property
-    'Hello World!'
-    >>> my_object.some_parameter = 'everybody'
-    >>> my_object.my_cached_property
-    Computing my_cached_property...
-    'Hello everybody!'
+        >>> class MyClass(DeleteCacheMixin):
+        ...     def __init__(self, some_parameter):
+        ...         self.some_parameter = some_parameter
+        ...     some_parameter = property_deleting_cache('_some_parameter')
+        ...     @cached_property
+        ...     def my_cached_property(self):
+        ...         print('Computing my_cached_property...')
+        ...         return 'Hello %s!' % self.some_parameter
+        >>> my_object = MyClass(some_parameter='World')
+        >>> my_object.my_cached_property
+        Computing my_cached_property...
+        'Hello World!'
+        >>> my_object.my_cached_property
+        'Hello World!'
+        >>> my_object.some_parameter = 'everybody'
+        >>> my_object.my_cached_property
+        Computing my_cached_property...
+        'Hello everybody!'
     """
 
     def getter(self):

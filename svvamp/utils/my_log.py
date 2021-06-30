@@ -34,18 +34,23 @@ class MyLog:
     def mylog(self, message="I am alive", detail_level=1):
         """Print a log message.
 
-        :param message: A string. The message to display.
-        :param detail_level: An integer. The level of detail of the message.
-            The more it is, the less important is the message. Typically:
+        Parameters
+        ----------
+        message : str
+            The message to display.
+        detail_level : int
+            The level of detail of the message. The more it is, the less important is the message. Typically:
             * 1: Beginning of a method (except a simple get).
             * 2: Big steps of calculation.
             * 3: Computations inside loop (very verbose log).
             It is not recommended to use detail_level = 0 or lower.
 
-        >>> from svvamp.utils.my_log import MyLog
-        >>> my_log_object = MyLog(log_identity="COMMENDATORE", log_depth=3)
-        >>> my_log_object.mylog("Don Giovanni!", 1)
-        COMMENDATORE: Don Giovanni!
+        Examples
+        --------
+            >>> from svvamp.utils.my_log import MyLog
+            >>> my_log_object = MyLog(log_identity="COMMENDATORE", log_depth=3)
+            >>> my_log_object.mylog("Don Giovanni!", 1)
+            COMMENDATORE: Don Giovanni!
         """
         if detail_level <= self.log_depth:
             print(self.log_identity + ": " + message)
@@ -53,14 +58,20 @@ class MyLog:
     def mylogv(self, message="Variable =", variable=None, detail_level=1):
         """Print a log message with the value of a variable.
 
-        :param message: String.
-        :param variable: Variable to be displayed.
-        :param detail_level: An integer. Cf. :meth:`mylog`.
+        Parameters
+        ----------
+        message : str
+        variable : object
+            Variable to be displayed.
+        detail_level : int
+            Cf. :meth:`mylog`.
 
-        >>> from svvamp.utils.my_log import MyLog
-        >>> my_log_object = MyLog(log_identity="HITCHHIKER", log_depth=3)
-        >>> my_log_object.mylogv("The answer is", 42)
-        HITCHHIKER: The answer is 42
+        Examples
+        --------
+            >>> from svvamp.utils.my_log import MyLog
+            >>> my_log_object = MyLog(log_identity="HITCHHIKER", log_depth=3)
+            >>> my_log_object.mylogv("The answer is", 42)
+            HITCHHIKER: The answer is 42
         """
         if detail_level <= self.log_depth:
             print(self.log_identity + ": " + message, variable)
@@ -68,20 +79,26 @@ class MyLog:
     def mylogm(self, message="Variable =", variable=None, detail_level=1):
         """Print a log message with the value of a variable, typically a matrix.
 
-        :param message: String.
-        :param variable: Variable to be displayed.
-        :param detail_level: An integer. Cf. :meth:`mylog`.
-
         This method is well suited for a matrix because it skips to next line before printing the variable.
 
-        >>> from svvamp.utils.my_log import MyLog
-        >>> import numpy as np
-        >>> my_log_object = MyLog(log_identity="MAGIC_SQUARE", log_depth=3)
-        >>> my_log_object.mylogm("A nice matrix:", np.array([[2, 7, 6], [9, 5, 1], [4, 3, 8]]))
-        MAGIC_SQUARE: A nice matrix:
-        [[2 7 6]
-         [9 5 1]
-         [4 3 8]]
+        Parameters
+        ----------
+        message : str
+        variable : object
+            Variable to be displayed.
+        detail_level : int
+            Cf. :meth:`mylog`.
+
+        Examples
+        --------
+            >>> from svvamp.utils.my_log import MyLog
+            >>> import numpy as np
+            >>> my_log_object = MyLog(log_identity="MAGIC_SQUARE", log_depth=3)
+            >>> my_log_object.mylogm("A nice matrix:", np.array([[2, 7, 6], [9, 5, 1], [4, 3, 8]]))
+            MAGIC_SQUARE: A nice matrix:
+            [[2 7 6]
+             [9 5 1]
+             [4 3 8]]
         """
         if detail_level <= self.log_depth:
             print(self.log_identity + ": " + message)

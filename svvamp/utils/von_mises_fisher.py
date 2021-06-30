@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on oct. 31, 2014, 10:15 
+Created on oct. 31, 2014, 10:15
 Copyright François Durand 2014-2018
 fradurand@gmail.com
 
@@ -26,12 +26,24 @@ import numpy as np
 def profile_vmf_aux(n_c, n_v, concentration, pole=None):
     """Von Mises-Fisher distribution.
 
-    :param n_c: Integer. Number of candidates.
-    :param n_v: Integer. Number of voters.
-    :param concentration: Number >= 0. Concentration of the VMF distribution.
-    :param pole: 1d array of size ``n_c``. Center of the VMF distribution.
-    :return: 2d array of size (``n_v``, ``n_c``). Preferences (utilities) of the population.
+    Parameters
+    ----------
+    n_c : int
+        Number of candidates.
+    n_v : int
+        Number of voters.
+    concentration : number
+        Number >= 0. Concentration of the VMF distribution.
+    pole : list or ndarray
+        1d array of size ``n_c``. Center of the VMF distribution.
 
+    Returns
+    -------
+    ndarray
+        2d array of size (``n_v``, ``n_c``). Preferences (utilities) of the population.
+
+    Notes
+    -----
     Each row (voter) of ``preferences_ut`` is drawn according to a Von Mises-Fisher law, using Ulrich's method modified
     by Wood. We work on the ``n_c - 1``-sphere (in ``R^n_c``). Up to a normalization constant, the density of
     probability for a unit vector ``x`` is ``exp(concentration pole.x)``, where ``pole.x`` is the dot product of
@@ -41,10 +53,13 @@ def profile_vmf_aux(n_c, n_v, concentration, pole=None):
     not the norm of ``pole``. If ``pole`` is not given, it is drawn at random on the sphere (uniformly), then the
     algorithm is launched (i.e. all voters are drawn with the same pole).
 
-    >>> profile_vmf_aux(n_v=10, n_c=3, concentration=5, pole=[1, 0, 0]).shape
-    (10, 3)
+    Examples
+    --------
+        >>> profile_vmf_aux(n_v=10, n_c=3, concentration=5, pole=[1, 0, 0]).shape
+        (10, 3)
 
-    References:
+    References
+    ----------
     Ulrich (1984) - Computer Generation of Distributions on the m-Sphere.
     Wood (1994) - Simulation of the von Mises Fisher distribution.
     """
