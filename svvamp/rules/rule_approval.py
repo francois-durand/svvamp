@@ -134,7 +134,9 @@ class RuleApproval(Rule):
     def ballots_(self):
         """2d array of values in {0, 1}. ``ballots_[v, c] = 1`` iff voter ``v`` votes for candidates ``c``.
 
-        .. seealso:: :attr:`approval_comparator`, :attr:`approval_threshold`.
+        See Also
+        --------
+        :attr:`approval_comparator`, :attr:`approval_threshold`.
         """
         self.mylog("Compute ballots", 1)
         if self.approval_comparator == '>':

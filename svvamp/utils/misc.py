@@ -1,3 +1,4 @@
+import random
 import numpy as np
 import networkx as nx
 
@@ -353,3 +354,15 @@ def strong_connected_components(a):
     """
     condensed = nx.condensation(nx.DiGraph(np.array(a)))
     return [condensed.nodes[component]['members'] for component in nx.topological_sort(condensed)]
+
+
+def initialize_random_seeds(n=0):
+    """Initialize the random seeds.
+
+    Parameters
+    ----------
+    n : int
+        The desired random seed. Default: 0.
+    """
+    random.seed(n)
+    np.random.seed(n)

@@ -28,6 +28,7 @@ from mpl_toolkits.mplot3d import Axes3D
 from svvamp.utils.printing import printm, print_title
 from svvamp.utils import my_log
 from svvamp.utils.util_cache import cached_property
+from svvamp.utils.misc import initialize_random_seeds
 from svvamp.utils.misc import preferences_ut_to_preferences_rk, preferences_rk_to_preferences_borda_rk, \
     preferences_ut_to_preferences_borda_ut, preferences_ut_to_matrix_duels_ut, is_resistant_condorcet
 
@@ -305,12 +306,35 @@ class Profile(my_log.MyLog):
 
         By convention, diagonal coefficients are set to 0.
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.matrix_victories_ut_abs
-        array([[0., 1., 1.],
-               [0., 0., 1.],
-               [0., 0., 0.]])
+        Examples
+        --------
+        A victory:
+
+            >>> profile = Profile(preferences_ut=[[1, 0], [1, 0]])
+            >>> profile.matrix_victories_ut_abs
+            array([[0., 1.],
+                   [0., 0.]])
+
+        A half-victory, but the other candidate has lost:
+
+            >>> profile = Profile(preferences_ut=[[1, 0], [42, 42]])
+            >>> profile.matrix_victories_ut_abs
+            array([[0. , 0.5],
+                   [0. , 0. ]])
+
+        A half-victory for each candidate:
+
+            >>> profile = Profile(preferences_ut=[[1, 0], [0, 1]])
+            >>> profile.matrix_victories_ut_abs
+            array([[0. , 0.5],
+                   [0.5, 0. ]])
+
+        A defeat for each candidate:
+
+            >>> profile = Profile(preferences_ut=[[0, 0], [0, 0]])
+            >>> profile.matrix_victories_ut_abs
+            array([[0., 0.],
+                   [0., 0.]])
         """
         self.mylog("Compute matrix_victories_ut_abs", 1)
         return (np.multiply(0.5, self.matrix_duels_ut >= self.n_v / 2)
@@ -328,12 +352,35 @@ class Profile(my_log.MyLog):
 
         By convention, diagonal coefficients are set to 0.
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.matrix_victories_ut_abs_ctb
-        array([[0., 1., 1.],
-               [0., 0., 1.],
-               [0., 0., 0.]])
+        Examples
+        --------
+        A victory (without tie-breaking):
+
+            >>> profile = Profile(preferences_ut=[[1, 0], [1, 0]])
+            >>> profile.matrix_victories_ut_abs_ctb
+            array([[0., 1.],
+                   [0., 0.]])
+
+        A victory with tie-breaking:
+
+            >>> profile = Profile(preferences_ut=[[1, 0], [0, 1]])
+            >>> profile.matrix_victories_ut_abs_ctb
+            array([[0., 1.],
+                   [0., 0.]])
+
+        Another case of victory with tie-breaking:
+
+            >>> profile = Profile(preferences_ut=[[1, 0], [42, 42]])
+            >>> profile.matrix_victories_ut_abs_ctb
+            array([[0., 1.],
+                   [0., 0.]])
+
+        A defeat for each candidate:
+
+            >>> profile = Profile(preferences_ut=[[0, 0], [0, 0]])
+            >>> profile.matrix_victories_ut_abs_ctb
+            array([[0., 0.],
+                   [0., 0.]])
         """
         self.mylog("Compute matrix_victories_ut_abs_ctb", 1)
         result = np.zeros((self.n_c, self.n_c))
@@ -358,12 +405,21 @@ class Profile(my_log.MyLog):
 
         By convention, diagonal coefficients are set to 0.
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.matrix_victories_ut_rel
-        array([[0., 1., 1.],
-               [0., 0., 1.],
-               [0., 0., 0.]])
+        Examples
+        --------
+        A relative victory (which is not an absolute victory):
+
+            >>> profile = Profile(preferences_ut=[[1, 0], [0, 0], [0, 0]])
+            >>> profile.matrix_victories_ut_rel
+            array([[0., 1.],
+                   [0., 0.]])
+
+        A tie:
+
+            >>> profile = Profile(preferences_ut=[[1, 0], [0, 1], [0, 0]])
+            >>> profile.matrix_victories_ut_rel
+            array([[0. , 0.5],
+                   [0.5, 0. ]])
         """
         self.mylog("Compute matrix_victories_ut_rel", 1)
         return (
@@ -386,12 +442,21 @@ class Profile(my_log.MyLog):
 
         By convention, diagonal coefficients are set to 0.
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.matrix_victories_ut_rel_ctb
-        array([[0., 1., 1.],
-               [0., 0., 1.],
-               [0., 0., 0.]])
+        Examples
+        --------
+        A relative victory (without tie-breaking):
+
+            >>> profile = Profile(preferences_ut=[[1, 0], [0, 0], [0, 0]])
+            >>> profile.matrix_victories_ut_rel_ctb
+            array([[0., 1.],
+                   [0., 0.]])
+
+        A relative victory with tie-breaking:
+
+            >>> profile = Profile(preferences_ut=[[1, 0], [0, 1], [0, 0]])
+            >>> profile.matrix_victories_ut_rel_ctb
+            array([[0., 1.],
+                   [0., 0.]])
         """
         self.mylog("Compute matrix_victories_ut_rel_ctb", 1)
         result = np.zeros((self.n_c, self.n_c))
@@ -417,12 +482,22 @@ class Profile(my_log.MyLog):
 
         By convention, diagonal coefficients are set to 0.
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.matrix_victories_rk
-        array([[0., 1., 1.],
-               [0., 0., 1.],
-               [0., 0., 0.]])
+        Examples
+        --------
+        A victory:
+
+            >>> profile = Profile(preferences_rk=[[0, 1], [0, 1]])
+            >>> profile.matrix_victories_rk
+            array([[0., 1.],
+                   [0., 0.]])
+
+        A tie:
+
+            >>> profile = Profile(preferences_rk=[[0, 1], [1, 0]])
+            >>> profile.matrix_victories_rk
+            array([[0. , 0.5],
+                   [0.5, 0. ]])
+
         """
         self.mylog("Compute matrix_victories_rk", 1)
         return (np.multiply(0.5, self.matrix_duels_rk >= self.n_v / 2)
@@ -442,12 +517,21 @@ class Profile(my_log.MyLog):
 
         By convention, diagonal coefficients are set to 0.
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.matrix_victories_rk_ctb
-        array([[0., 1., 1.],
-               [0., 0., 1.],
-               [0., 0., 0.]])
+        Examples
+        --------
+        A victory (without tie-breaking):
+
+            >>> profile = Profile(preferences_rk=[[0, 1], [0, 1]])
+            >>> profile.matrix_victories_rk_ctb
+            array([[0., 1.],
+                   [0., 0.]])
+
+        A victory with tie-breaking:
+
+            >>> profile = Profile(preferences_rk=[[0, 1], [1, 0]])
+            >>> profile.matrix_victories_rk_ctb
+            array([[0., 1.],
+                   [0., 0.]])
         """
         self.mylog("Compute matrix_victories_rk_ctb", 1)
         result = np.zeros((self.n_c, self.n_c))
@@ -468,12 +552,16 @@ class Profile(my_log.MyLog):
         """Boolean. True iff in matrix :attr:`~svvamp.Population.matrix_victories_rk_ctb`, there is a candidate with
         ``n_c - 1`` victories, a candidate with ``n_c - 2`` victories, etc.
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.exists_condorcet_order_rk_ctb
-        True
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.exists_condorcet_order_rk_ctb
+            True
 
-        .. seealso:: :attr:`~svvamp.Population.not_exists_condorcet_order_rk_ctb`.
+        See Also
+        --------
+        :attr:`~svvamp.Population.not_exists_condorcet_order_rk_ctb`.
         """
         self.mylog("Compute exists_condorcet_order_rk_ctb", 1)
         temp = np.copy(self.matrix_victories_rk_ctb.sum(1))
@@ -482,7 +570,15 @@ class Profile(my_log.MyLog):
 
     @cached_property
     def not_exists_condorcet_order_rk_ctb(self):
-        """Boolean. Cf. :attr:`~svvamp.Population.exists_condorcet_order_rk_ctb`."""
+        """Boolean. Cf. :attr:`~svvamp.Population.exists_condorcet_order_rk_ctb`.
+
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.not_exists_condorcet_order_rk_ctb
+            False
+        """
         return not self.exists_condorcet_order_rk_ctb
 
     @cached_property
@@ -490,12 +586,16 @@ class Profile(my_log.MyLog):
         """Boolean. True iff in matrix :attr:`~svvamp.Population.matrix_victories_rk`, there is a candidate with
         ``n_c - 1`` victories, a candidate with ``n_c - 2`` victories, etc.
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.exists_condorcet_order_rk
-        True
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.exists_condorcet_order_rk
+            True
 
-        .. seealso:: :attr:`~svvamp.Population.not_exists_condorcet_order_rk`.
+        See Also
+        --------
+        :attr:`~svvamp.Population.not_exists_condorcet_order_rk`.
         """
         self.mylog("Compute exists_condorcet_order_rk", 1)
         temp = np.copy(self.matrix_victories_rk.sum(1))
@@ -504,7 +604,15 @@ class Profile(my_log.MyLog):
 
     @cached_property
     def not_exists_condorcet_order_rk(self):
-        """Boolean. Cf. :attr:`~svvamp.Population.exists_condorcet_order_rk`."""
+        """Boolean. Cf. :attr:`~svvamp.Population.exists_condorcet_order_rk`.
+
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.not_exists_condorcet_order_rk
+            False
+        """
         return not self.exists_condorcet_order_rk
 
     @cached_property
@@ -512,12 +620,16 @@ class Profile(my_log.MyLog):
         """Boolean. True iff in matrix :attr:`~svvamp.Population.matrix_victories_ut_abs`, there is a candidate with
         ``n_c - 1`` victories, a candidate with ``n_c - 2`` victories, etc.
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.exists_condorcet_order_ut_abs
-        True
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.exists_condorcet_order_ut_abs
+            True
 
-        .. seealso:: :attr:`~svvamp.Population.not_exists_condorcet_order_ut_abs`.
+        See Also
+        --------
+        :attr:`~svvamp.Population.not_exists_condorcet_order_ut_abs`.
         """
         self.mylog("Compute exists_condorcet_order_ut_abs", 1)
         temp = np.copy(self.matrix_victories_ut_abs.sum(1))
@@ -526,7 +638,15 @@ class Profile(my_log.MyLog):
 
     @cached_property
     def not_exists_condorcet_order_ut_abs(self):
-        """Boolean. Cf. :attr:`~svvamp.Population.exists_condorcet_order_ut_abs`."""
+        """Boolean. Cf. :attr:`~svvamp.Population.exists_condorcet_order_ut_abs`.
+
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.not_exists_condorcet_order_ut_abs
+            False
+        """
         return not self.exists_condorcet_order_ut_abs
 
     @cached_property
@@ -534,12 +654,16 @@ class Profile(my_log.MyLog):
         """Boolean. True iff in matrix :attr:`~svvamp.Population.matrix_victories_ut_abs_ctb`, there is a candidate
         with ``n_c - 1`` victories, a candidate with ``n_c - 2`` victories, etc.
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.exists_condorcet_order_ut_abs_ctb
-        True
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.exists_condorcet_order_ut_abs_ctb
+            True
 
-        .. seealso:: :attr:`~svvamp.Population.not_exists_condorcet_order_ut_abs_ctb`.
+        See Also
+        --------
+        :attr:`~svvamp.Population.not_exists_condorcet_order_ut_abs_ctb`.
         """
         self.mylog("Compute exists_condorcet_order_ut_abs_ctb", 1)
         temp = np.copy(self.matrix_victories_ut_abs_ctb.sum(1))
@@ -548,7 +672,15 @@ class Profile(my_log.MyLog):
 
     @cached_property
     def not_exists_condorcet_order_ut_abs_ctb(self):
-        """Boolean. Cf. :attr:`~svvamp.Population.exists_condorcet_order_ut_abs_ctb`."""
+        """Boolean. Cf. :attr:`~svvamp.Population.exists_condorcet_order_ut_abs_ctb`.
+
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.not_exists_condorcet_order_ut_abs_ctb
+            False
+        """
         return not self.exists_condorcet_order_ut_abs_ctb
 
     @cached_property
@@ -556,12 +688,16 @@ class Profile(my_log.MyLog):
         """Boolean. True iff in matrix :attr:`~svvamp.Population.matrix_victories_ut_rel`, there is a candidate with
         ``n_c - 1`` victories, a candidate with ``n_c - 2`` victories, etc.
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.exists_condorcet_order_ut_rel
-        True
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.exists_condorcet_order_ut_rel
+            True
 
-        .. seealso:: :attr:`~svvamp.Population.not_exists_condorcet_order_ut_rel`.
+        See Also
+        --------
+        :attr:`~svvamp.Population.not_exists_condorcet_order_ut_rel`.
         """
         self.mylog("Compute exists_condorcet_order_ut_rel", 1)
         temp = np.copy(self.matrix_victories_ut_rel.sum(1))
@@ -570,7 +706,15 @@ class Profile(my_log.MyLog):
 
     @cached_property
     def not_exists_condorcet_order_ut_rel(self):
-        """Boolean. Cf. :attr:`~svvamp.Population.exists_condorcet_order_ut_rel`."""
+        """Boolean. Cf. :attr:`~svvamp.Population.exists_condorcet_order_ut_rel`.
+
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.not_exists_condorcet_order_ut_rel
+            False
+        """
         return not self.exists_condorcet_order_ut_rel
 
     @cached_property
@@ -578,12 +722,16 @@ class Profile(my_log.MyLog):
         """Boolean. True iff in matrix :attr:`~svvamp.Population.matrix_victories_ut_rel_ctb`, there is a candidate
         with ``n_c - 1`` victories, a candidate with ``n_c - 2`` victories, etc.
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.exists_condorcet_order_ut_rel_ctb
-        True
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.exists_condorcet_order_ut_rel_ctb
+            True
 
-        .. seealso:: :attr:`~svvamp.Population.not_exists_condorcet_order_ut_rel_ctb`.
+        See Also
+        --------
+        :attr:`~svvamp.Population.not_exists_condorcet_order_ut_rel_ctb`.
         """
         self.mylog("Compute exists_condorcet_order_ut_rel_ctb", 1)
         temp = np.copy(self.matrix_victories_ut_rel_ctb.sum(1))
@@ -592,7 +740,15 @@ class Profile(my_log.MyLog):
 
     @cached_property
     def not_exists_condorcet_order_ut_rel_ctb(self):
-        """Boolean. Cf. :attr:`~svvamp.Population.exists_condorcet_order_ut_rel_ctb`."""
+        """Boolean. Cf. :attr:`~svvamp.Population.exists_condorcet_order_ut_rel_ctb`.
+
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.not_exists_condorcet_order_ut_rel_ctb
+            False
+        """
         return not self.exists_condorcet_order_ut_rel_ctb
 
     # %% Condorcet winner and variants
@@ -603,14 +759,18 @@ class Profile(my_log.MyLog):
         Condorcet-admissible, i.e. iff no candidate ``d`` has an absolute victory against ``c`` (in the sense of
         :attr:`~svvamp.Population.matrix_victories_ut_abs`).
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.condorcet_admissible_candidates
-        array([ True, False, False])
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.condorcet_admissible_candidates
+            array([ True, False, False])
 
-        .. seealso:: :attr:`~svvamp.Population.nb_condorcet_admissible`,
-                     :attr:`~svvamp.Population.exists_condorcet_admissible`,
-                     :attr:`~svvamp.Population.not_exists_condorcet_admissible`.
+        See Also
+        --------
+        :attr:`~svvamp.Population.nb_condorcet_admissible`,
+        :attr:`~svvamp.Population.exists_condorcet_admissible`,
+        :attr:`~svvamp.Population.not_exists_condorcet_admissible`.
         """
         self.mylog("Compute Condorcet-admissible candidates", 1)
         return np.all(self.matrix_victories_ut_abs <= 0.5, 0)
@@ -620,10 +780,12 @@ class Profile(my_log.MyLog):
         """Integer (number of Condorcet-admissible candidates,
         :attr:`~svvamp.Population.condorcet_admissible_candidates`).
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.nb_condorcet_admissible
-        1
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.nb_condorcet_admissible
+            1
         """
         self.mylog("Compute number of Condorcet-admissible candidates", 1)
         return np.sum(self.condorcet_admissible_candidates)
@@ -633,10 +795,12 @@ class Profile(my_log.MyLog):
         """Boolean (``True`` iff there is at least one Condorcet-admissible candidate,
         :attr:`~svvamp.Population.condorcet_admissible_candidates`).
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.exists_condorcet_admissible
-        True
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.exists_condorcet_admissible
+            True
         """
         return np.any(self.condorcet_admissible_candidates)
 
@@ -644,6 +808,13 @@ class Profile(my_log.MyLog):
     def not_exists_condorcet_admissible(self):
         """Boolean (``True`` iff there is no Condorcet-admissible candidate,
         :attr:`~svvamp.Population.condorcet_admissible_candidates`).
+
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.not_exists_condorcet_admissible
+            False
         """
         return not self.exists_condorcet_admissible
 
@@ -653,14 +824,18 @@ class Profile(my_log.MyLog):
         winner, i.e. iff no candidate ``d`` has a relative victory against ``c`` (in the sense of
         :attr:`~svvamp.Population.matrix_victories_ut_rel`).
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.weak_condorcet_winners
-        array([ True, False, False])
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.weak_condorcet_winners
+            array([ True, False, False])
 
-        .. seealso: :attr:`~svvamp.Population.nb_weak_condorcet_winners`,
-                    :attr:`~svvamp.Population.exists_weak_condorcet_winner`,
-                    :attr:`~svvamp.Population.not_exists_weak_condorcet_winner`.
+        See Also
+        --------
+        :attr:`~svvamp.Population.nb_weak_condorcet_winners`,
+        :attr:`~svvamp.Population.exists_weak_condorcet_winner`,
+        :attr:`~svvamp.Population.not_exists_weak_condorcet_winner`.
         """
         self.mylog("Compute weak Condorcet winners", 1)
         return np.all(self.matrix_victories_ut_rel <= 0.5, 0)
@@ -669,10 +844,12 @@ class Profile(my_log.MyLog):
     def nb_weak_condorcet_winners(self):
         """Integer (number of weak Condorcet winners, :attr:`~svvamp.Population.weak_condorcet_winners`).
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.nb_weak_condorcet_winners
-        1
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.nb_weak_condorcet_winners
+            1
         """
         self.mylog("Compute number of weak Condorcet winners", 1)
         return np.sum(self.weak_condorcet_winners)
@@ -682,16 +859,25 @@ class Profile(my_log.MyLog):
         """Boolean (``True`` iff there is at least one weak Condorcet winner,
         :attr:`~svvamp.Population.weak_condorcet_winners`).
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.exists_weak_condorcet_winner
-        True
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.exists_weak_condorcet_winner
+            True
         """
         return np.any(self.weak_condorcet_winners)
 
     @cached_property
     def not_exists_weak_condorcet_winner(self):
         """Boolean (``True`` iff there is no weak Condorcet winner, :attr:`~svvamp.Population.weak_condorcet_winners`).
+
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.not_exists_weak_condorcet_winner
+            False
         """
         return not self.exists_weak_condorcet_winner
 
@@ -700,13 +886,17 @@ class Profile(my_log.MyLog):
         """Integer or ``NaN``. Candidate who has only victories in
         :attr:`~svvamp.Population.matrix_victories_rk_ctb`. If there is no such candidate, then ``NaN``.
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.condorcet_winner_rk_ctb
-        0
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.condorcet_winner_rk_ctb
+            0
 
-        .. seealso:: :attr:`~svvamp.Population.exists_condorcet_winner_rk_ctb`,
-                     :attr:`~svvamp.Population.not_exists_condorcet_winner_rk_ctb`.
+        See Also
+        --------
+        :attr:`~svvamp.Population.exists_condorcet_winner_rk_ctb`,
+        :attr:`~svvamp.Population.not_exists_condorcet_winner_rk_ctb`.
         """
         self.mylog("Compute condorcet_winner_rk_ctb", 1)
         for c in range(self.n_c):
@@ -719,16 +909,26 @@ class Profile(my_log.MyLog):
     def exists_condorcet_winner_rk_ctb(self):
         """Boolean (``True`` iff there is a :attr:`~svvamp.Population.condorcet_winner_rk_ctb`).
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.exists_condorcet_winner_rk_ctb
-        True
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.exists_condorcet_winner_rk_ctb
+            True
         """
         return not np.isnan(self.condorcet_winner_rk_ctb)
 
     @cached_property
     def not_exists_condorcet_winner_rk_ctb(self):
-        """Boolean (``True`` iff there is no :attr:`~svvamp.Population.condorcet_winner_rk_ctb`)."""
+        """Boolean (``True`` iff there is no :attr:`~svvamp.Population.condorcet_winner_rk_ctb`).
+
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.not_exists_condorcet_winner_rk_ctb
+            False
+        """
         return np.isnan(self.condorcet_winner_rk_ctb)
 
     @cached_property
@@ -736,13 +936,17 @@ class Profile(my_log.MyLog):
         """Integer or ``NaN``. Candidate who has only victories in :attr:`~svvamp.Population.matrix_victories_rk`. If
         there is no such candidate, then ``NaN``.
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.condorcet_winner_rk
-        0
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.condorcet_winner_rk
+            0
 
-        .. seealso:: :attr:`~svvamp.Population.exists_condorcet_winner_rk`,
-                     :attr:`~svvamp.Population.not_exists_condorcet_winner_rk`.
+        See Also
+        --------
+        :attr:`~svvamp.Population.exists_condorcet_winner_rk`,
+        :attr:`~svvamp.Population.not_exists_condorcet_winner_rk`.
         """
         self.mylog("Compute condorcet_winner_rk", 1)
         for c in range(self.n_c):
@@ -755,16 +959,26 @@ class Profile(my_log.MyLog):
     def exists_condorcet_winner_rk(self):
         """Boolean (``True`` iff there is a :attr:`~svvamp.Population.condorcet_winner_rk`).
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.exists_condorcet_winner_rk
-        True
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.exists_condorcet_winner_rk
+            True
         """
         return not np.isnan(self.condorcet_winner_rk)
 
     @cached_property
     def not_exists_condorcet_winner_rk(self):
-        """Boolean (``True`` iff there is no :attr:`~svvamp.Population.condorcet_winner_rk`)."""
+        """Boolean (``True`` iff there is no :attr:`~svvamp.Population.condorcet_winner_rk`).
+
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.not_exists_condorcet_winner_rk
+            False
+        """
         return np.isnan(self.condorcet_winner_rk)
 
     @cached_property
@@ -772,13 +986,17 @@ class Profile(my_log.MyLog):
         """Integer or ``NaN``. Candidate who has only victories in
         :attr:`~svvamp.Population.matrix_victories_ut_rel_ctb`. If there is no such candidate, then ``NaN``.
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.condorcet_winner_ut_rel_ctb
-        0
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.condorcet_winner_ut_rel_ctb
+            0
 
-        .. seealso:: :attr:`~svvamp.Population.exists_condorcet_winner_ut_rel_ctb`,
-                     :attr:`~svvamp.Population.not_exists_condorcet_winner_ut_rel_ctb`.
+        See Also
+        --------
+        :attr:`~svvamp.Population.exists_condorcet_winner_ut_rel_ctb`,
+        :attr:`~svvamp.Population.not_exists_condorcet_winner_ut_rel_ctb`.
         """
         self.mylog("Compute condorcet_winner_ut_rel_ctb", 1)
         for c in range(self.n_c):
@@ -791,16 +1009,26 @@ class Profile(my_log.MyLog):
     def exists_condorcet_winner_ut_rel_ctb(self):
         """Boolean (``True`` iff there is a :attr:`~svvamp.Population.condorcet_winner_ut_rel_ctb`).
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.exists_condorcet_winner_ut_rel_ctb
-        True
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.exists_condorcet_winner_ut_rel_ctb
+            True
         """
         return not np.isnan(self.condorcet_winner_ut_rel_ctb)
 
     @cached_property
     def not_exists_condorcet_winner_ut_rel_ctb(self):
-        """Boolean (``True`` iff there is no :attr:`~svvamp.Population.condorcet_winner_ut_rel_ctb`)."""
+        """Boolean (``True`` iff there is no :attr:`~svvamp.Population.condorcet_winner_ut_rel_ctb`).
+
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.not_exists_condorcet_winner_ut_rel_ctb
+            False
+        """
         return np.isnan(self.condorcet_winner_ut_rel_ctb)
 
     @cached_property
@@ -808,13 +1036,17 @@ class Profile(my_log.MyLog):
         """Integer or ``NaN``. Candidate who has only victories in
         :attr:`~svvamp.Population.matrix_victories_ut_rel`. If there is no such candidate, then ``NaN``.
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.condorcet_winner_ut_rel
-        0
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.condorcet_winner_ut_rel
+            0
 
-        .. seealso:: :attr:`~svvamp.Population.exists_condorcet_winner_ut_rel`,
-                     :attr:`~svvamp.Population.not_exists_condorcet_winner_ut_rel`.
+        See Also
+        --------
+        :attr:`~svvamp.Population.exists_condorcet_winner_ut_rel`,
+        :attr:`~svvamp.Population.not_exists_condorcet_winner_ut_rel`.
         """
         self.mylog("Compute condorcet_winner_ut_rel", 1)
         for c in range(self.n_c):
@@ -827,16 +1059,26 @@ class Profile(my_log.MyLog):
     def exists_condorcet_winner_ut_rel(self):
         """Boolean (``True`` iff there is a :attr:`~svvamp.Population.condorcet_winner_ut_rel`).
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.exists_condorcet_winner_ut_rel
-        True
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.exists_condorcet_winner_ut_rel
+            True
         """
         return not np.isnan(self.condorcet_winner_ut_rel)
 
     @cached_property
     def not_exists_condorcet_winner_ut_rel(self):
-        """Boolean (``True`` iff there is no :attr:`~svvamp.Population.condorcet_winner_ut_rel`)."""
+        """Boolean (``True`` iff there is no :attr:`~svvamp.Population.condorcet_winner_ut_rel`).
+
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.not_exists_condorcet_winner_ut_rel
+            False
+        """
         return np.isnan(self.condorcet_winner_ut_rel)
 
     @cached_property
@@ -844,13 +1086,17 @@ class Profile(my_log.MyLog):
         """Integer or ``NaN``. Candidate who has only victories in
         :attr:`~svvamp.Population.matrix_victories_ut_abs_ctb`. If there is no such candidate, then ``NaN``.
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.condorcet_winner_ut_abs_ctb
-        0
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.condorcet_winner_ut_abs_ctb
+            0
 
-        .. seealso:: :attr:`~svvamp.Population.exists_condorcet_winner_ut_abs_ctb`,
-                     :attr:`~svvamp.Population.not_exists_condorcet_winner_ut_abs_ctb`
+        See Also
+        --------
+        :attr:`~svvamp.Population.exists_condorcet_winner_ut_abs_ctb`,
+        :attr:`~svvamp.Population.not_exists_condorcet_winner_ut_abs_ctb`
         """
         self.mylog("Compute condorcet_winner_ut_abs_ctb", 1)
         for c in range(self.n_c):
@@ -862,16 +1108,26 @@ class Profile(my_log.MyLog):
     def exists_condorcet_winner_ut_abs_ctb(self):
         """Boolean (``True`` iff there is a :attr:`~svvamp.Population.condorcet_winner_ut_abs_ctb`).
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.exists_condorcet_winner_ut_abs_ctb
-        True
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.exists_condorcet_winner_ut_abs_ctb
+            True
         """
         return not np.isnan(self.condorcet_winner_ut_abs_ctb)
 
     @cached_property
     def not_exists_condorcet_winner_ut_abs_ctb(self):
-        """Boolean (``True`` iff there is no :attr:`~svvamp.Population.condorcet_winner_ut_abs_ctb`)."""
+        """Boolean (``True`` iff there is no :attr:`~svvamp.Population.condorcet_winner_ut_abs_ctb`).
+
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.not_exists_condorcet_winner_ut_abs_ctb
+            False
+        """
         return np.isnan(self.condorcet_winner_ut_abs_ctb)
 
     @cached_property
@@ -879,13 +1135,17 @@ class Profile(my_log.MyLog):
         """Integer or ``NaN``. Candidate who has only victories in
         :attr:`~svvamp.Population.matrix_victories_ut_abs`. If there is no such candidate, then ``NaN``.
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.condorcet_winner_ut_abs
-        0
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.condorcet_winner_ut_abs
+            0
 
-        .. seealso:: :attr:`~svvamp.Population.exists_condorcet_winner_ut_abs`,
-                     :attr:`~svvamp.Population.not_exists_condorcet_winner_ut_abs`.
+        See Also
+        --------
+        :attr:`~svvamp.Population.exists_condorcet_winner_ut_abs`,
+        :attr:`~svvamp.Population.not_exists_condorcet_winner_ut_abs`.
         """
         self.mylog("Compute Condorcet winner", 1)
         for c in range(self.n_c):
@@ -897,16 +1157,26 @@ class Profile(my_log.MyLog):
     def exists_condorcet_winner_ut_abs(self):
         """Boolean (``True`` iff there is a :attr:`~svvamp.Population.condorcet_winner_ut_abs`).
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.exists_condorcet_winner_ut_abs
-        True
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.exists_condorcet_winner_ut_abs
+            True
         """
         return not np.isnan(self.condorcet_winner_ut_abs)
 
     @cached_property
     def not_exists_condorcet_winner_ut_abs(self):
-        """Boolean (``True`` iff there is no :attr:`~svvamp.Population.condorcet_winner_ut_abs`)."""
+        """Boolean (``True`` iff there is no :attr:`~svvamp.Population.condorcet_winner_ut_abs`).
+
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.not_exists_condorcet_winner_ut_abs
+            False
+        """
         return np.isnan(self.condorcet_winner_ut_abs)
 
     # %% Resistant Condorcet winner
@@ -923,13 +1193,17 @@ class Profile(my_log.MyLog):
             1) Do not prefer ``c`` to ``w``,
             2) And prefer ``w`` to ``d``.
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.resistant_condorcet_winner
-        0
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.resistant_condorcet_winner
+            0
 
-        .. seealso:: :attr:`~svvamp.Population.exists_resistant_condorcet_winner`,
-                     :attr:`~svvamp.Population.not_exists_resistant_condorcet_winner`.
+        See Also
+        --------
+        :attr:`~svvamp.Population.exists_resistant_condorcet_winner`,
+        :attr:`~svvamp.Population.not_exists_resistant_condorcet_winner`.
         """
         self.mylog("Compute Resistant Condorcet winner", 1)
         if is_resistant_condorcet(self.condorcet_winner_ut_abs, self.preferences_ut):
@@ -940,16 +1214,26 @@ class Profile(my_log.MyLog):
     def exists_resistant_condorcet_winner(self):
         """Boolean (``True`` iff there is a :attr:`~svvamp.Population.resistant_condorcet_winner`).
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.exists_resistant_condorcet_winner
-        True
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.exists_resistant_condorcet_winner
+            True
         """
         return not np.isnan(self.resistant_condorcet_winner)
 
     @cached_property
     def not_exists_resistant_condorcet_winner(self):
-        """Boolean (``True`` iff there is no :attr:`~svvamp.Population.resistant_condorcet_winner`)."""
+        """Boolean (``True`` iff there is no :attr:`~svvamp.Population.resistant_condorcet_winner`).
+
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.not_exists_resistant_condorcet_winner
+            False
+        """
         return np.isnan(self.resistant_condorcet_winner)
 
     @cached_property
@@ -994,12 +1278,14 @@ class Profile(my_log.MyLog):
         If this result is negative, it means that even without ``c``-manipulators, ``w`` is not a Condorcet winner.
         In that case, threshold is set to 0 instead.
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.threshold_c_prevents_w_condorcet_ut_abs
-        array([[0, 0, 0],
-               [2, 0, 0],
-               [2, 0, 0]])
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.threshold_c_prevents_w_condorcet_ut_abs
+            array([[0, 0, 0],
+                   [2, 0, 0],
+                   [2, 0, 0]])
         """
         self.mylog("Compute threshold_c_prevents_w_Condorcet_ut_abs", 1)
         result = np.full((self.n_c, self.n_c), 42)
@@ -1030,13 +1316,17 @@ class Profile(my_log.MyLog):
         :attr:`~svvamp.Population.plurality_scores_rk`. Can also be candidate 0 with exactly n_v/2. If there is no such
         candidate, then ``NaN``.
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.majority_favorite_rk_ctb
-        0
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.majority_favorite_rk_ctb
+            0
 
-        .. seealso:: :attr:`~svvamp.Population.exists_majority_favorite_rk_ctb`,
-                     :attr:`~svvamp.Population.not_exists_majority_favorite_rk_ctb`.
+        See Also
+        --------
+        :attr:`~svvamp.Population.exists_majority_favorite_rk_ctb`,
+        :attr:`~svvamp.Population.not_exists_majority_favorite_rk_ctb`.
         """
         self.mylog("Compute majority favorite (rk_ctb)", 1)
         c = np.argmax(self.plurality_scores_rk)
@@ -1049,16 +1339,26 @@ class Profile(my_log.MyLog):
     def exists_majority_favorite_rk_ctb(self):
         """Boolean (``True`` iff there is a :attr:`~svvamp.Population.majority_favorite_rk_ctb`).
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.exists_majority_favorite_rk_ctb
-        True
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.exists_majority_favorite_rk_ctb
+            True
         """
         return not np.isnan(self.majority_favorite_rk_ctb)
 
     @cached_property
     def not_exists_majority_favorite_rk_ctb(self):
-        """Boolean (``True`` iff there is no :attr:`~svvamp.Population.majority_favorite_rk_ctb`)."""
+        """Boolean (``True`` iff there is no :attr:`~svvamp.Population.majority_favorite_rk_ctb`).
+
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.not_exists_majority_favorite_rk_ctb
+            False
+        """
         return np.isnan(self.majority_favorite_rk_ctb)
 
     @cached_property
@@ -1067,13 +1367,17 @@ class Profile(my_log.MyLog):
         :attr:`~svvamp.Population.plurality_scores_ut`. Can also be candidate 0 with exactly n_v/2. If there is no
         such candidate, then ``NaN``.
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.majority_favorite_ut_ctb
-        0
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.majority_favorite_ut_ctb
+            0
 
-        .. seealso:: :attr:`~svvamp.Population.exists_majority_favorite_ut_ctb`,
-                     :attr:`~svvamp.Population.not_exists_majority_favorite_ut_ctb`.
+        See Also
+        --------
+        :attr:`~svvamp.Population.exists_majority_favorite_ut_ctb`,
+        :attr:`~svvamp.Population.not_exists_majority_favorite_ut_ctb`.
         """
         self.mylog("Compute majority favorite (ut_ctb)", 1)
         c = np.argmax(self.plurality_scores_ut)
@@ -1086,16 +1390,26 @@ class Profile(my_log.MyLog):
     def exists_majority_favorite_ut_ctb(self):
         """Boolean (``True`` iff there is a :attr:`~svvamp.Population.majority_favorite_ut_ctb`).
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.exists_majority_favorite_ut_ctb
-        True
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.exists_majority_favorite_ut_ctb
+            True
         """
         return not np.isnan(self.majority_favorite_ut_ctb)
 
     @cached_property
     def not_exists_majority_favorite_ut_ctb(self):
-        """Boolean (``True`` iff there is no :attr:`~svvamp.Population.majority_favorite_ut_ctb`)."""
+        """Boolean (``True`` iff there is no :attr:`~svvamp.Population.majority_favorite_ut_ctb`).
+
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.not_exists_majority_favorite_ut_ctb
+            False
+        """
         return np.isnan(self.majority_favorite_ut_ctb)
 
     @cached_property
@@ -1103,13 +1417,17 @@ class Profile(my_log.MyLog):
         """Integer or ``NaN``. Candidate who has strictly more than n_v/2 in
         :attr:`~svvamp.Population.plurality_scores_rk`. If there is no such candidate, then ``NaN``.
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.majority_favorite_rk
-        0
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.majority_favorite_rk
+            0
 
-        .. seealso:: :attr:`~svvamp.Population.exists_majority_favorite_rk`,
-                     :attr:`~svvamp.Population.not_exists_majority_favorite_rk`.
+        See Also
+        --------
+        :attr:`~svvamp.Population.exists_majority_favorite_rk`,
+        :attr:`~svvamp.Population.not_exists_majority_favorite_rk`.
         """
         self.mylog("Compute majority favorite (rk)", 1)
         c = np.argmax(self.plurality_scores_rk)
@@ -1122,16 +1440,26 @@ class Profile(my_log.MyLog):
     def exists_majority_favorite_rk(self):
         """Boolean (``True`` iff there is a :attr:`~svvamp.Population.majority_favorite_rk`).
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.exists_majority_favorite_rk
-        True
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.exists_majority_favorite_rk
+            True
         """
         return not np.isnan(self.majority_favorite_rk)
 
     @cached_property
     def not_exists_majority_favorite_rk(self):
-        """Boolean (``True`` iff there is no :attr:`~svvamp.Population.majority_favorite_rk`)."""
+        """Boolean (``True`` iff there is no :attr:`~svvamp.Population.majority_favorite_rk`).
+
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.not_exists_majority_favorite_rk
+            False
+        """
         return np.isnan(self.majority_favorite_rk)
 
     @cached_property
@@ -1139,13 +1467,17 @@ class Profile(my_log.MyLog):
         """Integer or ``NaN``. Candidate who has strictly more than n_v/2 in
         :attr:`~svvamp.Population.plurality_scores_ut`. If there is no such candidate, then ``NaN``.
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.majority_favorite_ut
-        0
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.majority_favorite_ut
+            0
 
-        .. seealso:: :attr:`~svvamp.Population.exists_majority_favorite_ut`,
-                     :attr:`~svvamp.Population.not_exists_majority_favorite_ut`.
+        See Also
+        --------
+        :attr:`~svvamp.Population.exists_majority_favorite_ut`,
+        :attr:`~svvamp.Population.not_exists_majority_favorite_ut`.
         """
         self.mylog("Compute majority favorite (ut)", 1)
         c = np.argmax(self.plurality_scores_ut)
@@ -1158,16 +1490,26 @@ class Profile(my_log.MyLog):
     def exists_majority_favorite_ut(self):
         """Boolean (``True`` iff there is a :attr:`~svvamp.Population.majority_favorite_ut`).
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.exists_majority_favorite_ut
-        True
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.exists_majority_favorite_ut
+            True
         """
         return not np.isnan(self.majority_favorite_ut)
 
     @cached_property
     def not_exists_majority_favorite_ut(self):
-        """Boolean (``True`` iff there is no :attr:`~svvamp.Population.majority_favorite_ut`)."""
+        """Boolean (``True`` iff there is no :attr:`~svvamp.Population.majority_favorite_ut`).
+
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.not_exists_majority_favorite_ut
+            False
+        """
         return np.isnan(self.majority_favorite_ut)
 
     # %% Total utilities
@@ -1177,10 +1519,12 @@ class Profile(my_log.MyLog):
         """1d array of numbers. ``total_utility_c[c]`` is the total utility for candidate ``c`` (i.e. the sum of
         ``c``'s column in matrix :attr:`~svvamp.Population.preferences_ut`).
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_ut=[[5, 1, 2], [4, 10, 1]])
-        >>> profile.total_utility_c
-        array([ 9, 11,  3])
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_ut=[[5, 1, 2], [4, 10, 1]])
+            >>> profile.total_utility_c
+            array([ 9, 11,  3])
         """
         self.mylog("Compute total utility of candidates", 1)
         return np.sum(self.preferences_ut, 0)
@@ -1189,10 +1533,12 @@ class Profile(my_log.MyLog):
     def total_utility_min(self):
         """Float. ``total_utility_min`` is the minimum of :attr:`~svvamp.Population.total_utility_c`.
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_ut=[[5, 1, 2], [4, 10, 1]])
-        >>> profile.total_utility_min
-        3
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_ut=[[5, 1, 2], [4, 10, 1]])
+            >>> profile.total_utility_min
+            3
         """
         self.mylog("Compute total_utility_min", 1)
         return np.min(self.total_utility_c)
@@ -1201,10 +1547,12 @@ class Profile(my_log.MyLog):
     def total_utility_max(self):
         """Float. ``total_utility_max`` is the maximum of :attr:`~svvamp.Population.total_utility_c`.
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_ut=[[5, 1, 2], [4, 10, 1]])
-        >>> profile.total_utility_max
-        11
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_ut=[[5, 1, 2], [4, 10, 1]])
+            >>> profile.total_utility_max
+            11
         """
         self.mylog("Compute total_utility_max", 1)
         return np.max(self.total_utility_c)
@@ -1213,10 +1561,12 @@ class Profile(my_log.MyLog):
     def total_utility_mean(self):
         """Float. ``total_utility_mean`` is the mean of :attr:`~svvamp.Population.total_utility_c`.
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_ut=[[5, 1, 2], [4, 10, 1]])
-        >>> profile.total_utility_mean == (9 + 11 + 3) / 3
-        True
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_ut=[[5, 1, 2], [4, 10, 1]])
+            >>> profile.total_utility_mean == (9 + 11 + 3) / 3
+            True
         """
         self.mylog("Compute total_utility_mean", 1)
         return np.mean(self.total_utility_c)
@@ -1225,11 +1575,13 @@ class Profile(my_log.MyLog):
     def total_utility_std(self):
         """Float. ``total_utility_std`` is the standard deviation of :attr:`~svvamp.Population.total_utility_c`.
 
-        >>> from svvamp import Profile
-        >>> import numpy as np
-        >>> profile = Profile(preferences_ut=[[5, 1, 2], [4, 10, 1]])
-        >>> profile.total_utility_std == np.std([9, 11, 3])
-        True
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> import numpy as np
+            >>> profile = Profile(preferences_ut=[[5, 1, 2], [4, 10, 1]])
+            >>> profile.total_utility_std == np.std([9, 11, 3])
+            True
         """
         self.mylog("Compute total_utility_std", 1)
         return np.std(self.total_utility_c, ddof=0)
@@ -1241,10 +1593,12 @@ class Profile(my_log.MyLog):
         """1d array of floats. ``mean_utility_c[c]`` is the mean utility for candidate ``c`` (i.e. the mean of
         ``c``'s column in matrix :attr:`~svvamp.Population.preferences_ut`).
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_ut=[[5, 1, 2], [4, 10, 1]])
-        >>> profile.mean_utility_c
-        array([4.5, 5.5, 1.5])
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_ut=[[5, 1, 2], [4, 10, 1]])
+            >>> profile.mean_utility_c
+            array([4.5, 5.5, 1.5])
         """
         self.mylog("Compute mean utility of candidates", 1)
         return np.mean(self.preferences_ut, 0)
@@ -1253,10 +1607,12 @@ class Profile(my_log.MyLog):
     def mean_utility_min(self):
         """Float. ``mean_utility_min`` is the minimum of :attr:`~svvamp.Population.mean_utility_c`.
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_ut=[[5, 1, 2], [4, 10, 1]])
-        >>> profile.mean_utility_min
-        1.5
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_ut=[[5, 1, 2], [4, 10, 1]])
+            >>> profile.mean_utility_min
+            1.5
         """
         self.mylog("Compute mean_utility_min", 1)
         return np.min(self.mean_utility_c)
@@ -1265,10 +1621,12 @@ class Profile(my_log.MyLog):
     def mean_utility_max(self):
         """Float. ``mean_utility_max`` is the maximum of :attr:`~svvamp.Population.mean_utility_c`.
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_ut=[[5, 1, 2], [4, 10, 1]])
-        >>> profile.mean_utility_max
-        5.5
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_ut=[[5, 1, 2], [4, 10, 1]])
+            >>> profile.mean_utility_max
+            5.5
         """
         self.mylog("Compute mean_utility_max", 1)
         return np.max(self.mean_utility_c)
@@ -1277,10 +1635,12 @@ class Profile(my_log.MyLog):
     def mean_utility_mean(self):
         """Float. ``mean_utility_mean`` is the mean of :attr:`~svvamp.Population.mean_utility_c`.
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_ut=[[5, 1, 2], [4, 10, 1]])
-        >>> profile.mean_utility_mean == (4.5 + 5.5 + 1.5) / 3
-        True
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_ut=[[5, 1, 2], [4, 10, 1]])
+            >>> profile.mean_utility_mean == (4.5 + 5.5 + 1.5) / 3
+            True
         """
         self.mylog("Compute mean_utility_mean", 1)
         return np.mean(self.mean_utility_c)
@@ -1289,11 +1649,13 @@ class Profile(my_log.MyLog):
     def mean_utility_std(self):
         """Float. ``mean_utility_std`` is the standard deviation of :attr:`~svvamp.Population.mean_utility_c`.
 
-        >>> from svvamp import Profile
-        >>> import numpy as np
-        >>> profile = Profile(preferences_ut=[[5, 1, 2], [4, 10, 1]])
-        >>> profile.mean_utility_std == np.std([4.5, 5.5, 1.5])
-        True
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> import numpy as np
+            >>> profile = Profile(preferences_ut=[[5, 1, 2], [4, 10, 1]])
+            >>> profile.mean_utility_std == np.std([4.5, 5.5, 1.5])
+            True
         """
         self.mylog("Compute mean_utility_std", 1)
         return np.std(self.mean_utility_c, ddof=0)
@@ -1305,10 +1667,12 @@ class Profile(my_log.MyLog):
         """1d array of integers. ``borda_score_c_rk[c]`` is the total Borda score of candidate ``c`` (using
         :attr:`~svvamp.Population.preferences_borda_rk`, i.e. strict preferences).
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.borda_score_c_rk
-        array([4, 2, 0])
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.borda_score_c_rk
+            array([4, 2, 0])
         """
         self.mylog("Compute Borda scores of the candidates (rankings)", 1)
         return np.sum(self.matrix_duels_rk, 1)
@@ -1318,10 +1682,12 @@ class Profile(my_log.MyLog):
         """1d array of floats. ``borda_score_c_ut[c]`` is the total Borda score of candidate ``c`` (using
         :attr:`~svvamp.Population.preferences_borda_ut`, i.e. weak preferences).
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.borda_score_c_ut
-        array([4., 2., 0.])
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.borda_score_c_ut
+            array([4., 2., 0.])
         """
         self.mylog("Compute Borda scores of the candidates (weak orders)", 1)
         return np.sum(self.preferences_borda_ut, 0)
@@ -1341,10 +1707,12 @@ class Profile(my_log.MyLog):
 
         For example, ``candidates_by_decreasing_borda_score_rk[0]`` is the candidate with highest Borda score (rk).
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.candidates_by_decreasing_borda_score_rk
-        array([0, 1, 2])
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.candidates_by_decreasing_borda_score_rk
+            array([0, 1, 2])
         """
         self.mylog("Compute candidates_by_decreasing_borda_score_rk", 1)
         return self._tuple_decreasing_borda_score_rk[0]
@@ -1356,10 +1724,12 @@ class Profile(my_log.MyLog):
 
         For example, ``decreasing_borda_scores_rk[0]`` is the highest Borda score for a candidate (rk).
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.decreasing_borda_scores_rk
-        array([4, 2, 0])
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.decreasing_borda_scores_rk
+            array([4, 2, 0])
         """
         self.mylog("Compute decreasing_borda_scores_rk", 1)
         return self._tuple_decreasing_borda_score_rk[1]
@@ -1378,10 +1748,12 @@ class Profile(my_log.MyLog):
 
         For example, ``candidates_by_decreasing_borda_score_ut[0]`` is the candidate with highest Borda score (ut).
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.candidates_by_decreasing_borda_score_ut
-        array([0, 1, 2])
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.candidates_by_decreasing_borda_score_ut
+            array([0, 1, 2])
         """
         self.mylog("Compute candidates_by_decreasing_borda_score_ut", 1)
         return self._tuple_decreasing_borda_score_ut[0]
@@ -1393,10 +1765,12 @@ class Profile(my_log.MyLog):
 
         For example, ``decreasing_borda_scores_ut[0]`` is the highest Borda score for a candidate (rk).
 
-        >>> from svvamp import Profile
-        >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> profile.decreasing_borda_scores_ut
-        array([4., 2., 0.])
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.decreasing_borda_scores_ut
+            array([4., 2., 0.])
         """
         self.mylog("Compute decreasing_borda_scores_ut", 1)
         return self._tuple_decreasing_borda_score_ut[1]
@@ -1426,6 +1800,14 @@ class Profile(my_log.MyLog):
         :math:`\\sum u_i = 0`, i.e. the unit circle of the plan that is orthogonal to the main diagonal [1, 1, 1].
 
         Other blue circles are the frontiers between the 6 different strict total orders on the candidates.
+
+        Examples
+        --------
+            >>> initialize_random_seeds()
+            >>> preferences_ut_test = np.random.randint(-5, 5, (10, 5))
+            >>> profile = Profile(preferences_ut=preferences_ut_test,
+            ...                   labels_candidates=['Alice', 'Bob', 'Catherine', 'Dave', 'Ellen'])
+            >>> profile.plot3(indexes=[0, 1, 2], normalize=True)
 
         References
         ----------
@@ -1486,7 +1868,7 @@ class Profile(my_log.MyLog):
                 position[worst] = - temp
                 ax.text(position[0], position[1], position[2],
                         ' ' + str(_indexes[best]) + ' > ' + str(_indexes[other]) + ' > ' + str(_indexes[worst]))
-        plt.show()
+        # plt.show()
 
     def plot4(self, indexes=None, normalize=True, use_labels=True):
         """Plot utilities for 4 candidates (without approval limit).
@@ -1515,6 +1897,14 @@ class Profile(my_log.MyLog):
               norm is equal to 1.
 
         Blue lines are the frontiers between the 24 different strict total orders on the candidates ('permutohedron').
+
+        Examples
+        --------
+            >>> initialize_random_seeds()
+            >>> preferences_ut_test = np.random.randint(-5, 5, (10, 5))
+            >>> profile = Profile(preferences_ut=preferences_ut_test,
+            ...                   labels_candidates=['Alice', 'Bob', 'Catherine', 'Dave', 'Ellen'])
+            >>> profile.plot4(indexes=[0, 1, 2, 4], normalize=True)
 
         References
         ----------
@@ -1611,7 +2001,7 @@ class Profile(my_log.MyLog):
 
         # Conclude
         plt.axis('off')
-        plt.show()
+        # plt.show()
 
     # %% Demo
 
@@ -1622,6 +2012,300 @@ class Profile(my_log.MyLog):
         ----------
         log_depth : int
             Integer from 0 (basic info) to 3 (verbose).
+
+        Examples
+        --------
+            >>> initialize_random_seeds()
+            >>> preferences_ut_test = np.random.randint(-5, 5, (10, 5))
+            >>> profile = Profile(preferences_ut=preferences_ut_test,
+            ...                   labels_candidates=['Alice', 'Bob', 'Catherine', 'Dave', 'Ellen'])
+            >>> profile.demo(log_depth=0)  # doctest: +NORMALIZE_WHITESPACE
+            <BLANKLINE>
+            ************************
+            *   Basic properties   *
+            ************************
+            n_v = 10
+            n_c = 5
+            labels_candidates = ['Alice', 'Bob', 'Catherine', 'Dave', 'Ellen']
+            preferences_ut =
+            [[ 4 -2  0 -3 -1]
+             [ 4  4 -5 -1  2]
+             [ 0  4  3  4 -1]
+             [-2 -2  2 -5 -4]
+             [-2 -3  2 -3 -5]
+             [-3 -2  3 -4 -2]
+             [ 2  1  3  3 -4]
+             [-2 -5 -2  0 -5]
+             [ 1  2  2  3 -4]
+             [ 0 -5 -2 -2  2]]
+            preferences_borda_ut =
+            [[4.  1.  3.  0.  2. ]
+             [3.5 3.5 0.  1.  2. ]
+             [1.  3.5 2.  3.5 0. ]
+             [2.5 2.5 4.  0.  1. ]
+             [3.  1.5 4.  1.5 0. ]
+             [1.  2.5 4.  0.  2.5]
+             [2.  1.  3.5 3.5 0. ]
+             [2.5 0.5 2.5 4.  0.5]
+             [1.  2.5 2.5 4.  0. ]
+             [3.  0.  1.5 1.5 4. ]]
+            preferences_borda_rk =
+            [[4 1 3 0 2]
+             [3 4 0 1 2]
+             [1 4 2 3 0]
+             [3 2 4 0 1]
+             [3 1 4 2 0]
+             [1 3 4 0 2]
+             [2 1 3 4 0]
+             [2 0 3 4 1]
+             [1 2 3 4 0]
+             [3 0 2 1 4]]
+            preferences_rk =
+            [[0 2 4 1 3]
+             [1 0 4 3 2]
+             [1 3 2 0 4]
+             [2 0 1 4 3]
+             [2 0 3 1 4]
+             [2 1 4 0 3]
+             [3 2 0 1 4]
+             [3 2 0 4 1]
+             [3 2 1 0 4]
+             [4 0 2 3 1]]
+            v_has_same_ordinal_preferences_as_previous_voter =
+            [False False False False False False False False False False]
+            <BLANKLINE>
+            ************************
+            *   Plurality scores   *
+            ************************
+            preferences_rk (reminder) =
+            [[0 2 4 1 3]
+             [1 0 4 3 2]
+             [1 3 2 0 4]
+             [2 0 1 4 3]
+             [2 0 3 1 4]
+             [2 1 4 0 3]
+             [3 2 0 1 4]
+             [3 2 0 4 1]
+             [3 2 1 0 4]
+             [4 0 2 3 1]]
+            plurality_scores_rk = [1 2 3 3 1]
+            majority_favorite_rk = nan
+            majority_favorite_rk_ctb = nan
+            <BLANKLINE>
+            preferences_borda_ut (reminder) =
+            [[4.  1.  3.  0.  2. ]
+             [3.5 3.5 0.  1.  2. ]
+             [1.  3.5 2.  3.5 0. ]
+             [2.5 2.5 4.  0.  1. ]
+             [3.  1.5 4.  1.5 0. ]
+             [1.  2.5 4.  0.  2.5]
+             [2.  1.  3.5 3.5 0. ]
+             [2.5 0.5 2.5 4.  0.5]
+             [1.  2.5 2.5 4.  0. ]
+             [3.  0.  1.5 1.5 4. ]]
+            plurality_scores_ut = [1 0 3 2 1]
+            majority_favorite_ut = nan
+            majority_favorite_ut_ctb = nan
+            <BLANKLINE>
+            ********************
+            *   Borda scores   *
+            ********************
+            preferences_borda_rk (reminder) =
+            [[4 1 3 0 2]
+             [3 4 0 1 2]
+             [1 4 2 3 0]
+             [3 2 4 0 1]
+             [3 1 4 2 0]
+             [1 3 4 0 2]
+             [2 1 3 4 0]
+             [2 0 3 4 1]
+             [1 2 3 4 0]
+             [3 0 2 1 4]]
+            borda_score_c_rk =
+            [23 18 28 19 12]
+            Remark: Borda scores above are computed with the matrix of duels.
+            Check: np.sum(self.preferences_borda_rk, 0) =
+            [23 18 28 19 12]
+            decreasing_borda_scores_rk =
+            [28 23 19 18 12]
+            candidates_by_decreasing_borda_score_rk =
+            [2 0 3 1 4]
+            <BLANKLINE>
+            preferences_borda_ut (reminder) =
+            [[4.  1.  3.  0.  2. ]
+             [3.5 3.5 0.  1.  2. ]
+             [1.  3.5 2.  3.5 0. ]
+             [2.5 2.5 4.  0.  1. ]
+             [3.  1.5 4.  1.5 0. ]
+             [1.  2.5 4.  0.  2.5]
+             [2.  1.  3.5 3.5 0. ]
+             [2.5 0.5 2.5 4.  0.5]
+             [1.  2.5 2.5 4.  0. ]
+             [3.  0.  1.5 1.5 4. ]]
+            borda_score_c_ut =
+            [23.5 18.5 27.  19.  12. ]
+            decreasing_borda_scores_ut =
+            [27.  23.5 19.  18.5 12. ]
+            candidates_by_decreasing_borda_score_ut =
+            [2 0 3 1 4]
+            <BLANKLINE>
+            *****************
+            *   Utilities   *
+            *****************
+            preferences_ut (reminder) =
+            [[ 4 -2  0 -3 -1]
+             [ 4  4 -5 -1  2]
+             [ 0  4  3  4 -1]
+             [-2 -2  2 -5 -4]
+             [-2 -3  2 -3 -5]
+             [-3 -2  3 -4 -2]
+             [ 2  1  3  3 -4]
+             [-2 -5 -2  0 -5]
+             [ 1  2  2  3 -4]
+             [ 0 -5 -2 -2  2]]
+            total_utility_c =
+            [  2  -8   6  -8 -22]
+            total_utility_min = -22
+            total_utility_max = 6
+            total_utility_mean = -6.0
+            total_utility_std = 9.715966241192895
+            <BLANKLINE>
+            *******************************************
+            *   Condorcet notions based on rankings   *
+            *******************************************
+            preferences_rk (reminder) =
+            [[0 2 4 1 3]
+             [1 0 4 3 2]
+             [1 3 2 0 4]
+             [2 0 1 4 3]
+             [2 0 3 1 4]
+             [2 1 4 0 3]
+             [3 2 0 1 4]
+             [3 2 0 4 1]
+             [3 2 1 0 4]
+             [4 0 2 3 1]]
+            matrix_duels_rk =
+            [[0 6 3 6 8]
+             [4 0 2 5 7]
+             [7 8 0 5 8]
+             [4 5 5 0 5]
+             [2 3 2 5 0]]
+            matrix_victories_rk =
+            [[0.  1.  0.  1.  1. ]
+             [0.  0.  0.  0.5 1. ]
+             [1.  1.  0.  0.5 1. ]
+             [0.  0.5 0.5 0.  0.5]
+             [0.  0.  0.  0.5 0. ]]
+            condorcet_winner_rk = nan
+            exists_condorcet_order_rk = False
+            matrix_victories_rk_ctb =
+            [[0. 1. 0. 1. 1.]
+             [0. 0. 0. 1. 1.]
+             [1. 1. 0. 1. 1.]
+             [0. 0. 0. 0. 1.]
+             [0. 0. 0. 0. 0.]]
+            condorcet_winner_rk_ctb = 2
+            exists_condorcet_order_rk_ctb = True
+            <BLANKLINE>
+            ***************************************
+            *   Relative Condorcet notions (ut)   *
+            ***************************************
+            preferences_borda_ut (reminder) =
+            [[4.  1.  3.  0.  2. ]
+             [3.5 3.5 0.  1.  2. ]
+             [1.  3.5 2.  3.5 0. ]
+             [2.5 2.5 4.  0.  1. ]
+             [3.  1.5 4.  1.5 0. ]
+             [1.  2.5 4.  0.  2.5]
+             [2.  1.  3.5 3.5 0. ]
+             [2.5 0.5 2.5 4.  0.5]
+             [1.  2.5 2.5 4.  0. ]
+             [3.  0.  1.5 1.5 4. ]]
+            matrix_duels_ut =
+            [[0 5 3 6 8]
+             [3 0 2 4 6]
+             [6 7 0 4 8]
+             [4 4 4 0 5]
+             [2 2 2 5 0]]
+            matrix_victories_ut_rel =
+            [[0.  1.  0.  1.  1. ]
+             [0.  0.  0.  0.5 1. ]
+             [1.  1.  0.  0.5 1. ]
+             [0.  0.5 0.5 0.  0.5]
+             [0.  0.  0.  0.5 0. ]]
+            condorcet_winner_ut_rel = nan
+            exists_condorcet_order_ut_rel = False
+            matrix_victories_ut_rel_ctb =
+            [[0. 1. 0. 1. 1.]
+             [0. 0. 0. 1. 1.]
+             [1. 1. 0. 1. 1.]
+             [0. 0. 0. 0. 1.]
+             [0. 0. 0. 0. 0.]]
+            condorcet_winner_ut_rel_ctb = 2
+            exists_condorcet_order_ut_rel_ctb = True
+            <BLANKLINE>
+            ***************************************
+            *   Absolute Condorcet notions (ut)   *
+            ***************************************
+            matrix_duels_ut (reminder) =
+            [[0 5 3 6 8]
+             [3 0 2 4 6]
+             [6 7 0 4 8]
+             [4 4 4 0 5]
+             [2 2 2 5 0]]
+            matrix_victories_ut_abs =
+            [[0.  0.5 0.  1.  1. ]
+             [0.  0.  0.  0.  1. ]
+             [1.  1.  0.  0.  1. ]
+             [0.  0.  0.  0.  0.5]
+             [0.  0.  0.  0.5 0. ]]
+            condorcet_admissible_candidates =
+            [False False  True False False]
+            nb_condorcet_admissible = 1
+            weak_condorcet_winners =
+            [False False  True False False]
+            nb_weak_condorcet_winners = 1
+            condorcet_winner_ut_abs = nan
+            exists_condorcet_order_ut_abs = False
+            resistant_condorcet_winner = nan
+            threshold_c_prevents_w_Condorcet_ut_abs =
+            [[0 0 0 2 0]
+             [0 0 0 0 0]
+             [2 0 0 2 0]
+             [0 0 2 0 0]
+             [0 0 0 1 0]]
+            matrix_victories_ut_abs_ctb =
+            [[0. 1. 0. 1. 1.]
+             [0. 0. 0. 0. 1.]
+             [1. 1. 0. 0. 1.]
+             [0. 0. 0. 0. 1.]
+             [0. 0. 0. 0. 0.]]
+            condorcet_winner_ut_abs_ctb = nan
+            exists_condorcet_order_ut_abs_ctb = False
+            <BLANKLINE>
+            **********************************************
+            *   Implications between Condorcet notions   *
+            **********************************************
+            maj_fav_ut (False)             ==>            maj_fav_ut_ctb (False)
+             ||          ||                                     ||           ||
+             ||          V                                      V            ||
+             ||         maj_fav_rk (False) ==> maj_fav_rk_ctb (False)        ||
+             V                         ||       ||                           ||
+            Resistant Condorcet (False)                                      ||
+             ||                        ||       ||                           ||
+             V                         ||       ||                           V
+            Condorcet_ut_abs (False)       ==>      Condorcet_ut_abs_ctb (False)
+             ||          ||            ||       ||              ||           ||
+             ||          V             V        V               V            ||
+             ||       Condorcet_rk (False) ==> Condorcet_rk_ctb (True)       ||
+             V                                                               V
+            Condorcet_ut_rel (False)       ==>      Condorcet_ut_rel_ctb (True)
+             ||
+             V
+            Weak Condorcet (True)
+             ||
+             V
+            Condorcet-admissible (True)
         """
         old_log_depth = self.log_depth
         self.log_depth = log_depth
@@ -1766,6 +2450,7 @@ class Profile(my_log.MyLog):
 
 if __name__ == '__main__':
     # A quick demo
+    initialize_random_seeds()
     preferences_ut_test = np.random.randint(-5, 5, (10, 5))
     profile = Profile(preferences_ut=preferences_ut_test,
                       labels_candidates=['Alice', 'Bob', 'Catherine', 'Dave', 'Ellen'])
