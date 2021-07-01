@@ -1586,7 +1586,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             elif mode == 'im_with_candidates_':
                 c_is_wanted = np.isneginf(self._candidates_im)
                 stop_if_true = False
-            elif mode == 'v_im_for_c_ ':
+            elif mode == 'v_im_for_c_':
                 c_is_wanted = np.ones(self.profile_.n_c, dtype=np.bool)
                 stop_if_true = False
             else:  # This should not happen.

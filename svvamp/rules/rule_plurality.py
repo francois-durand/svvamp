@@ -316,13 +316,20 @@ class RulePlurality(Rule):
 
         Examples
         --------
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 2, 1],
-            ...     [1, 0, 2],
-            ...     [1, 0, 2],
-            ...     [2, 0, 1],
-            ...     [2, 1, 0],
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 1. , -0.5,  0. ],
+            ...     [ 0.5,  1. , -1. ],
+            ...     [-0.5,  0.5, -1. ],
+            ...     [ 1. ,  0. ,  1. ],
+            ...     [-1. , -0.5,  1. ],
             ... ])
+            >>> rule = RulePlurality()(profile)
+            >>> rule.v_im_for_c_
+            array([[0., 0., 0.],
+                   [0., 0., 0.],
+                   [0., 0., 0.],
+                   [0., 0., 0.],
+                   [0., 1., 0.]])
         """
         self.mylog("Compute IM", 1)
         self._im_was_computed_with_candidates = True
@@ -331,7 +338,6 @@ class RulePlurality(Rule):
         close_races = np.zeros(self.profile_.n_c, dtype=bool)
         # Case 1 : ``w`` wins by only one ballot over ``c_test < w``.
         for c_test in range(0, self.w_):
-            raise ValueError('Checkpoint')
             if self.scores_[c_test] == self.score_w_ - 1:
                 close_races[c_test] = True
         # Case 2 : ``w`` is tied with ``c_test > w`` (and benefits for the tie-breaking rule).

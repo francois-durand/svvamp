@@ -332,12 +332,12 @@ class RuleIteratedBucklin(Rule):
     @cached_property
     def _one_v_might_be_pivotal_(self):
         """
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 1, 2],
-            ...     [0, 2, 1],
-            ...     [1, 0, 2],
-            ...     [1, 0, 2],
-            ...     [2, 1, 0],
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 0.5, -1. , -1. ],
+            ...     [ 1. , -0.5,  0.5],
+            ...     [ 0.5,  1. , -0.5],
+            ...     [-0.5,  0. , -1. ],
+            ...     [ 0. ,  0.5,  1. ],
             ... ])
             >>> rule = RuleIteratedBucklin()(profile)
             >>> rule._one_v_might_be_pivotal_

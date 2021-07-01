@@ -283,6 +283,13 @@ class RuleVeto(Rule):
     # %% Independence of Irrelevant Alternatives (IIA)
 
     def _compute_winner_of_subset_(self, candidates_r):
+        """
+            >>> initialize_random_seeds()
+            >>> profile = GeneratorProfileLadder(n_v=5, n_c=3, n_rungs=5)().profile_
+            >>> rule = RuleVeto()(profile)
+            >>> rule._compute_winner_of_subset_(candidates_r=np.array([0, 1]))
+            0
+        """
         self.mylogv("IIA: Compute winner of subset ", candidates_r, 3)
         scores_r = - np.bincount(np.argmin(self.profile_.preferences_borda_rk[:, candidates_r], 1),
                                  minlength=candidates_r.shape[0])
@@ -294,6 +301,22 @@ class RuleVeto(Rule):
     # %% Individual manipulation (IM)
 
     def _im_main_work_v_(self, v, c_is_wanted, nb_wanted_undecided, stop_if_true):
+        """
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 1. ,  0.5,  1. ],
+            ...     [ 0. ,  0.5, -1. ],
+            ...     [ 0. ,  1. ,  1. ],
+            ...     [-1. , -1. ,  0.5],
+            ...     [ 0. , -0.5,  0.5],
+            ... ])
+            >>> rule = RuleVeto()(profile)
+            >>> rule.v_im_for_c_
+            array([[0., 0., 0.],
+                   [0., 0., 1.],
+                   [0., 0., 1.],
+                   [0., 0., 0.],
+                   [0., 0., 0.]])
+        """
         # If voter ``v`` strictly prefers some ``c_test`` to ``w``, let us note that she cannot have voted against
         # ``c_test``. So, the only thing she can do better is to vote against ``w`` (if it is not already the case),
         # because otherwise ``w`` will still keep a better score than ``c_test``. This strategy does not depend on
