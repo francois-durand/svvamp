@@ -316,20 +316,16 @@ class RulePlurality(Rule):
 
         Examples
         --------
-            >>> profile = Profile(preferences_ut=[
-            ...     [ 1. , -0.5,  0. ],
-            ...     [ 0.5,  1. , -1. ],
-            ...     [-0.5,  0.5, -1. ],
-            ...     [ 1. ,  0. ,  1. ],
-            ...     [-1. , -0.5,  1. ],
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [1, 0, 2],
+            ...     [1, 2, 0],
+            ...     [2, 0, 1],
+            ...     [2, 0, 1],
             ... ])
             >>> rule = RulePlurality()(profile)
-            >>> rule.v_im_for_c_
-            array([[0., 0., 0.],
-                   [0., 0., 0.],
-                   [0., 0., 0.],
-                   [0., 0., 0.],
-                   [0., 1., 0.]])
+            >>> rule.is_im_v_with_candidates(0)
+            (False, array([0., 0., 0.]))
         """
         self.mylog("Compute IM", 1)
         self._im_was_computed_with_candidates = True
