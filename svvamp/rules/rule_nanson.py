@@ -35,6 +35,8 @@ class RuleNanson(Rule):
         >>> initialize_random_seeds()
         >>> profile = GeneratorProfileLadder(n_v=5, n_c=3, n_rungs=5)().profile_
         >>> rule = RuleNanson()(profile)
+        >>> rule.meets_condorcet_c_rk_ctb
+        True
         >>> rule.demo_results_(log_depth=0)  # doctest: +NORMALIZE_WHITESPACE
         <BLANKLINE>
         ************************

@@ -331,6 +331,18 @@ class RuleIteratedBucklin(Rule):
 
     @cached_property
     def _one_v_might_be_pivotal_(self):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [1, 0, 2],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleIteratedBucklin()(profile)
+            >>> rule._one_v_might_be_pivotal_
+            True
+        """
         scores_r = np.zeros(self.profile_.n_c)
         is_eliminated = np.zeros(self.profile_.n_c, dtype=np.bool)
         preferences_borda_temp = np.copy(self.profile_.preferences_borda_rk)

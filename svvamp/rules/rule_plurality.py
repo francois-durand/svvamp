@@ -291,6 +291,13 @@ class RulePlurality(Rule):
     # %% Independence of Irrelevant Alternatives (IIA)
 
     def _compute_winner_of_subset_(self, candidates_r):
+        """
+            >>> initialize_random_seeds()
+            >>> profile = GeneratorProfileLadder(n_v=5, n_c=3, n_rungs=5)().profile_
+            >>> rule = RulePlurality()(profile)
+            >>> rule._compute_winner_of_subset_(candidates_r=np.array([0, 1]))
+            0
+        """
         self.mylogv("IIA: Compute winner of subset ", candidates_r, 3)
         scores_r = np.bincount(np.argmax(self.profile_.preferences_borda_rk[:, candidates_r], 1),
                                minlength=candidates_r.shape[0])
@@ -306,6 +313,16 @@ class RulePlurality(Rule):
 
         For Plurality, since calculation is quite cheap, we calculate everything directly, even if complete_mode is
         False.
+
+        Examples
+        --------
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ...     [2, 1, 0],
+            ... ])
         """
         self.mylog("Compute IM", 1)
         self._im_was_computed_with_candidates = True
@@ -314,6 +331,7 @@ class RulePlurality(Rule):
         close_races = np.zeros(self.profile_.n_c, dtype=bool)
         # Case 1 : ``w`` wins by only one ballot over ``c_test < w``.
         for c_test in range(0, self.w_):
+            raise ValueError('Checkpoint')
             if self.scores_[c_test] == self.score_w_ - 1:
                 close_races[c_test] = True
         # Case 2 : ``w`` is tied with ``c_test > w`` (and benefits for the tie-breaking rule).

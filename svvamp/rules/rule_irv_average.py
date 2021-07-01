@@ -278,6 +278,14 @@ class RuleIRVAverage(Rule):
 
     @cached_property
     def _count_ballots_(self):
+        """
+        Case where all the candidates have the same score:
+
+            >>> profile = Profile(preferences_rk=[[0, 1], [1, 0]])
+            >>> rule = RuleIRVAverage()(profile)
+            >>> rule.w_
+            0
+        """
         self.mylog("Count ballots", 1)
         scores = []
         candidates_worst_to_best = []
