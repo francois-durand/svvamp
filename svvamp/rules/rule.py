@@ -738,6 +738,17 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         """
         return not np.isnan(self.profile_.resistant_condorcet_winner) and not self.w_is_resistant_condorcet_winner_
 
+    def demo_profile_(self, log_depth=1):
+        """Demonstrate the attributes of the loaded profile.
+
+        Parameters
+        ----------
+        log_depth : int
+            Integer from 0 (basic info) to 3 (verbose).
+        """
+        print_big_title('Profile Class')
+        self.profile_.demo(log_depth=log_depth)
+
     def demo_results_(self, log_depth=1):
         """Demonstrate the methods related to the result of the election (without manipulation).
 
@@ -748,9 +759,6 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         """
         old_log_depth = self.log_depth
         self.log_depth = log_depth
-
-        print_big_title('Profile Class')
-        self.profile_.demo()
 
         print_big_title('Election Results')
 
@@ -3255,15 +3263,14 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         is_quick_escape = self._cm_main_work_c_(c, optimize_bounds)
         self._cm_conclude_c_(c, is_quick_escape)
 
-    def demo_(self, log_depth=1):
-        """Demonstrate the methods of :class:`Rule` class.
+    def demo_manipulation_(self, log_depth=1):
+        """Demonstrate the manipulation methods of :class:`Rule` class.
 
         Parameters
         ----------
         log_depth : int
             Integer from 0 (basic info) to 3 (verbose).
         """
-        self.demo_results_(log_depth=log_depth)
         old_log_depth = self.log_depth
         self.log_depth = log_depth
 

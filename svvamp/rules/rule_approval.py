@@ -20,6 +20,8 @@ This file is part of SVVAMP.
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
 import numpy as np
+from svvamp import GeneratorProfileLadder
+from svvamp.utils.misc import initialize_random_seeds
 from svvamp.rules.rule import Rule
 from svvamp.utils import type_checker
 from svvamp.utils.util_cache import cached_property
@@ -38,22 +40,6 @@ class RuleApproval(Rule):
     approval_threshold : number
         Number (default 0). Utility above which a sincere voter approves of a candidate.
 
-    Examples
-    --------
-        >>> import svvamp
-        >>> profile = svvamp.Profile(preferences_ut=[[8, 4, 2], [8, -4, 0], [-2, 4, -8], [-10, 6, 0], [-6, 4, 8]])
-        >>> rule = svvamp.RuleApproval(approval_comparator='>', approval_threshold=0)(profile)
-        >>> print(rule.ballots_)
-        [[ True  True  True]
-         [ True False False]
-         [False  True False]
-         [False  True False]
-         [False  True  True]]
-        >>> print(rule.scores_)
-        [2 4 2]
-        >>> rule.w_
-        1
-
     Notes
     -----
     Each voter may vote for any number of candidates. The candidate with most votes is declared the winner. In case
@@ -66,6 +52,223 @@ class RuleApproval(Rule):
     References
     ----------
     'Approval voting', Steven Brams and Peter Fishburn. In: American Political Science Review 72 (3 1978), pp. 831–847.
+
+    Examples
+    --------
+        >>> initialize_random_seeds()
+        >>> profile = GeneratorProfileLadder(n_v=5, n_c=3, n_rungs=5)().profile_
+        >>> rule = RuleApproval()(profile)
+        >>> rule.demo_results_(log_depth=0)  # doctest: +NORMALIZE_WHITESPACE
+        <BLANKLINE>
+        ************************
+        *                      *
+        *   Election Results   *
+        *                      *
+        ************************
+        <BLANKLINE>
+        ***************
+        *   Results   *
+        ***************
+        profile_.preferences_ut (reminder) =
+        [[ 0.  -0.5 -1. ]
+         [ 1.  -1.   0.5]
+         [ 0.5  0.5 -0.5]
+         [ 0.5  0.   1. ]
+         [-1.  -1.   1. ]]
+        profile_.preferences_rk (reminder) =
+        [[0 1 2]
+         [0 2 1]
+         [1 0 2]
+         [2 0 1]
+         [2 1 0]]
+        ballots =
+        [[False False False]
+         [ True False  True]
+         [ True  True False]
+         [ True False  True]
+         [False False  True]]
+        scores =
+        [3 1 3]
+        candidates_by_scores_best_to_worst
+        [0 2 1]
+        scores_best_to_worst
+        [3 3 1]
+        w = 0
+        score_w = 3
+        total_utility_w = 1.0
+        <BLANKLINE>
+        *********************************
+        *   Condorcet efficiency (rk)   *
+        *********************************
+        w (reminder) = 0
+        <BLANKLINE>
+        condorcet_winner_rk_ctb = 0
+        w_is_condorcet_winner_rk_ctb = True
+        w_is_not_condorcet_winner_rk_ctb = False
+        w_missed_condorcet_winner_rk_ctb = False
+        <BLANKLINE>
+        condorcet_winner_rk = 0
+        w_is_condorcet_winner_rk = True
+        w_is_not_condorcet_winner_rk = False
+        w_missed_condorcet_winner_rk = False
+        <BLANKLINE>
+        ***************************************
+        *   Condorcet efficiency (relative)   *
+        ***************************************
+        w (reminder) = 0
+        <BLANKLINE>
+        condorcet_winner_ut_rel_ctb = 0
+        w_is_condorcet_winner_ut_rel_ctb = True
+        w_is_not_condorcet_winner_ut_rel_ctb = False
+        w_missed_condorcet_winner_ut_rel_ctb = False
+        <BLANKLINE>
+        condorcet_winner_ut_rel = 0
+        w_is_condorcet_winner_ut_rel = True
+        w_is_not_condorcet_winner_ut_rel = False
+        w_missed_condorcet_winner_ut_rel = False
+        <BLANKLINE>
+        ***************************************
+        *   Condorcet efficiency (absolute)   *
+        ***************************************
+        w (reminder) = 0
+        <BLANKLINE>
+        condorcet_admissible_candidates =
+        [ True False False]
+        w_is_condorcet_admissible = True
+        w_is_not_condorcet_admissible = False
+        w_missed_condorcet_admissible = False
+        <BLANKLINE>
+        weak_condorcet_winners =
+        [ True False False]
+        w_is_weak_condorcet_winner = True
+        w_is_not_weak_condorcet_winner = False
+        w_missed_weak_condorcet_winner = False
+        <BLANKLINE>
+        condorcet_winner_ut_abs_ctb = 0
+        w_is_condorcet_winner_ut_abs_ctb = True
+        w_is_not_condorcet_winner_ut_abs_ctb = False
+        w_missed_condorcet_winner_ut_abs_ctb = False
+        <BLANKLINE>
+        condorcet_winner_ut_abs = 0
+        w_is_condorcet_winner_ut_abs = True
+        w_is_not_condorcet_winner_ut_abs = False
+        w_missed_condorcet_winner_ut_abs = False
+        <BLANKLINE>
+        resistant_condorcet_winner = nan
+        w_is_resistant_condorcet_winner = False
+        w_is_not_resistant_condorcet_winner = True
+        w_missed_resistant_condorcet_winner = False
+        >>> rule.demo_manipulation_(log_depth=0)  # doctest: +NORMALIZE_WHITESPACE
+        <BLANKLINE>
+        *****************************
+        *                           *
+        *   Election Manipulation   *
+        *                           *
+        *****************************
+        <BLANKLINE>
+        *********************************************
+        *   Basic properties of the voting system   *
+        *********************************************
+        with_two_candidates_reduces_to_plurality =  False
+        is_based_on_rk =  False
+        is_based_on_ut_minus1_1 =  True
+        meets_iia =  True
+        <BLANKLINE>
+        ****************************************************
+        *   Manipulation properties of the voting system   *
+        ****************************************************
+        Condorcet_c_ut_rel_ctb (False)     ==>     Condorcet_c_ut_rel (False)
+         ||                                                               ||
+         ||     Condorcet_c_rk_ctb (False) ==> Condorcet_c_rk (False)     ||
+         ||           ||               ||       ||             ||         ||
+         V            V                ||       ||             V          V
+        Condorcet_c_ut_abs_ctb (False)     ==>     Condorcet_ut_abs_c (False)
+         ||                            ||       ||                        ||
+         ||                            V        V                         ||
+         ||       maj_fav_c_rk_ctb (False) ==> maj_fav_c_rk (False)       ||
+         ||           ||                                       ||         ||
+         V            V                                        V          V
+        majority_favorite_c_ut_ctb (False) ==> majority_favorite_c_ut (False)
+         ||                                                               ||
+         V                                                                V
+        IgnMC_c_ctb (True)                 ==>                IgnMC_c (True)
+         ||                                                               ||
+         V                                                                V
+        InfMC_c_ctb (True)                 ==>                InfMC_c (True)
+        <BLANKLINE>
+        *****************************************************
+        *   Independence of Irrelevant Alternatives (IIA)   *
+        *****************************************************
+        w (reminder) = 0
+        is_iia = True
+        log_iia: iia_subset_maximum_size = 2.0
+        example_winner_iia = nan
+        example_subset_iia = nan
+        <BLANKLINE>
+        **********************
+        *   c-Manipulators   *
+        **********************
+        w (reminder) = 0
+        preferences_ut (reminder) =
+        [[ 0.  -0.5 -1. ]
+         [ 1.  -1.   0.5]
+         [ 0.5  0.5 -0.5]
+         [ 0.5  0.   1. ]
+         [-1.  -1.   1. ]]
+        v_wants_to_help_c =
+        [[False False False]
+         [False False False]
+         [False False False]
+         [False False  True]
+         [False False  True]]
+        <BLANKLINE>
+        ************************************
+        *   Individual Manipulation (IM)   *
+        ************************************
+        is_im = True
+        log_im: im_option = exact
+        candidates_im =
+        [0. 0. 1.]
+        <BLANKLINE>
+        *********************************
+        *   Trivial Manipulation (TM)   *
+        *********************************
+        is_tm = True
+        log_tm: tm_option = exact
+        candidates_tm =
+        [0. 0. 1.]
+        <BLANKLINE>
+        ********************************
+        *   Unison Manipulation (UM)   *
+        ********************************
+        is_um = True
+        log_um: um_option = exact
+        candidates_um =
+        [0. 0. 1.]
+        <BLANKLINE>
+        *********************************************
+        *   Ignorant-Coalition Manipulation (ICM)   *
+        *********************************************
+        is_icm = False
+        log_icm: icm_option = exact
+        candidates_icm =
+        [0. 0. 0.]
+        necessary_coalition_size_icm =
+        [0. 6. 4.]
+        sufficient_coalition_size_icm =
+        [0. 6. 4.]
+        <BLANKLINE>
+        ***********************************
+        *   Coalition Manipulation (CM)   *
+        ***********************************
+        is_cm = True
+        log_cm: cm_option = exact
+        candidates_cm =
+        [0. 0. 1.]
+        necessary_coalition_size_cm =
+        [0. 3. 2.]
+        sufficient_coalition_size_cm =
+        [0. 3. 2.]
     """
 
     def __init__(self, approval_comparator='>', approval_threshold=0., **kwargs):
