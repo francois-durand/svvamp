@@ -888,10 +888,15 @@ class Profile(my_log.MyLog):
 
         Examples
         --------
-            >>> from svvamp import Profile
             >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
             >>> profile.condorcet_winner_rk_ctb
             0
+
+        No Condorcet winner:
+
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [1, 2, 0], [2, 0, 1]])
+            >>> profile.condorcet_winner_rk_ctb
+            nan
 
         See Also
         --------
@@ -943,6 +948,12 @@ class Profile(my_log.MyLog):
             >>> profile.condorcet_winner_rk
             0
 
+        No Condorcet winner:
+
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [1, 2, 0], [2, 0, 1]])
+            >>> profile.condorcet_winner_rk
+            nan
+
         See Also
         --------
         :attr:`~svvamp.Population.exists_condorcet_winner_rk`,
@@ -992,6 +1003,12 @@ class Profile(my_log.MyLog):
             >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
             >>> profile.condorcet_winner_ut_rel_ctb
             0
+
+        No Condorcet winner:
+
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [1, 2, 0], [2, 0, 1]])
+            >>> profile.condorcet_winner_ut_rel_ctb
+            nan
 
         See Also
         --------
@@ -1043,6 +1060,12 @@ class Profile(my_log.MyLog):
             >>> profile.condorcet_winner_ut_rel
             0
 
+        No Condorcet winner:
+
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [1, 2, 0], [2, 0, 1]])
+            >>> profile.condorcet_winner_ut_rel
+            nan
+
         See Also
         --------
         :attr:`~svvamp.Population.exists_condorcet_winner_ut_rel`,
@@ -1093,6 +1116,12 @@ class Profile(my_log.MyLog):
             >>> profile.condorcet_winner_ut_abs_ctb
             0
 
+        No Condorcet winner:
+
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [1, 2, 0], [2, 0, 1]])
+            >>> profile.condorcet_winner_ut_abs_ctb
+            nan
+
         See Also
         --------
         :attr:`~svvamp.Population.exists_condorcet_winner_ut_abs_ctb`,
@@ -1141,6 +1170,12 @@ class Profile(my_log.MyLog):
             >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
             >>> profile.condorcet_winner_ut_abs
             0
+
+        No Condorcet winner:
+
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [1, 2, 0], [2, 0, 1]])
+            >>> profile.condorcet_winner_ut_abs
+            nan
 
         See Also
         --------
@@ -1199,6 +1234,12 @@ class Profile(my_log.MyLog):
             >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
             >>> profile.resistant_condorcet_winner
             0
+
+        No resistant Condorcet winner:
+
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [1, 2, 0], [2, 0, 1]])
+            >>> profile.resistant_condorcet_winner
+            nan
 
         See Also
         --------
@@ -1323,6 +1364,12 @@ class Profile(my_log.MyLog):
             >>> profile.majority_favorite_rk_ctb
             0
 
+        No majority favorite:
+
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [1, 2, 0], [2, 0, 1]])
+            >>> profile.majority_favorite_rk_ctb
+            nan
+
         See Also
         --------
         :attr:`~svvamp.Population.exists_majority_favorite_rk_ctb`,
@@ -1374,6 +1421,12 @@ class Profile(my_log.MyLog):
             >>> profile.majority_favorite_ut_ctb
             0
 
+        No majority favorite:
+
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [1, 2, 0], [2, 0, 1]])
+            >>> profile.majority_favorite_ut_ctb
+            nan
+
         See Also
         --------
         :attr:`~svvamp.Population.exists_majority_favorite_ut_ctb`,
@@ -1424,6 +1477,12 @@ class Profile(my_log.MyLog):
             >>> profile.majority_favorite_rk
             0
 
+        No majority favorite:
+
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [1, 2, 0], [2, 0, 1]])
+            >>> profile.majority_favorite_rk
+            nan
+
         See Also
         --------
         :attr:`~svvamp.Population.exists_majority_favorite_rk`,
@@ -1473,6 +1532,12 @@ class Profile(my_log.MyLog):
             >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
             >>> profile.majority_favorite_ut
             0
+
+        No majority favorite:
+
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [1, 2, 0], [2, 0, 1]])
+            >>> profile.majority_favorite_ut
+            nan
 
         See Also
         --------
@@ -1803,11 +1868,21 @@ class Profile(my_log.MyLog):
 
         Examples
         --------
+        Typical usage:
+
             >>> initialize_random_seeds()
             >>> preferences_ut_test = np.random.randint(-5, 5, (10, 5))
             >>> profile = Profile(preferences_ut=preferences_ut_test,
             ...                   labels_candidates=['Alice', 'Bob', 'Catherine', 'Dave', 'Ellen'])
-            >>> profile.plot3(indexes=[0, 1, 2], normalize=True)
+            >>> profile.plot3(indexes=[0, 1, 2])
+
+        If `indexes` is not given, it defaults to [0, 1, 2]:
+
+            >>> profile.plot3()
+
+        You can ignore the labels of the candidates and simply use their numbers:
+
+            >>> profile.plot3(use_labels=False)
 
         References
         ----------
@@ -1900,11 +1975,25 @@ class Profile(my_log.MyLog):
 
         Examples
         --------
+        Typical usage:
+
             >>> initialize_random_seeds()
             >>> preferences_ut_test = np.random.randint(-5, 5, (10, 5))
             >>> profile = Profile(preferences_ut=preferences_ut_test,
             ...                   labels_candidates=['Alice', 'Bob', 'Catherine', 'Dave', 'Ellen'])
-            >>> profile.plot4(indexes=[0, 1, 2, 4], normalize=True)
+            >>> profile.plot4(indexes=[0, 1, 2, 4])
+
+        If `indexes` is not given, it defaults to [0, 1, 2, 3]:
+
+            >>> profile.plot4()
+
+        You can ignore the labels of the candidates and simply use their numbers:
+
+            >>> profile.plot4(use_labels=False)
+
+        It is possible to avoid normalization:
+
+            >>> profile.plot4(normalize=False)
 
         References
         ----------
