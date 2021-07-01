@@ -11,5 +11,6 @@ def test_loser_equals_selected_two():
         ... ])
         >>> rule = RuleIRVDuels()(profile)
         >>> rule.w_
+        0
     """
     pass

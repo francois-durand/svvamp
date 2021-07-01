@@ -162,22 +162,22 @@ class RuleNanson(Rule):
         ****************************************************
         Condorcet_c_ut_rel_ctb (False)     ==>     Condorcet_c_ut_rel (False)
          ||                                                               ||
-         ||     Condorcet_c_rk_ctb (False) ==> Condorcet_c_rk (False)     ||
+         ||     Condorcet_c_rk_ctb (True)  ==> Condorcet_c_rk (True)      ||
          ||           ||               ||       ||             ||         ||
          V            V                ||       ||             V          V
-        Condorcet_c_ut_abs_ctb (False)     ==>     Condorcet_ut_abs_c (False)
+        Condorcet_c_ut_abs_ctb (True)      ==>     Condorcet_ut_abs_c (True)
          ||                            ||       ||                        ||
          ||                            V        V                         ||
-         ||       maj_fav_c_rk_ctb (False) ==> maj_fav_c_rk (False)       ||
+         ||       maj_fav_c_rk_ctb (True)  ==> maj_fav_c_rk (True)        ||
          ||           ||                                       ||         ||
          V            V                                        V          V
-        majority_favorite_c_ut_ctb (False) ==> majority_favorite_c_ut (False)
+        majority_favorite_c_ut_ctb (True)  ==> majority_favorite_c_ut (True)
          ||                                                               ||
          V                                                                V
-        IgnMC_c_ctb (False)                ==>                IgnMC_c (False)
+        IgnMC_c_ctb (True)                 ==>                IgnMC_c (True)
          ||                                                               ||
          V                                                                V
-        InfMC_c_ctb (False)                ==>                InfMC_c (False)
+        InfMC_c_ctb (True)                 ==>                InfMC_c (True)
         <BLANKLINE>
         *****************************************************
         *   Independence of Irrelevant Alternatives (IIA)   *
@@ -368,6 +368,7 @@ class RuleNanson(Rule):
 
     # %% Manipulation criteria of the voting system
 
+    @cached_property
     def meets_condorcet_c_rk_ctb(self):
         return True
 
