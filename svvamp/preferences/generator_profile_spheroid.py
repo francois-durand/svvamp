@@ -58,7 +58,19 @@ class GeneratorProfileSpheroid(GeneratorProfile):
 
     Examples
     --------
+    Typical usage:
+
         >>> generator = GeneratorProfileSpheroid(n_v=10, n_c=3, stretching=1)
+        >>> generator().profile_.preferences_rk.shape
+        (10, 3)
+
+    With some stretching:
+
+        >>> generator = GeneratorProfileSpheroid(n_v=10, n_c=3, stretching=2)
+        >>> generator().profile_.preferences_rk.shape
+        (10, 3)
+
+        >>> generator = GeneratorProfileSpheroid(n_v=10, n_c=3, stretching=.5)
         >>> generator().profile_.preferences_rk.shape
         (10, 3)
     """

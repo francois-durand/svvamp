@@ -20,6 +20,7 @@ This file is part of SVVAMP.
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
 import numpy as np
+from svvamp.utils.misc import initialize_random_seeds
 from svvamp.utils.util_cache import cached_property
 from svvamp.utils.von_mises_fisher import profile_vmf_aux
 from svvamp.preferences.generator_profile import GeneratorProfile
@@ -63,15 +64,56 @@ class GeneratorProfileVMFHypercircle(GeneratorProfile):
 
     Examples
     --------
-    >>> generator = GeneratorProfileVMFHypercircle(n_v=10, n_c=3, vmf_concentration=5)
-    >>> generator().profile_.preferences_rk.shape
-    (10, 3)
+    Typical usage:
+
+        >>> initialize_random_seeds()
+        >>> generator = GeneratorProfileVMFHypercircle(n_v=5, n_c=3, vmf_concentration=10)
+        >>> generator().profile_.preferences_ut
+        array([[ 0.67886167, -0.73231774,  0.05345607],
+               [ 0.62834837, -0.76570906,  0.1373607 ],
+               [ 0.71859954, -0.6950244 , -0.02357514],
+               [ 0.49333272, -0.81010857,  0.31677584],
+               [ 0.63042345, -0.76457205,  0.1341486 ]])
+
+    You can specify a pole:
+
+        >>> initialize_random_seeds()
+        >>> generator = GeneratorProfileVMFHypercircle(n_v=5, n_c=3, vmf_concentration=10, vmf_pole=[.7, 0, -.7])
+        >>> generator().profile_.preferences_ut
+        array([[ 0.8147627 , -0.36132374, -0.45343896],
+               [ 0.44917711,  0.36590272, -0.81507983],
+               [ 0.71021983, -0.00626776, -0.70395207],
+               [ 0.68206757,  0.04766644, -0.72973402],
+               [ 0.81591082, -0.38117577, -0.43473505]])
+
+    With several poles:
+
+        >>> initialize_random_seeds()
+        >>> generator = GeneratorProfileVMFHypercircle(n_v=5, n_c=3, vmf_concentration=[np.inf, np.inf],
+        ...                                            vmf_probability=[.9, .1])
+        >>> generator().profile_.preferences_ut
+        array([[ 1.19716876,  0.82383355, -2.02100232],
+               [ 0.71640317, -0.64749197, -0.0689112 ],
+               [ 0.71640317, -0.64749197, -0.0689112 ],
+               [ 0.71640317, -0.64749197, -0.0689112 ],
+               [ 0.71640317, -0.64749197, -0.0689112 ]])
+
+    If the probabilities are not explicitly given, poles are equiprobable:
+
+        >>> initialize_random_seeds()
+        >>> generator = GeneratorProfileVMFHypercircle(n_v=5, n_c=3, vmf_concentration=[np.inf, np.inf])
+        >>> generator().profile_.preferences_ut
+        array([[ 1.19716876,  0.82383355, -2.02100232],
+               [ 1.19716876,  0.82383355, -2.02100232],
+               [ 1.19716876,  0.82383355, -2.02100232],
+               [ 0.71640317, -0.64749197, -0.0689112 ],
+               [ 0.71640317, -0.64749197, -0.0689112 ]])
 
     References
     ----------
-        Ulrich (1984) - Computer Generation of Distributions on the m-Sphere
+    Ulrich (1984) - Computer Generation of Distributions on the m-Sphere
 
-        Wood (1994) - Simulation of the von Mises Fisher distribution
+    Wood (1994) - Simulation of the von Mises Fisher distribution
     """
 
     def __init__(self, n_v, n_c, vmf_concentration, vmf_probability=None, vmf_pole=None):

@@ -20,6 +20,7 @@ This file is part of SVVAMP.
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
 import numpy as np
+from svvamp.utils.misc import initialize_random_seeds
 from svvamp.utils.util_cache import cached_property
 from svvamp.utils.von_mises_fisher import profile_vmf_aux
 from svvamp.preferences.generator_profile import GeneratorProfile
@@ -68,9 +69,70 @@ class GeneratorProfileVMFHypersphere(GeneratorProfile):
 
     Examples
     --------
-        >>> generator = GeneratorProfileVMFHypersphere(n_v=10, n_c=3, vmf_concentration=5)
-        >>> generator().profile_.preferences_rk.shape
-        (10, 3)
+    Typical usage:
+
+        >>> initialize_random_seeds()
+        >>> generator = GeneratorProfileVMFHypersphere(n_v=5, n_c=3, vmf_concentration=10)
+        >>> generator().profile_.preferences_ut
+        array([[ 0.95891992, -0.12067454,  0.25672991],
+               [ 0.86494714,  0.06265355,  0.49793673],
+               [ 0.94128919, -0.27215259,  0.19976892],
+               [ 0.80831535, -0.13959226,  0.57196179],
+               [ 0.60411981, -0.07180745,  0.79365165]])
+
+    You can specify a pole:
+
+        >>> initialize_random_seeds()
+        >>> generator = GeneratorProfileVMFHypersphere(n_v=5, n_c=3, vmf_concentration=10, vmf_pole=[.7, .7, 0])
+        >>> generator().profile_.preferences_ut
+        array([[ 0.75351327,  0.5734909 , -0.32144353],
+               [ 0.5984744 ,  0.64868975, -0.47013828],
+               [ 0.38344905,  0.91929245, -0.08870296],
+               [ 0.6432514 ,  0.75827724, -0.1060342 ],
+               [ 0.25385897,  0.94748174, -0.19450957]])
+
+    With several poles:
+
+        >>> initialize_random_seeds()
+        >>> generator = GeneratorProfileVMFHypersphere(n_v=5, n_c=3, vmf_concentration=[np.inf, np.inf],
+        ...                                            vmf_probability=[.9, .1])
+        >>> generator().profile_.preferences_ut
+        array([[ 2.2408932 ,  1.86755799, -0.97727788],
+               [ 1.76405235,  0.40015721,  0.97873798],
+               [ 1.76405235,  0.40015721,  0.97873798],
+               [ 1.76405235,  0.40015721,  0.97873798],
+               [ 1.76405235,  0.40015721,  0.97873798]])
+
+    If the probabilities are not explicitly given, poles are equiprobable:
+
+        >>> initialize_random_seeds()
+        >>> generator = GeneratorProfileVMFHypersphere(n_v=5, n_c=3, vmf_concentration=[np.inf, np.inf])
+        >>> generator().profile_.preferences_ut
+        array([[ 2.2408932 ,  1.86755799, -0.97727788],
+               [ 2.2408932 ,  1.86755799, -0.97727788],
+               [ 2.2408932 ,  1.86755799, -0.97727788],
+               [ 1.76405235,  0.40015721,  0.97873798],
+               [ 1.76405235,  0.40015721,  0.97873798]])
+
+    With some stretching:
+
+        >>> initialize_random_seeds()
+        >>> generator = GeneratorProfileVMFHypersphere(n_v=5, n_c=3, vmf_concentration=0, stretching=100)
+        >>> generator().profile_.preferences_ut
+        array([[ 0.14719473,  0.14577802,  0.14320266],
+               [ 0.17534594,  0.17348776,  0.17273085],
+               [-0.3104039 , -0.3047001 , -0.31555119],
+               [ 0.25555345,  0.25232602,  0.25907932],
+               [ 0.59993219,  0.59426747,  0.60493974]])
+
+        >>> initialize_random_seeds()
+        >>> generator = GeneratorProfileVMFHypersphere(n_v=5, n_c=3, vmf_concentration=0, stretching=.01)
+        >>> generator().profile_.preferences_ut
+        array([[ 0.18174638,  0.04007574, -0.21746036],
+               [ 0.15084759, -0.03497065, -0.11066129],
+               [-0.02165249,  0.54872752, -0.53638159],
+               [-0.00739108, -0.33013437,  0.34519503],
+               [ 0.02790245, -0.53856937,  0.52865831]])
 
     References
     ----------

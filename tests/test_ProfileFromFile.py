@@ -3,6 +3,13 @@ import os
 
 
 def test_from_csv():
+    file = os.path.join(os.path.dirname(__file__), 'example_ballots.csv')
+    profile = ProfileFromFile(file, sort_voters=False)
+    assert profile.preferences_ut.shape == (86, 11)
+    assert len(profile.labels_candidates) == 11
+
+
+def test_from_csv_transposed():
     file = os.path.join(os.path.dirname(__file__), 'example_ballots.t.csv')
     profile = ProfileFromFile(file, sort_voters=False)
     assert profile.preferences_ut.shape == (86, 11)
