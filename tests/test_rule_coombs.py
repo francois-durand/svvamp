@@ -44,5 +44,6 @@ def test_is_um_c():
         ... ])
         >>> rule = RuleCoombs()(profile)
         >>> rule.is_um_c_(2)
+        nan
     """
     pass
