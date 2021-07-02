@@ -372,6 +372,80 @@ class RuleBucklin(Rule):
             >>> rule = RuleBucklin()(profile)
             >>> rule.is_im_
             False
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ...     [2, 0, 1],
+            ...     [2, 1, 0],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleBucklin()(profile)
+            >>> rule.is_im_
+            False
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [1, 2, 0],
+            ...     [1, 2, 0],
+            ...     [1, 2, 0],
+            ...     [2, 0, 1],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleBucklin()(profile)
+            >>> rule.is_im_
+            False
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleBucklin()(profile)
+            >>> rule.is_im_c_(2)
+            False
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [1, 0, 2],
+            ...     [1, 0, 2],
+            ...     [1, 2, 0],
+            ...     [2, 0, 1],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleBucklin()(profile)
+            >>> rule.is_im_
+            True
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [1, 0, 2],
+            ...     [1, 0, 2],
+            ...     [1, 2, 0],
+            ...     [2, 0, 1],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleBucklin()(profile)
+            >>> rule.candidates_im_
+            array([1., 0., 0.])
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 0. ,  1. ,  0.5,  0. ,  0. ],
+            ...     [ 0. ,  1. ,  1. , -1. ,  0. ],
+            ...     [ 0. , -1. , -0.5,  1. ,  0. ],
+            ...     [-0.5, -0.5, -0.5, -1. ,  1. ],
+            ...     [ 0. ,  0. , -1. ,  0.5,  1. ],
+            ... ], preferences_rk=[
+            ...     [1, 2, 3, 0, 4],
+            ...     [1, 2, 4, 0, 3],
+            ...     [3, 0, 4, 2, 1],
+            ...     [4, 0, 2, 1, 3],
+            ...     [4, 3, 1, 0, 2],
+            ... ])
+            >>> rule = RuleBucklin()(profile)
+            >>> rule.is_im_
+            False
         """
         scores_without_v = np.copy(self.scores_)
         for k in range(self.profile_.n_c):
@@ -384,7 +458,8 @@ class RuleBucklin(Rule):
             nb_wanted_undecided -= 1
             # r : round where c will have majority (with the manipulator).
             r = np.where(scores_without_v[:, c] + 1 > self.profile_.n_v / 2)[0][0]
-            if r == 0:
+            if r == 0:  # pragma: no cover
+                # TO DO: Investigate whether this case can actually happen.
                 self._v_im_for_c[v, c] = True
                 self._candidates_im[c] = True
                 self._voters_im[v] = True
