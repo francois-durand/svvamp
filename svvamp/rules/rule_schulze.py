@@ -628,7 +628,7 @@ class RuleSchulze(Rule):
                 self.mylog("IM found", 3)
                 if stop_if_true or nb_wanted_undecided == 0:
                     return
-                continue
+                continue  # pragma: no cover - Not really "executed" because of Python optimization
 
             the_s = 2 * (widest_path - (self.profile_.n_v - 1) / 2)
             np.fill_diagonal(the_s, 0)
