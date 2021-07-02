@@ -348,6 +348,53 @@ class RuleTwoRound(Rule):
         """Compute IM: is_im, candidates_im, _voters_im and v_im_for_c.
 
         For Two Round, since calculation is not so expensive, we compute everything, even if complete_mode = False.
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [1, 0, 2],
+            ...     [1, 2, 0],
+            ...     [2, 0, 1],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleTwoRound()(profile)
+            >>> rule.is_im_v(0)
+            False
+            >>> rule.v_im_for_c_
+            array([[0., 0., 0.],
+                   [0., 0., 0.],
+                   [0., 0., 0.],
+                   [1., 0., 0.],
+                   [1., 0., 0.]])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 1, 2],
+            ...     [1, 0, 2],
+            ...     [1, 2, 0],
+            ...     [1, 2, 0],
+            ... ])
+            >>> rule = RuleTwoRound()(profile)
+            >>> rule.v_im_for_c_
+            array([[0., 0., 0.],
+                   [0., 0., 0.],
+                   [0., 0., 0.],
+                   [0., 0., 0.],
+                   [0., 0., 0.]])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [1, 2, 0],
+            ...     [1, 2, 0],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleTwoRound()(profile)
+            >>> rule.v_im_for_c_
+            array([[0., 0., 0.],
+                   [0., 0., 0.],
+                   [0., 0., 1.],
+                   [0., 0., 1.],
+                   [0., 0., 0.]])
         """
         self.mylog("Compute IM", 1)
         self._im_was_computed_with_candidates = True
@@ -424,6 +471,48 @@ class RuleTwoRound(Rule):
     # %% Unison manipulation (UM)
 
     def _um_main_work_c_(self, c):
+        """
+            >>> profile = Profile([
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleTwoRound()(profile)
+            >>> rule.candidates_um_
+            array([0., 0., 0.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 3, 2],
+            ...     [0, 2, 1, 3],
+            ...     [1, 2, 0, 3],
+            ...     [2, 1, 0, 3],
+            ...     [3, 1, 2, 0],
+            ... ])
+            >>> rule = RuleTwoRound()(profile)
+            >>> rule.candidates_um_
+            array([0., 0., 1., 0.])
+
+            Case where ``c`` is ``selected_one_s``:
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 0.5,  0.5, -1. , -0.5],
+            ...     [ 0.5, -1. , -1. , -0.5],
+            ...     [-0.5,  0.5, -1. , -0.5],
+            ...     [-0.5,  0.5,  1. , -0.5],
+            ...     [ 0. ,  1. ,  0. ,  1. ],
+            ... ], preferences_rk=[
+            ...     [0, 1, 3, 2],
+            ...     [0, 3, 1, 2],
+            ...     [1, 0, 3, 2],
+            ...     [2, 1, 3, 0],
+            ...     [3, 1, 0, 2],
+            ... ])
+            >>> rule = RuleTwoRound()(profile)
+            >>> rule.candidates_um_
+            array([1., 0., 0., 1.])
+        """
         n_m = self.profile_.matrix_duels_ut.astype(int)[c, self.w_]
         n_s = self.profile_.n_v - n_m
         ballots_first_round_s = self.ballots_[np.logical_not(self.v_wants_to_help_c_[:, c]), 0]
@@ -480,6 +569,19 @@ class RuleTwoRound(Rule):
     # %% Coalition Manipulation (CM)
 
     def _cm_main_work_c_(self, c, optimize_bounds):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 1, 2],
+            ...     [1, 2, 0],
+            ...     [2, 1, 0],
+            ...     [2, 1, 0],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleTwoRound()(profile)
+            >>> rule.candidates_cm_
+            array([0., 1., 0.])
+        """
         n_s = self.profile_.n_v - self.profile_.matrix_duels_ut.astype(int)[c, self.w_]
         ballots_first_round_s = self.ballots_[np.logical_not(self.v_wants_to_help_c_[:, c]), 0]
         scores_first_round_s = np.bincount(ballots_first_round_s, minlength=self.profile_.n_c)
@@ -489,6 +591,7 @@ class RuleTwoRound(Rule):
                 continue
             # First round.
             if self.profile_.n_c == 2:
+                # pragma: no cover - Theoretically this cannot happen: when n_c = 2, the prechecks are able to conclude.
                 n_m_first = 0
             else:
                 # Besides ``d`` and ``c``, which candidate has the best score?
