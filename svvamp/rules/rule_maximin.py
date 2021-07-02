@@ -525,7 +525,7 @@ class RuleMaximin(Rule):
                 self.mylog("IM found", 3)
                 if stop_if_true or nb_wanted_undecided == 0:
                     return
-                continue
+                continue  # pragma: no cover - Not really "executed" because of Python optimization
             # Best we can do: improve ``c`` by one, do not move the others
             if scores_r[w_temp] > scores_r[c] + 1 or (scores_r[w_temp] >= scores_r[c] + 1 and w_temp < c):
                 self.mylogv("IM: scores_r =", scores_r, 3)
@@ -533,7 +533,7 @@ class RuleMaximin(Rule):
                 self._v_im_for_c[v, c] = False
                 if nb_wanted_undecided == 0:
                     return
-                continue
+                continue  # pragma: no cover - Not really "executed" because of Python optimization
 
             self._vote_strategically_(matrix_duels_r, scores_r, c, 1)
             w_r = np.argmax(scores_r)
