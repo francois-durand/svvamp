@@ -584,6 +584,21 @@ class RuleSchulze(Rule):
             >>> rule = RuleSchulze()(profile)
             >>> rule.is_im_c_(2)
             True
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 3, 4, 2],
+            ...     [2, 4, 0, 3, 1],
+            ...     [2, 4, 1, 3, 0],
+            ...     [3, 2, 0, 1, 4],
+            ...     [4, 0, 3, 2, 1],
+            ... ])
+            >>> rule = RuleSchulze()(profile)
+            >>> rule.v_im_for_c_
+            array([[ 0.,  0.,  0.,  0.,  0.],
+                   [ 0.,  0.,  1.,  0.,  1.],
+                   [ 0.,  0., nan, nan,  1.],
+                   [ 0.,  0.,  1., nan,  0.],
+                   [ 0.,  0.,  0.,  0., nan]])
         """
         for c in self.losing_candidates_:
             if not c_is_wanted[c]:
@@ -658,6 +673,17 @@ class RuleSchulze(Rule):
             >>> rule = RuleSchulze(im_option='exact')(profile)
             >>> rule.is_im_
             False
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [1, 0, 2],
+            ...     [1, 2, 0],
+            ...     [2, 0, 1],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleSchulze(im_option='exact')(profile)
+            >>> rule.is_im_
+            True
         """
         self._im_main_work_v_fast(v, c_is_wanted, nb_wanted_undecided, stop_if_true)
         # Deal with 'exact' (brute force) option
