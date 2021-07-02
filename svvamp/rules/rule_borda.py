@@ -398,6 +398,17 @@ class RuleBorda(Rule):
             >>> rule = RuleBorda()(profile)
             >>> rule.is_im_c_(0)
             True
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleBorda()(profile)
+            >>> rule.is_im_c_(2)
+            True
         """
         scores_without_v = self.scores_ - self.ballots_[v, :]
         self.mylogv('scores_without_v =', scores_without_v)
