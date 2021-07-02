@@ -311,6 +311,18 @@ class RuleBorda(Rule):
 
     @cached_property
     def _compute_iia_(self):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [1, 0, 2],
+            ...     [1, 2, 0],
+            ...     [2, 0, 1],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleBorda()(profile)
+            >>> rule.is_iia_
+            False
+        """
         self.mylog("Compute IIA", 1)
         # If we remove candidate ``d``, candidate ``c`` loses ``matrix_duels_rk[c, d]`` Borda points and ``w`` loses
         # ``matrix_duels_rk[w, d]``. So, candidate ``c`` gains the difference, when compared to ``w``.
@@ -349,6 +361,22 @@ class RuleBorda(Rule):
         self._v_im_for_c[:, temp <= self.scores_[self.w_]] = False
 
     def _im_main_work_v_(self, v, c_is_wanted, nb_wanted_undecided, stop_if_true):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleBorda()(profile)
+            >>> rule.v_im_for_c_
+            array([[0., 0., 0.],
+                   [0., 0., 0.],
+                   [0., 0., 0.],
+                   [0., 0., 1.],
+                   [0., 0., 0.]])
+        """
         scores_without_v = self.scores_ - self.ballots_[v, :]
         self.mylogv('scores_without_v =', scores_without_v)
         candidates_by_decreasing_score = np.argsort(- scores_without_v, kind='mergesort')
@@ -463,6 +491,17 @@ class RuleBorda(Rule):
         * Try to improve bounds ``_sufficient_coalition_size_cm[c]`` and ``_necessary_coalition_size_cm[c]``.
 
         Algorithm: Zuckerman et al. (2009), Algorithms for the coalitional manipulation problem.
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleBorda()(profile)
+            >>> rule.candidates_cm_
+            array([0., 0., 0.])
         """
         scores_test = np.sum(self.ballots_[np.logical_not(self.v_wants_to_help_c_[:, c]), :], 0)
         # We add a tie-breaking term [(C-1)/C, (C-2)/C, ..., 0] to ease the computations.
@@ -522,6 +561,18 @@ class RuleBorda(Rule):
                 break
 
     def _cm_main_work_c_(self, c, optimize_bounds):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleBorda(cm_option='exact')(profile)
+            >>> rule.candidates_cm_
+            array([0., 0., 0.])
+        """
         is_quick_escape_fast = self._cm_main_work_c_fast_(c, optimize_bounds)
         if not self.cm_option == "exact":
             # With 'fast' option, we stop here anyway.
