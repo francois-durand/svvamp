@@ -376,6 +376,28 @@ class RuleBorda(Rule):
                    [0., 0., 0.],
                    [0., 0., 1.],
                    [0., 0., 0.]])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [1, 2, 0],
+            ...     [1, 2, 0],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleBorda()(profile)
+            >>> rule.is_im_c_(0)
+            True
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 2, 1],
+            ...     [2, 0, 1],
+            ...     [2, 0, 1],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleBorda()(profile)
+            >>> rule.is_im_c_(0)
+            True
         """
         scores_without_v = self.scores_ - self.ballots_[v, :]
         self.mylogv('scores_without_v =', scores_without_v)
@@ -407,6 +429,7 @@ class RuleBorda(Rule):
                     return
             else:
                 self._v_im_for_c[v, c] = False
+            nb_wanted_undecided -= 1
             if nb_wanted_undecided == 0:
                 return
 
