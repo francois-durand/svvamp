@@ -540,6 +540,51 @@ class RuleSchulze(Rule):
     # %% Individual manipulation (IM)
 
     def _im_main_work_v_fast(self, v, c_is_wanted, nb_wanted_undecided, stop_if_true):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleSchulze()(profile)
+            >>> rule.is_im_
+            False
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [1, 0, 2],
+            ...     [1, 2, 0],
+            ...     [2, 0, 1],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleSchulze()(profile)
+            >>> rule.is_im_
+            True
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleSchulze()(profile)
+            >>> rule.is_im_c_(2)
+            False
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [1, 3, 2, 0, 4],
+            ...     [2, 3, 0, 1, 4],
+            ...     [3, 4, 2, 1, 0],
+            ...     [4, 0, 1, 3, 2],
+            ...     [4, 2, 0, 1, 3],
+            ... ])
+            >>> rule = RuleSchulze()(profile)
+            >>> rule.is_im_c_(2)
+            True
+        """
         for c in self.losing_candidates_:
             if not c_is_wanted[c]:
                 continue
@@ -591,6 +636,29 @@ class RuleSchulze(Rule):
                 return
 
     def _im_main_work_v_(self, v, c_is_wanted, nb_wanted_undecided, stop_if_true):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleSchulze(im_option='exact')(profile)
+            >>> rule.is_im_
+            False
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleSchulze(im_option='exact')(profile)
+            >>> rule.is_im_
+            False
+        """
         self._im_main_work_v_fast(v, c_is_wanted, nb_wanted_undecided, stop_if_true)
         # Deal with 'exact' (brute force) option
         if self._im_option != 'exact':
@@ -615,6 +683,52 @@ class RuleSchulze(Rule):
     # %% Coalition Manipulation (CM)
 
     def _cm_main_work_c_(self, c, optimize_bounds):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 3, 1, 2],
+            ...     [1, 0, 2, 3],
+            ...     [2, 1, 3, 0],
+            ...     [2, 3, 0, 1],
+            ...     [3, 2, 0, 1],
+            ... ])
+            >>> rule = RuleSchulze()(profile)
+            >>> rule.candidates_cm_
+            array([ 1.,  1.,  0., nan])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 3, 2, 1],
+            ...     [1, 0, 3, 2],
+            ...     [2, 1, 0, 3],
+            ...     [2, 3, 0, 1],
+            ...     [3, 1, 0, 2],
+            ... ])
+            >>> rule = RuleSchulze()(profile)
+            >>> rule.candidates_cm_
+            array([ 0.,  1., nan,  1.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [1, 0, 2, 3, 4],
+            ...     [2, 1, 4, 0, 3],
+            ...     [2, 3, 4, 0, 1],
+            ...     [3, 4, 0, 1, 2],
+            ...     [4, 0, 3, 1, 2],
+            ...     [4, 0, 3, 1, 2],
+            ... ])
+            >>> rule = RuleSchulze()(profile)
+            >>> rule.candidates_cm_
+            array([0., 0., 1., 1., 0.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleSchulze(cm_option='exact')(profile)
+            >>> rule.candidates_cm_
+            array([0., 0., 0.])
+        """
         _ = self._um_variables_are_declared_
         matrix_duels_s = preferences_ut_to_matrix_duels_ut(
             self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :])
@@ -661,7 +775,8 @@ class RuleSchulze(Rule):
                                    'CM: Update necessary_coalition_size_cm = n_m =')
             if self.cm_option == 'exact':
                 self._um_main_work_c_exact_rankings_(c)
-                if self._candidates_um[c] == True:
+                if self._candidates_um[c] == True:  # pragma: no cover
+                    # TO DO: Investigate whether this case can actually happen.
                     self._update_sufficient(self._sufficient_coalition_size_cm, c, n_m,
                                             'CM: Update sufficient_coalition_size_cm = n_m =')
                 else:
@@ -700,11 +815,57 @@ class RuleSchulze(Rule):
         self._candidates_um[np.equal(self._candidates_cm, False)] = False
 
     def _um_main_work_c_(self, c):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [1, 0, 2],
+            ...     [1, 2, 0],
+            ...     [2, 0, 1],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleSchulze()(profile)
+            >>> rule.candidates_um_
+            array([0., 1., 1.])
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 1. ,  1. ,  0. ,  0.5, -0.5],
+            ...     [ 0. , -0.5,  1. , -0.5,  0. ],
+            ...     [ 0. ,  0. ,  1. ,  1. ,  1. ],
+            ...     [ 0.5, -0.5, -0.5, -0.5,  0.5],
+            ...     [ 0.5, -0.5, -1. ,  0.5,  1. ],
+            ...     [-1. ,  0.5, -1. ,  0.5,  1. ],
+            ... ], preferences_rk=[
+            ...     [1, 0, 3, 2, 4],
+            ...     [2, 4, 0, 1, 3],
+            ...     [3, 2, 4, 1, 0],
+            ...     [4, 0, 2, 1, 3],
+            ...     [4, 0, 3, 1, 2],
+            ...     [4, 1, 3, 0, 2],
+            ... ])
+            >>> rule = RuleSchulze()(profile)
+            >>> rule.candidates_um_
+            array([0., 0., 1., 0., 0.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleSchulze()(profile)
+            >>> rule.candidates_cm_
+            array([0., 0., 0.])
+            >>> rule.candidates_um_
+            array([0., 0., 0.])
+        """
         n_m = self.profile_.matrix_duels_ut[c, self.w_]
-        if self._sufficient_coalition_size_cm[c] + 1 <= n_m:
+        if self._sufficient_coalition_size_cm[c] + 1 <= n_m:  # pragma: no cover
+            # TO DO: Investigate whether this case can actually happen.
             self._candidates_um[c] = True
             return
-        if self._necessary_coalition_size_cm[c] - 1 > n_m:
+        if self._necessary_coalition_size_cm[c] - 1 > n_m:  # pragma: no cover
+            # TO DO: Investigate whether this case can actually happen.
             self._candidates_um[c] = False
             return
         if not self._um_fast_tested[c]:
@@ -724,7 +885,8 @@ class RuleSchulze(Rule):
             if not success_cowinner:
                 self._candidates_um[c] = False
                 return
-        if self.um_option == 'exact':
+        if self.um_option == 'exact':# pragma: no cover
+            # TO DO: Investigate whether this case can actually happen.
             self._um_main_work_c_exact_rankings_(c)
         else:
             self._candidates_um[c] = np.nan
