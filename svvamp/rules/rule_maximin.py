@@ -440,6 +440,62 @@ class RuleMaximin(Rule):
     # %% Individual manipulation (IM)
 
     def _im_main_work_v_(self, v, c_is_wanted, nb_wanted_undecided, stop_if_true):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleMaximin()(profile)
+            >>> rule.is_im_c_with_voters(2)
+            (False, array([0., 0., 0., 0., 0.]))
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleMaximin()(profile)
+            >>> rule.is_im_
+            False
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [1, 0, 2],
+            ...     [1, 2, 0],
+            ...     [2, 0, 1],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleMaximin()(profile)
+            >>> rule.is_im_
+            True
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 1, 2],
+            ...     [1, 2, 0],
+            ...     [2, 1, 0],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleMaximin()(profile)
+            >>> rule.is_im_
+            False
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1, 3],
+            ...     [1, 3, 0, 2],
+            ...     [2, 1, 0, 3],
+            ...     [2, 1, 3, 0],
+            ...     [3, 0, 1, 2],
+            ... ])
+            >>> rule = RuleMaximin()(profile)
+            >>> rule.is_im_
+            True
+        """
         for c in self.losing_candidates_:
             if not c_is_wanted[c]:
                 continue
@@ -510,6 +566,18 @@ class RuleMaximin(Rule):
     # %% Unison manipulation (UM)
 
     def _um_main_work_c_(self, c):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [1, 0, 2],
+            ...     [1, 2, 0],
+            ...     [2, 0, 1],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleMaximin()(profile)
+            >>> rule.candidates_um_
+            array([0., 1., 1.])
+        """
         matrix_duels_temp = preferences_ut_to_matrix_duels_ut(
             self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :]
         ).astype(float)
@@ -519,7 +587,8 @@ class RuleMaximin(Rule):
         n_m = self.profile_.matrix_duels_ut[c, self.w_]
 
         w_temp = np.argmax(scores_temp)
-        if w_temp == c:
+        if w_temp == c:  # pragma: no cover
+            # TO DO: Investigate whether this case can really happen or not.
             self.mylogv("UM: scores_temp =", scores_temp, 3)
             self.mylog("UM: Manipulation easy (c wins without manipulators' votes)", 3)
             self._candidates_um[c] = True
@@ -539,6 +608,18 @@ class RuleMaximin(Rule):
     # %% Coalition Manipulation (CM)
 
     def _cm_main_work_c_fast(self, c, optimize_bounds):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 1, 2],
+            ...     [1, 2, 0],
+            ...     [2, 1, 0],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleMaximin()(profile)
+            >>> rule.candidates_cm_
+            array([nan,  0.,  0.])
+        """
         matrix_duels_temp = preferences_ut_to_matrix_duels_ut(
             self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :]
         ).astype(float)
@@ -579,6 +660,18 @@ class RuleMaximin(Rule):
         return False
 
     def _cm_main_work_c_(self, c, optimize_bounds):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleMaximin(cm_option='exact')(profile)
+            >>> rule.candidates_cm_
+            array([0., 0., 0.])
+        """
         is_quick_escape_fast = self._cm_main_work_c_fast(c, optimize_bounds)
         if not self.cm_option == "exact":
             # With 'fast' option, we stop here anyway.
@@ -594,6 +687,8 @@ class StackFamily:
     """Family of stacks. Used for the manipulation of Maximin.
 
     >>> sf = StackFamily()
+    >>> print(sf.pop_front())
+    None
     >>> sf.push_front(42, 4)
     >>> sf.push_front(51, 0)
     >>> sf.push_front(42, 2)
