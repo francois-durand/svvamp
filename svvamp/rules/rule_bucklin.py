@@ -480,13 +480,13 @@ class RuleBucklin(Rule):
                 self._v_im_for_c[v, c] = False
                 if nb_wanted_undecided == 0:
                     return
-                continue
+                continue  # pragma: no cover - Not really "executed" because of Python optimization
             if np.max(scores_prev) > self.profile_.n_v / 2:
                 # One d reaches majority before c!
                 self._v_im_for_c[v, c] = False
                 if nb_wanted_undecided == 0:
                     return
-                continue
+                continue  # pragma: no cover - Not really "executed" because of Python optimization
 
             # Now, attribute other ranks in manipulator's ballots. For ``d`` to be added safely at rank ``r``
             # (corresponding to last round), we just need that ``d`` will not outperform ``c`` at rank ``r``.
