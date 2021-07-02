@@ -357,23 +357,7 @@ class RuleApproval(Rule):
 
     # %% Individual manipulation (IM)
 
-    def _im_main_work_v(self, v, c_is_wanted, nb_wanted_undecided, stop_if_true):
-        """
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 1, 2],
-            ...     [0, 2, 1],
-            ...     [0, 2, 1],
-            ...     [0, 2, 1],
-            ...     [2, 0, 1],
-            ... ])
-            >>> rule = RuleApproval()(profile)
-            >>> rule.v_im_for_c_
-            array([[0., 0., 0.],
-                   [0., 0., 0.],
-                   [0., 0., 0.],
-                   [0., 0., 0.],
-                   [0., 0., 0.]])
-        """
+    def _im_main_work_v_(self, v, c_is_wanted, nb_wanted_undecided, stop_if_true):
         scores_test = self.scores_ - self.ballots_[v, :]
         w_test = int(np.argmax(scores_test))
         # Best strategy: vote only for c
