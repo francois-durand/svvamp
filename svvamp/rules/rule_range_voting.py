@@ -482,6 +482,29 @@ class RuleRangeVoting(Rule):
     # %% Individual manipulation (IM)
 
     def _im_main_work_v_(self, v, c_is_wanted, nb_wanted_undecided, stop_if_true):
+        """
+            >>> profile = Profile([
+            ...     [ 1. , -0.5,  0. ],
+            ...     [ 0.5,  1. , -1. ],
+            ...     [-0.5,  0.5, -1. ],
+            ...     [ 1. ,  0. ,  1. ],
+            ...     [-1. , -0.5,  1. ],
+            ... ])
+            >>> rule = RuleRangeVoting()(profile)
+            >>> rule.is_im_c_(1)
+            False
+
+            >>> profile = Profile([
+            ...     [ 1. , -1. ,  1. ],
+            ...     [ 1. , -1. ,  0.5],
+            ...     [-0.5,  1. ,  0.5],
+            ...     [-1. ,  0. , -0.5],
+            ...     [-1. ,  0.5, -0.5],
+            ... ])
+            >>> rule = RuleRangeVoting()(profile)
+            >>> rule.is_im_c_(1)
+            True
+        """
         scores_without_v = self.scores_sum_ - self.ballots_[v, :]
         w_without_v = np.argmax(np.around(scores_without_v, 12))
         new_score_w = np.around(scores_without_v[w_without_v] + self.min_grade, 12)

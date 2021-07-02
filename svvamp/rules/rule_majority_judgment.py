@@ -520,6 +520,18 @@ class RuleMajorityJudgment(Rule):
     # %% Individual manipulation (IM)
 
     def _im_main_work_v_(self, v, c_is_wanted, nb_wanted_undecided, stop_if_true):
+        """
+            >>> profile = Profile([
+            ...     [ 1. , -0.5,  0. ],
+            ...     [ 0.5,  1. , -1. ],
+            ...     [-0.5,  0.5, -1. ],
+            ...     [ 1. ,  0. ,  1. ],
+            ...     [-1. , -0.5,  1. ],
+            ... ])
+            >>> rule = RuleMajorityJudgment()(profile)
+            >>> rule.is_im_c_(1)
+            True
+        """
         ballots_test = np.copy(self.ballots_)
         ballots_test[v, :] = self.min_grade
         scores_v_is_evil = np.zeros((2, self.profile_.n_c))
@@ -552,6 +564,7 @@ class RuleMajorityJudgment(Rule):
                     return
             else:
                 self._v_im_for_c[v, c] = False
+            nb_wanted_undecided -= 1
             if nb_wanted_undecided == 0:
                 return
 
@@ -564,6 +577,22 @@ class RuleMajorityJudgment(Rule):
                 'CM: Preliminary checks: not TM => \n    _necessary_coalition_size_cm[c] = n_m + 1 =')
 
     def _cm_main_work_c_(self, c, optimize_bounds):
+        """
+            >>> profile = Profile([
+            ...     [ 1. , -0.5,  0. ],
+            ...     [ 0.5,  1. , -1. ],
+            ...     [-0.5,  0.5, -1. ],
+            ...     [ 1. ,  0. ,  1. ],
+            ...     [-1. , -0.5,  1. ],
+            ... ])
+            >>> rule = RuleMajorityJudgment()(profile)
+            >>> rule.candidates_cm_
+            array([0., 1., 0.])
+            >>> rule.necessary_coalition_size_cm_
+            array([0., 3., 2.])
+            >>> rule.sufficient_coalition_size_cm_
+            array([0., 3., 2.])
+        """
         # In fact, in sorted_sincere, there will be sincere voters and one manipulator (so that median and other
         # stuff is always defined). Grades for ``c`` are sorted in ascending order along ``c``'s column. Grades for
         # other candidates are sorted in descending order. This way, when adding one manipulator, the median is shifted
