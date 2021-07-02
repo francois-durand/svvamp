@@ -494,7 +494,7 @@ class RuleTwoRound(Rule):
             >>> rule.candidates_um_
             array([0., 0., 1., 0.])
 
-            Case where ``c`` is ``selected_one_s``:
+            Cases where ``c`` is ``selected_one_s``:
 
             >>> profile = Profile(preferences_ut=[
             ...     [ 0.5,  0.5, -1. , -0.5],
@@ -512,6 +512,46 @@ class RuleTwoRound(Rule):
             >>> rule = RuleTwoRound()(profile)
             >>> rule.candidates_um_
             array([1., 0., 0., 1.])
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 1. ,  0. , -1. ,  1. ,  1. ],
+            ...     [ 0. , -0.5,  1. , -0.5,  1. ],
+            ...     [ 1. ,  1. ,  0.5,  1. ,  1. ],
+            ...     [-0.5, -1. ,  0. ,  1. , -1. ],
+            ...     [ 0. , -1. ,  0. ,  0. , -1. ],
+            ...     [ 0.5, -0.5,  1. ,  0. ,  1. ],
+            ... ], preferences_rk=[
+            ...     [0, 4, 3, 1, 2],
+            ...     [2, 4, 0, 1, 3],
+            ...     [3, 0, 4, 1, 2],
+            ...     [3, 2, 0, 4, 1],
+            ...     [3, 2, 0, 4, 1],
+            ...     [4, 2, 0, 3, 1],
+            ... ])
+            >>> rule = RuleTwoRound()(profile)
+            >>> rule.candidates_um_
+            array([0., 0., 1., 0., 0.])
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 0. ,  0. ,  1. , -0.5, -0.5,  0. , -0.5],
+            ...     [ 0. , -0.5, -1. ,  0. , -0.5, -0.5, -0.5],
+            ...     [ 0. , -0.5, -0.5, -1. ,  1. , -1. , -0.5],
+            ...     [ 0. ,  0. , -1. ,  0.5,  1. ,  0. ,  1. ],
+            ...     [ 1. , -1. , -1. , -1. ,  1. ,  1. ,  1. ],
+            ...     [-0.5, -1. ,  0.5,  1. ,  0.5, -1. ,  1. ],
+            ...     [-1. ,  0. , -1. ,  0.5,  0.5,  0.5,  1. ],
+            ... ], preferences_rk=[
+            ...     [2, 0, 1, 5, 3, 6, 4],
+            ...     [3, 0, 1, 6, 4, 5, 2],
+            ...     [4, 0, 6, 2, 1, 3, 5],
+            ...     [4, 6, 3, 5, 1, 0, 2],
+            ...     [4, 6, 5, 0, 2, 1, 3],
+            ...     [6, 3, 4, 2, 0, 1, 5],
+            ...     [6, 5, 4, 3, 1, 2, 0],
+            ... ])
+            >>> rule = RuleTwoRound()(profile)
+            >>> rule.candidates_um_
+            array([0., 0., 0., 0., 1., 0., 0.])
         """
         n_m = self.profile_.matrix_duels_ut.astype(int)[c, self.w_]
         n_s = self.profile_.n_v - n_m
@@ -591,8 +631,9 @@ class RuleTwoRound(Rule):
                 continue
             # First round.
             if self.profile_.n_c == 2:
-                # pragma: no cover - Theoretically this cannot happen: when n_c = 2, the prechecks are able to conclude.
-                n_m_first = 0
+                n_m_first = 0  # pragma: no cover
+                # Theoretically this cannot happen: when n_c = 2, the prechecks are able to conclude,
+                # so _cm_main_work_c_ is never called.
             else:
                 # Besides ``d`` and ``c``, which candidate has the best score?
                 scores_temp = np.copy(scores_first_round_s)
