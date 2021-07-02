@@ -414,6 +414,19 @@ class RuleCoombs(Rule):
         int or inf
             ``n_manip_fast``. If a manipulation is found with n_max manipulators or less, then a sufficient number
             of manipulators is returned. Otherwise, it is +inf.
+
+        Examples
+        --------
+            >>> profile = Profile(preferences_rk=[
+            ...     [1, 2, 0, 3],
+            ...     [1, 3, 2, 0],
+            ...     [2, 0, 3, 1],
+            ...     [2, 1, 3, 0],
+            ...     [3, 2, 0, 1],
+            ... ])
+            >>> rule = RuleCoombs()(profile)
+            >>> rule.candidates_cm_
+            array([0., 1., 0., 1.])
         """
         # Each step of the loop:
         # ^^^^^^^^^^^^^^^^^^^^^^
@@ -538,6 +551,51 @@ class RuleCoombs(Rule):
     # %% Individual manipulation (IM)
 
     def _im_main_work_v_(self, v, c_is_wanted, nb_wanted_undecided, stop_if_true):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 3, 1],
+            ...     [1, 0, 3, 2],
+            ...     [1, 3, 2, 0],
+            ...     [2, 1, 3, 0],
+            ...     [3, 1, 0, 2],
+            ... ])
+            >>> rule = RuleCoombs()(profile)
+            >>> rule.is_im_
+            True
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleCoombs()(profile)
+            >>> rule.is_im_c_with_voters(2)
+            (nan, array([ 0.,  0.,  0., nan, nan]))
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleCoombs(im_option='exact')(profile)
+            >>> rule.is_im_
+            False
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 1, 2],
+            ...     [2, 0, 1],
+            ...     [2, 1, 0],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleCoombs(im_option='exact')(profile)
+            >>> rule.is_im_
+            True
+        """
         preferences_borda_s = self.profile_.preferences_borda_rk[np.array(range(self.profile_.n_v)) != v, :]
         for c in range(self.profile_.n_c):
             if not c_is_wanted[c]:
@@ -594,6 +652,29 @@ class RuleCoombs(Rule):
     # %% Coalition Manipulation (CM)
 
     def _cm_main_work_c_(self, c, optimize_bounds):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1, 3],
+            ...     [0, 2, 3, 1],
+            ...     [0, 2, 3, 1],
+            ...     [3, 0, 2, 1],
+            ...     [3, 1, 2, 0],
+            ... ])
+            >>> rule = RuleCoombs(cm_option='exact')(profile)
+            >>> rule.candidates_cm_
+            array([0., 0., 0., 0.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleCoombs(cm_option='exact')(profile)
+            >>> rule.necessary_coalition_size_cm_
+            array([0., 5., 4.])
+        """
         n_m = self.profile_.matrix_duels_ut[c, self.w_]
         exact = (self.cm_option == "exact")
         if optimize_bounds and exact:
@@ -601,7 +682,8 @@ class RuleCoombs(Rule):
         else:
             n_max = n_m
         self.mylogv("CM: n_max =", n_max, 3)
-        if not exact and self._necessary_coalition_size_cm[c] > n_max:
+        if not exact and self._necessary_coalition_size_cm[c] > n_max:  # pragma: no cover
+            # TO DO: Investigate whether this case can actually happen.
             self.mylog("CM: Fast algorithm will not do better than what we already know", 3)
             return
         n_manip_fast = self._cm_aux_fast(
