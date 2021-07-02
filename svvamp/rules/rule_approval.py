@@ -402,6 +402,27 @@ class RuleApproval(Rule):
                    [0., 0., 0.],
                    [0., 0., 0.],
                    [0., 0., 0.]])
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 0. , -0.5, -1. ],
+            ...     [ 1. ,  0. ,  1. ],
+            ...     [ 0. ,  1. , -0.5],
+            ...     [-1. ,  0. , -0.5],
+            ...     [-1. ,  1. ,  0. ],
+            ... ], preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [1, 2, 0],
+            ...     [1, 2, 0],
+            ... ])
+            >>> rule = RuleApproval()(profile)
+            >>> rule.v_im_for_c_
+            array([[1., 0., 0.],
+                   [0., 0., 0.],
+                   [0., 0., 0.],
+                   [0., 0., 0.],
+                   [0., 0., 0.]])
         """
         scores_test = self.scores_ - self.ballots_[v, :]
         w_test = int(np.argmax(scores_test))
