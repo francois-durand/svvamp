@@ -496,6 +496,19 @@ class RuleCoombs(Rule):
         int or inf
             ``n_manip_exact``. If a manipulation is found with ``n_max`` manipulators or less, the minimal sufficient
             number of manipulators is returned. Otherwise, it is +inf.
+
+        Examples
+        --------
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1, 3],
+            ...     [0, 2, 3, 1],
+            ...     [0, 2, 3, 1],
+            ...     [3, 0, 2, 1],
+            ...     [3, 1, 2, 0],
+            ... ])
+            >>> rule = RuleCoombs(cm_option='exact')(profile)
+            >>> rule.necessary_coalition_size_cm_
+            array([0., 4., 4., 3.])
         """
         # Explore subsets that are reachable with less than the upper bound.
         # ``situations_end_r`` is a dictionary.
@@ -595,6 +608,21 @@ class RuleCoombs(Rule):
             >>> rule = RuleCoombs(im_option='exact')(profile)
             >>> rule.is_im_
             True
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [1, 0, 2],
+            ...     [1, 2, 0],
+            ...     [2, 0, 1],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleCoombs()(profile)
+            >>> rule.v_im_for_c_
+            array([[ 0.,  0.,  0.],
+                   [ 0., nan,  0.],
+                   [ 0., nan,  1.],
+                   [ 0.,  0., nan],
+                   [ 0.,  0., nan]])
         """
         preferences_borda_s = self.profile_.preferences_borda_rk[np.array(range(self.profile_.n_v)) != v, :]
         for c in range(self.profile_.n_c):
@@ -674,6 +702,28 @@ class RuleCoombs(Rule):
             >>> rule = RuleCoombs(cm_option='exact')(profile)
             >>> rule.necessary_coalition_size_cm_
             array([0., 5., 4.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [1, 3, 0, 2],
+            ...     [2, 0, 3, 1],
+            ...     [2, 1, 3, 0],
+            ...     [3, 1, 0, 2],
+            ...     [3, 2, 1, 0],
+            ... ])
+            >>> rule = RuleCoombs(cm_option='exact')(profile)
+            >>> rule.candidates_cm_
+            array([0., 1., 1., 0.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [1, 2, 0, 3],
+            ...     [1, 3, 2, 0],
+            ...     [2, 0, 3, 1],
+            ...     [2, 1, 3, 0],
+            ...     [3, 2, 0, 1],
+            ... ])
+            >>> rule = RuleCoombs(cm_option='exact')(profile)
+            >>> rule.candidates_cm_
+            array([0., 1., 0., 1.])
         """
         n_m = self.profile_.matrix_duels_ut[c, self.w_]
         exact = (self.cm_option == "exact")
@@ -699,7 +749,8 @@ class RuleCoombs(Rule):
 
         # From this point, we have necessarily the 'exact' option.
         if self._sufficient_coalition_size_cm[c] == self._necessary_coalition_size_cm[c]:
-            return
+            # TO DO: Investigate whether this case can actually happen.
+            return  # pragma: no cover
         if not optimize_bounds and n_m >= self._sufficient_coalition_size_cm[c]:
             # This is a quick escape: since we have the option 'exact', if we come back with ``optimize_bound``,
             # we will try to be more precise.
