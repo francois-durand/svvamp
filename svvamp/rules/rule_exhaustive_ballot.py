@@ -308,6 +308,46 @@ class RuleExhaustiveBallot(Rule):
         Parameters
         ----------
         profile : Profile
+
+        Examples
+        --------
+        Same 'rule' object, different profiles:
+
+            >>> rule = RuleExhaustiveBallot()
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule(profile).w_
+            0
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1],
+            ...     [2, 0, 1],
+            ...     [2, 0, 1],
+            ...     [2, 0, 1],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule(profile).w_
+            2
+
+        Same profile, different 'rule' objects:
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule_1 = RuleExhaustiveBallot()(profile)
+            >>> rule_1.w_
+            0
+            >>> rule_2 = RuleExhaustiveBallot()(profile)
+            >>> rule_2.w_
+            0
         """
         # Unplug this exhaustive_ballot from the old profile
         if self.profile_ is not None:
@@ -442,6 +482,20 @@ class RuleExhaustiveBallot(Rule):
         ``margins[r, c] = 0``.
 
         For eliminated candidates, ``margins[r, c] = numpy.nan``.
+
+        Examples
+        --------
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleExhaustiveBallot()(profile)
+            >>> rule.margins
+            array([[ 5.,  0.,  1.],
+                   [ 4., nan,  0.]])
         """
         return self._counts_ballots_['margins']
 
@@ -456,6 +510,19 @@ class RuleExhaustiveBallot(Rule):
     def elimination_path(self):
         """1d array of integers. Same as :attr:`~svvamp.ExhaustiveBallot.candidates_by_scores_best_to_worst`,
         but in the reverse order.
+
+        Examples
+        --------
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleExhaustiveBallot()(profile)
+            >>> rule.elimination_path
+            array([1, 2, 0], dtype=int64)
         """
         return self._counts_ballots_['elimination_path']
 
@@ -495,6 +562,19 @@ class RuleExhaustiveBallot(Rule):
         list of bool
             1d array of booleans, ``candidates_im_aux``. ``candidates_im_aux[c]`` is True if manipulation for
             ``c`` is possible (whether desired or not).
+
+        Examples
+        --------
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [1, 2, 0],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleExhaustiveBallot(im_option='exact')(profile)
+            >>> rule.is_im_
+            False
         """
         # Explore subsets that are reachable. ``situations_begin_r`` is a dictionary.
         #
@@ -574,6 +654,29 @@ class RuleExhaustiveBallot(Rule):
         return candidates_im_aux
 
     def _im_preliminary_checks_general_subclass_(self):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [1, 0, 2],
+            ...     [1, 2, 0],
+            ... ])
+            >>> rule = RuleExhaustiveBallot(im_option='exact')(profile)
+            >>> rule.is_im_
+            False
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 1, 2],
+            ...     [0, 1, 2],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ... ])
+            >>> rule = RuleExhaustiveBallot(im_option='exact')(profile)
+            >>> rule.is_im_
+            False
+        """
         if self.im_option != "exact":
             return
         if np.all(np.logical_not(np.isneginf(self._v_im_for_c))):
@@ -590,6 +693,18 @@ class RuleExhaustiveBallot(Rule):
                 self._v_im_for_c[:, c] = False
 
     def _im_main_work_v_(self, v, c_is_wanted, nb_wanted_undecided, stop_if_true):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [1, 2, 0],
+            ...     [1, 2, 0],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleExhaustiveBallot(im_option='exact')(profile)
+            >>> rule.is_im_
+            True
+        """
         if self.im_option == "lazy":
             self._im_main_work_v_lazy_(v, c_is_wanted, nb_wanted_undecided, stop_if_true)
             return
@@ -643,6 +758,36 @@ class RuleExhaustiveBallot(Rule):
             * ``example_path_fast``: An example of elimination path that realizes the manipulation with
               ``n_manip_fast`` manipulators. ``example_path_fast[k]`` is the ``k``-th candidate eliminated. If no
               manipulation is found, ``example_path`` is NaN.
+
+        Examples
+        --------
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [1, 2, 0],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleExhaustiveBallot(fast_algo='c_minus_max')(profile)
+            >>> rule.is_cm_
+            nan
+            >>> rule = RuleExhaustiveBallot(fast_algo='minus_max')(profile)
+            >>> rule.is_cm_
+            nan
+            >>> rule = RuleExhaustiveBallot(fast_algo='hardest_first')(profile)
+            >>> rule.is_cm_
+            nan
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 1, 2],
+            ...     [1, 0, 2],
+            ...     [1, 2, 0],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleExhaustiveBallot()(profile)
+            >>> rule.is_um_
+            nan
         """
         # At each round, we examine all candidates ``d`` that we can eliminate. If several ``d`` are possible,
         # we choose the one that maximize a heuristic parameter denoted ``situation_c``.
@@ -721,7 +866,7 @@ class RuleExhaustiveBallot(Rule):
                 elif self.fast_algo == "hardest_first":
                     situation_for_c = n_manip_d
                 else:
-                    raise ValueError("Unknown fast algorithm: " + format(self.fast_algo))
+                    raise NotImplementedError("Unknown fast algorithm: " + format(self.fast_algo))
                 self.mylogv("cm_aux_fast: scores_s_temp =", scores_s_temp, 3)
                 self.mylogv("cm_aux_fast: situation_for_c =", situation_for_c, 3)
                 # Is the the best ``d`` so far?
@@ -784,6 +929,52 @@ class RuleExhaustiveBallot(Rule):
             * ``example_path``: An example of elimination path that realizes the manipulation with ``n_manip_final``
               manipulators. ``example_path[k]`` is the ``k``-th candidate eliminated. If the manipulation is impossible,
               ``example_path`` is NaN.
+
+        Examples
+        --------
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [1, 0, 2],
+            ...     [1, 2, 0],
+            ...     [2, 1, 0],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleExhaustiveBallot(um_option='exact')(profile)
+            >>> rule.is_um_
+            False
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 3, 2],
+            ...     [0, 2, 3, 1],
+            ...     [2, 0, 1, 3],
+            ...     [3, 1, 0, 2],
+            ...     [3, 2, 0, 1],
+            ... ])
+            >>> rule = RuleExhaustiveBallot(cm_option='exact')(profile)
+            >>> rule.candidates_cm_
+            array([0., 0., 0., 0.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1, 3],
+            ...     [1, 0, 3, 2],
+            ...     [1, 3, 2, 0],
+            ...     [2, 3, 1, 0],
+            ...     [3, 2, 0, 1],
+            ... ])
+            >>> rule = RuleExhaustiveBallot(cm_option='exact')(profile)
+            >>> rule.candidates_cm_
+            array([0., 1., 0., 1.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2, 3],
+            ...     [1, 3, 0, 2],
+            ...     [2, 1, 3, 0],
+            ...     [3, 0, 1, 2],
+            ...     [3, 1, 0, 2],
+            ... ])
+            >>> rule = RuleExhaustiveBallot(cm_option='exact')(profile)
+            >>> rule.candidates_cm_
+            array([0., 0., 0., 0.])
         """
         # Explore subsets that are reachable with less than the upper bound. ``situations_begin_r`` is a dictionary.
         #
@@ -884,11 +1075,39 @@ class RuleExhaustiveBallot(Rule):
 
     @cached_property
     def example_path_tm_(self):
+        """
+        Examples
+        --------
+            >>> profile = Profile(preferences_rk=[
+            ...     [1, 0, 2],
+            ...     [1, 2, 0],
+            ...     [1, 2, 0],
+            ...     [2, 1, 0],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleExhaustiveBallot()(profile)
+            >>> rule.example_path_tm_
+            {0: array([2, 1, 0]), 1: None, 2: array([0, 1, 2])}
+        """
         _ = self.candidates_tm_
         return self._example_path_tm
 
     @cached_property
     def sufficient_coalition_size_tm_(self):
+        """
+        Examples
+        --------
+            >>> profile = Profile(preferences_rk=[
+            ...     [1, 0, 2],
+            ...     [1, 2, 0],
+            ...     [1, 2, 0],
+            ...     [2, 1, 0],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleExhaustiveBallot()(profile)
+            >>> rule.sufficient_coalition_size_tm_
+            array([5., 0., 4.])
+        """
         _ = self.candidates_tm_
         return self._sufficient_coalition_size_tm
 
@@ -958,10 +1177,34 @@ class RuleExhaustiveBallot(Rule):
 
     @cached_property
     def example_path_um_(self):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [1, 0, 2],
+            ...     [1, 2, 0],
+            ...     [1, 2, 0],
+            ...     [2, 1, 0],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleExhaustiveBallot()(profile)
+            >>> rule.example_path_um_
+            {0: None, 1: None, 2: None}
+        """
         _ = self.candidates_um_
         return self._example_path_um
 
     def example_path_um_c_(self, c):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [1, 0, 2],
+            ...     [1, 2, 0],
+            ...     [1, 2, 0],
+            ...     [2, 1, 0],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleExhaustiveBallot()(profile)
+            >>> print(rule.example_path_um_c_(0))
+            None
+        """
         _ = self.is_um_c_(c)
         return self._example_path_um[c]
 
@@ -971,6 +1214,35 @@ class RuleExhaustiveBallot(Rule):
         return True
 
     def _um_main_work_c_(self, c):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 3, 1, 2],
+            ...     [1, 3, 0, 2],
+            ...     [2, 0, 1, 3],
+            ...     [2, 1, 0, 3],
+            ...     [3, 0, 2, 1],
+            ... ])
+            >>> rule = RuleExhaustiveBallot(um_option='exact')(profile)
+            >>> rule.candidates_um_
+            array([0., 0., 0., 1.])
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [-1. ,  0.5, -0.5, -1. ,  0.5],
+            ...     [ 0. ,  1. ,  1. ,  0. ,  0.5],
+            ...     [ 0. , -0.5, -0.5,  0.5,  0. ],
+            ...     [-1. , -0.5,  0.5,  1. ,  0.5],
+            ...     [-0.5, -0.5, -1. , -1. ,  1. ],
+            ... ], preferences_rk=[
+            ...     [1, 4, 2, 0, 3],
+            ...     [2, 1, 4, 0, 3],
+            ...     [3, 0, 4, 2, 1],
+            ...     [3, 2, 4, 1, 0],
+            ...     [4, 0, 1, 3, 2],
+            ... ])
+            >>> rule = RuleExhaustiveBallot(um_option='exact')(profile)
+            >>> rule.candidates_um_
+            array([0., 0., 1., 0., 1.])
+        """
         exact = (self.um_option == "exact")
         n_m = self.profile_.matrix_duels_ut[c, self.w_]
         self.mylogv("UM: n_m =", n_m, 3)
@@ -1007,6 +1279,18 @@ class RuleExhaustiveBallot(Rule):
 
     @cached_property
     def example_path_cm_(self):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [2, 1, 0],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleExhaustiveBallot()(profile)
+            >>> rule.example_path_cm_
+            {0: None, 1: array([2, 0, 1]), 2: array([1, 0, 2])}
+        """
         _ = self.candidates_cm_
         return self._example_path_cm
 
@@ -1038,13 +1322,26 @@ class RuleExhaustiveBallot(Rule):
             self._example_path_cm[c] = self.example_path_tm_c_(c)
 
     def _cm_main_work_c_(self, c, optimize_bounds):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2, 3],
+            ...     [0, 3, 2, 1],
+            ...     [1, 3, 2, 0],
+            ...     [2, 0, 3, 1],
+            ...     [3, 2, 0, 1],
+            ... ])
+            >>> rule = RuleExhaustiveBallot(cm_option='exact')(profile)
+            >>> rule.candidates_cm_
+            array([1., 0., 0., 1.])
+        """
         exact = (self.cm_option == "exact")
         if optimize_bounds and exact:
             n_max = self._sufficient_coalition_size_cm[c] - 1
         else:
             n_max = self.profile_.matrix_duels_ut[c, self.w_]
         self.mylogv("CM: n_max =", n_max, 3)
-        if not exact and self._necessary_coalition_size_cm[c] > n_max:
+        if not exact and self._necessary_coalition_size_cm[c] > n_max:  # pragma: no cover
+            # TO DO: Investigate whether this case can actually happen.
             self.mylog("CM: Fast algorithm will not do better than what we already know", 3)
             return
         n_manip_fast, example_path_fast = self._cm_aux_fast(
@@ -1062,7 +1359,8 @@ class RuleExhaustiveBallot(Rule):
 
         # From this point, we have necessarily the ``exact`` option
         if self._sufficient_coalition_size_cm[c] == self._necessary_coalition_size_cm[c]:
-            return False
+            # TO DO: Investigate whether this case can actually happen.
+            return False  # pragma: no cover
         if not optimize_bounds and self.profile_.matrix_duels_ut[c, self.w_] >= self._sufficient_coalition_size_cm[c]:
             # This is a quick escape: since we have the option ``exact``, if we come back with ``optimize_bounds``,
             # we will try to be more precise.
