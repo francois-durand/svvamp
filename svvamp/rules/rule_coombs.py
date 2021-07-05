@@ -640,7 +640,7 @@ class RuleCoombs(Rule):
                 self._is_im = True
                 if stop_if_true:
                     return
-                continue
+                continue  # pragma: no cover - Not really "executed" because of Python optimization
             if self.im_option != 'exact':
                 self._v_im_for_c[v, c] = np.nan
                 continue
