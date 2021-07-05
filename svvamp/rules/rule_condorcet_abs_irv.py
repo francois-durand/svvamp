@@ -595,7 +595,8 @@ class RuleCondorcetAbsIRV(Rule):
                 min(n_manip_becomes_cond, max(self.irv_.necessary_coalition_size_cm_[c], n_manip_prevent_cond)),
                 'CM: Update necessary_coalition_size[c] =')
         else:
-            if c == self.irv_.w_:
+            if c == self.irv_.w_:  # pragma: no cover
+                # TO DO: Investigate whether this case can actually happen.
                 self.mylog('CM: c == self.irv_.w_ != self.w_', 3)
                 self.mylogv("CM: sufficient size for IRV (sincere IRV) =", n_m, 3)
                 self._update_sufficient(self._sufficient_coalition_size_cm, c, max(n_m, n_manip_prevent_cond),
