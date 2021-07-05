@@ -315,10 +315,8 @@ class RuleCondorcetAbsIRV(Rule):
             irv_options['cm_option'] = 'fast'
         elif self.cm_option == 'slow':
             irv_options['cm_option'] = 'slow'
-        elif self.cm_option in {'almost_exact', 'exact'}:
+        else:  # self.cm_option in {'almost_exact', 'exact'}
             irv_options['cm_option'] = 'exact'
-        else:
-            raise ValueError
         self.irv_ = RuleIRV(**irv_options)(self.profile_)
         return self
 
@@ -424,6 +422,19 @@ class RuleCondorcetAbsIRV(Rule):
     def losing_candidates_(self):
         """If ``irv_.w_`` does not win, then we put her first. Other losers are sorted as usual. (scores in
         ``matrix_duels_ut``).
+
+        Examples
+        --------
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 1, 2],
+            ...     [1, 2, 0],
+            ...     [2, 1, 0],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleCondorcetAbsIRV()(profile)
+            >>> rule.candidates_cm_
+            array([nan,  0.,  1.])
         """
         self.mylog("Compute ordered list of losing candidates", 1)
         if self.w_ == self.irv_.w_:
@@ -445,7 +456,8 @@ class RuleCondorcetAbsIRV(Rule):
         # We check IRV first.
         if self.w_ != self.irv_.w_:
             # Then IRV is manipulable anyway (for ``w``, so a precheck on IRV would give us no information).
-            return
+            # TO DO: Investigate whether this case can actually happen.
+            return  # pragma: no cover
         if self.cm_option != "fast":
             if self.cm_option == "slow":
                 self.irv_.cm_option = "slow"
@@ -459,6 +471,40 @@ class RuleCondorcetAbsIRV(Rule):
                 self._cm_was_computed_with_candidates = True
 
     def _cm_main_work_c_(self, c, optimize_bounds):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleCondorcetAbsIRV(cm_option='slow')(profile)
+            >>> rule.candidates_cm_
+            array([0., 0., 1.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleCondorcetAbsIRV(cm_option='almost_exact')(profile)
+            >>> rule.candidates_cm_
+            array([0., 0., 1.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleCondorcetAbsIRV(cm_option='exact')(profile)
+            >>> rule.candidates_cm_
+            array([0., 0., 1.])
+        """
         # Decondorcification is independent from what we will do for IRV. It just gives a necessary coalition size.
         #
         # 1) If ``irv_.w_`` is Condorcet:
@@ -506,7 +552,8 @@ class RuleCondorcetAbsIRV(Rule):
         self._update_sufficient(self._sufficient_coalition_size_cm, c, n_manip_becomes_cond,
                                 'CM: Update sufficient_coalition_size_cm[c] = n_manip_becomes_cond =')
         if not optimize_bounds and n_m >= self._sufficient_coalition_size_cm[c]:
-            return True
+            # TO DO: Investigate whether this case can actually happen.
+            return True  # pragma: no cover
         # Prevent another cond. Look at the weakest duel for ``d``, she has ``matrix_duels_temp[d, e]``. We simply need
         # that:
         # ``matrix_duels_temp[d, e] <= (n_s + n_m) / 2``
@@ -520,7 +567,8 @@ class RuleCondorcetAbsIRV(Rule):
         self._update_necessary(self._necessary_coalition_size_cm, c, n_manip_prevent_cond,
                                'CM: Update necessary_coalition_size_cm[c] = n_manip_prevent_cond =')
         if not optimize_bounds and self._necessary_coalition_size_cm[c] > n_m:
-            return True
+            # TO DO: Investigate whether this case can actually happen.
+            return True  # pragma: no cover
 
         is_quick_escape_one = False
         if self.w_ == self.irv_.w_:

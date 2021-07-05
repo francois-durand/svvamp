@@ -36,12 +36,3 @@ def test_cm_exact():
         array([0., 0., 0.])
     """
     pass
-
-
-def test_cm__option_unexpected():
-    """
-        >>> rule = RuleCondorcetAbsIRV(cm_option='foo')()
-        Traceback (most recent call last):
-        ValueError: Unknown value for cm_option: foo
-    """
-    pass
