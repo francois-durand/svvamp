@@ -521,8 +521,8 @@ class RuleExhaustiveBallot(Rule):
             ...     [2, 0, 1],
             ... ])
             >>> rule = RuleExhaustiveBallot()(profile)
-            >>> rule.elimination_path
-            array([1, 2, 0], dtype=int64)
+            >>> list(rule.elimination_path)
+            [1, 2, 0]
         """
         return self._counts_ballots_['elimination_path']
 
