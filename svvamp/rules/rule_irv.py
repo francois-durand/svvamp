@@ -310,7 +310,47 @@ class RuleIRV(Rule):
         """
         Parameters
         ----------
-        profile : Profile.
+        profile : Profile
+
+        Examples
+        --------
+        Same 'rule' object, different profiles:
+
+            >>> rule = RuleIRV()
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule(profile).w_
+            0
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1],
+            ...     [2, 0, 1],
+            ...     [2, 0, 1],
+            ...     [2, 0, 1],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule(profile).w_
+            2
+
+        Same profile, different 'rule' objects:
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule_1 = RuleIRV()(profile)
+            >>> rule_1.w_
+            0
+            >>> rule_2 = RuleIRV()(profile)
+            >>> rule_2.w_
+            0
         """
         # Unplug this irv from the old profile
         if self.profile_ is not None:
@@ -395,12 +435,26 @@ class RuleIRV(Rule):
         return self.eb_.scores_
 
     @cached_property
-    def margins(self):
-        """2d array. ``margins[r, c]`` is the number of votes that ``c`` must lose to be eliminated at round ``r``
+    def margins_(self):
+        """2d array. ``margins_[r, c]`` is the number of votes that ``c`` must lose to be eliminated at round ``r``
         (all other things being equal). The candidate who is eliminated at round ``r`` is the only one for which
-        ``margins[r, c] = 0``.
+        ``margins_[r, c] = 0``.
 
-        For eliminated candidates, ``margins[r, c] = numpy.nan``.
+        For eliminated candidates, ``margins_[r, c] = numpy.nan``.
+
+        Examples
+        --------
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleIRV()(profile)
+            >>> rule.margins_
+            array([[ 2.,  0.,  1.],
+                   [ 2., nan,  0.]])
         """
         return self.eb_.margins_
 
@@ -408,13 +462,39 @@ class RuleIRV(Rule):
     def candidates_by_scores_best_to_worst_(self):
         """1d array of integers. ``candidates_by_scores_best_to_worst`` is the list of all candidates in the reverse
         order of their elimination.
+
+        Examples
+        --------
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleIRV()(profile)
+            >>> list(rule.candidates_by_scores_best_to_worst_)
+            [0, 2, 1]
         """
         return self.eb_.candidates_by_scores_best_to_worst_
 
     @cached_property
-    def elimination_path(self):
+    def elimination_path_(self):
         """1d array of integers. Same as :attr:`~svvamp.ExhaustiveBallot.candidates_by_scores_best_to_worst`,
         but in the reverse order.
+
+        Examples
+        --------
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleIRV()(profile)
+            >>> list(rule.elimination_path_)
+            [1, 2, 0]
         """
         return self.eb_.elimination_path_
 
@@ -471,6 +551,117 @@ class RuleIRV(Rule):
     # %% Individual manipulation (IM)
 
     def _im_main_work_v_exact_(self, v, c_is_wanted, nb_wanted_undecided, stop_if_true):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [1, 0, 2],
+            ...     [1, 2, 0],
+            ...     [2, 0, 1],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleIRV(im_option='exact')(profile)
+            >>> rule.is_im_
+            True
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 2, 1],
+            ...     [1, 2, 0],
+            ...     [1, 2, 0],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleIRV(im_option='exact')(profile)
+            >>> rule.is_im_
+            True
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2, 3],
+            ...     [1, 2, 0, 3],
+            ...     [2, 0, 1, 3],
+            ...     [3, 0, 2, 1],
+            ...     [3, 1, 2, 0],
+            ... ])
+            >>> rule = RuleIRV(im_option='exact')(profile)
+            >>> rule.is_im_
+            True
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [1, 0, 3, 2],
+            ...     [1, 2, 0, 3],
+            ...     [2, 0, 3, 1],
+            ...     [3, 0, 1, 2],
+            ...     [3, 0, 2, 1],
+            ... ])
+            >>> rule = RuleIRV(im_option='exact')(profile)
+            >>> rule.is_im_
+            True
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1, 3],
+            ...     [1, 0, 2, 3],
+            ...     [1, 0, 3, 2],
+            ...     [2, 3, 0, 1],
+            ...     [3, 0, 2, 1],
+            ... ])
+            >>> rule = RuleIRV(im_option='exact')(profile)
+            >>> rule.is_im_
+            False
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 1, 2],
+            ...     [0, 1, 2],
+            ...     [1, 0, 2],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleIRV(im_option='exact')(profile)
+            >>> rule.is_im_
+            False
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [1, 0, 2],
+            ...     [1, 2, 0],
+            ...     [1, 2, 0],
+            ...     [1, 2, 0],
+            ...     [1, 2, 0],
+            ... ])
+            >>> rule = RuleIRV(im_option='exact')(profile)
+            >>> rule.is_im_
+            False
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 3, 1, 2],
+            ...     [1, 2, 0, 3],
+            ...     [2, 0, 3, 1],
+            ...     [3, 1, 0, 2],
+            ...     [3, 2, 1, 0],
+            ... ])
+            >>> rule = RuleIRV(im_option='exact')(profile)
+            >>> rule.is_im_
+            True
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 3, 1, 4],
+            ...     [1, 2, 0, 4, 3],
+            ...     [3, 2, 1, 4, 0],
+            ...     [4, 2, 0, 3, 1],
+            ...     [4, 2, 1, 3, 0],
+            ... ])
+            >>> rule = RuleIRV(im_option='exact')(profile)
+            >>> rule.is_im_
+            True
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [1, 0, 2],
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleIRV(im_option='exact')(profile)
+            >>> rule.is_im_v_with_candidates_(4)
+            (True, array([1., 0., 0.]))
+        """
         self.mylogv("self._v_im_for_c[v, :] =", self._v_im_for_c[v, :], 3)
         other_voters = (np.array(range(self.profile_.n_v)) != v)
         n_s = self.profile_.n_v - 1
@@ -493,7 +684,9 @@ class RuleIRV(Rule):
         eliminated_d_r = np.zeros(self.profile_.n_c - 1)
         self.mylogv("im_aux_exact: natural_loser_r[r] =", natural_loser_r[r], 3)
         # If ``w`` has too many votes, then manipulation is not possible.
-        if scores_tot_begin_r[0, self.w_] + (self.w_ == 0) > n_s + 1 - scores_tot_begin_r[0, self.w_]:
+        if (scores_tot_begin_r[0, self.w_] + (self.w_ == 0)
+                > n_s + 1 - scores_tot_begin_r[0, self.w_]):  # pragma: no cover
+            # TO DO: Investigate whether this case can actually happen.
             self.mylog("im_aux_exact: Manipulation impossible by this path (w has too many votes)", 3)
             r = -1
         while True:
@@ -591,7 +784,7 @@ class RuleIRV(Rule):
         if self.im_option == "exact":
             # In that case, we check Exhaustive Ballot first.
             self.eb_.im_option = "exact"
-            if self.eb_.is_im_()[0] == False:
+            if self.eb_.is_im_ == False:
                 self.mylog("IM impossible (since it is impossible for Exhaustive Ballot)", 2)
                 self._v_im_for_c[:] = False
                 # Other variables will be updated in ``_im_preliminary_checks_general``.
@@ -601,7 +794,7 @@ class RuleIRV(Rule):
         if self.im_option == "exact":
             if np.any(np.isneginf(self._v_im_for_c[v, :])):
                 # ``self.eb_.im_option = exact``
-                candidates_im_v = self.eb_.is_im_v_with_candidates_(v)[2]
+                candidates_im_v = self.eb_.is_im_v_with_candidates_(v)[1]
                 self.mylogv("IM: Preliminary checks: EB._v_im_for_c[v, :] =", candidates_im_v, 3)
                 self._v_im_for_c[v, candidates_im_v == False] = False
 
@@ -623,11 +816,39 @@ class RuleIRV(Rule):
 
     @cached_property
     def example_path_tm_(self):
+        """
+        Examples
+        --------
+            >>> profile = Profile(preferences_rk=[
+            ...     [1, 0, 2],
+            ...     [1, 2, 0],
+            ...     [1, 2, 0],
+            ...     [2, 1, 0],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleIRV()(profile)
+            >>> rule.example_path_tm_
+            {0: array([2, 1, 0]), 1: None, 2: array([0, 1, 2])}
+        """
         # self.eb_.tm_option = self.tm_option
         return self.eb_.example_path_tm_
 
     @cached_property
     def sufficient_coalition_size_tm_(self):
+        """
+        Examples
+        --------
+            >>> profile = Profile(preferences_rk=[
+            ...     [1, 0, 2],
+            ...     [1, 2, 0],
+            ...     [1, 2, 0],
+            ...     [2, 1, 0],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleIRV()(profile)
+            >>> rule.sufficient_coalition_size_tm_
+            array([5., 0., 4.])
+        """
         # self.eb_.tm_option = self.tm_option
         return self.eb_.sufficient_coalition_size_tm_
 
@@ -699,6 +920,80 @@ class RuleIRV(Rule):
             * ``example_path_fast``: An example of elimination path that realizes the manipulation with ``n_m``
               manipulators. ``example_path_fast[k]`` is the ``k``-th candidate eliminated. If no manipulation is
               found, ``example_path`` is NaN.
+
+        Examples
+        --------
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1],
+            ...     [1, 2, 0],
+            ...     [1, 2, 0],
+            ...     [2, 0, 1],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleIRV()(profile)
+            >>> rule.candidates_um_
+            array([nan, nan,  0.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 3, 2],
+            ...     [1, 0, 2, 3],
+            ...     [1, 2, 0, 3],
+            ...     [2, 0, 3, 1],
+            ...     [2, 3, 1, 0],
+            ... ])
+            >>> rule = RuleIRV()(profile)
+            >>> rule.candidates_um_
+            array([nan,  0., nan, nan])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 3, 1, 2],
+            ...     [1, 0, 2, 3],
+            ...     [1, 2, 0, 3],
+            ...     [2, 3, 0, 1],
+            ...     [3, 0, 2, 1],
+            ... ])
+            >>> rule = RuleIRV()(profile)
+            >>> rule.candidates_um_
+            array([ 0., nan, nan,  1.])
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 0.5,  0.5, -1. ,  0.5],
+            ...     [-1. ,  0. ,  0. ,  0. ],
+            ...     [ 0. ,  1. ,  0. ,  0.5],
+            ...     [ 0.5,  0. ,  1. , -0.5],
+            ...     [-0.5, -0.5,  1. ,  0.5],
+            ... ], preferences_rk=[
+            ...     [0, 3, 1, 2],
+            ...     [1, 2, 3, 0],
+            ...     [1, 3, 2, 0],
+            ...     [2, 0, 1, 3],
+            ...     [2, 3, 0, 1],
+            ... ])
+            >>> rule = RuleIRV()(profile)
+            >>> rule.candidates_um_
+            array([ 1.,  0., nan, nan])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleIRV(fast_algo='minus_max')(profile)
+            >>> rule.candidates_um_
+            array([ 0., nan, nan])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleIRV(fast_algo='hardest_first')(profile)
+            >>> rule.candidates_um_
+            array([ 0., nan, nan])
         """
         # At each round, we examine all candidates ``d`` that we can eliminate. If several ``d`` are possible,
         # we choose the one that maximize a heuristic parameter denoted ``situation_c``.
@@ -782,7 +1077,7 @@ class RuleIRV(Rule):
                 elif self.fast_algo == "hardest_first":
                     situation_for_c = (ballot_m_temp != -1)
                 else:
-                    raise ValueError("Unknown fast algorithm: " + format(self.fast_algo))
+                    raise NotImplementedError("Unknown fast algorithm: " + format(self.fast_algo))
                 self.mylogv("um_aux_fast: scores_s_temp =", scores_s_temp, 3)
                 self.mylogv("um_aux_fast: ballot_m_temp =", ballot_m_temp, 3)
                 self.mylogv("um_aux_fast: scores_tot_temp =", scores_tot_temp, 3)
@@ -832,6 +1127,80 @@ class RuleIRV(Rule):
             * ``example_path``: An example of elimination path that realizes the manipulation with ``n_m`` manipulators.
               ``example_path[k]`` is the ``k``-th candidate eliminated. If the manipulation is impossible,
               ``example_path`` is NaN.
+
+        Examples
+        --------
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 0. ,  0. , -1. ,  0. ],
+            ...     [ 0. , -0.5,  0. , -1. ],
+            ...     [ 1. ,  1. ,  1. ,  0.5],
+            ...     [ 1. ,  0.5,  1. , -0.5],
+            ...     [-1. , -0.5,  0. ,  0. ],
+            ... ], preferences_rk=[
+            ...     [0, 1, 3, 2],
+            ...     [0, 2, 1, 3],
+            ...     [1, 2, 0, 3],
+            ...     [2, 0, 1, 3],
+            ...     [3, 2, 1, 0],
+            ... ])
+            >>> rule = RuleIRV(um_option='exact')(profile)
+            >>> rule.candidates_um_
+            array([1., 0., 0., 0.])
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 0.5,  0.5, -1. ,  0. , -0.5],
+            ...     [ 0. ,  1. , -1. , -1. ,  1. ],
+            ...     [-0.5,  0.5,  1. ,  0.5, -1. ],
+            ...     [ 0. ,  0.5, -1. ,  1. ,  0. ],
+            ...     [ 0.5, -0.5,  1. ,  0.5,  1. ],
+            ... ], preferences_rk=[
+            ...     [0, 1, 3, 4, 2],
+            ...     [1, 4, 0, 3, 2],
+            ...     [2, 3, 1, 0, 4],
+            ...     [3, 1, 4, 0, 2],
+            ...     [4, 2, 0, 3, 1],
+            ... ])
+            >>> rule = RuleIRV(um_option='exact')(profile)
+            >>> rule.candidates_um_
+            array([0., 0., 0., 1., 0.])
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 1. ,  0.5,  1. , -1. , -1. ],
+            ...     [ 0.5, -0.5, -0.5,  0.5, -0.5],
+            ...     [ 0. ,  0. ,  0. , -0.5, -0.5],
+            ...     [ 0.5,  0. ,  1. ,  0.5,  0.5],
+            ...     [-1. , -0.5,  0.5,  0. ,  1. ],
+            ... ], preferences_rk=[
+            ...     [0, 2, 1, 4, 3],
+            ...     [0, 3, 1, 4, 2],
+            ...     [1, 2, 0, 3, 4],
+            ...     [2, 3, 4, 0, 1],
+            ...     [4, 2, 3, 1, 0],
+            ... ])
+            >>> rule = RuleIRV(um_option='exact')(profile)
+            >>> rule.candidates_um_
+            array([0., 0., 0., 0., 0.])
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 0.5,  0.5, -0.5, -1. ],
+            ...     [ 1. ,  1. ,  1. , -1. ],
+            ...     [-1. ,  0. , -0.5, -1. ],
+            ...     [ 0. ,  0. ,  1. , -0.5],
+            ...     [ 1. ,  0. ,  1. ,  0. ],
+            ...     [-1. , -0.5, -1. ,  0. ],
+            ...     [ 0. , -1. ,  0.5,  1. ],
+            ... ], preferences_rk=[
+            ...     [0, 1, 2, 3],
+            ...     [1, 0, 2, 3],
+            ...     [1, 2, 3, 0],
+            ...     [2, 0, 1, 3],
+            ...     [2, 0, 1, 3],
+            ...     [3, 1, 0, 2],
+            ...     [3, 2, 0, 1],
+            ... ])
+            >>> rule = RuleIRV(um_option='exact')(profile)
+            >>> rule.candidates_um_
+            array([1., 0., 0., 0.])
         """
         candidates = np.array(range(self.profile_.n_c))
         n_s = preferences_borda_s.shape[0]
@@ -848,7 +1217,8 @@ class RuleIRV(Rule):
         # If an opponent has too many votes, then manipulation is not possible.
         max_score = np.nanmax(scores_tot_begin_r[0, candidates != c])
         most_serious_opponent = np.where(scores_tot_begin_r[0, :] == max_score)[0][0]
-        if max_score + (most_serious_opponent < c) > n_s + n_m - max_score:
+        if max_score + (most_serious_opponent < c) > n_s + n_m - max_score:  # pragma: no cover
+            # TO DO: Investigate whether this case can actually happen.
             self.mylogv("um_aux_exact: most_serious_opponent =", most_serious_opponent, 3)
             self.mylog("um_aux_exact: Manipulation impossible by this path (an opponent has too many votes)", 3)
             r = -1
@@ -941,12 +1311,41 @@ class RuleIRV(Rule):
             self.mylogv("um_aux_exact: natural_loser_r[r] =", natural_loser_r[r], 3)
 
     def _um_preliminary_checks_general_subclass_(self):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [1, 0, 2],
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleIRV(um_option='exact')(profile)
+            >>> rule.candidates_um_
+            array([0., 0., 0.])
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [-0.5, -0.5, -0.5],
+            ...     [-1. ,  0.5, -0.5],
+            ...     [-1. ,  0. , -1. ],
+            ...     [ 0. ,  1. ,  1. ],
+            ...     [ 0. ,  0.5,  0.5],
+            ... ], preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [1, 2, 0],
+            ...     [1, 2, 0],
+            ...     [2, 1, 0],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleIRV()(profile)
+            >>> rule.candidates_um_
+            array([0., 0., 0.])
+        """
         if np.all(np.equal(self._candidates_um, False)):
             return
         if self.um_option == "exact":
             # In that case, we check Exhaustive Ballot first.
             self.eb_.um_option = "exact"
-            if self.eb_.is_um_()[0] == False:
+            if self.eb_.is_um_ == False:
                 self.mylog("UM impossible (since it is impossible for Exhaustive Ballot)", 2)
                 self._candidates_um[:] = False
                 # Other variables will be updated in ``_um_preliminary_checks_general``.
@@ -968,7 +1367,7 @@ class RuleIRV(Rule):
             return
 
         # From this point, we have necessarily the 'exact' option (and have not found a manipulation for ``c`` yet).
-        if self.eb_.candidates_um_c_(c) == False:
+        if self.eb_.is_um_c_(c) == False:
             self.mylog("UM impossible for c (since it is impossible for Exhaustive Ballot)", 2)
             self._candidates_um[c] = False
             return
@@ -987,10 +1386,38 @@ class RuleIRV(Rule):
 
     @cached_property
     def example_path_cm_(self):
+        """
+        Examples
+        --------
+            >>> profile = Profile(preferences_rk=[
+            ...     [1, 0, 2],
+            ...     [1, 2, 0],
+            ...     [1, 2, 0],
+            ...     [2, 1, 0],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleIRV()(profile)
+            >>> rule.example_path_cm_
+            {0: None, 1: None, 2: None}
+        """
         _ = self.candidates_cm_
         return self._example_path_cm
 
     def example_path_cm_c_(self, c):
+        """
+        Examples
+        --------
+            >>> profile = Profile(preferences_rk=[
+            ...     [1, 0, 2],
+            ...     [1, 2, 0],
+            ...     [1, 2, 0],
+            ...     [2, 1, 0],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleIRV()(profile)
+            >>> print(rule.example_path_cm_c_(0))
+            None
+        """
         _ = self.is_cm_c_(c)
         return self._example_path_cm[c]
 
@@ -1028,6 +1455,30 @@ class RuleIRV(Rule):
             * ``example_path_fast``: An example of elimination path that realizes the manipulation with
               ``n_manip_fast`` manipulators. ``example_path_fast[k]`` is the ``k``-th candidate eliminated. If no
               manipulation is found, ``example_path`` is NaN.
+
+        Examples
+        --------
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [1, 0, 2],
+            ...     [1, 2, 0],
+            ...     [2, 0, 1],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleIRV(fast_algo='minus_max')(profile)
+            >>> rule.candidates_cm_
+            array([nan,  0., nan])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [1, 0, 2],
+            ...     [1, 2, 0],
+            ...     [2, 0, 1],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleIRV(fast_algo='hardest_first')(profile)
+            >>> rule.candidates_cm_
+            array([nan,  0., nan])
         """
         # At each round, we examine all candidates ``d`` that we can eliminate. If several ``d`` are possible,
         # we choose the one that maximize a heuristic parameter denoted ``situation_c``.
@@ -1099,7 +1550,7 @@ class RuleIRV(Rule):
                 elif self.fast_algo == "hardest_first":
                     situation_for_c = n_manip_d
                 else:
-                    raise ValueError("Unknown fast algorithm: " + format(self.fast_algo))
+                    raise NotImplementedError("Unknown fast algorithm: " + format(self.fast_algo))
                 self.mylogv("cm_aux_fast: scores_s_temp =", scores_s_temp, 3)
                 self.mylogv("cm_aux_fast: scores_m_temp =", scores_m_temp, 3)
                 self.mylogv("cm_aux_fast: scores_tot_temp =", scores_tot_temp, 3)
@@ -1220,6 +1671,53 @@ class RuleIRV(Rule):
               manipulators. ``example_path[k]`` is the ``k``-th candidate eliminated. If the manipulation is impossible,
               ``example_path`` is NaN.
             * ``quick_escape``: Boolean. True if we get out without optimizing ``n_manip_final``.
+
+        Examples
+        --------
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2, 3],
+            ...     [1, 3, 0, 2],
+            ...     [2, 3, 0, 1],
+            ...     [2, 3, 1, 0],
+            ...     [3, 0, 2, 1],
+            ... ])
+            >>> rule = RuleIRV(cm_option='exact')(profile)
+            >>> rule.candidates_cm_
+            array([0., 0., 0., 1.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [1, 0, 4, 2, 3],
+            ...     [1, 4, 2, 0, 3],
+            ...     [2, 4, 3, 1, 0],
+            ...     [3, 4, 1, 2, 0],
+            ...     [4, 0, 3, 1, 2],
+            ... ])
+            >>> rule = RuleIRV(cm_option='exact')(profile)
+            >>> rule.candidates_cm_
+            array([1., 1., 1., 0., 1.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 3, 1, 4, 2],
+            ...     [1, 0, 4, 2, 3],
+            ...     [1, 2, 0, 3, 4],
+            ...     [2, 1, 0, 4, 3],
+            ...     [3, 4, 0, 2, 1],
+            ...     [4, 2, 0, 1, 3],
+            ... ])
+            >>> rule = RuleIRV(cm_option='exact')(profile)
+            >>> rule.candidates_cm_
+            array([0., 1., 0., 0., 0.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2, 3],
+            ...     [1, 2, 0, 3],
+            ...     [2, 0, 3, 1],
+            ...     [2, 3, 0, 1],
+            ...     [3, 2, 1, 0],
+            ... ])
+            >>> rule = RuleIRV(cm_option='exact')(profile)
+            >>> rule.necessary_coalition_size_cm_
+            array([4., 3., 0., 4.])
         """
         candidates = np.array(range(self.profile_.n_c))
         n_s = preferences_borda_s.shape[0]
@@ -1247,7 +1745,8 @@ class RuleIRV(Rule):
         # If an opponent has too many votes, then manipulation is not possible.
         max_score = np.nanmax(scores_tot_begin_r[0, candidates != c])
         most_serious_opponent = np.where(scores_tot_begin_r[0, :] == max_score)[0][0]
-        if max_score + (most_serious_opponent < c) > n_s + n_max_updated - max_score:
+        if max_score + (most_serious_opponent < c) > n_s + n_max_updated - max_score:  # pragma: no cover
+            # TO DO: Investigate whether this case can actually happen.
             self.mylogv("cm_aux_exact: scores_tot_begin_r =", scores_tot_begin_r[0, :], 3)
             self.mylogv("cm_aux_exact: most_serious_opponent =", most_serious_opponent, 3)
             self.mylog("cm_aux_exact: Manipulation impossible by this path (an opponent has too many votes)", 3)
@@ -1371,7 +1870,8 @@ class RuleIRV(Rule):
         n_m = self.profile_.matrix_duels_ut[c, self.w_]  # Number of manipulators
         if not optimize_bounds and n_m >= self._sufficient_coalition_size_cm[c]:
             return
-        if not optimize_bounds and self._necessary_coalition_size_cm[c] > n_m:
+        if not optimize_bounds and self._necessary_coalition_size_cm[c] > n_m:  # pragma: no cover
+            # TO DO: Investigate whether this case can actually happen.
             return
         # Another pretest, based on Exhaustive Ballot
         if self.cm_option == "slow" or self.cm_option == "exact":
@@ -1388,6 +1888,40 @@ class RuleIRV(Rule):
                                    '    necessary_coalition_size_cm[c] = EB._necessary_coalition_size_cm[c] =')
 
     def _cm_main_work_c_(self, c, optimize_bounds):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1, 3],
+            ...     [1, 2, 0, 3],
+            ...     [1, 3, 2, 0],
+            ...     [2, 1, 0, 3],
+            ...     [3, 2, 1, 0],
+            ... ])
+            >>> rule = RuleIRV(cm_option='exact')(profile)
+            >>> rule.candidates_cm_
+            array([0., 1., 0., 0.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleIRV(cm_option='exact')(profile)
+            >>> rule.necessary_coalition_size_cm_
+            array([0., 4., 5.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 2, 1],
+            ...     [2, 1, 0],
+            ...     [2, 1, 0],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleIRV()(profile)
+            >>> rule.necessary_coalition_size_cm_
+            array([3., 2., 0.])
+        """
         exact = (self.cm_option == "exact")
         slow = (self.cm_option == "slow")
         fast = (self.cm_option == "fast")
@@ -1426,7 +1960,7 @@ class RuleIRV(Rule):
 
         # EB should always suggest an elimination path. But just as precaution, we use the fact that we know that
         # ``self._example_path_cm[c]`` provides a path (thanks to 'improved' TM).
-        if self.eb_.example_path_cm_c_(c) is None:
+        if self.eb_.example_path_cm_c_(c) is None:  # pragma: no cover - This should never happen.
             suggested_path = self._example_path_cm[c]
             self.mylog('***************************************************', 0)
             self.mylog('CM: WARNING: EB did not provide an elimination path', 0)

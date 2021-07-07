@@ -324,7 +324,7 @@ class RulePlurality(Rule):
             ...     [2, 0, 1],
             ... ])
             >>> rule = RulePlurality()(profile)
-            >>> rule.is_im_v_with_candidates(0)
+            >>> rule.is_im_v_with_candidates_(0)
             (False, array([0., 0., 0.]))
         """
         self.mylog("Compute IM", 1)

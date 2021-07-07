@@ -1313,7 +1313,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             self._compute_im_v_(v, c_is_wanted=np.ones(self.profile_.n_c, dtype=np.bool), stop_if_true=True)
         return pseudo_bool(self._voters_im[v])
 
-    def is_im_v_with_candidates(self, v):
+    def is_im_v_with_candidates_(self, v):
         """Individual manipulation, focus on one voter, with details.
 
         Parameters

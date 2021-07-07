@@ -434,7 +434,7 @@ class RuleExhaustiveBallot(Rule):
             self.mylogv("loser =", loser, 3)
             margins[r, :] = (scores[r, :] - scores[r, loser] + (np.array(range(self.profile_.n_c)) < loser))
             min_margin_r = np.nanmin(margins[r, margins[r, :] != 0])
-            self.mylogv("margins[r, :] =", margins[r, :], 3)
+            self.mylogv("margins_[r, :] =", margins[r, :], 3)
             # Are there pivot voters?
             if min_margin_r == 1:
                 # Any voter who has not voted for ``loser`` can save her: she just needs to vote for her and a
@@ -476,12 +476,12 @@ class RuleExhaustiveBallot(Rule):
         return self._counts_ballots_['scores']
 
     @cached_property
-    def margins(self):
-        """2d array. ``margins[r, c]`` is the number of votes that ``c`` must lose to be eliminated at round ``r``
+    def margins_(self):
+        """2d array. ``margins_[r, c]`` is the number of votes that ``c`` must lose to be eliminated at round ``r``
         (all other things being equal). The candidate who is eliminated at round ``r`` is the only one for which
-        ``margins[r, c] = 0``.
+        ``margins_[r, c] = 0``.
 
-        For eliminated candidates, ``margins[r, c] = numpy.nan``.
+        For eliminated candidates, ``margins_[r, c] = numpy.nan``.
 
         Examples
         --------
@@ -493,7 +493,7 @@ class RuleExhaustiveBallot(Rule):
             ...     [2, 0, 1],
             ... ])
             >>> rule = RuleExhaustiveBallot()(profile)
-            >>> rule.margins
+            >>> rule.margins_
             array([[ 5.,  0.,  1.],
                    [ 4., nan,  0.]])
         """
@@ -507,7 +507,7 @@ class RuleExhaustiveBallot(Rule):
         return self._counts_ballots_['candidates_by_scores_best_to_worst']
 
     @cached_property
-    def elimination_path(self):
+    def elimination_path_(self):
         """1d array of integers. Same as :attr:`~svvamp.ExhaustiveBallot.candidates_by_scores_best_to_worst`,
         but in the reverse order.
 
@@ -521,7 +521,7 @@ class RuleExhaustiveBallot(Rule):
             ...     [2, 0, 1],
             ... ])
             >>> rule = RuleExhaustiveBallot()(profile)
-            >>> list(rule.elimination_path)
+            >>> list(rule.elimination_path_)
             [1, 2, 0]
         """
         return self._counts_ballots_['elimination_path']
