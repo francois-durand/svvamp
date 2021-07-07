@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+import itertools
 import numpy as np
 from svvamp import GeneratorProfileLadder
 from svvamp.utils.misc import initialize_random_seeds
@@ -308,10 +309,8 @@ class RuleCondorcetVtbIRV(Rule):
             irv_options['cm_option'] = 'fast'
         elif self.cm_option == 'slow':
             irv_options['cm_option'] = 'slow'
-        elif self.cm_option in {'almost_exact', 'exact'}:
+        else:  # self.cm_option in {'almost_exact', 'exact'}:
             irv_options['cm_option'] = 'exact'
-        else:
-            raise ValueError
         self.irv_ = RuleIRV(**irv_options)(self.profile_)
         return self
 
@@ -418,6 +417,17 @@ class RuleCondorcetVtbIRV(Rule):
     def losing_candidates_(self):
         """If ``irv_.w_ does not win, then we put her first. Other losers are sorted as usual. (scores in
         ``matrix_duels_ut``).
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [1, 0, 2],
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleCondorcetVtbIRV()(profile)
+            >>> rule.candidates_cm_
+            array([ 0.,  1., nan])
         """
         self.mylog("Compute ordered list of losing candidates", 1)
         if self.w_ == self.irv_.w_:
@@ -453,6 +463,19 @@ class RuleCondorcetVtbIRV(Rule):
         -------
         bool
             ``manipulation_found``.
+
+        Examples
+        --------
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2, 3],
+            ...     [0, 3, 1, 2],
+            ...     [1, 3, 0, 2],
+            ...     [2, 3, 1, 0],
+            ...     [3, 2, 1, 0],
+            ... ])
+            >>> rule = RuleCondorcetVtbIRV(cm_option='almost_exact')(profile)
+            >>> rule.candidates_cm_
+            array([ 1.,  1., nan,  0.])
         """
         candidates = np.array(range(self.profile_.n_c))
 
@@ -484,7 +507,7 @@ class RuleCondorcetVtbIRV(Rule):
             # Update variables for next round
             scores_m_begin_r = scores_m_begin_r + scores_m_new_r
             if np.sum(scores_m_begin_r) > n_m:
-                raise NotImplemented("Error: this should not happen.")
+                raise NotImplementedError("Error: this should not happen.")
             scores_m_begin_r[d] = 0
             is_candidate_alive_begin_r[d] = False
             # We need to attribute manipulator's votes to specific manipulators. This is done arbitrarily,
@@ -538,7 +561,7 @@ class RuleCondorcetVtbIRV(Rule):
         self.mylog("cm_aux: Step 3 needed", 1)
         for manipulator in range(n_m):
             candidate_start = manipulator % self.profile_.n_c
-            for d in np.concatenate((range(candidate_start, self.profile_.n_c), range(candidate_start))):
+            for d in itertools.chain(range(candidate_start, self.profile_.n_c), range(candidate_start)):
                 if candidates_to_put_in_ballot[manipulator, d]:
                     candidates_to_put_in_ballot[manipulator, d] = False
                     matrix_duels_temp[d, candidates_to_put_in_ballot[manipulator, :]] += 1
@@ -546,10 +569,153 @@ class RuleCondorcetVtbIRV(Rule):
             if np.all(matrix_duels_temp[:, d] < self.profile_.n_v / 2):
                 self.mylog("cm_aux: Decondorcification failed", 1)
                 return False
-        self.mylog("cm_aux: Decondorcification succeeded", 1)
-        return True
+        # TO DO: Investigate whether this case can actually happen.
+        self.mylog("cm_aux: Decondorcification succeeded", 1)  # pragma: no cover
+        return True  # pragma: no cover
 
     def _cm_main_work_c_(self, c, optimize_bounds):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 1, 2],
+            ...     [1, 0, 2],
+            ...     [1, 2, 0],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleCondorcetVtbIRV(cm_option='almost_exact')(profile)
+            >>> rule.candidates_cm_
+            array([0., 0., 0.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 3, 1],
+            ...     [1, 2, 0, 3],
+            ...     [1, 3, 0, 2],
+            ...     [2, 0, 3, 1],
+            ...     [3, 2, 1, 0],
+            ... ])
+            >>> rule = RuleCondorcetVtbIRV()(profile)
+            >>> rule.candidates_cm_
+            array([ 1., nan,  0., nan])
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [-1. , -1. , -1. ],
+            ...     [ 1. ,  1. , -0.5],
+            ...     [-0.5,  1. , -1. ],
+            ...     [-1. ,  1. ,  0. ],
+            ...     [ 0.5, -0.5,  0.5],
+            ... ], preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 1, 2],
+            ...     [1, 0, 2],
+            ...     [1, 2, 0],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleCondorcetVtbIRV()(profile)
+            >>> rule.candidates_cm_
+            array([ 0., nan,  0.])
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 1. , -0.5, -1. ],
+            ...     [ 0.5, -1. ,  0.5],
+            ...     [-1. ,  0.5,  0. ],
+            ...     [-1. ,  1. , -1. ],
+            ...     [ 1. , -1. ,  1. ],
+            ... ], preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 2, 1],
+            ...     [1, 2, 0],
+            ...     [1, 2, 0],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleCondorcetVtbIRV()(profile)
+            >>> rule.candidates_cm_
+            array([ 0., nan,  1.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 1, 2],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [1, 2, 0],
+            ...     [1, 2, 0],
+            ...     [2, 0, 1],
+            ...     [2, 1, 0],
+            ...     [2, 1, 0],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleCondorcetVtbIRV()(profile)
+            >>> rule.necessary_coalition_size_cm_
+            array([2., 3., 0.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 4, 3, 2, 1],
+            ...     [1, 2, 3, 0, 4],
+            ...     [2, 4, 3, 1, 0],
+            ...     [3, 4, 1, 2, 0],
+            ...     [4, 0, 1, 2, 3],
+            ... ])
+            >>> rule = RuleCondorcetVtbIRV()(profile)
+            >>> rule.necessary_coalition_size_cm_
+            array([1., 2., 1., 1., 0.])
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 1. ,  0. , -0.5],
+            ...     [ 1. ,  0.5, -1. ],
+            ...     [ 0. , -1. , -1. ],
+            ...     [ 0.5, -0.5,  0.5],
+            ...     [-0.5,  0.5,  1. ],
+            ... ], preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 1, 2],
+            ...     [0, 2, 1],
+            ...     [2, 0, 1],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleCondorcetVtbIRV()(profile)
+            >>> rule.necessary_coalition_size_cm_
+            array([0., 3., 3.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 1, 2],
+            ...     [0, 2, 1],
+            ...     [2, 0, 1],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleCondorcetVtbIRV(cm_option='slow')(profile)
+            >>> rule.necessary_coalition_size_cm_
+            array([0., 5., 4.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [1, 0, 2],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleCondorcetVtbIRV(cm_option='exact')(profile)
+            >>> rule.necessary_coalition_size_cm_
+            array([3., 0., 3.])
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 0.5, -0.5,  0. , -0.5, -1. ],
+            ...     [ 0.5,  1. ,  1. , -1. ,  0. ],
+            ...     [-1. ,  1. ,  0. ,  0. ,  0. ],
+            ...     [ 0. ,  0. ,  1. ,  0.5, -1. ],
+            ...     [ 0. , -1. ,  0. ,  0.5, -1. ],
+            ...     [ 0.5,  0.5,  0. ,  0.5,  0.5],
+            ... ], preferences_rk=[
+            ...     [0, 2, 3, 1, 4],
+            ...     [1, 2, 0, 4, 3],
+            ...     [1, 3, 2, 4, 0],
+            ...     [2, 3, 1, 0, 4],
+            ...     [3, 2, 0, 4, 1],
+            ...     [4, 3, 1, 0, 2],
+            ... ])
+            >>> rule = RuleCondorcetVtbIRV(cm_option='almost_exact')(profile)
+            >>> rule.necessary_coalition_size_cm_
+            array([3., 3., 2., 0., 4.])
+        """
         n_m = self.profile_.matrix_duels_ut[c, self.w_]
         n_s = self.profile_.n_v - n_m
         candidates = np.array(range(self.profile_.n_c))
@@ -625,7 +791,7 @@ class RuleCondorcetVtbIRV(Rule):
             if self.irv_.sufficient_coalition_size_cm_[c] <= n_m:
                 suggested_path_two = self.irv_.example_path_cm_c_(c)
                 self.mylogv("CM: suggested_path =", suggested_path_two, 3)
-                if np.equal(suggested_path_one, suggested_path_two):
+                if np.array_equal(suggested_path_one, suggested_path_two):
                     self.mylog('CM: Same suggested path as before, skip computation')
                 else:
                     manipulation_found = self._cm_aux_almost_exact(c, n_m, suggested_path_two, preferences_borda_s,
