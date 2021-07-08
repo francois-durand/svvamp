@@ -308,6 +308,7 @@ class RuleCondorcetAbsIRV(Rule):
         )
 
     def __call__(self, profile):
+        self.delete_cache(suffix='_')
         self.profile_ = profile
         # Grab the IRV ballot of the profile (or create it)
         irv_options = {}
