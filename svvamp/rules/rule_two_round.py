@@ -290,12 +290,12 @@ class RuleTwoRound(Rule):
         return {'w': w, 'selected_one': selected_one, 'selected_two': selected_two}
 
     @cached_property
-    def selected_one(self):
+    def selected_one_(self):
         """Integer. The candidate with highest score at first round."""
         return self._counts_ballots_['selected_one']
 
     @cached_property
-    def selected_two(self):
+    def selected_two_(self):
         """Integer. The candidate with second highest score at first round."""
         return self._counts_ballots_['selected_two']
 
@@ -310,7 +310,7 @@ class RuleTwoRound(Rule):
         """
         ballots = np.zeros((self.profile_.n_v, 2), dtype=np.int)
         ballots[:, 0] = self.profile_.preferences_rk[:, 0]
-        c, d = self.selected_one, self.selected_two
+        c, d = self.selected_one_, self.selected_two_
         ballots[self.profile_.preferences_borda_rk[:, c] > self.profile_.preferences_borda_rk[:, d], 1] = c
         ballots[self.profile_.preferences_borda_rk[:, d] > self.profile_.preferences_borda_rk[:, c], 1] = d
         return ballots
@@ -322,7 +322,7 @@ class RuleTwoRound(Rule):
         """
         scores = np.zeros((2, self.profile_.n_c))
         scores[0, :] = self.profile_.plurality_scores_rk
-        c, d = self.selected_one, self.selected_two
+        c, d = self.selected_one_, self.selected_two_
         scores[1, c] = self.profile_.matrix_duels_rk[c, d]
         scores[1, d] = self.profile_.matrix_duels_rk[d, c]
         return scores
@@ -425,9 +425,9 @@ class RuleTwoRound(Rule):
         # Below, ``c_test`` is not the candidate ``v`` wants to get elected, but the candidate that she wants to push
         # to second round.
         for c_test in range(self.profile_.n_c):
-            if c_test == self.selected_one or c_test == self.selected_two:
+            if c_test == self.selected_one_ or c_test == self.selected_two_:
                 continue
-            if self.scores_[0, self.selected_two] - 1 + (self.selected_two < c_test) > self.scores_[0, c_test] + 1:
+            if self.scores_[0, self.selected_two_] - 1 + (self.selected_two_ < c_test) > self.scores_[0, c_test] + 1:
                 # c_test cannot go to second round at all
                 continue
             for v in range(self.profile_.n_v):
