@@ -476,7 +476,7 @@ class RuleCondorcetVtbIRV(Rule):
             ... ])
             >>> rule = RuleCondorcetVtbIRV(cm_option='almost_exact')(profile)
             >>> rule.candidates_cm_
-            array([ 1.,  1., nan,  0.])
+            array([1., 1., 1., 0.])
         """
         candidates = np.array(range(self.profile_.n_c))
 

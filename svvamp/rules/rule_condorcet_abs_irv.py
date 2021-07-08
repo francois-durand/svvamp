@@ -482,7 +482,7 @@ class RuleCondorcetAbsIRV(Rule):
             ... ])
             >>> rule = RuleCondorcetAbsIRV(cm_option='slow')(profile)
             >>> rule.candidates_cm_
-            array([0., 0., 1.])
+            array([0., 0., 0.])
 
             >>> profile = Profile(preferences_rk=[
             ...     [0, 2, 1],
@@ -493,7 +493,7 @@ class RuleCondorcetAbsIRV(Rule):
             ... ])
             >>> rule = RuleCondorcetAbsIRV(cm_option='almost_exact')(profile)
             >>> rule.candidates_cm_
-            array([0., 0., 1.])
+            array([0., 0., 0.])
 
             >>> profile = Profile(preferences_rk=[
             ...     [0, 2, 1],
@@ -504,7 +504,7 @@ class RuleCondorcetAbsIRV(Rule):
             ... ])
             >>> rule = RuleCondorcetAbsIRV(cm_option='exact')(profile)
             >>> rule.candidates_cm_
-            array([0., 0., 1.])
+            array([0., 0., 0.])
         """
         # Decondorcification is independent from what we will do for IRV. It just gives a necessary coalition size.
         #
