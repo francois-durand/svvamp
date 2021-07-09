@@ -26,6 +26,7 @@ import networkx as nx
 from svvamp.rules.rule import Rule
 from svvamp.utils.misc import preferences_ut_to_matrix_duels_ut
 from svvamp.utils.util_cache import cached_property
+from svvamp.utils.pseudo_bool import equal_true
 from svvamp.preferences.profile import Profile
 
 
@@ -545,7 +546,7 @@ class RuleMaximin(Rule):
 
             # We can conclude.
             self._v_im_for_c[v, c] = (w_r == c)
-            if self._v_im_for_c[v, c] == True:
+            if equal_true(self._v_im_for_c[v, c]):
                 self._candidates_im[c] = True
                 self._voters_im[v] = True
                 self._is_im = True

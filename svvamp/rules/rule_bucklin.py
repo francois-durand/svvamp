@@ -24,6 +24,7 @@ from svvamp import GeneratorProfileLadder
 from svvamp.utils.misc import initialize_random_seeds
 from svvamp.rules.rule import Rule
 from svvamp.utils.util_cache import cached_property
+from svvamp.utils.pseudo_bool import equal_true
 from svvamp.preferences.profile import Profile
 
 
@@ -500,7 +501,7 @@ class RuleBucklin(Rule):
             # We can conclude.
             self._v_im_for_c[v, c] = (np.sum(d_can_be_added) >= r - 1
                                       and np.sum(d_can_be_added_before_last_round) >= r - 2)
-            if self._v_im_for_c[v, c] == True:
+            if equal_true(self._v_im_for_c[v, c]):
                 self._candidates_im[c] = True
                 self._voters_im[v] = True
                 self._is_im = True

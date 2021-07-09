@@ -25,6 +25,7 @@ from svvamp import GeneratorProfileLadder
 from svvamp.utils.misc import initialize_random_seeds
 from svvamp.rules.rule import Rule
 from svvamp.utils.util_cache import cached_property
+from svvamp.utils.pseudo_bool import equal_true, equal_false
 from svvamp.preferences.profile import Profile
 from svvamp.utils.misc import preferences_ut_to_matrix_duels_ut
 from svvamp.rules.rule_irv import RuleIRV
@@ -762,7 +763,7 @@ class RuleCondorcetVtbIRV(Rule):
             # Use IRV without bounds
             self.mylog('CM: Use IRV without bounds')
             irv_is_cm_c = self.irv_.is_cm_c_(c)
-            if irv_is_cm_c == True:
+            if equal_true(irv_is_cm_c):
                 suggested_path_one = self.irv_.example_path_cm_c_(c)
                 self.mylogv("CM: suggested_path =", suggested_path_one, 3)
                 manipulation_found = self._cm_aux_almost_exact(c, n_m, suggested_path_one, preferences_borda_s,
@@ -775,7 +776,7 @@ class RuleCondorcetVtbIRV(Rule):
                         return True
             else:
                 suggested_path_one = np.zeros(self.profile_.n_c)
-            if irv_is_cm_c == False:
+            if equal_false(irv_is_cm_c):
                 self.mylog('CM: irv_.is_cm_c_(c) = False', 3)
                 self._update_necessary(self._necessary_coalition_size_cm, c,
                                        min(n_manip_becomes_cond, max(n_m + 1, n_manip_prevent_cond)),

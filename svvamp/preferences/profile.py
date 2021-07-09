@@ -31,6 +31,7 @@ from svvamp.utils.util_cache import cached_property
 from svvamp.utils.misc import initialize_random_seeds
 from svvamp.utils.misc import preferences_ut_to_preferences_rk, preferences_rk_to_preferences_borda_rk, \
     preferences_ut_to_preferences_borda_ut, preferences_ut_to_matrix_duels_ut, is_resistant_condorcet
+from svvamp.utils.pseudo_bool import equal_true
 
 
 # TODO : remove this class once Exhaustive Ballot and IRV are corrected.
@@ -2506,7 +2507,7 @@ class Profile(my_log.MyLog):
         # Condorcet-admissible (False)
 
         def display_bool(value):
-            return '(True) ' if value == True else '(False)'
+            return '(True) ' if equal_true(value) else '(False)'
         print('maj_fav_ut ' + display_bool(self.majority_favorite_ut) + '             ==>            '
               + 'maj_fav_ut_ctb ' + display_bool(self.majority_favorite_ut_ctb))
         print(' ||          ||                                     ||           ||')

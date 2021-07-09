@@ -1,6 +1,78 @@
 import numpy as np
 
 
+def equal_true(x):
+    """
+    Test whether x is equal to True.
+
+    Parameters
+    ----------
+    x : object
+
+    Returns
+    -------
+    bool
+        True iff `x` is equal to True. This includes values such as 1., 1, etc.
+
+    Examples
+    --------
+    By definition, `equal_true(x)` is equivalent to `x == True`.
+
+    However, `equal_true(x)` is not the same as `x is True`:
+
+        >>> x = 1.
+        >>> equal_true(x)
+        True
+        >>> x is True
+        False
+
+    Similarly, `equal_true(x)` is not the same as `bool(x)`:
+
+        >>> x = -np.inf
+        >>> equal_true(x)
+        False
+        >>> bool(x)
+        True
+    """
+    return x == True
+
+
+def equal_false(x):
+    """
+    Test whether x is equal to False.
+
+    Parameters
+    ----------
+    x : object
+
+    Returns
+    -------
+    bool
+        True iff `x` is equal to False. This includes values such as 0., 0, etc.
+
+    Examples
+    --------
+    By definition, `equal_false(x)` is equivalent to `x == False.
+
+    However, `equal_false(x)` is not the same as `x is False`:
+
+        >>> x = 0.
+        >>> equal_false(x)
+        True
+        >>> x is False
+        False
+
+    Similarly, `equal_false(x)` is not the same as `not bool(x)`:
+
+        >>> x = None
+        >>> equal_false(x)
+        False
+        >>> not bool(x)
+        True
+    """
+    return x == False
+
+
 # noinspection PySimplifyBooleanCheck
 def pseudo_bool(value):
     """Convert to pseudo-Boolean.
@@ -26,9 +98,9 @@ def pseudo_bool(value):
     """
     if np.isnan(value):
         return np.nan
-    elif value == True:
+    elif equal_true(value):
         return True
-    elif value == False:
+    elif equal_false(value):
         return False
     else:
         raise ValueError("Expected Boolean or np.nan and got:" + format(value))

@@ -25,7 +25,7 @@ from svvamp.utils.misc import initialize_random_seeds
 from svvamp.rules.rule import Rule
 from svvamp.utils.util_cache import cached_property
 from svvamp.preferences.profile import Profile
-from svvamp.utils.pseudo_bool import neginf_to_zero
+from svvamp.utils.pseudo_bool import neginf_to_zero, equal_false
 from svvamp.rules.rule_exhaustive_ballot import RuleExhaustiveBallot
 
 
@@ -785,7 +785,7 @@ class RuleIRV(Rule):
         if self.im_option == "exact":
             # In that case, we check Exhaustive Ballot first.
             self.eb_.im_option = "exact"
-            if self.eb_.is_im_ == False:
+            if equal_false(self.eb_.is_im_):
                 self.mylog("IM impossible (since it is impossible for Exhaustive Ballot)", 2)
                 self._v_im_for_c[:] = False
                 # Other variables will be updated in ``_im_preliminary_checks_general``.
@@ -1347,7 +1347,7 @@ class RuleIRV(Rule):
         if self.um_option == "exact":
             # In that case, we check Exhaustive Ballot first.
             self.eb_.um_option = "exact"
-            if self.eb_.is_um_ == False:
+            if equal_false(self.eb_.is_um_):
                 self.mylog("UM impossible (since it is impossible for Exhaustive Ballot)", 2)
                 self._candidates_um[:] = False
                 # Other variables will be updated in ``_um_preliminary_checks_general``.
@@ -1369,7 +1369,7 @@ class RuleIRV(Rule):
             return
 
         # From this point, we have necessarily the 'exact' option (and have not found a manipulation for ``c`` yet).
-        if self.eb_.is_um_c_(c) == False:
+        if equal_false(self.eb_.is_um_c_(c)):
             self.mylog("UM impossible for c (since it is impossible for Exhaustive Ballot)", 2)
             self._candidates_um[c] = False
             return
@@ -1861,7 +1861,7 @@ class RuleIRV(Rule):
         if self.cm_option == "slow" or self.cm_option == 'exact':
             # In that case, we check Exhaustive Ballot first
             self.eb_.cm_option = "exact"
-            if self.eb_.is_cm_ == False:
+            if equal_false(self.eb_.is_cm_):
                 self.mylog("CM impossible (since it is impossible for Exhaustive Ballot)", 2)
                 self._is_cm = False
                 self._candidates_cm[:] = False

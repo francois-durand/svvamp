@@ -24,7 +24,7 @@ from svvamp.utils.util_cache import cached_property, DeleteCacheMixin
 from svvamp.utils import my_log, type_checker
 from svvamp.utils.printing import printm, print_title, print_big_title
 from svvamp.utils.misc import compute_next_subset_with_w, compute_next_borda_clever
-from svvamp.utils.pseudo_bool import pseudo_bool, neginf_to_nan, neginf_to_zero
+from svvamp.utils.pseudo_bool import pseudo_bool, neginf_to_nan, neginf_to_zero, equal_true, equal_false
 from svvamp.preferences.profile import Profile
 from svvamp.preferences.profile_subset_candidates import ProfileSubsetCandidates
 
@@ -1434,7 +1434,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             self.mylog("IM: Identical to previous voter", 3)
             decided_previous_v = np.logical_not(np.isneginf(self._v_im_for_c[v - 1, :]))
             self._v_im_for_c[v, decided_previous_v] = self._v_im_for_c[v - 1, decided_previous_v]
-            if self._voters_im[v - 1] == True:
+            if equal_true(self._voters_im[v - 1]):
                 self._voters_im[v] = True
         # Preliminary checks on v
         self._im_preliminary_checks_v_(v)
@@ -1851,13 +1851,13 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         # Preliminary checks
         self._tm_preliminary_checks_c_(c)
         # Conclude what we can
-        if self._candidates_tm[c] == True:  # pragma: no cover
+        if equal_true(self._candidates_tm[c]):  # pragma: no cover
             # For the moment, this cannot happen, because no voting rule overrides
             # `_tm_preliminary_checks_general_subclass_` (which does nothing by default).
             self._reached_uncovered_code()
             self.mylogv("TM: Preliminary checks: TM is True for c =", c, 2)
             self._is_tm = True
-        elif self._candidates_tm[c] == False:  # pragma: no cover
+        elif equal_false(self._candidates_tm[c]):  # pragma: no cover
             # For the moment, this cannot happen, because no voting rule overrides
             # `_tm_preliminary_checks_general_subclass_` (which does nothing by default).
             self._reached_uncovered_code()
@@ -1942,10 +1942,10 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         * If ``_candidates_tm[c]`` is True, then ``_is_tm = True``.
         * Otherwise, do not update ``_is_tm``.
         """
-        if self._candidates_tm[c] == True:
+        if equal_true(self._candidates_tm[c]):
             self.mylogv("TM: Final answer: TM is True for c =", c, 2)
             self._is_tm = True
-        elif self._candidates_tm[c] == False:
+        elif equal_false(self._candidates_tm[c]):
             self.mylogv("TM: Final answer: TM is False for c =", c, 2)
         else:
             self.mylogv("TM: Final answer: TM is unknown for c =", c, 2)
@@ -1974,7 +1974,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         # If we find a candidate for which _candidates_tm[c] = True, then _is_tm becomes True ("surely yes").
         for c in self.losing_candidates_:
             self._compute_tm_c_(c)
-            if not with_candidates and self._is_tm == True:
+            if not with_candidates and equal_true(self._is_tm):
                 return
             if np.isneginf(self._is_tm) and np.isnan(self._candidates_tm[c]):
                 self._is_tm = np.nan
@@ -2203,10 +2203,10 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         # Preliminary checks
         self._um_preliminary_checks_c_(c)
         # Conclude what we can
-        if self._candidates_um[c] == True:
+        if equal_true(self._candidates_um[c]):
             self.mylogv("UM: Preliminary checks: UM is True for c =", c, 2)
             self._is_um = True
-        elif self._candidates_um[c] == False:
+        elif equal_false(self._candidates_um[c]):
             self.mylogv("UM: Preliminary checks: UM is False for c =", c, 2)
         else:
             self.mylogv("UM: Preliminary checks: UM is unknown for c =", c, 2)
@@ -2338,10 +2338,10 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             * If ``_candidates_um[c]`` is True, then ``_is_um = True``.
             * Otherwise, do not update ``_is_um``.
         """
-        if self._candidates_um[c] == True:
+        if equal_true(self._candidates_um[c]):
             self.mylogv("UM: Final answer: UM is True for c =", c, 2)
             self._is_um = True
-        elif self._candidates_um[c] == False:
+        elif equal_false(self._candidates_um[c]):
             self.mylogv("UM: Final answer: UM is False for c =", c, 2)
         else:
             self.mylogv("UM: Final answer: UM is unknown for c =", c, 2)
@@ -2374,7 +2374,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         # If we find a candidate for which ``_candidates_um[c] = True``, then ``_is_um`` becomes True ("surely yes").
         for c in self.losing_candidates_:
             self._compute_um_c_(c)
-            if not with_candidates and self._is_um == True:
+            if not with_candidates and equal_true(self._is_um):
                 return
             if np.isneginf(self._is_um) and np.isnan(self._candidates_um[c]):
                 self._is_um = np.nan
@@ -2454,7 +2454,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             (``candidates_icm_[c]``, ``necessary_coalition_size_icm_[c]``, ``sufficient_coalition_size_icm_[c]``).
         """
         _ = self._icm_is_initialized_general_
-        if self._bounds_optimized_icm[c] == False:
+        if equal_false(self._bounds_optimized_icm[c]):
             self._compute_icm_c_(c, optimize_bounds=True)
         return (pseudo_bool(self._candidates_icm[c]), np.float(self._necessary_coalition_size_icm[c]),
                 np.float(self._sufficient_coalition_size_icm[c]))
@@ -2601,10 +2601,10 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         """
         self.mylogv("ICM: Candidate =", c, 2)
         # Check if job is done for c
-        if self._bounds_optimized_icm[c] == True:
+        if equal_true(self._bounds_optimized_icm[c]):
             self.mylog("ICM: Job already done", 2)
             return True
-        if optimize_bounds == False and not np.isneginf(self._candidates_icm[c]):
+        if equal_false(optimize_bounds) and not np.isneginf(self._candidates_icm[c]):
             self.mylog("ICM: Job already done", 2)
             return True
         # Improve bounds
@@ -2625,12 +2625,12 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             self.mylogv("ICM: Preliminary checks: ICM is True for c =", c, 2)
             self._candidates_icm[c] = True
             self._is_icm = True
-            if optimize_bounds == False or self._bounds_optimized_icm[c]:
+            if equal_false(optimize_bounds) or self._bounds_optimized_icm[c]:
                 return True
         elif n_m < self._necessary_coalition_size_icm[c]:
             self.mylogv("ICM: Preliminary checks: ICM is False for c =", c, 2)
             self._candidates_icm[c] = False
-            if optimize_bounds == False or self._bounds_optimized_icm[c]:
+            if equal_false(optimize_bounds) or self._bounds_optimized_icm[c]:
                 return True
         else:
             self.mylogv("ICM: Preliminary checks: ICM is unknown for c =", c, 2)
@@ -2760,7 +2760,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         # If we find a candidate for which ``_candidates_icm[c] = True``, then ``_is_icm`` becomes True ("surely yes").
         for c in self.losing_candidates_:
             self._compute_icm_c_(c, optimize_bounds)
-            if not with_candidates and self._is_icm == True:
+            if not with_candidates and equal_true(self._is_icm):
                 return
             if np.isneginf(self._is_icm) and np.isnan(self._candidates_icm[c]):
                 self._is_icm = np.nan
@@ -2840,7 +2840,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             (``candidates_cm[c]``, ``necessary_coalition_size_cm[c]``, ``sufficient_coalition_size_cm[c]``).
         """
         _ = self._cm_is_initialized_general_
-        if self._bounds_optimized_cm[c] == False:
+        if equal_false(self._bounds_optimized_cm[c]):
             self._compute_cm_c_(c, optimize_bounds=True)
         return (pseudo_bool(self._candidates_cm[c]), np.float(self._necessary_coalition_size_cm[c]),
                 np.float(self._sufficient_coalition_size_cm[c]))
@@ -2990,19 +2990,19 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             return
         # ICM
         if self.precheck_icm:
-            if self.is_icm_ == True:
+            if equal_true(self.is_icm_):
                 self.mylog("CM found (thanks to ICM)", 2)
                 self._is_cm = True
                 return
         # TM
         if self.precheck_tm:
-            if self.is_tm_ == True:
+            if equal_true(self.is_tm_):
                 self.mylog("CM found (thanks to TM)", 2)
                 self._is_cm = True
                 return
         # UM
         if self.precheck_um:
-            if self.is_um_ == True:
+            if equal_true(self.is_um_):
                 self.mylog("CM found (thanks to UM)", 2)
                 self._is_cm = True
                 return
@@ -3040,10 +3040,10 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         """
         self.mylogv("CM: Candidate =", c, 2)
         # Check  if job is done for c
-        if self._bounds_optimized_cm[c] == True:
+        if equal_true(self._bounds_optimized_cm[c]):
             self.mylog("CM: Job already done", 2)
             return True
-        if optimize_bounds == False and not (np.isneginf(self._candidates_cm[c])):
+        if equal_false(optimize_bounds) and not (np.isneginf(self._candidates_cm[c])):
             self.mylog("CM: Job already done", 2)
             return True
         # Improve bounds
@@ -3064,12 +3064,12 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             self.mylogv("CM: Preliminary checks: CM is True for c =", c, 2)
             self._candidates_cm[c] = True
             self._is_cm = True
-            if optimize_bounds == False or self._bounds_optimized_cm[c]:
+            if equal_false(optimize_bounds) or self._bounds_optimized_cm[c]:
                 return True
         elif n_m < self._necessary_coalition_size_cm[c]:
             self.mylogv("CM: Preliminary checks: CM is False for c =", c, 2)
             self._candidates_cm[c] = False
-            if optimize_bounds == False or self._bounds_optimized_cm[c]:
+            if equal_false(optimize_bounds) or self._bounds_optimized_cm[c]:
                 return True
         else:
             self.mylogv("CM: Preliminary checks: CM is unknown for c =", c, 2)
@@ -3158,7 +3158,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
                 self._reached_uncovered_code()
                 return
         if self.precheck_tm and self._necessary_coalition_size_cm[c] <= n_m < self._sufficient_coalition_size_cm[c]:
-            if self.is_tm_c_(c) == True:
+            if equal_true(self.is_tm_c_(c)):
                 self._update_sufficient(
                     self._sufficient_coalition_size_cm, c, n_m,
                     'CM: Preliminary checks: TM => \n    '
@@ -3166,7 +3166,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
                 if not optimize_bounds:
                     return
         if self.precheck_um and self._necessary_coalition_size_cm[c] <= n_m < self._sufficient_coalition_size_cm[c]:
-            if self.is_tm_c_(c) == True:  # pragma: no cover
+            if equal_true(self.is_tm_c_(c)):  # pragma: no cover
                 # TO DO: Investigate whether this case can actually happen.
                 self._reached_uncovered_code()
                 self._update_sufficient(
@@ -3305,7 +3305,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         # If we find a candidate for which ``_candidates_cm[c] = True``, then ``_is_cm`` becomes True ("surely yes").
         for c in self.losing_candidates_:
             self._compute_cm_c_(c, optimize_bounds)
-            if not with_candidates and self._is_cm == True:
+            if not with_candidates and equal_true(self._is_cm):
                 return
             if np.isneginf(self._is_cm) and np.isnan(self._candidates_cm[c]):
                 self._is_cm = np.nan
@@ -3367,7 +3367,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         # InfMC_c_ctb (False)                ==>                InfMC_c (False)
 
         def display_bool(value):
-            return '(True) ' if value == True else '(False)'
+            return '(True) ' if equal_true(value) else '(False)'
 
         print('Condorcet_c_ut_rel_ctb ' + display_bool(self.meets_condorcet_c_ut_rel_ctb) +
               '     ==>     Condorcet_c_ut_rel ' + display_bool(self.meets_condorcet_c_ut_rel))

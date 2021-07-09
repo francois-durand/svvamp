@@ -26,6 +26,7 @@ from svvamp.rules.rule import Rule
 from svvamp.utils.util_cache import cached_property
 from svvamp.preferences.profile import Profile
 from svvamp.utils.misc import preferences_ut_to_matrix_duels_ut
+from svvamp.utils.pseudo_bool import equal_false
 from svvamp.rules.rule_irv import RuleIRV
 
 
@@ -463,7 +464,7 @@ class RuleCondorcetAbsIRV(Rule):
                 self.irv_.cm_option = "slow"
             else:
                 self.irv_.cm_option = "exact"
-            if self.irv_.is_cm_ == False:
+            if equal_false(self.irv_.is_cm_):
                 # Condorcification theorem apply.
                 self.mylog("CM impossible (since it is impossible for IRV)", 2)
                 self._is_cm = False

@@ -26,6 +26,7 @@ import networkx as nx
 from svvamp.rules.rule import Rule
 from svvamp.utils.util_cache import cached_property
 from svvamp.utils.misc import preferences_ut_to_matrix_duels_ut
+from svvamp.utils.pseudo_bool import equal_true
 from svvamp.preferences.profile import Profile
 
 
@@ -822,7 +823,7 @@ class RuleSchulze(Rule):
                                    'CM: Update necessary_coalition_size_cm = n_m =')
             if self.cm_option == 'exact':
                 self._um_main_work_c_exact_rankings_(c)
-                if self._candidates_um[c] == True:
+                if equal_true(self._candidates_um[c]):
                     self._update_sufficient(self._sufficient_coalition_size_cm, c, n_m,
                                             'CM: Update sufficient_coalition_size_cm = n_m =')
                 else:

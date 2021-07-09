@@ -24,6 +24,7 @@ from svvamp import GeneratorProfileLadder
 from svvamp.utils.misc import initialize_random_seeds
 from svvamp.rules.rule import Rule
 from svvamp.utils.util_cache import cached_property
+from svvamp.utils.pseudo_bool import equal_false
 from svvamp.preferences.profile import Profile
 
 
@@ -688,7 +689,7 @@ class RuleExhaustiveBallot(Rule):
                                          preferences_borda_s=self.profile_.preferences_borda_rk)
         candidates_im_aux[self.w_] = False
         for c in self.losing_candidates_:
-            if candidates_im_aux[c] == False:
+            if equal_false(candidates_im_aux[c]):
                 self.mylogv("IM: Manipulation with voter and anti-voter failed for c =", c, 2)
                 self._v_im_for_c[:, c] = False
 

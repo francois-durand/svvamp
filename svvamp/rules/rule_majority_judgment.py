@@ -27,6 +27,7 @@ from fractions import Fraction
 from svvamp.rules.rule import Rule
 from svvamp.utils import type_checker
 from svvamp.utils.util_cache import cached_property
+from svvamp.utils.pseudo_bool import equal_false
 from svvamp.preferences.profile import Profile
 
 
@@ -571,7 +572,7 @@ class RuleMajorityJudgment(Rule):
     # %% Coalition Manipulation (CM)
 
     def _cm_preliminary_checks_c_subclass_(self, c, optimize_bounds):
-        if self.is_tm_c_(c) == False:
+        if equal_false(self.is_tm_c_(c)):
             self._update_necessary(
                 self._necessary_coalition_size_cm, c, self.profile_.matrix_duels_ut[c, self.w_] + 1,
                 'CM: Preliminary checks: not TM => \n    _necessary_coalition_size_cm[c] = n_m + 1 =')
