@@ -589,7 +589,6 @@ class RuleBucklin(Rule):
             ...     [1, 0],
             ... ])
             >>> rule = RuleBucklin()(profile)
-            >>> rule._error_when_uncovered = True
             >>> rule.sufficient_coalition_size_icm_
             array([2., 0.])
         """
@@ -650,7 +649,6 @@ class RuleBucklin(Rule):
             ...     [3, 2, 0, 1],
             ... ])
             >>> rule = RuleBucklin()(profile)
-            >>> rule._error_when_uncovered = True
             >>> rule.sufficient_coalition_size_cm_
             array([0., 6., 5., 3.])
         """

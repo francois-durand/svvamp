@@ -1250,7 +1250,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             self._compute_im_(mode='is_im_c_', c=c)
         return pseudo_bool(self._candidates_im[c])
 
-    def is_im_c_with_voters(self, c):
+    def is_im_c_with_voters_(self, c):
         """Individual manipulation, focus on one candidate, with details.
 
         Parameters
@@ -1264,7 +1264,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             (``candidates_im[c]``, ``v_im_for_c[:, c]``).
         """
         _ = self._im_is_initialized_general_
-        if np.any(np.isneginf(self._v_im_for_c[:, c])):
+        if np.isneginf(self._candidates_im[c]) or np.any(np.isneginf(self._v_im_for_c[:, c])):
             self._compute_im_(mode='is_im_c_with_voters_', c=c)
         return pseudo_bool(self._candidates_im[c]), self._v_im_for_c[:, c]
 
@@ -1300,7 +1300,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             self._compute_im_(mode='v_im_for_c_')
         return self._v_im_for_c.astype(np.float)
 
-    def is_im_v(self, v):
+    def is_im_v_(self, v):
         """Individual manipulation, focus on one voter.
 
         Parameters

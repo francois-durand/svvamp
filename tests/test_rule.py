@@ -636,7 +636,6 @@ def test_compute_im():
         ...     [3, 2, 0, 1],
         ... ])
         >>> rule = RuleCondorcetSumDefeats(im_option='exact')(profile)
-        >>> rule._error_when_uncovered = True
         >>> rule.candidates_im_
         array([1., 0., 0., 0.])
     """
@@ -1147,6 +1146,24 @@ def test_reached_uncovered_code():
         >>> rule._example_reached_uncovered_code()
         Traceback (most recent call last):
         AssertionError: Uncovered portion of code.
+    """
+    pass
+
+
+def test_is_im_c_with_voters():
+    """
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 1. ,  0.5,  0. ],
+        ...     [-1. ,  1. ,  0. ],
+        ...     [-1. , -0.5,  0. ],
+        ...     [-0.5, -0.5,  0. ],
+        ...     [-0.5, -0.5,  1. ],
+        ... ])
+        >>> rule = RuleRangeVoting()(profile)
+        >>> rule.is_im_v_with_candidates_(0)
+        (False, array([0., 0., 0.]))
+        >>> rule.is_im_c_with_voters_(0)
+        (False, array([0., 0., 0., 0., 0.]))
     """
     pass
 

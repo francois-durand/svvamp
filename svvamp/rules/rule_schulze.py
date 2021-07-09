@@ -885,6 +885,17 @@ class RuleSchulze(Rule):
             array([0., 0., 0.])
             >>> rule.candidates_um_
             array([0., 0., 0.])
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 0. ,  0.5,  0. , -1. ],
+            ...     [ 0. , -0.5,  0.5, -0.5],
+            ... ], preferences_rk=[
+            ...     [1, 2, 0, 3],
+            ...     [2, 0, 3, 1],
+            ... ])
+            >>> rule = RuleSchulze(um_option='exact', cm_option='exact')(profile)
+            >>> rule.candidates_um_
+            array([1., 0., 0., 0.])
         """
         n_m = self.profile_.matrix_duels_ut[c, self.w_]
         if self._sufficient_coalition_size_cm[c] + 1 <= n_m:  # pragma: no cover
@@ -914,9 +925,7 @@ class RuleSchulze(Rule):
             if not success_cowinner:
                 self._candidates_um[c] = False
                 return
-        if self.um_option == 'exact':  # pragma: no cover
-            # TO DO: Investigate whether this case can actually happen.
-            self._reached_uncovered_code()
+        if self.um_option == 'exact':
             self._um_main_work_c_exact_rankings_(c)
         else:
             self._candidates_um[c] = np.nan

@@ -449,7 +449,7 @@ class RuleMaximin(Rule):
             ...     [2, 0, 1],
             ... ])
             >>> rule = RuleMaximin()(profile)
-            >>> rule.is_im_c_with_voters(2)
+            >>> rule.is_im_c_with_voters_(2)
             (False, array([0., 0., 0., 0., 0.]))
 
             >>> profile = Profile(preferences_rk=[

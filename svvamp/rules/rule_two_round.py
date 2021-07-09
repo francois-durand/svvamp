@@ -357,7 +357,7 @@ class RuleTwoRound(Rule):
             ...     [2, 0, 1],
             ... ])
             >>> rule = RuleTwoRound()(profile)
-            >>> rule.is_im_v(0)
+            >>> rule.is_im_v_(0)
             False
             >>> rule.v_im_for_c_
             array([[0., 0., 0.],
@@ -638,7 +638,6 @@ class RuleTwoRound(Rule):
             ...     [1, 0],
             ... ])
             >>> rule = RuleTwoRound()(profile)
-            >>> rule._error_when_uncovered = True
             >>> rule.is_cm_c_with_bounds_(0)
             (False, 3.0, 3.0)
         """

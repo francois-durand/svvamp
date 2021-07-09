@@ -584,7 +584,7 @@ class RuleCoombs(Rule):
             ...     [2, 1, 0],
             ... ])
             >>> rule = RuleCoombs()(profile)
-            >>> rule.is_im_c_with_voters(2)
+            >>> rule.is_im_c_with_voters_(2)
             (nan, array([ 0.,  0.,  0., nan, nan]))
 
             >>> profile = Profile(preferences_rk=[
