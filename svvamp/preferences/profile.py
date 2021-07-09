@@ -34,12 +34,6 @@ from svvamp.utils.misc import preferences_ut_to_preferences_rk, preferences_rk_t
 from svvamp.utils.pseudo_bool import equal_true
 
 
-# TODO : remove this class once Exhaustive Ballot and IRV are corrected.
-class _Storage:
-    """This class is used to store things."""
-    pass
-
-
 class Profile(my_log.MyLog):
 
     def __init__(self, preferences_ut=None, preferences_rk=None, log_creation=None, labels_candidates=None,
@@ -177,14 +171,6 @@ class Profile(my_log.MyLog):
         # Misc variables
         self._labels_candidates = labels_candidates
         self.log_creation = log_creation
-
-        # Other variables
-        # TODO: clean this
-        self._eb_result = None  # Storage for Exhaustive Ballot
-        self._eb_manip = None  # Storage for Exhaustive Ballot
-        self._eb_options = None  # Storage for Exhaustive Ballot
-        self._irv_manip = None  # Storage for IRV
-        self._irv_options = None  # Storage for IRV
 
     # %% Basic variables
 
