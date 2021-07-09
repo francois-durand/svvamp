@@ -1004,9 +1004,11 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             return self._compute_iia_aux_when_guaranteed_("IIA guaranteed: w is a Condorcet winner.")
         if self.meets_condorcet_c_ut_abs_ctb and self.w_is_condorcet_winner_ut_abs_ctb_:
             return self._compute_iia_aux_when_guaranteed_("IIA guaranteed: w is a Condorcet winner (ctb).")
-        if self.meets_condorcet_c_ut_rel and self.w_is_condorcet_winner_ut_rel_:
+        if self.meets_condorcet_c_ut_rel and self.w_is_condorcet_winner_ut_rel_:  # pragma: no cover
+            # TO DO: Investigate whether this case can actually happen.
             return self._compute_iia_aux_when_guaranteed_("IIA guaranteed: w is a relative Condorcet winner.")
-        if self.meets_condorcet_c_ut_rel_ctb and self.w_is_condorcet_winner_ut_rel_ctb_:
+        if self.meets_condorcet_c_ut_rel_ctb and self.w_is_condorcet_winner_ut_rel_ctb_:  # pragma: no cover
+            # TO DO: Investigate whether this case can actually happen.
             return self._compute_iia_aux_when_guaranteed_("IIA guaranteed: w is a relative Condorcet winner (ctb).")
         if self.meets_condorcet_c_rk and self.w_is_condorcet_winner_rk_:
             return self._compute_iia_aux_when_guaranteed_("IIA guaranteed: w is a Condorcet winner (vtb).")
@@ -1497,7 +1499,9 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         """
         if self.is_based_on_rk:
             self._im_main_work_v_exact_rankings_(v, c_is_wanted, nb_wanted_undecided, stop_if_true)
-        elif self.is_based_on_ut_minus1_1:
+        elif self.is_based_on_ut_minus1_1:  # pragma: no cover
+            # As of now, all the voting rules concerned (Majority Judgement, Range Voting and Approval)
+            # have their own `_im_main_work_v_` method, so they do not use this.
             self._im_main_work_v_exact_utilities_minus1_1_(v, c_is_wanted, nb_wanted_undecided, stop_if_true)
         else:
             raise NotImplementedError
@@ -1531,11 +1535,14 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         # not possible. Next instruction replaces all -Inf with 0.
         neginf_to_zero(self._v_im_for_c[v, :])
 
-    def _im_main_work_v_exact_utilities_minus1_1_(self, v, c_is_wanted, nb_wanted_undecided, stop_if_true):
+    def _im_main_work_v_exact_utilities_minus1_1_(self, v, c_is_wanted,
+                                                  nb_wanted_undecided, stop_if_true):  # pragma: no cover
         """Do the main work in IM loop for voter v, with option 'exact', for a voting system based only on utilities
         and where it is optimal for a c-manipulator to pretend that ``c`` has utility 1 and other candidates utility 0.
         Cf. :meth:`_im_main_work_v`.
         """
+        # As of now, all the voting rules concerned (Majority Judgement, Range Voting and Approval)
+        # have their own `_im_main_work_v_` method, so they do not use this.
         preferences_ut_test = np.copy(self.profile_.preferences_ut)
         for c in range(self.profile_.n_c):
             if not c_is_wanted[c]:
@@ -1620,9 +1627,11 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             self._im_was_computed_with_voters = True
             self._im_was_computed_with_candidates = True
         else:
-            if not np.any(np.isneginf(self._voters_im)):
+            if not np.any(np.isneginf(self._voters_im)):  # pragma: no cover
+                # TO DO: Investigate whether this case can actually happen.
                 self._im_was_computed_with_voters = True
-            if not np.any(np.isneginf(self._candidates_im)):
+            if not np.any(np.isneginf(self._candidates_im)):  # pragma: no cover
+                # TO DO: Investigate whether this case can actually happen.
                 self._im_was_computed_with_candidates = True
 
     def _compute_im_v_(self, v, c_is_wanted, stop_if_true):
@@ -1796,7 +1805,9 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             self._candidates_tm[:] = False
             self._tm_was_computed_with_candidates = True
             return
-        if not np.isneginf(self._is_tm):
+        if not np.isneginf(self._is_tm):  # pragma: no cover
+            # For the moment, this cannot happen, because no voting rule overrides
+            # `_tm_preliminary_checks_general_subclass_` (which does nothing by default).
             return
         # 3) Preliminary checks that gives only global information on _is_tm
         # (may return as soon as decision is made).
@@ -1836,10 +1847,14 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         # Preliminary checks
         self._tm_preliminary_checks_c_(c)
         # Conclude what we can
-        if self._candidates_tm[c] == True:
+        if self._candidates_tm[c] == True:  # pragma: no cover
+            # For the moment, this cannot happen, because no voting rule overrides
+            # `_tm_preliminary_checks_general_subclass_` (which does nothing by default).
             self.mylogv("TM: Preliminary checks: TM is True for c =", c, 2)
             self._is_tm = True
-        elif self._candidates_tm[c] == False:
+        elif self._candidates_tm[c] == False:  # pragma: no cover
+            # For the moment, this cannot happen, because no voting rule overrides
+            # `_tm_preliminary_checks_general_subclass_` (which does nothing by default).
             self.mylogv("TM: Preliminary checks: TM is False for c =", c, 2)
         else:
             self.mylogv("TM: Preliminary checks: TM is unknown for c =", c, 3)
@@ -1880,7 +1895,9 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         """
         if self.is_based_on_rk:
             self._tm_main_work_c_exact_rankings_(c)
-        elif self.is_based_on_ut_minus1_1:
+        elif self.is_based_on_ut_minus1_1:  # pragma: no cover
+            # As of now, all the voting rules concerned (Majority Judgement, Range Voting and Approval)
+            # have other ways to compute TM, so they do not use this.
             self._tm_main_work_c_exact_utilities_minus1_1_(c)
         else:
             raise NotImplementedError
@@ -1894,11 +1911,14 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         self.mylogv("TM: w_test =", w_test)
         self._candidates_tm[c] = (w_test == c)
 
-    def _tm_main_work_c_exact_utilities_minus1_1_(self, c):
+    def _tm_main_work_c_exact_utilities_minus1_1_(self, c):  # pragma: no cover
         """Do the main work in TM loop for candidate ``c``, with option 'exact', for a voting system based only on
         utilities and where it is optimal for a ``c``-manipulator to pretend that ``c`` has utility 1 and other
         candidates utility 0. Must decide ``_candidates_tm[c]`` (to True, False or NaN). Do not update ``_is_tm``.
         """
+        # As of now, all the voting rules concerned (Majority Judgement, Range Voting and Approval)
+        # have other ways to compute TM, so they do not use this.
+        #
         # Manipulators give -1 to all candidates, except 1 for c.
         preferences_test = np.copy(self.profile_.preferences_ut)
         preferences_test[self.v_wants_to_help_c_[:, c], :] = -1
@@ -2203,22 +2223,26 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         # If ``plurality_scores_ut[w] > (n_s + n_m) / 2``, then CM impossible.
         # Necessary condition: ``n_m >= 2 * plurality_scores_ut[w] - n_s``.
         if self.meets_majority_favorite_c_ut:
-            if n_m < 2 * self.profile_.plurality_scores_ut[self.w_] - n_s:
+            if n_m < 2 * self.profile_.plurality_scores_ut[self.w_] - n_s:  # pragma: no cover
+                # TO DO: Investigate whether this case can actually happen.
                 self.mylog('UM: Preliminary checks: even with n_m manipulators, w stays plurality winner (ut)', 3)
                 self._candidates_um[c] = False
                 return
         if self.meets_majority_favorite_c_ut_ctb and self.w_ == 0:
-            if n_m < 2 * self.profile_.plurality_scores_ut[self.w_] - n_s + 1:
+            if n_m < 2 * self.profile_.plurality_scores_ut[self.w_] - n_s + 1:  # pragma: no cover
+                # TO DO: Investigate whether this case can actually happen.
                 self.mylog('UM: Preliminary checks: even with n_m manipulators, w stays plurality winner (ut, ctb)', 3)
                 self._candidates_um[c] = False
                 return
         if self.meets_majority_favorite_c_rk:
-            if n_m < 2 * self.profile_.plurality_scores_rk[self.w_] - n_s:
+            if n_m < 2 * self.profile_.plurality_scores_rk[self.w_] - n_s:  # pragma: no cover
+                # TO DO: Investigate whether this case can actually happen.
                 self.mylog('UM: Preliminary checks: even with n_m manipulators, w stays plurality winner (rk)', 3)
                 self._candidates_um[c] = False
                 return
         if self.meets_majority_favorite_c_rk_ctb and self.w_ == 0:
-            if n_m < 2 * self.profile_.plurality_scores_rk[self.w_] - n_s + 1:
+            if n_m < 2 * self.profile_.plurality_scores_rk[self.w_] - n_s + 1:  # pragma: no cover
+                # TO DO: Investigate whether this case can actually happen.
                 self.mylog('UM: Preliminary checks: even with n_m manipulators, w stays plurality winner (rk, ctb)', 3)
                 self._candidates_um[c] = False
                 return
@@ -2260,7 +2284,9 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         """
         if self.is_based_on_rk:
             self._um_main_work_c_exact_rankings_(c)
-        elif self.is_based_on_ut_minus1_1:
+        elif self.is_based_on_ut_minus1_1:  # pragma: no cover
+            # As of now, all the voting rules concerned (Majority Judgement, Range Voting and Approval)
+            # have other ways to compute UM, so they do not use this.
             self._um_main_work_c_exact_utilities_minus1_1_(c)
         else:
             raise NotImplementedError
@@ -2283,11 +2309,13 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         else:
             self._candidates_um[c] = False
 
-    def _um_main_work_c_exact_utilities_minus1_1_(self, c):
+    def _um_main_work_c_exact_utilities_minus1_1_(self, c):  # pragma: no cover
         """Do the main work in UM loop for candidate ``c``, with option 'exact', for a voting system based only on
         utilities and where it is optimal for a c-manipulator to pretend that ``c`` has utility 1 and other
         candidates utility 0. Must decide ``_candidates_um[c]`` (to True, False or NaN). Do not update ``_is_um``.
         """
+        # As of now, all the voting rules concerned (Majority Judgement, Range Voting and Approval)
+        # have other ways to compute UM, so they do not use this.
         self._candidates_um[c] = self.is_tm_c_(c)
 
     def _um_conclude_c_(self, c):
@@ -2674,7 +2702,8 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         """Do the main work in ICM loop for candidate ``c``, with option 'exact'. Same specifications as
         ``_icm_main_work_c``.
         """
-        if self.meets_ignmc_c_ctb:
+        if self.meets_ignmc_c_ctb:  # pragma: no cover
+            # TO DO: Investigate whether this case can actually happen.
             return False
         else:
             raise NotImplementedError
@@ -2730,7 +2759,8 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         job_done = self._icm_initialize_c(c, optimize_bounds)
         if job_done:
             return
-        if not optimize_bounds and not np.isneginf(self._candidates_icm[c]):
+        if not optimize_bounds and not np.isneginf(self._candidates_icm[c]):  # pragma: no cover
+            # TO DO: Investigate whether this case can actually happen.
             return
         is_quick_escape = self._icm_main_work_c_(c, optimize_bounds)
         self._icm_conclude_c(c, is_quick_escape)
@@ -3061,28 +3091,32 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
                 self._necessary_coalition_size_cm, c, 2 * self.profile_.plurality_scores_rk[self.w_] - n_s + 1,
                 'CM: Preliminary checks: majority_favorite_c_rk_ctb => \n    '
                 'necessary_coalition_size_cm[c] = 2 * plurality_scores_rk[w] - n_s + 1 =')
-            if not optimize_bounds and self._necessary_coalition_size_cm[c] > n_m:
+            if not optimize_bounds and self._necessary_coalition_size_cm[c] > n_m:  # pragma: no cover
+                # TO DO: Investigate whether this case can actually happen.
                 return
         if self.meets_majority_favorite_c_rk:
             self._update_necessary(
                 self._necessary_coalition_size_cm, c, 2 * self.profile_.plurality_scores_rk[self.w_] - n_s,
                 'CM: Preliminary checks: majority_favorite_c_rk => \n    '
                 'necessary_coalition_size_cm[c] = 2 * plurality_scores_rk[w] - n_s =')
-            if not optimize_bounds and self._necessary_coalition_size_cm[c] > n_m:
+            if not optimize_bounds and self._necessary_coalition_size_cm[c] > n_m:  # pragma: no cover
+                # TO DO: Investigate whether this case can actually happen.
                 return
         if self.meets_majority_favorite_c_ut_ctb and self.w_ == 0:
             self._update_necessary(
                 self._necessary_coalition_size_cm, c, 2 * self.profile_.plurality_scores_ut[self.w_] - n_s + 1,
                 'CM: Preliminary checks: majority_favorite_c_ut_ctb => \n    '
                 'necessary_coalition_size_cm[c] = 2 * plurality_scores_ut[w] - n_s + 1 =')
-            if not optimize_bounds and self._necessary_coalition_size_cm[c] > n_m:
+            if not optimize_bounds and self._necessary_coalition_size_cm[c] > n_m:  # pragma: no cover
+                # TO DO: Investigate whether this case can actually happen.
                 return
         if self.meets_majority_favorite_c_ut:
             self._update_necessary(
                 self._necessary_coalition_size_cm, c, 2 * self.profile_.plurality_scores_ut[self.w_] - n_s,
                 'CM: Preliminary checks: majority_favorite_c_ut => \n    '
                 'necessary_coalition_size_cm[c] = 2 * plurality_scores_ut[w] - n_s =')
-            if not optimize_bounds and self._necessary_coalition_size_cm[c] > n_m:
+            if not optimize_bounds and self._necessary_coalition_size_cm[c] > n_m:  # pragma: no cover
+                # TO DO: Investigate whether this case can actually happen.
                 return
         # Pretest based on the same idea as Condorcet resistance
         if self.meets_condorcet_c_ut_abs:
@@ -3099,7 +3133,8 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
                 self._sufficient_coalition_size_cm, c, suf_icm_c,
                 'CM: Preliminary checks: ICM => \n    '
                 'sufficient_coalition_size_cm[c] = sufficient_coalition_size_icm[c] =')
-            if not optimize_bounds and n_m >= self._sufficient_coalition_size_cm[c]:
+            if not optimize_bounds and n_m >= self._sufficient_coalition_size_cm[c]:  # pragma: no cover
+                # TO DO: Investigate whether this case can actually happen.
                 return
         if self.precheck_tm and self._necessary_coalition_size_cm[c] <= n_m < self._sufficient_coalition_size_cm[c]:
             if self.is_tm_c_(c) == True:
@@ -3110,7 +3145,8 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
                 if not optimize_bounds:
                     return
         if self.precheck_um and self._necessary_coalition_size_cm[c] <= n_m < self._sufficient_coalition_size_cm[c]:
-            if self.is_tm_c_(c) == True:
+            if self.is_tm_c_(c) == True:  # pragma: no cover
+                # TO DO: Investigate whether this case can actually happen.
                 self._update_sufficient(
                     self._sufficient_coalition_size_cm, c, n_m,
                     'CM: Preliminary checks: UM => \n    '
@@ -3165,7 +3201,10 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         """Do the main work in CM loop for candidate ``c``, with option 'exact'. Same specifications as
         ``_cm_main_work_c``.
         """
-        if self.is_based_on_ut_minus1_1:
+        if self.is_based_on_ut_minus1_1:  # pragma: no cover
+            # As of now, all the voting rules concerned (Majority Judgement, Range Voting and Approval)
+            # have other ways to compute TM, so they do not use this.
+            #
             # TM was already checked during preliminary checks. If TM was not True, then CM impossible.
             self._update_necessary(self._necessary_coalition_size_cm, c, self.profile_.matrix_duels_ut[c, self.w_] + 1)
             return
@@ -3258,7 +3297,8 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         job_done = self._cm_initialize_c_(c, optimize_bounds)
         if job_done:
             return
-        if not optimize_bounds and not np.isneginf(self._candidates_cm[c]):
+        if not optimize_bounds and not np.isneginf(self._candidates_cm[c]):  # pragma: no cover
+            # TO DO: Investigate whether this case can actually happen.
             return
         is_quick_escape = self._cm_main_work_c_(c, optimize_bounds)
         self._cm_conclude_c_(c, is_quick_escape)

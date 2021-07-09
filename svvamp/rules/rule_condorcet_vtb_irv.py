@@ -730,7 +730,8 @@ class RuleCondorcetVtbIRV(Rule):
         self.mylogv("CM: n_manip_becomes_cond =", n_manip_becomes_cond, 3)
         self._update_sufficient(self._sufficient_coalition_size_cm, c, n_manip_becomes_cond,
                                 'CM: Update sufficient_coalition_size_cm[c] = n_manip_becomes_cond =')
-        if not optimize_bounds and n_m >= self._sufficient_coalition_size_cm[c]:
+        if not optimize_bounds and n_m >= self._sufficient_coalition_size_cm[c]:  # pragma: no cover
+            # TO DO: Investigate whether this case can actually happen.
             return True
         # Prevent another cond. Look at the weakest duel for ``d``, she has ``matrix_duels_vtb_temp[d, e]``. We simply
         # need that:

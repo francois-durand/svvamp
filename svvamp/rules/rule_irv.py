@@ -1597,6 +1597,19 @@ class RuleIRV(Rule):
         -------
         n_manip_slow : int
             Number of manipulators needed to manipulate with ``suggested_path``.
+
+        Examples
+        --------
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 3, 1],
+            ...     [1, 2, 3, 0],
+            ...     [1, 2, 3, 0],
+            ...     [2, 1, 0, 3],
+            ...     [3, 2, 0, 1],
+            ... ])
+            >>> rule = RuleIRV(cm_option='slow')(profile)
+            >>> rule.is_cm_
+            nan
         """
         candidates = np.array(range(self.profile_.n_c))
         is_candidate_alive = np.ones(self.profile_.n_c, dtype=np.bool)
@@ -1921,6 +1934,17 @@ class RuleIRV(Rule):
             >>> rule = RuleIRV()(profile)
             >>> rule.necessary_coalition_size_cm_
             array([3., 2., 0.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [1, 0, 2, 3, 4],
+            ...     [2, 0, 1, 3, 4],
+            ...     [2, 1, 3, 4, 0],
+            ...     [3, 0, 4, 1, 2],
+            ...     [4, 1, 3, 0, 2],
+            ... ])
+            >>> rule = RuleIRV(cm_option='slow')(profile)
+            >>> rule.is_cm_
+            nan
         """
         exact = (self.cm_option == "exact")
         slow = (self.cm_option == "slow")
