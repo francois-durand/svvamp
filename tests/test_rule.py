@@ -1,6 +1,6 @@
 from svvamp import Rule, RulePlurality, Profile, RuleVeto, RuleMaximin, RuleExhaustiveBallot, RuleBaldwin, \
     RuleIRVAverage, RuleMajorityJudgment, RuleNanson, RuleRankedPairs, RuleBorda, RuleSchulze, RuleIRVDuels, \
-    RuleRangeVoting, RuleKemeny, RuleTwoRound, RuleICRV, RuleBucklin, RuleCondorcetSumDefeats
+    RuleRangeVoting, RuleKemeny, RuleTwoRound, RuleICRV, RuleBucklin, RuleCondorcetSumDefeats, RuleCoombs
 
 
 def test_initialize_options():
@@ -1170,5 +1170,7 @@ def test_is_im_c_with_voters():
 
 def test_temp():
     """
+
+
     """
     pass

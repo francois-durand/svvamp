@@ -724,6 +724,28 @@ class RuleCoombs(Rule):
             >>> rule = RuleCoombs(cm_option='exact')(profile)
             >>> rule.candidates_cm_
             array([0., 1., 0., 1.])
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 0. ,  0. ],
+            ...     [ 0.5, -0.5],
+            ...     [-0.5, -1. ],
+            ...     [-0.5,  0. ],
+            ...     [ 0. ,  0.5],
+            ...     [-0.5, -0.5],
+            ... ], preferences_rk=[
+            ...     [0, 1],
+            ...     [0, 1],
+            ...     [0, 1],
+            ...     [1, 0],
+            ...     [1, 0],
+            ...     [1, 0],
+            ... ])
+            >>> rule = RuleCoombs(cm_option='exact')(profile)
+            >>> rule._error_when_uncovered = True
+            >>> rule.is_cm_c_(1)
+            False
+            >>> rule.sufficient_coalition_size_cm_
+            array([0., 3.])
         """
         n_m = self.profile_.matrix_duels_ut[c, self.w_]
         exact = (self.cm_option == "exact")
@@ -749,9 +771,7 @@ class RuleCoombs(Rule):
             return
 
         # From this point, we have necessarily the 'exact' option.
-        if self._sufficient_coalition_size_cm[c] == self._necessary_coalition_size_cm[c]:  # pragma: no cover
-            # TO DO: Investigate whether this case can actually happen.
-            self._reached_uncovered_code()
+        if self._sufficient_coalition_size_cm[c] == self._necessary_coalition_size_cm[c]:
             return
         if not optimize_bounds and n_m >= self._sufficient_coalition_size_cm[c]:
             # This is a quick escape: since we have the option 'exact', if we come back with ``optimize_bound``,
