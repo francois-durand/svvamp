@@ -126,6 +126,7 @@ def property_deleting_cache(hidden_variable_name, doc=''):
 
     Examples
     --------
+        >>> # noinspection PyUnresolvedReferences
         >>> class MyClass(DeleteCacheMixin):
         ...     def __init__(self, some_parameter):
         ...         self.some_parameter = some_parameter

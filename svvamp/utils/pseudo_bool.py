@@ -73,7 +73,6 @@ def equal_false(x):
     return x == False
 
 
-# noinspection PySimplifyBooleanCheck
 def pseudo_bool(value):
     """Convert to pseudo-Boolean.
 

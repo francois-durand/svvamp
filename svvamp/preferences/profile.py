@@ -48,9 +48,9 @@ class Profile(my_log.MyLog):
 
         Parameters
         ----------
-        preferences_ut : ndarray
+        preferences_ut : list of list (or 2d ndarray)
             2d array of floats. ``preferences_ut[v, c]`` is the utility of candidate ``c`` as seen by voter ``v``.
-        preferences_rk : ndarray
+        preferences_rk : list of list (or 2d ndarray)
             2d array of integers. ``preferences_rk[v, k]`` is the candidate at rank ``k`` for voter ``v``.
         log_creation : object
             Any type (string, list...). Some comments.
@@ -125,13 +125,6 @@ class Profile(my_log.MyLog):
             *  ``Condorcet_ut_abs``, ``Condorcet_ut_abs_ctb``, ``Condorcet_rk``, ``Condorcet_rk_ctb``,
                ``Condorcet_ut_rel``, ``Condorcet_ut_rel_ctb``, ``Weak Condorcet`` and ``Condorcet-admissible`` are
                equivalent.
-
-        Attributes
-        ----------
-        n_c : int
-            Number of candidates.
-        n_v : int
-            Number of voters.
         """
         super().__init__(log_identity="PROFILE")
 
@@ -157,6 +150,10 @@ class Profile(my_log.MyLog):
         """
 
         # Number of voters and candidates
+        self.n_v = None
+        """int : Number of voters."""
+        self.n_c = None
+        """int : Number of candidates."""
         self.n_v, self.n_c = self.preferences_ut.shape
         if self.n_v < 2 or self.n_c < 2:
             raise ValueError("A population must have at least 2 voters and 2 candidates.")
