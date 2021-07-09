@@ -1006,9 +1006,11 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             return self._compute_iia_aux_when_guaranteed_("IIA guaranteed: w is a Condorcet winner (ctb).")
         if self.meets_condorcet_c_ut_rel and self.w_is_condorcet_winner_ut_rel_:  # pragma: no cover
             # TO DO: Investigate whether this case can actually happen.
+            self._reached_uncovered_code()
             return self._compute_iia_aux_when_guaranteed_("IIA guaranteed: w is a relative Condorcet winner.")
         if self.meets_condorcet_c_ut_rel_ctb and self.w_is_condorcet_winner_ut_rel_ctb_:  # pragma: no cover
             # TO DO: Investigate whether this case can actually happen.
+            self._reached_uncovered_code()
             return self._compute_iia_aux_when_guaranteed_("IIA guaranteed: w is a relative Condorcet winner (ctb).")
         if self.meets_condorcet_c_rk and self.w_is_condorcet_winner_rk_:
             return self._compute_iia_aux_when_guaranteed_("IIA guaranteed: w is a Condorcet winner (vtb).")
@@ -1502,6 +1504,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         elif self.is_based_on_ut_minus1_1:  # pragma: no cover
             # As of now, all the voting rules concerned (Majority Judgement, Range Voting and Approval)
             # have their own `_im_main_work_v_` method, so they do not use this.
+            self._reached_uncovered_code()
             self._im_main_work_v_exact_utilities_minus1_1_(v, c_is_wanted, nb_wanted_undecided, stop_if_true)
         else:
             raise NotImplementedError
@@ -1543,6 +1546,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         """
         # As of now, all the voting rules concerned (Majority Judgement, Range Voting and Approval)
         # have their own `_im_main_work_v_` method, so they do not use this.
+        self._reached_uncovered_code()
         preferences_ut_test = np.copy(self.profile_.preferences_ut)
         for c in range(self.profile_.n_c):
             if not c_is_wanted[c]:
@@ -1629,9 +1633,11 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         else:
             if not np.any(np.isneginf(self._voters_im)):  # pragma: no cover
                 # TO DO: Investigate whether this case can actually happen.
+                self._reached_uncovered_code()
                 self._im_was_computed_with_voters = True
             if not np.any(np.isneginf(self._candidates_im)):  # pragma: no cover
                 # TO DO: Investigate whether this case can actually happen.
+                self._reached_uncovered_code()
                 self._im_was_computed_with_candidates = True
 
     def _compute_im_v_(self, v, c_is_wanted, stop_if_true):
@@ -1808,6 +1814,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         if not np.isneginf(self._is_tm):  # pragma: no cover
             # For the moment, this cannot happen, because no voting rule overrides
             # `_tm_preliminary_checks_general_subclass_` (which does nothing by default).
+            self._reached_uncovered_code()
             return
         # 3) Preliminary checks that gives only global information on _is_tm
         # (may return as soon as decision is made).
@@ -1850,11 +1857,13 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         if self._candidates_tm[c] == True:  # pragma: no cover
             # For the moment, this cannot happen, because no voting rule overrides
             # `_tm_preliminary_checks_general_subclass_` (which does nothing by default).
+            self._reached_uncovered_code()
             self.mylogv("TM: Preliminary checks: TM is True for c =", c, 2)
             self._is_tm = True
         elif self._candidates_tm[c] == False:  # pragma: no cover
             # For the moment, this cannot happen, because no voting rule overrides
             # `_tm_preliminary_checks_general_subclass_` (which does nothing by default).
+            self._reached_uncovered_code()
             self.mylogv("TM: Preliminary checks: TM is False for c =", c, 2)
         else:
             self.mylogv("TM: Preliminary checks: TM is unknown for c =", c, 3)
@@ -1898,6 +1907,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         elif self.is_based_on_ut_minus1_1:  # pragma: no cover
             # As of now, all the voting rules concerned (Majority Judgement, Range Voting and Approval)
             # have other ways to compute TM, so they do not use this.
+            self._reached_uncovered_code()
             self._tm_main_work_c_exact_utilities_minus1_1_(c)
         else:
             raise NotImplementedError
@@ -1920,6 +1930,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         # have other ways to compute TM, so they do not use this.
         #
         # Manipulators give -1 to all candidates, except 1 for c.
+        self._reached_uncovered_code()
         preferences_test = np.copy(self.profile_.preferences_ut)
         preferences_test[self.v_wants_to_help_c_[:, c], :] = -1
         preferences_test[self.v_wants_to_help_c_[:, c], c] = 1
@@ -2225,24 +2236,28 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         if self.meets_majority_favorite_c_ut:
             if n_m < 2 * self.profile_.plurality_scores_ut[self.w_] - n_s:  # pragma: no cover
                 # TO DO: Investigate whether this case can actually happen.
+                self._reached_uncovered_code()
                 self.mylog('UM: Preliminary checks: even with n_m manipulators, w stays plurality winner (ut)', 3)
                 self._candidates_um[c] = False
                 return
         if self.meets_majority_favorite_c_ut_ctb and self.w_ == 0:
             if n_m < 2 * self.profile_.plurality_scores_ut[self.w_] - n_s + 1:  # pragma: no cover
                 # TO DO: Investigate whether this case can actually happen.
+                self._reached_uncovered_code()
                 self.mylog('UM: Preliminary checks: even with n_m manipulators, w stays plurality winner (ut, ctb)', 3)
                 self._candidates_um[c] = False
                 return
         if self.meets_majority_favorite_c_rk:
             if n_m < 2 * self.profile_.plurality_scores_rk[self.w_] - n_s:  # pragma: no cover
                 # TO DO: Investigate whether this case can actually happen.
+                self._reached_uncovered_code()
                 self.mylog('UM: Preliminary checks: even with n_m manipulators, w stays plurality winner (rk)', 3)
                 self._candidates_um[c] = False
                 return
         if self.meets_majority_favorite_c_rk_ctb and self.w_ == 0:
             if n_m < 2 * self.profile_.plurality_scores_rk[self.w_] - n_s + 1:  # pragma: no cover
                 # TO DO: Investigate whether this case can actually happen.
+                self._reached_uncovered_code()
                 self.mylog('UM: Preliminary checks: even with n_m manipulators, w stays plurality winner (rk, ctb)', 3)
                 self._candidates_um[c] = False
                 return
@@ -2287,6 +2302,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         elif self.is_based_on_ut_minus1_1:  # pragma: no cover
             # As of now, all the voting rules concerned (Majority Judgement, Range Voting and Approval)
             # have other ways to compute UM, so they do not use this.
+            self._reached_uncovered_code()
             self._um_main_work_c_exact_utilities_minus1_1_(c)
         else:
             raise NotImplementedError
@@ -2316,6 +2332,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         """
         # As of now, all the voting rules concerned (Majority Judgement, Range Voting and Approval)
         # have other ways to compute UM, so they do not use this.
+        self._reached_uncovered_code()
         self._candidates_um[c] = self.is_tm_c_(c)
 
     def _um_conclude_c_(self, c):
@@ -2704,6 +2721,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         """
         if self.meets_ignmc_c_ctb:  # pragma: no cover
             # TO DO: Investigate whether this case can actually happen.
+            self._reached_uncovered_code()
             return False
         else:
             raise NotImplementedError
@@ -2761,6 +2779,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             return
         if not optimize_bounds and not np.isneginf(self._candidates_icm[c]):  # pragma: no cover
             # TO DO: Investigate whether this case can actually happen.
+            self._reached_uncovered_code()
             return
         is_quick_escape = self._icm_main_work_c_(c, optimize_bounds)
         self._icm_conclude_c(c, is_quick_escape)
@@ -3093,6 +3112,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
                 'necessary_coalition_size_cm[c] = 2 * plurality_scores_rk[w] - n_s + 1 =')
             if not optimize_bounds and self._necessary_coalition_size_cm[c] > n_m:  # pragma: no cover
                 # TO DO: Investigate whether this case can actually happen.
+                self._reached_uncovered_code()
                 return
         if self.meets_majority_favorite_c_rk:
             self._update_necessary(
@@ -3101,6 +3121,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
                 'necessary_coalition_size_cm[c] = 2 * plurality_scores_rk[w] - n_s =')
             if not optimize_bounds and self._necessary_coalition_size_cm[c] > n_m:  # pragma: no cover
                 # TO DO: Investigate whether this case can actually happen.
+                self._reached_uncovered_code()
                 return
         if self.meets_majority_favorite_c_ut_ctb and self.w_ == 0:
             self._update_necessary(
@@ -3109,6 +3130,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
                 'necessary_coalition_size_cm[c] = 2 * plurality_scores_ut[w] - n_s + 1 =')
             if not optimize_bounds and self._necessary_coalition_size_cm[c] > n_m:  # pragma: no cover
                 # TO DO: Investigate whether this case can actually happen.
+                self._reached_uncovered_code()
                 return
         if self.meets_majority_favorite_c_ut:
             self._update_necessary(
@@ -3117,6 +3139,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
                 'necessary_coalition_size_cm[c] = 2 * plurality_scores_ut[w] - n_s =')
             if not optimize_bounds and self._necessary_coalition_size_cm[c] > n_m:  # pragma: no cover
                 # TO DO: Investigate whether this case can actually happen.
+                self._reached_uncovered_code()
                 return
         # Pretest based on the same idea as Condorcet resistance
         if self.meets_condorcet_c_ut_abs:
@@ -3135,6 +3158,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
                 'sufficient_coalition_size_cm[c] = sufficient_coalition_size_icm[c] =')
             if not optimize_bounds and n_m >= self._sufficient_coalition_size_cm[c]:  # pragma: no cover
                 # TO DO: Investigate whether this case can actually happen.
+                self._reached_uncovered_code()
                 return
         if self.precheck_tm and self._necessary_coalition_size_cm[c] <= n_m < self._sufficient_coalition_size_cm[c]:
             if self.is_tm_c_(c) == True:
@@ -3147,6 +3171,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         if self.precheck_um and self._necessary_coalition_size_cm[c] <= n_m < self._sufficient_coalition_size_cm[c]:
             if self.is_tm_c_(c) == True:  # pragma: no cover
                 # TO DO: Investigate whether this case can actually happen.
+                self._reached_uncovered_code()
                 self._update_sufficient(
                     self._sufficient_coalition_size_cm, c, n_m,
                     'CM: Preliminary checks: UM => \n    '
@@ -3204,7 +3229,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         if self.is_based_on_ut_minus1_1:  # pragma: no cover
             # As of now, all the voting rules concerned (Majority Judgement, Range Voting and Approval)
             # have other ways to compute TM, so they do not use this.
-            #
+            self._reached_uncovered_code()
             # TM was already checked during preliminary checks. If TM was not True, then CM impossible.
             self._update_necessary(self._necessary_coalition_size_cm, c, self.profile_.matrix_duels_ut[c, self.w_] + 1)
             return
@@ -3299,6 +3324,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             return
         if not optimize_bounds and not np.isneginf(self._candidates_cm[c]):  # pragma: no cover
             # TO DO: Investigate whether this case can actually happen.
+            self._reached_uncovered_code()
             return
         is_quick_escape = self._cm_main_work_c_(c, optimize_bounds)
         self._cm_conclude_c_(c, is_quick_escape)
@@ -3414,3 +3440,39 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         printm("sufficient_coalition_size_cm =", self.sufficient_coalition_size_cm_)
 
         self.log_depth = old_log_depth
+
+    def _reached_uncovered_code(self):
+        """
+        Print a log message when some uncovered code is reached.
+
+        We should call this method each time a portion of code is not covered by the tests.
+        """
+        import inspect
+        current_frame = inspect.currentframe()
+        calling_frame = inspect.getouterframes(current_frame, 2)
+        caller_name = calling_frame[1][3]
+        print("You reached a portion of code that is not covered by the tests. If you want to \n"
+              "help SVVAMP's developers, please send an email to fradurand@gmail.com and \n"
+              "copy-paste the following log message.\n")
+        print(self.__class__.__name__)
+        print(caller_name)
+        if self.profile_ is not None:
+            print
+            print('n_v =', self.profile_.n_v)
+            print('n_c =', self.profile_.n_c)
+            printm('preferences_rk =', self.profile_.preferences_rk)
+            printm('preferences_ut =', self.profile_.preferences_ut)
+        print('result_options =', self._result_options)
+        print(self.log_iia_)
+        print(self.log_im_)
+        print(self.log_tm_)
+        print(self.log_um_)
+        print(self.log_icm_)
+        print(self.log_cm_)
+        pass
+
+    def _example_reached_uncovered_code(self):
+        """
+        Demonstrate :meth:`_reached_uncovered_code` (cf. the unit test in `test_rule.py`).
+        """
+        self._reached_uncovered_code()

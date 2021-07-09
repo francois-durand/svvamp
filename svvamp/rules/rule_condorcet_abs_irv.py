@@ -457,8 +457,7 @@ class RuleCondorcetAbsIRV(Rule):
         # We check IRV first.
         if self.w_ != self.irv_.w_:
             # Then IRV is manipulable anyway (for ``w``, so a precheck on IRV would give us no information).
-            # TO DO: Investigate whether this case can actually happen.
-            return  # pragma: no cover
+            return
         if self.cm_option != "fast":
             if self.cm_option == "slow":
                 self.irv_.cm_option = "slow"
@@ -596,9 +595,10 @@ class RuleCondorcetAbsIRV(Rule):
         self.mylogv("CM: n_manip_becomes_cond =", n_manip_becomes_cond, 3)
         self._update_sufficient(self._sufficient_coalition_size_cm, c, n_manip_becomes_cond,
                                 'CM: Update sufficient_coalition_size_cm[c] = n_manip_becomes_cond =')
-        if not optimize_bounds and n_m >= self._sufficient_coalition_size_cm[c]:
+        if not optimize_bounds and n_m >= self._sufficient_coalition_size_cm[c]:  # pragma: no cover
             # TO DO: Investigate whether this case can actually happen.
-            return True  # pragma: no cover
+            self._reached_uncovered_code()
+            return True
         # Prevent another cond. Look at the weakest duel for ``d``, she has ``matrix_duels_temp[d, e]``. We simply need
         # that:
         # ``matrix_duels_temp[d, e] <= (n_s + n_m) / 2``
@@ -611,9 +611,10 @@ class RuleCondorcetAbsIRV(Rule):
         self.mylogv("CM: n_manip_prevent_cond =", n_manip_prevent_cond, 3)
         self._update_necessary(self._necessary_coalition_size_cm, c, n_manip_prevent_cond,
                                'CM: Update necessary_coalition_size_cm[c] = n_manip_prevent_cond =')
-        if not optimize_bounds and self._necessary_coalition_size_cm[c] > n_m:
+        if not optimize_bounds and self._necessary_coalition_size_cm[c] > n_m:  # pragma: no cover
             # TO DO: Investigate whether this case can actually happen.
-            return True  # pragma: no cover
+            self._reached_uncovered_code()
+            return True
 
         is_quick_escape_one = False
         if self.w_ == self.irv_.w_:
@@ -642,6 +643,7 @@ class RuleCondorcetAbsIRV(Rule):
         else:
             if c == self.irv_.w_:  # pragma: no cover
                 # TO DO: Investigate whether this case can actually happen.
+                # self._reached_uncovered_code()
                 self.mylog('CM: c == self.irv_.w_ != self.w_', 3)
                 self.mylogv("CM: sufficient size for IRV (sincere IRV) =", n_m, 3)
                 self._update_sufficient(self._sufficient_coalition_size_cm, c, max(n_m, n_manip_prevent_cond),

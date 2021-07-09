@@ -687,6 +687,7 @@ class RuleIRV(Rule):
         if (scores_tot_begin_r[0, self.w_] + (self.w_ == 0)
                 > n_s + 1 - scores_tot_begin_r[0, self.w_]):  # pragma: no cover
             # TO DO: Investigate whether this case can actually happen.
+            self._reached_uncovered_code()
             self.mylog("im_aux_exact: Manipulation impossible by this path (w has too many votes)", 3)
             r = -1
         while True:
@@ -1219,6 +1220,7 @@ class RuleIRV(Rule):
         most_serious_opponent = np.where(scores_tot_begin_r[0, :] == max_score)[0][0]
         if max_score + (most_serious_opponent < c) > n_s + n_m - max_score:  # pragma: no cover
             # TO DO: Investigate whether this case can actually happen.
+            self._reached_uncovered_code()
             self.mylogv("um_aux_exact: most_serious_opponent =", most_serious_opponent, 3)
             self.mylog("um_aux_exact: Manipulation impossible by this path (an opponent has too many votes)", 3)
             r = -1
@@ -1760,6 +1762,7 @@ class RuleIRV(Rule):
         most_serious_opponent = np.where(scores_tot_begin_r[0, :] == max_score)[0][0]
         if max_score + (most_serious_opponent < c) > n_s + n_max_updated - max_score:  # pragma: no cover
             # TO DO: Investigate whether this case can actually happen.
+            self._reached_uncovered_code()
             self.mylogv("cm_aux_exact: scores_tot_begin_r =", scores_tot_begin_r[0, :], 3)
             self.mylogv("cm_aux_exact: most_serious_opponent =", most_serious_opponent, 3)
             self.mylog("cm_aux_exact: Manipulation impossible by this path (an opponent has too many votes)", 3)
@@ -1885,6 +1888,7 @@ class RuleIRV(Rule):
             return
         if not optimize_bounds and self._necessary_coalition_size_cm[c] > n_m:  # pragma: no cover
             # TO DO: Investigate whether this case can actually happen.
+            self._reached_uncovered_code()
             return
         # Another pretest, based on Exhaustive Ballot
         if self.cm_option == "slow" or self.cm_option == "exact":
@@ -1985,6 +1989,7 @@ class RuleIRV(Rule):
         # EB should always suggest an elimination path. But just as precaution, we use the fact that we know that
         # ``self._example_path_cm[c]`` provides a path (thanks to 'improved' TM).
         if self.eb_.example_path_cm_c_(c) is None:  # pragma: no cover - This should never happen.
+            self._reached_uncovered_code()
             suggested_path = self._example_path_cm[c]
             self.mylog('***************************************************', 0)
             self.mylog('CM: WARNING: EB did not provide an elimination path', 0)

@@ -589,6 +589,7 @@ class RuleMaximin(Rule):
         w_temp = np.argmax(scores_temp)
         if w_temp == c:  # pragma: no cover
             # TO DO: Investigate whether this case can really happen or not.
+            self._reached_uncovered_code()
             self.mylogv("UM: scores_temp =", scores_temp, 3)
             self.mylog("UM: Manipulation easy (c wins without manipulators' votes)", 3)
             self._candidates_um[c] = True

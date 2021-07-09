@@ -1079,7 +1079,31 @@ def test_cm_main_work_c_exact():
     pass
 
 
-def test_temp():
+def test_reached_uncovered_code():
     """
+        >>> profile = Profile(preferences_rk=[[0, 1, 2], [1, 0, 2]])
+        >>> rule = RulePlurality()(profile)
+        >>> rule._example_reached_uncovered_code()  # doctest: +NORMALIZE_WHITESPACE
+        You reached a portion of code that is not covered by the tests. If you want to
+        help SVVAMP's developers, please send an email to fradurand@gmail.com and
+        copy-paste the following log message.
+        <BLANKLINE>
+        RulePlurality
+        _example_reached_uncovered_code
+        n_v = 2
+        n_c = 3
+        preferences_rk =
+        [[0 1 2]
+         [1 0 2]]
+        preferences_ut =
+        [[2 1 0]
+         [1 2 0]]
+        result_options = {}
+        iia_subset_maximum_size = 2.0
+        im_option = exact
+        tm_option = exact
+        um_option = exact
+        icm_option = exact
+        cm_option = exact
     """
     pass

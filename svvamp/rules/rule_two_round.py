@@ -630,10 +630,11 @@ class RuleTwoRound(Rule):
             if d == c:
                 continue
             # First round.
-            if self.profile_.n_c == 2:
-                n_m_first = 0  # pragma: no cover
+            if self.profile_.n_c == 2:  # pragma: no cover
                 # Theoretically this cannot happen: when n_c = 2, the prechecks are able to conclude,
                 # so _cm_main_work_c_ is never called.
+                self._reached_uncovered_code()
+                n_m_first = 0
             else:
                 # Besides ``d`` and ``c``, which candidate has the best score?
                 scores_temp = np.copy(scores_first_round_s)

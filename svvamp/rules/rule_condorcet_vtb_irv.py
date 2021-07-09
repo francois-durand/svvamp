@@ -571,6 +571,7 @@ class RuleCondorcetVtbIRV(Rule):
                 self.mylog("cm_aux: Decondorcification failed", 1)
                 return False
         # TO DO: Investigate whether this case can actually happen.
+        self._reached_uncovered_code()  # pragma: no cover
         self.mylog("cm_aux: Decondorcification succeeded", 1)  # pragma: no cover
         return True  # pragma: no cover
 
@@ -732,6 +733,7 @@ class RuleCondorcetVtbIRV(Rule):
                                 'CM: Update sufficient_coalition_size_cm[c] = n_manip_becomes_cond =')
         if not optimize_bounds and n_m >= self._sufficient_coalition_size_cm[c]:  # pragma: no cover
             # TO DO: Investigate whether this case can actually happen.
+            self._reached_uncovered_code()
             return True
         # Prevent another cond. Look at the weakest duel for ``d``, she has ``matrix_duels_vtb_temp[d, e]``. We simply
         # need that:

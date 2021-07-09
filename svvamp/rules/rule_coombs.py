@@ -734,6 +734,7 @@ class RuleCoombs(Rule):
         self.mylogv("CM: n_max =", n_max, 3)
         if not exact and self._necessary_coalition_size_cm[c] > n_max:  # pragma: no cover
             # TO DO: Investigate whether this case can actually happen.
+            self._reached_uncovered_code()
             self.mylog("CM: Fast algorithm will not do better than what we already know", 3)
             return
         n_manip_fast = self._cm_aux_fast(
@@ -748,9 +749,10 @@ class RuleCoombs(Rule):
             return
 
         # From this point, we have necessarily the 'exact' option.
-        if self._sufficient_coalition_size_cm[c] == self._necessary_coalition_size_cm[c]:
+        if self._sufficient_coalition_size_cm[c] == self._necessary_coalition_size_cm[c]:  # pragma: no cover
             # TO DO: Investigate whether this case can actually happen.
-            return  # pragma: no cover
+            self._reached_uncovered_code()
+            return
         if not optimize_bounds and n_m >= self._sufficient_coalition_size_cm[c]:
             # This is a quick escape: since we have the option 'exact', if we come back with ``optimize_bound``,
             # we will try to be more precise.

@@ -1342,6 +1342,7 @@ class RuleExhaustiveBallot(Rule):
         self.mylogv("CM: n_max =", n_max, 3)
         if not exact and self._necessary_coalition_size_cm[c] > n_max:  # pragma: no cover
             # TO DO: Investigate whether this case can actually happen.
+            self._reached_uncovered_code()
             self.mylog("CM: Fast algorithm will not do better than what we already know", 3)
             return
         n_manip_fast, example_path_fast = self._cm_aux_fast(
@@ -1358,9 +1359,10 @@ class RuleExhaustiveBallot(Rule):
             return False
 
         # From this point, we have necessarily the ``exact`` option
-        if self._sufficient_coalition_size_cm[c] == self._necessary_coalition_size_cm[c]:
+        if self._sufficient_coalition_size_cm[c] == self._necessary_coalition_size_cm[c]:  # pragma: no cover
             # TO DO: Investigate whether this case can actually happen.
-            return False  # pragma: no cover
+            self._reached_uncovered_code()
+            return False
         if not optimize_bounds and self.profile_.matrix_duels_ut[c, self.w_] >= self._sufficient_coalition_size_cm[c]:
             # This is a quick escape: since we have the option ``exact``, if we come back with ``optimize_bounds``,
             # we will try to be more precise.

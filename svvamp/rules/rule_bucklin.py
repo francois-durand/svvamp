@@ -460,6 +460,7 @@ class RuleBucklin(Rule):
             r = np.where(scores_without_v[:, c] + 1 > self.profile_.n_v / 2)[0][0]
             if r == 0:  # pragma: no cover
                 # TO DO: Investigate whether this case can actually happen.
+                self._reached_uncovered_code()
                 self._v_im_for_c[v, c] = True
                 self._candidates_im[c] = True
                 self._voters_im[v] = True
@@ -585,6 +586,7 @@ class RuleBucklin(Rule):
         n_s = self.profile_.n_v - self.profile_.matrix_duels_ut[c, self.w_]
         if self.profile_.n_c == 2 and c == 0:  # pragma: no cover
             # TO DO: Investigate whether this case can actually happen.
+            self._reached_uncovered_code()
             self._update_sufficient(self._sufficient_coalition_size_icm, c, n_s,
                                     'ICM: Tie-breaking: sufficient_coalition_size_icm = n_s =')
         else:
@@ -612,10 +614,12 @@ class RuleBucklin(Rule):
         if n_m < self._necessary_coalition_size_cm[c]:  # pragma: no cover
             # This algorithm will not do better (so, this is not a quick escape).
             # TO DO: Investigate whether this case can actually happen.
+            self._reached_uncovered_code()
             return
         if n_m >= self._sufficient_coalition_size_cm[c]:  # pragma: no cover
             # Idem.
             # TO DO: Investigate whether this case can actually happen.
+            self._reached_uncovered_code()
             return
         scores_r = np.zeros(self.profile_.n_c)
         # Manipulators put ``c`` in first position anyway.

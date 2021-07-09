@@ -803,6 +803,7 @@ class RuleSchulze(Rule):
                 self._um_main_work_c_exact_rankings_(c)
                 if self._candidates_um[c] == True:  # pragma: no cover
                     # TO DO: Investigate whether this case can actually happen.
+                    self._reached_uncovered_code()
                     self._update_sufficient(self._sufficient_coalition_size_cm, c, n_m,
                                             'CM: Update sufficient_coalition_size_cm = n_m =')
                 else:
@@ -888,10 +889,12 @@ class RuleSchulze(Rule):
         n_m = self.profile_.matrix_duels_ut[c, self.w_]
         if self._sufficient_coalition_size_cm[c] + 1 <= n_m:  # pragma: no cover
             # TO DO: Investigate whether this case can actually happen.
+            self._reached_uncovered_code()
             self._candidates_um[c] = True
             return
         if self._necessary_coalition_size_cm[c] - 1 > n_m:  # pragma: no cover
             # TO DO: Investigate whether this case can actually happen.
+            self._reached_uncovered_code()
             self._candidates_um[c] = False
             return
         if not self._um_fast_tested[c]:
@@ -911,8 +914,9 @@ class RuleSchulze(Rule):
             if not success_cowinner:
                 self._candidates_um[c] = False
                 return
-        if self.um_option == 'exact':# pragma: no cover
+        if self.um_option == 'exact':  # pragma: no cover
             # TO DO: Investigate whether this case can actually happen.
+            self._reached_uncovered_code()
             self._um_main_work_c_exact_rankings_(c)
         else:
             self._candidates_um[c] = np.nan
