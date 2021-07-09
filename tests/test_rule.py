@@ -1171,6 +1171,5 @@ def test_is_im_c_with_voters():
 def test_temp():
     """
 
-
     """
     pass

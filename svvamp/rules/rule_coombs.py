@@ -741,7 +741,6 @@ class RuleCoombs(Rule):
             ...     [1, 0],
             ... ])
             >>> rule = RuleCoombs(cm_option='exact')(profile)
-            >>> rule._error_when_uncovered = True
             >>> rule.is_cm_c_(1)
             False
             >>> rule.sufficient_coalition_size_cm_

@@ -754,6 +754,27 @@ class RuleSchulze(Rule):
             >>> rule = RuleSchulze(cm_option='exact')(profile)
             >>> rule.candidates_cm_
             array([0., 0., 0.])
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 0. ,  1. ,  1. , -1. ,  0. ],
+            ...     [-0.5,  1. ,  0. ,  0.5,  0.5],
+            ...     [ 1. , -0.5,  0.5,  1. , -0.5],
+            ...     [ 0. ,  0.5,  0.5,  1. , -0.5],
+            ...     [-1. , -1. , -0.5,  0.5,  1. ],
+            ...     [-0.5, -0.5,  0. ,  0.5,  1. ],
+            ... ], preferences_rk=[
+            ...     [1, 2, 4, 0, 3],
+            ...     [1, 3, 4, 2, 0],
+            ...     [3, 0, 2, 4, 1],
+            ...     [3, 2, 1, 0, 4],
+            ...     [4, 3, 2, 0, 1],
+            ...     [4, 3, 2, 1, 0],
+            ... ])
+            >>> rule = RuleSchulze(cm_option='exact')(profile)
+            >>> rule.is_um_c_(0)
+            False
+            >>> rule.necessary_coalition_size_cm_
+            array([2., 2., 2., 0., 2.])
         """
         _ = self._um_variables_are_declared_
         matrix_duels_s = preferences_ut_to_matrix_duels_ut(
@@ -801,9 +822,7 @@ class RuleSchulze(Rule):
                                    'CM: Update necessary_coalition_size_cm = n_m =')
             if self.cm_option == 'exact':
                 self._um_main_work_c_exact_rankings_(c)
-                if self._candidates_um[c] == True:  # pragma: no cover
-                    # TO DO: Investigate whether this case can actually happen.
-                    self._reached_uncovered_code()
+                if self._candidates_um[c] == True:
                     self._update_sufficient(self._sufficient_coalition_size_cm, c, n_m,
                                             'CM: Update sufficient_coalition_size_cm = n_m =')
                 else:
