@@ -621,6 +621,26 @@ class RuleTwoRound(Rule):
             >>> rule = RuleTwoRound()(profile)
             >>> rule.candidates_cm_
             array([0., 1., 0.])
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 0.5,  0.5],
+            ...     [ 1. ,  0.5],
+            ...     [ 0. ,  1. ],
+            ...     [-0.5,  0. ],
+            ...     [-0.5, -0.5],
+            ...     [-1. , -1. ],
+            ... ], preferences_rk=[
+            ...     [0, 1],
+            ...     [0, 1],
+            ...     [1, 0],
+            ...     [1, 0],
+            ...     [1, 0],
+            ...     [1, 0],
+            ... ])
+            >>> rule = RuleTwoRound()(profile)
+            >>> rule._error_when_uncovered = True
+            >>> rule.is_cm_c_with_bounds_(0)
+            (False, 3.0, 3.0)
         """
         n_s = self.profile_.n_v - self.profile_.matrix_duels_ut.astype(int)[c, self.w_]
         ballots_first_round_s = self.ballots_[np.logical_not(self.v_wants_to_help_c_[:, c]), 0]
@@ -630,10 +650,7 @@ class RuleTwoRound(Rule):
             if d == c:
                 continue
             # First round.
-            if self.profile_.n_c == 2:  # pragma: no cover
-                # Theoretically this cannot happen: when n_c = 2, the prechecks are able to conclude,
-                # so _cm_main_work_c_ is never called.
-                self._reached_uncovered_code()
+            if self.profile_.n_c == 2:
                 n_m_first = 0
             else:
                 # Besides ``d`` and ``c``, which candidate has the best score?

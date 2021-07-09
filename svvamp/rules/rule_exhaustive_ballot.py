@@ -1333,6 +1333,18 @@ class RuleExhaustiveBallot(Rule):
             >>> rule = RuleExhaustiveBallot(cm_option='exact')(profile)
             >>> rule.candidates_cm_
             array([1., 0., 0., 1.])
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 1. ,  0. ,  0.5],
+            ...     [ 0. , -0.5,  0.5],
+            ... ], preferences_rk=[
+            ...     [0, 2, 1],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleExhaustiveBallot(cm_option='fast', fast_algo='c_minus_max', icm_option='exact',
+            ...                             tm_option='exact')(profile)
+            >>> rule.is_cm_c_with_bounds_(1)
+            (False, 1.0, 3.0)
         """
         exact = (self.cm_option == "exact")
         if optimize_bounds and exact:
@@ -1340,9 +1352,7 @@ class RuleExhaustiveBallot(Rule):
         else:
             n_max = self.profile_.matrix_duels_ut[c, self.w_]
         self.mylogv("CM: n_max =", n_max, 3)
-        if not exact and self._necessary_coalition_size_cm[c] > n_max:  # pragma: no cover
-            # TO DO: Investigate whether this case can actually happen.
-            self._reached_uncovered_code()
+        if not exact and self._necessary_coalition_size_cm[c] > n_max:
             self.mylog("CM: Fast algorithm will not do better than what we already know", 3)
             return
         n_manip_fast, example_path_fast = self._cm_aux_fast(

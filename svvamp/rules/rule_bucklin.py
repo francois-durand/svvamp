@@ -580,13 +580,24 @@ class RuleBucklin(Rule):
     # %% Ignorant-Coalition Manipulation (ICM)
 
     def _icm_main_work_c_exact_(self, c, complete_mode=True):
+        """
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 0. ,  0.5],
+            ...     [-0.5,  0.5],
+            ... ], preferences_rk=[
+            ...     [1, 0],
+            ...     [1, 0],
+            ... ])
+            >>> rule = RuleBucklin()(profile)
+            >>> rule._error_when_uncovered = True
+            >>> rule.sufficient_coalition_size_icm_
+            array([2., 0.])
+        """
         # The only question is when we have exactly ``n_v / 2`` manipulators. If the counter-manipulators put ``c``
         # last, then ``c`` cannot be elected (except if there are 2 candidates and ``c == 0``). So exactly ``n_v / 2``
         # manipulators is not enough.
         n_s = self.profile_.n_v - self.profile_.matrix_duels_ut[c, self.w_]
-        if self.profile_.n_c == 2 and c == 0:  # pragma: no cover
-            # TO DO: Investigate whether this case can actually happen.
-            self._reached_uncovered_code()
+        if self.profile_.n_c == 2 and c == 0:
             self._update_sufficient(self._sufficient_coalition_size_icm, c, n_s,
                                     'ICM: Tie-breaking: sufficient_coalition_size_icm = n_s =')
         else:
@@ -607,19 +618,50 @@ class RuleBucklin(Rule):
             >>> rule = RuleBucklin()(profile)
             >>> rule.candidates_cm_
             array([1., 0., 0.])
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 1. ,  0. ,  1. ,  0. ],
+            ...     [ 1. ,  0. ,  1. ,  0. ],
+            ...     [ 0. , -1. ,  1. ,  0. ],
+            ...     [-0.5, -1. ,  0. ,  0.5],
+            ... ], preferences_rk=[
+            ...     [2, 0, 1, 3],
+            ...     [2, 0, 3, 1],
+            ...     [2, 3, 0, 1],
+            ...     [3, 2, 0, 1],
+            ... ])
+            >>> rule = RuleBucklin()(profile)
+            >>> rule.necessary_coalition_size_cm_
+            array([2., 2., 0., 3.])
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 1. ,  0.5, -1. , -1. ],
+            ...     [ 0. ,  0.5, -0.5, -0.5],
+            ...     [ 0.5, -1. ,  1. ,  0. ],
+            ...     [ 0.5, -0.5,  0. ,  1. ],
+            ...     [ 0. ,  0. ,  0. ,  1. ],
+            ...     [-1. , -1. , -0.5,  1. ],
+            ... ], preferences_rk=[
+            ...     [0, 1, 3, 2],
+            ...     [1, 0, 3, 2],
+            ...     [2, 0, 3, 1],
+            ...     [3, 0, 2, 1],
+            ...     [3, 1, 2, 0],
+            ...     [3, 2, 0, 1],
+            ... ])
+            >>> rule = RuleBucklin()(profile)
+            >>> rule._error_when_uncovered = True
+            >>> rule.sufficient_coalition_size_cm_
+            array([0., 6., 5., 3.])
         """
         # We do not try to find optimal bounds. We just check whether it is possible to manipulate with the number of
         #  manipulators that we have.
         n_m = self.profile_.matrix_duels_ut[c, self.w_]
-        if n_m < self._necessary_coalition_size_cm[c]:  # pragma: no cover
+        if n_m < self._necessary_coalition_size_cm[c]:
             # This algorithm will not do better (so, this is not a quick escape).
-            # TO DO: Investigate whether this case can actually happen.
-            self._reached_uncovered_code()
             return
-        if n_m >= self._sufficient_coalition_size_cm[c]:  # pragma: no cover
+        if n_m >= self._sufficient_coalition_size_cm[c]:
             # Idem.
-            # TO DO: Investigate whether this case can actually happen.
-            self._reached_uncovered_code()
             return
         scores_r = np.zeros(self.profile_.n_c)
         # Manipulators put ``c`` in first position anyway.

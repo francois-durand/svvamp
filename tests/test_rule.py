@@ -1,6 +1,6 @@
 from svvamp import Rule, RulePlurality, Profile, RuleVeto, RuleMaximin, RuleExhaustiveBallot, RuleBaldwin, \
     RuleIRVAverage, RuleMajorityJudgment, RuleNanson, RuleRankedPairs, RuleBorda, RuleSchulze, RuleIRVDuels, \
-    RuleRangeVoting, RuleKemeny, RuleTwoRound, RuleICRV
+    RuleRangeVoting, RuleKemeny, RuleTwoRound, RuleICRV, RuleBucklin, RuleCondorcetSumDefeats
 
 
 def test_initialize_options():
@@ -604,6 +604,41 @@ def test_compute_im():
         >>> rule = RuleNanson()(profile)
         >>> rule.voters_im_
         array([nan, nan,  0.,  0.,  0.])
+
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 1. ,  1. ,  0. , -0.5],
+        ...     [ 0.5,  1. , -0.5,  0. ],
+        ...     [ 0. , -1. ,  1. , -1. ],
+        ...     [-0.5,  0. ,  0. , -0.5],
+        ... ], preferences_rk=[
+        ...     [0, 1, 2, 3],
+        ...     [1, 0, 3, 2],
+        ...     [2, 0, 3, 1],
+        ...     [2, 1, 3, 0],
+        ... ])
+        >>> rule = RuleIRVAverage(im_option='exact')(profile)
+        >>> rule.voters_im_
+        array([1., 1., 0., 0.])
+
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 0.5, -0.5, -0.5, -1. ],
+        ...     [ 1. ,  0.5,  0.5, -0.5],
+        ...     [ 0.5,  0. ,  1. , -1. ],
+        ...     [-0.5,  0. ,  0.5, -0.5],
+        ...     [ 0.5,  0.5,  0.5,  1. ],
+        ...     [-1. , -1. ,  0. ,  0.5],
+        ... ], preferences_rk=[
+        ...     [0, 1, 2, 3],
+        ...     [0, 2, 1, 3],
+        ...     [2, 0, 1, 3],
+        ...     [2, 1, 3, 0],
+        ...     [3, 1, 0, 2],
+        ...     [3, 2, 0, 1],
+        ... ])
+        >>> rule = RuleCondorcetSumDefeats(im_option='exact')(profile)
+        >>> rule._error_when_uncovered = True
+        >>> rule.candidates_im_
+        array([1., 0., 0., 0.])
     """
     pass
 
@@ -1105,5 +1140,18 @@ def test_reached_uncovered_code():
         um_option = exact
         icm_option = exact
         cm_option = exact
+
+        >>> profile = Profile(preferences_rk=[[0, 1, 2], [1, 0, 2]])
+        >>> rule = RulePlurality()(profile)
+        >>> rule._error_when_uncovered = True
+        >>> rule._example_reached_uncovered_code()
+        Traceback (most recent call last):
+        AssertionError: Uncovered portion of code.
+    """
+    pass
+
+
+def test_temp():
+    """
     """
     pass

@@ -181,6 +181,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         # Log
         super().__init__()
         self.log_identity = log_identity
+        self._error_when_uncovered = False  # For developers
         # Basic properties of the voting system
         self.with_two_candidates_reduces_to_plurality = with_two_candidates_reduces_to_plurality
         self.is_based_on_rk = is_based_on_rk
@@ -1631,13 +1632,9 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             self._im_was_computed_with_voters = True
             self._im_was_computed_with_candidates = True
         else:
-            if not np.any(np.isneginf(self._voters_im)):  # pragma: no cover
-                # TO DO: Investigate whether this case can actually happen.
-                self._reached_uncovered_code()
+            if not np.any(np.isneginf(self._voters_im)):
                 self._im_was_computed_with_voters = True
-            if not np.any(np.isneginf(self._candidates_im)):  # pragma: no cover
-                # TO DO: Investigate whether this case can actually happen.
-                self._reached_uncovered_code()
+            if not np.any(np.isneginf(self._candidates_im)):
                 self._im_was_computed_with_candidates = True
 
     def _compute_im_v_(self, v, c_is_wanted, stop_if_true):
@@ -3469,7 +3466,8 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         print(self.log_um_)
         print(self.log_icm_)
         print(self.log_cm_)
-        pass
+        if self._error_when_uncovered:
+            raise AssertionError('Uncovered portion of code.')
 
     def _example_reached_uncovered_code(self):
         """
