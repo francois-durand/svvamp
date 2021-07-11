@@ -555,7 +555,7 @@ class RuleExhaustiveBallot(Rule):
         anti_voter_allowed : bool
             If True, we manipulate with one voter but also an anti-voter (who may decrease one candidate's score by
             1 point at each round). If False, we manipulate only with one voter.
-        preferences_borda_s : list of list
+        preferences_borda_s : ndarray
             Preferences of the sincere voters (in Borda format with vtb).
 
         Returns
@@ -745,7 +745,7 @@ class RuleExhaustiveBallot(Rule):
 
         unison : bool
             Must be True when computing UM, False for CM.
-        preferences_borda_s : list of list
+        preferences_borda_s : ndarray
             Preferences of the sincere voters (in Borda format with vtb).
 
         Returns
@@ -913,7 +913,7 @@ class RuleExhaustiveBallot(Rule):
 
         unison : bool
             Must be True when computing UM, False for CM.
-        preferences_borda_s : list of list
+        preferences_borda_s : ndarray
             Preferences of the sincere voters (in Borda format).
 
         Returns
@@ -1411,7 +1411,3 @@ class RuleExhaustiveBallot(Rule):
                     self._necessary_coalition_size_cm, c, self.profile_.matrix_duels_ut[c, self.w_] + 1,
                     'CM: Update necessary_coalition_size_cm[c] = n_m + 1 =')
                 return True
-
-
-if __name__ == '__main__':
-    RuleExhaustiveBallot()(Profile(preferences_ut=np.random.randint(-5, 5, (5, 3)))).demo_()

@@ -313,7 +313,3 @@ class RuleCondorcetSumDefeats(Rule):
     @cached_property
     def meets_infmc_c_ctb(self):
         return True
-
-
-if __name__ == '__main__':
-    RuleCondorcetSumDefeats()(Profile(preferences_ut=np.random.randint(-5, 5, (5, 3)))).demo_(log_depth=3)

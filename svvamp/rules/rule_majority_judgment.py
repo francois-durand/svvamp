@@ -704,7 +704,3 @@ class RuleMajorityJudgment(Rule):
     # %% Ignorant-Coalition Manipulation (ICM)
 
     # Since Majority Judgment meets IgnMC_c_tb, the general methods are exact.
-
-
-if __name__ == '__main__':
-    RuleMajorityJudgment()(Profile(preferences_ut=np.random.randint(-5, 5, (5, 3)))).demo_()

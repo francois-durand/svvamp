@@ -571,7 +571,3 @@ class RuleRangeVoting(Rule):
     # %% Ignorant-Coalition Manipulation (ICM)
 
     # Since Range Voting meets IgnMC_c_ctb, the general methods are exact.
-
-
-if __name__ == '__main__':
-    RuleRangeVoting()(Profile(preferences_ut=np.random.randint(-5, 5, (5, 3)))).demo_()

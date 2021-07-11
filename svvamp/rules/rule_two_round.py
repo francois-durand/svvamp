@@ -671,7 +671,3 @@ class RuleTwoRound(Rule):
             if self._sufficient_coalition_size_cm[c] == self._necessary_coalition_size_cm[c]:
                 return
         self._necessary_coalition_size_cm[c] = self._sufficient_coalition_size_cm[c]
-
-
-if __name__ == '__main__':
-    RuleTwoRound()(Profile(preferences_ut=np.random.randint(-5, 5, (5, 3)))).demo_()

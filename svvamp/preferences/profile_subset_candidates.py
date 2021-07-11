@@ -89,6 +89,7 @@ class ProfileSubsetCandidates(Profile):
 
     def __init__(self, parent_profile, candidates_subset):
         self.parent_profile = parent_profile
+        # noinspection PyTypeChecker
         self.candidates_subset = candidates_subset
         super().__init__(preferences_ut=parent_profile.preferences_ut[:, candidates_subset],
                          preferences_rk=preferences_ut_to_preferences_rk(

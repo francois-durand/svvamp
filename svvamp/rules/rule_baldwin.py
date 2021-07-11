@@ -345,7 +345,3 @@ class RuleBaldwin(Rule):
         # ==> candidate 1 wins.
         # Conclusion: this voting system does not meet Condorcet criterion (ut/rel).
         return True
-
-
-if __name__ == '__main__':
-    RuleBaldwin()(Profile(preferences_ut=np.random.randint(-5, 5, (5, 3)))).demo_(log_depth=3)

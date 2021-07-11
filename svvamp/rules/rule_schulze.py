@@ -445,9 +445,9 @@ class RuleSchulze(Rule):
 
         Parameters
         ----------
-        matrix_duels_s : list of list
+        matrix_duels_s : ndarray
             2d array. Matrix of duels for sincere voters.
-        strength : list of list
+        strength : ndarray
             2d array. ``S[c, d]`` is the strength of the widest path from ``c`` to ``d`` (with sincere
             voters only). Be careful, it is based on the antisymmetric matrix of duels. I.e. while
             ``_count_ballot_aux`` provides ``widest_path_s``, we need to take ``S = 2 * (widest_path_s - n_s / 2)``,
@@ -949,7 +949,3 @@ class RuleSchulze(Rule):
             self._um_main_work_c_exact_rankings_(c)
         else:
             self._candidates_um[c] = np.nan
-
-
-if __name__ == '__main__':
-    RuleSchulze()(Profile(preferences_ut=np.random.randint(-5, 5, (5, 3)))).demo_()

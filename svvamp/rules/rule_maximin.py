@@ -317,7 +317,7 @@ class RuleMaximin(Rule):
         matrix_duels_r : list of list (or ndarray)
             2d array of integers. Diagonal coefficients must have an arbitrary value that is greater than all the
             other ones (``+ inf`` is a good idea).
-        scores_r : list
+        scores_r : ndarray
             1d array of integers. Scores corresponding to ``matrix_duels_r``.
         c : int
             Candidate.
@@ -731,7 +731,3 @@ class StackFamily:
         if len(self.data[lowest_score]) == 0:
             del self.data[lowest_score]
         return c
-
-
-if __name__ == '__main__':
-    RuleMaximin()(Profile(preferences_ut=np.random.randint(-5, 5, (5, 3)))).demo_()

@@ -77,11 +77,3 @@ class GeneratorProfileGaussianWell(GeneratorProfile):
         preferences_utilities = - distance.cdist(voters_positions, candidates_positions, 'euclidean')
         preferences_utilities -= np.average(preferences_utilities)
         return Profile(preferences_ut=preferences_utilities, log_creation=self.log_creation)
-
-
-if __name__ == '__main__':
-    # A quick demo
-    profile = GeneratorProfileGaussianWell(n_v=1000, n_c=4, sigma=[1], shift=[10])().profile_
-    profile.demo_()
-    profile.plot3()
-    profile.plot4()

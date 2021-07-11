@@ -909,7 +909,7 @@ class RuleIRV(Rule):
             Candidate for which we want to manipulate.
         n_m : int
             Number of manipulators.
-        preferences_borda_s : list of list
+        preferences_borda_s : ndarray
             Preferences of the sincere voters (in Borda format).
 
         Returns
@@ -1116,7 +1116,7 @@ class RuleIRV(Rule):
             Candidate for which we want to manipulate.
         n_m : int
             Number of manipulators.
-        preferences_borda_s : list of list
+        preferences_borda_s : ndarray
             Preferences of the sincere voters (in Borda format).
 
         Returns
@@ -1444,7 +1444,7 @@ class RuleIRV(Rule):
               the best value for ``sufficient_coalition_size[c]``, even if it exceeds the number of manipulators)
             * CM, otherwise --> put the number of manipulators.
 
-        preferences_borda_s : list of list
+        preferences_borda_s : ndarray
             Preferences of the sincere voters (in Borda format).
 
         Returns
@@ -1590,9 +1590,9 @@ class RuleIRV(Rule):
 
         Parameters
         ----------
-        suggested_path : list
+        suggested_path : List
             A suggested path of elimination.
-        preferences_borda_s : list of list
+        preferences_borda_s : ndarray
             Preferences of the sincere voters (in Borda format).
 
         Returns
@@ -1666,9 +1666,9 @@ class RuleIRV(Rule):
             When we know that ``n_min`` manipulators are needed (necessary coalition size).
         optimize_bounds : bool
             True iff we need to continue, even after a manipulation is found.
-        suggested_path : list
+        suggested_path : List
             A suggested path of elimination.
-        preferences_borda_s : list of list
+        preferences_borda_s : ndarray
             Preferences of the sincere voters (in Borda format).
 
         Returns
@@ -2037,7 +2037,3 @@ class RuleIRV(Rule):
                         self._necessary_coalition_size_cm, c, self.profile_.matrix_duels_ut[c, self.w_] + 1,
                         'CM: Update necessary_coalition_size_cm[c] = n_m + 1 =')
                     return True
-
-
-if __name__ == '__main__':
-    RuleIRV()(Profile(preferences_ut=np.random.randint(-5, 5, (5, 3)))).demo_()

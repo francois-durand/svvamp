@@ -456,7 +456,7 @@ class RuleCondorcetVtbIRV(Rule):
             Candidate for which we want to manipulate.
         n_m : int
             The exact number of manipulators.
-        suggested_path : list
+        suggested_path : List
             A suggested path of elimination (for the IRV part). It must work with ``n_m`` manipulators.
         preferences_borda_s : list of list (or ndarray)
             Preferences of the sincere voters (in Borda format).
@@ -824,25 +824,3 @@ class RuleCondorcetVtbIRV(Rule):
                 self.mylog('CM: c, self.irv_.w_ and self.w_ are all distinct', 3)
         if self.cm_option == 'exact':
             return self._cm_main_work_c_exact_(c, optimize_bounds)
-
-
-if __name__ == '__main__':
-    # from svvamp.Rules.RuleExhaustiveBallot import RuleExhaustiveBallot
-    # p = Profile(preferences_ut=np.random.randint(-5, 5, (8, 4)))
-    # exhaustive_ballot = RuleExhaustiveBallot()(p)
-    # exhaustive_ballot.log_depth = 3
-    # exhaustive_ballot.cm_option = 'exact'
-    # print(exhaustive_ballot.is_cm_)
-    # irv = RuleIRV()(p)
-    # irv.log_depth = 3
-    # irv.eb_.log_depth = 3
-    # irv.cm_option = 'exact'
-    # print(irv.is_cm_)
-    # election = RuleCondorcetVtbIRV()(p)
-    # election.log_depth = 3
-    # election.irv_.log_depth = 3
-    # election.irv_.eb_.log_depth = 3
-    # election.cm_option = 'slow'
-    # print(election.is_cm_)
-
-    RuleCondorcetVtbIRV()(Profile(preferences_ut=np.random.randint(-5, 5, (5, 3)))).demo_()

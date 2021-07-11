@@ -329,6 +329,7 @@ class RuleIteratedBucklin(Rule):
         """
         return self._count_ballots_['candidates_by_scores_best_to_worst']
 
+    # noinspection PyProtectedMember
     @cached_property
     def _one_v_might_be_pivotal_(self):
         """
@@ -384,7 +385,3 @@ class RuleIteratedBucklin(Rule):
     @cached_property
     def meets_majority_favorite_c_rk(self):
         return True
-
-
-if __name__ == '__main__':
-    RuleIteratedBucklin()(Profile(preferences_ut=np.random.randint(-5, 5, (5, 3)))).demo_()

@@ -1165,7 +1165,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
 
         Parameters
         ----------
-        sufficient_array : list or ndaray
+        sufficient_array : list or ndarray
             An array like ``_sufficient_coalition_size_cm`` or ``_sufficient_coalition_size_icm``.
         c : int
             Candidate.
@@ -1661,7 +1661,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         becomes NaN).
         """
         self._im_initialize_v_(v)
-        nb_wanted_undecided = np.sum(np.isneginf(self._v_im_for_c[v, c_is_wanted]))
+        nb_wanted_undecided = np.isneginf(self._v_im_for_c[v, c_is_wanted]).sum()
         if nb_wanted_undecided == 0:
             self.mylog("IM: Job already done", 3)
         else:
@@ -3454,7 +3454,6 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         print(self.__class__.__name__)
         print(caller_name)
         if self.profile_ is not None:
-            print
             print('n_v =', self.profile_.n_v)
             print('n_c =', self.profile_.n_c)
             printm('preferences_rk =', self.profile_.preferences_rk)

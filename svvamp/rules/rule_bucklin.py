@@ -698,7 +698,3 @@ class RuleBucklin(Rule):
             self._update_necessary(self._necessary_coalition_size_cm, c, n_m + 1,
                                    'CM: Exact: Manipulation proven impossible for n_m manipulators =>\n'
                                    '    necessary_coalition_size_cm[c] = n_m + 1 =')
-
-
-if __name__ == '__main__':
-    RuleBucklin()(Profile(preferences_ut=np.random.randint(-5, 5, (5, 3)))).demo_(log_depth=3)

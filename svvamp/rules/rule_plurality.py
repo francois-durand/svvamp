@@ -290,6 +290,7 @@ class RulePlurality(Rule):
 
     # %% Independence of Irrelevant Alternatives (IIA)
 
+    # noinspection PyProtectedMember
     def _compute_winner_of_subset_(self, candidates_r):
         """
             >>> initialize_random_seeds()

@@ -54,14 +54,3 @@ class GeneratorProfileCubicUniform(GeneratorProfile):
     @cached_property
     def profile_(self):
         return Profile(preferences_ut=2 * np.random.rand(self.n_v, self.n_c) - 1, log_creation=self.log_creation)
-
-
-if __name__ == '__main__':
-    # A quick demo
-    profile = GeneratorProfileCubicUniform(n_v=5000, n_c=3)().profile_
-    profile.demo_()
-    profile.plot3(normalize=False)
-
-    profile = GeneratorProfileCubicUniform(n_v=5000, n_c=4)().profile_
-    profile.demo_()
-    profile.plot4(normalize=False)

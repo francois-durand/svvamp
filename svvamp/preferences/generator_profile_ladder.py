@@ -39,7 +39,7 @@ class GeneratorProfileLadder(GeneratorProfile):
 
     Notes
     -----
-    Each utility ``preferences_ut[v, c]`` is drawn independently and equiprobably between ``n_rungs`` values that
+    Each utility ``preferences_ut[v, c]`` is drawn independently and uniformly between ``n_rungs`` values that
     divide the interval [-1, 1] equally. For example, if ``n_rungs = 21``, then values in {-1, -0.9, ..., 1} are used.
 
     The ordinal part of this distribution is **not** the Impartial Culture. Indeed, weak orders of preference come
@@ -64,14 +64,3 @@ class GeneratorProfileLadder(GeneratorProfile):
         return Profile(
             preferences_ut=np.random.randint(self.n_rungs, size=(self.n_v, self.n_c)) * 2 / (self.n_rungs - 1) - 1,
             log_creation=self.log_creation)
-
-
-if __name__ == '__main__':
-    # A quick demo
-    profile = GeneratorProfileLadder(n_v=1000, n_c=3, n_rungs=5)().profile_
-    profile.demo_()
-    profile.plot3(normalize=False)
-
-    profile = GeneratorProfileLadder(n_v=1000, n_c=4, n_rungs=5).profile_
-    profile.demo()
-    profile.plot4(normalize=False)

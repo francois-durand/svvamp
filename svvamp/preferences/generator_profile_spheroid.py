@@ -101,11 +101,3 @@ class GeneratorProfileSpheroid(GeneratorProfile):
             preferences_ut = (preferences_ut / self.stretching
                               + np.sum(preferences_ut, 1)[:, np.newaxis] * (1 - 1 / self.stretching) / self.n_c)
         return Profile(preferences_ut=preferences_ut, log_creation=self.log_creation)
-
-
-if __name__ == '__main__':
-    # A quick demo
-    profile = GeneratorProfileSpheroid(n_v=100, n_c=4, stretching=1)().profile_
-    profile._labels_candidates = ['1', '2', '3', '4']
-    profile.demo_()
-    profile.plot4()

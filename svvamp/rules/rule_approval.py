@@ -519,8 +519,3 @@ class RuleApproval(Rule):
     # %% Ignorant-Coalition Manipulation (ICM)
 
     # Defined in the superclass.
-
-
-if __name__ == '__main__':
-    from svvamp.preferences.profile import Profile
-    RuleApproval()(profile=Profile(preferences_ut=np.random.randint(-5, 5, (10, 5)))).demo_(log_depth=3)

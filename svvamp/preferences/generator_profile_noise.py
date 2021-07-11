@@ -72,11 +72,3 @@ class GeneratorProfileNoise(GeneratorProfile):
         if self.total_noise != 0:
             preferences_ut += self.total_noise * 2 * (0.5 - np.random.rand(self.n_v, self.n_c))
         return Profile(preferences_ut=preferences_ut, log_creation=self.log_creation)
-
-
-if __name__ == '__main__':
-    # A quick demo
-    profile = GeneratorProfileNoise(
-        base_profile=Profile(preferences_ut=[[5, 1, 2], [4, 10, 1]]), absolute_noise=.1
-    ).profile_
-    print(profile.preferences_ut)

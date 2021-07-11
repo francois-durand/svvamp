@@ -371,7 +371,3 @@ class RuleNanson(Rule):
     @cached_property
     def meets_condorcet_c_rk_ctb(self):
         return True
-
-
-if __name__ == '__main__':
-    RuleNanson()(Profile(preferences_ut=np.random.randint(-5, 5, (5, 3)))).demo_()

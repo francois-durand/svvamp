@@ -155,6 +155,7 @@ class Profile(my_log.MyLog):
         if sort_voters:
             # Sort voters by weak order (deducted from utility)
             list_borda_ut = self.preferences_borda_ut.tolist()
+            # noinspection PyTypeChecker,PyUnresolvedReferences
             indexes = sorted(range(len(list_borda_ut)), key=list_borda_ut.__getitem__)
             self.preferences_rk = self.preferences_rk[indexes, ::]
             self.preferences_ut = self.preferences_ut[indexes, ::]
@@ -2012,7 +2013,7 @@ class Profile(my_log.MyLog):
         # 4. Now just do not care about last coordinate, it is 0.
         ax.scatter(mat_temp[:, 0], mat_temp[:, 1], mat_temp[:, 2], s=40, c='r', marker='o')
 
-        # Permutoedron
+        # Permutohedron
         xs = []
         ys = []
         zs = []
@@ -2519,14 +2520,3 @@ class Profile(my_log.MyLog):
         print('Condorcet-admissible ' + display_bool(self.exists_condorcet_admissible))
 
         self.log_depth = old_log_depth
-
-
-if __name__ == '__main__':
-    # A quick demo
-    initialize_random_seeds()
-    preferences_ut_test = np.random.randint(-5, 5, (10, 5))
-    profile = Profile(preferences_ut=preferences_ut_test,
-                      labels_candidates=['Alice', 'Bob', 'Catherine', 'Dave', 'Ellen'])
-    profile.demo(log_depth=1)
-    profile.plot3(indexes=[0, 1, 2], normalize=True)
-    profile.plot4(indexes=[0, 1, 2, 3], normalize=True)

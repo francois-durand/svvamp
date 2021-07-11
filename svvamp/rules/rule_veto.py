@@ -282,6 +282,7 @@ class RuleVeto(Rule):
 
     # %% Independence of Irrelevant Alternatives (IIA)
 
+    # noinspection PyProtectedMember
     def _compute_winner_of_subset_(self, candidates_r):
         """
             >>> initialize_random_seeds()
@@ -387,7 +388,3 @@ class RuleVeto(Rule):
         self._sufficient_coalition_size_cm[c] = np.sum(
             np.maximum(scores_test - scores_test[c] + (np.array(range(self.profile_.n_c)) < c), 0))
         self._necessary_coalition_size_cm[c] = self._sufficient_coalition_size_cm[c]
-
-
-if __name__ == '__main__':
-    RuleVeto()(Profile(preferences_ut=np.random.randint(-5, 5, (5, 3)))).demo_()

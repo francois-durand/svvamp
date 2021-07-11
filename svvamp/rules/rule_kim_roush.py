@@ -362,7 +362,3 @@ class RuleKimRoush(Rule):
     @cached_property
     def v_might_im_for_c_(self):
         return np.full((self.profile_.n_v, self.profile_.n_c), self._count_ballots_['one_v_might_be_pivotal'])
-
-
-if __name__ == '__main__':
-    RuleKimRoush()(Profile(preferences_ut=np.random.randint(-5, 5, (5, 3)))).demo_()

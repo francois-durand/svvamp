@@ -36,13 +36,13 @@ class GeneratorProfileVMFHypercircle(GeneratorProfile):
         Number of voters.
     n_c : int
         Number of candidates.
-    vmf_concentration : list or ndarray
+    vmf_concentration : number or list or ndarray
         1d array. Denote ``k`` its size (number of 'groups'). ``vmf_concentration[i]`` is the VMF concentration of
         group ``i``.
-    vmf_probability : list or ndarray
+    vmf_probability : number or list or ndarray
         1d array of size ``k``. ``vmf_probability[i]`` is the probability, for a voter, to be in group ``i``
         (up to normalization). If ``None``, then the groups have equal probabilities.
-    vmf_pole : ndarray
+    vmf_pole : list or ndarray
         2d array of size ``(k, n_c)``. ``vmf_pole[i, :]`` is the pole of the VMF distribution for group ``i``.
 
     Notes
@@ -98,7 +98,7 @@ class GeneratorProfileVMFHypercircle(GeneratorProfile):
                [ 0.71640317, -0.64749197, -0.0689112 ],
                [ 0.71640317, -0.64749197, -0.0689112 ]])
 
-    If the probabilities are not explicitly given, poles are equiprobable:
+    If the probabilities are not explicitly given, poles have equal probabilities:
 
         >>> initialize_random_seeds()
         >>> generator = GeneratorProfileVMFHypercircle(n_v=5, n_c=3, vmf_concentration=[np.inf, np.inf])
@@ -177,10 +177,3 @@ class GeneratorProfileVMFHypercircle(GeneratorProfile):
         preferences_ut -= 2 * preferences_parallel
         # Conclude
         return Profile(preferences_ut=preferences_ut, log_creation=self.log_creation)
-
-
-if __name__ == '__main__':
-    # A quick demo
-    profile = GeneratorProfileVMFHypercircle(n_v=100, n_c=4, vmf_concentration=[10], vmf_pole=[4, 1, 2, 3])().profile_
-    profile.demo_()
-    profile.plot4()

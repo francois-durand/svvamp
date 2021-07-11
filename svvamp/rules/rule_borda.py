@@ -615,7 +615,3 @@ class RuleBorda(Rule):
         # with = ``n_m`` manipulators).
         is_quick_escape_exact = self._cm_main_work_c_exact_(c, optimize_bounds)
         return is_quick_escape_fast or is_quick_escape_exact
-
-
-if __name__ == '__main__':
-    RuleBorda()(Profile(preferences_ut=np.random.randint(-5, 5, (5, 3)))).demo_(log_depth=3)

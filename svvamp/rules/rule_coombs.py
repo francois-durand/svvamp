@@ -802,7 +802,3 @@ class RuleCoombs(Rule):
                 self._update_necessary(self._necessary_coalition_size_cm, c, n_m + 1,
                                        'CM: Update necessary_coalition_size_cm = n_m + 1 =')
                 return True
-
-
-if __name__ == '__main__':
-    RuleCoombs()(Profile(preferences_ut=np.random.randint(-5, 5, (5, 3)))).demo_()
