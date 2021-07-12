@@ -19,9 +19,9 @@
 #
 import os
 import sys
-import svvamp
-
 sys.path.insert(0, os.path.abspath('..'))
+
+import svvamp
 
 # -- General configuration ---------------------------------------------
 
