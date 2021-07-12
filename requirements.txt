@@ -1,1 +1,9 @@
-wheel==0.23.0
+matplotlib
+networkx
+numpy
+pandas
+scipy
+sphinx>=1.4
+nbsphinx
+ipykernel
+sphinx-rtd-theme
