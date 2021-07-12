@@ -29,7 +29,6 @@ from svvamp.utils.misc import preferences_ut_to_matrix_duels_ut
 from svvamp.rules.rule_irv import RuleIRV
 
 
-# noinspection PySimplifyBooleanCheck
 class RuleCondorcetVtbIRV(Rule):
     """Condorcet Instant Runoff Voting
 
@@ -264,7 +263,7 @@ class RuleCondorcetVtbIRV(Rule):
     Notes
     -----
     Each voter must provide a strict total order. If there is a Condorcet winner (in the sense of
-    :attr:`matrix_victories_rk`), then she is elected. Otherwise, :class:`IRV` is used.
+    :attr:`matrix_victories_rk`), then she is elected. Otherwise, :class:`RuleIRV` is used.
 
     If sincere preferences are strict total orders, then this voting system is equivalent to
     :class:`RuleCondorcetAbsIRV` for sincere voting, but manipulators have less possibilities (they are forced to
@@ -412,7 +411,7 @@ class RuleCondorcetVtbIRV(Rule):
 
     # %% Trivial Manipulation (TM)
 
-    # Use the general methods from class Election.
+    # Use the general methods from class Rule.
 
     # %% Unison manipulation (UM)
 
@@ -420,7 +419,7 @@ class RuleCondorcetVtbIRV(Rule):
 
     # %% Ignorant-Coalition Manipulation (ICM)
 
-    # Use the general methods from class Election.
+    # Use the general methods from class Rule.
 
     # %% Coalition Manipulation (CM)
 

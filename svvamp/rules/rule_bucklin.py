@@ -26,7 +26,6 @@ from svvamp.utils.pseudo_bool import equal_true
 from svvamp.preferences.profile import Profile
 
 
-# noinspection PySimplifyBooleanCheck
 class RuleBucklin(Rule):
     """Bucklin method.
 

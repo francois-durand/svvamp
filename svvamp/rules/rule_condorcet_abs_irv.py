@@ -28,7 +28,6 @@ from svvamp.utils.pseudo_bool import equal_false
 from svvamp.rules.rule_irv import RuleIRV
 
 
-# noinspection PySimplifyBooleanCheck
 class RuleCondorcetAbsIRV(Rule):
     """Absolute-Condorcet Instant Runoff Voting.
 
@@ -271,7 +270,7 @@ class RuleCondorcetAbsIRV(Rule):
     is a tie-breaking of this weak order).
 
     If there is a Condorcet winner (computed with the weak orders, i.e. in the sense of
-    :attr:`matrix_victories_ut_abs`), then she is elected. Otherwise, :class:`IRV` is used (with the strict total
+    :attr:`matrix_victories_ut_abs`), then she is elected. Otherwise, :class:`RuleIRV` is used (with the strict total
     orders).
 
     If sincere preferences are strict total orders, then this voting system is equivalent to :class:`CondorcetVtbIRV`
@@ -417,7 +416,7 @@ class RuleCondorcetAbsIRV(Rule):
 
     # %% Trivial Manipulation (TM)
 
-    # Use the general methods from class Election.
+    # Use the general methods from class Rule.
 
     # %% Unison manipulation (UM)
 
@@ -425,7 +424,7 @@ class RuleCondorcetAbsIRV(Rule):
 
     # %% Ignorant-Coalition Manipulation (ICM)
 
-    # Use the general methods from class Election.
+    # Use the general methods from class Rule.
 
     # %% Coalition Manipulation (CM)
 

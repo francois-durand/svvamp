@@ -28,7 +28,6 @@ from svvamp.utils.pseudo_bool import equal_true
 from svvamp.preferences.profile import Profile
 
 
-# noinspection PySimplifyBooleanCheck
 class RuleMaximin(Rule):
     """Maximin method.
 

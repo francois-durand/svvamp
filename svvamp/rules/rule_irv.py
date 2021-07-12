@@ -27,7 +27,6 @@ from svvamp.utils.pseudo_bool import neginf_to_zero, equal_false
 from svvamp.rules.rule_exhaustive_ballot import RuleExhaustiveBallot
 
 
-# noinspection PySimplifyBooleanCheck
 class RuleIRV(Rule):
     """Instant-Runoff Voting (IRV). Also known as Single Transferable Voting, Alternative Vote, Hare method.
 

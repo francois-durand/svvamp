@@ -26,7 +26,6 @@ from svvamp.utils.pseudo_bool import equal_false
 from svvamp.preferences.profile import Profile
 
 
-# noinspection PySimplifyBooleanCheck
 class RuleExhaustiveBallot(Rule):
     """Exhaustive Ballot.
 
@@ -552,7 +551,7 @@ class RuleExhaustiveBallot(Rule):
 
     # %% Independence of Irrelevant Alternatives (IIA)
 
-    # TODO: A faster algorithm that the one implemented in superclass Election. Simply check that for each subset of
+    # TODO: A faster algorithm that the one implemented in superclass Rule. Simply check that for each subset of
     # candidates including ``w``, ``w`` cannot be a Plurality loser.
 
     # %% Individual manipulation (IM)

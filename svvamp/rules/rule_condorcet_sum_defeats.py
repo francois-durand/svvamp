@@ -25,7 +25,6 @@ from svvamp.utils.util_cache import cached_property
 from svvamp.preferences.profile import Profile
 
 
-# noinspection PySimplifyBooleanCheck
 class RuleCondorcetSumDefeats(Rule):
     """Condorcet with sum of defeats.
 

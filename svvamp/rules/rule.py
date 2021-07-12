@@ -29,7 +29,6 @@ from svvamp.preferences.profile import Profile
 from svvamp.preferences.profile_subset_candidates import ProfileSubsetCandidates
 
 
-# noinspection PySimplifyBooleanCheck
 class Rule(DeleteCacheMixin, my_log.MyLog):
     """A voting rule.
 

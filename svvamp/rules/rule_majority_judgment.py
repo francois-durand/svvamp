@@ -29,7 +29,6 @@ from svvamp.utils.pseudo_bool import equal_false
 from svvamp.preferences.profile import Profile
 
 
-# noinspection PySimplifyBooleanCheck
 class RuleMajorityJudgment(Rule):
     """Majority Judgment.
 
