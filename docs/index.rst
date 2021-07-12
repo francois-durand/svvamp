@@ -8,7 +8,7 @@ Welcome to SVVAMP's documentation!
    readme
    installation
    usage
-   tutorials/index
+   tuto/index
    reference/index
    contributing
    authors
