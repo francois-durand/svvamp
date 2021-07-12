@@ -4,21 +4,21 @@
 History
 =======
 
-------------------
-0.1.2 (2021-07-12)
-------------------
+--------------------------------------
+0.1.2 (2021-07-12): Fix Release Number
+--------------------------------------
 
 * Fix release number.
 
-------------------
-0.1.1 (2021-07-12)
-------------------
+----------------------------------
+0.1.1 (2021-07-12): Fix Deployment
+----------------------------------
 
 * Fix deployment on PyPI.
 
-------------------
-0.1.0 (2021-07-12)
-------------------
+----------------------------------------
+0.1.0 (2021-07-12): Complete Refactoring
+----------------------------------------
 
 * Refactor the code completely. New architecture, especially for ``Rule`` (formerly ``Election``), avoiding
   diamond inheritance. Rename most classes, properties and methods.
@@ -26,30 +26,31 @@ History
 * Fix some minor bugs.
 * Documentation in numpy style.
 * Tutorials are now Jupyter notebooks.
+* New rules: Kim-Roush and IRV-Average.
 
-------------------
-0.0.4 (2015-03-10)
-------------------
+------------------------------------------
+0.0.4 (2015-03-10): Fix a Bug in Plurality
+------------------------------------------
 
 * Correct a minor bug in Plurality.IM (voters_IM is now updated).
 
-------------------
-0.0.3 (2015-02-28)
-------------------
+----------------------------------------------------
+0.0.3 (2015-02-28): Miscellaneous Minor Improvements
+----------------------------------------------------
 
 * Rename functions and attributes with suffix _vtb to _rk.
 * Allow to define a population by both utilities and rankings.
 * Add shift to Euclidean box model.
 * Range voting / Majority Judgment: with a discrete set of grades, send to closest authorized grades.
 
-------------------
-0.0.2 (2015-02-16)
-------------------
+------------------------------------------
+0.0.2 (2015-02-16): SVVAMP's Core Features
+------------------------------------------
 
 * 8 population models and 23 voting systems.
 
-------------------
-0.0.1 (2015-02-14)
-------------------
+---------------------------------
+0.0.1 (2015-02-14): First Release
+---------------------------------
 
 * First release on PyPI.
