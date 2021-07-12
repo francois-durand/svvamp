@@ -162,6 +162,6 @@ texinfo_documents = [
 
 # -- Options for nbsphinx ----------------------------------------
 
-# nbsphinx_execute = 'never'
+nbsphinx_execute = 'never'
 # nbsphinx_execute = 'auto'
-nbsphinx_execute = 'always'
+# nbsphinx_execute = 'always'
