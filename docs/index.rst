@@ -8,6 +8,7 @@ Welcome to SVVAMP's documentation!
    readme
    installation
    usage
+   tutorials/index
    reference/index
    contributing
    authors
