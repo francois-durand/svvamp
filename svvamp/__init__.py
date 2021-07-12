@@ -48,6 +48,7 @@ from svvamp.rules.rule_ranked_pairs import RuleRankedPairs
 from svvamp.rules.rule_schulze import RuleSchulze
 from svvamp.rules.rule_two_round import RuleTwoRound
 from svvamp.rules.rule_veto import RuleVeto
+from svvamp.rules.rule_woodall import RuleWoodall
 
 # Voting Rule: IRV Family
 from svvamp.rules.rule_exhaustive_ballot import RuleExhaustiveBallot
