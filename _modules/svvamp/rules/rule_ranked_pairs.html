@@ -1,0 +1,609 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>svvamp.rules.rule_ranked_pairs &mdash; SVVAMP 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> SVVAMP
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">SVVAMP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../history.html">History</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">SVVAMP</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>svvamp.rules.rule_ranked_pairs</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for svvamp.rules.rule_ranked_pairs</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on 11 dec. 2018, 07:50</span>
+<span class="sd">Copyright François Durand 2014-2018</span>
+<span class="sd">fradurand@gmail.com</span>
+
+<span class="sd">This file is part of SVVAMP.</span>
+
+<span class="sd">    SVVAMP is free software: you can redistribute it and/or modify</span>
+<span class="sd">    it under the terms of the GNU General Public License as published by</span>
+<span class="sd">    the Free Software Foundation, either version 3 of the License, or</span>
+<span class="sd">    (at your option) any later version.</span>
+
+<span class="sd">    SVVAMP is distributed in the hope that it will be useful,</span>
+<span class="sd">    but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="sd">    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="sd">    GNU General Public License for more details.</span>
+
+<span class="sd">    You should have received a copy of the GNU General Public License</span>
+<span class="sd">    along with SVVAMP.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="kn">from</span> <span class="nn">svvamp.rules.rule</span> <span class="kn">import</span> <span class="n">Rule</span>
+<span class="kn">from</span> <span class="nn">svvamp.utils.util_cache</span> <span class="kn">import</span> <span class="n">cached_property</span>
+<span class="kn">from</span> <span class="nn">svvamp.preferences.profile</span> <span class="kn">import</span> <span class="n">Profile</span>
+
+
+<div class="viewcode-block" id="RuleRankedPairs"><a class="viewcode-back" href="../../../reference/rules/rule_ranked_pairs.html#svvamp.RuleRankedPairs">[docs]</a><span class="k">class</span> <span class="nc">RuleRankedPairs</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Tideman&#39;s Ranked Pairs.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
+<span class="sd">        ...     [ 0. , -0.5, -1. ],</span>
+<span class="sd">        ...     [ 1. , -1. ,  0.5],</span>
+<span class="sd">        ...     [ 0.5,  0.5, -0.5],</span>
+<span class="sd">        ...     [ 0.5,  0. ,  1. ],</span>
+<span class="sd">        ...     [-1. , -1. ,  1. ],</span>
+<span class="sd">        ... ], preferences_rk=[</span>
+<span class="sd">        ...     [0, 1, 2],</span>
+<span class="sd">        ...     [0, 2, 1],</span>
+<span class="sd">        ...     [1, 0, 2],</span>
+<span class="sd">        ...     [2, 0, 1],</span>
+<span class="sd">        ...     [2, 1, 0],</span>
+<span class="sd">        ... ])</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleRankedPairs()(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule.meets_condorcet_c_rk_ctb</span>
+<span class="sd">        True</span>
+<span class="sd">        &gt;&gt;&gt; rule.demo_results_(log_depth=0)  # doctest: +NORMALIZE_WHITESPACE</span>
+<span class="sd">        &lt;BLANKLINE&gt;</span>
+<span class="sd">        ************************</span>
+<span class="sd">        *                      *</span>
+<span class="sd">        *   Election Results   *</span>
+<span class="sd">        *                      *</span>
+<span class="sd">        ************************</span>
+<span class="sd">        &lt;BLANKLINE&gt;</span>
+<span class="sd">        ***************</span>
+<span class="sd">        *   Results   *</span>
+<span class="sd">        ***************</span>
+<span class="sd">        profile_.preferences_ut (reminder) =</span>
+<span class="sd">        [[ 0.  -0.5 -1. ]</span>
+<span class="sd">         [ 1.  -1.   0.5]</span>
+<span class="sd">         [ 0.5  0.5 -0.5]</span>
+<span class="sd">         [ 0.5  0.   1. ]</span>
+<span class="sd">         [-1.  -1.   1. ]]</span>
+<span class="sd">        profile_.preferences_rk (reminder) =</span>
+<span class="sd">        [[0 1 2]</span>
+<span class="sd">         [0 2 1]</span>
+<span class="sd">         [1 0 2]</span>
+<span class="sd">         [2 0 1]</span>
+<span class="sd">         [2 1 0]]</span>
+<span class="sd">        ballots =</span>
+<span class="sd">        [[0 1 2]</span>
+<span class="sd">         [0 2 1]</span>
+<span class="sd">         [1 0 2]</span>
+<span class="sd">         [2 0 1]</span>
+<span class="sd">         [2 1 0]]</span>
+<span class="sd">        scores =</span>
+<span class="sd">        [[0. 3. 3.]</span>
+<span class="sd">         [0. 0. 0.]</span>
+<span class="sd">         [0. 3. 0.]]</span>
+<span class="sd">        candidates_by_scores_best_to_worst</span>
+<span class="sd">        [0, 2, 1]</span>
+<span class="sd">        scores_best_to_worst</span>
+<span class="sd">        [[0. 3. 3.]</span>
+<span class="sd">         [0. 0. 3.]</span>
+<span class="sd">         [0. 0. 0.]]</span>
+<span class="sd">        w = 0</span>
+<span class="sd">        score_w = [[0. 3. 3.]]</span>
+<span class="sd">        total_utility_w = 1.0</span>
+<span class="sd">        &lt;BLANKLINE&gt;</span>
+<span class="sd">        *********************************</span>
+<span class="sd">        *   Condorcet efficiency (rk)   *</span>
+<span class="sd">        *********************************</span>
+<span class="sd">        w (reminder) = 0</span>
+<span class="sd">        &lt;BLANKLINE&gt;</span>
+<span class="sd">        condorcet_winner_rk_ctb = 0</span>
+<span class="sd">        w_is_condorcet_winner_rk_ctb = True</span>
+<span class="sd">        w_is_not_condorcet_winner_rk_ctb = False</span>
+<span class="sd">        w_missed_condorcet_winner_rk_ctb = False</span>
+<span class="sd">        &lt;BLANKLINE&gt;</span>
+<span class="sd">        condorcet_winner_rk = 0</span>
+<span class="sd">        w_is_condorcet_winner_rk = True</span>
+<span class="sd">        w_is_not_condorcet_winner_rk = False</span>
+<span class="sd">        w_missed_condorcet_winner_rk = False</span>
+<span class="sd">        &lt;BLANKLINE&gt;</span>
+<span class="sd">        ***************************************</span>
+<span class="sd">        *   Condorcet efficiency (relative)   *</span>
+<span class="sd">        ***************************************</span>
+<span class="sd">        w (reminder) = 0</span>
+<span class="sd">        &lt;BLANKLINE&gt;</span>
+<span class="sd">        condorcet_winner_ut_rel_ctb = 0</span>
+<span class="sd">        w_is_condorcet_winner_ut_rel_ctb = True</span>
+<span class="sd">        w_is_not_condorcet_winner_ut_rel_ctb = False</span>
+<span class="sd">        w_missed_condorcet_winner_ut_rel_ctb = False</span>
+<span class="sd">        &lt;BLANKLINE&gt;</span>
+<span class="sd">        condorcet_winner_ut_rel = 0</span>
+<span class="sd">        w_is_condorcet_winner_ut_rel = True</span>
+<span class="sd">        w_is_not_condorcet_winner_ut_rel = False</span>
+<span class="sd">        w_missed_condorcet_winner_ut_rel = False</span>
+<span class="sd">        &lt;BLANKLINE&gt;</span>
+<span class="sd">        ***************************************</span>
+<span class="sd">        *   Condorcet efficiency (absolute)   *</span>
+<span class="sd">        ***************************************</span>
+<span class="sd">        w (reminder) = 0</span>
+<span class="sd">        &lt;BLANKLINE&gt;</span>
+<span class="sd">        condorcet_admissible_candidates =</span>
+<span class="sd">        [ True False False]</span>
+<span class="sd">        w_is_condorcet_admissible = True</span>
+<span class="sd">        w_is_not_condorcet_admissible = False</span>
+<span class="sd">        w_missed_condorcet_admissible = False</span>
+<span class="sd">        &lt;BLANKLINE&gt;</span>
+<span class="sd">        weak_condorcet_winners =</span>
+<span class="sd">        [ True False False]</span>
+<span class="sd">        w_is_weak_condorcet_winner = True</span>
+<span class="sd">        w_is_not_weak_condorcet_winner = False</span>
+<span class="sd">        w_missed_weak_condorcet_winner = False</span>
+<span class="sd">        &lt;BLANKLINE&gt;</span>
+<span class="sd">        condorcet_winner_ut_abs_ctb = 0</span>
+<span class="sd">        w_is_condorcet_winner_ut_abs_ctb = True</span>
+<span class="sd">        w_is_not_condorcet_winner_ut_abs_ctb = False</span>
+<span class="sd">        w_missed_condorcet_winner_ut_abs_ctb = False</span>
+<span class="sd">        &lt;BLANKLINE&gt;</span>
+<span class="sd">        condorcet_winner_ut_abs = 0</span>
+<span class="sd">        w_is_condorcet_winner_ut_abs = True</span>
+<span class="sd">        w_is_not_condorcet_winner_ut_abs = False</span>
+<span class="sd">        w_missed_condorcet_winner_ut_abs = False</span>
+<span class="sd">        &lt;BLANKLINE&gt;</span>
+<span class="sd">        resistant_condorcet_winner = nan</span>
+<span class="sd">        w_is_resistant_condorcet_winner = False</span>
+<span class="sd">        w_is_not_resistant_condorcet_winner = True</span>
+<span class="sd">        w_missed_resistant_condorcet_winner = False</span>
+<span class="sd">        &gt;&gt;&gt; rule.demo_manipulation_(log_depth=0)  # doctest: +NORMALIZE_WHITESPACE</span>
+<span class="sd">        &lt;BLANKLINE&gt;</span>
+<span class="sd">        *****************************</span>
+<span class="sd">        *                           *</span>
+<span class="sd">        *   Election Manipulation   *</span>
+<span class="sd">        *                           *</span>
+<span class="sd">        *****************************</span>
+<span class="sd">        &lt;BLANKLINE&gt;</span>
+<span class="sd">        *********************************************</span>
+<span class="sd">        *   Basic properties of the voting system   *</span>
+<span class="sd">        *********************************************</span>
+<span class="sd">        with_two_candidates_reduces_to_plurality =  True</span>
+<span class="sd">        is_based_on_rk =  True</span>
+<span class="sd">        is_based_on_ut_minus1_1 =  False</span>
+<span class="sd">        meets_iia =  False</span>
+<span class="sd">        &lt;BLANKLINE&gt;</span>
+<span class="sd">        ****************************************************</span>
+<span class="sd">        *   Manipulation properties of the voting system   *</span>
+<span class="sd">        ****************************************************</span>
+<span class="sd">        Condorcet_c_ut_rel_ctb (False)     ==&gt;     Condorcet_c_ut_rel (False)</span>
+<span class="sd">         ||                                                               ||</span>
+<span class="sd">         ||     Condorcet_c_rk_ctb (True)  ==&gt; Condorcet_c_rk (True)      ||</span>
+<span class="sd">         ||           ||               ||       ||             ||         ||</span>
+<span class="sd">         V            V                ||       ||             V          V</span>
+<span class="sd">        Condorcet_c_ut_abs_ctb (True)      ==&gt;     Condorcet_ut_abs_c (True)</span>
+<span class="sd">         ||                            ||       ||                        ||</span>
+<span class="sd">         ||                            V        V                         ||</span>
+<span class="sd">         ||       maj_fav_c_rk_ctb (True)  ==&gt; maj_fav_c_rk (True)        ||</span>
+<span class="sd">         ||           ||                                       ||         ||</span>
+<span class="sd">         V            V                                        V          V</span>
+<span class="sd">        majority_favorite_c_ut_ctb (True)  ==&gt; majority_favorite_c_ut (True)</span>
+<span class="sd">         ||                                                               ||</span>
+<span class="sd">         V                                                                V</span>
+<span class="sd">        IgnMC_c_ctb (True)                 ==&gt;                IgnMC_c (True)</span>
+<span class="sd">         ||                                                               ||</span>
+<span class="sd">         V                                                                V</span>
+<span class="sd">        InfMC_c_ctb (True)                 ==&gt;                InfMC_c (True)</span>
+<span class="sd">        &lt;BLANKLINE&gt;</span>
+<span class="sd">        *****************************************************</span>
+<span class="sd">        *   Independence of Irrelevant Alternatives (IIA)   *</span>
+<span class="sd">        *****************************************************</span>
+<span class="sd">        w (reminder) = 0</span>
+<span class="sd">        is_iia = True</span>
+<span class="sd">        log_iia: iia_subset_maximum_size = 2.0</span>
+<span class="sd">        example_winner_iia = nan</span>
+<span class="sd">        example_subset_iia = nan</span>
+<span class="sd">        &lt;BLANKLINE&gt;</span>
+<span class="sd">        **********************</span>
+<span class="sd">        *   c-Manipulators   *</span>
+<span class="sd">        **********************</span>
+<span class="sd">        w (reminder) = 0</span>
+<span class="sd">        preferences_ut (reminder) =</span>
+<span class="sd">        [[ 0.  -0.5 -1. ]</span>
+<span class="sd">         [ 1.  -1.   0.5]</span>
+<span class="sd">         [ 0.5  0.5 -0.5]</span>
+<span class="sd">         [ 0.5  0.   1. ]</span>
+<span class="sd">         [-1.  -1.   1. ]]</span>
+<span class="sd">        v_wants_to_help_c =</span>
+<span class="sd">        [[False False False]</span>
+<span class="sd">         [False False False]</span>
+<span class="sd">         [False False False]</span>
+<span class="sd">         [False False  True]</span>
+<span class="sd">         [False False  True]]</span>
+<span class="sd">        &lt;BLANKLINE&gt;</span>
+<span class="sd">        ************************************</span>
+<span class="sd">        *   Individual Manipulation (IM)   *</span>
+<span class="sd">        ************************************</span>
+<span class="sd">        is_im = nan</span>
+<span class="sd">        log_im: im_option = lazy</span>
+<span class="sd">        candidates_im =</span>
+<span class="sd">        [ 0.  0. nan]</span>
+<span class="sd">        &lt;BLANKLINE&gt;</span>
+<span class="sd">        *********************************</span>
+<span class="sd">        *   Trivial Manipulation (TM)   *</span>
+<span class="sd">        *********************************</span>
+<span class="sd">        is_tm = False</span>
+<span class="sd">        log_tm: tm_option = exact</span>
+<span class="sd">        candidates_tm =</span>
+<span class="sd">        [0. 0. 0.]</span>
+<span class="sd">        &lt;BLANKLINE&gt;</span>
+<span class="sd">        ********************************</span>
+<span class="sd">        *   Unison Manipulation (UM)   *</span>
+<span class="sd">        ********************************</span>
+<span class="sd">        is_um = nan</span>
+<span class="sd">        log_um: um_option = lazy</span>
+<span class="sd">        candidates_um =</span>
+<span class="sd">        [ 0.  0. nan]</span>
+<span class="sd">        &lt;BLANKLINE&gt;</span>
+<span class="sd">        *********************************************</span>
+<span class="sd">        *   Ignorant-Coalition Manipulation (ICM)   *</span>
+<span class="sd">        *********************************************</span>
+<span class="sd">        is_icm = False</span>
+<span class="sd">        log_icm: icm_option = exact</span>
+<span class="sd">        candidates_icm =</span>
+<span class="sd">        [0. 0. 0.]</span>
+<span class="sd">        necessary_coalition_size_icm =</span>
+<span class="sd">        [0. 6. 4.]</span>
+<span class="sd">        sufficient_coalition_size_icm =</span>
+<span class="sd">        [0. 6. 4.]</span>
+<span class="sd">        &lt;BLANKLINE&gt;</span>
+<span class="sd">        ***********************************</span>
+<span class="sd">        *   Coalition Manipulation (CM)   *</span>
+<span class="sd">        ***********************************</span>
+<span class="sd">        is_cm = nan</span>
+<span class="sd">        log_cm: cm_option = lazy, um_option = lazy, tm_option = exact</span>
+<span class="sd">        candidates_cm =</span>
+<span class="sd">        [ 0.  0. nan]</span>
+<span class="sd">        necessary_coalition_size_cm =</span>
+<span class="sd">        [0. 1. 2.]</span>
+<span class="sd">        sufficient_coalition_size_cm =</span>
+<span class="sd">        [0. 6. 4.]</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    In the matrix of duels :attr:`matrix_duels_rk`, victories (and ties) are sorted by decreasing amplitude. If two</span>
+<span class="sd">    duels have the same score, we take first the one where the winner has the smallest index; if there is still a</span>
+<span class="sd">    choice to make, we take first the duel where the loser has the highest index.</span>
+
+<span class="sd">    Starting with the largest victory, we build a directed graph whose nodes are the candidates and edges are</span>
+<span class="sd">    victories. But if a victory creates a cycle in the graph, it is not validated and the edge is not added.</span>
+
+<span class="sd">    At the end, we have a transitive connected directed graph, whose adjacency relation is included in the relation</span>
+<span class="sd">    of victories (with ties broken), :attr:`matrix_victories_rk_ctb`. The maximal node of this graph (by topological</span>
+<span class="sd">    order) is declared the winner.</span>
+
+<span class="sd">    This method meets the Condorcet criterion.</span>
+
+<span class="sd">    * :meth:`is_cm_`: Deciding CM is NP-complete. Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
+<span class="sd">    * :meth:`is_icm_`: Exact in polynomial time.</span>
+<span class="sd">    * :meth:`is_im_`: Deciding IM is NP-complete. Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
+<span class="sd">    * :meth:`is_iia_`: Exact in polynomial time.</span>
+<span class="sd">    * :meth:`is_tm_`: Exact in polynomial time.</span>
+<span class="sd">    * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    &#39;Independence of clones as a criterion for voting rules&#39;, Nicolaus Tideman, 1987.</span>
+
+<span class="sd">    &#39;Complexity of Unweighted Coalitional Manipulation under Some Common Voting Rules&#39;, Lirong Xia et al., 2009.</span>
+
+<span class="sd">    &#39;Schulze and Ranked-Pairs Voting are Fixed-Parameter Tractable to Bribe, Manipulate, and Control&#39;,</span>
+<span class="sd">    Lane A. Hemaspaandra, Rahman Lavaee and Curtis Menton, 2012.</span>
+
+<span class="sd">    &#39;A Complexity-of-Strategic-Behavior Comparison between Schulze’s Rule and Ranked Pairs&#39;, David Parkes and</span>
+<span class="sd">    Lirong Xia, 2012.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">options_parameters</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;icm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">}</span>
+            <span class="p">},</span>
+            <span class="n">with_two_candidates_reduces_to_plurality</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">is_based_on_rk</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">precheck_icm</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">log_identity</span><span class="o">=</span><span class="s2">&quot;RANKED_PAIRS&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">)</span>
+
+    <span class="c1"># %% Counting the ballots</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">_count_ballots_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Count ballots&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">matrix_duels_vtb_temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_rk</span><span class="p">)</span>
+        <span class="n">dig</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+        <span class="n">dig</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">))</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">best_duel_result_c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">matrix_duels_vtb_temp</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">best_duel_result_c</span><span class="p">)</span>
+            <span class="n">best_duel_result</span> <span class="o">=</span> <span class="n">best_duel_result_c</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">matrix_duels_vtb_temp</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="p">:]</span> <span class="o">==</span> <span class="n">best_duel_result</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">best_duel_result</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="n">matrix_duels_vtb_temp</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">matrix_duels_vtb_temp</span><span class="p">[</span><span class="n">d</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">nx</span><span class="o">.</span><span class="n">has_path</span><span class="p">(</span><span class="n">dig</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+                <span class="n">dig</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_rk</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">])</span>
+        <span class="n">candidates_by_scores_best_to_worst</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">nx</span><span class="o">.</span><span class="n">topological_sort</span><span class="p">(</span><span class="n">dig</span><span class="p">))</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">candidates_by_scores_best_to_worst</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">scores</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">to_numpy_matrix</span><span class="p">(</span><span class="n">dig</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;scores&#39;</span><span class="p">:</span> <span class="n">scores</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">:</span> <span class="n">w</span><span class="p">,</span> <span class="s1">&#39;candidates_by_scores_best_to_worst&#39;</span><span class="p">:</span> <span class="n">candidates_by_scores_best_to_worst</span><span class="p">}</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">w_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s1">&#39;w&#39;</span><span class="p">]</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">candidates_by_scores_best_to_worst_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;1d array of integers. ``candidates_by_scores_best_to_worst[k]`` is the ``k``\ :sup:`th` candidate by</span>
+<span class="sd">        topological order on the graph generated by Ranked Pairs.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s1">&#39;candidates_by_scores_best_to_worst&#39;</span><span class="p">]</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">scores_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;2d array of integers. ``scores[c, d]`` is equal to :attr:`matrix_duels_rk`\ ``[c, d]`` iff this duel was</span>
+<span class="sd">        validated in Ranked Pairs, 0 otherwise.</span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            Unlike for most other voting systems, ``scores`` matrix must be read in rows, in order to comply with our</span>
+<span class="sd">            convention for the matrix of duels: ``c``&#39;s score vector is ``scores[c, :]``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s1">&#39;scores&#39;</span><span class="p">]</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">score_w_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;1d array. ``score_w_`` is :attr:`w_`&#39;s score vector: ``score_w_`` =</span>
+<span class="sd">        :attr:`scores_`\ ``[``:attr:`w_`\ ``, :]``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Compute winner&#39;s score&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">scores_</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">,</span> <span class="p">:]</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">scores_best_to_worst_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;2d array. ``scores_best_to_worst_`` is the scores of the candidates, from the winner to the last candidate</span>
+<span class="sd">        of the election.</span>
+
+<span class="sd">        ``scores_best_to_worst[k, j]`` is the score of the ``k``\ :sup:`th` best candidate of the election against</span>
+<span class="sd">        the ``j``\ :sup:`th`. It is the result in :attr:`~svvamp.Population.matrix_duels_rk` if this duels was</span>
+<span class="sd">        validated by Ranked Pairs, 0 otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Compute scores_best_to_worst&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">scores_</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates_by_scores_best_to_worst_</span><span class="p">,</span> <span class="p">:][:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates_by_scores_best_to_worst_</span><span class="p">]</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">v_might_im_for_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># This is a quite lazy version, we could be more precise (possible future work). For a voter to be pivotal,</span>
+        <span class="c1"># it is necessary that she makes a duel examined before another one in Ranked Pairs algorithm (this includes</span>
+        <span class="c1"># the case of making a duel ``(c, d)`` examined before ``(d, c)``, i.e. changing a defeat into a victory)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Compute v_might_im_for_c_&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">scores_duels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_rk</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">triu_indices</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">,</span> <span class="mi">1</span><span class="p">)],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_rk</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">tril_indices</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
+        <span class="p">)))</span>
+        <span class="n">one_v_might_be_pivotal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">scores_duels</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">&gt;=</span> <span class="n">scores_duels</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">),</span> <span class="n">one_v_might_be_pivotal</span><span class="p">)</span>
+
+    <span class="c1"># %% Manipulation criteria of the voting system</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">meets_condorcet_c_rk_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, François Durand.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

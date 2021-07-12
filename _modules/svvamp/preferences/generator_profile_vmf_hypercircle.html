@@ -1,0 +1,395 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>svvamp.preferences.generator_profile_vmf_hypercircle &mdash; SVVAMP 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> SVVAMP
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">SVVAMP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../history.html">History</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">SVVAMP</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>svvamp.preferences.generator_profile_vmf_hypercircle</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for svvamp.preferences.generator_profile_vmf_hypercircle</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on nov. 28, 2018, 15:19</span>
+<span class="sd">Copyright François Durand 2018</span>
+<span class="sd">fradurand@gmail.com</span>
+
+<span class="sd">This file is part of SVVAMP.</span>
+
+<span class="sd">    SVVAMP is free software: you can redistribute it and/or modify</span>
+<span class="sd">    it under the terms of the GNU General Public License as published by</span>
+<span class="sd">    the Free Software Foundation, either version 3 of the License, or</span>
+<span class="sd">    (at your option) any later version.</span>
+
+<span class="sd">    SVVAMP is distributed in the hope that it will be useful,</span>
+<span class="sd">    but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="sd">    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="sd">    GNU General Public License for more details.</span>
+
+<span class="sd">    You should have received a copy of the GNU General Public License</span>
+<span class="sd">    along with SVVAMP.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">svvamp.utils.misc</span> <span class="kn">import</span> <span class="n">initialize_random_seeds</span>
+<span class="kn">from</span> <span class="nn">svvamp.utils.von_mises_fisher</span> <span class="kn">import</span> <span class="n">profile_vmf_aux</span>
+<span class="kn">from</span> <span class="nn">svvamp.preferences.generator_profile</span> <span class="kn">import</span> <span class="n">GeneratorProfile</span>
+<span class="kn">from</span> <span class="nn">svvamp.preferences.profile</span> <span class="kn">import</span> <span class="n">Profile</span>
+
+
+<div class="viewcode-block" id="GeneratorProfileVMFHypercircle"><a class="viewcode-back" href="../../../reference/preferences/generator_profile_vmf_hypercircle.html#svvamp.GeneratorProfileVMFHypercircle">[docs]</a><span class="k">class</span> <span class="nc">GeneratorProfileVMFHypercircle</span><span class="p">(</span><span class="n">GeneratorProfile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Profile generator using the Von Mises-Fisher distribution on the ``n_c - 2``-sphere</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    n_v : int</span>
+<span class="sd">        Number of voters.</span>
+<span class="sd">    n_c : int</span>
+<span class="sd">        Number of candidates.</span>
+<span class="sd">    vmf_concentration : number or list or ndarray</span>
+<span class="sd">        1d array. Denote ``k`` its size (number of &#39;groups&#39;). ``vmf_concentration[i]`` is the VMF concentration of</span>
+<span class="sd">        group ``i``.</span>
+<span class="sd">    vmf_probability : number or list or ndarray</span>
+<span class="sd">        1d array of size ``k``. ``vmf_probability[i]`` is the probability, for a voter, to be in group ``i``</span>
+<span class="sd">        (up to normalization). If ``None``, then the groups have equal probabilities.</span>
+<span class="sd">    vmf_pole : list or ndarray</span>
+<span class="sd">        2d array of size ``(k, n_c)``. ``vmf_pole[i, :]`` is the pole of the VMF distribution for group ``i``.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    We work on the ``n_c - 2``-sphere: vectors of :math:`\mathbb{R}^n_c` with Euclidean norm equal to 1 and that are</span>
+<span class="sd">    orthogonal to [1, ...,  1]. It is a representation of the classical Von Neumann-Morgenstern utility space. Cf.</span>
+<span class="sd">    Durand et al., &#39;Geometry on the Utility Sphere&#39;.</span>
+
+<span class="sd">    Before all computations, the poles are projected onto the hyperplane and normalized. So, the only source of</span>
+<span class="sd">    concentration for group ``i`` is ``vmf_concentration[i]``, not the norm of ``vmf_pole[i]``. If ``pole`` is None,</span>
+<span class="sd">    then each pole is drawn independently and uniformly on the ``n_c - 2``-sphere.</span>
+
+<span class="sd">    For each voter ``c``, we draw a group ``i`` at random, according to ``vmf_probability`` (normalized beforehand if</span>
+<span class="sd">    necessary). Then, ``v``&#39;s utility vector is drawn according to a Von Mises-Fisher distribution of pole</span>
+<span class="sd">    ``vmf_pole[i, :]`` and concentration ``vmf_concentration[i]``, using Ulrich&#39;s method modified by Wood.</span>
+
+<span class="sd">    Once group ``i`` is chosen, then up to a normalization constant, the density of probability for a unit vector</span>
+<span class="sd">    ``x`` is ``exp(vmf_concentration[i] vmf.pole[i, :].x)``, where ``vmf.pole[i, :].x`` is a dot product.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    Typical usage:</span>
+
+<span class="sd">        &gt;&gt;&gt; initialize_random_seeds()</span>
+<span class="sd">        &gt;&gt;&gt; generator = GeneratorProfileVMFHypercircle(n_v=5, n_c=3, vmf_concentration=10)</span>
+<span class="sd">        &gt;&gt;&gt; profile = generator()</span>
+<span class="sd">        &gt;&gt;&gt; profile.preferences_ut</span>
+<span class="sd">        array([[ 0.67886167, -0.73231774,  0.05345607],</span>
+<span class="sd">               [ 0.62834837, -0.76570906,  0.1373607 ],</span>
+<span class="sd">               [ 0.71859954, -0.6950244 , -0.02357514],</span>
+<span class="sd">               [ 0.49333272, -0.81010857,  0.31677584],</span>
+<span class="sd">               [ 0.63042345, -0.76457205,  0.1341486 ]])</span>
+
+<span class="sd">    You can specify a pole:</span>
+
+<span class="sd">        &gt;&gt;&gt; initialize_random_seeds()</span>
+<span class="sd">        &gt;&gt;&gt; generator = GeneratorProfileVMFHypercircle(n_v=5, n_c=3, vmf_concentration=10, vmf_pole=[.7, 0, -.7])</span>
+<span class="sd">        &gt;&gt;&gt; profile = generator()</span>
+<span class="sd">        &gt;&gt;&gt; profile.preferences_ut</span>
+<span class="sd">        array([[ 0.8147627 , -0.36132374, -0.45343896],</span>
+<span class="sd">               [ 0.44917711,  0.36590272, -0.81507983],</span>
+<span class="sd">               [ 0.71021983, -0.00626776, -0.70395207],</span>
+<span class="sd">               [ 0.68206757,  0.04766644, -0.72973402],</span>
+<span class="sd">               [ 0.81591082, -0.38117577, -0.43473505]])</span>
+
+<span class="sd">    With several poles:</span>
+
+<span class="sd">        &gt;&gt;&gt; initialize_random_seeds()</span>
+<span class="sd">        &gt;&gt;&gt; generator = GeneratorProfileVMFHypercircle(n_v=5, n_c=3, vmf_concentration=[np.inf, np.inf],</span>
+<span class="sd">        ...                                            vmf_probability=[.9, .1])</span>
+<span class="sd">        &gt;&gt;&gt; profile = generator()</span>
+<span class="sd">        &gt;&gt;&gt; profile.preferences_ut</span>
+<span class="sd">        array([[ 1.19716876,  0.82383355, -2.02100232],</span>
+<span class="sd">               [ 0.71640317, -0.64749197, -0.0689112 ],</span>
+<span class="sd">               [ 0.71640317, -0.64749197, -0.0689112 ],</span>
+<span class="sd">               [ 0.71640317, -0.64749197, -0.0689112 ],</span>
+<span class="sd">               [ 0.71640317, -0.64749197, -0.0689112 ]])</span>
+
+<span class="sd">    If the probabilities are not explicitly given, poles have equal probabilities:</span>
+
+<span class="sd">        &gt;&gt;&gt; initialize_random_seeds()</span>
+<span class="sd">        &gt;&gt;&gt; generator = GeneratorProfileVMFHypercircle(n_v=5, n_c=3, vmf_concentration=[np.inf, np.inf])</span>
+<span class="sd">        &gt;&gt;&gt; profile = generator()</span>
+<span class="sd">        &gt;&gt;&gt; profile.preferences_ut</span>
+<span class="sd">        array([[ 1.19716876,  0.82383355, -2.02100232],</span>
+<span class="sd">               [ 1.19716876,  0.82383355, -2.02100232],</span>
+<span class="sd">               [ 1.19716876,  0.82383355, -2.02100232],</span>
+<span class="sd">               [ 0.71640317, -0.64749197, -0.0689112 ],</span>
+<span class="sd">               [ 0.71640317, -0.64749197, -0.0689112 ]])</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    Ulrich (1984) - Computer Generation of Distributions on the m-Sphere</span>
+
+<span class="sd">    Wood (1994) - Simulation of the von Mises Fisher distribution</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_v</span><span class="p">,</span> <span class="n">n_c</span><span class="p">,</span> <span class="n">vmf_concentration</span><span class="p">,</span> <span class="n">vmf_probability</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vmf_pole</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_v</span> <span class="o">=</span> <span class="n">n_v</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_c</span> <span class="o">=</span> <span class="n">n_c</span>
+        <span class="c1"># Ensure that _vmf_concentration is an np.array. Compute k, its size.</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">vmf_concentration</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">vmf_concentration</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vmf_concentration</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vmf_concentration</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vmf_concentration</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">vmf_concentration</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vmf_concentration</span><span class="p">)</span>
+        <span class="c1"># Ensure that _vmf_probability is an np.array. Ensure that it is normalized.</span>
+        <span class="k">if</span> <span class="n">vmf_probability</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vmf_probability</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">vmf_probability</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">vmf_probability</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vmf_probability</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vmf_probability</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">vmf_probability</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vmf_probability</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">])</span>
+        <span class="c1"># Ensure that _vmf_pole is a 2d array. It is not necessary to normalize: it is done in profile_vmf_aux.</span>
+        <span class="k">if</span> <span class="n">vmf_pole</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vmf_pole</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_c</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vmf_pole</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vmf_pole</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vmf_pole</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">vmf_pole</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vmf_pole</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_creation</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;VMFHypercircle&#39;</span><span class="p">,</span> <span class="n">n_c</span><span class="p">,</span> <span class="n">n_v</span><span class="p">,</span> <span class="s1">&#39;VMF Concentration&#39;</span><span class="p">,</span> <span class="n">vmf_concentration</span><span class="p">,</span>
+                             <span class="s1">&#39;VMF Probability&#39;</span><span class="p">,</span> <span class="n">vmf_probability</span><span class="p">,</span> <span class="s1">&#39;VMF Pole&#39;</span><span class="p">,</span> <span class="n">vmf_pole</span><span class="p">]</span>
+        <span class="c1"># We have three interesting spaces:</span>
+        <span class="c1"># Space 1: unit sphere of R^(n_c-1)</span>
+        <span class="c1"># Space 2: unit sphere of R^n_c orthogonal to [0, ..., 0, 1]</span>
+        <span class="c1"># Space 3: unit sphere of R^n_c orthogonal to [1, ..., 1, 1]</span>
+        <span class="c1"># We use two isometric transformations:</span>
+        <span class="c1"># 1 =&gt; 2: add a 0 as last coordinate.</span>
+        <span class="c1"># 2 =&gt; 1: remove the last coordinate (which is 0).</span>
+        <span class="c1"># 2 &lt;=&gt; 3: symmetry by a hyperplane that exchanges [0, ..., 0, 1] and [1, ..., 1] / sqrt(n_c).</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unitary_parallel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_c</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_c</span><span class="p">))</span> <span class="o">-</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_c</span><span class="p">))</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unitary_parallel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">unitary_parallel</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">unitary_parallel</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+        <span class="c1"># Project poles on the hyperplane H orthogonal to [1,..., 1] (space 3).</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vmf_pole</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vmf_pole</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vmf_pole</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_c</span>
+        <span class="c1"># Send poles to space 2 ~= space 1.</span>
+        <span class="n">pole_parallel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vmf_pole</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">unitary_parallel</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:],</span> <span class="mi">1</span><span class="p">),</span>
+                                 <span class="bp">self</span><span class="o">.</span><span class="n">unitary_parallel</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vmf_pole</span> <span class="o">-=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pole_parallel</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Compute the number of voters in each group</span>
+        <span class="n">group_v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_v</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vmf_probability</span><span class="p">)</span>
+        <span class="n">cardinal_group_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">group_v</span><span class="p">,</span> <span class="n">minlength</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">)</span>
+        <span class="n">cum_cardinal_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(([</span><span class="mi">0</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">cardinal_group_i</span><span class="p">)))</span>
+        <span class="c1"># Use Von-Mises Fisher in space 1 ~= space 2</span>
+        <span class="n">preferences_ut</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">n_v</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_c</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">):</span>
+            <span class="n">preferences_ut</span><span class="p">[</span><span class="n">cum_cardinal_i</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span><span class="n">cum_cardinal_i</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">profile_vmf_aux</span><span class="p">(</span>
+                <span class="n">n_c</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_v</span><span class="o">=</span><span class="n">cardinal_group_i</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">concentration</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vmf_concentration</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                <span class="n">pole</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vmf_pole</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="c1"># Now send back to space 3.</span>
+        <span class="n">preferences_parallel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">preferences_ut</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">unitary_parallel</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:],</span> <span class="mi">1</span><span class="p">),</span>
+                                        <span class="bp">self</span><span class="o">.</span><span class="n">unitary_parallel</span><span class="p">)</span>
+        <span class="n">preferences_ut</span> <span class="o">-=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">preferences_parallel</span>
+        <span class="c1"># Conclude</span>
+        <span class="k">return</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="n">preferences_ut</span><span class="p">,</span> <span class="n">log_creation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">log_creation</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, François Durand.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
