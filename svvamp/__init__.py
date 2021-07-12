@@ -6,51 +6,51 @@ __version__ = '0.1.0'
 
 
 # Utils
-from .utils.misc import initialize_random_seeds
+from svvamp.utils.misc import initialize_random_seeds
 
 # Profile
-from .preferences.profile import Profile
-from .preferences.profile_from_file import ProfileFromFile
-from .preferences.profile_subset_candidates import ProfileSubsetCandidates
+from svvamp.preferences.profile import Profile
+from svvamp.preferences.profile_from_file import ProfileFromFile
+from svvamp.preferences.profile_subset_candidates import ProfileSubsetCandidates
 
 # Profile Generator
-from .preferences.generator_profile import GeneratorProfile
-from .preferences.generator_profile_cubic_uniform import GeneratorProfileCubicUniform
-from .preferences.generator_profile_euclidean_box import GeneratorProfileEuclideanBox
-from .preferences.generator_profile_gaussian_well import GeneratorProfileGaussianWell
-from .preferences.generator_profile_ladder import GeneratorProfileLadder
-from .preferences.generator_profile_noise import GeneratorProfileNoise
-from .preferences.generator_profile_noised_file import ProfileGeneratorNoisedFile
-from .preferences.generator_profile_spheroid import GeneratorProfileSpheroid
-from .preferences.generator_profile_vmf_hypercircle import GeneratorProfileVMFHypercircle
-from .preferences.generator_profile_vmf_hypersphere import GeneratorProfileVMFHypersphere
+from svvamp.preferences.generator_profile import GeneratorProfile
+from svvamp.preferences.generator_profile_cubic_uniform import GeneratorProfileCubicUniform
+from svvamp.preferences.generator_profile_euclidean_box import GeneratorProfileEuclideanBox
+from svvamp.preferences.generator_profile_gaussian_well import GeneratorProfileGaussianWell
+from svvamp.preferences.generator_profile_ladder import GeneratorProfileLadder
+from svvamp.preferences.generator_profile_noise import GeneratorProfileNoise
+from svvamp.preferences.generator_profile_noised_file import ProfileGeneratorNoisedFile
+from svvamp.preferences.generator_profile_spheroid import GeneratorProfileSpheroid
+from svvamp.preferences.generator_profile_vmf_hypercircle import GeneratorProfileVMFHypercircle
+from svvamp.preferences.generator_profile_vmf_hypersphere import GeneratorProfileVMFHypersphere
 
 # Voting Rule
-from .rules.rule import Rule
-from .rules.rule_approval import RuleApproval
-from .rules.rule_baldwin import RuleBaldwin
-from .rules.rule_borda import RuleBorda
-from .rules.rule_bucklin import RuleBucklin
-from .rules.rule_condorcet_sum_defeats import RuleCondorcetSumDefeats
-from .rules.rule_coombs import RuleCoombs
-from .rules.rule_icrv import RuleICRV
-from .rules.rule_irv_average import RuleIRVAverage
-from .rules.rule_irv_duels import RuleIRVDuels
-from .rules.rule_iterated_bucklin import RuleIteratedBucklin
-from .rules.rule_kemeny import RuleKemeny
-from .rules.rule_kim_roush import RuleKimRoush
-from .rules.rule_majority_judgment import RuleMajorityJudgment
-from .rules.rule_maximin import RuleMaximin
-from .rules.rule_nanson import RuleNanson
-from .rules.rule_plurality import RulePlurality
-from .rules.rule_range_voting import RuleRangeVoting
-from .rules.rule_ranked_pairs import RuleRankedPairs
-from .rules.rule_schulze import RuleSchulze
-from .rules.rule_two_round import RuleTwoRound
-from .rules.rule_veto import RuleVeto
+from svvamp.rules.rule import Rule
+from svvamp.rules.rule_approval import RuleApproval
+from svvamp.rules.rule_baldwin import RuleBaldwin
+from svvamp.rules.rule_borda import RuleBorda
+from svvamp.rules.rule_bucklin import RuleBucklin
+from svvamp.rules.rule_condorcet_sum_defeats import RuleCondorcetSumDefeats
+from svvamp.rules.rule_coombs import RuleCoombs
+from svvamp.rules.rule_icrv import RuleICRV
+from svvamp.rules.rule_irv_average import RuleIRVAverage
+from svvamp.rules.rule_irv_duels import RuleIRVDuels
+from svvamp.rules.rule_iterated_bucklin import RuleIteratedBucklin
+from svvamp.rules.rule_kemeny import RuleKemeny
+from svvamp.rules.rule_kim_roush import RuleKimRoush
+from svvamp.rules.rule_majority_judgment import RuleMajorityJudgment
+from svvamp.rules.rule_maximin import RuleMaximin
+from svvamp.rules.rule_nanson import RuleNanson
+from svvamp.rules.rule_plurality import RulePlurality
+from svvamp.rules.rule_range_voting import RuleRangeVoting
+from svvamp.rules.rule_ranked_pairs import RuleRankedPairs
+from svvamp.rules.rule_schulze import RuleSchulze
+from svvamp.rules.rule_two_round import RuleTwoRound
+from svvamp.rules.rule_veto import RuleVeto
 
 # Voting Rule: IRV Family
-from .rules.rule_exhaustive_ballot import RuleExhaustiveBallot
-from .rules.rule_irv import RuleIRV
-from .rules.rule_condorcet_abs_irv import RuleCondorcetAbsIRV
-from .rules.rule_condorcet_vtb_irv import RuleCondorcetVtbIRV
+from svvamp.rules.rule_exhaustive_ballot import RuleExhaustiveBallot
+from svvamp.rules.rule_irv import RuleIRV
+from svvamp.rules.rule_condorcet_abs_irv import RuleCondorcetAbsIRV
+from svvamp.rules.rule_condorcet_vtb_irv import RuleCondorcetVtbIRV
