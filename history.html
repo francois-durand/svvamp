@@ -101,13 +101,13 @@
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">History</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">0.1.2 (2021-07-12)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">0.1.1 (2021-07-12)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">0.1.0 (2021-07-12)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id4">0.0.4 (2015-03-10)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id5">0.0.3 (2015-02-28)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id6">0.0.2 (2015-02-16)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id7">0.0.1 (2015-02-14)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fix-release-number">0.1.2 (2021-07-12): Fix Release Number</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fix-deployment">0.1.1 (2021-07-12): Fix Deployment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#complete-refactoring">0.1.0 (2021-07-12): Complete Refactoring</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fix-a-bug-in-plurality">0.0.4 (2015-03-10): Fix a Bug in Plurality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#miscellaneous-minor-improvements">0.0.3 (2015-02-28): Miscellaneous Minor Improvements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#svvamp-s-core-features">0.0.2 (2015-02-16): SVVAMP’s Core Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#first-release">0.0.1 (2015-02-14): First Release</a></li>
 </ul>
 </li>
 </ul>
@@ -203,20 +203,20 @@
 </style>
 <div class="section" id="history">
 <h1>History<a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="id1">
-<h2>0.1.2 (2021-07-12)<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="fix-release-number">
+<h2>0.1.2 (2021-07-12): Fix Release Number<a class="headerlink" href="#fix-release-number" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Fix release number.</p></li>
 </ul>
 </div>
-<div class="section" id="id2">
-<h2>0.1.1 (2021-07-12)<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="fix-deployment">
+<h2>0.1.1 (2021-07-12): Fix Deployment<a class="headerlink" href="#fix-deployment" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Fix deployment on PyPI.</p></li>
 </ul>
 </div>
-<div class="section" id="id3">
-<h2>0.1.0 (2021-07-12)<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="complete-refactoring">
+<h2>0.1.0 (2021-07-12): Complete Refactoring<a class="headerlink" href="#complete-refactoring" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Refactor the code completely. New architecture, especially for <code class="docutils literal notranslate"><span class="pre">Rule</span></code> (formerly <code class="docutils literal notranslate"><span class="pre">Election</span></code>), avoiding
 diamond inheritance. Rename most classes, properties and methods.</p></li>
@@ -224,16 +224,17 @@ diamond inheritance. Rename most classes, properties and methods.</p></li>
 <li><p>Fix some minor bugs.</p></li>
 <li><p>Documentation in numpy style.</p></li>
 <li><p>Tutorials are now Jupyter notebooks.</p></li>
+<li><p>New rules: Kim-Roush and IRV-Average.</p></li>
 </ul>
 </div>
-<div class="section" id="id4">
-<h2>0.0.4 (2015-03-10)<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="fix-a-bug-in-plurality">
+<h2>0.0.4 (2015-03-10): Fix a Bug in Plurality<a class="headerlink" href="#fix-a-bug-in-plurality" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Correct a minor bug in Plurality.IM (voters_IM is now updated).</p></li>
 </ul>
 </div>
-<div class="section" id="id5">
-<h2>0.0.3 (2015-02-28)<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="miscellaneous-minor-improvements">
+<h2>0.0.3 (2015-02-28): Miscellaneous Minor Improvements<a class="headerlink" href="#miscellaneous-minor-improvements" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Rename functions and attributes with suffix _vtb to _rk.</p></li>
 <li><p>Allow to define a population by both utilities and rankings.</p></li>
@@ -241,14 +242,14 @@ diamond inheritance. Rename most classes, properties and methods.</p></li>
 <li><p>Range voting / Majority Judgment: with a discrete set of grades, send to closest authorized grades.</p></li>
 </ul>
 </div>
-<div class="section" id="id6">
-<h2>0.0.2 (2015-02-16)<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="svvamp-s-core-features">
+<h2>0.0.2 (2015-02-16): SVVAMP’s Core Features<a class="headerlink" href="#svvamp-s-core-features" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>8 population models and 23 voting systems.</p></li>
 </ul>
 </div>
-<div class="section" id="id7">
-<h2>0.0.1 (2015-02-14)<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="first-release">
+<h2>0.0.1 (2015-02-14): First Release<a class="headerlink" href="#first-release" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>First release on PyPI.</p></li>
 </ul>
