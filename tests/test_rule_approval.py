@@ -1,7 +1,4 @@
-import numpy as np
-from svvamp import GeneratorProfileLadder
-from svvamp.utils.misc import initialize_random_seeds
-from svvamp import RuleApproval
+from svvamp import RuleApproval, Profile
 
 
 def test_approval_threshold_setter():
@@ -38,8 +35,19 @@ def test_approval_comparator_setter():
 
 def test_comparator_greater_or_equal():
     """
-        >>> initialize_random_seeds()
-        >>> profile = GeneratorProfileLadder(n_v=5, n_c=3, n_rungs=5)().profile_
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 0. , -0.5, -1. ],
+        ...     [ 1. , -1. ,  0.5],
+        ...     [ 0.5,  0.5, -0.5],
+        ...     [ 0.5,  0. ,  1. ],
+        ...     [-1. , -1. ,  1. ],
+        ... ], preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [0, 2, 1],
+        ...     [1, 0, 2],
+        ...     [2, 0, 1],
+        ...     [2, 1, 0],
+        ... ])
         >>> rule = RuleApproval(approval_comparator='>=')(profile)
         >>> rule.w_
         0
@@ -48,8 +56,19 @@ def test_comparator_greater_or_equal():
 
 def test_tm_um_c():
     """
-        >>> initialize_random_seeds()
-        >>> profile = GeneratorProfileLadder(n_v=5, n_c=3, n_rungs=5)().profile_
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 0. , -0.5, -1. ],
+        ...     [ 1. , -1. ,  0.5],
+        ...     [ 0.5,  0.5, -0.5],
+        ...     [ 0.5,  0. ,  1. ],
+        ...     [-1. , -1. ,  1. ],
+        ... ], preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [0, 2, 1],
+        ...     [1, 0, 2],
+        ...     [2, 0, 1],
+        ...     [2, 1, 0],
+        ... ])
         >>> rule = RuleApproval()(profile)
         >>> rule.is_tm_c_(0)
         False

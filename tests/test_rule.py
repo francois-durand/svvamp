@@ -1,6 +1,6 @@
 from svvamp import Rule, RulePlurality, Profile, RuleVeto, RuleMaximin, RuleExhaustiveBallot, RuleBaldwin, \
     RuleIRVAverage, RuleMajorityJudgment, RuleNanson, RuleRankedPairs, RuleBorda, RuleSchulze, RuleIRVDuels, \
-    RuleRangeVoting, RuleKemeny, RuleTwoRound, RuleICRV, RuleBucklin, RuleCondorcetSumDefeats, RuleCoombs
+    RuleRangeVoting, RuleKemeny, RuleICRV, RuleCondorcetSumDefeats
 
 
 def test_initialize_options():
@@ -1113,6 +1113,7 @@ def test_cm_main_work_c_exact():
     pass
 
 
+# noinspection PyProtectedMember
 def test_reached_uncovered_code():
     """
         >>> profile = Profile(preferences_rk=[[0, 1, 2], [1, 0, 2]])

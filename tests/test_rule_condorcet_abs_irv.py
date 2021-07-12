@@ -1,12 +1,22 @@
-from svvamp.utils.misc import initialize_random_seeds
-from svvamp import RuleCondorcetAbsIRV, GeneratorProfileLadder
+from svvamp import RuleCondorcetAbsIRV, Profile
 
 
 def test_cm_slow():
     """
         >>> cm_option = 'slow'
-        >>> initialize_random_seeds()
-        >>> profile = GeneratorProfileLadder(n_v=5, n_c=3, n_rungs=5)().profile_
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 0. , -0.5, -1. ],
+        ...     [ 1. , -1. ,  0.5],
+        ...     [ 0.5,  0.5, -0.5],
+        ...     [ 0.5,  0. ,  1. ],
+        ...     [-1. , -1. ,  1. ],
+        ... ], preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [0, 2, 1],
+        ...     [1, 0, 2],
+        ...     [2, 0, 1],
+        ...     [2, 1, 0],
+        ... ])
         >>> rule = RuleCondorcetAbsIRV(cm_option=cm_option)(profile)
         >>> rule.candidates_cm_
         array([0., 0., 0.])
@@ -17,8 +27,19 @@ def test_cm_slow():
 def test_cm_almost_exact():
     """
         >>> cm_option = 'almost_exact'
-        >>> initialize_random_seeds()
-        >>> profile = GeneratorProfileLadder(n_v=5, n_c=3, n_rungs=5)().profile_
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 0. , -0.5, -1. ],
+        ...     [ 1. , -1. ,  0.5],
+        ...     [ 0.5,  0.5, -0.5],
+        ...     [ 0.5,  0. ,  1. ],
+        ...     [-1. , -1. ,  1. ],
+        ... ], preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [0, 2, 1],
+        ...     [1, 0, 2],
+        ...     [2, 0, 1],
+        ...     [2, 1, 0],
+        ... ])
         >>> rule = RuleCondorcetAbsIRV(cm_option=cm_option)(profile)
         >>> rule.candidates_cm_
         array([0., 0., 0.])
@@ -29,8 +50,19 @@ def test_cm_almost_exact():
 def test_cm_exact():
     """
         >>> cm_option = 'exact'
-        >>> initialize_random_seeds()
-        >>> profile = GeneratorProfileLadder(n_v=5, n_c=3, n_rungs=5)().profile_
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 0. , -0.5, -1. ],
+        ...     [ 1. , -1. ,  0.5],
+        ...     [ 0.5,  0.5, -0.5],
+        ...     [ 0.5,  0. ,  1. ],
+        ...     [-1. , -1. ,  1. ],
+        ... ], preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [0, 2, 1],
+        ...     [1, 0, 2],
+        ...     [2, 0, 1],
+        ...     [2, 1, 0],
+        ... ])
         >>> rule = RuleCondorcetAbsIRV(cm_option=cm_option)(profile)
         >>> rule.candidates_cm_
         array([0., 0., 0.])

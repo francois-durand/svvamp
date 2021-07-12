@@ -20,7 +20,6 @@ This file is part of SVVAMP.
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
 import numpy as np
-from svvamp.utils.util_cache import cached_property
 from svvamp.preferences.generator_profile import GeneratorProfile
 from svvamp.preferences.profile import Profile
 
@@ -47,7 +46,8 @@ class GeneratorProfileNoise(GeneratorProfile):
     --------
         >>> generator = GeneratorProfileNoise(base_profile=Profile(preferences_ut=[[5, 1, 2], [4, 10, 1]]),
         ...                                   absolute_noise=.1)
-        >>> generator().profile_.preferences_rk.shape
+        >>> profile = generator()
+        >>> profile.preferences_rk.shape
         (2, 3)
     """
 
@@ -66,8 +66,7 @@ class GeneratorProfileNoise(GeneratorProfile):
                              'Relative noise', relative_noise, 'Absolute noise', absolute_noise]
         super().__init__()
 
-    @cached_property
-    def profile_(self):
+    def __call__(self):
         preferences_ut = self.base_ut.copy()
         if self.total_noise != 0:
             preferences_ut += self.total_noise * 2 * (0.5 - np.random.rand(self.n_v, self.n_c))

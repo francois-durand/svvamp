@@ -12,9 +12,9 @@ with open('HISTORY.rst') as history_file:
 
 requirements = ['matplotlib', 'networkx', 'numpy', 'pandas', 'scipy']
 
-setup_requirements = ['pytest-runner',]
+setup_requirements = ['pytest-runner', ]
 
-test_requirements = ['pytest>=3',]
+test_requirements = ['pytest>=3', ]
 
 setup(
     author="François Durand",

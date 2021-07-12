@@ -4,12 +4,12 @@ from svvamp import Profile
 
 def test_not_enough_voters():
     with pytest.raises(ValueError):
-        profile = Profile(preferences_ut=[[1, 0]])
+        _ = Profile(preferences_ut=[[1, 0]])
 
 
 def test_not_enough_candidates():
     with pytest.raises(ValueError):
-        profile = Profile(preferences_ut=[[1], [0]])
+        _ = Profile(preferences_ut=[[1], [0]])
 
 
 def test_set_labels_candidates():

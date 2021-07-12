@@ -19,10 +19,9 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
-from svvamp.utils.util_cache import cached_property, DeleteCacheMixin
 
 
-class GeneratorProfile(DeleteCacheMixin):
+class GeneratorProfile:
     """A generator of profiles.
 
     Examples
@@ -36,23 +35,11 @@ class GeneratorProfile(DeleteCacheMixin):
         pass
 
     def __call__(self):
-        """Erase the cache (in particular, the last generated profile).
-
-        Returns
-        -------
-        GeneratorProfile
-            The generator itself.
-        """
-        self.delete_cache()
-        return self
-
-    @cached_property
-    def profile_(self):
-        """The profile generated.
+        """Return a random profile.
 
         Returns
         -------
         Profile
-            The generated profile.
+            A random profile.
         """
         raise NotImplementedError

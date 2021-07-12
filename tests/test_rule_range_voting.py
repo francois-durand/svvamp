@@ -1,7 +1,5 @@
 import numpy as np
-from svvamp import GeneratorProfileLadder
-from svvamp.utils.misc import initialize_random_seeds
-from svvamp import RuleRangeVoting
+from svvamp import RuleRangeVoting, Profile
 
 
 def test_min_grade_setter():
@@ -70,8 +68,19 @@ def test_rescale_grades_setter():
 
 def test_no_rescale_grades():
     """
-        >>> initialize_random_seeds()
-        >>> profile = GeneratorProfileLadder(n_v=5, n_c=3, n_rungs=5)().profile_
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 0. , -0.5, -1. ],
+        ...     [ 1. , -1. ,  0.5],
+        ...     [ 0.5,  0.5, -0.5],
+        ...     [ 0.5,  0. ,  1. ],
+        ...     [-1. , -1. ,  1. ],
+        ... ], preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [0, 2, 1],
+        ...     [1, 0, 2],
+        ...     [2, 0, 1],
+        ...     [2, 1, 0],
+        ... ])
         >>> rule = RuleRangeVoting(rescale_grades=False)(profile)
         >>> rule.w_
         2
@@ -81,8 +90,19 @@ def test_no_rescale_grades():
 
 def test_step_grade_not_equal_to_zero():
     """
-        >>> initialize_random_seeds()
-        >>> profile = GeneratorProfileLadder(n_v=5, n_c=3, n_rungs=5)().profile_
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 0. , -0.5, -1. ],
+        ...     [ 1. , -1. ,  0.5],
+        ...     [ 0.5,  0.5, -0.5],
+        ...     [ 0.5,  0. ,  1. ],
+        ...     [-1. , -1. ,  1. ],
+        ... ], preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [0, 2, 1],
+        ...     [1, 0, 2],
+        ...     [2, 0, 1],
+        ...     [2, 1, 0],
+        ... ])
         >>> rule = RuleRangeVoting(step_grade=0.1)(profile)
         >>> rule.w_
         0
@@ -92,8 +112,19 @@ def test_step_grade_not_equal_to_zero():
 
 def test_tm_um_c():
     """
-        >>> initialize_random_seeds()
-        >>> profile = GeneratorProfileLadder(n_v=5, n_c=3, n_rungs=5)().profile_
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 0. , -0.5, -1. ],
+        ...     [ 1. , -1. ,  0.5],
+        ...     [ 0.5,  0.5, -0.5],
+        ...     [ 0.5,  0. ,  1. ],
+        ...     [-1. , -1. ,  1. ],
+        ... ], preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [0, 2, 1],
+        ...     [1, 0, 2],
+        ...     [2, 0, 1],
+        ...     [2, 1, 0],
+        ... ])
         >>> rule = RuleRangeVoting()(profile)
         >>> rule.is_tm_c_(0)
         False

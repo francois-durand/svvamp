@@ -20,7 +20,6 @@ This file is part of SVVAMP.
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
 import numpy as np
-from svvamp.utils.util_cache import cached_property
 from svvamp.preferences.generator_profile import GeneratorProfile
 from svvamp.preferences.profile import Profile
 
@@ -48,7 +47,8 @@ class GeneratorProfileLadder(GeneratorProfile):
     Examples
     --------
         >>> generator = GeneratorProfileLadder(n_v=10, n_c=3, n_rungs=5)
-        >>> generator().profile_.preferences_rk.shape
+        >>> profile = generator()
+        >>> profile.preferences_rk.shape
         (10, 3)
     """
 
@@ -59,8 +59,7 @@ class GeneratorProfileLadder(GeneratorProfile):
         self.log_creation = ['Ladder', n_c, n_v, 'Number of rungs', n_rungs]
         super().__init__()
 
-    @cached_property
-    def profile_(self):
+    def __call__(self):
         return Profile(
             preferences_ut=np.random.randint(self.n_rungs, size=(self.n_v, self.n_c)) * 2 / (self.n_rungs - 1) - 1,
             log_creation=self.log_creation)

@@ -5,6 +5,9 @@ __email__ = 'fradurand@gmail.com'
 __version__ = '0.1.0'
 
 
+# Utils
+from .utils.misc import initialize_random_seeds
+
 # Profile
 from .preferences.profile import Profile
 from .preferences.profile_from_file import ProfileFromFile

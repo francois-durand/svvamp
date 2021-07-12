@@ -21,7 +21,6 @@ This file is part of SVVAMP.
 """
 import numpy as np
 from svvamp.utils.misc import initialize_random_seeds
-from svvamp.utils.util_cache import cached_property
 from svvamp.utils.von_mises_fisher import profile_vmf_aux
 from svvamp.preferences.generator_profile import GeneratorProfile
 from svvamp.preferences.profile import Profile
@@ -73,7 +72,8 @@ class GeneratorProfileVMFHypersphere(GeneratorProfile):
 
         >>> initialize_random_seeds()
         >>> generator = GeneratorProfileVMFHypersphere(n_v=5, n_c=3, vmf_concentration=10)
-        >>> generator().profile_.preferences_ut
+        >>> profile = generator()
+        >>> profile.preferences_ut
         array([[ 0.95891992, -0.12067454,  0.25672991],
                [ 0.86494714,  0.06265355,  0.49793673],
                [ 0.94128919, -0.27215259,  0.19976892],
@@ -84,7 +84,8 @@ class GeneratorProfileVMFHypersphere(GeneratorProfile):
 
         >>> initialize_random_seeds()
         >>> generator = GeneratorProfileVMFHypersphere(n_v=5, n_c=3, vmf_concentration=10, vmf_pole=[.7, .7, 0])
-        >>> generator().profile_.preferences_ut
+        >>> profile = generator()
+        >>> profile.preferences_ut
         array([[ 0.75351327,  0.5734909 , -0.32144353],
                [ 0.5984744 ,  0.64868975, -0.47013828],
                [ 0.38344905,  0.91929245, -0.08870296],
@@ -96,7 +97,8 @@ class GeneratorProfileVMFHypersphere(GeneratorProfile):
         >>> initialize_random_seeds()
         >>> generator = GeneratorProfileVMFHypersphere(n_v=5, n_c=3, vmf_concentration=[np.inf, np.inf],
         ...                                            vmf_probability=[.9, .1])
-        >>> generator().profile_.preferences_ut
+        >>> profile = generator()
+        >>> profile.preferences_ut
         array([[ 2.2408932 ,  1.86755799, -0.97727788],
                [ 1.76405235,  0.40015721,  0.97873798],
                [ 1.76405235,  0.40015721,  0.97873798],
@@ -107,7 +109,8 @@ class GeneratorProfileVMFHypersphere(GeneratorProfile):
 
         >>> initialize_random_seeds()
         >>> generator = GeneratorProfileVMFHypersphere(n_v=5, n_c=3, vmf_concentration=[np.inf, np.inf])
-        >>> generator().profile_.preferences_ut
+        >>> profile = generator()
+        >>> profile.preferences_ut
         array([[ 2.2408932 ,  1.86755799, -0.97727788],
                [ 2.2408932 ,  1.86755799, -0.97727788],
                [ 2.2408932 ,  1.86755799, -0.97727788],
@@ -118,7 +121,8 @@ class GeneratorProfileVMFHypersphere(GeneratorProfile):
 
         >>> initialize_random_seeds()
         >>> generator = GeneratorProfileVMFHypersphere(n_v=5, n_c=3, vmf_concentration=0, stretching=100)
-        >>> generator().profile_.preferences_ut
+        >>> profile = generator()
+        >>> profile.preferences_ut
         array([[ 0.14719473,  0.14577802,  0.14320266],
                [ 0.17534594,  0.17348776,  0.17273085],
                [-0.3104039 , -0.3047001 , -0.31555119],
@@ -127,7 +131,8 @@ class GeneratorProfileVMFHypersphere(GeneratorProfile):
 
         >>> initialize_random_seeds()
         >>> generator = GeneratorProfileVMFHypersphere(n_v=5, n_c=3, vmf_concentration=0, stretching=.01)
-        >>> generator().profile_.preferences_ut
+        >>> profile = generator()
+        >>> profile.preferences_ut
         array([[ 0.18174638,  0.04007574, -0.21746036],
                [ 0.15084759, -0.03497065, -0.11066129],
                [-0.02165249,  0.54872752, -0.53638159],
@@ -169,8 +174,7 @@ class GeneratorProfileVMFHypersphere(GeneratorProfile):
                              'VMF Probability', vmf_probability, 'VMF Pole', vmf_pole, 'Stretching', stretching]
         super().__init__()
 
-    @cached_property
-    def profile_(self):
+    def __call__(self):
         # Compute the number of voters in each group
         group_v = np.random.choice(self.k, size=self.n_v, replace=True, p=self.vmf_probability)
         cardinal_group_i = np.bincount(group_v, minlength=self.k)

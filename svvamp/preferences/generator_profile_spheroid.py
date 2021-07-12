@@ -20,7 +20,6 @@ This file is part of SVVAMP.
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
 import numpy as np
-from svvamp.utils.util_cache import cached_property
 from svvamp.preferences.generator_profile import GeneratorProfile
 from svvamp.preferences.profile import Profile
 
@@ -61,17 +60,20 @@ class GeneratorProfileSpheroid(GeneratorProfile):
     Typical usage:
 
         >>> generator = GeneratorProfileSpheroid(n_v=10, n_c=3, stretching=1)
-        >>> generator().profile_.preferences_rk.shape
+        >>> profile = generator()
+        >>> profile.preferences_rk.shape
         (10, 3)
 
     With some stretching:
 
         >>> generator = GeneratorProfileSpheroid(n_v=10, n_c=3, stretching=2)
-        >>> generator().profile_.preferences_rk.shape
+        >>> profile = generator()
+        >>> profile.preferences_rk.shape
         (10, 3)
 
         >>> generator = GeneratorProfileSpheroid(n_v=10, n_c=3, stretching=.5)
-        >>> generator().profile_.preferences_rk.shape
+        >>> profile = generator()
+        >>> profile.preferences_rk.shape
         (10, 3)
     """
 
@@ -82,8 +84,7 @@ class GeneratorProfileSpheroid(GeneratorProfile):
         self.log_creation = ['Spheroid', n_c, n_v, 'Stretching', stretching]
         super().__init__()
 
-    @cached_property
-    def profile_(self):
+    def __call__(self):
         # Step 1: spherical distribution
         preferences_ut = np.random.randn(self.n_v, self.n_c)
         preferences_ut = preferences_ut / np.sqrt(np.sum(preferences_ut**2, 1))[:, np.newaxis]

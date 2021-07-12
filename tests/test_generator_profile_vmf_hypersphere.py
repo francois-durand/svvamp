@@ -8,7 +8,8 @@ def test():
 
         >>> initialize_random_seeds()
         >>> generator = GeneratorProfileVMFHypersphere(n_v=5, n_c=3, vmf_concentration=10, vmf_probability=1)
-        >>> generator().profile_.preferences_ut
+        >>> profile = generator()
+        >>> profile.preferences_ut
         array([[ 0.95891992, -0.12067454,  0.25672991],
                [ 0.86494714,  0.06265355,  0.49793673],
                [ 0.94128919, -0.27215259,  0.19976892],

@@ -21,7 +21,6 @@ This file is part of SVVAMP.
 """
 import numpy as np
 from scipy.spatial import distance
-from svvamp.utils.util_cache import cached_property
 from svvamp.preferences.generator_profile import GeneratorProfile
 from svvamp.preferences.profile import Profile
 
@@ -56,7 +55,8 @@ class GeneratorProfileGaussianWell(GeneratorProfile):
     Examples
     --------
         >>> generator = GeneratorProfileGaussianWell(n_v=10, n_c=3, sigma=[1], shift=[10])
-        >>> generator().profile_.preferences_rk.shape
+        >>> profile = generator()
+        >>> profile.preferences_rk.shape
         (10, 3)
     """
 
@@ -70,8 +70,7 @@ class GeneratorProfileGaussianWell(GeneratorProfile):
                              'Shift', self.shift, 'Number of dimensions', self.n_dim]
         super().__init__()
 
-    @cached_property
-    def profile_(self):
+    def __call__(self):
         voters_positions = np.random.randn(self.n_v, self.n_dim) * self.sigma
         candidates_positions = self.shift + np.random.randn(self.n_c, self.n_dim) * self.sigma
         preferences_utilities = - distance.cdist(voters_positions, candidates_positions, 'euclidean')
