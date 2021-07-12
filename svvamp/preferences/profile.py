@@ -30,7 +30,8 @@ from svvamp.utils import my_log
 from svvamp.utils.util_cache import cached_property
 from svvamp.utils.misc import initialize_random_seeds
 from svvamp.utils.misc import preferences_ut_to_preferences_rk, preferences_rk_to_preferences_borda_rk, \
-    preferences_ut_to_preferences_borda_ut, preferences_ut_to_matrix_duels_ut, is_resistant_condorcet
+    preferences_ut_to_preferences_borda_ut, preferences_ut_to_matrix_duels_ut, is_resistant_condorcet, \
+    matrix_victories_to_smith_set
 from svvamp.utils.pseudo_bool import equal_true
 
 
@@ -1333,6 +1334,86 @@ class Profile(my_log.MyLog):
                     result[c, w] = np.minimum(result[c, w], threshold_c_makes_w_not_win_against_d)
                 result = np.maximum(result, 0)
         return result
+
+    # %% Smith Set
+
+    @cached_property
+    def smith_set_rk_ctb(self):
+        """List. Smith set computed from :attr:`~svvamp.Population.matrix_victories_rk_ctb`.
+
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3], [1, 2, 0, 3], [2, 0, 1, 3]])
+            >>> profile.smith_set_rk_ctb
+            [0, 1, 2]
+        """
+        return matrix_victories_to_smith_set(self.matrix_victories_rk_ctb)
+
+    @cached_property
+    def smith_set_rk(self):
+        """List. Smith set computed from :attr:`~svvamp.Population.matrix_victories_rk`.
+
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3], [1, 2, 0, 3], [2, 0, 1, 3]])
+            >>> profile.smith_set_rk
+            [0, 1, 2]
+        """
+        return matrix_victories_to_smith_set(self.matrix_victories_rk)
+
+    @cached_property
+    def smith_set_ut_rel_ctb(self):
+        """List. Smith set computed from :attr:`~svvamp.Population.matrix_victories_ut_rel_ctb`.
+
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3], [1, 2, 0, 3], [2, 0, 1, 3]])
+            >>> profile.smith_set_ut_rel_ctb
+            [0, 1, 2]
+        """
+        return matrix_victories_to_smith_set(self.matrix_victories_ut_rel_ctb)
+
+    @cached_property
+    def smith_set_ut_rel(self):
+        """List. Smith set computed from :attr:`~svvamp.Population.matrix_victories_ut_rel`.
+
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3], [1, 2, 0, 3], [2, 0, 1, 3]])
+            >>> profile.smith_set_ut_rel
+            [0, 1, 2]
+        """
+        return matrix_victories_to_smith_set(self.matrix_victories_ut_rel)
+
+    @cached_property
+    def smith_set_ut_abs_ctb(self):
+        """List. Smith set computed from :attr:`~svvamp.Population.matrix_victories_ut_abs_ctb`.
+
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3], [1, 2, 0, 3], [2, 0, 1, 3]])
+            >>> profile.smith_set_ut_abs_ctb
+            [0, 1, 2]
+        """
+        return matrix_victories_to_smith_set(self.matrix_victories_ut_abs_ctb)
+
+    @cached_property
+    def smith_set_ut_abs(self):
+        """List. Smith set computed from :attr:`~svvamp.Population.matrix_victories_ut_abs`.
+
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3], [1, 2, 0, 3], [2, 0, 1, 3]])
+            >>> profile.smith_set_ut_abs
+            [0, 1, 2]
+        """
+        return matrix_victories_to_smith_set(self.matrix_victories_ut_abs)
 
     # %% Majority favorite
 
