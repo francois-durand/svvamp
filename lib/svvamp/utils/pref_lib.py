@@ -108,7 +108,6 @@ def preflib_to_preferences_ut(file_name):
                     crank += 1
                 else:
                     ballot_temp[int(ccand.strip()) - 1] = - crank
-                    # noinspection PySimplifyBooleanCheck
                     if not partial:
                         crank += 1
         preferences_utilities[start_index:start_index + count, :] = (

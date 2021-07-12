@@ -470,7 +470,7 @@
 <p>Each voter must provide a weak order, and a strict total order that is coherent with this weak order (i.e.,
 is a tie-breaking of this weak order).</p>
 <p>If there is a Condorcet winner (computed with the weak orders, i.e. in the sense of
-<code class="xref py py-attr docutils literal notranslate"><span class="pre">matrix_victories_ut_abs</span></code>), then she is elected. Otherwise, <code class="xref py py-class docutils literal notranslate"><span class="pre">IRV</span></code> is used (with the strict total
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">matrix_victories_ut_abs</span></code>), then she is elected. Otherwise, <a class="reference internal" href="rule_irv.html#svvamp.RuleIRV" title="svvamp.RuleIRV"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleIRV</span></code></a> is used (with the strict total
 orders).</p>
 <p>If sincere preferences are strict total orders, then this voting system is equivalent to <code class="xref py py-class docutils literal notranslate"><span class="pre">CondorcetVtbIRV</span></code>
 for sincere voting, but manipulators have more possibilities (they can pretend to have ties in their

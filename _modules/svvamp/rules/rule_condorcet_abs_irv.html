@@ -196,7 +196,6 @@
 <span class="kn">from</span> <span class="nn">svvamp.rules.rule_irv</span> <span class="kn">import</span> <span class="n">RuleIRV</span>
 
 
-<span class="c1"># noinspection PySimplifyBooleanCheck</span>
 <div class="viewcode-block" id="RuleCondorcetAbsIRV"><a class="viewcode-back" href="../../../reference/rules/rule_condorcet_abs_irv.html#svvamp.RuleCondorcetAbsIRV">[docs]</a><span class="k">class</span> <span class="nc">RuleCondorcetAbsIRV</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Absolute-Condorcet Instant Runoff Voting.</span>
 
@@ -439,7 +438,7 @@
 <span class="sd">    is a tie-breaking of this weak order).</span>
 
 <span class="sd">    If there is a Condorcet winner (computed with the weak orders, i.e. in the sense of</span>
-<span class="sd">    :attr:`matrix_victories_ut_abs`), then she is elected. Otherwise, :class:`IRV` is used (with the strict total</span>
+<span class="sd">    :attr:`matrix_victories_ut_abs`), then she is elected. Otherwise, :class:`RuleIRV` is used (with the strict total</span>
 <span class="sd">    orders).</span>
 
 <span class="sd">    If sincere preferences are strict total orders, then this voting system is equivalent to :class:`CondorcetVtbIRV`</span>
@@ -585,7 +584,7 @@
 
     <span class="c1"># %% Trivial Manipulation (TM)</span>
 
-    <span class="c1"># Use the general methods from class Election.</span>
+    <span class="c1"># Use the general methods from class Rule.</span>
 
     <span class="c1"># %% Unison manipulation (UM)</span>
 
@@ -593,7 +592,7 @@
 
     <span class="c1"># %% Ignorant-Coalition Manipulation (ICM)</span>
 
-    <span class="c1"># Use the general methods from class Election.</span>
+    <span class="c1"># Use the general methods from class Rule.</span>
 
     <span class="c1"># %% Coalition Manipulation (CM)</span>
 
