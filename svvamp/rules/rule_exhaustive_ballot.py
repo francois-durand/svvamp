@@ -1378,9 +1378,7 @@ class RuleExhaustiveBallot(Rule):
             return False
 
         # From this point, we have necessarily the ``exact`` option
-        if self._sufficient_coalition_size_cm[c] == self._necessary_coalition_size_cm[c]:  # pragma: no cover
-            # TO DO: Investigate whether this case can actually happen.
-            self._reached_uncovered_code()
+        if self._sufficient_coalition_size_cm[c] == self._necessary_coalition_size_cm[c]:
             return False
         if not optimize_bounds and self.profile_.matrix_duels_ut[c, self.w_] >= self._sufficient_coalition_size_cm[c]:
             # This is a quick escape: since we have the option ``exact``, if we come back with ``optimize_bounds``,
