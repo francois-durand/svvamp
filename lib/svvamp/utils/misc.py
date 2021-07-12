@@ -117,6 +117,50 @@ def preferences_ut_to_matrix_duels_ut(preferences_ut):
     return matrix_duels
 
 
+def matrix_victories_to_smith_set(matrix_victories):
+    """
+    Smith set associated to a matrix of victories.
+
+    Parameters
+    ----------
+    matrix_victories : ndarray.
+        ``matrix_victories[c, d]`` is 1 vs 0 in case of victory, 0.5 vs 0.5 in case of tie. Diagonal coefficients
+        can use any conventional value, but they must all have the same value.
+
+    Returns
+    -------
+    smith_set : list
+        List of candidates in the Smith set, sorted by increasing order.
+
+    Examples
+    --------
+        >>> matrix_victories = np.array([
+        ...     [0, 1,  1, 1, 1,  1, 0],
+        ...     [0, 0,  0, 0, 1,  0, 0],
+        ...     [0, 1,  0, 0, 1, .5, 1],
+        ...     [0, 1,  1, 0, 1,  1, 1],
+        ...     [0, 0,  0, 0, 0,  0, 0],
+        ...     [0, 1, .5, 0, 1,  0, 0],
+        ...     [1, 1,  0, 0, 1,  1, 0]
+        ... ])
+        >>> matrix_victories_to_smith_set(matrix_victories)
+        [0, 2, 3, 5, 6]
+    """
+    n_c = matrix_victories.shape[0]
+    copeland_scores = matrix_victories.sum(axis=1)
+    copeland_decreasing = sorted(copeland_scores, reverse=True)
+    candidates_by_copeland_best_worst = sorted(range(n_c), key=copeland_scores.__getitem__, reverse=True)
+    matrix_victories_sorted = (
+        matrix_victories[candidates_by_copeland_best_worst, :][:, candidates_by_copeland_best_worst])
+    i = 0
+    while True:
+        while i < n_c - 1 and copeland_decreasing[i] == copeland_decreasing[i + 1]:
+            i += 1
+        if np.all(matrix_victories_sorted[0:i + 1, i + 1:] == 1):
+            return sorted(candidates_by_copeland_best_worst[0:i + 1])
+        i += 1
+
+
 def is_resistant_condorcet(w, preferences_ut):
     """Test for resistant Condorcet winner.
 

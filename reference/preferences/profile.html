@@ -1947,6 +1947,84 @@ majority of voters who simultaneously:</p>
 </dd></dl>
 
 <dl class="py property">
+<dt class="sig sig-object py" id="svvamp.Profile.smith_set_rk">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">smith_set_rk</span></span><a class="headerlink" href="#svvamp.Profile.smith_set_rk" title="Permalink to this definition">¶</a></dt>
+<dd><p>List. Smith set computed from <code class="xref py py-attr docutils literal notranslate"><span class="pre">matrix_victories_rk</span></code>.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">svvamp</span> <span class="kn">import</span> <span class="n">Profile</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_rk</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">smith_set_rk</span>
+<span class="go">[0, 1, 2]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.Profile.smith_set_rk_ctb">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">smith_set_rk_ctb</span></span><a class="headerlink" href="#svvamp.Profile.smith_set_rk_ctb" title="Permalink to this definition">¶</a></dt>
+<dd><p>List. Smith set computed from <code class="xref py py-attr docutils literal notranslate"><span class="pre">matrix_victories_rk_ctb</span></code>.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">svvamp</span> <span class="kn">import</span> <span class="n">Profile</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_rk</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">smith_set_rk_ctb</span>
+<span class="go">[0, 1, 2]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.Profile.smith_set_ut_abs">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">smith_set_ut_abs</span></span><a class="headerlink" href="#svvamp.Profile.smith_set_ut_abs" title="Permalink to this definition">¶</a></dt>
+<dd><p>List. Smith set computed from <code class="xref py py-attr docutils literal notranslate"><span class="pre">matrix_victories_ut_abs</span></code>.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">svvamp</span> <span class="kn">import</span> <span class="n">Profile</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_rk</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">smith_set_ut_abs</span>
+<span class="go">[0, 1, 2]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.Profile.smith_set_ut_abs_ctb">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">smith_set_ut_abs_ctb</span></span><a class="headerlink" href="#svvamp.Profile.smith_set_ut_abs_ctb" title="Permalink to this definition">¶</a></dt>
+<dd><p>List. Smith set computed from <code class="xref py py-attr docutils literal notranslate"><span class="pre">matrix_victories_ut_abs_ctb</span></code>.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">svvamp</span> <span class="kn">import</span> <span class="n">Profile</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_rk</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">smith_set_ut_abs_ctb</span>
+<span class="go">[0, 1, 2]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.Profile.smith_set_ut_rel">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">smith_set_ut_rel</span></span><a class="headerlink" href="#svvamp.Profile.smith_set_ut_rel" title="Permalink to this definition">¶</a></dt>
+<dd><p>List. Smith set computed from <code class="xref py py-attr docutils literal notranslate"><span class="pre">matrix_victories_ut_rel</span></code>.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">svvamp</span> <span class="kn">import</span> <span class="n">Profile</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_rk</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">smith_set_ut_rel</span>
+<span class="go">[0, 1, 2]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.Profile.smith_set_ut_rel_ctb">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">smith_set_ut_rel_ctb</span></span><a class="headerlink" href="#svvamp.Profile.smith_set_ut_rel_ctb" title="Permalink to this definition">¶</a></dt>
+<dd><p>List. Smith set computed from <code class="xref py py-attr docutils literal notranslate"><span class="pre">matrix_victories_ut_rel_ctb</span></code>.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">svvamp</span> <span class="kn">import</span> <span class="n">Profile</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_rk</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">smith_set_ut_rel_ctb</span>
+<span class="go">[0, 1, 2]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="svvamp.Profile.threshold_c_prevents_w_condorcet_ut_abs">
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">threshold_c_prevents_w_condorcet_ut_abs</span></span><a class="headerlink" href="#svvamp.Profile.threshold_c_prevents_w_condorcet_ut_abs" title="Permalink to this definition">¶</a></dt>
 <dd><p>2d array of integers. Threshold for <code class="docutils literal notranslate"><span class="pre">c</span></code>-manipulators to prevent <code class="docutils literal notranslate"><span class="pre">w</span></code> from being a Condorcet winner (in

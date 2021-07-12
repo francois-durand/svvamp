@@ -198,7 +198,8 @@
 <span class="kn">from</span> <span class="nn">svvamp.utils.util_cache</span> <span class="kn">import</span> <span class="n">cached_property</span>
 <span class="kn">from</span> <span class="nn">svvamp.utils.misc</span> <span class="kn">import</span> <span class="n">initialize_random_seeds</span>
 <span class="kn">from</span> <span class="nn">svvamp.utils.misc</span> <span class="kn">import</span> <span class="n">preferences_ut_to_preferences_rk</span><span class="p">,</span> <span class="n">preferences_rk_to_preferences_borda_rk</span><span class="p">,</span> \
-    <span class="n">preferences_ut_to_preferences_borda_ut</span><span class="p">,</span> <span class="n">preferences_ut_to_matrix_duels_ut</span><span class="p">,</span> <span class="n">is_resistant_condorcet</span>
+    <span class="n">preferences_ut_to_preferences_borda_ut</span><span class="p">,</span> <span class="n">preferences_ut_to_matrix_duels_ut</span><span class="p">,</span> <span class="n">is_resistant_condorcet</span><span class="p">,</span> \
+    <span class="n">matrix_victories_to_smith_set</span>
 <span class="kn">from</span> <span class="nn">svvamp.utils.pseudo_bool</span> <span class="kn">import</span> <span class="n">equal_true</span>
 
 
@@ -1501,6 +1502,86 @@
                     <span class="n">result</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="n">w</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="n">w</span><span class="p">],</span> <span class="n">threshold_c_makes_w_not_win_against_d</span><span class="p">)</span>
                 <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span>
+
+    <span class="c1"># %% Smith Set</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">smith_set_rk_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;List. Smith set computed from :attr:`~svvamp.Population.matrix_victories_rk_ctb`.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; from svvamp import Profile</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 1, 2, 3], [1, 2, 0, 3], [2, 0, 1, 3]])</span>
+<span class="sd">            &gt;&gt;&gt; profile.smith_set_rk_ctb</span>
+<span class="sd">            [0, 1, 2]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">matrix_victories_to_smith_set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matrix_victories_rk_ctb</span><span class="p">)</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">smith_set_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;List. Smith set computed from :attr:`~svvamp.Population.matrix_victories_rk`.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; from svvamp import Profile</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 1, 2, 3], [1, 2, 0, 3], [2, 0, 1, 3]])</span>
+<span class="sd">            &gt;&gt;&gt; profile.smith_set_rk</span>
+<span class="sd">            [0, 1, 2]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">matrix_victories_to_smith_set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matrix_victories_rk</span><span class="p">)</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">smith_set_ut_rel_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;List. Smith set computed from :attr:`~svvamp.Population.matrix_victories_ut_rel_ctb`.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; from svvamp import Profile</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 1, 2, 3], [1, 2, 0, 3], [2, 0, 1, 3]])</span>
+<span class="sd">            &gt;&gt;&gt; profile.smith_set_ut_rel_ctb</span>
+<span class="sd">            [0, 1, 2]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">matrix_victories_to_smith_set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matrix_victories_ut_rel_ctb</span><span class="p">)</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">smith_set_ut_rel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;List. Smith set computed from :attr:`~svvamp.Population.matrix_victories_ut_rel`.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; from svvamp import Profile</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 1, 2, 3], [1, 2, 0, 3], [2, 0, 1, 3]])</span>
+<span class="sd">            &gt;&gt;&gt; profile.smith_set_ut_rel</span>
+<span class="sd">            [0, 1, 2]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">matrix_victories_to_smith_set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matrix_victories_ut_rel</span><span class="p">)</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">smith_set_ut_abs_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;List. Smith set computed from :attr:`~svvamp.Population.matrix_victories_ut_abs_ctb`.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; from svvamp import Profile</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 1, 2, 3], [1, 2, 0, 3], [2, 0, 1, 3]])</span>
+<span class="sd">            &gt;&gt;&gt; profile.smith_set_ut_abs_ctb</span>
+<span class="sd">            [0, 1, 2]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">matrix_victories_to_smith_set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matrix_victories_ut_abs_ctb</span><span class="p">)</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">smith_set_ut_abs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;List. Smith set computed from :attr:`~svvamp.Population.matrix_victories_ut_abs`.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; from svvamp import Profile</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 1, 2, 3], [1, 2, 0, 3], [2, 0, 1, 3]])</span>
+<span class="sd">            &gt;&gt;&gt; profile.smith_set_ut_abs</span>
+<span class="sd">            [0, 1, 2]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">matrix_victories_to_smith_set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matrix_victories_ut_abs</span><span class="p">)</span>
 
     <span class="c1"># %% Majority favorite</span>
 
