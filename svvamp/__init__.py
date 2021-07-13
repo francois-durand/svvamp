@@ -50,6 +50,13 @@ from svvamp.rules.rule_two_round import RuleTwoRound
 from svvamp.rules.rule_veto import RuleVeto
 from svvamp.rules.rule_woodall import RuleWoodall
 
+RULE_CLASSES = [
+    RuleApproval, RuleBaldwin, RuleBorda, RuleBucklin, RuleCondorcetSumDefeats, RuleCoombs,
+    RuleICRV, RuleIRVAverage, RuleIRVDuels, RuleIteratedBucklin,
+    RuleKemeny, RuleKimRoush, RuleMajorityJudgment, RuleMaximin, RuleNanson, RulePlurality,
+    RuleRangeVoting, RuleRankedPairs, RuleSchulze, RuleTwoRound, RuleVeto, RuleWoodall
+]
+
 # Voting Rule: IRV Family
 from svvamp.rules.rule_exhaustive_ballot import RuleExhaustiveBallot
 from svvamp.rules.rule_irv import RuleIRV
