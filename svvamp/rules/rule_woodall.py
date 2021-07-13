@@ -320,6 +320,7 @@ class RuleWoodall(Rule):
 
     @cached_property
     def w_(self):
+        self.mylog("Count ballots", 1)
         if self.profile_.exists_condorcet_winner_rk:
             return self.profile_.condorcet_winner_rk
         else:
@@ -328,6 +329,7 @@ class RuleWoodall(Rule):
 
     @cached_property
     def scores_(self):
+        self.mylog("Compute scores", 1)
         smith_set = self.profile_.smith_set_rk
         scores_smith = [(1 if c in smith_set else 0) for c in range(self.profile_.n_c)]
         scores_irv = sorted(range(self.profile_.n_c), key=self.irv_.elimination_path_.__getitem__)
@@ -335,6 +337,7 @@ class RuleWoodall(Rule):
 
     @cached_property
     def candidates_by_scores_best_to_worst_(self):
+        self.mylog("Compute candidates_by_scores_best_to_worst", 1)
         return sorted(
             range(self.profile_.n_c),
             key=lambda c: list(self.scores_[:, c]),
