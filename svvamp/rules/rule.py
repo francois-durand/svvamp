@@ -3455,8 +3455,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         if self.profile_ is not None:
             print('n_v =', self.profile_.n_v)
             print('n_c =', self.profile_.n_c)
-            printm('preferences_rk =', self.profile_.preferences_rk)
-            printm('preferences_ut =', self.profile_.preferences_ut)
+            print(self.profile_.to_doctest_string())
         print('result_options =', self._result_options)
         print(self.log_iia_)
         print(self.log_im_)
