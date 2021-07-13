@@ -1437,6 +1437,35 @@ class RuleIRV(Rule):
         return self._example_path_cm[c]
 
     def example_ballots_cm_c_(self, c):
+        """
+        N.B.: If c == w, compute manipulating ballots under the assumption that the winner is the condorcet_winner_rk.
+        """
+        if self._example_ballots_cm_c[c] is not None:
+            return self._example_ballots_cm_c[c]
+        if c == self.w_:
+            w = self.profile_.condorcet_winner_rk_ctb
+            if np.isnan(w):
+                return None
+            if c == w:
+                return None
+            suggested_path = self.elimination_path_
+            n_m = self.profile_.matrix_duels_ut[c, w]
+            preferences_borda_s = self.profile_.preferences_borda_rk[
+                self.profile_.preferences_ut[:, w] >= self.profile_.preferences_ut[:, c], :]
+            matrix_duels_temp = (preferences_ut_to_matrix_duels_ut(preferences_borda_s))
+        else:  # c != self.w_
+            self.is_cm_c_with_bounds_(c)  # Provide a better (cheaper) elimination path.
+            if not equal_true(self.is_cm_c_(c)):
+                return None
+            suggested_path = self.example_path_cm_c_(c)
+            n_m = self.profile_.matrix_duels_ut[c, self.w_]
+            preferences_borda_s = self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :]
+            matrix_duels_temp = (preferences_ut_to_matrix_duels_ut(preferences_borda_s))
+        self._example_ballots_cm_c[c] = self._example_ballots_cm_c_aux(
+            c, n_m, suggested_path, preferences_borda_s, matrix_duels_temp)
+        return self._example_ballots_cm_c[c]
+
+    def _example_ballots_cm_c_aux(self, c, n_m, suggested_path, preferences_borda_s, matrix_duels_temp):
         """Example of manipulating ballots (in rk format).
 
         Parameters
@@ -1449,15 +1478,12 @@ class RuleIRV(Rule):
         ballot_rk_m : ndarray or None
             ``ballot_rk_m[v, k]`` is the candidate placed in k-th position on the v-th manipulator's ballot.
         """
-        if self._example_ballots_cm_c[c] is not None:
-            return self._example_ballots_cm_c[c]
-        if not equal_true(self.is_cm_c_(c)):
-            return None
-        suggested_path = self.example_path_cm_c_(c)
+        # print(c)
+        # print(n_m)
+        # print(suggested_path)
+        # print(preferences_borda_s)
+        # print(matrix_duels_temp)
         candidates = np.array(range(self.profile_.n_c))
-        n_m = self.profile_.matrix_duels_ut[c, self.w_]
-        preferences_borda_s = self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :]
-        matrix_duels_temp = (preferences_ut_to_matrix_duels_ut(preferences_borda_s))
         ballots_m = [[] for v in range(n_m)]
 
         # Step 1: ensure the elimination path
@@ -1527,17 +1553,24 @@ class RuleIRV(Rule):
                 self.mylog("cm_aux: Decondorcification succeeded", 3)
                 self._example_ballots_cm_c[c] = np.array(ballots_m)
                 return self._example_ballots_cm_c[c]
-            i_found_a_new_ok = False
+            csd_penalties = np.zeros(self.profile_.n_c)  # Sum of losses in absolute defeats
             for d in not_yet_ok:
-                if np.any(matrix_duels_temp[:, d] >= self.profile_.n_v / 2):
-                    candidates_ok[d] = True
-                    i_found_a_new_ok = True
-                    for manipulator in np.where(candidates_to_put_in_ballot[:, d])[0]:
-                        ballots_m[manipulator].append(d)
-                        candidates_to_put_in_ballot[manipulator, d] = False
-                        matrix_duels_temp[d, candidates_to_put_in_ballot[manipulator, :]] += 1
-                    self.mylogv("cm_aux: Found a non-Condorcet d =", d, 3)
-                    self.mylogm("cm_aux: matrix_duels_temp =", matrix_duels_temp, 3)
+                csd_penalties[d] = np.sum(np.maximum(
+                    matrix_duels_temp[:, d] - self.profile_.n_v / 2, 0
+                ))
+            max_penalty = np.max(csd_penalties)
+            if max_penalty == 0:
+                i_found_a_new_ok = False
+            else:
+                i_found_a_new_ok = True
+                d = np.where(csd_penalties == max_penalty)[0][-1]
+                candidates_ok[d] = True
+                for manipulator in np.where(candidates_to_put_in_ballot[:, d])[0]:
+                    ballots_m[manipulator].append(d)
+                    candidates_to_put_in_ballot[manipulator, d] = False
+                    matrix_duels_temp[d, candidates_to_put_in_ballot[manipulator, :]] += 1
+                self.mylogv("cm_aux: Found a non-Condorcet d =", d, 3)
+                self.mylogm("cm_aux: matrix_duels_temp =", matrix_duels_temp, 3)
 
         # Step 3
         # Some candidates are left, who do not have non-victories yet. We will put them in the ballots,
@@ -1550,8 +1583,7 @@ class RuleIRV(Rule):
                     ballots_m[manipulator].append(d)
                     candidates_to_put_in_ballot[manipulator, d] = False
                     matrix_duels_temp[d, candidates_to_put_in_ballot[manipulator, :]] += 1
-        self._example_ballots_cm_c[c] = np.array(ballots_m)
-        return self._example_ballots_cm_c[c]
+        return np.array(ballots_m)
 
     @cached_property
     def _cm_is_initialized_general_subclass_(self):

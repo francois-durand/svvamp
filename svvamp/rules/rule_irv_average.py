@@ -21,6 +21,7 @@ This file is part of SVVAMP.
 """
 import numpy as np
 from svvamp.rules.rule import Rule
+from svvamp.rules.rule_irv import RuleIRV
 from svvamp.utils.util_cache import cached_property
 from svvamp.preferences.profile import Profile
 
@@ -278,6 +279,9 @@ class RuleIRVAverage(Rule):
 
     def __init__(self, **kwargs):
         super().__init__(
+            options_parameters={
+                'cm_option': {'allowed': ['lazy', 'fast', 'exact'], 'default': 'lazy'},
+            },
             with_two_candidates_reduces_to_plurality=True, is_based_on_rk=True,
             precheck_icm=True,
             log_identity="IRV_AVERAGE", **kwargs
@@ -377,3 +381,27 @@ class RuleIRVAverage(Rule):
     @cached_property
     def meets_majority_favorite_c_rk_ctb(self):
         return True
+
+    def _cm_main_work_c_fast_(self, c, optimize_bounds):
+        irv = RuleIRV(cm_option='exact')(self.profile_)
+        if self.w_ == irv.w_:
+            ballots_m = irv.example_ballots_cm_c_(c)
+        elif self.w_ == self.profile_.condorcet_winner_rk_ctb and c == irv.w_:
+            ballots_m = irv.example_ballots_cm_c_(c)
+        else:
+            return False
+        if ballots_m is None:
+            return False  # Not a quick escape (we did what we could)
+        preferences_rk_s = self.profile_.preferences_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :]
+        profile_test = Profile(
+            preferences_rk=np.concatenate((preferences_rk_s, ballots_m))
+        )
+        if profile_test.n_v != self.profile_.n_v:
+            raise AssertionError('Uh-oh!')
+        winner_test = self.__class__()(profile_test).w_
+        n_m = self.profile_.matrix_duels_ut[c, self.w_]
+        if winner_test == c:
+            self._update_sufficient(self._sufficient_coalition_size_cm, c, n_m,
+                                    'CM: Manipulation found by Decondorcification/IRV heuristic =>\n'
+                                    '    sufficient_coalition_size_cm = n_m =')
+        return False
