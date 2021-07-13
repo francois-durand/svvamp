@@ -21,6 +21,7 @@ This file is part of SVVAMP.
 """
 import random
 import numpy as np
+from svvamp.utils.constants import OPTIONS
 from svvamp.utils.util_cache import cached_property, DeleteCacheMixin
 from svvamp.utils import my_log, type_checker
 from svvamp.utils.printing import printm, print_title, print_big_title
@@ -181,7 +182,6 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         # Log
         super().__init__()
         self.log_identity = log_identity
-        self._error_when_uncovered = False  # For developers
         # Basic properties of the voting system
         self.with_two_candidates_reduces_to_plurality = with_two_candidates_reduces_to_plurality
         self.is_based_on_rk = is_based_on_rk
@@ -3464,7 +3464,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         print(self.log_um_)
         print(self.log_icm_)
         print(self.log_cm_)
-        if self._error_when_uncovered:
+        if OPTIONS.ERROR_WHEN_UNCOVERED_CODE:
             raise AssertionError('Uncovered portion of code.')
 
     def _example_reached_uncovered_code(self):

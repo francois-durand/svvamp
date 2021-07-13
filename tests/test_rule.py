@@ -1,6 +1,6 @@
 from svvamp import Rule, RulePlurality, Profile, RuleVeto, RuleMaximin, RuleExhaustiveBallot, RuleBaldwin, \
     RuleIRVAverage, RuleMajorityJudgment, RuleNanson, RuleRankedPairs, RuleBorda, RuleSchulze, RuleIRVDuels, \
-    RuleRangeVoting, RuleKemeny, RuleICRV, RuleCondorcetSumDefeats
+    RuleRangeVoting, RuleKemeny, RuleICRV, RuleCondorcetSumDefeats, OPTIONS
 
 
 def test_initialize_options():
@@ -1116,9 +1116,9 @@ def test_cm_main_work_c_exact():
 # noinspection PyProtectedMember
 def test_reached_uncovered_code():
     """
+        >>> OPTIONS.ERROR_WHEN_UNCOVERED_CODE = True
         >>> profile = Profile(preferences_rk=[[0, 1, 2], [1, 0, 2]])
         >>> rule = RulePlurality()(profile)
-        >>> rule._error_when_uncovered = True
         >>> rule._example_reached_uncovered_code()
         Traceback (most recent call last):
         AssertionError: Uncovered portion of code.
