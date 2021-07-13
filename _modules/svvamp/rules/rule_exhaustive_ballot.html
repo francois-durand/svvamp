@@ -1546,9 +1546,7 @@
             <span class="k">return</span> <span class="kc">False</span>
 
         <span class="c1"># From this point, we have necessarily the ``exact`` option</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]:</span>  <span class="c1"># pragma: no cover</span>
-            <span class="c1"># TO DO: Investigate whether this case can actually happen.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_reached_uncovered_code</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]:</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">optimize_bounds</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_ut</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]:</span>
             <span class="c1"># This is a quick escape: since we have the option ``exact``, if we come back with ``optimize_bounds``,</span>

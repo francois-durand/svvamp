@@ -1862,7 +1862,7 @@ norm is equal to 1.</p></li>
 <dl class="py property">
 <dt class="sig sig-object py" id="svvamp.Profile.plurality_scores_rk">
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">plurality_scores_rk</span></span><a class="headerlink" href="#svvamp.Profile.plurality_scores_rk" title="Permalink to this definition">¶</a></dt>
-<dd><p>1d array of booleans. <code class="docutils literal notranslate"><span class="pre">plurality_scores_rk[c]</span></code> is the number of voters for whom <code class="docutils literal notranslate"><span class="pre">c</span></code> is the top-ranked
+<dd><p>1d array of int. <code class="docutils literal notranslate"><span class="pre">plurality_scores_rk[c]</span></code> is the number of voters for whom <code class="docutils literal notranslate"><span class="pre">c</span></code> is the top-ranked
 candidate (with voter tie-breaking).</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">svvamp</span> <span class="kn">import</span> <span class="n">Profile</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_rk</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
@@ -1875,7 +1875,7 @@ candidate (with voter tie-breaking).</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="svvamp.Profile.plurality_scores_ut">
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">plurality_scores_ut</span></span><a class="headerlink" href="#svvamp.Profile.plurality_scores_ut" title="Permalink to this definition">¶</a></dt>
-<dd><p>1d array of booleans. <code class="docutils literal notranslate"><span class="pre">plurality_scores_ut[c]</span></code> is the number of voters who strictly prefer <code class="docutils literal notranslate"><span class="pre">c</span></code> to all
+<dd><p>1d array of int. <code class="docutils literal notranslate"><span class="pre">plurality_scores_ut[c]</span></code> is the number of voters who strictly prefer <code class="docutils literal notranslate"><span class="pre">c</span></code> to all
 other candidates. If a voter has several candidates with maximal utility, then none of them receives any point.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">svvamp</span> <span class="kn">import</span> <span class="n">Profile</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
@@ -2059,6 +2059,38 @@ In that case, threshold is set to 0 instead.</p>
 <span class="go">array([[0, 0, 0],</span>
 <span class="go">       [2, 0, 0],</span>
 <span class="go">       [2, 0, 0]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.Profile.to_doctest_string">
+<span class="sig-name descname"><span class="pre">to_doctest_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ut</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/preferences/profile.html#Profile.to_doctest_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.Profile.to_doctest_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert to string, in the doctest format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ut</strong> (<em>bool</em>) – Whether to print <cite>preferences_ut</cite>.</p></li>
+<li><p><strong>rk</strong> (<em>bool</em>) – Whether to print <cite>preferences_rk</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A string that can be copied-pasted to make a doctest.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_rk</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="n">profile</span><span class="o">.</span><span class="n">to_doctest_string</span><span class="p">())</span>  
+<span class="go">    . &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
+<span class="go">    ...     [1, 0],</span>
+<span class="go">    ...     [1, 0],</span>
+<span class="go">    ... ], preferences_rk=[</span>
+<span class="go">    ...     [0, 1],</span>
+<span class="go">    ...     [0, 1],</span>
+<span class="go">    ... ])</span>
 </pre></div>
 </div>
 </dd></dl>

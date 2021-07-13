@@ -217,7 +217,7 @@ class Profile(my_log.MyLog):
 
     @cached_property
     def plurality_scores_rk(self):
-        """1d array of booleans. ``plurality_scores_rk[c]`` is the number of voters for whom ``c`` is the top-ranked
+        """1d array of int. ``plurality_scores_rk[c]`` is the number of voters for whom ``c`` is the top-ranked
         candidate (with voter tie-breaking).
 
         >>> from svvamp import Profile
@@ -230,7 +230,7 @@ class Profile(my_log.MyLog):
 
     @cached_property
     def plurality_scores_ut(self):
-        """1d array of booleans. ``plurality_scores_ut[c]`` is the number of voters who strictly prefer ``c`` to all
+        """1d array of int. ``plurality_scores_ut[c]`` is the number of voters who strictly prefer ``c`` to all
         other candidates. If a voter has several candidates with maximal utility, then none of them receives any point.
 
         >>> from svvamp import Profile
@@ -2601,3 +2601,60 @@ class Profile(my_log.MyLog):
         print('Condorcet-admissible ' + display_bool(self.exists_condorcet_admissible))
 
         self.log_depth = old_log_depth
+
+    # %% For developers
+
+    def to_doctest_string(self, ut=True, rk=True):
+        """Convert to string, in the doctest format.
+
+        Parameters
+        ----------
+        ut : bool
+            Whether to print `preferences_ut`.
+        rk : bool
+            Whether to print `preferences_rk`.
+
+        Returns
+        -------
+        str
+            A string that can be copied-pasted to make a doctest.
+
+        Examples
+        --------
+        >>> profile = Profile(preferences_rk=[[0, 1], [0, 1]])
+        >>> print('.' + profile.to_doctest_string())  # doctest: +NORMALIZE_WHITESPACE
+            . >>> profile = Profile(preferences_ut=[
+            ...     [1, 0],
+            ...     [1, 0],
+            ... ], preferences_rk=[
+            ...     [0, 1],
+            ...     [0, 1],
+            ... ])
+        """
+        s = '            >>> profile = Profile('
+        arguments = []
+        if ut:
+            argument = ''
+            argument += 'preferences_ut=[\n'
+            argument += (
+                repr(self.preferences_ut)
+                    .replace('array([', '            ...     ')
+                    .replace('\n       ', '\n            ...     ')
+                    .replace('])', ',')
+            )
+            argument += '\n            ... ]'
+            arguments.append(argument)
+        if rk:
+            argument = ''
+            argument += 'preferences_rk=[\n'
+            argument += (
+                repr(self.preferences_rk)
+                    .replace('array([', '            ...     ')
+                    .replace('\n       ', '\n            ...     ')
+                    .replace('])', ',')
+            )
+            argument += '\n            ... ]'
+            arguments.append(argument)
+        s += ', '.join(arguments)
+        s += ')'
+        return s

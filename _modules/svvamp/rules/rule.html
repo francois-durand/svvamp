@@ -187,7 +187,9 @@
 <span class="sd">    You should have received a copy of the GNU General Public License</span>
 <span class="sd">    along with SVVAMP.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">svvamp.utils.constants</span> <span class="kn">import</span> <span class="n">OPTIONS</span>
 <span class="kn">from</span> <span class="nn">svvamp.utils.util_cache</span> <span class="kn">import</span> <span class="n">cached_property</span><span class="p">,</span> <span class="n">DeleteCacheMixin</span>
 <span class="kn">from</span> <span class="nn">svvamp.utils</span> <span class="kn">import</span> <span class="n">my_log</span><span class="p">,</span> <span class="n">type_checker</span>
 <span class="kn">from</span> <span class="nn">svvamp.utils.printing</span> <span class="kn">import</span> <span class="n">printm</span><span class="p">,</span> <span class="n">print_title</span><span class="p">,</span> <span class="n">print_big_title</span>
@@ -348,7 +350,6 @@
         <span class="c1"># Log</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log_identity</span> <span class="o">=</span> <span class="n">log_identity</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_error_when_uncovered</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># For developers</span>
         <span class="c1"># Basic properties of the voting system</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">with_two_candidates_reduces_to_plurality</span> <span class="o">=</span> <span class="n">with_two_candidates_reduces_to_plurality</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">is_based_on_rk</span> <span class="o">=</span> <span class="n">is_based_on_rk</span>
@@ -3623,8 +3624,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;n_v =&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span><span class="p">)</span>
             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;n_c =&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">)</span>
-            <span class="n">printm</span><span class="p">(</span><span class="s1">&#39;preferences_rk =&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_rk</span><span class="p">)</span>
-            <span class="n">printm</span><span class="p">(</span><span class="s1">&#39;preferences_ut =&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_ut</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">to_doctest_string</span><span class="p">())</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;result_options =&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result_options</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">log_iia_</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">log_im_</span><span class="p">)</span>
@@ -3632,14 +3632,73 @@
         <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">log_um_</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">log_icm_</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">log_cm_</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_error_when_uncovered</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">OPTIONS</span><span class="o">.</span><span class="n">ERROR_WHEN_UNCOVERED_CODE</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s1">&#39;Uncovered portion of code.&#39;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_example_reached_uncovered_code</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Demonstrate :meth:`_reached_uncovered_code` (cf. the unit test in `test_rule.py`).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_reached_uncovered_code</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reached_uncovered_code</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_set_random_options</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set random options.</span>
+
+<span class="sd">        For each option where a set of values is allowed, select a random value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">option</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">options_parameters</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;allowed&#39;</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;allowed&#39;</span><span class="p">])</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_random_instruction</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;Random instruction (used for testing purposes, especially identify uncovered code).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            A random instruction.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">instructions</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s1">&#39;is_im_&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;is_im_c_(0)&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;is_im_c_(1)&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;is_im_c_with_voters_(0)&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;is_im_c_with_voters_(1)&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;voters_im_&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;candidates_im_&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;v_im_for_c_&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;is_im_v_(0)&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;is_im_v_(1)&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;is_im_v_with_candidates_(0)&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;is_im_v_with_candidates_(1)&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;is_tm_&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;is_tm_c_(0)&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;is_tm_c_(1)&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;candidates_tm_&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;is_um_&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;is_um_c_(0)&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;is_um_c_(1)&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;candidates_um_&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;is_icm_&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;is_icm_c_(0)&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;is_icm_c_(1)&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;is_icm_c_with_bounds_(0)&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;is_icm_c_with_bounds_(1)&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;candidates_icm_&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;necessary_coalition_size_icm_&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;sufficient_coalition_size_icm_&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;is_cm_&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;is_cm_c_(0)&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;is_cm_c_(1)&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;is_cm_c_with_bounds_(0)&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;is_cm_c_with_bounds_(1)&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;candidates_cm_&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;necessary_coalition_size_cm_&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;sufficient_coalition_size_cm_&#39;</span><span class="p">,</span>
+        <span class="p">]</span>
+        <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">instructions</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

@@ -7,6 +7,7 @@ __version__ = '0.1.2'
 
 # Utils
 from svvamp.utils.misc import initialize_random_seeds
+from svvamp.utils.constants import OPTIONS
 
 # Profile
 from svvamp.preferences.profile import Profile
@@ -46,9 +47,19 @@ from svvamp.rules.rule_plurality import RulePlurality
 from svvamp.rules.rule_range_voting import RuleRangeVoting
 from svvamp.rules.rule_ranked_pairs import RuleRankedPairs
 from svvamp.rules.rule_schulze import RuleSchulze
+from svvamp.rules.rule_smith_irv import RuleSmithIRV
+from svvamp.rules.rule_tideman import RuleTideman
 from svvamp.rules.rule_two_round import RuleTwoRound
 from svvamp.rules.rule_veto import RuleVeto
 from svvamp.rules.rule_woodall import RuleWoodall
+
+RULE_CLASSES = [
+    RuleApproval, RuleBaldwin, RuleBorda, RuleBucklin, RuleCondorcetSumDefeats, RuleCoombs,
+    RuleICRV, RuleIRVAverage, RuleIRVDuels, RuleIteratedBucklin,
+    RuleKemeny, RuleKimRoush, RuleMajorityJudgment, RuleMaximin, RuleNanson, RulePlurality,
+    RuleRangeVoting, RuleRankedPairs, RuleSchulze, RuleSmithIRV,
+    RuleTideman, RuleTwoRound, RuleVeto, RuleWoodall
+]
 
 # Voting Rule: IRV Family
 from svvamp.rules.rule_exhaustive_ballot import RuleExhaustiveBallot
