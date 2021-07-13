@@ -101,6 +101,7 @@
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">History</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#smith-irv-and-similar-voting-rules">0.2.0 (2021-07-13): Smith-IRV and Similar Voting Rules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#fix-release-number">0.1.2 (2021-07-12): Fix Release Number</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#fix-deployment">0.1.1 (2021-07-12): Fix Deployment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#complete-refactoring">0.1.0 (2021-07-12): Complete Refactoring</a></li>
@@ -203,6 +204,25 @@
 </style>
 <div class="section" id="history">
 <h1>History<a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="smith-irv-and-similar-voting-rules">
+<h2>0.2.0 (2021-07-13): Smith-IRV and Similar Voting Rules<a class="headerlink" href="#smith-irv-and-similar-voting-rules" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>A <code class="docutils literal notranslate"><span class="pre">Profile</span></code> object can now compute its Smith set (also called “top cycle”): <code class="docutils literal notranslate"><span class="pre">smith_set_rk</span></code>, <code class="docutils literal notranslate"><span class="pre">smith_set_rk_ctb</span></code>,
+<code class="docutils literal notranslate"><span class="pre">smith_set_ut_abs</span></code>, <code class="docutils literal notranslate"><span class="pre">smith_set_ut_abs_ctb</span></code>, <code class="docutils literal notranslate"><span class="pre">smith_set_ut_rel</span></code>, <code class="docutils literal notranslate"><span class="pre">smith_set_ut_rel_ctb</span></code>.</p></li>
+<li><p>Add Smith-IRV.</p></li>
+<li><p>Add Tideman’s rule.</p></li>
+<li><p>Add Woodall’s rule.</p></li>
+<li><p>Add constant <code class="docutils literal notranslate"><span class="pre">RULE_CLASSES</span></code>: list of all the rule classes.</p></li>
+<li><p>Tools that are mostly dedicated to developers:</p>
+<ul>
+<li><p>A global option allows to throw an error when an uncovered portion of code is reached.</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">Profile.to_doctest_string</span></code>.</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">Rule._set_random_options</span></code>.</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">Rule._random_instruction</span></code>.</p></li>
+</ul>
+</li>
+</ul>
+</div>
 <div class="section" id="fix-release-number">
 <h2>0.1.2 (2021-07-12): Fix Release Number<a class="headerlink" href="#fix-release-number" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
