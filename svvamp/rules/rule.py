@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+import random
 import numpy as np
 from svvamp.utils.util_cache import cached_property, DeleteCacheMixin
 from svvamp.utils import my_log, type_checker
@@ -3471,3 +3472,62 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         Demonstrate :meth:`_reached_uncovered_code` (cf. the unit test in `test_rule.py`).
         """
         self._reached_uncovered_code()
+
+    def _set_random_options(self):
+        """Set random options.
+
+        For each option where a set of values is allowed, select a random value.
+        """
+        for option, d in self.options_parameters.items():
+            if isinstance(d['allowed'], list):
+                value = random.choice(d['allowed'])
+                setattr(self, option, value)
+
+    @staticmethod
+    def _random_instruction():
+        """Random instruction (used for testing purposes, especially identify uncovered code).
+
+        Returns
+        -------
+        str
+            A random instruction.
+        """
+        instructions = [
+            'is_im_',
+            'is_im_c_(0)',
+            'is_im_c_(1)',
+            'is_im_c_with_voters_(0)',
+            'is_im_c_with_voters_(1)',
+            'voters_im_',
+            'candidates_im_',
+            'v_im_for_c_',
+            'is_im_v_(0)',
+            'is_im_v_(1)',
+            'is_im_v_with_candidates_(0)',
+            'is_im_v_with_candidates_(1)',
+            'is_tm_',
+            'is_tm_c_(0)',
+            'is_tm_c_(1)',
+            'candidates_tm_',
+            'is_um_',
+            'is_um_c_(0)',
+            'is_um_c_(1)',
+            'candidates_um_',
+            'is_icm_',
+            'is_icm_c_(0)',
+            'is_icm_c_(1)',
+            'is_icm_c_with_bounds_(0)',
+            'is_icm_c_with_bounds_(1)',
+            'candidates_icm_',
+            'necessary_coalition_size_icm_',
+            'sufficient_coalition_size_icm_',
+            'is_cm_',
+            'is_cm_c_(0)',
+            'is_cm_c_(1)',
+            'is_cm_c_with_bounds_(0)',
+            'is_cm_c_with_bounds_(1)',
+            'candidates_cm_',
+            'necessary_coalition_size_cm_',
+            'sufficient_coalition_size_cm_',
+        ]
+        return random.choice(instructions)
