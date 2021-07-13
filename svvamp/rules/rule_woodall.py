@@ -375,17 +375,21 @@ class RuleWoodall(Rule):
     # %% Coalition Manipulation (CM)
 
     def _cm_main_work_c_fast_(self, c, optimize_bounds):
-        if self.irv_.w_ != self.w_:
-            return False
-        # Now self.w_ == irv.w_
         irv = RuleIRV(cm_option='exact')(self.profile_)
-        ballots_m = irv.example_ballots_cm_c_(c)
+        if self.w_ == irv.w_:
+            ballots_m = irv.example_ballots_cm_c_(c)
+        elif self.w_ == self.profile_.condorcet_winner_rk_ctb and c == irv.w_:
+            ballots_m = irv.example_ballots_cm_c_(c)
+        else:
+            return False
         if ballots_m is None:
             return False  # Not a quick escape (we did what we could)
         preferences_rk_s = self.profile_.preferences_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :]
         profile_test = Profile(
             preferences_rk=np.concatenate((preferences_rk_s, ballots_m))
         )
+        if profile_test.n_v != self.profile_.n_v:
+            raise AssertionError('Uh-oh!')
         winner_test = self.__class__()(profile_test).w_
         n_m = self.profile_.matrix_duels_ut[c, self.w_]
         if winner_test == c:
