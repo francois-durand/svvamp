@@ -217,7 +217,7 @@ class Profile(my_log.MyLog):
 
     @cached_property
     def plurality_scores_rk(self):
-        """1d array of booleans. ``plurality_scores_rk[c]`` is the number of voters for whom ``c`` is the top-ranked
+        """1d array of int. ``plurality_scores_rk[c]`` is the number of voters for whom ``c`` is the top-ranked
         candidate (with voter tie-breaking).
 
         >>> from svvamp import Profile
@@ -230,7 +230,7 @@ class Profile(my_log.MyLog):
 
     @cached_property
     def plurality_scores_ut(self):
-        """1d array of booleans. ``plurality_scores_ut[c]`` is the number of voters who strictly prefer ``c`` to all
+        """1d array of int. ``plurality_scores_ut[c]`` is the number of voters who strictly prefer ``c`` to all
         other candidates. If a voter has several candidates with maximal utility, then none of them receives any point.
 
         >>> from svvamp import Profile
