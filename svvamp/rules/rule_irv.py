@@ -19,12 +19,14 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+import itertools
 import numpy as np
 from svvamp.rules.rule import Rule
 from svvamp.utils.util_cache import cached_property
 from svvamp.preferences.profile import Profile
-from svvamp.utils.pseudo_bool import neginf_to_zero, equal_false
+from svvamp.utils.pseudo_bool import neginf_to_zero, equal_false, equal_true
 from svvamp.rules.rule_exhaustive_ballot import RuleExhaustiveBallot
+from svvamp.utils.misc import preferences_ut_to_matrix_duels_ut
 
 
 class RuleIRV(Rule):
@@ -313,6 +315,7 @@ class RuleIRV(Rule):
             precheck_um=False, precheck_icm=False,
             log_identity="IRV", **kwargs
         )
+        self._example_ballots_cm_c = None
 
     def __call__(self, profile):
         """
@@ -384,6 +387,8 @@ class RuleIRV(Rule):
         if self.um_option == 'exact':
             eb_options['um_option'] = 'exact'
         self.eb_ = RuleExhaustiveBallot(**eb_options)(self.profile_)
+        # Initialize examples of manipulating ballots
+        self._example_ballots_cm_c = {c: None for c in range(profile.n_c)}
         return self
 
     # %% Dealing with the options
@@ -1430,6 +1435,123 @@ class RuleIRV(Rule):
         """
         _ = self.is_cm_c_(c)
         return self._example_path_cm[c]
+
+    def example_ballots_cm_c_(self, c):
+        """Example of manipulating ballots (in rk format).
+
+        Parameters
+        ----------
+        c : int
+            Candidate.
+
+        Returns
+        -------
+        ballot_rk_m : ndarray or None
+            ``ballot_rk_m[v, k]`` is the candidate placed in k-th position on the v-th manipulator's ballot.
+        """
+        if self._example_ballots_cm_c[c] is not None:
+            return self._example_ballots_cm_c[c]
+        if not equal_true(self.is_cm_c_(c)):
+            return None
+        suggested_path = self.example_path_cm_c_(c)
+        candidates = np.array(range(self.profile_.n_c))
+        n_m = self.profile_.matrix_duels_ut[c, self.w_]
+        preferences_borda_s = self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :]
+        matrix_duels_temp = (preferences_ut_to_matrix_duels_ut(preferences_borda_s))
+        ballots_m = [[] for v in range(n_m)]
+
+        # Step 1: ensure the elimination path
+        # And consequences on the majority matrix
+        scores_m_begin_r = np.zeros(self.profile_.n_c)  # Score due to manipulators at the beginning of the round
+        is_candidate_alive_begin_r = np.ones(self.profile_.n_c, dtype=np.bool)
+        current_top_v = np.array(- np.ones(n_m))  # -1 means that manipulator v is available
+        candidates_to_put_in_ballot = np.ones((n_m, self.profile_.n_c), dtype=np.bool)
+        for r in range(self.profile_.n_c - 1):
+            self.mylogv("cm_aux: r =", r, 3)
+            scores_tot_begin_r = np.full(self.profile_.n_c, np.nan)
+            scores_tot_begin_r[is_candidate_alive_begin_r] = np.sum(np.equal(
+                preferences_borda_s[:, is_candidate_alive_begin_r],
+                np.max(preferences_borda_s[:, is_candidate_alive_begin_r], 1)[:, np.newaxis]
+            ), 0)
+            self.mylogv("cm_aux: scores_s_begin_r =", scores_tot_begin_r, 3)
+            self.mylogv("cm_aux: scores_m_begin_r =", scores_m_begin_r, 3)
+            scores_tot_begin_r += scores_m_begin_r
+            self.mylogv("cm_aux: scores_tot_begin_r =", scores_tot_begin_r, 3)
+            d = suggested_path[r]
+            self.mylogv("cm_aux: d =", d, 3)
+            scores_m_new_r = np.zeros(self.profile_.n_c, dtype=np.int)
+            scores_m_new_r[is_candidate_alive_begin_r] = np.maximum(
+                0,
+                scores_tot_begin_r[d] - scores_tot_begin_r[is_candidate_alive_begin_r]
+                + (candidates[is_candidate_alive_begin_r] > d))
+            self.mylogv("cm_aux: scores_m_new_r =", scores_m_new_r, 3)
+            # Update variables for next round
+            scores_m_begin_r = scores_m_begin_r + scores_m_new_r
+            if np.sum(scores_m_begin_r) > n_m:
+                raise NotImplementedError("Error: this should not happen.")
+            scores_m_begin_r[d] = 0
+            is_candidate_alive_begin_r[d] = False
+            # We need to attribute manipulator's votes to specific manipulators. This is done arbitrarily,
+            # and has consequences on the majority matrix.
+            free_manipulators = np.where(current_top_v == -1)[0]
+            i_manipulator = 0
+            for e in range(self.profile_.n_c):
+                n_manip_new_e = scores_m_new_r[e]
+                for k in range(n_manip_new_e):
+                    manipulator = free_manipulators[i_manipulator]
+                    ballots_m[manipulator].append(e)
+                    current_top_v[manipulator] = e
+                    candidates_to_put_in_ballot[manipulator, e] = False
+                    matrix_duels_temp[e, candidates_to_put_in_ballot[manipulator, :]] += 1
+                    i_manipulator += 1
+            current_top_v[current_top_v == d] = -1
+            self.mylogv("cm_aux: current_top_v =", current_top_v, 3)
+            self.mylogm("cm_aux: matrix_duels_temp =", matrix_duels_temp, 3)
+
+        # Step 2
+        # Ensure that no candidate ``!= c`` is Condorcet winner. If ``c`` is not yet in all ballots, put it.
+        for manipulator in np.where(candidates_to_put_in_ballot[:, c])[0]:
+            ballots_m[manipulator].append(c)
+            candidates_to_put_in_ballot[manipulator, c] = False
+            matrix_duels_temp[c, candidates_to_put_in_ballot[manipulator, :]] += 1
+        self.mylogv("cm_aux: Adding to all ballots c =", c, 3)
+        self.mylogm("cm_aux: matrix_duels_temp =", matrix_duels_temp, 3)
+        # If some candidates already have some non-victories in the matrix of duels, they can safely be put in the
+        # ballots. Maybe this will generate non-victories for other candidates, etc.
+        candidates_ok = np.zeros(self.profile_.n_c, dtype=np.bool)
+        candidates_ok[c] = True
+        i_found_a_new_ok = True
+        while i_found_a_new_ok:
+            not_yet_ok = np.where(np.logical_not(candidates_ok))[0]
+            if not_yet_ok.shape[0] == 0:
+                self.mylog("cm_aux: Decondorcification succeeded", 3)
+                self._example_ballots_cm_c[c] = np.array(ballots_m)
+                return self._example_ballots_cm_c[c]
+            i_found_a_new_ok = False
+            for d in not_yet_ok:
+                if np.any(matrix_duels_temp[:, d] >= self.profile_.n_v / 2):
+                    candidates_ok[d] = True
+                    i_found_a_new_ok = True
+                    for manipulator in np.where(candidates_to_put_in_ballot[:, d])[0]:
+                        ballots_m[manipulator].append(d)
+                        candidates_to_put_in_ballot[manipulator, d] = False
+                        matrix_duels_temp[d, candidates_to_put_in_ballot[manipulator, :]] += 1
+                    self.mylogv("cm_aux: Found a non-Condorcet d =", d, 3)
+                    self.mylogm("cm_aux: matrix_duels_temp =", matrix_duels_temp, 3)
+
+        # Step 3
+        # Some candidates are left, who do not have non-victories yet. We will put them in the ballots,
+        # while favoring a Condorcet cycle 0 > 1 > ... > n_c-1 > 0. N.B.: In practice, this step seems never necessary.
+        self.mylog("cm_aux: Step 3 needed", 1)
+        for manipulator in range(n_m):
+            candidate_start = manipulator % self.profile_.n_c
+            for d in itertools.chain(range(candidate_start, self.profile_.n_c), range(candidate_start)):
+                if candidates_to_put_in_ballot[manipulator, d]:
+                    ballots_m[manipulator].append(d)
+                    candidates_to_put_in_ballot[manipulator, d] = False
+                    matrix_duels_temp[d, candidates_to_put_in_ballot[manipulator, :]] += 1
+        self._example_ballots_cm_c[c] = np.array(ballots_m)
+        return self._example_ballots_cm_c[c]
 
     @cached_property
     def _cm_is_initialized_general_subclass_(self):

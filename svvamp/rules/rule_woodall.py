@@ -298,9 +298,9 @@ class RuleWoodall(Rule):
     """
 
     def __init__(self, **kwargs):
-        # TO DO: update this
         super().__init__(
             options_parameters={
+                'cm_option': {'allowed': ['lazy', 'fast', 'exact'], 'default': 'lazy'},
                 'tm_option': {'allowed': ['exact'], 'default': 'exact'},
                 'icm_option': {'allowed': ['exact'], 'default': 'exact'}
             },
@@ -374,4 +374,22 @@ class RuleWoodall(Rule):
 
     # %% Coalition Manipulation (CM)
 
-    # TODO: should be implemented.
+    def _cm_main_work_c_fast_(self, c, optimize_bounds):
+        if self.irv_.w_ != self.w_:
+            return False
+        # Now self.w_ == irv.w_
+        irv = RuleIRV(cm_option='exact')(self.profile_)
+        ballots_m = irv.example_ballots_cm_c_(c)
+        if ballots_m is None:
+            return False  # Not a quick escape (we did what we could)
+        preferences_rk_s = self.profile_.preferences_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :]
+        profile_test = Profile(
+            preferences_rk=np.concatenate((preferences_rk_s, ballots_m))
+        )
+        winner_test = self.__class__()(profile_test).w_
+        n_m = self.profile_.matrix_duels_ut[c, self.w_]
+        if winner_test == c:
+            self._update_sufficient(self._sufficient_coalition_size_cm, c, n_m,
+                                    'CM: Manipulation found by Decondorcification/IRV heuristic =>\n'
+                                    '    sufficient_coalition_size_cm = n_m =')
+        return False
