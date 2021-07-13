@@ -4,6 +4,23 @@
 History
 =======
 
+------------------------------------------------------
+0.2.0 (2021-07-13): Smith-IRV and Similar Voting Rules
+------------------------------------------------------
+
+* A ``Profile`` object can now compute its Smith set (also called "top cycle"): ``smith_set_rk``, ``smith_set_rk_ctb``,
+  ``smith_set_ut_abs``, ``smith_set_ut_abs_ctb``, ``smith_set_ut_rel``, ``smith_set_ut_rel_ctb``.
+* Add Smith-IRV.
+* Add Tideman's rule.
+* Add Woodall's rule.
+* Add constant ``RULE_CLASSES``: list of all the rule classes.
+* Tools that are mostly dedicated to developers:
+
+  * A global option allows to throw an error when an uncovered portion of code is reached.
+  * Add ``Profile.to_doctest_string``.
+  * Add ``Rule._set_random_options``.
+  * Add ``Rule._random_instruction``.
+
 --------------------------------------
 0.1.2 (2021-07-12): Fix Release Number
 --------------------------------------
