@@ -2601,3 +2601,60 @@ class Profile(my_log.MyLog):
         print('Condorcet-admissible ' + display_bool(self.exists_condorcet_admissible))
 
         self.log_depth = old_log_depth
+
+    # %% For developers
+
+    def to_doctest_string(self, ut=True, rk=True):
+        """Convert to string, in the doctest format.
+
+        Parameters
+        ----------
+        ut : bool
+            Whether to print `preferences_ut`.
+        rk : bool
+            Whether to print `preferences_rk`.
+
+        Returns
+        -------
+        str
+            A string that can be copied-pasted to make a doctest.
+
+        Examples
+        --------
+        >>> profile = Profile(preferences_rk=[[0, 1], [0, 1]])
+        >>> print('.' + profile.to_doctest_string())  # doctest: +NORMALIZE_WHITESPACE
+            . >>> profile = Profile(preferences_ut=[
+            ...     [1, 0],
+            ...     [1, 0],
+            ... ], preferences_rk=[
+            ...     [0, 1],
+            ...     [0, 1],
+            ... ])
+        """
+        s = '            >>> profile = Profile('
+        arguments = []
+        if ut:
+            argument = ''
+            argument += 'preferences_ut=[\n'
+            argument += (
+                repr(self.preferences_ut)
+                    .replace('array([', '            ...     ')
+                    .replace('\n       ', '\n            ...     ')
+                    .replace('])', ',')
+            )
+            argument += '\n            ... ]'
+            arguments.append(argument)
+        if rk:
+            argument = ''
+            argument += 'preferences_rk=[\n'
+            argument += (
+                repr(self.preferences_rk)
+                    .replace('array([', '            ...     ')
+                    .replace('\n       ', '\n            ...     ')
+                    .replace('])', ',')
+            )
+            argument += '\n            ... ]'
+            arguments.append(argument)
+        s += ', '.join(arguments)
+        s += ')'
+        return s
