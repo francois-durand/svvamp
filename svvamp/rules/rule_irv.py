@@ -362,21 +362,51 @@ class RuleIRV(Rule):
             >>> rule_2 = RuleIRV()(profile)
             >>> rule_2.w_
             0
+
+        Check that the new rule does not change the options of the old one (which used to be a bug):
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule_irv_fast = RuleIRV(cm_option='fast')
+            >>> rule_irv_exact = RuleIRV(cm_option='exact')
+            >>> _ = rule_irv_fast(profile)
+            >>> _ = rule_irv_exact(profile)
+            >>> rule_irv_fast.cm_option
+            'fast'
+
+        Same kind of example with EB/IRV:
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule_eb_fast = RuleExhaustiveBallot(cm_option='fast')
+            >>> rule_irv_exact = RuleIRV(cm_option='exact')
+            >>> _ = rule_eb_fast(profile)
+            >>> _ = rule_irv_exact(profile)
+            >>> rule_eb_fast.cm_option
+            'fast'
         """
         # Unplug this irv from the old profile
         if self.profile_ is not None:
             delattr(self.profile_, 'irv')
-        # See if new profile has an irv
-        if hasattr(profile, 'irv'):
-            # Update the profile's irv with my options
-            for option_name in self.options_parameters.keys():
-                setattr(profile.irv, option_name, getattr(self, option_name))
+        # See if new profile has an irv, with the same options
+        if hasattr(profile, 'irv') and self.options == profile.irv.options:
             # Copy all its inner variables into mine.
             self.__dict__.update(profile.irv.__dict__)
         else:
+            # 'Usual' behavior
             self.delete_cache(suffix='_')
+            self.profile_ = profile
         # Bind this irv with the new profile
-        self.profile_ = profile
         profile.irv = self
         # Grab the exhaustive ballot of the profile (or create it)
         eb_options = {}
