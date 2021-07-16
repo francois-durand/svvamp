@@ -455,8 +455,8 @@ class RuleCondorcetVtbIRV(Rule):
             losing_candidates = np.concatenate(([self.irv_.w_], losing_candidates))
         return losing_candidates
 
-    def _cm_aux_very_slow(self, c, n_m, suggested_path, preferences_borda_s, matrix_duels_temp):
-        """'Very slow' algorithm used for CM.
+    def _cm_aux_(self, c, n_m, suggested_path, preferences_borda_s, matrix_duels_temp):
+        """Algorithm used for CM (using suggested path).
 
         Parameters
         ----------
@@ -774,8 +774,8 @@ class RuleCondorcetVtbIRV(Rule):
             if equal_true(irv_is_cm_c):
                 suggested_path_one = self.irv_.example_path_cm_c_(c)
                 self.mylogv("CM: suggested_path =", suggested_path_one, 3)
-                manipulation_found = self._cm_aux_very_slow(c, n_m, suggested_path_one, preferences_borda_s,
-                                                               matrix_duels_vtb_temp)
+                manipulation_found = self._cm_aux_(c, n_m, suggested_path_one, preferences_borda_s,
+                                                   matrix_duels_vtb_temp)
                 self.mylogv("CM: manipulation_found =", manipulation_found, 3)
                 if manipulation_found:
                     self._update_sufficient(self._sufficient_coalition_size_cm, c, n_m,
@@ -807,8 +807,8 @@ class RuleCondorcetVtbIRV(Rule):
                 if np.array_equal(suggested_path_one, suggested_path_two):
                     self.mylog('CM: Same suggested path as before, skip computation')
                 else:
-                    manipulation_found = self._cm_aux_very_slow(c, n_m, suggested_path_two, preferences_borda_s,
-                                                                   matrix_duels_vtb_temp)
+                    manipulation_found = self._cm_aux_(c, n_m, suggested_path_two, preferences_borda_s,
+                                                       matrix_duels_vtb_temp)
                     self.mylogv("CM: manipulation_found =", manipulation_found, 3)
                     if manipulation_found:
                         self._update_sufficient(self._sufficient_coalition_size_cm, c, n_m,
@@ -820,8 +820,8 @@ class RuleCondorcetVtbIRV(Rule):
                 self.mylog('CM: c == self.irv_.w != self._w', 3)
                 suggested_path = self.irv_.elimination_path_
                 self.mylogv("CM: suggested_path =", suggested_path, 3)
-                manipulation_found = self._cm_aux_very_slow(c, n_m, suggested_path, preferences_borda_s,
-                                                               matrix_duels_vtb_temp)
+                manipulation_found = self._cm_aux_(c, n_m, suggested_path, preferences_borda_s,
+                                                   matrix_duels_vtb_temp)
                 self.mylogv("CM: manipulation_found =", manipulation_found, 3)
                 if manipulation_found:
                     self._update_sufficient(self._sufficient_coalition_size_cm, c, n_m,

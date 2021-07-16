@@ -316,6 +316,7 @@ class RuleIRV(Rule):
             log_identity="IRV", **kwargs
         )
         self._example_ballots_cm_c = None
+        self._example_ballots_cm_w_against = None
 
     def __call__(self, profile):
         """
@@ -419,6 +420,7 @@ class RuleIRV(Rule):
         self.eb_ = RuleExhaustiveBallot(**eb_options)(self.profile_)
         # Initialize examples of manipulating ballots
         self._example_ballots_cm_c = {c: None for c in range(profile.n_c)}
+        self._example_ballots_cm_w_against = {w_other_rule: None for w_other_rule in range(profile.n_c)}
         return self
 
     # %% Dealing with the options
@@ -1468,32 +1470,36 @@ class RuleIRV(Rule):
 
     def example_ballots_cm_c_(self, c):
         """
-        N.B.: If c == w, compute manipulating ballots under the assumption that the winner is the condorcet_winner_rk.
+        To manipulate for c against w.
         """
-        if self._example_ballots_cm_c[c] is not None:
-            return self._example_ballots_cm_c[c]
         if c == self.w_:
-            w = self.profile_.condorcet_winner_rk_ctb
-            if np.isnan(w):
-                return None
-            if c == w:
-                return None
-            suggested_path = self.elimination_path_
-            n_m = self.profile_.matrix_duels_ut[c, w]
-            preferences_borda_s = self.profile_.preferences_borda_rk[
-                self.profile_.preferences_ut[:, w] >= self.profile_.preferences_ut[:, c], :]
-            matrix_duels_temp = (preferences_ut_to_matrix_duels_ut(preferences_borda_s))
-        else:  # c != self.w_
-            self.is_cm_c_with_bounds_(c)  # Provide a better (cheaper) elimination path.
+            return None
+        if self._example_ballots_cm_c[c] is None:
             if not equal_true(self.is_cm_c_(c)):
                 return None
             suggested_path = self.example_path_cm_c_(c)
             n_m = self.profile_.matrix_duels_ut[c, self.w_]
             preferences_borda_s = self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :]
             matrix_duels_temp = (preferences_ut_to_matrix_duels_ut(preferences_borda_s))
-        self._example_ballots_cm_c[c] = self._example_ballots_cm_c_aux(
-            c, n_m, suggested_path, preferences_borda_s, matrix_duels_temp)
+            self._example_ballots_cm_c[c] = self._example_ballots_cm_c_aux(
+                c, n_m, suggested_path, preferences_borda_s, matrix_duels_temp)
         return self._example_ballots_cm_c[c]
+
+    def example_ballots_cm_w_against_(self, w_other_rule):
+        """
+        To manipulate for w when in a sibling rule, the winner is different (w_other_rule).
+        """
+        if w_other_rule == self.w_:
+            return None
+        if self._example_ballots_cm_w_against[w_other_rule] is None:
+            suggested_path = self.elimination_path_
+            n_m = self.profile_.matrix_duels_ut[self.w_, w_other_rule]
+            preferences_borda_s = self.profile_.preferences_borda_rk[
+                self.profile_.preferences_ut[:, w_other_rule] >= self.profile_.preferences_ut[:, self.w_], :]
+            matrix_duels_temp = (preferences_ut_to_matrix_duels_ut(preferences_borda_s))
+            self._example_ballots_cm_w_against[w_other_rule] = self._example_ballots_cm_c_aux(
+                self.w_, n_m, suggested_path, preferences_borda_s, matrix_duels_temp)
+        return self._example_ballots_cm_w_against[w_other_rule]
 
     def _example_ballots_cm_c_aux(self, c, n_m, suggested_path, preferences_borda_s, matrix_duels_temp):
         """Example of manipulating ballots (in rk format).
