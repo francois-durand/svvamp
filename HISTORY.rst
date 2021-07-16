@@ -4,6 +4,32 @@
 History
 =======
 
+--------------------------------------------------------------
+0.3.0 (2021-07-16): New CM Algorithms for Smith-IRV-Like Rules
+--------------------------------------------------------------
+
+* New CM algorithms for Smith-IRV-like rules:
+
+  * New CM algorithms for ``RuleICRV``, ``RuleSmithIRV``, ``RuleTideman``, ``RuleWoodall`` and ``RuleIRVAverage``.
+  * Add ``RuleIRV.example_ballots_cm_c_`` and ``RuleIRV.example_ballots_cm_w_against_``: examples of manipulating ballots
+    (used as heuristic to manipulate Smith-IRV and similar rules).
+  * In ``RuleCondorcetAbsIRV`` and ``RuleCondorcetVtbIRV``, the former option ``almost_exact`` is renamed to
+    ``very_slow``, for the sake of consistency with Smith-IRV and similar voting rules.
+
+* Improve imports/exports:
+
+  * ``ProfileFromFile`` can now import a CVR (cast vote record) file.
+  * ``ProfileFromFile`` has a new parameter ``sort_candidates``: sort the candidates from strongest to weakest (in a
+    Black method sense).
+  * Add ``Profile.to_csv``: export the utilities to a csv file.
+
+* Add ``Rule.options``: a dictionary with all the options of a rule.
+* Bug fixes:
+
+  * Fix a major bug in ``RuleTideman``: ballots were not counted correctly.
+  * Fix a bug in ``RuleExhaustiveBallot`` and ``RuleIRV``: applying a voting rule to a profile was able to change the
+    options of another (related) rule.
+
 ------------------------------------------------------
 0.2.0 (2021-07-13): Smith-IRV and Similar Voting Rules
 ------------------------------------------------------
