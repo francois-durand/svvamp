@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>History &mdash; SVVAMP 0.2.0 documentation</title>
+  <title>History &mdash; SVVAMP 0.3.0 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.2.0
+                0.3.0
               </div>
             
           
@@ -101,6 +101,7 @@
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">History</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#new-cm-algorithms-for-smith-irv-like-rules">0.3.0 (2021-07-16): New CM Algorithms for Smith-IRV-Like Rules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#smith-irv-and-similar-voting-rules">0.2.0 (2021-07-13): Smith-IRV and Similar Voting Rules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#fix-release-number">0.1.2 (2021-07-12): Fix Release Number</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#fix-deployment">0.1.1 (2021-07-12): Fix Deployment</a></li>
@@ -204,6 +205,36 @@
 </style>
 <div class="section" id="history">
 <h1>History<a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="new-cm-algorithms-for-smith-irv-like-rules">
+<h2>0.3.0 (2021-07-16): New CM Algorithms for Smith-IRV-Like Rules<a class="headerlink" href="#new-cm-algorithms-for-smith-irv-like-rules" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>New CM algorithms for Smith-IRV-like rules:</p>
+<ul>
+<li><p>New CM algorithms for <code class="docutils literal notranslate"><span class="pre">RuleICRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleSmithIRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleTideman</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleWoodall</span></code> and <code class="docutils literal notranslate"><span class="pre">RuleIRVAverage</span></code>.</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">RuleIRV.example_ballots_cm_c_</span></code> and <code class="docutils literal notranslate"><span class="pre">RuleIRV.example_ballots_cm_w_against_</span></code>: examples of manipulating ballots
+(used as heuristic to manipulate Smith-IRV and similar rules).</p></li>
+<li><p>In <code class="docutils literal notranslate"><span class="pre">RuleCondorcetAbsIRV</span></code> and <code class="docutils literal notranslate"><span class="pre">RuleCondorcetVtbIRV</span></code>, the former option <code class="docutils literal notranslate"><span class="pre">almost_exact</span></code> is renamed to
+<code class="docutils literal notranslate"><span class="pre">very_slow</span></code>, for the sake of consistency with Smith-IRV and similar voting rules.</p></li>
+</ul>
+</li>
+<li><p>Improve imports/exports:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">ProfileFromFile</span></code> can now import a CVR (cast vote record) file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ProfileFromFile</span></code> has a new parameter <code class="docutils literal notranslate"><span class="pre">sort_candidates</span></code>: sort the candidates from strongest to weakest (in a
+Black method sense).</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">Profile.to_csv</span></code>: export the utilities to a csv file.</p></li>
+</ul>
+</li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">Rule.options</span></code>: a dictionary with all the options of a rule.</p></li>
+<li><p>Bug fixes:</p>
+<ul>
+<li><p>Fix a major bug in <code class="docutils literal notranslate"><span class="pre">RuleTideman</span></code>: ballots were not counted correctly.</p></li>
+<li><p>Fix a bug in <code class="docutils literal notranslate"><span class="pre">RuleExhaustiveBallot</span></code> and <code class="docutils literal notranslate"><span class="pre">RuleIRV</span></code>: applying a voting rule to a profile was able to change the
+options of another (related) rule.</p></li>
+</ul>
+</li>
+</ul>
+</div>
 <div class="section" id="smith-irv-and-similar-voting-rules">
 <h2>0.2.0 (2021-07-13): Smith-IRV and Similar Voting Rules<a class="headerlink" href="#smith-irv-and-similar-voting-rules" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
