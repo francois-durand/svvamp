@@ -283,12 +283,12 @@ class RuleCondorcetAbsIRV(Rule):
           but unable to decide non-CM (except in rare obvious cases).
         * :attr:`cm_option` = ``'slow'``: Rely on :class:`RuleExhaustiveBallot`'s exact algorithm. Non-polynomial
           heuristic (:math:`2^{n_c}`). Quite efficient to prove CM or non-CM.
-        * :attr:`cm_option` = ``'almost_exact'``: Rely on :class:`RuleIRV`'s exact algorithm. Non-polynomial
+        * :attr:`cm_option` = ``'very_slow'``: Rely on :class:`RuleIRV`'s exact algorithm. Non-polynomial
           heuristic (:math:`n_c!`). Very efficient to prove CM or non-CM.
         * :attr:`cm_option` = ``'exact'``: Non-polynomial algorithm from superclass :class:`Rule`.
 
-        Each algorithm above exploits the faster ones. For example, if :attr:`cm_option` = ``'almost_exact'``, SVVAMP
-        tries the fast algorithm first, then the slow one, then the 'almost exact' one. As soon as it reaches a
+        Each algorithm above exploits the faster ones. For example, if :attr:`cm_option` = ``'very_slow'``, SVVAMP
+        tries the fast algorithm first, then the slow one, then the 'very slow' one. As soon as it reaches a
         decision, computation stops.
 
     * :meth:`is_icm_`: Exact in polynomial time.
@@ -307,7 +307,7 @@ class RuleCondorcetAbsIRV(Rule):
         self.irv_ = None
         super().__init__(
             options_parameters={
-                'cm_option': {'allowed': {'fast', 'slow', 'almost_exact', 'exact'}, 'default': 'fast'},
+                'cm_option': {'allowed': {'fast', 'slow', 'very_slow', 'exact'}, 'default': 'fast'},
                 'tm_option': {'allowed': ['exact'], 'default': 'exact'},
                 'icm_option': {'allowed': {'exact'}, 'default': 'exact'}
             },
@@ -325,7 +325,7 @@ class RuleCondorcetAbsIRV(Rule):
             irv_options['cm_option'] = 'fast'
         elif self.cm_option == 'slow':
             irv_options['cm_option'] = 'slow'
-        else:  # self.cm_option in {'almost_exact', 'exact'}
+        else:  # self.cm_option in {'very_slow', 'exact'}
             irv_options['cm_option'] = 'exact'
         self.irv_ = RuleIRV(**irv_options)(self.profile_)
         return self
@@ -499,7 +499,7 @@ class RuleCondorcetAbsIRV(Rule):
             ...     [1, 0, 2],
             ...     [2, 0, 1],
             ... ])
-            >>> rule = RuleCondorcetAbsIRV(cm_option='almost_exact')(profile)
+            >>> rule = RuleCondorcetAbsIRV(cm_option='very_slow')(profile)
             >>> rule.candidates_cm_
             array([0., 0., 0.])
 
@@ -532,7 +532,7 @@ class RuleCondorcetAbsIRV(Rule):
             ...     [2, 3, 0, 1],
             ...     [3, 0, 1, 2],
             ... ])
-            >>> rule = RuleCondorcetAbsIRV(cm_option='almost_exact')(profile)
+            >>> rule = RuleCondorcetAbsIRV(cm_option='very_slow')(profile)
             >>> rule.is_cm_
             False
 
@@ -554,7 +554,7 @@ class RuleCondorcetAbsIRV(Rule):
             ...     [2, 1, 0],
             ...     [2, 1, 0],
             ... ])
-            >>> rule = RuleCondorcetAbsIRV(cm_option='almost_exact')(profile)
+            >>> rule = RuleCondorcetAbsIRV(cm_option='very_slow')(profile)
             >>> rule.is_cm_c_(1)
             False
         """

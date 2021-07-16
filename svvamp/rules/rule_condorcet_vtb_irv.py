@@ -275,12 +275,12 @@ class RuleCondorcetVtbIRV(Rule):
           CM but unable to decide non-CM (except in rare obvious cases).
         * :attr:`cm_option` = ``'slow'``: Rely on :class:`RuleExhaustiveBallot`'s exact algorithm. Non-polynomial
           heuristic (:math:`2^{n_c}`). Quite efficient to prove CM or non-CM.
-        * :attr:`cm_option` = ``'almost_exact'``: Rely on :class:`RuleIRV`'s exact algorithm. Non-polynomial
+        * :attr:`cm_option` = ``'very_slow'``: Rely on :class:`RuleIRV`'s exact algorithm. Non-polynomial
           heuristic (:math:`n_c!`). Very efficient to prove CM or non-CM.
         * :attr:`cm_option` = ``'exact'``: Non-polynomial algorithm from superclass :class:`Rule`.
 
-        Each algorithm above exploits the faster ones. For example, if :attr:`cm_option` = ``'almost_exact'``,
-        SVVAMP tries the fast algorithm first, then the slow one, then the 'almost exact' one. As soon as it reaches
+        Each algorithm above exploits the faster ones. For example, if :attr:`cm_option` = ``'very_slow'``,
+        SVVAMP tries the fast algorithm first, then the slow one, then the 'very slow' one. As soon as it reaches
         a decision, computation stops.
 
     * :meth:`is_icm_`: Exact in polynomial time.
@@ -301,7 +301,7 @@ class RuleCondorcetVtbIRV(Rule):
         # self.irv_ = None
         super().__init__(
             options_parameters={
-                'cm_option': {'allowed': {'fast', 'slow', 'almost_exact', 'exact'}, 'default': 'fast'},
+                'cm_option': {'allowed': {'fast', 'slow', 'very_slow', 'exact'}, 'default': 'fast'},
                 'tm_option': {'allowed': ['exact'], 'default': 'exact'},
                 'icm_option': {'allowed': {'exact'}, 'default': 'exact'}
             },
@@ -319,7 +319,7 @@ class RuleCondorcetVtbIRV(Rule):
             irv_options['cm_option'] = 'fast'
         elif self.cm_option == 'slow':
             irv_options['cm_option'] = 'slow'
-        else:  # self.cm_option in {'almost_exact', 'exact'}:
+        else:  # self.cm_option in {'very_slow', 'exact'}:
             irv_options['cm_option'] = 'exact'
         self.irv_ = RuleIRV(**irv_options)(self.profile_)
         return self
@@ -455,8 +455,8 @@ class RuleCondorcetVtbIRV(Rule):
             losing_candidates = np.concatenate(([self.irv_.w_], losing_candidates))
         return losing_candidates
 
-    def _cm_aux_almost_exact(self, c, n_m, suggested_path, preferences_borda_s, matrix_duels_temp):
-        """'Almost exact' algorithm used for CM.
+    def _cm_aux_very_slow(self, c, n_m, suggested_path, preferences_borda_s, matrix_duels_temp):
+        """'Very slow' algorithm used for CM.
 
         Parameters
         ----------
@@ -483,7 +483,7 @@ class RuleCondorcetVtbIRV(Rule):
             ...     [2, 3, 1, 0],
             ...     [3, 2, 1, 0],
             ... ])
-            >>> rule = RuleCondorcetVtbIRV(cm_option='almost_exact')(profile)
+            >>> rule = RuleCondorcetVtbIRV(cm_option='very_slow')(profile)
             >>> rule.candidates_cm_
             array([1., 1., 1., 0.])
         """
@@ -593,7 +593,7 @@ class RuleCondorcetVtbIRV(Rule):
             ...     [1, 2, 0],
             ...     [2, 1, 0],
             ... ])
-            >>> rule = RuleCondorcetVtbIRV(cm_option='almost_exact')(profile)
+            >>> rule = RuleCondorcetVtbIRV(cm_option='very_slow')(profile)
             >>> rule.candidates_cm_
             array([0., 0., 0.])
 
@@ -723,7 +723,7 @@ class RuleCondorcetVtbIRV(Rule):
             ...     [3, 2, 0, 4, 1],
             ...     [4, 3, 1, 0, 2],
             ... ])
-            >>> rule = RuleCondorcetVtbIRV(cm_option='almost_exact')(profile)
+            >>> rule = RuleCondorcetVtbIRV(cm_option='very_slow')(profile)
             >>> rule.necessary_coalition_size_cm_
             array([3., 3., 2., 0., 4.])
         """
@@ -774,7 +774,7 @@ class RuleCondorcetVtbIRV(Rule):
             if equal_true(irv_is_cm_c):
                 suggested_path_one = self.irv_.example_path_cm_c_(c)
                 self.mylogv("CM: suggested_path =", suggested_path_one, 3)
-                manipulation_found = self._cm_aux_almost_exact(c, n_m, suggested_path_one, preferences_borda_s,
+                manipulation_found = self._cm_aux_very_slow(c, n_m, suggested_path_one, preferences_borda_s,
                                                                matrix_duels_vtb_temp)
                 self.mylogv("CM: manipulation_found =", manipulation_found, 3)
                 if manipulation_found:
@@ -807,7 +807,7 @@ class RuleCondorcetVtbIRV(Rule):
                 if np.array_equal(suggested_path_one, suggested_path_two):
                     self.mylog('CM: Same suggested path as before, skip computation')
                 else:
-                    manipulation_found = self._cm_aux_almost_exact(c, n_m, suggested_path_two, preferences_borda_s,
+                    manipulation_found = self._cm_aux_very_slow(c, n_m, suggested_path_two, preferences_borda_s,
                                                                    matrix_duels_vtb_temp)
                     self.mylogv("CM: manipulation_found =", manipulation_found, 3)
                     if manipulation_found:
@@ -820,7 +820,7 @@ class RuleCondorcetVtbIRV(Rule):
                 self.mylog('CM: c == self.irv_.w != self._w', 3)
                 suggested_path = self.irv_.elimination_path_
                 self.mylogv("CM: suggested_path =", suggested_path, 3)
-                manipulation_found = self._cm_aux_almost_exact(c, n_m, suggested_path, preferences_borda_s,
+                manipulation_found = self._cm_aux_very_slow(c, n_m, suggested_path, preferences_borda_s,
                                                                matrix_duels_vtb_temp)
                 self.mylogv("CM: manipulation_found =", manipulation_found, 3)
                 if manipulation_found:
