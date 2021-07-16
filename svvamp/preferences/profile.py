@@ -21,6 +21,7 @@ This file is part of SVVAMP.
 """
 
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 # noinspection PyUnresolvedReferences
 from mpl_toolkits.mplot3d import Axes3D
@@ -2658,3 +2659,7 @@ class Profile(my_log.MyLog):
         s += ', '.join(arguments)
         s += ')'
         return s
+
+    def to_csv(self, file_name):
+        df = pd.DataFrame(self.preferences_ut, columns=self.labels_candidates)
+        df.to_csv(file_name, sep=';')
