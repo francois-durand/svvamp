@@ -192,47 +192,60 @@
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="kn">from</span> <span class="nn">svvamp.utils.pref_lib</span> <span class="kn">import</span> <span class="n">preflib_to_preferences_ut</span>
+<span class="kn">from</span> <span class="nn">svvamp.utils.cast_vote_records</span> <span class="kn">import</span> <span class="n">cvr_to_preferences_ut</span>
 <span class="kn">from</span> <span class="nn">svvamp.preferences.profile</span> <span class="kn">import</span> <span class="n">Profile</span>
 
 
 <div class="viewcode-block" id="ProfileFromFile"><a class="viewcode-back" href="../../../reference/preferences/profile_from_file.html#svvamp.ProfileFromFile">[docs]</a><span class="k">class</span> <span class="nc">ProfileFromFile</span><span class="p">(</span><span class="n">Profile</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">sort_voters</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">sort_candidates</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sort_voters</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Profile from a file.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        file_name : str</span>
 <span class="sd">            The name of the file.</span>
+<span class="sd">        sort_candidates : bool</span>
+<span class="sd">            If True, then candidates are sorted, first by number of victories (in the matrix of victories), then</span>
+<span class="sd">            by Borda score.</span>
 <span class="sd">        sort_voters : bool</span>
 <span class="sd">            Whether the voters should be sorted. Cf. :class:`Profile`.</span>
 
 <span class="sd">        Notes</span>
 <span class="sd">        -----</span>
+<span class="sd">        * If the file name ends with &#39;.cvr.csv&#39; (cvr = Cast Vote Records): first row gives the column headers. The</span>
+<span class="sd">          last headers are &#39;rank1&#39;, &#39;rank2&#39;, etc. Each row represents a voter. In the column &#39;rank1&#39;, the name of</span>
+<span class="sd">          her most-liked candidate, etc.</span>
 <span class="sd">        * If the file name ends with &#39;.t.csv&#39; (t = transposed format): simple table of utilities with candidates</span>
 <span class="sd">          declared in the first column and voters declared in the first row.</span>
 <span class="sd">        * If the file name ends with &#39;.csv&#39; (but not &#39;.t.csv&#39;), candidates must be declared in the first row and voters</span>
 <span class="sd">          in the first column.</span>
-<span class="sd">        * Otherwise, the file is considered as a PrefLib file. In that case, since information is ordinal only,</span>
-<span class="sd">          ``preferences_ut[v, c]`` is set to the Borda score (with no vtb) minus ``(C - 1) / 2``. This way,</span>
-<span class="sd">          utilities are between ``- (C - 1) / 2`` and ``(C - 1) / 2``.</span>
+<span class="sd">        * Otherwise, the file is considered as a PrefLib file.</span>
+
+<span class="sd">        For CVR and Preflib files, since the information is ordinal only, ``preferences_ut[v, c]`` is set to the Borda</span>
+<span class="sd">        score (with no vtb) minus ``(C - 1) / 2``. This way, utilities are between ``- (C - 1) / 2`` and</span>
+<span class="sd">        ``(C - 1) / 2``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">file_name</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">:]</span> <span class="o">==</span> <span class="s1">&#39;.csv&#39;</span><span class="p">:</span>
-            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="o">=</span><span class="n">file_name</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;;&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">file_name</span><span class="p">[</span><span class="o">-</span><span class="mi">6</span><span class="p">:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;.t&#39;</span><span class="p">:</span>
-                <span class="n">preferences_ut</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span><span class="o">.</span><span class="n">values</span>
-                <span class="n">labels_candidates</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">str</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">8</span> <span class="ow">and</span> <span class="n">file_name</span><span class="p">[</span><span class="o">-</span><span class="mi">8</span><span class="p">:]</span> <span class="o">==</span> <span class="s1">&#39;.cvr.csv&#39;</span><span class="p">:</span>
+                <span class="n">preferences_ut</span><span class="p">,</span> <span class="n">labels_candidates</span> <span class="o">=</span> <span class="n">cvr_to_preferences_ut</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">preferences_ut</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">values</span>
-                <span class="n">labels_candidates</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">str</span><span class="p">)</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="o">=</span><span class="n">file_name</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;;&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">file_name</span><span class="p">[</span><span class="o">-</span><span class="mi">6</span><span class="p">:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;.t&#39;</span><span class="p">:</span>
+                    <span class="n">preferences_ut</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span><span class="o">.</span><span class="n">values</span>
+                    <span class="n">labels_candidates</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">str</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">preferences_ut</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">values</span>
+                    <span class="n">labels_candidates</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">str</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">preferences_ut</span><span class="p">,</span> <span class="n">labels_candidates</span> <span class="o">=</span> <span class="n">preflib_to_preferences_ut</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">sort_candidates</span><span class="p">:</span>
             <span class="n">pop_temp</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="p">)</span>
             <span class="n">nb_victories_temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">pop_temp</span><span class="o">.</span><span class="n">matrix_victories_ut_rel</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
             <span class="n">scores_temp</span> <span class="o">=</span> <span class="n">nb_victories_temp</span> <span class="o">+</span> <span class="n">pop_temp</span><span class="o">.</span><span class="n">borda_score_c_ut</span> <span class="o">/</span> <span class="n">pop_temp</span><span class="o">.</span><span class="n">n_c</span> <span class="o">/</span> <span class="n">pop_temp</span><span class="o">.</span><span class="n">n_v</span>
             <span class="n">candidates_best_to_worst</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="o">-</span> <span class="n">scores_temp</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;mergesort&#39;</span><span class="p">)</span>
             <span class="n">preferences_ut</span> <span class="o">=</span> <span class="n">preferences_ut</span><span class="p">[:,</span> <span class="n">candidates_best_to_worst</span><span class="p">]</span>
-            <span class="n">labels_candidates</span> <span class="o">=</span> <span class="n">labels_candidates</span><span class="p">[</span><span class="n">candidates_best_to_worst</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">preferences_ut</span><span class="p">,</span> <span class="n">labels_candidates</span> <span class="o">=</span> <span class="n">preflib_to_preferences_ut</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+            <span class="n">labels_candidates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">labels_candidates</span><span class="p">)[</span><span class="n">candidates_best_to_worst</span><span class="p">]</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="n">preferences_ut</span><span class="p">,</span>
                          <span class="n">log_creation</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;From file&#39;</span><span class="p">,</span> <span class="s1">&#39;File name&#39;</span><span class="p">,</span> <span class="n">file_name</span><span class="p">],</span>
                          <span class="n">labels_candidates</span><span class="o">=</span><span class="n">labels_candidates</span><span class="p">,</span> <span class="n">sort_voters</span><span class="o">=</span><span class="n">sort_voters</span><span class="p">)</span></div>

@@ -443,12 +443,12 @@
 <span class="sd">          CM but unable to decide non-CM (except in rare obvious cases).</span>
 <span class="sd">        * :attr:`cm_option` = ``&#39;slow&#39;``: Rely on :class:`RuleExhaustiveBallot`&#39;s exact algorithm. Non-polynomial</span>
 <span class="sd">          heuristic (:math:`2^{n_c}`). Quite efficient to prove CM or non-CM.</span>
-<span class="sd">        * :attr:`cm_option` = ``&#39;almost_exact&#39;``: Rely on :class:`RuleIRV`&#39;s exact algorithm. Non-polynomial</span>
+<span class="sd">        * :attr:`cm_option` = ``&#39;very_slow&#39;``: Rely on :class:`RuleIRV`&#39;s exact algorithm. Non-polynomial</span>
 <span class="sd">          heuristic (:math:`n_c!`). Very efficient to prove CM or non-CM.</span>
 <span class="sd">        * :attr:`cm_option` = ``&#39;exact&#39;``: Non-polynomial algorithm from superclass :class:`Rule`.</span>
 
-<span class="sd">        Each algorithm above exploits the faster ones. For example, if :attr:`cm_option` = ``&#39;almost_exact&#39;``,</span>
-<span class="sd">        SVVAMP tries the fast algorithm first, then the slow one, then the &#39;almost exact&#39; one. As soon as it reaches</span>
+<span class="sd">        Each algorithm above exploits the faster ones. For example, if :attr:`cm_option` = ``&#39;very_slow&#39;``,</span>
+<span class="sd">        SVVAMP tries the fast algorithm first, then the slow one, then the &#39;very slow&#39; one. As soon as it reaches</span>
 <span class="sd">        a decision, computation stops.</span>
 
 <span class="sd">    * :meth:`is_icm_`: Exact in polynomial time.</span>
@@ -469,7 +469,7 @@
         <span class="c1"># self.irv_ = None</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">options_parameters</span><span class="o">=</span><span class="p">{</span>
-                <span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;fast&#39;</span><span class="p">,</span> <span class="s1">&#39;slow&#39;</span><span class="p">,</span> <span class="s1">&#39;almost_exact&#39;</span><span class="p">,</span> <span class="s1">&#39;exact&#39;</span><span class="p">},</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;fast&#39;</span><span class="p">},</span>
+                <span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;fast&#39;</span><span class="p">,</span> <span class="s1">&#39;slow&#39;</span><span class="p">,</span> <span class="s1">&#39;very_slow&#39;</span><span class="p">,</span> <span class="s1">&#39;exact&#39;</span><span class="p">},</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;fast&#39;</span><span class="p">},</span>
                 <span class="s1">&#39;tm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">},</span>
                 <span class="s1">&#39;icm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;exact&#39;</span><span class="p">},</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">}</span>
             <span class="p">},</span>
@@ -487,7 +487,7 @@
             <span class="n">irv_options</span><span class="p">[</span><span class="s1">&#39;cm_option&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;fast&#39;</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span> <span class="o">==</span> <span class="s1">&#39;slow&#39;</span><span class="p">:</span>
             <span class="n">irv_options</span><span class="p">[</span><span class="s1">&#39;cm_option&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;slow&#39;</span>
-        <span class="k">else</span><span class="p">:</span>  <span class="c1"># self.cm_option in {&#39;almost_exact&#39;, &#39;exact&#39;}:</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># self.cm_option in {&#39;very_slow&#39;, &#39;exact&#39;}:</span>
             <span class="n">irv_options</span><span class="p">[</span><span class="s1">&#39;cm_option&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;exact&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">irv_</span> <span class="o">=</span> <span class="n">RuleIRV</span><span class="p">(</span><span class="o">**</span><span class="n">irv_options</span><span class="p">)(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span>
@@ -623,8 +623,8 @@
             <span class="n">losing_candidates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(([</span><span class="bp">self</span><span class="o">.</span><span class="n">irv_</span><span class="o">.</span><span class="n">w_</span><span class="p">],</span> <span class="n">losing_candidates</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">losing_candidates</span>
 
-    <span class="k">def</span> <span class="nf">_cm_aux_almost_exact</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_m</span><span class="p">,</span> <span class="n">suggested_path</span><span class="p">,</span> <span class="n">preferences_borda_s</span><span class="p">,</span> <span class="n">matrix_duels_temp</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;&#39;Almost exact&#39; algorithm used for CM.</span>
+    <span class="k">def</span> <span class="nf">_cm_aux_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_m</span><span class="p">,</span> <span class="n">suggested_path</span><span class="p">,</span> <span class="n">preferences_borda_s</span><span class="p">,</span> <span class="n">matrix_duels_temp</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Algorithm used for CM (using suggested path).</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -651,7 +651,7 @@
 <span class="sd">            ...     [2, 3, 1, 0],</span>
 <span class="sd">            ...     [3, 2, 1, 0],</span>
 <span class="sd">            ... ])</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleCondorcetVtbIRV(cm_option=&#39;almost_exact&#39;)(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleCondorcetVtbIRV(cm_option=&#39;very_slow&#39;)(profile)</span>
 <span class="sd">            &gt;&gt;&gt; rule.candidates_cm_</span>
 <span class="sd">            array([1., 1., 1., 0.])</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -761,7 +761,7 @@
 <span class="sd">            ...     [1, 2, 0],</span>
 <span class="sd">            ...     [2, 1, 0],</span>
 <span class="sd">            ... ])</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleCondorcetVtbIRV(cm_option=&#39;almost_exact&#39;)(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleCondorcetVtbIRV(cm_option=&#39;very_slow&#39;)(profile)</span>
 <span class="sd">            &gt;&gt;&gt; rule.candidates_cm_</span>
 <span class="sd">            array([0., 0., 0.])</span>
 
@@ -891,7 +891,7 @@
 <span class="sd">            ...     [3, 2, 0, 4, 1],</span>
 <span class="sd">            ...     [4, 3, 1, 0, 2],</span>
 <span class="sd">            ... ])</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleCondorcetVtbIRV(cm_option=&#39;almost_exact&#39;)(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleCondorcetVtbIRV(cm_option=&#39;very_slow&#39;)(profile)</span>
 <span class="sd">            &gt;&gt;&gt; rule.necessary_coalition_size_cm_</span>
 <span class="sd">            array([3., 3., 2., 0., 4.])</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -942,8 +942,8 @@
             <span class="k">if</span> <span class="n">equal_true</span><span class="p">(</span><span class="n">irv_is_cm_c</span><span class="p">):</span>
                 <span class="n">suggested_path_one</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">irv_</span><span class="o">.</span><span class="n">example_path_cm_c_</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;CM: suggested_path =&quot;</span><span class="p">,</span> <span class="n">suggested_path_one</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-                <span class="n">manipulation_found</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cm_aux_almost_exact</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">n_m</span><span class="p">,</span> <span class="n">suggested_path_one</span><span class="p">,</span> <span class="n">preferences_borda_s</span><span class="p">,</span>
-                                                               <span class="n">matrix_duels_vtb_temp</span><span class="p">)</span>
+                <span class="n">manipulation_found</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cm_aux_</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">n_m</span><span class="p">,</span> <span class="n">suggested_path_one</span><span class="p">,</span> <span class="n">preferences_borda_s</span><span class="p">,</span>
+                                                   <span class="n">matrix_duels_vtb_temp</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;CM: manipulation_found =&quot;</span><span class="p">,</span> <span class="n">manipulation_found</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">manipulation_found</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_update_sufficient</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_m</span><span class="p">,</span>
@@ -975,8 +975,8 @@
                 <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">suggested_path_one</span><span class="p">,</span> <span class="n">suggested_path_two</span><span class="p">):</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s1">&#39;CM: Same suggested path as before, skip computation&#39;</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">manipulation_found</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cm_aux_almost_exact</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">n_m</span><span class="p">,</span> <span class="n">suggested_path_two</span><span class="p">,</span> <span class="n">preferences_borda_s</span><span class="p">,</span>
-                                                                   <span class="n">matrix_duels_vtb_temp</span><span class="p">)</span>
+                    <span class="n">manipulation_found</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cm_aux_</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">n_m</span><span class="p">,</span> <span class="n">suggested_path_two</span><span class="p">,</span> <span class="n">preferences_borda_s</span><span class="p">,</span>
+                                                       <span class="n">matrix_duels_vtb_temp</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;CM: manipulation_found =&quot;</span><span class="p">,</span> <span class="n">manipulation_found</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
                     <span class="k">if</span> <span class="n">manipulation_found</span><span class="p">:</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">_update_sufficient</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_m</span><span class="p">,</span>
@@ -988,8 +988,8 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s1">&#39;CM: c == self.irv_.w != self._w&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
                 <span class="n">suggested_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">irv_</span><span class="o">.</span><span class="n">elimination_path_</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;CM: suggested_path =&quot;</span><span class="p">,</span> <span class="n">suggested_path</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-                <span class="n">manipulation_found</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cm_aux_almost_exact</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">n_m</span><span class="p">,</span> <span class="n">suggested_path</span><span class="p">,</span> <span class="n">preferences_borda_s</span><span class="p">,</span>
-                                                               <span class="n">matrix_duels_vtb_temp</span><span class="p">)</span>
+                <span class="n">manipulation_found</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cm_aux_</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">n_m</span><span class="p">,</span> <span class="n">suggested_path</span><span class="p">,</span> <span class="n">preferences_borda_s</span><span class="p">,</span>
+                                                   <span class="n">matrix_duels_vtb_temp</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;CM: manipulation_found =&quot;</span><span class="p">,</span> <span class="n">manipulation_found</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">manipulation_found</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_update_sufficient</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_m</span><span class="p">,</span>

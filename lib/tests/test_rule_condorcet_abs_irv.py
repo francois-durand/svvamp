@@ -24,9 +24,9 @@ def test_cm_slow():
     pass
 
 
-def test_cm_almost_exact():
+def test_cm_very_slow():
     """
-        >>> cm_option = 'almost_exact'
+        >>> cm_option = 'very_slow'
         >>> profile = Profile(preferences_ut=[
         ...     [ 0. , -0.5, -1. ],
         ...     [ 1. , -1. ,  0.5],
@@ -106,7 +106,7 @@ def test_improve_coverage_eb():
         ...     [4, 3, 0, 1, 2],
         ...     [4, 3, 1, 2, 0],
         ... ])
-        >>> RuleCondorcetAbsIRV(cm_option='almost_exact')(profile).is_cm_
+        >>> RuleCondorcetAbsIRV(cm_option='very_slow')(profile).is_cm_
         True
     """
     pass

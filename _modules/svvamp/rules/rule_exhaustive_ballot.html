@@ -525,21 +525,35 @@
 <span class="sd">            &gt;&gt;&gt; rule_2 = RuleExhaustiveBallot()(profile)</span>
 <span class="sd">            &gt;&gt;&gt; rule_2.w_</span>
 <span class="sd">            0</span>
+
+<span class="sd">        Check that the new rule does not change the options of the old one (which used to be a bug):</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
+<span class="sd">            ...     [0, 1, 2],</span>
+<span class="sd">            ...     [0, 2, 1],</span>
+<span class="sd">            ...     [1, 0, 2],</span>
+<span class="sd">            ...     [2, 0, 1],</span>
+<span class="sd">            ...     [2, 1, 0],</span>
+<span class="sd">            ... ])</span>
+<span class="sd">            &gt;&gt;&gt; rule_eb_fast = RuleExhaustiveBallot(cm_option=&#39;fast&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; rule_eb_exact = RuleExhaustiveBallot(cm_option=&#39;exact&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; _ = rule_eb_fast(profile)</span>
+<span class="sd">            &gt;&gt;&gt; _ = rule_eb_exact(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule_eb_fast.cm_option</span>
+<span class="sd">            &#39;fast&#39;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Unplug this exhaustive_ballot from the old profile</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="nb">delattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="p">,</span> <span class="s1">&#39;exhaustive_ballot&#39;</span><span class="p">)</span>
-        <span class="c1"># See if new profile has an exhaustive_ballot</span>
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="s1">&#39;exhaustive_ballot&#39;</span><span class="p">):</span>
-            <span class="c1"># Update the profile&#39;s exhaustive_ballot with my options</span>
-            <span class="k">for</span> <span class="n">option_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">options_parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-                <span class="nb">setattr</span><span class="p">(</span><span class="n">profile</span><span class="o">.</span><span class="n">exhaustive_ballot</span><span class="p">,</span> <span class="n">option_name</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option_name</span><span class="p">))</span>
-            <span class="c1"># Copy all its inner variables into mine.</span>
+        <span class="c1"># See if new profile has an exhaustive_ballot, with the same options</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="s1">&#39;exhaustive_ballot&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">==</span> <span class="n">profile</span><span class="o">.</span><span class="n">exhaustive_ballot</span><span class="o">.</span><span class="n">options</span><span class="p">:</span>
+            <span class="c1"># Copy all its inner variables into mine</span>
             <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">profile</span><span class="o">.</span><span class="n">exhaustive_ballot</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># &#39;Usual&#39; behavior</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">delete_cache</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;_&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span> <span class="o">=</span> <span class="n">profile</span>
         <span class="c1"># Bind this exhaustive_ballot with the new profile</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span> <span class="o">=</span> <span class="n">profile</span>
         <span class="n">profile</span><span class="o">.</span><span class="n">exhaustive_ballot</span> <span class="o">=</span> <span class="bp">self</span>
         <span class="k">return</span> <span class="bp">self</span>
 

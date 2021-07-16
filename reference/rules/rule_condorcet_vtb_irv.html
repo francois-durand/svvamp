@@ -475,12 +475,12 @@ provide strict total orders).</p>
 CM but unable to decide non-CM (except in rare obvious cases).</p></li>
 <li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'slow'</span></code>: Rely on <a class="reference internal" href="rule_exhaustive_ballot.html#svvamp.RuleExhaustiveBallot" title="svvamp.RuleExhaustiveBallot"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleExhaustiveBallot</span></code></a>’s exact algorithm. Non-polynomial
 heuristic (<span class="math notranslate nohighlight">\(2^{n_c}\)</span>). Quite efficient to prove CM or non-CM.</p></li>
-<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'almost_exact'</span></code>: Rely on <a class="reference internal" href="rule_irv.html#svvamp.RuleIRV" title="svvamp.RuleIRV"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleIRV</span></code></a>’s exact algorithm. Non-polynomial
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'very_slow'</span></code>: Rely on <a class="reference internal" href="rule_irv.html#svvamp.RuleIRV" title="svvamp.RuleIRV"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleIRV</span></code></a>’s exact algorithm. Non-polynomial
 heuristic (<span class="math notranslate nohighlight">\(n_c!\)</span>). Very efficient to prove CM or non-CM.</p></li>
 <li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'exact'</span></code>: Non-polynomial algorithm from superclass <a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
 </ul>
-<p>Each algorithm above exploits the faster ones. For example, if <code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'almost_exact'</span></code>,
-SVVAMP tries the fast algorithm first, then the slow one, then the ‘almost exact’ one. As soon as it reaches
+<p>Each algorithm above exploits the faster ones. For example, if <code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'very_slow'</span></code>,
+SVVAMP tries the fast algorithm first, then the slow one, then the ‘very slow’ one. As soon as it reaches
 a decision, computation stops.</p>
 </div></blockquote>
 </li>
