@@ -251,7 +251,7 @@ class RuleICRV(Rule):
         *   Coalition Manipulation (CM)   *
         ***********************************
         is_cm = nan
-        log_cm: cm_option = lazy, um_option = lazy, tm_option = exact
+        log_cm: cm_option = fast, um_option = lazy, tm_option = exact
         candidates_cm =
         [ 0.  0. nan]
         necessary_coalition_size_cm =
