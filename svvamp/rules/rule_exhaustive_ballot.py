@@ -357,21 +357,35 @@ class RuleExhaustiveBallot(Rule):
             >>> rule_2 = RuleExhaustiveBallot()(profile)
             >>> rule_2.w_
             0
+
+        Check that the new rule does not change the options of the old one (which used to be a bug):
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule_eb_fast = RuleExhaustiveBallot(cm_option='fast')
+            >>> rule_eb_exact = RuleExhaustiveBallot(cm_option='exact')
+            >>> _ = rule_eb_fast(profile)
+            >>> _ = rule_eb_exact(profile)
+            >>> rule_eb_fast.cm_option
+            'fast'
         """
         # Unplug this exhaustive_ballot from the old profile
         if self.profile_ is not None:
             delattr(self.profile_, 'exhaustive_ballot')
-        # See if new profile has an exhaustive_ballot
-        if hasattr(profile, 'exhaustive_ballot'):
-            # Update the profile's exhaustive_ballot with my options
-            for option_name in self.options_parameters.keys():
-                setattr(profile.exhaustive_ballot, option_name, getattr(self, option_name))
-            # Copy all its inner variables into mine.
+        # See if new profile has an exhaustive_ballot, with the same options
+        if hasattr(profile, 'exhaustive_ballot') and self.options == profile.exhaustive_ballot.options:
+            # Copy all its inner variables into mine
             self.__dict__.update(profile.exhaustive_ballot.__dict__)
         else:
+            # 'Usual' behavior
             self.delete_cache(suffix='_')
+            self.profile_ = profile
         # Bind this exhaustive_ballot with the new profile
-        self.profile_ = profile
         profile.exhaustive_ballot = self
         return self
 
