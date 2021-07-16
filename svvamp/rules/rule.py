@@ -241,6 +241,11 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         if kwargs:
             raise ValueError('Unknown option:', list(kwargs.keys()).pop())
 
+    @property
+    def options(self):
+        """dict: The options. Key: name of the option. Value: value of the option."""
+        return {k: getattr(self, k) for k in self.options_parameters.keys()}
+
     def __call__(self, profile):
         """
         Parameters
