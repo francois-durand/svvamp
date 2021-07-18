@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on 16 jul. 2021, 13:32
+Created on 16 jul. 2021, 13:57
 Copyright François Durand 2014-2021
 fradurand@gmail.com
 
@@ -25,37 +25,37 @@ from svvamp.utils.util_cache import cached_property
 from svvamp.preferences.profile import Profile
 
 
-class RuleCopeland(Rule):
+class RuleBlack(Rule):
     """
-    Copeland rule
+    Black rule
 
     Notes
     -----
-    Copeland does not :attr:`meets_condorcet_c_ut_rel`:
+    Black does not :attr:`meets_condorcet_c_ut_rel`:
 
         >>> profile = Profile(preferences_ut=[
-        ...     [-0.5, -0.5, -1. ],
-        ...     [ 0. ,  0.5, -1. ],
+        ...     [-1. , -0.5, -0.5],
+        ...     [-1. , -0.5,  0. ],
         ... ], preferences_rk=[
-        ...     [0, 1, 2],
-        ...     [1, 0, 2],
-        ... ])
-        >>> RuleCopeland()(profile).w_
-        0
-        >>> profile.condorcet_winner_ut_rel
-        1
-
-    Copeland does not :attr:`meets_majority_favorite_c_ut_ctb`:
-
-        >>> profile = Profile(preferences_ut=[
-        ...     [ 0. , -0.5, -1. ],
-        ...     [-0.5,  1. , -0.5],
-        ... ], preferences_rk=[
-        ...     [0, 1, 2],
         ...     [1, 2, 0],
+        ...     [2, 1, 0],
         ... ])
-        >>> RuleCopeland()(profile).w_
+        >>> RuleBlack()(profile).w_
         1
+        >>> profile.condorcet_winner_ut_rel
+        2
+
+    Black does not :attr:`meets_majority_favorite_c_ut_ctb`:
+
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 0.5, -1. ,  0. ],
+        ...     [-1. ,  0. ,  0.5],
+        ... ], preferences_rk=[
+        ...     [0, 2, 1],
+        ...     [2, 1, 0],
+        ... ])
+        >>> RuleBlack()(profile).w_
+        2
         >>> profile.majority_favorite_ut_ctb
         0
     """
@@ -67,12 +67,36 @@ class RuleCopeland(Rule):
             },
             with_two_candidates_reduces_to_plurality=True, is_based_on_rk=True,
             precheck_icm=False,
-            log_identity="COPELAND", **kwargs
+            log_identity="BLACK", **kwargs
         )
+
+    # %% Count the ballots
+
+    @cached_property
+    def w_(self):
+        self.mylog("Compute winner", 1)
+        if self.profile_.exists_condorcet_winner_rk:
+            return self.profile_.condorcet_winner_rk
+        else:
+            return int(np.argmax(self.profile_.borda_score_c_rk))
 
     @cached_property
     def scores_(self):
-        return self.profile_.matrix_victories_rk.sum(axis=1)
+        self.mylog("Compute scores", 1)
+        scores_condorcet = np.zeros(self.profile_.n_c)
+        if self.profile_.exists_condorcet_winner_rk:
+            scores_condorcet[self.profile_.condorcet_winner_rk] = 1
+        scores_borda = self.profile_.borda_score_c_rk
+        return np.array(scores_condorcet, scores_borda)
+
+    @cached_property
+    def candidates_by_scores_best_to_worst_(self):
+        self.mylog("Compute candidates_by_scores_best_to_worst", 1)
+        return sorted(
+            range(self.profile_.n_c),
+            key=lambda c: list(self.scores_[:, c]),
+            reverse=True
+        )
 
     # %% Manipulation criteria of the voting system
 
