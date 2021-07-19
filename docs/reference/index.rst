@@ -26,18 +26,22 @@ Voting rules
    rules/rule
    rules/rule_approval
    rules/rule_baldwin
+   rules/rule_black
    rules/rule_borda
    rules/rule_bucklin
    rules/rule_condorcet_abs_irv
    rules/rule_condorcet_sum_defeats
    rules/rule_condorcet_vtb_irv
    rules/rule_coombs
+   rules/rule_copeland
    rules/rule_exhaustive_ballot
    rules/rule_icrv
    rules/rule_irv
+   rules/rule_irv_average
    rules/rule_irv_duels
    rules/rule_iterated_bucklin
    rules/rule_kemeny
+   rules/rule_kim_roush
    rules/rule_majority_judgment
    rules/rule_maximin
    rules/rule_nanson
@@ -45,5 +49,10 @@ Voting rules
    rules/rule_range_voting
    rules/rule_ranked_pairs
    rules/rule_schulze
+   rules/rule_smith_irv
+   rules/rule_split_cycle
+   rules/rule_star
+   rules/rule_tideman
    rules/rule_two_round
    rules/rule_veto
+   rules/rule_woodall
