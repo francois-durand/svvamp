@@ -411,6 +411,22 @@ class RuleMajorityJudgment(Rule):
         else:
             raise ValueError("Unknown value for rescale_grades: " + format(value))
 
+    @cached_property
+    def allowed_grades(self):
+        """List or None. If ``step_grade`` is positive, the list of authorized grades. If ``step_grade`` is zero
+        (continuous set of grades), then None.
+        """
+        if self.step_grade == 0:
+            return None
+        else:
+            i_lowest_rung = floor(self.min_grade / self.step_grade) + 1
+            i_highest_rung = ceil(self.max_grade / self.step_grade) - 1
+            return np.concatenate((
+                [self.min_grade],
+                np.array(range(i_lowest_rung, i_highest_rung + 1)) * self.step_grade,
+                [self.max_grade]
+            ))
+
     # %% Counting the ballots
 
     @cached_property
@@ -452,14 +468,9 @@ class RuleMajorityJudgment(Rule):
             ballots = np.clip(self.profile_.preferences_ut, self.min_grade, self.max_grade)
         # Round (or not)
         if self.step_grade != 0:
-            i_lowest_rung = ceil(self.min_grade / self.step_grade)
-            i_highest_rung = floor(self.max_grade / self.step_grade)
-            allowed_grades = np.concatenate(([self.min_grade],
-                                             np.array(range(i_lowest_rung, i_highest_rung + 1)) * self.step_grade,
-                                             [self.max_grade]))
-            frontiers = (allowed_grades[0:-1] + allowed_grades[1:]) / 2
+            frontiers = (self.allowed_grades[0:-1] + self.allowed_grades[1:]) / 2
             for v in range(self.profile_.n_v):
-                ballots[v, :] = allowed_grades[np.digitize(ballots[v, :], frontiers)]
+                ballots[v, :] = self.allowed_grades[np.digitize(ballots[v, :], frontiers)]
         return ballots
 
     @cached_property
