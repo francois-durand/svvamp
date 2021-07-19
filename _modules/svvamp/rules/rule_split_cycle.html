@@ -1,0 +1,466 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>svvamp.rules.rule_split_cycle &mdash; SVVAMP 0.3.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> SVVAMP
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.3.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">SVVAMP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../history.html">History</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">SVVAMP</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>svvamp.rules.rule_split_cycle</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for svvamp.rules.rule_split_cycle</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on 16 jul. 2021, 15:49</span>
+<span class="sd">Copyright François Durand 2014-2021</span>
+<span class="sd">fradurand@gmail.com</span>
+
+<span class="sd">This file is part of SVVAMP.</span>
+
+<span class="sd">    SVVAMP is free software: you can redistribute it and/or modify</span>
+<span class="sd">    it under the terms of the GNU General Public License as published by</span>
+<span class="sd">    the Free Software Foundation, either version 3 of the License, or</span>
+<span class="sd">    (at your option) any later version.</span>
+
+<span class="sd">    SVVAMP is distributed in the hope that it will be useful,</span>
+<span class="sd">    but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="sd">    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="sd">    GNU General Public License for more details.</span>
+
+<span class="sd">    You should have received a copy of the GNU General Public License</span>
+<span class="sd">    along with SVVAMP.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">svvamp.rules.rule</span> <span class="kn">import</span> <span class="n">Rule</span>
+<span class="kn">from</span> <span class="nn">svvamp.utils.util_cache</span> <span class="kn">import</span> <span class="n">cached_property</span>
+<span class="kn">from</span> <span class="nn">svvamp.preferences.profile</span> <span class="kn">import</span> <span class="n">Profile</span>
+
+
+<div class="viewcode-block" id="RuleSplitCycle"><a class="viewcode-back" href="../../../reference/rules/rule_split_cycle.html#svvamp.RuleSplitCycle">[docs]</a><span class="k">class</span> <span class="nc">RuleSplitCycle</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Split Cycle.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    Split Cycle does not :attr:`meets_condorcet_c_ut_rel`:</span>
+
+<span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
+<span class="sd">        ...     [ 0. ,  0. ,  0. ],</span>
+<span class="sd">        ...     [ 0.5,  1. , -0.5],</span>
+<span class="sd">        ... ], preferences_rk=[</span>
+<span class="sd">        ...     [0, 2, 1],</span>
+<span class="sd">        ...     [1, 0, 2],</span>
+<span class="sd">        ... ])</span>
+<span class="sd">        &gt;&gt;&gt; RuleSplitCycle()(profile).w_</span>
+<span class="sd">        0</span>
+<span class="sd">        &gt;&gt;&gt; profile.condorcet_winner_ut_rel</span>
+<span class="sd">        1</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">options_parameters</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;icm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">}</span>
+            <span class="p">},</span>
+            <span class="n">with_two_candidates_reduces_to_plurality</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">is_based_on_rk</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">precheck_icm</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">log_identity</span><span class="o">=</span><span class="s2">&quot;SPLIT_CYCLE&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">)</span>
+
+    <span class="c1"># %% Counting the ballots</span>
+
+    <span class="c1"># noinspection PyProtectedMember</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_count_ballot_aux</span><span class="p">(</span><span class="n">matrix_duels</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        matrix_duels</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; a, b, c, d, e, f = 1, 2, 3, 4, 5, 6</span>
+<span class="sd">            &gt;&gt;&gt; def cowinners(profile):</span>
+<span class="sd">            ...     results = RuleSplitCycle._count_ballot_aux(profile.matrix_duels_rk)</span>
+<span class="sd">            ...     better_or_tie_c = results[&#39;better_or_tie_c&#39;]</span>
+<span class="sd">            ...     return list(np.where(better_or_tie_c == np.max(better_or_tie_c))[0])</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=</span>
+<span class="sd">            ...     [[a, c, b]] * 5</span>
+<span class="sd">            ...     + [[c, b, a]] * 4</span>
+<span class="sd">            ...     + [[b, a, c]] * 4</span>
+<span class="sd">            ...     + [[c, a, b]] * 2</span>
+<span class="sd">            ...     + [[b, c, a]] * 2</span>
+<span class="sd">            ... )</span>
+<span class="sd">            &gt;&gt;&gt; cowinners(profile)</span>
+<span class="sd">            [2]</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=(</span>
+<span class="sd">            ...     [[d, b, a, c]] * 3</span>
+<span class="sd">            ...     + [[a, d, c, b]] * 1</span>
+<span class="sd">            ...     + [[a, c, b, d]] * 2</span>
+<span class="sd">            ...     + [[c, b, d, a]] * 1</span>
+<span class="sd">            ...     + [[c, b, a, d]] * 2</span>
+<span class="sd">            ... ))</span>
+<span class="sd">            &gt;&gt;&gt; cowinners(profile)</span>
+<span class="sd">            [0, 1, 2]</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=(</span>
+<span class="sd">            ...     [[b,a,c,e,d,f]] * 2</span>
+<span class="sd">            ...     + [[e,d,f,b,a,c]] * 2</span>
+<span class="sd">            ...     + [[a,c,b,d,f,e]] * 2</span>
+<span class="sd">            ...     + [[d,f,e,a,c,b]] * 2</span>
+<span class="sd">            ...     + [[c,b,a,f,e,d]] * 2</span>
+<span class="sd">            ...     + [[f,e,d,c,b,a]] * 2</span>
+<span class="sd">            ...     + [[a,f,b,c,d,e]] * 2</span>
+<span class="sd">            ...     + [[e,d,c,b,a,f]] * 2</span>
+<span class="sd">            ...     + [[d,a,b,c,e,f]] * 1</span>
+<span class="sd">            ...     + [[f,e,c,b,d,a]] * 1</span>
+<span class="sd">            ... ))</span>
+<span class="sd">            &gt;&gt;&gt; cowinners(profile)</span>
+<span class="sd">            [0, 1, 2, 3, 4]</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=(</span>
+<span class="sd">            ...     [[e, c, b, a, d]] * 4</span>
+<span class="sd">            ...     + [[c, b, a, d, e]] * 3</span>
+<span class="sd">            ...     + [[e, b, a, d, c]] * 7</span>
+<span class="sd">            ...     + [[d, a, c, b, e]] * 7</span>
+<span class="sd">            ...     + [[c, d, b, a, e]] * 2</span>
+<span class="sd">            ...     + [[d, e, a, b, c]] * 1</span>
+<span class="sd">            ... ))</span>
+<span class="sd">            &gt;&gt;&gt; cowinners(profile)</span>
+<span class="sd">            [3]</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=(</span>
+<span class="sd">            ...     [[d, b, c, a]] * 1</span>
+<span class="sd">            ...     + [[c, a, d, b]] * 2</span>
+<span class="sd">            ...     + [[c, d, b, a]] * 1</span>
+<span class="sd">            ...     + [[b, a, d, c]] * 2</span>
+<span class="sd">            ... ))</span>
+<span class="sd">            &gt;&gt;&gt; cowinners(profile)</span>
+<span class="sd">            [1, 2, 3]</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=(</span>
+<span class="sd">            ...     [[b, a, c, d]] * 9</span>
+<span class="sd">            ...     + [[a, c, b, d]] * 3</span>
+<span class="sd">            ...     + [[d, a, c, b]] * 2</span>
+<span class="sd">            ...     + [[d, c, b, a]] * 5</span>
+<span class="sd">            ...     + [[d, c, a, b]] * 4</span>
+<span class="sd">            ... ))</span>
+<span class="sd">            &gt;&gt;&gt; cowinners(profile)</span>
+<span class="sd">            [0, 1, 2]</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=(</span>
+<span class="sd">            ...     [[b, a, c, d, e]] * 2</span>
+<span class="sd">            ...     + [[b, a, c, e, d]] * 3</span>
+<span class="sd">            ...     + [[a, e, c, b, d]] * 3</span>
+<span class="sd">            ...     + [[d, e, a, c, b]] * 1</span>
+<span class="sd">            ...     + [[d, a, e, c, b]] * 1</span>
+<span class="sd">            ...     + [[d, e, c, b, a]] * 5</span>
+<span class="sd">            ...     + [[b, e, a, c, d]] * 4</span>
+<span class="sd">            ...     + [[d, c, a, b, e]] * 4</span>
+<span class="sd">            ... ))</span>
+<span class="sd">            &gt;&gt;&gt; cowinners(profile)</span>
+<span class="sd">            [0, 1, 3]</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=(</span>
+<span class="sd">            ...     [[a, b, c, d]] * 5</span>
+<span class="sd">            ...     + [[b, c, d, a]] * 3</span>
+<span class="sd">            ...     + [[a, c, b, d]] * 1</span>
+<span class="sd">            ...     + [[d, a, b, c]] * 7</span>
+<span class="sd">            ...     + [[c, a, b, d]] * 4</span>
+<span class="sd">            ...     + [[d, b, c, a]] * 4</span>
+<span class="sd">            ...     + [[b, a, c, d]] * 2</span>
+<span class="sd">            ...     + [[b, a, d, c]] * 11</span>
+<span class="sd">            ...     + [[c, d, a, b]] * 16</span>
+<span class="sd">            ... ))</span>
+<span class="sd">            &gt;&gt;&gt; cowinners(profile)</span>
+<span class="sd">            [0]</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=(</span>
+<span class="sd">            ...     [[a, b, c, d, e]] * 5</span>
+<span class="sd">            ...     + [[b, c, e, d, a]] * 3</span>
+<span class="sd">            ...     + [[c, e, d, a, b]] * 4</span>
+<span class="sd">            ...     + [[e, a, c, b, d]] * 1</span>
+<span class="sd">            ...     + [[d, a, b, c, e]] * 7</span>
+<span class="sd">            ...     + [[c, a, e, b, d]] * 4</span>
+<span class="sd">            ...     + [[e, d, b, c, a]] * 4</span>
+<span class="sd">            ...     + [[e, b, a, c, d]] * 2</span>
+<span class="sd">            ...     + [[e, b, a, d, c]] * 7</span>
+<span class="sd">            ...     + [[b, e, a, d, c]] * 4</span>
+<span class="sd">            ...     + [[c, d, a, e, b]] * 12</span>
+<span class="sd">            ... ))</span>
+<span class="sd">            &gt;&gt;&gt; cowinners(profile)</span>
+<span class="sd">            [0, 2]</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=(</span>
+<span class="sd">            ...     [[c, b, a]] * 3</span>
+<span class="sd">            ...     + [[b, a, c]] * 3</span>
+<span class="sd">            ...     + [[a, c, b]] * 3</span>
+<span class="sd">            ... ))</span>
+<span class="sd">            &gt;&gt;&gt; cowinners(profile)</span>
+<span class="sd">            [0, 1, 2]</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=(</span>
+<span class="sd">            ...     [[c, b, a, d]] * 3</span>
+<span class="sd">            ...     + [[b, a, d, c]] * 2</span>
+<span class="sd">            ...     + [[d, b, a, c]] * 1</span>
+<span class="sd">            ...     + [[d, a, c, b]] * 3</span>
+<span class="sd">            ... ))</span>
+<span class="sd">            &gt;&gt;&gt; cowinners(profile)</span>
+<span class="sd">            [0, 1, 3]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">n_c</span> <span class="o">=</span> <span class="n">matrix_duels</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1"># Margin graph</span>
+        <span class="n">margin_graph</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">matrix_duels</span> <span class="o">-</span> <span class="n">matrix_duels</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">margin_graph</span><span class="p">[</span><span class="n">margin_graph</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+        <span class="c1"># Weak Condorcet winners</span>
+        <span class="n">weak_condorcet_winners</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">margin_graph</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># Calculate widest path for candidate c to d</span>
+        <span class="n">strength</span> <span class="o">=</span> <span class="n">margin_graph</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_c</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_c</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">j</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">weak_condorcet_winners</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+                    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_c</span><span class="p">):</span>
+                        <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="n">i</span> <span class="ow">or</span> <span class="n">k</span> <span class="o">==</span> <span class="n">j</span><span class="p">:</span>
+                            <span class="k">continue</span>
+                        <span class="n">strength</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">strength</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">k</span><span class="p">],</span> <span class="nb">min</span><span class="p">(</span><span class="n">strength</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> <span class="n">strength</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">k</span><span class="p">]))</span>
+        <span class="c1"># Winners</span>
+        <span class="n">better_or_tie_c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">strength</span> <span class="o">&gt;=</span> <span class="n">margin_graph</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">candidates_by_scores_best_to_worst</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="o">-</span> <span class="n">better_or_tie_c</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;mergesort&#39;</span><span class="p">)</span>
+        <span class="n">winners</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">better_or_tie_c</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">better_or_tie_c</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">candidates_by_scores_best_to_worst</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;w&#39;</span><span class="p">:</span> <span class="n">w</span><span class="p">,</span> <span class="s1">&#39;winners&#39;</span><span class="p">:</span> <span class="n">winners</span><span class="p">,</span> <span class="s1">&#39;margin_graph&#39;</span><span class="p">:</span> <span class="n">margin_graph</span><span class="p">,</span> <span class="s1">&#39;strength&#39;</span><span class="p">:</span> <span class="n">strength</span><span class="p">,</span>
+                <span class="s1">&#39;better_or_tie_c&#39;</span><span class="p">:</span> <span class="n">better_or_tie_c</span><span class="p">}</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">_count_ballots_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Count ballots&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballot_aux</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_rk</span><span class="p">)</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">w_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s1">&#39;w&#39;</span><span class="p">]</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">candidates_by_scores_best_to_worst_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s1">&#39;candidates_by_scores_best_to_worst&#39;</span><span class="p">]</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">scores_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s1">&#39;better_or_tie_c&#39;</span><span class="p">]</span>
+
+    <span class="c1"># %% Manipulation criteria of the voting system</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">meets_condorcet_c_rk_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># TO DO : to check</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, François Durand.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
