@@ -324,7 +324,7 @@ class RuleRangeVoting(Rule):
             },
             with_two_candidates_reduces_to_plurality=False,
             # # Even if ``rescale_grades = True``, a voter who has the same utility for ``c`` and ``d`` will not vote
-            # # the same in Majority Judgment and in Plurality.
+            # # the same in Range Voting and in Plurality.
             is_based_on_rk=False,
             precheck_um=False, precheck_tm=False, precheck_icm=False,
             log_identity="RANGE_VOTING", **kwargs
@@ -444,6 +444,7 @@ class RuleRangeVoting(Rule):
                 np.array(range(i_lowest_rung, i_highest_rung + 1)) * self.step_grade,
                 [self.max_grade]
             ))
+            print(allowed_grades)
             frontiers = (allowed_grades[0:-1] + allowed_grades[1:]) / 2
             for v in range(self.profile_.n_v):
                 ballots[v, :] = allowed_grades[np.digitize(ballots[v, :], frontiers)]

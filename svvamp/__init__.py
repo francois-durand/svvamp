@@ -51,6 +51,7 @@ from svvamp.rules.rule_ranked_pairs import RuleRankedPairs
 from svvamp.rules.rule_schulze import RuleSchulze
 from svvamp.rules.rule_smith_irv import RuleSmithIRV
 from svvamp.rules.rule_split_cycle import RuleSplitCycle
+from svvamp.rules.rule_star import RuleSTAR
 from svvamp.rules.rule_tideman import RuleTideman
 from svvamp.rules.rule_two_round import RuleTwoRound
 from svvamp.rules.rule_veto import RuleVeto
