@@ -4,6 +4,17 @@
 History
 =======
 
+------------------------------------------------------
+0.4.0 (2021-07-19): Black, Copeland, Split Cycle, STAR
+------------------------------------------------------
+
+* Add ``RuleBlack``.
+* Add ``RuleCopeland``.
+* Add ``RuleSplitCycle``.
+* Add ``RuleSTAR``.
+* In ``RuleRangeVoting`` and ``RuleMajorityJudgment``, add an attribute ``allowed_grades``: a list of the
+  allowed grades.
+
 --------------------------------------------------------------
 0.3.0 (2021-07-16): New CM Algorithms for Smith-IRV-Like Rules
 --------------------------------------------------------------
