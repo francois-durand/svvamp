@@ -1919,7 +1919,9 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         strict rankings. Must decide ``_candidates_tm[c]`` (to True, False or NaN). Do not update ``_is_tm``.
         """
         # Manipulators put c on top and w at bottom.
-        w_test = self._copy(profile=Profile(preferences_ut=self._compute_trivial_strategy_ordinal_(c))).w_
+        w_test = self._copy(
+            profile=Profile(preferences_ut=self._compute_trivial_strategy_ordinal_(c), sort_voters=False)
+        ).w_
         self.mylogv("TM: w_test =", w_test)
         self._candidates_tm[c] = (w_test == c)
 
