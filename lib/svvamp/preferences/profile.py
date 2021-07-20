@@ -240,12 +240,10 @@ class Profile(my_log.MyLog):
         array([1, 0, 0])
         """
         self.mylog("Compute Plurality scores (ut)", 1)
-        result = np.zeros(self.n_c, dtype=int)
-        for v in range(self.n_v):
-            c = np.argmax(self.preferences_ut[v, :])
-            if np.all(np.greater(self.preferences_ut[v, c], self.preferences_ut[v, np.array(range(self.n_c)) != c])):
-                result[c] += 1
-        return result
+        ut_max = np.max(self.preferences_ut, axis=1)
+        nb_favorites = np.sum(self.preferences_ut == ut_max[:, np.newaxis], axis=1)
+        favorite = np.argmax(self.preferences_ut, axis=1)
+        return np.array(np.bincount(favorite[nb_favorites == 1], minlength=self.n_c), dtype=int)
 
     # %% Matrix of duels
 
