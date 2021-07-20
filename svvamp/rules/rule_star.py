@@ -397,7 +397,7 @@ class RuleSTAR(Rule):
             score_second_round_d_c = np.sum(ballots_s[:, d] > ballots_s[:, c])
             n_2 = max(score_second_round_d_c - score_second_round_c_d + int(d < c), 0)
             # Consequences on first round
-            scores_first_round = scores_first_round_s.copy()
+            scores_first_round = scores_first_round_s.copy().astype(float)
             scores_first_round[c] += n_2 * self.max_grade
             scores_first_round[d] += n_2 * self.second_best_grade  # Exactly if step_grade > 0, minus epsilon if == 0
             if self.profile_.n_c == 2:
