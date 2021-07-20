@@ -4,6 +4,13 @@
 History
 =======
 
+--------------------------------------------------
+0.4.2 (2021-07-20): Accelerate plurality_scores_ut
+--------------------------------------------------
+
+* Accelerate ``Profile.plurality_scores_ut``. As an example, for a profile with 65,000 voters and 5 candidates,
+  the new version is approximately 10 times faster.
+
 --------------------------------------------------------
 0.4.1 (2021-07-20): Fix Missing Subpackage in Deployment
 --------------------------------------------------------
