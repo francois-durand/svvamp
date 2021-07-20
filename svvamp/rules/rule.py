@@ -1919,9 +1919,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         strict rankings. Must decide ``_candidates_tm[c]`` (to True, False or NaN). Do not update ``_is_tm``.
         """
         # Manipulators put c on top and w at bottom.
-        w_test = self._copy(
-            profile=Profile(preferences_ut=self._compute_trivial_strategy_ordinal_(c), sort_voters=False)
-        ).w_
+        w_test = self._copy(profile=self._compute_trivial_strategy_ordinal_(c)).w_
         self.mylogv("TM: w_test =", w_test)
         self._candidates_tm[c] = (w_test == c)
 
@@ -2016,28 +2014,19 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
 
         Returns
         -------
-        list of list (or ndarray)
-            2d array of integers, ``preferences_test``. New Borda scores of the population. For each voter
-            preferring ``c`` to ``w``, she now puts ``c`` on top, ``w`` at the bottom, and other Borda scores are
-            modified accordingly.
+        Profile
+            For each voter preferring ``c`` to ``w``, she now puts ``c`` on top, ``w`` at the bottom, and other
+            Borda scores are modified accordingly.
         """
-        preferences_test = np.copy(self.profile_.preferences_borda_rk)
-        self.mylogm("Borda scores (sincere) =", preferences_test, 3)
-        # For manipulators: all candidates that were above c lose 1 point.
-        preferences_test[np.logical_and(
-            self.v_wants_to_help_c_[:, c][:, np.newaxis],
-            self.profile_.preferences_borda_rk > self.profile_.preferences_borda_rk[:, c][:, np.newaxis]
-        )] -= 1
-        # For manipulators: all candidates that were below w gain 1 point.
-        preferences_test[np.logical_and(
-            self.v_wants_to_help_c_[:, c][:, np.newaxis],
-            self.profile_.preferences_borda_rk < self.profile_.preferences_borda_rk[:, self.w_][:, np.newaxis]
-        )] += 1
-        # For manipulators: c gets score C and w gets score 1.
-        preferences_test[self.v_wants_to_help_c_[:, c], c] = self.profile_.n_c - 1
-        preferences_test[self.v_wants_to_help_c_[:, c], self.w_] = 0
-        self.mylogm("Borda scores (with trivial strategy) =", preferences_test, 3)
-        return preferences_test
+        preferences_rk = np.copy(self.profile_.preferences_rk)
+        self.mylogm("Rankings (sincere) =", preferences_rk, 3)
+        preferences_rk_manipulators = preferences_rk[self.v_wants_to_help_c_[:, c], :]
+        sorting_array = np.array(preferences_rk_manipulators == self.w_, dtype=int) - (preferences_rk_manipulators == c)
+        indexes = np.argsort(sorting_array)
+        preferences_rk_manipulators = np.take_along_axis(preferences_rk_manipulators, indexes, axis=1)
+        preferences_rk[self.v_wants_to_help_c_[:, c], :] = preferences_rk_manipulators
+        self.mylogm("Rankings (with trivial strategy) =", preferences_rk, 3)
+        return Profile(preferences_rk=preferences_rk, sort_voters=False)
 
     # %% Unison Manipulation (UM)
 
