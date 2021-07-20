@@ -4,6 +4,12 @@
 History
 =======
 
+--------------------------------------------------------
+0.4.1 (2021-07-20): Fix Missing Subpackage in Deployment
+--------------------------------------------------------
+
+* Fix bug: in some distributions, some subpackages of Svvamp were not included.
+
 ------------------------------------------------------
 0.4.0 (2021-07-19): Black, Copeland, Split Cycle, STAR
 ------------------------------------------------------
