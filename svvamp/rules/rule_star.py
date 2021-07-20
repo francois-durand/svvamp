@@ -252,16 +252,13 @@ class RuleSTAR(Rule):
             ballots = np.clip(self.profile_.preferences_ut, self.min_grade, self.max_grade)
         # Round (or not)
         if self.step_grade != 0:
-            i_lowest_rung = ceil(self.min_grade / self.step_grade)
-            i_highest_rung = floor(self.max_grade / self.step_grade)
-            allowed_grades = np.concatenate((
-                [self.min_grade],
-                np.array(range(i_lowest_rung, i_highest_rung + 1)) * self.step_grade,
-                [self.max_grade]
-            ))
-            frontiers = (allowed_grades[0:-1] + allowed_grades[1:]) / 2
-            for v in range(self.profile_.n_v):
-                ballots[v, :] = allowed_grades[np.digitize(ballots[v, :], frontiers)]
+            if self.min_grade % 1 == 0 and self.max_grade % 1 == 0 and self.step_grade % 1 == 0:
+                # There is a faster version for this (common) use case.
+                ballots = np.array(np.rint(ballots), dtype=int)
+            else:
+                frontiers = (self.allowed_grades[0:-1] + self.allowed_grades[1:]) / 2
+                for v in range(self.profile_.n_v):
+                    ballots[v, :] = self.allowed_grades[np.digitize(ballots[v, :], frontiers)]
         return ballots
 
     @cached_property

@@ -467,9 +467,13 @@ class RuleMajorityJudgment(Rule):
             ballots = np.clip(self.profile_.preferences_ut, self.min_grade, self.max_grade)
         # Round (or not)
         if self.step_grade != 0:
-            frontiers = (self.allowed_grades[0:-1] + self.allowed_grades[1:]) / 2
-            for v in range(self.profile_.n_v):
-                ballots[v, :] = self.allowed_grades[np.digitize(ballots[v, :], frontiers)]
+            if self.min_grade % 1 == 0 and self.max_grade % 1 == 0 and self.step_grade % 1 == 0:
+                # There is a faster version for this (common) use case.
+                ballots = np.array(np.rint(ballots), dtype=int)
+            else:
+                frontiers = (self.allowed_grades[0:-1] + self.allowed_grades[1:]) / 2
+                for v in range(self.profile_.n_v):
+                    ballots[v, :] = self.allowed_grades[np.digitize(ballots[v, :], frontiers)]
         return ballots
 
     @cached_property
