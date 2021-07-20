@@ -124,7 +124,7 @@ class Profile(my_log.MyLog):
         """
         super().__init__(log_identity="PROFILE")
 
-        # Preference arrays
+        # Preference arrays (except preferences_borda_ut, which is not needed at this point).
         if preferences_rk is None:
             preferences_rk = preferences_ut_to_preferences_rk(preferences_ut)
         self.preferences_rk = np.array(preferences_rk)
@@ -139,11 +139,6 @@ class Profile(my_log.MyLog):
             preferences_ut = self.preferences_borda_rk
         self.preferences_ut = np.array(preferences_ut)
         """2d array of floats. ``preferences_ut[v, c]`` is the utility of  candidate ``c`` as seen by voter ``v``."""
-        self.preferences_borda_ut = preferences_ut_to_preferences_borda_ut(self.preferences_ut)
-        """2d array of integers. ``preferences_borda_ut[v, c]`` gains 1 point for each ``d`` such that ``v`` strictly
-        prefers ``c`` to ``d`` (in the sense of utilities), and 0.5 point for each ``d`` such that ``v`` is
-        indifferent between ``c`` and ``d``. So, these Borda scores are between ``0`` and ``C - 1``.
-        """
 
         # Number of voters and candidates
         self.n_v = None
@@ -155,27 +150,40 @@ class Profile(my_log.MyLog):
             raise ValueError("A population must have at least 2 voters and 2 candidates.")
 
         if sort_voters:
+            self._preferences_borda_ut = preferences_ut_to_preferences_borda_ut(self.preferences_ut)
             # Sort voters by weak order (deducted from utility)
-            list_borda_ut = self.preferences_borda_ut.tolist()
+            list_borda_ut = self._preferences_borda_ut.tolist()
             # noinspection PyTypeChecker,PyUnresolvedReferences
             indexes = sorted(range(len(list_borda_ut)), key=list_borda_ut.__getitem__)
             self.preferences_rk = self.preferences_rk[indexes, ::]
             self.preferences_ut = self.preferences_ut[indexes, ::]
             self.preferences_borda_rk = self.preferences_borda_rk[indexes, ::]
-            self.preferences_borda_ut = self.preferences_borda_ut[indexes, ::]
+            self._preferences_borda_ut = self._preferences_borda_ut[indexes, ::]
             # Sort voters by strict ranking
             list_rankings = self.preferences_rk.tolist()
             indexes = sorted(range(len(list_rankings)), key=list_rankings.__getitem__)
             self.preferences_rk = self.preferences_rk[indexes, ::]
             self.preferences_ut = self.preferences_ut[indexes, ::]
             self.preferences_borda_rk = self.preferences_borda_rk[indexes, ::]
-            self.preferences_borda_ut = self.preferences_borda_ut[indexes, ::]
+            self._preferences_borda_ut = self._preferences_borda_ut[indexes, ::]
+        else:
+            self._preferences_borda_ut = None  # Compute later only if needed.
 
         # Misc variables
         self._labels_candidates = labels_candidates
         self.log_creation = log_creation
 
     # %% Basic variables
+
+    @cached_property
+    def preferences_borda_ut(self):
+        """2d array of integers. ``preferences_borda_ut[v, c]`` gains 1 point for each ``d`` such that ``v`` strictly
+        prefers ``c`` to ``d`` (in the sense of utilities), and 0.5 point for each ``d`` such that ``v`` is
+        indifferent between ``c`` and ``d``. So, these Borda scores are between ``0`` and ``C - 1``.
+        """
+        if self._preferences_borda_ut is None:
+            self._preferences_borda_ut = preferences_ut_to_preferences_borda_ut(self.preferences_ut)
+        return self._preferences_borda_ut
 
     @property
     def labels_candidates(self):
