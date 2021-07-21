@@ -435,27 +435,30 @@ class RuleRangeVoting(Rule):
         self.mylog("Compute ballots", 1)
         # Rescale (or not)
         if self.rescale_grades:
-            ballots = np.zeros((self.profile_.n_v, self.profile_.n_c))
-            for v in range(self.profile_.n_v):
-                max_util = np.max(self.profile_.preferences_ut[v, :])
-                min_util = np.min(self.profile_.preferences_ut[v, :])
-                if min_util == max_util:
-                    # Same utilities for all candidates
-                    ballots[v, :] = np.ones(self.profile_.n_c) * (self.max_grade + self.min_grade) / 2
-                else:
-                    # Generic case
-                    ballots[v, :] = (
-                        self.min_grade +
-                        (self.max_grade - self.min_grade) * (self.profile_.preferences_ut[v, :] - min_util)
-                        / (max_util - min_util)
-                    )
+            # Multiplicative renormalization
+            max_util = np.max(self.profile_.preferences_ut, axis=1)
+            min_util = np.min(self.profile_.preferences_ut, axis=1)
+            delta_util = max_util - min_util
+            ballots = np.divide(
+                self.profile_.preferences_ut * (self.max_grade - self.min_grade),
+                delta_util[:, np.newaxis],
+                out=np.zeros(self.profile_.preferences_ut.shape),
+                where=delta_util[:, np.newaxis] != 0
+            )  # `out` and `where` ensure that when dividing by zero, the result will be zero.
+            # Additive renormalization
+            middle_grade = (np.max(ballots, axis=1) + np.min(ballots, axis=1)) / 2
+            ballots += (self.max_grade - self.min_grade) / 2 - middle_grade[:, np.newaxis]
         else:
             ballots = np.clip(self.profile_.preferences_ut, self.min_grade, self.max_grade)
         # Round (or not)
         if self.step_grade != 0:
-            frontiers = (self.allowed_grades[0:-1] + self.allowed_grades[1:]) / 2
-            for v in range(self.profile_.n_v):
-                ballots[v, :] = self.allowed_grades[np.digitize(ballots[v, :], frontiers)]
+            if self.min_grade % 1 == 0 and self.max_grade % 1 == 0 and self.step_grade % 1 == 0:
+                # There is a faster version for this (common) use case.
+                ballots = np.array(np.rint(ballots), dtype=int)
+            else:
+                frontiers = (self.allowed_grades[0:-1] + self.allowed_grades[1:]) / 2
+                for v in range(self.profile_.n_v):
+                    ballots[v, :] = self.allowed_grades[np.digitize(ballots[v, :], frontiers)]
         return ballots
 
     @cached_property

@@ -292,7 +292,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">log_identity</span><span class="o">=</span><span class="s2">&quot;PROFILE&quot;</span><span class="p">)</span>
 
-        <span class="c1"># Preference arrays</span>
+        <span class="c1"># Preference arrays (except preferences_borda_ut, which is not needed at this point).</span>
         <span class="k">if</span> <span class="n">preferences_rk</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">preferences_rk</span> <span class="o">=</span> <span class="n">preferences_ut_to_preferences_rk</span><span class="p">(</span><span class="n">preferences_ut</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">preferences_rk</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">preferences_rk</span><span class="p">)</span>
@@ -307,11 +307,6 @@
             <span class="n">preferences_ut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preferences_borda_rk</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">preferences_ut</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">preferences_ut</span><span class="p">)</span>
         <span class="sd">&quot;&quot;&quot;2d array of floats. ``preferences_ut[v, c]`` is the utility of  candidate ``c`` as seen by voter ``v``.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">preferences_borda_ut</span> <span class="o">=</span> <span class="n">preferences_ut_to_preferences_borda_ut</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preferences_ut</span><span class="p">)</span>
-        <span class="sd">&quot;&quot;&quot;2d array of integers. ``preferences_borda_ut[v, c]`` gains 1 point for each ``d`` such that ``v`` strictly</span>
-<span class="sd">        prefers ``c`` to ``d`` (in the sense of utilities), and 0.5 point for each ``d`` such that ``v`` is</span>
-<span class="sd">        indifferent between ``c`` and ``d``. So, these Borda scores are between ``0`` and ``C - 1``.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># Number of voters and candidates</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_v</span> <span class="o">=</span> <span class="kc">None</span>
@@ -323,27 +318,40 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;A population must have at least 2 voters and 2 candidates.&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">sort_voters</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_borda_ut</span> <span class="o">=</span> <span class="n">preferences_ut_to_preferences_borda_ut</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preferences_ut</span><span class="p">)</span>
             <span class="c1"># Sort voters by weak order (deducted from utility)</span>
-            <span class="n">list_borda_ut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preferences_borda_ut</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+            <span class="n">list_borda_ut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_borda_ut</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
             <span class="c1"># noinspection PyTypeChecker,PyUnresolvedReferences</span>
             <span class="n">indexes</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">list_borda_ut</span><span class="p">)),</span> <span class="n">key</span><span class="o">=</span><span class="n">list_borda_ut</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">preferences_rk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preferences_rk</span><span class="p">[</span><span class="n">indexes</span><span class="p">,</span> <span class="p">::]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">preferences_ut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preferences_ut</span><span class="p">[</span><span class="n">indexes</span><span class="p">,</span> <span class="p">::]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">preferences_borda_rk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[</span><span class="n">indexes</span><span class="p">,</span> <span class="p">::]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">preferences_borda_ut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preferences_borda_ut</span><span class="p">[</span><span class="n">indexes</span><span class="p">,</span> <span class="p">::]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_borda_ut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_borda_ut</span><span class="p">[</span><span class="n">indexes</span><span class="p">,</span> <span class="p">::]</span>
             <span class="c1"># Sort voters by strict ranking</span>
             <span class="n">list_rankings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preferences_rk</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
             <span class="n">indexes</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">list_rankings</span><span class="p">)),</span> <span class="n">key</span><span class="o">=</span><span class="n">list_rankings</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">preferences_rk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preferences_rk</span><span class="p">[</span><span class="n">indexes</span><span class="p">,</span> <span class="p">::]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">preferences_ut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preferences_ut</span><span class="p">[</span><span class="n">indexes</span><span class="p">,</span> <span class="p">::]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">preferences_borda_rk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[</span><span class="n">indexes</span><span class="p">,</span> <span class="p">::]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">preferences_borda_ut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preferences_borda_ut</span><span class="p">[</span><span class="n">indexes</span><span class="p">,</span> <span class="p">::]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_borda_ut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_borda_ut</span><span class="p">[</span><span class="n">indexes</span><span class="p">,</span> <span class="p">::]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_borda_ut</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Compute later only if needed.</span>
 
         <span class="c1"># Misc variables</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_labels_candidates</span> <span class="o">=</span> <span class="n">labels_candidates</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log_creation</span> <span class="o">=</span> <span class="n">log_creation</span>
 
     <span class="c1"># %% Basic variables</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">preferences_borda_ut</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;2d array of integers. ``preferences_borda_ut[v, c]`` gains 1 point for each ``d`` such that ``v`` strictly</span>
+<span class="sd">        prefers ``c`` to ``d`` (in the sense of utilities), and 0.5 point for each ``d`` such that ``v`` is</span>
+<span class="sd">        indifferent between ``c`` and ``d``. So, these Borda scores are between ``0`` and ``C - 1``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_borda_ut</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_borda_ut</span> <span class="o">=</span> <span class="n">preferences_ut_to_preferences_borda_ut</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preferences_ut</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_borda_ut</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">labels_candidates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
