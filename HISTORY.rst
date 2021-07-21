@@ -4,6 +4,15 @@
 History
 =======
 
+---------------------------------
+0.4.3 (2021-07-21): Accelerations
+---------------------------------
+
+* ``Rule``: accelerate trivial manipulation (TM) for rules based on rankings.
+* ``Profile``: compute ``preferences_borda_ut`` only when needed. In particular, if often accelerates trivial
+  manipulation (which relies on examining an alternate Profile object, with trivial strategy for manipulators).
+* ``RuleMajorityJudgment``, ``RuleRangeVoting`` and ``RuleSTAR``: accelerate the computation of the ballots.
+
 --------------------------------------------------
 0.4.2 (2021-07-20): Accelerate plurality_scores_ut
 --------------------------------------------------
