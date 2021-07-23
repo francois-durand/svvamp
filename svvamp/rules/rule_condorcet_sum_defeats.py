@@ -290,6 +290,8 @@ class RuleCondorcetSumDefeats(Rule):
     * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
     """
 
+    options_parameters = Rule.options_parameters.copy()
+
     def __init__(self, **kwargs):
         super().__init__(
             with_two_candidates_reduces_to_plurality=True, is_based_on_rk=True,

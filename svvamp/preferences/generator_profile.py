@@ -24,15 +24,20 @@ This file is part of SVVAMP.
 class GeneratorProfile:
     """A generator of profiles.
 
+    Parameters
+    ----------
+    sort_voters : bool
+        This argument is passed to :class:`Profile`.
+
     Examples
     --------
     Cf. :class:`GeneratorProfileEuclideanBox`.
     """
 
-    def __init__(self):
+    def __init__(self, sort_voters=True):
         """Store the parameters of the generator.
         """
-        pass
+        self.sort_voters = sort_voters
 
     def __call__(self):
         """Return a random profile.

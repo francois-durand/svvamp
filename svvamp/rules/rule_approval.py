@@ -281,19 +281,21 @@ class RuleApproval(Rule):
         [0. 3. 2.]
     """
 
+    options_parameters = Rule.options_parameters.copy()
+    options_parameters.update({
+        'approval_threshold': {'allowed': type_checker.is_number, 'default': 0},
+        'approval_comparator': {'allowed': ['>', '>='], 'default': '>'},
+        'im_option': {'allowed': ['exact'], 'default': 'exact'},
+        'tm_option': {'allowed': ['exact'], 'default': 'exact'},
+        'um_option': {'allowed': ['exact'], 'default': 'exact'},
+        'icm_option': {'allowed': ['exact'], 'default': 'exact'},
+        'cm_option': {'allowed': ['exact'], 'default': 'exact'}
+    })
+
     def __init__(self, approval_comparator='>', approval_threshold=0., **kwargs):
         self._approval_threshold = None
         self._approval_comparator = None
         super().__init__(
-            options_parameters={
-                'approval_threshold': {'allowed': type_checker.is_number, 'default': 0},
-                'approval_comparator': {'allowed': ['>', '>='], 'default': '>'},
-                'im_option': {'allowed': ['exact'], 'default': 'exact'},
-                'tm_option': {'allowed': ['exact'], 'default': 'exact'},
-                'um_option': {'allowed': ['exact'], 'default': 'exact'},
-                'icm_option': {'allowed': ['exact'], 'default': 'exact'},
-                'cm_option': {'allowed': ['exact'], 'default': 'exact'}
-            },
             with_two_candidates_reduces_to_plurality=False, is_based_on_rk=False,
             is_based_on_ut_minus1_1=True, meets_iia=True,
             precheck_um=False, precheck_tm=False, precheck_icm=False,

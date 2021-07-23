@@ -300,17 +300,19 @@ class RuleIRV(Rule):
     # Exceptionally, for this voting system, we establish a pointer from the Profile object, so that the
     # manipulation results can be used by Condorcet-IRV.
 
+    options_parameters = Rule.options_parameters.copy()
+    options_parameters.update({
+        'um_option': {'allowed': {'fast', 'exact'}, 'default': 'fast'},
+        'cm_option': {'allowed': {'fast', 'slow', 'exact'}, 'default': 'fast'},
+        'tm_option': {'allowed': ['exact'], 'default': 'exact'},
+        'icm_option': {'allowed': {'exact'}, 'default': 'exact'},
+        'fast_algo': {'allowed': {'c_minus_max', 'minus_max', 'hardest_first'}, 'default': 'c_minus_max'}
+    })
+
     def __init__(self, **kwargs):
         self._fast_algo = None
         self.eb_ = None
         super().__init__(
-            options_parameters={
-                'um_option': {'allowed': {'fast', 'exact'}, 'default': 'fast'},
-                'cm_option': {'allowed': {'fast', 'slow', 'exact'}, 'default': 'fast'},
-                'tm_option': {'allowed': ['exact'], 'default': 'exact'},
-                'icm_option': {'allowed': {'exact'}, 'default': 'exact'},
-                'fast_algo': {'allowed': {'c_minus_max', 'minus_max', 'hardest_first'}, 'default': 'c_minus_max'}
-            },
             with_two_candidates_reduces_to_plurality=True, is_based_on_rk=True,
             precheck_um=False, precheck_icm=False,
             log_identity="IRV", **kwargs

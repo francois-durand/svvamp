@@ -410,3 +410,30 @@ def initialize_random_seeds(n=0):
     """
     random.seed(n)
     np.random.seed(n)
+
+
+def indent(s, n_spaces=4):
+    """Indent a string.
+
+    Parameters
+    ----------
+    s : str
+        The string
+    n_spaces : int
+        Number of spaces to put at the beginning of each line.
+
+    Returns
+    -------
+    str
+
+    Examples
+    --------
+        >>> s = 'First line\\nSecond line'
+        >>> print(s)
+        First line
+        Second line
+        >>> print(indent(s, 4))
+            First line
+            Second line
+    """
+    return '    ' + s.replace('\n', '\n    ')

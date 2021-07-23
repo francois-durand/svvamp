@@ -1,33 +1,4 @@
-"""Top-level package for SVVAMP."""
-
-__author__ = """François Durand"""
-__email__ = 'fradurand@gmail.com'
-__version__ = '0.4.3'
-
-
-# Utils
-from svvamp.utils.misc import initialize_random_seeds
-from svvamp.utils.constants import OPTIONS
-
-# Profile
-from svvamp.preferences.profile import Profile
-from svvamp.preferences.profile_from_file import ProfileFromFile
-from svvamp.preferences.profile_subset_candidates import ProfileSubsetCandidates
-
-# Profile Generator
-from svvamp.preferences.generator_profile import GeneratorProfile
-from svvamp.preferences.generator_profile_cubic_uniform import GeneratorProfileCubicUniform
-from svvamp.preferences.generator_profile_euclidean_box import GeneratorProfileEuclideanBox
-from svvamp.preferences.generator_profile_gaussian_well import GeneratorProfileGaussianWell
-from svvamp.preferences.generator_profile_ladder import GeneratorProfileLadder
-from svvamp.preferences.generator_profile_noise import GeneratorProfileNoise
-from svvamp.preferences.generator_profile_noised_file import GeneratorProfileNoisedFile
-from svvamp.preferences.generator_profile_spheroid import GeneratorProfileSpheroid
-from svvamp.preferences.generator_profile_vmf_hypercircle import GeneratorProfileVMFHypercircle
-from svvamp.preferences.generator_profile_vmf_hypersphere import GeneratorProfileVMFHypersphere
-
 # Voting Rule
-from svvamp.rules.rule import Rule
 from svvamp.rules.rule_approval import RuleApproval
 from svvamp.rules.rule_baldwin import RuleBaldwin
 from svvamp.rules.rule_black import RuleBlack
@@ -63,11 +34,19 @@ from svvamp.rules.rule_smith_irv import RuleSmithIRV
 from svvamp.rules.rule_tideman import RuleTideman
 from svvamp.rules.rule_woodall import RuleWoodall
 
-# All rules
-from svvamp.rules.all_rule_classes import ALL_RULE_CLASSES
-
-# Meta
-from svvamp.meta.study_profile_criteria import StudyProfileCriteria
-from svvamp.meta.study_rule_criteria import StudyRuleCriteria
-from svvamp.meta.voting_rule_tasks import VotingRuleTasks
-from svvamp.meta.experiment_analyzer import ExperimentAnalyzer
+ALL_RULE_CLASSES = [
+    RuleApproval,
+    RuleBaldwin, RuleBlack, RuleBorda, RuleBucklin,
+    RuleCondorcetSumDefeats, RuleCoombs, RuleCopeland,
+    RuleIRVDuels, RuleIteratedBucklin,
+    RuleKemeny, RuleKimRoush,
+    RuleMajorityJudgment, RuleMaximin,
+    RuleNanson,
+    RulePlurality,
+    RuleRangeVoting, RuleRankedPairs,
+    RuleSchulze, RuleSplitCycle, RuleSTAR,
+    RuleTwoRound,
+    RuleVeto,
+    RuleExhaustiveBallot, RuleIRV, RuleCondorcetAbsIRV, RuleCondorcetVtbIRV,
+    RuleICRV, RuleIRVAverage, RuleSmithIRV, RuleTideman, RuleWoodall,
+]

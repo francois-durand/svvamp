@@ -174,7 +174,16 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     # precise algorithm among those running in polynomial time.
     # Exception: for iia_subset_maximum_size, default option is 2.
 
-    def __init__(self, options_parameters=None,
+    options_parameters = {
+        'iia_subset_maximum_size': {'allowed': type_checker.is_number, 'default': 2},
+        'im_option': {'allowed': ['lazy', 'exact'], 'default': 'lazy'},
+        'tm_option': {'allowed': ['lazy', 'exact'], 'default': 'exact'},
+        'um_option': {'allowed': ['lazy', 'exact'], 'default': 'lazy'},
+        'icm_option': {'allowed': ['lazy'], 'default': 'lazy'},
+        'cm_option': {'allowed': ['lazy', 'exact'], 'default': 'lazy'}
+    }
+
+    def __init__(self,
                  with_two_candidates_reduces_to_plurality=False, is_based_on_rk=False,
                  is_based_on_ut_minus1_1=False, meets_iia=False,
                  precheck_um=True, precheck_tm=True, precheck_icm=True,
@@ -190,17 +199,6 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         self.precheck_um = precheck_um
         self.precheck_tm = precheck_tm
         self.precheck_icm = precheck_icm
-        # Options parameters
-        self.options_parameters = {
-            'iia_subset_maximum_size': {'allowed': type_checker.is_number, 'default': 2},
-            'im_option': {'allowed': ['lazy', 'exact'], 'default': 'lazy'},
-            'tm_option': {'allowed': ['lazy', 'exact'], 'default': 'exact'},
-            'um_option': {'allowed': ['lazy', 'exact'], 'default': 'lazy'},
-            'icm_option': {'allowed': ['lazy'], 'default': 'lazy'},
-            'cm_option': {'allowed': ['lazy', 'exact'], 'default': 'lazy'}
-        }
-        if options_parameters is not None:
-            self.options_parameters.update(options_parameters)
         # Options
         self._iia_subset_maximum_size = None
         self._im_option = None
@@ -245,6 +243,52 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     def options(self):
         """dict: The options. Key: name of the option. Value: value of the option."""
         return {k: getattr(self, k) for k in self.options_parameters.keys()}
+
+    @classmethod
+    def check_option_allowed(cls, option, value):
+        """Check whether a pair (option, value) is allowed.
+
+        Parameters
+        ----------
+        option : str
+        value : object
+
+        Examples
+        --------
+        Raise an error if the option is not in :attr:`options_parameters`:
+
+            >>> Rule.check_option_allowed('not_existing_option', 42)
+            Traceback (most recent call last):
+            ValueError: Option 'not_existing_option' is unknown for Rule.
+
+        Raise an error if the value is not authorized for this option:
+
+            >>> Rule.check_option_allowed('cm_option', 'unexpected_value')
+            Traceback (most recent call last):
+            ValueError: 'cm_option' = 'unexpected_value' is not allowed in Rule.
+        """
+        if option not in cls.options_parameters:
+            raise ValueError(f"Option {repr(option)} is unknown for {cls.__name__}.")
+        allowed = cls.options_parameters[option]['allowed']
+        this_value_is_allowed = (callable(allowed) and allowed(value)) or (not callable(allowed) and value in allowed)
+        if not this_value_is_allowed:
+            raise ValueError(f"'{option}' = {repr(value)} is not allowed in {cls.__name__}.")
+
+    def log_(self, method_name):
+        """Log corresponding to a particular manipulation method.
+        """
+        if '_iia_' in method_name:
+            return self.log_iia_
+        if '_im_' in method_name:
+            return self.log_im_
+        if '_icm_' in method_name:
+            return self.log_icm_
+        if '_tm_' in method_name:
+            return self.log_tm_
+        if '_um_' in method_name:
+            return self.log_um_
+        if '_cm_' in method_name:
+            return self.log_cm_
 
     def __call__(self, profile):
         """

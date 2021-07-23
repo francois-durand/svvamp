@@ -38,6 +38,8 @@ class GeneratorProfileEuclideanBox(GeneratorProfile):
         1d array of numbers. The length of the Euclidean box along each axis.
     shift : list or ndarray
         1d array of numbers, same dimension as ``box_dimensions``. Shift for the mean position of the candidates.
+    sort_voters : bool
+        This argument is passed to :class:`Profile`.
 
     Notes
     -----
@@ -59,7 +61,7 @@ class GeneratorProfileEuclideanBox(GeneratorProfile):
         (10, 3)
     """
 
-    def __init__(self, n_v, n_c, box_dimensions, shift=None):
+    def __init__(self, n_v, n_c, box_dimensions, shift=None, sort_voters=True):
         self.n_v = n_v
         self.n_c = n_c
         self.box_dimensions = np.array(box_dimensions)
@@ -67,7 +69,7 @@ class GeneratorProfileEuclideanBox(GeneratorProfile):
         self.shift = np.zeros(self.n_dim) if shift is None else np.array(shift)
         self.log_creation = ['Euclidean box', self.n_c, self.n_v, 'Box dimensions', self.box_dimensions,
                              'Shift', self.shift, 'Number of dimensions', self.n_dim]
-        super().__init__()
+        super().__init__(sort_voters=sort_voters)
 
     def __call__(self):
         voters_positions = np.random.rand(self.n_v, self.n_dim) * self.box_dimensions

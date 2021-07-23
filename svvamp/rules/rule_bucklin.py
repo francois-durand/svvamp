@@ -282,15 +282,17 @@ class RuleBucklin(Rule):
     Michael Zuckerman, Ariel D. Procaccia, Vincent Conitzer and Jeffrey S. Rosenschein, 2009.
     """
 
+    options_parameters = Rule.options_parameters.copy()
+    options_parameters.update({
+        'im_option': {'allowed': ['exact'], 'default': 'exact'},
+        'tm_option': {'allowed': ['exact'], 'default': 'exact'},
+        'um_option': {'allowed': ['exact'], 'default': 'exact'},
+        'icm_option': {'allowed': ['exact'], 'default': 'exact'},
+        'cm_option': {'allowed': ['exact'], 'default': 'exact'},
+    })
+
     def __init__(self, **kwargs):
         super().__init__(
-            options_parameters={
-                'im_option': {'allowed': ['exact'], 'default': 'exact'},
-                'tm_option': {'allowed': ['exact'], 'default': 'exact'},
-                'um_option': {'allowed': ['exact'], 'default': 'exact'},
-                'icm_option': {'allowed': ['exact'], 'default': 'exact'},
-                'cm_option': {'allowed': ['exact'], 'default': 'exact'},
-            },
             with_two_candidates_reduces_to_plurality=True, is_based_on_rk=True,
             precheck_icm=False,  # Bucklin does not meet infmc_c_ctb, but precheck on ICM is not interesting anyway.
             log_identity="BUCKLIN", **kwargs

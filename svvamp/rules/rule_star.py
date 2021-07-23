@@ -93,23 +93,25 @@ class RuleSTAR(Rule):
     * :meth:`is_cm_`, :meth:`is_icm_`, :meth:`is_im_`, :meth:`is_tm_`, :meth:`is_um_`: Exact in polynomial time.
     """
 
+    options_parameters = Rule.options_parameters.copy()
+    options_parameters.update({
+        'max_grade': {'allowed': np.isfinite, 'default': 1},
+        'min_grade': {'allowed': np.isfinite, 'default': 0},
+        'step_grade': {'allowed': np.isfinite, 'default': 0},
+        'rescale_grades': {'allowed': type_checker.is_bool, 'default': True},
+        'im_option': {'allowed': ['exact'], 'default': 'exact'},
+        'tm_option': {'allowed': ['exact'], 'default': 'exact'},
+        'um_option': {'allowed': ['exact'], 'default': 'exact'},
+        'icm_option': {'allowed': ['exact'], 'default': 'exact'},
+        'cm_option': {'allowed': ['exact'], 'default': 'exact'}
+    })
+
     def __init__(self, **kwargs):
         self._min_grade = None
         self._max_grade = None
         self._step_grade = None
         self._rescale_grades = None
         super().__init__(
-            options_parameters={
-                'max_grade': {'allowed': np.isfinite, 'default': 1},
-                'min_grade': {'allowed': np.isfinite, 'default': 0},
-                'step_grade': {'allowed': np.isfinite, 'default': 0},
-                'rescale_grades': {'allowed': type_checker.is_bool, 'default': True},
-                'im_option': {'allowed': ['exact'], 'default': 'exact'},
-                'tm_option': {'allowed': ['exact'], 'default': 'exact'},
-                'um_option': {'allowed': ['exact'], 'default': 'exact'},
-                'icm_option': {'allowed': ['exact'], 'default': 'exact'},
-                'cm_option': {'allowed': ['exact'], 'default': 'exact'}
-            },
             with_two_candidates_reduces_to_plurality=False,
             # # Even if ``rescale_grades = True``, a voter who has the same utility for ``c`` and ``d`` will not vote
             # # the same in STAR and in Plurality.
@@ -454,7 +456,7 @@ class RuleSTAR(Rule):
             score_second_round_d_c = np.sum(ballots_s[:, d] > ballots_s[:, c])
             n_2 = max(score_second_round_d_c - score_second_round_c_d + int(d < c), 0)
             # Consequences on first round
-            scores_first_round = scores_first_round_s.copy()
+            scores_first_round = scores_first_round_s.copy().astype(float)
             scores_first_round[c] += n_2 * self.max_grade
             scores_first_round[d] += n_2 * self.second_best_grade  # Exactly if step_grade > 0, minus epsilon if == 0
             if self.profile_.n_c == 2:

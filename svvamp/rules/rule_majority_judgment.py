@@ -320,23 +320,25 @@ class RuleMajorityJudgment(Rule):
     Majority Judgment : Measuring, Ranking, and Electing. Michel Balinski and Rida Laraki, 2010.
     """
 
+    options_parameters = Rule.options_parameters.copy()
+    options_parameters.update({
+        'max_grade': {'allowed': np.isfinite, 'default': 1},
+        'min_grade': {'allowed': np.isfinite, 'default': 0},
+        'step_grade': {'allowed': np.isfinite, 'default': 0},
+        'rescale_grades': {'allowed': type_checker.is_bool, 'default': True},
+        'im_option': {'allowed': ['exact'], 'default': 'exact'},
+        'tm_option': {'allowed': ['exact'], 'default': 'exact'},
+        'um_option': {'allowed': ['exact'], 'default': 'exact'},
+        'icm_option': {'allowed': ['exact'], 'default': 'exact'},
+        'cm_option': {'allowed': ['exact'], 'default': 'exact'}
+    })
+
     def __init__(self, **kwargs):
         self._min_grade = None
         self._max_grade = None
         self._step_grade = None
         self._rescale_grades = None
         super().__init__(
-            options_parameters={
-                'max_grade': {'allowed': np.isfinite, 'default': 1},
-                'min_grade': {'allowed': np.isfinite, 'default': 0},
-                'step_grade': {'allowed': np.isfinite, 'default': 0},
-                'rescale_grades': {'allowed': type_checker.is_bool, 'default': True},
-                'im_option': {'allowed': ['exact'], 'default': 'exact'},
-                'tm_option': {'allowed': ['exact'], 'default': 'exact'},
-                'um_option': {'allowed': ['exact'], 'default': 'exact'},
-                'icm_option': {'allowed': ['exact'], 'default': 'exact'},
-                'cm_option': {'allowed': ['exact'], 'default': 'exact'}
-            },
             with_two_candidates_reduces_to_plurality=False,
             # Even if ``rescale_grades = True``, a voter who has the same utility for ``c`` and ``d`` will not vote
             # the same in Majority Judgment and in Plurality.
