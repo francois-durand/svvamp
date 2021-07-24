@@ -203,6 +203,8 @@
 <span class="sd">        Number of candidates.</span>
 <span class="sd">    n_rungs : int</span>
 <span class="sd">        Number of rungs of the ladder.</span>
+<span class="sd">    sort_voters : bool</span>
+<span class="sd">        This argument is passed to :class:`Profile`.</span>
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
@@ -220,12 +222,12 @@
 <span class="sd">        (10, 3)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_v</span><span class="p">,</span> <span class="n">n_c</span><span class="p">,</span> <span class="n">n_rungs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_v</span><span class="p">,</span> <span class="n">n_c</span><span class="p">,</span> <span class="n">n_rungs</span><span class="p">,</span> <span class="n">sort_voters</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_v</span> <span class="o">=</span> <span class="n">n_v</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_c</span> <span class="o">=</span> <span class="n">n_c</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_rungs</span> <span class="o">=</span> <span class="n">n_rungs</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log_creation</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Ladder&#39;</span><span class="p">,</span> <span class="n">n_c</span><span class="p">,</span> <span class="n">n_v</span><span class="p">,</span> <span class="s1">&#39;Number of rungs&#39;</span><span class="p">,</span> <span class="n">n_rungs</span><span class="p">]</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">sort_voters</span><span class="o">=</span><span class="n">sort_voters</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">Profile</span><span class="p">(</span>

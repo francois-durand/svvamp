@@ -38,6 +38,8 @@ class GeneratorProfileGaussianWell(GeneratorProfile):
         1d array of numbers. The variance of the gaussian distribution along each dimension.
     shift : list or ndarray
         1d array of numbers, same dimension as ``sigma``. Shift for the mean position of the candidates.
+    sort_voters : bool
+        This argument is passed to :class:`Profile`.
 
     Notes
     -----
@@ -60,7 +62,7 @@ class GeneratorProfileGaussianWell(GeneratorProfile):
         (10, 3)
     """
 
-    def __init__(self, n_v, n_c, sigma, shift=None):
+    def __init__(self, n_v, n_c, sigma, shift=None, sort_voters=True):
         self.n_v = n_v
         self.n_c = n_c
         self.sigma = np.array(sigma)
@@ -68,7 +70,7 @@ class GeneratorProfileGaussianWell(GeneratorProfile):
         self.shift = np.zeros(self.n_dim) if shift is None else np.array(shift)
         self.log_creation = ['Gaussian well', self.n_c, self.n_v, 'Sigma', self.sigma,
                              'Shift', self.shift, 'Number of dimensions', self.n_dim]
-        super().__init__()
+        super().__init__(sort_voters=sort_voters)
 
     def __call__(self):
         voters_positions = np.random.randn(self.n_v, self.n_dim) * self.sigma

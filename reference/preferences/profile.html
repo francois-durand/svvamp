@@ -1885,9 +1885,9 @@ other candidates. If a voter has several candidates with maximal utility, then n
 </div>
 </dd></dl>
 
-<dl class="py attribute">
+<dl class="py property">
 <dt class="sig sig-object py" id="svvamp.Profile.preferences_borda_rk">
-<span class="sig-name descname"><span class="pre">preferences_borda_rk</span></span><a class="headerlink" href="#svvamp.Profile.preferences_borda_rk" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">preferences_borda_rk</span></span><a class="headerlink" href="#svvamp.Profile.preferences_borda_rk" title="Permalink to this definition">¶</a></dt>
 <dd><p>2d array of integers. <code class="docutils literal notranslate"><span class="pre">preferences_borda_rk[v,</span> <span class="pre">c]</span></code> gains 1 point for each candidate <code class="docutils literal notranslate"><span class="pre">d</span></code> such that
 voter <code class="docutils literal notranslate"><span class="pre">v</span></code> ranks <code class="docutils literal notranslate"><span class="pre">c</span></code> before <code class="docutils literal notranslate"><span class="pre">d</span></code>. So, these Borda scores are between <code class="docutils literal notranslate"><span class="pre">0</span></code> and <code class="docutils literal notranslate"><span class="pre">C</span> <span class="pre">-</span> <span class="pre">1</span></code>.</p>
 </dd></dl>
@@ -1900,17 +1900,38 @@ prefers <code class="docutils literal notranslate"><span class="pre">c</span></c
 indifferent between <code class="docutils literal notranslate"><span class="pre">c</span></code> and <code class="docutils literal notranslate"><span class="pre">d</span></code>. So, these Borda scores are between <code class="docutils literal notranslate"><span class="pre">0</span></code> and <code class="docutils literal notranslate"><span class="pre">C</span> <span class="pre">-</span> <span class="pre">1</span></code>.</p>
 </dd></dl>
 
-<dl class="py attribute">
+<dl class="py property">
 <dt class="sig sig-object py" id="svvamp.Profile.preferences_rk">
-<span class="sig-name descname"><span class="pre">preferences_rk</span></span><a class="headerlink" href="#svvamp.Profile.preferences_rk" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">preferences_rk</span></span><a class="headerlink" href="#svvamp.Profile.preferences_rk" title="Permalink to this definition">¶</a></dt>
 <dd><p>2d array of integers. <code class="docutils literal notranslate"><span class="pre">preferences_rk[v,</span> <span class="pre">k]</span></code> is the candidate at rank <code class="docutils literal notranslate"><span class="pre">k</span></code> for voter <code class="docutils literal notranslate"><span class="pre">v</span></code>. For
 example, <code class="docutils literal notranslate"><span class="pre">preferences_rk[v,</span> <span class="pre">0]</span></code> is <code class="docutils literal notranslate"><span class="pre">v</span></code>’s preferred candidate.</p>
 </dd></dl>
 
-<dl class="py attribute">
+<dl class="py property">
 <dt class="sig sig-object py" id="svvamp.Profile.preferences_ut">
-<span class="sig-name descname"><span class="pre">preferences_ut</span></span><a class="headerlink" href="#svvamp.Profile.preferences_ut" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">preferences_ut</span></span><a class="headerlink" href="#svvamp.Profile.preferences_ut" title="Permalink to this definition">¶</a></dt>
 <dd><p>2d array of floats. <code class="docutils literal notranslate"><span class="pre">preferences_ut[v,</span> <span class="pre">c]</span></code> is the utility of  candidate <code class="docutils literal notranslate"><span class="pre">c</span></code> as seen by voter <code class="docutils literal notranslate"><span class="pre">v</span></code>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.Profile.relative_social_welfare_c">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">relative_social_welfare_c</span></span><a class="headerlink" href="#svvamp.Profile.relative_social_welfare_c" title="Permalink to this definition">¶</a></dt>
+<dd><p>1d array of numbers. <code class="docutils literal notranslate"><span class="pre">relative_social_welfare_c[c]</span></code> is equal to <code class="docutils literal notranslate"><span class="pre">total_utility_c[c]</span></code>, but renormalized
+so that the minimum is 0 and the maximum is 1.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">svvamp</span> <span class="kn">import</span> <span class="n">Profile</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">relative_social_welfare_c</span>
+<span class="go">array([0.75, 1.  , 0.  ])</span>
+</pre></div>
+</div>
+<p>By convention, if all candidates have the same social welfare, then their relative social welfare is 1:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">svvamp</span> <span class="kn">import</span> <span class="n">Profile</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">relative_social_welfare_c</span>
+<span class="go">array([1, 1, 1])</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py property">

@@ -45,6 +45,8 @@ class GeneratorProfileVMFHypersphere(GeneratorProfile):
         (up to normalization). If ``None``, then the groups have equal probabilities.
     vmf_pole : list or ndarray
         2d array of size ``(k, n_c)``. ``vmf_pole[i, :]`` is the pole of the VMF distribution for group ``i``.
+    sort_voters : bool
+        This argument is passed to :class:`Profile`.
 
     Notes
     -----
@@ -146,7 +148,8 @@ class GeneratorProfileVMFHypersphere(GeneratorProfile):
         Wood (1994) - Simulation of the von Mises Fisher distribution
     """
 
-    def __init__(self, n_v, n_c, vmf_concentration, vmf_probability=None, vmf_pole=None, stretching=1):
+    def __init__(self, n_v, n_c, vmf_concentration, vmf_probability=None, vmf_pole=None, stretching=1,
+                 sort_voters=True):
         self.n_v = n_v
         self.n_c = n_c
         # Ensure that _vmf_concentration is an np.array. Compute k, its size.
@@ -172,7 +175,7 @@ class GeneratorProfileVMFHypersphere(GeneratorProfile):
         self.stretching = stretching
         self.log_creation = ['VMFHypersphere', n_c, n_v, 'VMF Concentration', vmf_concentration,
                              'VMF Probability', vmf_probability, 'VMF Pole', vmf_pole, 'Stretching', stretching]
-        super().__init__()
+        super().__init__(sort_voters=sort_voters)
 
     def __call__(self):
         # Compute the number of voters in each group

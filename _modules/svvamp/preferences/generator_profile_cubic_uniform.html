@@ -204,6 +204,8 @@
 <span class="sd">        Number of voters.</span>
 <span class="sd">    n_c : int</span>
 <span class="sd">        Number of candidates.</span>
+<span class="sd">    sort_voters : bool</span>
+<span class="sd">        This argument is passed to :class:`Profile`.</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
@@ -213,11 +215,11 @@
 <span class="sd">        (10, 3)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_v</span><span class="p">,</span> <span class="n">n_c</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_v</span><span class="p">,</span> <span class="n">n_c</span><span class="p">,</span> <span class="n">sort_voters</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_v</span> <span class="o">=</span> <span class="n">n_v</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_c</span> <span class="o">=</span> <span class="n">n_c</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log_creation</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Cubic uniform&#39;</span><span class="p">,</span> <span class="n">n_c</span><span class="p">,</span> <span class="n">n_v</span><span class="p">]</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">sort_voters</span><span class="o">=</span><span class="n">sort_voters</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_v</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_c</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">log_creation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">log_creation</span><span class="p">)</span></div>

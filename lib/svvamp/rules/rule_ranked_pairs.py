@@ -298,11 +298,14 @@ class RuleRankedPairs(Rule):
     Lirong Xia, 2012.
     """
 
+    full_name = 'Ranked Pairs'
+    abbreviation = 'RP'
+
+    options_parameters = Rule.options_parameters.copy()
+    options_parameters['icm_option'] = {'allowed': ['exact'], 'default': 'exact'}
+
     def __init__(self, **kwargs):
         super().__init__(
-            options_parameters={
-                'icm_option': {'allowed': ['exact'], 'default': 'exact'}
-            },
             with_two_candidates_reduces_to_plurality=True, is_based_on_rk=True,
             precheck_icm=False,
             log_identity="RANKED_PAIRS", **kwargs

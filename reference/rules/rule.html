@@ -240,7 +240,7 @@
 <h1>Rule<a class="headerlink" href="#rule" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="svvamp.Rule">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">svvamp.</span></span><span class="sig-name descname"><span class="pre">Rule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">options_parameters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_two_candidates_reduces_to_plurality</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_based_on_rk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_based_on_ut_minus1_1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meets_iia</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precheck_um</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precheck_tm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precheck_icm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_identity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'RULE'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/rules/rule.html#Rule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.Rule" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">svvamp.</span></span><span class="sig-name descname"><span class="pre">Rule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">with_two_candidates_reduces_to_plurality</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_based_on_rk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_based_on_ut_minus1_1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meets_iia</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precheck_um</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precheck_tm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precheck_icm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_identity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'RULE'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/rules/rule.html#Rule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.Rule" title="Permalink to this definition">¶</a></dt>
 <dd><p>A voting rule.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -408,11 +408,46 @@ possible, <code class="docutils literal notranslate"><span class="pre">False</sp
 <a class="reference internal" href="#svvamp.Rule.w_" title="svvamp.Rule.w_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">w_</span></code></a>, we have by convention <code class="docutils literal notranslate"><span class="pre">candidates_um_[w_]</span> <span class="pre">=</span> <span class="pre">False</span></code>.</p>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.Rule.check_option_allowed">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">check_option_allowed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">option</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/rules/rule.html#Rule.check_option_allowed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.Rule.check_option_allowed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check whether a pair (option, value) is allowed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>option</strong> (<em>str</em>) – </p></li>
+<li><p><strong>value</strong> (<em>object</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Raise an error if the option is not in <code class="xref py py-attr docutils literal notranslate"><span class="pre">options_parameters</span></code>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Rule</span><span class="o">.</span><span class="n">check_option_allowed</span><span class="p">(</span><span class="s1">&#39;not_existing_option&#39;</span><span class="p">,</span> <span class="mi">42</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="gr">ValueError</span>: <span class="n">Option &#39;not_existing_option&#39; is unknown for Rule.</span>
+</pre></div>
+</div>
+<p>Raise an error if the value is not authorized for this option:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Rule</span><span class="o">.</span><span class="n">check_option_allowed</span><span class="p">(</span><span class="s1">&#39;cm_option&#39;</span><span class="p">,</span> <span class="s1">&#39;unexpected_value&#39;</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="gr">ValueError</span>: <span class="n">&#39;cm_option&#39; = &#39;unexpected_value&#39; is not allowed in Rule.</span>
+</pre></div>
+</div>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="svvamp.Rule.cm_option">
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">cm_option</span></span><a class="headerlink" href="#svvamp.Rule.cm_option" title="Permalink to this definition">¶</a></dt>
 <dd><p>String. Option used to compute <a class="reference internal" href="#svvamp.Rule.is_cm_" title="svvamp.Rule.is_cm_"><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_cm_()</span></code></a> and related methods.</p>
 <p>To know what options are accepted for a given voting system, use <code class="xref py py-attr docutils literal notranslate"><span class="pre">options_parameters</span></code>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.Rule.cm_power_index_">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">cm_power_index_</span></span><a class="headerlink" href="#svvamp.Rule.cm_power_index_" title="Permalink to this definition">¶</a></dt>
+<dd><p>CM power index. For each candidate c != w, it is n_s / x_c (where n_s is the number of sincere voters
+and <cite>x_c</cite> the minimal number of manipulators that can make <cite>c</cite> win (cf <a class="reference internal" href="#svvamp.Rule.necessary_coalition_size_cm_" title="svvamp.Rule.necessary_coalition_size_cm_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">necessary_coalition_size_cm_</span></code></a>).
+Globally, it is the max over the candidates c != w.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -444,6 +479,17 @@ possible, <code class="docutils literal notranslate"><span class="pre">False</sp
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>log_depth</strong> (<em>int</em>) – Integer from 0 (basic info) to 3 (verbose).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.Rule.elects_condorcet_winner_rk_even_with_cm_">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">elects_condorcet_winner_rk_even_with_cm_</span></span><a class="headerlink" href="#svvamp.Rule.elects_condorcet_winner_rk_even_with_cm_" title="Permalink to this definition">¶</a></dt>
+<dd><p>True iff there is a Condorcet winner, she is elected by sincere voting and it is not CM.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
@@ -729,6 +775,12 @@ other voters still vote sincerely).</p>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.Rule.log_">
+<span class="sig-name descname"><span class="pre">log_</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/rules/rule.html#Rule.log_"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.Rule.log_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log corresponding to a particular manipulation method.</p>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="svvamp.Rule.log_cm_">
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">log_cm_</span></span><a class="headerlink" href="#svvamp.Rule.log_cm_" title="Permalink to this definition">¶</a></dt>
@@ -950,6 +1002,12 @@ she wins.</p></li>
 </dd></dl>
 
 <dl class="py property">
+<dt class="sig sig-object py" id="svvamp.Rule.nb_candidates_cm_">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">nb_candidates_cm_</span></span><a class="headerlink" href="#svvamp.Rule.nb_candidates_cm_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of candidates who can benefit from CM.</p>
+</dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="svvamp.Rule.necessary_coalition_size_cm_">
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">necessary_coalition_size_cm_</span></span><a class="headerlink" href="#svvamp.Rule.necessary_coalition_size_cm_" title="Permalink to this definition">¶</a></dt>
 <dd><p>1d array of integers. <code class="docutils literal notranslate"><span class="pre">necessary_coalition_size_cm_[c]</span></code> is the lower bound found by the algorithm for
@@ -1001,6 +1059,12 @@ but not the numerical evaluation of <span class="math notranslate nohighlight">\
 <dd class="field-even"><p>The options. Key</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.Rule.relative_social_welfare_w_">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">relative_social_welfare_w_</span></span><a class="headerlink" href="#svvamp.Rule.relative_social_welfare_w_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Float. The relative social welfare for the sincere winner <a class="reference internal" href="#svvamp.Rule.w_" title="svvamp.Rule.w_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">w_</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py property">
@@ -1303,6 +1367,12 @@ despite the fact that she exists.</p>
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">w_missed_weak_condorcet_winner_</span></span><a class="headerlink" href="#svvamp.Rule.w_missed_weak_condorcet_winner_" title="Permalink to this definition">¶</a></dt>
 <dd><p>Boolean. True iff the sincere winner <a class="reference internal" href="#svvamp.Rule.w_" title="svvamp.Rule.w_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">w_</span></code></a> is not a Weak Condorcet winner, despite the fact that at
 least one exists. Cf. <a class="reference internal" href="../preferences/profile.html#svvamp.Profile.weak_condorcet_winners" title="svvamp.Profile.weak_condorcet_winners"><code class="xref py py-attr docutils literal notranslate"><span class="pre">weak_condorcet_winners</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.Rule.worst_relative_welfare_with_cm_">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">worst_relative_welfare_with_cm_</span></span><a class="headerlink" href="#svvamp.Rule.worst_relative_welfare_with_cm_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Worst relative social welfare (sincere winner or candidate who can benefit from CM).</p>
 </dd></dl>
 
 </dd></dl>

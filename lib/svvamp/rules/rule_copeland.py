@@ -60,11 +60,14 @@ class RuleCopeland(Rule):
         0
     """
 
+    full_name = 'Copeland'
+    abbreviation = 'Cop'
+
+    options_parameters = Rule.options_parameters.copy()
+    options_parameters['icm_option'] = {'allowed': ['exact'], 'default': 'exact'}
+
     def __init__(self, **kwargs):
         super().__init__(
-            options_parameters={
-                'icm_option': {'allowed': ['exact'], 'default': 'exact'}
-            },
             with_two_candidates_reduces_to_plurality=True, is_based_on_rk=True,
             precheck_icm=False,
             log_identity="COPELAND", **kwargs

@@ -23,7 +23,7 @@ from svvamp.preferences.generator_profile_noise import GeneratorProfileNoise
 from svvamp.preferences.profile_from_file import ProfileFromFile
 
 
-class ProfileGeneratorNoisedFile(GeneratorProfileNoise):
+class GeneratorProfileNoisedFile(GeneratorProfileNoise):
     """Profile generator loading a file, then adding noise
 
     Parameters
@@ -34,15 +34,18 @@ class ProfileGeneratorNoisedFile(GeneratorProfileNoise):
         The relative noise.
     absolute_noise : number
         The absolute noise
+    sort_voters : bool
+        This argument is passed to :class:`Profile`.
 
     Notes
     -----
     This class is just a combination of :class:`ProfileFromFile` and :class:`GeneratorProfileNoise`.
     """
 
-    def __init__(self, file_name, relative_noise=0., absolute_noise=0.):
+    def __init__(self, file_name, relative_noise=0., absolute_noise=0., sort_voters=False):
         self.file_name = file_name
-        super().__init__(base_profile=ProfileFromFile(file_name=file_name, sort_voters=False),
-                         relative_noise=relative_noise, absolute_noise=absolute_noise)
+        base_profile = ProfileFromFile(file_name=file_name, sort_voters=False)
+        super().__init__(base_profile=base_profile, relative_noise=relative_noise, absolute_noise=absolute_noise,
+                         sort_voters=sort_voters)
         self.log_creation = ['Noised File', 'File name', file_name,
                              'Relative noise', relative_noise, 'Absolute noise', absolute_noise]

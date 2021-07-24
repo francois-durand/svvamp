@@ -458,6 +458,11 @@
 <span class="sd">    * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+    <span class="n">full_name</span> <span class="o">=</span> <span class="s1">&#39;Condorcet Sum Defeats&#39;</span>
+    <span class="n">abbreviation</span> <span class="o">=</span> <span class="s1">&#39;CSD&#39;</span>
+
+    <span class="n">options_parameters</span> <span class="o">=</span> <span class="n">Rule</span><span class="o">.</span><span class="n">options_parameters</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">with_two_candidates_reduces_to_plurality</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">is_based_on_rk</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>

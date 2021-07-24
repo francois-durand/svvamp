@@ -187,6 +187,7 @@
 <span class="sd">    You should have received a copy of the GNU General Public License</span>
 <span class="sd">    along with SVVAMP.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
 <span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">svvamp.utils.constants</span> <span class="kn">import</span> <span class="n">OPTIONS</span>
@@ -194,7 +195,8 @@
 <span class="kn">from</span> <span class="nn">svvamp.utils</span> <span class="kn">import</span> <span class="n">my_log</span><span class="p">,</span> <span class="n">type_checker</span>
 <span class="kn">from</span> <span class="nn">svvamp.utils.printing</span> <span class="kn">import</span> <span class="n">printm</span><span class="p">,</span> <span class="n">print_title</span><span class="p">,</span> <span class="n">print_big_title</span>
 <span class="kn">from</span> <span class="nn">svvamp.utils.misc</span> <span class="kn">import</span> <span class="n">compute_next_subset_with_w</span><span class="p">,</span> <span class="n">compute_next_borda_clever</span>
-<span class="kn">from</span> <span class="nn">svvamp.utils.pseudo_bool</span> <span class="kn">import</span> <span class="n">pseudo_bool</span><span class="p">,</span> <span class="n">neginf_to_nan</span><span class="p">,</span> <span class="n">neginf_to_zero</span><span class="p">,</span> <span class="n">equal_true</span><span class="p">,</span> <span class="n">equal_false</span>
+<span class="kn">from</span> <span class="nn">svvamp.utils.pseudo_bool</span> <span class="kn">import</span> <span class="n">pseudo_bool</span><span class="p">,</span> <span class="n">neginf_to_nan</span><span class="p">,</span> <span class="n">neginf_to_zero</span><span class="p">,</span> <span class="n">equal_true</span><span class="p">,</span> <span class="n">equal_false</span><span class="p">,</span> \
+    <span class="n">pseudo_bool_not</span>
 <span class="kn">from</span> <span class="nn">svvamp.preferences.profile</span> <span class="kn">import</span> <span class="n">Profile</span>
 <span class="kn">from</span> <span class="nn">svvamp.preferences.profile_subset_candidates</span> <span class="kn">import</span> <span class="n">ProfileSubsetCandidates</span>
 
@@ -342,7 +344,16 @@
     <span class="c1"># precise algorithm among those running in polynomial time.</span>
     <span class="c1"># Exception: for iia_subset_maximum_size, default option is 2.</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">options_parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">options_parameters</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;iia_subset_maximum_size&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="n">type_checker</span><span class="o">.</span><span class="n">is_number</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
+        <span class="s1">&#39;im_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;lazy&#39;</span><span class="p">,</span> <span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;lazy&#39;</span><span class="p">},</span>
+        <span class="s1">&#39;tm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;lazy&#39;</span><span class="p">,</span> <span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">},</span>
+        <span class="s1">&#39;um_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;lazy&#39;</span><span class="p">,</span> <span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;lazy&#39;</span><span class="p">},</span>
+        <span class="s1">&#39;icm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;lazy&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;lazy&#39;</span><span class="p">},</span>
+        <span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;lazy&#39;</span><span class="p">,</span> <span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;lazy&#39;</span><span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">with_two_candidates_reduces_to_plurality</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">is_based_on_rk</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                  <span class="n">is_based_on_ut_minus1_1</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">meets_iia</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                  <span class="n">precheck_um</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">precheck_tm</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">precheck_icm</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -358,17 +369,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">precheck_um</span> <span class="o">=</span> <span class="n">precheck_um</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">precheck_tm</span> <span class="o">=</span> <span class="n">precheck_tm</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">precheck_icm</span> <span class="o">=</span> <span class="n">precheck_icm</span>
-        <span class="c1"># Options parameters</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">options_parameters</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;iia_subset_maximum_size&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="n">type_checker</span><span class="o">.</span><span class="n">is_number</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
-            <span class="s1">&#39;im_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;lazy&#39;</span><span class="p">,</span> <span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;lazy&#39;</span><span class="p">},</span>
-            <span class="s1">&#39;tm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;lazy&#39;</span><span class="p">,</span> <span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">},</span>
-            <span class="s1">&#39;um_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;lazy&#39;</span><span class="p">,</span> <span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;lazy&#39;</span><span class="p">},</span>
-            <span class="s1">&#39;icm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;lazy&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;lazy&#39;</span><span class="p">},</span>
-            <span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;lazy&#39;</span><span class="p">,</span> <span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;lazy&#39;</span><span class="p">}</span>
-        <span class="p">}</span>
-        <span class="k">if</span> <span class="n">options_parameters</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">options_parameters</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">options_parameters</span><span class="p">)</span>
         <span class="c1"># Options</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_iia_subset_maximum_size</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_im_option</span> <span class="o">=</span> <span class="kc">None</span>
@@ -413,6 +413,52 @@
     <span class="k">def</span> <span class="nf">options</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;dict: The options. Key: name of the option. Value: value of the option.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">options_parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">()}</span>
+
+<div class="viewcode-block" id="Rule.check_option_allowed"><a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule.check_option_allowed">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">check_option_allowed</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check whether a pair (option, value) is allowed.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        option : str</span>
+<span class="sd">        value : object</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        Raise an error if the option is not in :attr:`options_parameters`:</span>
+
+<span class="sd">            &gt;&gt;&gt; Rule.check_option_allowed(&#39;not_existing_option&#39;, 42)</span>
+<span class="sd">            Traceback (most recent call last):</span>
+<span class="sd">            ValueError: Option &#39;not_existing_option&#39; is unknown for Rule.</span>
+
+<span class="sd">        Raise an error if the value is not authorized for this option:</span>
+
+<span class="sd">            &gt;&gt;&gt; Rule.check_option_allowed(&#39;cm_option&#39;, &#39;unexpected_value&#39;)</span>
+<span class="sd">            Traceback (most recent call last):</span>
+<span class="sd">            ValueError: &#39;cm_option&#39; = &#39;unexpected_value&#39; is not allowed in Rule.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">option</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">options_parameters</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Option </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">option</span><span class="p">)</span><span class="si">}</span><span class="s2"> is unknown for </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="n">allowed</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">options_parameters</span><span class="p">[</span><span class="n">option</span><span class="p">][</span><span class="s1">&#39;allowed&#39;</span><span class="p">]</span>
+        <span class="n">this_value_is_allowed</span> <span class="o">=</span> <span class="p">(</span><span class="n">callable</span><span class="p">(</span><span class="n">allowed</span><span class="p">)</span> <span class="ow">and</span> <span class="n">allowed</span><span class="p">(</span><span class="n">value</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span><span class="ow">not</span> <span class="n">callable</span><span class="p">(</span><span class="n">allowed</span><span class="p">)</span> <span class="ow">and</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">allowed</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">this_value_is_allowed</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">option</span><span class="si">}</span><span class="s2">&#39; = </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="si">}</span><span class="s2"> is not allowed in </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Rule.log_"><a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule.log_">[docs]</a>    <span class="k">def</span> <span class="nf">log_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Log corresponding to a particular manipulation method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="s1">&#39;_iia_&#39;</span> <span class="ow">in</span> <span class="n">method_name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_iia_</span>
+        <span class="k">if</span> <span class="s1">&#39;_im_&#39;</span> <span class="ow">in</span> <span class="n">method_name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_im_</span>
+        <span class="k">if</span> <span class="s1">&#39;_icm_&#39;</span> <span class="ow">in</span> <span class="n">method_name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_icm_</span>
+        <span class="k">if</span> <span class="s1">&#39;_tm_&#39;</span> <span class="ow">in</span> <span class="n">method_name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_tm_</span>
+        <span class="k">if</span> <span class="s1">&#39;_um_&#39;</span> <span class="ow">in</span> <span class="n">method_name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_um_</span>
+        <span class="k">if</span> <span class="s1">&#39;_cm_&#39;</span> <span class="ow">in</span> <span class="n">method_name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_cm_</span></div>
 
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">profile</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -727,6 +773,11 @@
     <span class="k">def</span> <span class="nf">mean_utility_w_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Float. The mean utility for the sincere winner :attr:`w_`.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">mean_utility_c</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">relative_social_welfare_w_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Float. The relative social welfare for the sincere winner :attr:`w_`.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">relative_social_welfare_c</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span>
 
     <span class="c1"># %% Condorcet efficiency and variants</span>
 
@@ -2472,17 +2523,17 @@
         <span class="sd">&quot;&quot;&quot;Do the main work in UM loop for candidate ``c``, with option &#39;exact&#39;, for a voting system based only on</span>
 <span class="sd">        strict rankings. Must decide ``_candidates_um[c]`` (to True, False or NaN). Do not update ``_is_um``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">preferences_borda_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">)</span>
-        <span class="n">ballot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">))</span>
-        <span class="n">ballot_favorite</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span>
-        <span class="k">while</span> <span class="n">ballot</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># Loop on possible ballots</span>
+        <span class="n">preferences_rk_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_rk</span><span class="p">)</span>
+        <span class="n">base_ballot</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">c</span><span class="p">])</span>  <span class="c1"># Put c first for the first try...</span>
+        <span class="k">for</span> <span class="n">ballot</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">permutations</span><span class="p">(</span><span class="n">base_ballot</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;UM: Ballot =&quot;</span><span class="p">,</span> <span class="n">ballot</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-            <span class="n">preferences_borda_test</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">v_wants_to_help_c_</span><span class="p">[:,</span> <span class="n">c</span><span class="p">],</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">ballot</span>
-            <span class="n">w_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_copy</span><span class="p">(</span><span class="n">profile</span><span class="o">=</span><span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="n">preferences_borda_test</span><span class="p">))</span><span class="o">.</span><span class="n">w_</span>
+            <span class="n">preferences_rk_test</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">v_wants_to_help_c_</span><span class="p">[:,</span> <span class="n">c</span><span class="p">],</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">ballot</span>
+            <span class="n">w_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_copy</span><span class="p">(</span>
+                <span class="n">profile</span><span class="o">=</span><span class="n">Profile</span><span class="p">(</span><span class="n">preferences_rk</span><span class="o">=</span><span class="n">preferences_rk_test</span><span class="p">,</span> <span class="n">sort_voters</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">w_</span>
             <span class="k">if</span> <span class="n">w_test</span> <span class="o">==</span> <span class="n">c</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_um</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
                 <span class="k">return</span>
-            <span class="n">ballot</span><span class="p">,</span> <span class="n">ballot_favorite</span> <span class="o">=</span> <span class="n">compute_next_borda_clever</span><span class="p">(</span><span class="n">ballot</span><span class="p">,</span> <span class="n">ballot_favorite</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_um</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
 
@@ -3489,6 +3540,71 @@
             <span class="k">return</span>
         <span class="n">is_quick_escape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cm_main_work_c_</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_cm_conclude_c_</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">is_quick_escape</span><span class="p">)</span>
+
+    <span class="c1"># %% Indicators with manipulation</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">elects_condorcet_winner_rk_even_with_cm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;bool : True iff there is a Condorcet winner, she is elected by sincere voting and it is not CM.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">exists_condorcet_winner_rk</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_is_condorcet_winner_rk_</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">pseudo_bool_not</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">is_cm_</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">nb_candidates_cm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Number of candidates who can benefit from CM.&quot;&quot;&quot;</span>
+        <span class="n">inf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates_cm_</span> <span class="o">==</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">sup</span> <span class="o">=</span> <span class="n">inf</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates_cm_</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">inf</span><span class="p">,</span> <span class="n">sup</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">worst_relative_welfare_with_cm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Worst relative social welfare (sincere winner or candidate who can benefit from CM).&quot;&quot;&quot;</span>
+        <span class="n">possible_winners</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates_cm_</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">possible_winners</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">inf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">relative_social_welfare_c</span><span class="p">[(</span><span class="n">possible_winners</span> <span class="o">==</span> <span class="kc">True</span><span class="p">)</span> <span class="o">|</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">possible_winners</span><span class="p">)]</span>
+        <span class="p">)</span>
+        <span class="n">sup</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">relative_social_welfare_c</span><span class="p">[</span><span class="n">possible_winners</span> <span class="o">==</span> <span class="kc">True</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">inf</span><span class="p">,</span> <span class="n">sup</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">cm_power_index_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;CM power index. For each candidate c != w, it is n_s / x_c (where n_s is the number of sincere voters</span>
+<span class="sd">        and `x_c` the minimal number of manipulators that can make `c` win (cf :attr:`necessary_coalition_size_cm_`).</span>
+<span class="sd">        Globally, it is the max over the candidates c != w.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">n_sincere_c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_wants_to_help_c_</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">inf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span>
+            <span class="n">n_sincere_c</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">sufficient_coalition_size_cm_</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">sufficient_coalition_size_cm_</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">sufficient_coalition_size_cm_</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">necessary_coalition_size_cm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">necessary_coalition_size_cm_</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">necessary_coalition_size_cm</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">sup</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span>
+                <span class="n">n_sincere_c</span><span class="p">[</span><span class="n">necessary_coalition_size_cm</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
+                <span class="o">/</span> <span class="n">necessary_coalition_size_cm</span><span class="p">[</span><span class="n">necessary_coalition_size_cm</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">n_sincere_c</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">necessary_coalition_size_cm_</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span>
+        <span class="k">return</span> <span class="n">inf</span><span class="p">,</span> <span class="n">sup</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">is_tm_or_um_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">equal_true</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">is_tm_</span><span class="p">)</span> <span class="ow">or</span> <span class="n">equal_true</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">is_um_</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">is_tm_</span><span class="p">)</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">is_um_</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="c1"># %% Demo</span>
 
 <div class="viewcode-block" id="Rule.demo_manipulation_"><a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule.demo_manipulation_">[docs]</a>    <span class="k">def</span> <span class="nf">demo_manipulation_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log_depth</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Demonstrate the manipulation methods of :class:`Rule` class.</span>
