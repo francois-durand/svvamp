@@ -203,6 +203,9 @@ class RuleSmithIRV(Rule):
     'Four Condorcet-Hare Hybrid Methods for Single-Winner Elections', James Green-Armytage, 2011.
     """
 
+    full_name = 'Smith-IRV'
+    abbreviation = 'SIRV'
+
     options_parameters = Rule.options_parameters.copy()
     options_parameters.update({
         'cm_option': {'allowed': {'fast', 'slow', 'very_slow', 'exact'}, 'default': 'fast'},

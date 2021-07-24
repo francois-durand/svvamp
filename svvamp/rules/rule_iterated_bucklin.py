@@ -289,6 +289,9 @@ class RuleIteratedBucklin(Rule):
     * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
     """
 
+    full_name = 'Iterated Bucklin'
+    abbreviation = 'IB'
+
     options_parameters = Rule.options_parameters.copy()
 
     def __init__(self, **kwargs):

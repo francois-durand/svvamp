@@ -290,6 +290,9 @@ class RuleCondorcetSumDefeats(Rule):
     * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
     """
 
+    full_name = 'Condorcet Sum Defeats'
+    abbreviation = 'CSD'
+
     options_parameters = Rule.options_parameters.copy()
 
     def __init__(self, **kwargs):

@@ -281,6 +281,9 @@ class RuleApproval(Rule):
         [0. 3. 2.]
     """
 
+    full_name = 'Approval Voting'
+    abbreviation = 'AV'
+
     options_parameters = Rule.options_parameters.copy()
     options_parameters.update({
         'approval_threshold': {'allowed': type_checker.is_number, 'default': 0},

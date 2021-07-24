@@ -168,12 +168,14 @@ class VotingRuleTasks(list):
             ...     (
             ...         RuleIRV,
             ...         {'cm_option': 'exact', 'um_option': 'exact'},
-            ...         StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True)
+            ...         StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,
+            ...                           numerical_criteria=[])
             ...     ),
             ...     (
             ...         RuleCondorcetVtbIRV,
             ...         {'cm_option': 'very_slow', 'um_option': 'exact'},
-            ...         StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True)
+            ...         StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,
+            ...                           numerical_criteria=[])
             ...     )
             ... ])
             >>> print(voting_rule_tasks)
@@ -186,6 +188,7 @@ class VotingRuleTasks(list):
                     manipulation_criteria_c: None
                     result_criteria: None
                     utility_criteria: None
+                    numerical_criteria: None
                 voting_system: RuleCondorcetVtbIRV
                 options: {'cm_option': 'very_slow', 'um_option': 'exact'}
                 StudyRuleCriteria with:
@@ -194,6 +197,7 @@ class VotingRuleTasks(list):
                     manipulation_criteria_c: None
                     result_criteria: None
                     utility_criteria: None
+                    numerical_criteria: None
         """
         lines = []
         for (rule_class, options, study_rule_criteria) in self:
@@ -218,17 +222,20 @@ class VotingRuleTasks(list):
             ...     (
             ...         RuleIRV,
             ...         {'cm_option': 'fast', 'um_option': 'fast'},
-            ...         StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True)
+            ...         StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,
+            ...                           numerical_criteria=[])
             ...     ),
             ...     (
             ...         RuleIRV,
             ...         {'cm_option': 'exact', 'um_option': 'exact'},
-            ...         StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True)
+            ...         StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,
+            ...                           numerical_criteria=[])
             ...     ),
             ...     (
             ...         RuleCondorcetVtbIRV,
             ...         {'cm_option': 'very_slow', 'um_option': 'exact'},
-            ...         StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True)
+            ...         StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,
+            ...                           numerical_criteria=[])
             ...     )
             ... ])
             >>> voting_rule_tasks.remove_rule(RuleIRV)
@@ -242,6 +249,7 @@ class VotingRuleTasks(list):
                     manipulation_criteria_c: None
                     result_criteria: None
                     utility_criteria: None
+                    numerical_criteria: None
         """
         self[:] = [element for element in self if element[0] != rule_class]
 
@@ -264,13 +272,15 @@ class VotingRuleTasks(list):
             ...     (
             ...         RuleIRV,
             ...         {'cm_option': 'fast'},
-            ...         StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True)
+            ...         StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,
+            ...                           numerical_criteria=[])
             ...     ),
             ... ])
             >>> voting_rule_tasks.append_task(
             ...     RuleIRV,
             ...     {'cm_option': 'exact'},
-            ...     StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True)
+            ...     StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,
+            ...                       numerical_criteria=[])
             ... )
             >>> print(voting_rule_tasks)
             VotingRuleTasks with:
@@ -282,6 +292,7 @@ class VotingRuleTasks(list):
                     manipulation_criteria_c: None
                     result_criteria: None
                     utility_criteria: None
+                    numerical_criteria: None
                 voting_system: RuleIRV
                 options: {'cm_option': 'exact'}
                 StudyRuleCriteria with:
@@ -290,6 +301,7 @@ class VotingRuleTasks(list):
                     manipulation_criteria_c: None
                     result_criteria: None
                     utility_criteria: None
+                    numerical_criteria: None
         """
         if options is None:
             options = {}
@@ -306,11 +318,13 @@ class VotingRuleTasks(list):
         --------
             >>> voting_rule_tasks = VotingRuleTasks(
             ...     voting_systems=[RuleExhaustiveBallot, RuleIRV],
-            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True)
+            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,
+            ...                                           numerical_criteria=[])
             ... )
             >>> voting_rule_tasks_2 = VotingRuleTasks(
             ...     voting_systems=[RuleICRV, RuleCondorcetVtbIRV],
-            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_um_'], manipulation_only=True)
+            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_um_'], manipulation_only=True,
+            ...                                           numerical_criteria=[])
             ... )
             >>> voting_rule_tasks.extend(voting_rule_tasks_2)
             >>> print(voting_rule_tasks)
@@ -323,6 +337,7 @@ class VotingRuleTasks(list):
                     manipulation_criteria_c: None
                     result_criteria: None
                     utility_criteria: None
+                    numerical_criteria: None
                 voting_system: RuleIRV
                 options: {}
                 StudyRuleCriteria with:
@@ -331,6 +346,7 @@ class VotingRuleTasks(list):
                     manipulation_criteria_c: None
                     result_criteria: None
                     utility_criteria: None
+                    numerical_criteria: None
                 voting_system: RuleICRV
                 options: {}
                 StudyRuleCriteria with:
@@ -339,6 +355,7 @@ class VotingRuleTasks(list):
                     manipulation_criteria_c: None
                     result_criteria: None
                     utility_criteria: None
+                    numerical_criteria: None
                 voting_system: RuleCondorcetVtbIRV
                 options: {}
                 StudyRuleCriteria with:
@@ -347,6 +364,7 @@ class VotingRuleTasks(list):
                     manipulation_criteria_c: None
                     result_criteria: None
                     utility_criteria: None
+                    numerical_criteria: None
         """
         super().extend(iterable)
 
@@ -365,7 +383,11 @@ class VotingRuleTasks(list):
 
             >>> voting_rule_tasks = VotingRuleTasks(
             ...     voting_systems=[RuleExhaustiveBallot, RuleIRV, (RuleIRV, {'cm_option': 'exact'})],
-            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_', 'is_um_'], manipulation_only=True)
+            ...     study_rule_criteria=StudyRuleCriteria(
+            ...         manipulation_criteria=['is_cm_', 'is_um_'],
+            ...         manipulation_only=True,
+            ...         numerical_criteria=[]
+            ...     )
             ... )
             >>> voting_rule_tasks.remove_criterion(criterion='is_um_', rule_class=RuleIRV)
             >>> print(voting_rule_tasks)
@@ -379,6 +401,7 @@ class VotingRuleTasks(list):
                     manipulation_criteria_c: None
                     result_criteria: None
                     utility_criteria: None
+                    numerical_criteria: None
                 voting_system: RuleIRV
                 options: {}
                 StudyRuleCriteria with:
@@ -387,6 +410,7 @@ class VotingRuleTasks(list):
                     manipulation_criteria_c: None
                     result_criteria: None
                     utility_criteria: None
+                    numerical_criteria: None
                 voting_system: RuleIRV
                 options: {'cm_option': 'exact'}
                 StudyRuleCriteria with:
@@ -395,12 +419,17 @@ class VotingRuleTasks(list):
                     manipulation_criteria_c: None
                     result_criteria: None
                     utility_criteria: None
+                    numerical_criteria: None
 
         If `rule_class` is None (default), then `criterion` is removed for all voting rules:
 
             >>> voting_rule_tasks = VotingRuleTasks(
             ...     voting_systems=[RuleExhaustiveBallot, RuleIRV],
-            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_', 'is_um_'], manipulation_only=True)
+            ...     study_rule_criteria=StudyRuleCriteria(
+            ...         manipulation_criteria=['is_cm_', 'is_um_'],
+            ...         manipulation_only=True,
+            ...         numerical_criteria=[]
+            ...     )
             ... )
             >>> voting_rule_tasks.remove_criterion('is_um_')
             >>> print(voting_rule_tasks)
@@ -413,6 +442,7 @@ class VotingRuleTasks(list):
                     manipulation_criteria_c: None
                     result_criteria: None
                     utility_criteria: None
+                    numerical_criteria: None
                 voting_system: RuleIRV
                 options: {}
                 StudyRuleCriteria with:
@@ -421,6 +451,7 @@ class VotingRuleTasks(list):
                     manipulation_criteria_c: None
                     result_criteria: None
                     utility_criteria: None
+                    numerical_criteria: None
         """
         for (rc, options, study_rule_criteria) in self:
             if rule_class is None or rule_class == rc:
@@ -441,7 +472,8 @@ class VotingRuleTasks(list):
 
             >>> voting_rule_tasks = VotingRuleTasks(
             ...     voting_systems=[RuleExhaustiveBallot, RuleIRV, (RuleIRV, {'cm_option': 'exact'})],
-            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True)
+            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,
+            ...                                           numerical_criteria=[])
             ... )
             >>> voting_rule_tasks.append_manipulation_criterion(criterion='is_um_', rule_class=RuleIRV)
             >>> print(voting_rule_tasks)
@@ -454,6 +486,7 @@ class VotingRuleTasks(list):
                     manipulation_criteria_c: None
                     result_criteria: None
                     utility_criteria: None
+                    numerical_criteria: None
                 voting_system: RuleIRV
                 options: {}
                 StudyRuleCriteria with:
@@ -463,6 +496,7 @@ class VotingRuleTasks(list):
                     manipulation_criteria_c: None
                     result_criteria: None
                     utility_criteria: None
+                    numerical_criteria: None
                 voting_system: RuleIRV
                 options: {'cm_option': 'exact'}
                 StudyRuleCriteria with:
@@ -472,12 +506,14 @@ class VotingRuleTasks(list):
                     manipulation_criteria_c: None
                     result_criteria: None
                     utility_criteria: None
+                    numerical_criteria: None
 
         If `rule_class` is None (default), then add `criterion` for all voting rules:
 
             >>> voting_rule_tasks = VotingRuleTasks(
             ...     voting_systems=[RuleExhaustiveBallot, RuleIRV],
-            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True)
+            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,
+            ...                                           numerical_criteria=[])
             ... )
             >>> voting_rule_tasks.append_manipulation_criterion('is_um_')
             >>> print(voting_rule_tasks)
@@ -491,6 +527,7 @@ class VotingRuleTasks(list):
                     manipulation_criteria_c: None
                     result_criteria: None
                     utility_criteria: None
+                    numerical_criteria: None
                 voting_system: RuleIRV
                 options: {}
                 StudyRuleCriteria with:
@@ -500,10 +537,97 @@ class VotingRuleTasks(list):
                     manipulation_criteria_c: None
                     result_criteria: None
                     utility_criteria: None
+                    numerical_criteria: None
         """
         for (rc, options, study_rule_criteria) in self:
             if rule_class is None or rule_class == rc:
                 study_rule_criteria.append_manipulation_criterion(criterion)
+
+    def append_manipulation_criterion_c(self, criterion, rule_class=None):
+        """Add a manipulation criterion (candidates) for one or all voting rules.
+
+        Parameters
+        ----------
+        criterion : str
+        rule_class : class
+            Subclass of :class:`Rule`.
+
+        Examples
+        --------
+        Add `criterion` for all occurrences of `rule_class`:
+
+            >>> voting_rule_tasks = VotingRuleTasks(
+            ...     voting_systems=[RuleExhaustiveBallot, RuleIRV, (RuleIRV, {'cm_option': 'exact'})],
+            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,
+            ...                                           numerical_criteria=[])
+            ... )
+            >>> voting_rule_tasks.append_manipulation_criterion_c(criterion='candidates_cm_', rule_class=RuleIRV)
+            >>> print(voting_rule_tasks)
+            VotingRuleTasks with:
+                voting_system: RuleExhaustiveBallot
+                options: {}
+                StudyRuleCriteria with:
+                    manipulation_criteria:
+                        is_cm_
+                    manipulation_criteria_c: None
+                    result_criteria: None
+                    utility_criteria: None
+                    numerical_criteria: None
+                voting_system: RuleIRV
+                options: {}
+                StudyRuleCriteria with:
+                    manipulation_criteria:
+                        is_cm_
+                    manipulation_criteria_c:
+                        candidates_cm_
+                    result_criteria: None
+                    utility_criteria: None
+                    numerical_criteria: None
+                voting_system: RuleIRV
+                options: {'cm_option': 'exact'}
+                StudyRuleCriteria with:
+                    manipulation_criteria:
+                        is_cm_
+                    manipulation_criteria_c:
+                        candidates_cm_
+                    result_criteria: None
+                    utility_criteria: None
+                    numerical_criteria: None
+
+        If `rule_class` is None (default), then add `criterion` for all voting rules:
+
+            >>> voting_rule_tasks = VotingRuleTasks(
+            ...     voting_systems=[RuleExhaustiveBallot, RuleIRV],
+            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,
+            ...                                           numerical_criteria=[])
+            ... )
+            >>> voting_rule_tasks.append_manipulation_criterion_c('candidates_cm_')
+            >>> print(voting_rule_tasks)
+            VotingRuleTasks with:
+                voting_system: RuleExhaustiveBallot
+                options: {}
+                StudyRuleCriteria with:
+                    manipulation_criteria:
+                        is_cm_
+                    manipulation_criteria_c:
+                        candidates_cm_
+                    result_criteria: None
+                    utility_criteria: None
+                    numerical_criteria: None
+                voting_system: RuleIRV
+                options: {}
+                StudyRuleCriteria with:
+                    manipulation_criteria:
+                        is_cm_
+                    manipulation_criteria_c:
+                        candidates_cm_
+                    result_criteria: None
+                    utility_criteria: None
+                    numerical_criteria: None
+        """
+        for (rc, options, study_rule_criteria) in self:
+            if rule_class is None or rule_class == rc:
+                study_rule_criteria.append_manipulation_criterion_c(criterion)
 
     def append_result_criterion(self, criterion, rule_class=None):
         """Add a result criterion for one or all voting rules
@@ -520,7 +644,8 @@ class VotingRuleTasks(list):
 
             >>> voting_rule_tasks = VotingRuleTasks(
             ...     voting_systems=[RuleExhaustiveBallot, RuleIRV, (RuleIRV, {'cm_option': 'exact'})],
-            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True)
+            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,
+            ...                                           numerical_criteria=[])
             ... )
             >>> voting_rule_tasks.append_result_criterion(criterion='w_is_condorcet_admissible_', rule_class=RuleIRV)
             >>> print(voting_rule_tasks)
@@ -533,6 +658,7 @@ class VotingRuleTasks(list):
                     manipulation_criteria_c: None
                     result_criteria: None
                     utility_criteria: None
+                    numerical_criteria: None
                 voting_system: RuleIRV
                 options: {}
                 StudyRuleCriteria with:
@@ -542,6 +668,7 @@ class VotingRuleTasks(list):
                     result_criteria:
                         w_is_condorcet_admissible_
                     utility_criteria: None
+                    numerical_criteria: None
                 voting_system: RuleIRV
                 options: {'cm_option': 'exact'}
                 StudyRuleCriteria with:
@@ -551,12 +678,14 @@ class VotingRuleTasks(list):
                     result_criteria:
                         w_is_condorcet_admissible_
                     utility_criteria: None
+                    numerical_criteria: None
 
         If `rule_class` is None (default), then add `criterion` for all voting rules:
 
             >>> voting_rule_tasks = VotingRuleTasks(
             ...     voting_systems=[RuleExhaustiveBallot, RuleIRV],
-            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True)
+            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,
+            ...                                           numerical_criteria=[])
             ... )
             >>> voting_rule_tasks.append_result_criterion(criterion='w_is_condorcet_admissible_')
             >>> print(voting_rule_tasks)
@@ -570,6 +699,7 @@ class VotingRuleTasks(list):
                     result_criteria:
                         w_is_condorcet_admissible_
                     utility_criteria: None
+                    numerical_criteria: None
                 voting_system: RuleIRV
                 options: {}
                 StudyRuleCriteria with:
@@ -579,6 +709,7 @@ class VotingRuleTasks(list):
                     result_criteria:
                         w_is_condorcet_admissible_
                     utility_criteria: None
+                    numerical_criteria: None
         """
         for (rc, options, study_rule_criteria) in self:
             if rule_class is None or rule_class == rc:
@@ -605,7 +736,8 @@ class VotingRuleTasks(list):
 
             >>> voting_rule_tasks = VotingRuleTasks(
             ...     voting_systems=[RuleExhaustiveBallot, RuleIRV, (RuleIRV, {'cm_option': 'exact'})],
-            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True)
+            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,
+            ...                                           numerical_criteria=[])
             ... )
             >>> voting_rule_tasks.append_utility_criterion(
             ...     criterion='total_utility_w_', func=np.sum, name='total_u_sum', rule_class=RuleIRV)
@@ -619,6 +751,7 @@ class VotingRuleTasks(list):
                     manipulation_criteria_c: None
                     result_criteria: None
                     utility_criteria: None
+                    numerical_criteria: None
                 voting_system: RuleIRV
                 options: {}
                 StudyRuleCriteria with:
@@ -628,6 +761,7 @@ class VotingRuleTasks(list):
                     result_criteria: None
                     utility_criteria:
                         ('total_utility_w_', <function sum at ...>, 'total_u_sum')
+                    numerical_criteria: None
                 voting_system: RuleIRV
                 options: {'cm_option': 'exact'}
                 StudyRuleCriteria with:
@@ -637,12 +771,14 @@ class VotingRuleTasks(list):
                     result_criteria: None
                     utility_criteria:
                         ('total_utility_w_', <function sum at ...>, 'total_u_sum')
+                    numerical_criteria: None
 
         If `rule_class` is None (default), then add `criterion` for all voting rules:
 
             >>> voting_rule_tasks = VotingRuleTasks(
             ...     voting_systems=[RuleExhaustiveBallot, RuleIRV],
-            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True)
+            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,
+            ...                                           numerical_criteria=[])
             ... )
             >>> voting_rule_tasks.append_utility_criterion(
             ...     criterion='total_utility_w_', func=np.sum, name='total_u_sum')
@@ -657,6 +793,7 @@ class VotingRuleTasks(list):
                     result_criteria: None
                     utility_criteria:
                         ('total_utility_w_', <function sum at ...>, 'total_u_sum')
+                    numerical_criteria: None
                 voting_system: RuleIRV
                 options: {}
                 StudyRuleCriteria with:
@@ -666,10 +803,97 @@ class VotingRuleTasks(list):
                     result_criteria: None
                     utility_criteria:
                         ('total_utility_w_', <function sum at ...>, 'total_u_sum')
+                    numerical_criteria: None
         """
         for (rc, options, study_rule_criteria) in self:
             if rule_class is None or rule_class == rc:
                 study_rule_criteria.append_utility_criterion(criterion, func, name)
+
+    def append_numerical_criterion(self, criterion, rule_class=None):
+        """Add a numerical criterion for one or all voting rules
+
+        Parameters
+        ----------
+        criterion : str
+        rule_class : class
+            Subclass of :class:`Rule`.
+
+        Examples
+        --------
+        Add `criterion` for all occurrences of `rule_class`:
+
+            >>> voting_rule_tasks = VotingRuleTasks(
+            ...     voting_systems=[RuleExhaustiveBallot, RuleIRV, (RuleIRV, {'cm_option': 'exact'})],
+            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,
+            ...                                           numerical_criteria=[])
+            ... )
+            >>> voting_rule_tasks.append_numerical_criterion(criterion='nb_candidates_cm_', rule_class=RuleIRV)
+            >>> print(voting_rule_tasks)
+            VotingRuleTasks with:
+                voting_system: RuleExhaustiveBallot
+                options: {}
+                StudyRuleCriteria with:
+                    manipulation_criteria:
+                        is_cm_
+                    manipulation_criteria_c: None
+                    result_criteria: None
+                    utility_criteria: None
+                    numerical_criteria: None
+                voting_system: RuleIRV
+                options: {}
+                StudyRuleCriteria with:
+                    manipulation_criteria:
+                        is_cm_
+                    manipulation_criteria_c: None
+                    result_criteria: None
+                    utility_criteria: None
+                    numerical_criteria:
+                        nb_candidates_cm_
+                voting_system: RuleIRV
+                options: {'cm_option': 'exact'}
+                StudyRuleCriteria with:
+                    manipulation_criteria:
+                        is_cm_
+                    manipulation_criteria_c: None
+                    result_criteria: None
+                    utility_criteria: None
+                    numerical_criteria:
+                        nb_candidates_cm_
+
+        If `rule_class` is None (default), then add `criterion` for all voting rules:
+
+            >>> voting_rule_tasks = VotingRuleTasks(
+            ...     voting_systems=[RuleExhaustiveBallot, RuleIRV],
+            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,
+            ...                                           numerical_criteria=[])
+            ... )
+            >>> voting_rule_tasks.append_numerical_criterion(criterion='nb_candidates_cm_')
+            >>> print(voting_rule_tasks)
+            VotingRuleTasks with:
+                voting_system: RuleExhaustiveBallot
+                options: {}
+                StudyRuleCriteria with:
+                    manipulation_criteria:
+                        is_cm_
+                    manipulation_criteria_c: None
+                    result_criteria: None
+                    utility_criteria: None
+                    numerical_criteria:
+                        nb_candidates_cm_
+                voting_system: RuleIRV
+                options: {}
+                StudyRuleCriteria with:
+                    manipulation_criteria:
+                        is_cm_
+                    manipulation_criteria_c: None
+                    result_criteria: None
+                    utility_criteria: None
+                    numerical_criteria:
+                        nb_candidates_cm_
+        """
+        for (rc, options, study_rule_criteria) in self:
+            if rule_class is None or rule_class == rc:
+                study_rule_criteria.append_numerical_criterion(criterion)
 
     def remove_option(self, option, rule_class=None):
         """Remove an option and its value for one or all voting rules
@@ -689,7 +913,8 @@ class VotingRuleTasks(list):
             ...         (RuleExhaustiveBallot, {'cm_option': 'exact'}),
             ...         (RuleIRV, {'cm_option': 'exact'})
             ...     ],
-            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True)
+            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,
+            ...                                           numerical_criteria=[])
             ... )
             >>> voting_rule_tasks.remove_option(option='cm_option', rule_class=RuleIRV)
             >>> print(voting_rule_tasks)
@@ -702,6 +927,7 @@ class VotingRuleTasks(list):
                     manipulation_criteria_c: None
                     result_criteria: None
                     utility_criteria: None
+                    numerical_criteria: None
                 voting_system: RuleIRV
                 options: {}
                 StudyRuleCriteria with:
@@ -710,6 +936,7 @@ class VotingRuleTasks(list):
                     manipulation_criteria_c: None
                     result_criteria: None
                     utility_criteria: None
+                    numerical_criteria: None
 
         This means that from now on, `RuleIRV` will use its default value for `cm_option`.
 
@@ -720,7 +947,8 @@ class VotingRuleTasks(list):
             ...         (RuleExhaustiveBallot, {'cm_option': 'exact'}),
             ...         (RuleIRV, {'cm_option': 'exact'})
             ...     ],
-            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True)
+            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,
+            ...                                           numerical_criteria=[])
             ... )
             >>> voting_rule_tasks.remove_option(option='cm_option')
             >>> print(voting_rule_tasks)
@@ -733,6 +961,7 @@ class VotingRuleTasks(list):
                     manipulation_criteria_c: None
                     result_criteria: None
                     utility_criteria: None
+                    numerical_criteria: None
                 voting_system: RuleIRV
                 options: {}
                 StudyRuleCriteria with:
@@ -741,6 +970,7 @@ class VotingRuleTasks(list):
                     manipulation_criteria_c: None
                     result_criteria: None
                     utility_criteria: None
+                    numerical_criteria: None
         """
         for (rc, options, study_rule_criteria) in self:
             if rule_class is None or rule_class == rc:
@@ -764,7 +994,8 @@ class VotingRuleTasks(list):
 
             >>> voting_rule_tasks = VotingRuleTasks(
             ...     voting_systems=[RuleExhaustiveBallot, RuleIRV],
-            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True)
+            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,
+            ...                                           numerical_criteria=[])
             ... )
             >>> voting_rule_tasks.set_option('cm_option', 'exact', rule_class=RuleIRV)
             >>> print(voting_rule_tasks)
@@ -777,6 +1008,7 @@ class VotingRuleTasks(list):
                     manipulation_criteria_c: None
                     result_criteria: None
                     utility_criteria: None
+                    numerical_criteria: None
                 voting_system: RuleIRV
                 options: {'cm_option': 'exact'}
                 StudyRuleCriteria with:
@@ -785,12 +1017,14 @@ class VotingRuleTasks(list):
                     manipulation_criteria_c: None
                     result_criteria: None
                     utility_criteria: None
+                    numerical_criteria: None
 
         If `rule_class` is None (default), do this for all voting rules:
 
             >>> voting_rule_tasks = VotingRuleTasks(
             ...     voting_systems=[RuleExhaustiveBallot, RuleIRV],
-            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True)
+            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,
+            ...                                           numerical_criteria=[])
             ... )
             >>> voting_rule_tasks.set_option('cm_option', 'exact')
             >>> print(voting_rule_tasks)
@@ -803,6 +1037,7 @@ class VotingRuleTasks(list):
                     manipulation_criteria_c: None
                     result_criteria: None
                     utility_criteria: None
+                    numerical_criteria: None
                 voting_system: RuleIRV
                 options: {'cm_option': 'exact'}
                 StudyRuleCriteria with:
@@ -811,6 +1046,7 @@ class VotingRuleTasks(list):
                     manipulation_criteria_c: None
                     result_criteria: None
                     utility_criteria: None
+                    numerical_criteria: None
         """
         for (rc, options, study_rule_criteria) in self:
             if rule_class is None or rule_class == rc:

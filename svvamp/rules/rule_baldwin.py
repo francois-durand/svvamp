@@ -280,6 +280,9 @@ class RuleBaldwin(Rule):
     Jessica Davies, George Katsirelos, Nina Narodytska, Toby Walsh and Lirong Xia, 2014.
     """
 
+    full_name = 'Baldwin'
+    abbreviation = 'Bal'
+
     options_parameters = Rule.options_parameters.copy()
     options_parameters['icm_option'] = {'allowed': ['exact'], 'default': 'exact'}
 

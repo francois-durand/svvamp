@@ -282,6 +282,9 @@ class RuleBucklin(Rule):
     Michael Zuckerman, Ariel D. Procaccia, Vincent Conitzer and Jeffrey S. Rosenschein, 2009.
     """
 
+    full_name = 'Bucklin'
+    abbreviation = 'Buc'
+
     options_parameters = Rule.options_parameters.copy()
     options_parameters.update({
         'im_option': {'allowed': ['exact'], 'default': 'exact'},

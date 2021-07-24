@@ -155,7 +155,8 @@ class StudyProfileCriteria():
                 'borda_score_c_rk',
                 'borda_score_c_ut',
                 'total_utility_c',
-                'mean_utility_c'
+                'mean_utility_c',
+                'relative_social_welfare_c',
             ]
         self.array_criteria = array_criteria
         if matrix_criteria is None:

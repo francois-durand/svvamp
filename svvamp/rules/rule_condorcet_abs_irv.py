@@ -303,6 +303,9 @@ class RuleCondorcetAbsIRV(Rule):
     Fabien Mathieu and Ludovic Noirie, 2014.
     """
 
+    full_name = 'Absolute-Condorcet IRV'
+    abbreviation = 'ACIRV'
+
     options_parameters = Rule.options_parameters.copy()
     options_parameters.update({
         'cm_option': {'allowed': {'fast', 'slow', 'very_slow', 'exact'}, 'default': 'fast'},

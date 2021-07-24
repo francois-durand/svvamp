@@ -1736,6 +1736,32 @@ class Profile(my_log.MyLog):
         self.mylog("Compute total_utility_std", 1)
         return np.std(self.total_utility_c, ddof=0)
 
+    # %% Relative social welfare
+
+    @cached_property
+    def relative_social_welfare_c(self):
+        """1d array of numbers. ``relative_social_welfare_c[c]`` is equal to ``total_utility_c[c]``, but renormalized
+        so that the minimum is 0 and the maximum is 1.
+
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_ut=[[5, 1, 2], [4, 10, 1]])
+            >>> profile.relative_social_welfare_c
+            array([0.75, 1.  , 0.  ])
+
+        By convention, if all candidates have the same social welfare, then their relative social welfare is 1:
+
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_ut=[[2, 1, 1], [1, 2, 2]])
+            >>> profile.relative_social_welfare_c
+            array([1, 1, 1])
+        """
+        self.mylog("Compute relative social welfare of candidates", 1)
+        if self.total_utility_min == self.total_utility_max:
+            return np.ones(self.total_utility_c.shape, dtype=self.total_utility_c.dtype)
+        return (self.total_utility_c - self.total_utility_min) / (self.total_utility_max - self.total_utility_min)
+
     # %% Mean utilities
 
     @cached_property

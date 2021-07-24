@@ -45,6 +45,9 @@ class RuleSplitCycle(Rule):
         1
     """
 
+    full_name = 'Split Cycle'
+    abbreviation = 'SC'
+
     options_parameters = Rule.options_parameters.copy()
     options_parameters['icm_option'] = {'allowed': ['exact'], 'default': 'exact'}
 

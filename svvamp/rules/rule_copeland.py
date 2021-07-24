@@ -60,6 +60,9 @@ class RuleCopeland(Rule):
         0
     """
 
+    full_name = 'Copeland'
+    abbreviation = 'Cop'
+
     options_parameters = Rule.options_parameters.copy()
     options_parameters['icm_option'] = {'allowed': ['exact'], 'default': 'exact'}
 

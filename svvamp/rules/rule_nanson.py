@@ -282,6 +282,9 @@ class RuleNanson(Rule):
     Jessica Davies, George Katsirelos, Nina Narodytska, Toby Walsh and Lirong Xia, 2014.
     """
 
+    full_name = 'Nanson'
+    abbreviation = 'Nan'
+
     options_parameters = Rule.options_parameters.copy()
     options_parameters['icm_option'] = {'allowed': ['exact'], 'default': 'exact'}
 

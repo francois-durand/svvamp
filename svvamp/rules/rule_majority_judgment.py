@@ -320,6 +320,9 @@ class RuleMajorityJudgment(Rule):
     Majority Judgment : Measuring, Ranking, and Electing. Michel Balinski and Rida Laraki, 2010.
     """
 
+    full_name = 'Majority Judgment'
+    abbreviation = 'MJ'
+
     options_parameters = Rule.options_parameters.copy()
     options_parameters.update({
         'max_grade': {'allowed': np.isfinite, 'default': 1},

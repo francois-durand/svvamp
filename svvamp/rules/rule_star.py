@@ -93,6 +93,9 @@ class RuleSTAR(Rule):
     * :meth:`is_cm_`, :meth:`is_icm_`, :meth:`is_im_`, :meth:`is_tm_`, :meth:`is_um_`: Exact in polynomial time.
     """
 
+    full_name = 'Scoring Then Automatic Runoff'
+    abbreviation = 'STAR'
+
     options_parameters = Rule.options_parameters.copy()
     options_parameters.update({
         'max_grade': {'allowed': np.isfinite, 'default': 1},

@@ -320,6 +320,9 @@ class RuleSchulze(Rule):
     Walsh, 2013.
     """
 
+    full_name = 'Schulze'
+    abbreviation = 'Sch'
+
     options_parameters = Rule.options_parameters.copy()
     options_parameters.update({
         'im_option': {'allowed': ['fast', 'exact'], 'default': 'fast'},

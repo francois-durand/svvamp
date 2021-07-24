@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+import itertools
 import random
 import numpy as np
 from svvamp.utils.constants import OPTIONS
@@ -26,7 +27,8 @@ from svvamp.utils.util_cache import cached_property, DeleteCacheMixin
 from svvamp.utils import my_log, type_checker
 from svvamp.utils.printing import printm, print_title, print_big_title
 from svvamp.utils.misc import compute_next_subset_with_w, compute_next_borda_clever
-from svvamp.utils.pseudo_bool import pseudo_bool, neginf_to_nan, neginf_to_zero, equal_true, equal_false
+from svvamp.utils.pseudo_bool import pseudo_bool, neginf_to_nan, neginf_to_zero, equal_true, equal_false, \
+    pseudo_bool_not
 from svvamp.preferences.profile import Profile
 from svvamp.preferences.profile_subset_candidates import ProfileSubsetCandidates
 
@@ -603,6 +605,11 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     def mean_utility_w_(self):
         """Float. The mean utility for the sincere winner :attr:`w_`."""
         return self.profile_.mean_utility_c[self.w_]
+
+    @cached_property
+    def relative_social_welfare_w_(self):
+        """Float. The relative social welfare for the sincere winner :attr:`w_`."""
+        return self.profile_.relative_social_welfare_c[self.w_]
 
     # %% Condorcet efficiency and variants
 
@@ -2348,17 +2355,17 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         """Do the main work in UM loop for candidate ``c``, with option 'exact', for a voting system based only on
         strict rankings. Must decide ``_candidates_um[c]`` (to True, False or NaN). Do not update ``_is_um``.
         """
-        preferences_borda_test = np.copy(self.profile_.preferences_borda_rk)
-        ballot = np.array(range(self.profile_.n_c))
-        ballot_favorite = self.profile_.n_c - 1
-        while ballot is not None:  # Loop on possible ballots
+        preferences_rk_test = np.copy(self.profile_.preferences_rk)
+        base_ballot = [c] + list([i for i in range(self.profile_.n_c) if i != c])  # Put c first for the first try...
+        for ballot in itertools.permutations(base_ballot):
             self.mylogv("UM: Ballot =", ballot, 3)
-            preferences_borda_test[self.v_wants_to_help_c_[:, c], :] = ballot
-            w_test = self._copy(profile=Profile(preferences_ut=preferences_borda_test)).w_
+            preferences_rk_test[self.v_wants_to_help_c_[:, c], :] = ballot
+            w_test = self._copy(
+                profile=Profile(preferences_rk=preferences_rk_test, sort_voters=False)
+            ).w_
             if w_test == c:
                 self._candidates_um[c] = True
                 return
-            ballot, ballot_favorite = compute_next_borda_clever(ballot, ballot_favorite, self.profile_.n_c)
         else:
             self._candidates_um[c] = False
 
@@ -3365,6 +3372,71 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             return
         is_quick_escape = self._cm_main_work_c_(c, optimize_bounds)
         self._cm_conclude_c_(c, is_quick_escape)
+
+    # %% Indicators with manipulation
+
+    @cached_property
+    def elects_condorcet_winner_rk_even_with_cm_(self):
+        """bool : True iff there is a Condorcet winner, she is elected by sincere voting and it is not CM."""
+        if self.profile_.exists_condorcet_winner_rk and self.w_is_condorcet_winner_rk_:
+            return pseudo_bool_not(self.is_cm_)
+        else:
+            return False
+
+    @cached_property
+    def nb_candidates_cm_(self):
+        """Number of candidates who can benefit from CM."""
+        inf = np.sum(self.candidates_cm_ == True)
+        sup = inf + np.sum(np.isnan(self.candidates_cm_))
+        return inf, sup
+
+    @cached_property
+    def worst_relative_welfare_with_cm_(self):
+        """Worst relative social welfare (sincere winner or candidate who can benefit from CM)."""
+        possible_winners = self.candidates_cm_.copy()
+        possible_winners[self.w_] = True
+        inf = np.min(
+            self.profile_.relative_social_welfare_c[(possible_winners == True) | np.isnan(possible_winners)]
+        )
+        sup = np.min(
+            self.profile_.relative_social_welfare_c[possible_winners == True]
+        )
+        return inf, sup
+
+    @cached_property
+    def cm_power_index_(self):
+        """CM power index. For each candidate c != w, it is n_s / x_c (where n_s is the number of sincere voters
+        and `x_c` the minimal number of manipulators that can make `c` win (cf :attr:`necessary_coalition_size_cm_`).
+        Globally, it is the max over the candidates c != w.
+        """
+        n_sincere_c = np.sum(np.logical_not(self.v_wants_to_help_c_), axis=0)
+        inf = np.max(
+            n_sincere_c[self.sufficient_coalition_size_cm_ != 0]
+            / self.sufficient_coalition_size_cm_[self.sufficient_coalition_size_cm_ != 0]
+        )
+        necessary_coalition_size_cm = np.maximum(self.necessary_coalition_size_cm_.copy(), 1)
+        necessary_coalition_size_cm[self.w_] = 0
+        try:
+            sup = np.max(
+                n_sincere_c[necessary_coalition_size_cm != 0]
+                / necessary_coalition_size_cm[necessary_coalition_size_cm != 0]
+            )
+        except ValueError:
+            print(n_sincere_c)
+            print(self.necessary_coalition_size_cm_)
+            raise ValueError
+        return inf, sup
+
+    @cached_property
+    def is_tm_or_um_(self):
+        if equal_true(self.is_tm_) or equal_true(self.is_um_):
+            return True
+        elif np.isnan(self.is_tm_) or np.isnan(self.is_um_):
+            return np.nan
+        else:
+            return False
+
+    # %% Demo
 
     def demo_manipulation_(self, log_depth=1):
         """Demonstrate the manipulation methods of :class:`Rule` class.

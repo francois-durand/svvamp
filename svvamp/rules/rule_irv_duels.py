@@ -290,6 +290,9 @@ class RuleIRVDuels(Rule):
     :class:`RuleCondorcetVtbIRV`.
     """
 
+    full_name = 'IRV-Duels'
+    abbreviation = 'IRVD'
+
     options_parameters = Rule.options_parameters.copy()
     options_parameters['icm_option'] = {'allowed': ['exact'], 'default': 'exact'}
 

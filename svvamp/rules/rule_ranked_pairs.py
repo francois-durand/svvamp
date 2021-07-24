@@ -298,6 +298,9 @@ class RuleRankedPairs(Rule):
     Lirong Xia, 2012.
     """
 
+    full_name = 'Ranked Pairs'
+    abbreviation = 'RP'
+
     options_parameters = Rule.options_parameters.copy()
     options_parameters['icm_option'] = {'allowed': ['exact'], 'default': 'exact'}
 

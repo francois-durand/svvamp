@@ -286,6 +286,9 @@ class RuleCoombs(Rule):
     'On The Complexity of Manipulating Elections', Tom Coleman and Vanessa Teague, 2007.
     """
 
+    full_name = 'Coombs'
+    abbreviation = 'Coo'
+
     options_parameters = Rule.options_parameters.copy()
     options_parameters.update({
         'im_option': {'allowed': ['fast', 'exact'], 'default': 'fast'},

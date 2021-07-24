@@ -287,6 +287,9 @@ class RuleMaximin(Rule):
     Jeffrey S. Rosenschein, 2011.
     """
 
+    full_name = 'Maximin'
+    abbreviation = 'Max'
+
     options_parameters = Rule.options_parameters.copy()
     options_parameters.update({
         'im_option': {'allowed': ['exact'], 'default': 'exact'},

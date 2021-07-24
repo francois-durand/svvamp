@@ -297,6 +297,9 @@ class RuleExhaustiveBallot(Rule):
     # Exceptionally, for this voting system, we establish a pointer from the Profile object, so that the
     # manipulation results can be used by IRV.
 
+    full_name = 'Exhaustive Ballot'
+    abbreviation = 'EB'
+
     options_parameters = Rule.options_parameters.copy()
     options_parameters.update({
         'um_option': {'allowed': {'fast', 'exact'}, 'default': 'fast'},

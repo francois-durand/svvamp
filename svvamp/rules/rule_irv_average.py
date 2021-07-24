@@ -181,6 +181,9 @@ class RuleIRVAverage(Rule):
     * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
     """
 
+    full_name = 'IRV-Average'
+    abbreviation = 'IRVA'
+
     options_parameters = Rule.options_parameters.copy()
     options_parameters['cm_option'] = {'allowed': {'fast', 'slow', 'very_slow', 'exact'}, 'default': 'fast'}
 

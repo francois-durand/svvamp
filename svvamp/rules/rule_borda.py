@@ -284,6 +284,9 @@ class RuleBorda(Rule):
     Jessica Davies, George Katsirelos, Nina Narodytska, Toby Walsh and Lirong Xia, 2014.
     """
 
+    full_name = 'Borda'
+    abbreviation = 'Bor'
+
     options_parameters = Rule.options_parameters.copy()
     options_parameters.update({
         'im_option': {'allowed': ['exact'], 'default': 'exact'},

@@ -300,6 +300,9 @@ class RuleIRV(Rule):
     # Exceptionally, for this voting system, we establish a pointer from the Profile object, so that the
     # manipulation results can be used by Condorcet-IRV.
 
+    full_name = 'Instant-Runoff Voting'
+    abbreviation = 'IRV'
+
     options_parameters = Rule.options_parameters.copy()
     options_parameters.update({
         'um_option': {'allowed': {'fast', 'exact'}, 'default': 'fast'},
