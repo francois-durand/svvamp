@@ -4,6 +4,49 @@
 History
 =======
 
+------------------------
+0.5.0 (2021-07-24): Meta
+------------------------
+
+* This release focuses on "meta" tools that make the simulations easier.
+
+  * Add ``StudyProfileCriteria``: a set of criteria to study for the simulator about the profiles.
+  * Add ``StudyRuleCriteria``: a set of criteria to study for the simulator about one or several voting rules.
+  * Add ``VotingRuleTasks``: a set of tasks for the simulator, i.e. which voting rules with which options and which
+    criteria about them.
+  * Add ``ExperimentAnalyzer``: a simulator designed to study small variations of a given profile.
+
+* New features for ``Rule``:
+
+  * Add ``check_option_allowed``: check whether a pair (option, value) is allowed.
+  * Add ``cm_power_index_``: CM power index.
+  * Add ``elects_condorcet_winner_rk_even_with_cm_``: True if there is a Condorcet winner, she is elected by sincere
+    voting and it is not CM.
+  * Add ``is_tm_or_um_``: True iff the profile is TM or UM.
+  * Add ``log_``: log corresponding to a particular manipulation method.
+  * Add ``nb_candidates_cm_``: number of candidates who can benefit from CM.
+  * Add ``relative_social_welfare_w_``: relative social welfare of the winner.
+  * Add ``worst_relative_welfare_with_cm_``: worst relative social welfare (sincere winner or candidate who can benefit
+    from CM).
+  * Each rule now has two class attributes ``full_name`` (name of the rule) and ``abbreviation`` (abbreviation of the
+    name of the rule). For example, for ``RuleApproval``, it is ``Approval Voting`` and ``AV`` respectively.
+  * ``options_parameters`` is now a class attribute.
+  * Accelerate the generic brute-force algorithm for exact UM when the rule is based on rankings.
+
+* New features for ``Profile``:
+
+  * Add property ``relative_social_welfare_c``: relative social welfare of each candidate.
+  * ``preferences_rk``, ``preferences_ut``, ``preferences_borda_rk`` and ``preferences_borda_ut`` are now properties.
+
+* Minor changes:
+
+  * ``GeneratorProfile`` and all its subclasses now have a parameter ``sort_voters``, which is simply passed to
+    :class:`Profile` when creating each profile.
+  * ``ProfileGeneratorNoisedFile`` is renamed to ``GeneratorProfileNoisedFile``, for the sake of consistency with
+    other profile generators.
+  * ``RULE_CLASSES`` is renamed to ``ALL_RULE_CLASSES``.
+  * Add utility functions ``indent`` and ``pseudo_bool_not``.
+
 ---------------------------------
 0.4.3 (2021-07-21): Accelerations
 ---------------------------------
