@@ -35,6 +35,8 @@ class GeneratorProfileSpheroid(GeneratorProfile):
         Number of candidates.
     stretching : number
         Number between 0 and ``numpy.inf`` (both included).
+    sort_voters : bool
+        This argument is passed to :class:`Profile`.
 
     Notes
     -----
@@ -77,12 +79,12 @@ class GeneratorProfileSpheroid(GeneratorProfile):
         (10, 3)
     """
 
-    def __init__(self, n_v, n_c, stretching=1):
+    def __init__(self, n_v, n_c, stretching=1, sort_voters=True):
         self.n_v = n_v
         self.n_c = n_c
         self.stretching = stretching
         self.log_creation = ['Spheroid', n_c, n_v, 'Stretching', stretching]
-        super().__init__()
+        super().__init__(sort_voters=sort_voters)
 
     def __call__(self):
         # Step 1: spherical distribution

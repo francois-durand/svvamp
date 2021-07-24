@@ -263,15 +263,20 @@ class RulePlurality(Rule):
     * :meth:`is_cm_`, :meth:`is_icm_`, :meth:`is_im_`, :meth:`is_tm_`, :meth:`is_um_`: Exact in polynomial time.
     """
 
+    full_name = 'Plurality'
+    abbreviation = 'Plu'
+
+    options_parameters = Rule.options_parameters.copy()
+    options_parameters.update({
+        'im_option': {'allowed': ['exact'], 'default': 'exact'},
+        'tm_option': {'allowed': ['exact'], 'default': 'exact'},
+        'um_option': {'allowed': ['exact'], 'default': 'exact'},
+        'icm_option': {'allowed': ['exact'], 'default': 'exact'},
+        'cm_option': {'allowed': ['exact'], 'default': 'exact'}
+    })
+
     def __init__(self, **kwargs):
         super().__init__(
-            options_parameters={
-                'im_option': {'allowed': ['exact'], 'default': 'exact'},
-                'tm_option': {'allowed': ['exact'], 'default': 'exact'},
-                'um_option': {'allowed': ['exact'], 'default': 'exact'},
-                'icm_option': {'allowed': ['exact'], 'default': 'exact'},
-                'cm_option': {'allowed': ['exact'], 'default': 'exact'}
-            },
             with_two_candidates_reduces_to_plurality=True, is_based_on_rk=True,
             precheck_tm=False, precheck_um=False, precheck_icm=False,
             log_identity="PLURALITY", **kwargs

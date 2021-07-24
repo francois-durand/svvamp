@@ -35,6 +35,8 @@ class GeneratorProfileLadder(GeneratorProfile):
         Number of candidates.
     n_rungs : int
         Number of rungs of the ladder.
+    sort_voters : bool
+        This argument is passed to :class:`Profile`.
 
     Notes
     -----
@@ -52,12 +54,12 @@ class GeneratorProfileLadder(GeneratorProfile):
         (10, 3)
     """
 
-    def __init__(self, n_v, n_c, n_rungs):
+    def __init__(self, n_v, n_c, n_rungs, sort_voters=True):
         self.n_v = n_v
         self.n_c = n_c
         self.n_rungs = n_rungs
         self.log_creation = ['Ladder', n_c, n_v, 'Number of rungs', n_rungs]
-        super().__init__()
+        super().__init__(sort_voters=sort_voters)
 
     def __call__(self):
         return Profile(

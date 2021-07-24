@@ -127,44 +127,37 @@ class Profile(my_log.MyLog):
         # Preference arrays (except preferences_borda_ut, which is not needed at this point).
         if preferences_rk is None:
             preferences_rk = preferences_ut_to_preferences_rk(preferences_ut)
-        self.preferences_rk = np.array(preferences_rk)
-        """2d array of integers. ``preferences_rk[v, k]`` is the candidate at rank ``k`` for voter ``v``. For
-        example, ``preferences_rk[v, 0]`` is ``v``'s preferred candidate.
-        """
-        self.preferences_borda_rk = preferences_rk_to_preferences_borda_rk(self.preferences_rk)
-        """2d array of integers. ``preferences_borda_rk[v, c]`` gains 1 point for each candidate ``d`` such that
-        voter ``v`` ranks ``c`` before ``d``. So, these Borda scores are between ``0`` and ``C - 1``.
-        """
+        self._preferences_rk = np.array(preferences_rk)
+        self._preferences_borda_rk = preferences_rk_to_preferences_borda_rk(self._preferences_rk)
         if preferences_ut is None:
-            preferences_ut = self.preferences_borda_rk
-        self.preferences_ut = np.array(preferences_ut)
-        """2d array of floats. ``preferences_ut[v, c]`` is the utility of  candidate ``c`` as seen by voter ``v``."""
+            preferences_ut = self._preferences_borda_rk
+        self._preferences_ut = np.array(preferences_ut)
 
         # Number of voters and candidates
         self.n_v = None
         """int : Number of voters."""
         self.n_c = None
         """int : Number of candidates."""
-        self.n_v, self.n_c = self.preferences_ut.shape
+        self.n_v, self.n_c = self._preferences_ut.shape
         if self.n_v < 2 or self.n_c < 2:
             raise ValueError("A population must have at least 2 voters and 2 candidates.")
 
         if sort_voters:
-            self._preferences_borda_ut = preferences_ut_to_preferences_borda_ut(self.preferences_ut)
+            self._preferences_borda_ut = preferences_ut_to_preferences_borda_ut(self._preferences_ut)
             # Sort voters by weak order (deducted from utility)
             list_borda_ut = self._preferences_borda_ut.tolist()
             # noinspection PyTypeChecker,PyUnresolvedReferences
             indexes = sorted(range(len(list_borda_ut)), key=list_borda_ut.__getitem__)
-            self.preferences_rk = self.preferences_rk[indexes, ::]
-            self.preferences_ut = self.preferences_ut[indexes, ::]
-            self.preferences_borda_rk = self.preferences_borda_rk[indexes, ::]
+            self._preferences_rk = self._preferences_rk[indexes, ::]
+            self._preferences_ut = self._preferences_ut[indexes, ::]
+            self._preferences_borda_rk = self._preferences_borda_rk[indexes, ::]
             self._preferences_borda_ut = self._preferences_borda_ut[indexes, ::]
             # Sort voters by strict ranking
-            list_rankings = self.preferences_rk.tolist()
+            list_rankings = self._preferences_rk.tolist()
             indexes = sorted(range(len(list_rankings)), key=list_rankings.__getitem__)
-            self.preferences_rk = self.preferences_rk[indexes, ::]
-            self.preferences_ut = self.preferences_ut[indexes, ::]
-            self.preferences_borda_rk = self.preferences_borda_rk[indexes, ::]
+            self._preferences_rk = self._preferences_rk[indexes, ::]
+            self._preferences_ut = self._preferences_ut[indexes, ::]
+            self._preferences_borda_rk = self._preferences_borda_rk[indexes, ::]
             self._preferences_borda_ut = self._preferences_borda_ut[indexes, ::]
         else:
             self._preferences_borda_ut = None  # Compute later only if needed.
@@ -174,6 +167,25 @@ class Profile(my_log.MyLog):
         self.log_creation = log_creation
 
     # %% Basic variables
+
+    @cached_property
+    def preferences_rk(self):
+        """2d array of integers. ``preferences_rk[v, k]`` is the candidate at rank ``k`` for voter ``v``. For
+        example, ``preferences_rk[v, 0]`` is ``v``'s preferred candidate.
+        """
+        return self._preferences_rk
+
+    @cached_property
+    def preferences_ut(self):
+        """2d array of floats. ``preferences_ut[v, c]`` is the utility of  candidate ``c`` as seen by voter ``v``."""
+        return self._preferences_ut
+
+    @cached_property
+    def preferences_borda_rk(self):
+        """2d array of integers. ``preferences_borda_rk[v, c]`` gains 1 point for each candidate ``d`` such that
+        voter ``v`` ranks ``c`` before ``d``. So, these Borda scores are between ``0`` and ``C - 1``.
+        """
+        return self._preferences_borda_rk
 
     @cached_property
     def preferences_borda_ut(self):
@@ -1723,6 +1735,32 @@ class Profile(my_log.MyLog):
         """
         self.mylog("Compute total_utility_std", 1)
         return np.std(self.total_utility_c, ddof=0)
+
+    # %% Relative social welfare
+
+    @cached_property
+    def relative_social_welfare_c(self):
+        """1d array of numbers. ``relative_social_welfare_c[c]`` is equal to ``total_utility_c[c]``, but renormalized
+        so that the minimum is 0 and the maximum is 1.
+
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_ut=[[5, 1, 2], [4, 10, 1]])
+            >>> profile.relative_social_welfare_c
+            array([0.75, 1.  , 0.  ])
+
+        By convention, if all candidates have the same social welfare, then their relative social welfare is 1:
+
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_ut=[[2, 1, 1], [1, 2, 2]])
+            >>> profile.relative_social_welfare_c
+            array([1, 1, 1])
+        """
+        self.mylog("Compute relative social welfare of candidates", 1)
+        if self.total_utility_min == self.total_utility_max:
+            return np.ones(self.total_utility_c.shape, dtype=self.total_utility_c.dtype)
+        return (self.total_utility_c - self.total_utility_min) / (self.total_utility_max - self.total_utility_min)
 
     # %% Mean utilities
 

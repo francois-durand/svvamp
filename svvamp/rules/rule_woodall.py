@@ -202,13 +202,18 @@ class RuleWoodall(Rule):
     'Four Condorcet-Hare Hybrid Methods for Single-Winner Elections', James Green-Armytage, 2011.
     """
 
+    full_name = 'Woodall'
+    abbreviation = 'Woo'
+
+    options_parameters = Rule.options_parameters.copy()
+    options_parameters.update({
+        'cm_option': {'allowed': {'fast', 'slow', 'very_slow', 'exact'}, 'default': 'fast'},
+        'tm_option': {'allowed': ['exact'], 'default': 'exact'},
+        'icm_option': {'allowed': ['exact'], 'default': 'exact'}
+    })
+
     def __init__(self, **kwargs):
         super().__init__(
-            options_parameters={
-                'cm_option': {'allowed': {'fast', 'slow', 'very_slow', 'exact'}, 'default': 'fast'},
-                'tm_option': {'allowed': ['exact'], 'default': 'exact'},
-                'icm_option': {'allowed': ['exact'], 'default': 'exact'}
-            },
             with_two_candidates_reduces_to_plurality=True, is_based_on_rk=True,
             precheck_um=False, precheck_icm=False,
             log_identity="WOODALL", **kwargs

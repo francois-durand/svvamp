@@ -183,3 +183,12 @@ def neginf_to_zero(variable):
     elif np.isneginf(variable):
         variable = 0
     return variable
+
+
+def pseudo_bool_not(variable):
+    if equal_true(variable):
+        return False
+    elif equal_false(variable):
+        return True
+    else:  # variable = nan or -np.inf
+        return variable

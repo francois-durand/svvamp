@@ -35,6 +35,8 @@ class GeneratorProfileNoise(GeneratorProfile):
         The relative noise.
     absolute_noise : number
         The absolute noise
+    sort_voters : bool
+        This argument is passed to :class:`Profile`.
 
     Notes
     -----
@@ -51,12 +53,13 @@ class GeneratorProfileNoise(GeneratorProfile):
         (2, 3)
     """
 
-    def __init__(self, base_profile, relative_noise=0., absolute_noise=0.):
+    def __init__(self, base_profile, relative_noise=0., absolute_noise=0., sort_voters=False):
         self.base_profile = base_profile
         self.base_ut = self.base_profile.preferences_ut.astype(np.float)
         self.n_v, self.n_c = self.base_profile.n_v, self.base_profile.n_c
         self.relative_noise = relative_noise
         self.absolute_noise = absolute_noise
+        self.sort_voters = sort_voters
         # Total noise
         self.total_noise = self.absolute_noise
         if relative_noise != 0:
@@ -64,10 +67,11 @@ class GeneratorProfileNoise(GeneratorProfile):
             self.total_noise += relative_noise * amplitude
         self.log_creation = ['Noise Adder', 'Base profile', str(base_profile),
                              'Relative noise', relative_noise, 'Absolute noise', absolute_noise]
-        super().__init__()
+        super().__init__(sort_voters=sort_voters)
 
     def __call__(self):
         preferences_ut = self.base_ut.copy()
         if self.total_noise != 0:
             preferences_ut += self.total_noise * 2 * (0.5 - np.random.rand(self.n_v, self.n_c))
-        return Profile(preferences_ut=preferences_ut, log_creation=self.log_creation)
+        return Profile(preferences_ut=preferences_ut, log_creation=self.log_creation,
+                       labels_candidates=self.base_profile.labels_candidates, sort_voters=self.sort_voters)

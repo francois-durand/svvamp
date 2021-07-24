@@ -287,15 +287,20 @@ class RuleMaximin(Rule):
     Jeffrey S. Rosenschein, 2011.
     """
 
+    full_name = 'Maximin'
+    abbreviation = 'Max'
+
+    options_parameters = Rule.options_parameters.copy()
+    options_parameters.update({
+        'im_option': {'allowed': ['exact'], 'default': 'exact'},
+        'tm_option': {'allowed': ['exact'], 'default': 'exact'},
+        'um_option': {'allowed': ['exact'], 'default': 'exact'},
+        'icm_option': {'allowed': ['exact'], 'default': 'exact'},
+        'cm_option': {'allowed': ['fast', 'exact'], 'default': 'fast'}
+    })
+
     def __init__(self, **kwargs):
         super().__init__(
-            options_parameters={
-                'im_option': {'allowed': ['exact'], 'default': 'exact'},
-                'tm_option': {'allowed': ['exact'], 'default': 'exact'},
-                'um_option': {'allowed': ['exact'], 'default': 'exact'},
-                'icm_option': {'allowed': ['exact'], 'default': 'exact'},
-                'cm_option': {'allowed': ['fast', 'exact'], 'default': 'fast'}
-            },
             with_two_candidates_reduces_to_plurality=True, is_based_on_rk=True,
             precheck_icm=False,
             log_identity="MAXIMIN", **kwargs

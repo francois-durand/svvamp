@@ -277,6 +277,11 @@ class RuleKimRoush(Rule):
     'Statistical Manipulability of Social Choice Functions', K.H. Kim and F.W. Roush, 1996.
     """
 
+    full_name = 'Kim-Roush'
+    abbreviation = 'KR'
+
+    options_parameters = Rule.options_parameters.copy()
+
     def __init__(self, **kwargs):
         super().__init__(
             with_two_candidates_reduces_to_plurality=True, is_based_on_rk=True,
