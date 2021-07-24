@@ -4,6 +4,12 @@
 History
 =======
 
+---------------------------------------
+0.5.1 (2021-07-24): Fix PyPI deployment
+---------------------------------------
+
+* Fix PyPI deployment.
+
 ------------------------
 0.5.0 (2021-07-24): Meta
 ------------------------
@@ -41,7 +47,7 @@ History
 * Minor changes:
 
   * ``GeneratorProfile`` and all its subclasses now have a parameter ``sort_voters``, which is simply passed to
-    :class:`Profile` when creating each profile.
+    ``Profile`` when creating each profile.
   * ``ProfileGeneratorNoisedFile`` is renamed to ``GeneratorProfileNoisedFile``, for the sake of consistency with
     other profile generators.
   * ``RULE_CLASSES`` is renamed to ``ALL_RULE_CLASSES``.
