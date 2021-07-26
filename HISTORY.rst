@@ -4,10 +4,12 @@
 History
 =======
 
-------------------------------------------------
-0.6.0 (2021-07-26): Accelerate Majority Judgment
-------------------------------------------------
+---------------------------------------
+0.6.0 (2021-07-26): ExperimentsCompiler
+---------------------------------------
 
+* Add ``ExperimentsCompiler``: draw plots and prepare tables based on the results computed by ``ExperimentAnalyzer``
+  on several experiments.
 * Accelerate ``RuleMajorityJudgment.necessary_coalition_size_cm_`` and
   ``RuleMajorityJudgment.sufficient_coalition_size_cm_``.
 
