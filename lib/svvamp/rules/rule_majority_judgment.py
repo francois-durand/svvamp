@@ -621,81 +621,106 @@ class RuleMajorityJudgment(Rule):
             >>> rule.sufficient_coalition_size_cm_
             array([0., 3., 2.])
         """
-        # In fact, in sorted_sincere, there will be sincere voters and one manipulator (so that median and other
-        # stuff is always defined). Grades for ``c`` are sorted in ascending order along ``c``'s column. Grades for
-        # other candidates are sorted in descending order. This way, when adding one manipulator, the median is shifted
-        # down by a half-index.
+        preferences_ut_s = self.profile_.preferences_ut[np.logical_not(self.v_wants_to_help_c_[:, c]), :]
+        n_s = self.profile_.n_v - self.profile_.matrix_duels_ut[c, self.w_]
         ballot_manip = np.ones(self.profile_.n_c) * self.min_grade
         ballot_manip[c] = self.max_grade
-        sorted_sincere = np.sort(np.concatenate((
-            self.ballots_[np.logical_not(self.v_wants_to_help_c_[:, c]), :], [ballot_manip]
-        ), 0), 0)[::-1, :]
-        sorted_sincere[:, c] = sorted_sincere[::-1, c]
-        self.mylogm("CM: sorted_sincere + 1 manipulator =", sorted_sincere, 3)
-        medians = np.median(sorted_sincere[:-1, :], 0)
-        self.mylogm("CM: medians (sincere only) =", medians, 3)
-        p = np.sum(sorted_sincere[:-1, :] > medians, 0)
-        self.mylogm("CM: p (sincere only) =", p, 3)
-        q = np.sum(sorted_sincere[:-1, :] < medians, 0)
-        self.mylogm("CM: q (sincere only) =", q, 3)
-
-        n_s = self.profile_.n_v - self.profile_.matrix_duels_ut[c, self.w_]
-        self.mylogv("CM: n_s =", n_s, 3)
-        n_m = 0
-        i_median = Fraction(n_s - 1, 2)
-        cm_successful = False
-        while not cm_successful:
-            n_m += 1
-            i_median += Fraction(1, 2)
-            self.mylogv("CM: n_m =", n_m, 3)
-
-            # Computing c's scores
-            if i_median % 1 == 0:
-                median_c = sorted_sincere[int(i_median), c]
+        n_m_inf = 0
+        n_m_sup = n_s + 1
+        # Loop invariant: CM always possible n_m_sup manipulators, impossible for n_m_inf manipulators
+        while n_m_sup - n_m_inf > 1:
+            n_m = (n_m_inf + n_m_sup) // 2
+            preferences_ut_test = np.concatenate((
+                preferences_ut_s,
+                np.outer(np.ones(n_m), ballot_manip)
+            ))
+            profile_test = Profile(preferences_ut=preferences_ut_test, sort_voters=False)
+            rule_test = self._copy(profile_test)
+            winner_test = rule_test.w_
+            if winner_test == c:
+                n_m_sup = n_m
             else:
-                median_c = (sorted_sincere[floor(i_median), c] + sorted_sincere[ceil(i_median), c]) / 2
-            if median_c == medians[c]:
-                if median_c != self.max_grade:
-                    p[c] += 1
-            else:
-                medians[c] = median_c
-                q[c] = ceil(i_median)
-                p[c] = np.sum(sorted_sincere[:-1, c] > median_c) + n_m
-            if q[c] >= p[c]:
-                score_c = [medians[c], -q[c], -c]
-            else:
-                score_c = [medians[c], p[c], -c]
-            self.mylogv("CM: score_c =", score_c, 3)
+                n_m_inf = n_m
+        self._sufficient_coalition_size_cm[c] = n_m_sup
+        self._necessary_coalition_size_cm[c] = n_m_sup
 
-            cm_successful = True
-            for d in range(self.profile_.n_c):
-                if d == c:
-                    continue
-
-                # Computing d's scores
-                if i_median % 1 == 0:
-                    median_d = sorted_sincere[int(i_median), d]
-                else:
-                    median_d = (sorted_sincere[floor(i_median), d] + sorted_sincere[ceil(i_median), d]) / 2
-                if median_d == medians[d]:
-                    if median_d != self.min_grade:
-                        q[d] += 1
-                else:
-                    medians[d] = median_d
-                    p[d] = ceil(i_median)
-                    q[d] = np.sum(sorted_sincere[:-1, d] < median_d) + n_m
-                if q[d] >= p[d]:
-                    score_d = [medians[d], -q[d], -d]
-                else:
-                    score_d = [medians[d], p[d], -d]
-                self.mylogv("CM: score_d =", score_d, 3)
-
-                # Does manipulation work?
-                if score_d > score_c:
-                    cm_successful = False
-
-        self._sufficient_coalition_size_cm[c] = n_m
-        self._necessary_coalition_size_cm[c] = n_m
+    # def _cm_main_work_c_old_(self, c, optimize_bounds):
+    #     # TODO: One day, I could combine the dichotomy of the new method with the approach of the old method.
+    #     # In fact, in sorted_sincere, there will be sincere voters and one manipulator (so that median and other
+    #     # stuff is always defined). Grades for ``c`` are sorted in ascending order along ``c``'s column. Grades for
+    #     # other candidates are sorted in descending order. This way, when adding one manipulator, the median is
+    #     # shifted down by a half-index.
+    #     ballot_manip = np.ones(self.profile_.n_c) * self.min_grade
+    #     ballot_manip[c] = self.max_grade
+    #     sorted_sincere = np.sort(np.concatenate((
+    #         self.ballots_[np.logical_not(self.v_wants_to_help_c_[:, c]), :], [ballot_manip]
+    #     ), 0), 0)[::-1, :]
+    #     sorted_sincere[:, c] = sorted_sincere[::-1, c]
+    #     self.mylogm("CM: sorted_sincere + 1 manipulator =", sorted_sincere, 3)
+    #     medians = np.median(sorted_sincere[:-1, :], 0)
+    #     self.mylogm("CM: medians (sincere only) =", medians, 3)
+    #     p = np.sum(sorted_sincere[:-1, :] > medians, 0)
+    #     self.mylogm("CM: p (sincere only) =", p, 3)
+    #     q = np.sum(sorted_sincere[:-1, :] < medians, 0)
+    #     self.mylogm("CM: q (sincere only) =", q, 3)
+    #
+    #     n_s = self.profile_.n_v - self.profile_.matrix_duels_ut[c, self.w_]
+    #     self.mylogv("CM: n_s =", n_s, 3)
+    #     n_m = 0
+    #     i_median = Fraction(n_s - 1, 2)
+    #     cm_successful = False
+    #     while not cm_successful:
+    #         n_m += 1
+    #         i_median += Fraction(1, 2)
+    #         self.mylogv("CM: n_m =", n_m, 3)
+    #
+    #         # Computing c's scores
+    #         if i_median % 1 == 0:
+    #             median_c = sorted_sincere[int(i_median), c]
+    #         else:
+    #             median_c = (sorted_sincere[floor(i_median), c] + sorted_sincere[ceil(i_median), c]) / 2
+    #         if median_c == medians[c]:
+    #             if median_c != self.max_grade:
+    #                 p[c] += 1
+    #         else:
+    #             medians[c] = median_c
+    #             q[c] = ceil(i_median)
+    #             p[c] = np.sum(sorted_sincere[:-1, c] > median_c) + n_m
+    #         if q[c] >= p[c]:
+    #             score_c = [medians[c], -q[c], -c]
+    #         else:
+    #             score_c = [medians[c], p[c], -c]
+    #         self.mylogv("CM: score_c =", score_c, 3)
+    #
+    #         cm_successful = True
+    #         for d in range(self.profile_.n_c):
+    #             if d == c:
+    #                 continue
+    #
+    #             # Computing d's scores
+    #             if i_median % 1 == 0:
+    #                 median_d = sorted_sincere[int(i_median), d]
+    #             else:
+    #                 median_d = (sorted_sincere[floor(i_median), d] + sorted_sincere[ceil(i_median), d]) / 2
+    #             if median_d == medians[d]:
+    #                 if median_d != self.min_grade:
+    #                     q[d] += 1
+    #             else:
+    #                 medians[d] = median_d
+    #                 p[d] = ceil(i_median)
+    #                 q[d] = np.sum(sorted_sincere[:-1, d] < median_d) + n_m
+    #             if q[d] >= p[d]:
+    #                 score_d = [medians[d], -q[d], -d]
+    #             else:
+    #                 score_d = [medians[d], p[d], -d]
+    #             self.mylogv("CM: score_d =", score_d, 3)
+    #
+    #             # Does manipulation work?
+    #             if score_d > score_c:
+    #                 cm_successful = False
+    #
+    #     self._sufficient_coalition_size_cm[c] = n_m
+    #     self._necessary_coalition_size_cm[c] = n_m
 
     # %% Trivial Manipulation (TM)
 
