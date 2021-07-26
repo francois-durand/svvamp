@@ -71,3 +71,4 @@ from svvamp.meta.study_profile_criteria import StudyProfileCriteria
 from svvamp.meta.study_rule_criteria import StudyRuleCriteria
 from svvamp.meta.voting_rule_tasks import VotingRuleTasks
 from svvamp.meta.experiment_analyzer import ExperimentAnalyzer
+from svvamp.meta.experiments_compiler import ExperimentsCompiler
