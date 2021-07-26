@@ -4,6 +4,13 @@
 History
 =======
 
+------------------------------------------------
+0.6.0 (2021-07-26): Accelerate Majority Judgment
+------------------------------------------------
+
+* Accelerate ``RuleMajorityJudgment.necessary_coalition_size_cm_`` and
+  ``RuleMajorityJudgment.sufficient_coalition_size_cm_``.
+
 ---------------------------------------
 0.5.1 (2021-07-24): Fix PyPI deployment
 ---------------------------------------
