@@ -97,28 +97,28 @@ class ProfileUM(Profile):
     def preferences_ut(self):
         return np.concatenate((
             self.profile_s.preferences_ut,
-            np.outer(np.ones(self.n_m), self.ballot_ut)
+            np.outer(np.ones(self.n_m, dtype=int), self.ballot_ut)
         ))
 
     @cached_property
     def preferences_borda_rk(self):
         return np.concatenate((
             self.profile_s.preferences_borda_rk,
-            np.outer(np.ones(self.n_m), self.ballot_borda_rk)
+            np.outer(np.ones(self.n_m, dtype=int), self.ballot_borda_rk)
         ))
 
     @cached_property
     def preferences_rk(self):
         return np.concatenate((
             self.profile_s.preferences_rk,
-            np.outer(np.ones(self.n_m), self.ballot_rk)
+            np.outer(np.ones(self.n_m, dtype=int), self.ballot_rk)
         ))
 
     @cached_property
     def preferences_borda_ut(self):
         return np.concatenate((
             self.profile_s.preferences_borda_ut,
-            np.outer(np.ones(self.n_m), self.ballot_borda_ut)
+            np.outer(np.ones(self.n_m, dtype=int), self.ballot_borda_ut)
         ))
 
     # %% Matrix of duels
