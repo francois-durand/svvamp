@@ -9,7 +9,7 @@ History
 --------------------------------------
 
 * Accelerate ``Profile``: lazy evaluation of attributes ``preferences_rk``, ``preferences_ut``, ``preferences_borda_rk``
-  and ````preferences_borda_ut``. This leads to a very significant acceleration for many methods (typically TM, UM and
+  and ``preferences_borda_ut``. This leads to a very significant acceleration for many methods (typically TM, UM and
   IIA, but also CM and IM for some voting rules).
 
 ---------------------------------------
