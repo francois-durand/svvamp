@@ -38,8 +38,8 @@ from svvamp.utils.pseudo_bool import equal_true
 
 class Profile(my_log.MyLog):
 
-    def __init__(self, preferences_ut=None, preferences_rk=None, log_creation=None, labels_candidates=None,
-                 sort_voters=True):
+    def __init__(self, preferences_ut=None, preferences_rk=None, preferences_borda_rk=None,
+                 log_creation=None, labels_candidates=None, sort_voters=True):
         """Create a profile of voters with preferences over some candidates.
 
         Parameters
@@ -48,6 +48,9 @@ class Profile(my_log.MyLog):
             2d array of floats. ``preferences_ut[v, c]`` is the utility of candidate ``c`` as seen by voter ``v``.
         preferences_rk : list of list (or 2d ndarray)
             2d array of integers. ``preferences_rk[v, k]`` is the candidate at rank ``k`` for voter ``v``.
+        preferences_borda_rk : list of list (or 2d ndarray)
+            2d array of integers. ``preferences_borda_rk[v, c]`` gains 1 point for each candidate ``d`` such that
+            voter ``v`` ranks ``c`` before ``d``. So, these Borda scores are between ``0`` and ``C - 1``.
         log_creation : object
             Any type (string, list...). Some comments.
         labels_candidates : list of str
@@ -62,6 +65,7 @@ class Profile(my_log.MyLog):
         Notes
         -----
         You may enter ``preferences_ut``, ``preferences_rk`` or both to define the preferences of the population.
+        In all cases, instead of ``preferences_rk``, you may enter ``preferences_borda_rk``.
 
         If you provide ``preferences_rk`` only, then ``preferences_ut`` is set to the corresponding Borda scores
         (:attr:`~svvamp.Population.preferences_borda_rk`).
@@ -124,6 +128,8 @@ class Profile(my_log.MyLog):
         """
         super().__init__(log_identity="PROFILE")
 
+        if preferences_rk is not None and preferences_borda_rk is not None:
+            raise ValueError('Please provide preferences_rk or preferences_borda_rk, but not both.')
         if preferences_ut is None:
             self._preferences_ut_input = None
         else:
@@ -132,6 +138,10 @@ class Profile(my_log.MyLog):
             self._preferences_rk_input = None
         else:
             self._preferences_rk_input = np.array(preferences_rk)
+        if preferences_borda_rk is None:
+            self._preferences_borda_rk_input = None
+        else:
+            self._preferences_borda_rk_input = np.array(preferences_borda_rk)
         self.log_creation = log_creation
         self._labels_candidates = labels_candidates
         self._sort_voters = sort_voters
@@ -163,23 +173,29 @@ class Profile(my_log.MyLog):
     @cached_property
     def _preferences_rk_unsorted(self):
         """preferences_rk, before sorting by voter."""
-        if self._preferences_rk_input is None:
+        if self._preferences_rk_input is not None:
+            return self._preferences_rk_input
+        if self._preferences_borda_rk_input is not None:
+            return preferences_ut_to_preferences_rk(self._preferences_borda_rk_input)
+        if self._preferences_ut_input is not None:
             return preferences_ut_to_preferences_rk(self._preferences_ut_input)
-        else:
-            return np.array(self._preferences_rk_input)
+        raise ValueError('Please provide at least preferences_rk, preferences_borda_rk or preferences_ut.')
 
     @cached_property
     def _preferences_borda_rk_unsorted(self):
         """preferences_borda_rk, before sorting by voter."""
-        return preferences_rk_to_preferences_borda_rk(self._preferences_rk_unsorted)
+        if self._preferences_borda_rk_input is not None:
+            return self._preferences_borda_rk_input
+        else:
+            return preferences_rk_to_preferences_borda_rk(self._preferences_rk_unsorted)
 
     @cached_property
     def _preferences_ut_unsorted(self):
         """preferences_ut, before sorting by voter."""
-        if self._preferences_ut_input is None:
-            return self._preferences_borda_rk_unsorted
+        if self._preferences_ut_input is not None:
+            return self._preferences_ut_input
         else:
-            return np.array(self._preferences_ut_input)
+            return self._preferences_borda_rk_unsorted
 
     @cached_property
     def _preferences_borda_ut_unsorted(self):
@@ -227,7 +243,7 @@ class Profile(my_log.MyLog):
 
     @cached_property
     def preferences_borda_ut(self):
-        """2d array of integers. ``preferences_borda_ut[v, c]`` gains 1 point for each ``d`` such that ``v`` strictly
+        """2d array of floats. ``preferences_borda_ut[v, c]`` gains 1 point for each ``d`` such that ``v`` strictly
         prefers ``c`` to ``d`` (in the sense of utilities), and 0.5 point for each ``d`` such that ``v`` is
         indifferent between ``c`` and ``d``. So, these Borda scores are between ``0`` and ``C - 1``.
         """

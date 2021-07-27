@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>History &mdash; SVVAMP 0.6.2 documentation</title>
+  <title>History &mdash; SVVAMP 0.6.3 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.6.2
+                0.6.3
               </div>
             
           
@@ -101,6 +101,7 @@
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">History</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#accelerate-profilesubsetcandidates">0.6.3 (2021-07-27): Accelerate ProfileSubsetCandidates</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#accelerate-maximin">0.6.2 (2021-07-27): Accelerate Maximin</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#accelerate-profile">0.6.1 (2021-07-27): Accelerate Profile</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#experimentscompiler">0.6.0 (2021-07-26): ExperimentsCompiler</a></li>
@@ -214,6 +215,14 @@
 </style>
 <div class="section" id="history">
 <h1>History<a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="accelerate-profilesubsetcandidates">
+<h2>0.6.3 (2021-07-27): Accelerate ProfileSubsetCandidates<a class="headerlink" href="#accelerate-profilesubsetcandidates" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Profile</span></code> now has a parameter <code class="docutils literal notranslate"><span class="pre">preferences_borda_rk</span></code>. At initialization, it can be given instead of
+<code class="docutils literal notranslate"><span class="pre">preferences_rk</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ProfileSubsetCandidates</span></code>: accelerate the initialization method.</p></li>
+</ul>
+</div>
 <div class="section" id="accelerate-maximin">
 <h2>0.6.2 (2021-07-27): Accelerate Maximin<a class="headerlink" href="#accelerate-maximin" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">

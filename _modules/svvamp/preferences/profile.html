@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>svvamp.preferences.profile &mdash; SVVAMP 0.6.2 documentation</title>
+  <title>svvamp.preferences.profile &mdash; SVVAMP 0.6.3 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.6.2
+                0.6.3
               </div>
             
           
@@ -206,8 +206,8 @@
 
 <div class="viewcode-block" id="Profile"><a class="viewcode-back" href="../../../reference/preferences/profile.html#svvamp.Profile">[docs]</a><span class="k">class</span> <span class="nc">Profile</span><span class="p">(</span><span class="n">my_log</span><span class="o">.</span><span class="n">MyLog</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preferences_ut</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">preferences_rk</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">log_creation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">labels_candidates</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">sort_voters</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preferences_ut</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">preferences_rk</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">preferences_borda_rk</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">log_creation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">labels_candidates</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sort_voters</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create a profile of voters with preferences over some candidates.</span>
 
 <span class="sd">        Parameters</span>
@@ -216,6 +216,9 @@
 <span class="sd">            2d array of floats. ``preferences_ut[v, c]`` is the utility of candidate ``c`` as seen by voter ``v``.</span>
 <span class="sd">        preferences_rk : list of list (or 2d ndarray)</span>
 <span class="sd">            2d array of integers. ``preferences_rk[v, k]`` is the candidate at rank ``k`` for voter ``v``.</span>
+<span class="sd">        preferences_borda_rk : list of list (or 2d ndarray)</span>
+<span class="sd">            2d array of integers. ``preferences_borda_rk[v, c]`` gains 1 point for each candidate ``d`` such that</span>
+<span class="sd">            voter ``v`` ranks ``c`` before ``d``. So, these Borda scores are between ``0`` and ``C - 1``.</span>
 <span class="sd">        log_creation : object</span>
 <span class="sd">            Any type (string, list...). Some comments.</span>
 <span class="sd">        labels_candidates : list of str</span>
@@ -230,6 +233,7 @@
 <span class="sd">        Notes</span>
 <span class="sd">        -----</span>
 <span class="sd">        You may enter ``preferences_ut``, ``preferences_rk`` or both to define the preferences of the population.</span>
+<span class="sd">        In all cases, instead of ``preferences_rk``, you may enter ``preferences_borda_rk``.</span>
 
 <span class="sd">        If you provide ``preferences_rk`` only, then ``preferences_ut`` is set to the corresponding Borda scores</span>
 <span class="sd">        (:attr:`~svvamp.Population.preferences_borda_rk`).</span>
@@ -292,6 +296,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">log_identity</span><span class="o">=</span><span class="s2">&quot;PROFILE&quot;</span><span class="p">)</span>
 
+        <span class="k">if</span> <span class="n">preferences_rk</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">preferences_borda_rk</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Please provide preferences_rk or preferences_borda_rk, but not both.&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">preferences_ut</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_ut_input</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">else</span><span class="p">:</span>
@@ -300,6 +306,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_rk_input</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_rk_input</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">preferences_rk</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">preferences_borda_rk</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_borda_rk_input</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_borda_rk_input</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">preferences_borda_rk</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log_creation</span> <span class="o">=</span> <span class="n">log_creation</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_labels_candidates</span> <span class="o">=</span> <span class="n">labels_candidates</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_sort_voters</span> <span class="o">=</span> <span class="n">sort_voters</span>
@@ -331,23 +341,29 @@
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">_preferences_rk_unsorted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;preferences_rk, before sorting by voter.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_rk_input</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_rk_input</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_rk_input</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_borda_rk_input</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">preferences_ut_to_preferences_rk</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_preferences_borda_rk_input</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_ut_input</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">preferences_ut_to_preferences_rk</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_preferences_ut_input</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_preferences_rk_input</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Please provide at least preferences_rk, preferences_borda_rk or preferences_ut.&#39;</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">_preferences_borda_rk_unsorted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;preferences_borda_rk, before sorting by voter.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">preferences_rk_to_preferences_borda_rk</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_preferences_rk_unsorted</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_borda_rk_input</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_borda_rk_input</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">preferences_rk_to_preferences_borda_rk</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_preferences_rk_unsorted</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">_preferences_ut_unsorted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;preferences_ut, before sorting by voter.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_ut_input</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_borda_rk_unsorted</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_ut_input</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_ut_input</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_preferences_ut_input</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_borda_rk_unsorted</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">_preferences_borda_ut_unsorted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -395,7 +411,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">preferences_borda_ut</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;2d array of integers. ``preferences_borda_ut[v, c]`` gains 1 point for each ``d`` such that ``v`` strictly</span>
+        <span class="sd">&quot;&quot;&quot;2d array of floats. ``preferences_borda_ut[v, c]`` gains 1 point for each ``d`` such that ``v`` strictly</span>
 <span class="sd">        prefers ``c`` to ``d`` (in the sense of utilities), and 0.5 point for each ``d`` such that ``v`` is</span>
 <span class="sd">        indifferent between ``c`` and ``d``. So, these Borda scores are between ``0`` and ``C - 1``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>

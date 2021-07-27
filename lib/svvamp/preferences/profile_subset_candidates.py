@@ -92,8 +92,7 @@ class ProfileSubsetCandidates(Profile):
         # noinspection PyTypeChecker
         self.candidates_subset = candidates_subset
         super().__init__(preferences_ut=parent_profile.preferences_ut[:, candidates_subset],
-                         preferences_rk=preferences_ut_to_preferences_rk(
-                             self.parent_profile.preferences_borda_rk[:, candidates_subset]),
+                         preferences_borda_rk=self.parent_profile.preferences_borda_rk[:, candidates_subset],
                          sort_voters=False)
 
     # %% Matrix of duels
