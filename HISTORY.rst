@@ -4,6 +4,13 @@
 History
 =======
 
+-----------------------------------------------------------------------
+0.6.8 (2021-07-27): Accelerate Exhaustive Ballot and some related rules
+-----------------------------------------------------------------------
+
+* ``RuleExhaustiveBallot``, ``RuleCondorcetAbsIRV`` and ``RuleCondorcetVtbIRV``: accelerate counting the ballots. This
+  also speeds up ``RuleIRV``, which relies directly on ``RuleExhaustiveBallot``.
+
 ---------------------------------
 0.6.7 (2021-07-27): Accelerations
 ---------------------------------
