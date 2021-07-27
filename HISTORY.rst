@@ -4,6 +4,12 @@
 History
 =======
 
+----------------------------------------
+0.6.6 (2021-07-27): Fix bug in ProfileUM
+----------------------------------------
+
+* Fix bug: ``preferences_rk`` was an array of floats, it is now an array of integers.
+
 ---------------------------------
 0.6.5 (2021-07-27): Accelerations
 ---------------------------------
