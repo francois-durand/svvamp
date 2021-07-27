@@ -620,6 +620,39 @@ class RuleMaximin(Rule):
         self.mylogv("UM: w_temp =", w_temp, 3)
         self._candidates_um[c] = (w_temp == c)
 
+    def sufficient_coalition_size_um_c_(self, c):
+        # TODO: put this in cache
+        n_s = self.profile_.n_v - self.profile_.matrix_duels_ut[c, self.w_]
+        matrix_duels_s = preferences_ut_to_matrix_duels_ut(
+            self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :]
+        ).astype(float)
+        for x in range(self.profile_.n_c):
+            matrix_duels_s[x, x] = np.inf
+        scores_s = np.min(matrix_duels_s, 1)
+        w_s = np.argmax(scores_s)
+        # If w_s == c, we win without any manipulator
+        if w_s == c:
+            self.mylogv("UM: scores_s =", scores_s, 3)
+            self.mylog("UM: Manipulation easy (c wins without manipulators' votes)", 3)
+            return 0
+        # If we have n_s + 1 manipulators, obviously we can manipulate.
+        n_m_sup = n_s + 1
+        # Best we can do: improve ``c`` by ``n_m``, do not move the others => we need at least n_m_inf + 1 manipulators.
+        n_m_inf = scores_s[w_s] - scores_s[c] - int(c < w_s)
+        # Loop invariant: UM always possible n_m_sup manipulators, impossible for n_m_inf manipulators
+        while n_m_sup - n_m_inf > 1:
+            n_m = (n_m_inf + n_m_sup) // 2
+            matrix_duels_temp = matrix_duels_s.copy()
+            scores_temp = scores_s.copy()
+            self._vote_strategically_(matrix_duels_temp, scores_temp, c, n_m)
+            w_temp = np.argmax(scores_temp)
+            self.mylogv("UM: w_temp =", w_temp, 3)
+            if w_temp == c:
+                n_m_sup = n_m
+            else:
+                n_m_inf = n_m
+        return n_m_sup
+
     # %% Coalition Manipulation (CM)
 
     def _cm_main_work_c_fast(self, c, optimize_bounds):
@@ -650,6 +683,15 @@ class RuleMaximin(Rule):
             self._necessary_coalition_size_cm, c, scores_temp[w_temp] - scores_temp[c] + (c > w_temp),
             'CM: Update necessary_coalition_size_cm = scores_s[w_s] - scores_s[c] + (c > w_s) =')
         if not optimize_bounds and (self._necessary_coalition_size_cm[c] > self.profile_.matrix_duels_ut[c, self.w_]):
+            return True  # is_quick_escape
+
+        # Relatively easy upper bound: if we can UM, we can CM.
+        self._update_sufficient(
+            self._sufficient_coalition_size_cm, c, self.sufficient_coalition_size_um_c_(c),
+            'CM: Update sufficient_coalition_size_cm = sufficient_coalition_size_um =')
+        if self._sufficient_coalition_size_cm[c] == self._necessary_coalition_size_cm[c]:
+            return False  # Not a quick escape, we did all the job!
+        if not optimize_bounds and (self.profile_.matrix_duels_ut[c, self.w_] >= self._sufficient_coalition_size_cm[c]):
             return True  # is_quick_escape
 
         while w_temp != c:

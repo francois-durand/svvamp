@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>svvamp.rules.rule_maximin &mdash; SVVAMP 0.6.1 documentation</title>
+  <title>svvamp.rules.rule_maximin &mdash; SVVAMP 0.6.2 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.6.1
+                0.6.2
               </div>
             
           
@@ -788,6 +788,39 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;UM: w_temp =&quot;</span><span class="p">,</span> <span class="n">w_temp</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_um</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">w_temp</span> <span class="o">==</span> <span class="n">c</span><span class="p">)</span>
 
+    <span class="k">def</span> <span class="nf">sufficient_coalition_size_um_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+        <span class="c1"># TODO: put this in cache</span>
+        <span class="n">n_s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_ut</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span>
+        <span class="n">matrix_duels_s</span> <span class="o">=</span> <span class="n">preferences_ut_to_matrix_duels_ut</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_wants_to_help_c_</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]),</span> <span class="p">:]</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">):</span>
+            <span class="n">matrix_duels_s</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+        <span class="n">scores_s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">matrix_duels_s</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">w_s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">scores_s</span><span class="p">)</span>
+        <span class="c1"># If w_s == c, we win without any manipulator</span>
+        <span class="k">if</span> <span class="n">w_s</span> <span class="o">==</span> <span class="n">c</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;UM: scores_s =&quot;</span><span class="p">,</span> <span class="n">scores_s</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;UM: Manipulation easy (c wins without manipulators&#39; votes)&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="c1"># If we have n_s + 1 manipulators, obviously we can manipulate.</span>
+        <span class="n">n_m_sup</span> <span class="o">=</span> <span class="n">n_s</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="c1"># Best we can do: improve ``c`` by ``n_m``, do not move the others =&gt; we need at least n_m_inf + 1 manipulators.</span>
+        <span class="n">n_m_inf</span> <span class="o">=</span> <span class="n">scores_s</span><span class="p">[</span><span class="n">w_s</span><span class="p">]</span> <span class="o">-</span> <span class="n">scores_s</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="n">c</span> <span class="o">&lt;</span> <span class="n">w_s</span><span class="p">)</span>
+        <span class="c1"># Loop invariant: UM always possible n_m_sup manipulators, impossible for n_m_inf manipulators</span>
+        <span class="k">while</span> <span class="n">n_m_sup</span> <span class="o">-</span> <span class="n">n_m_inf</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">n_m</span> <span class="o">=</span> <span class="p">(</span><span class="n">n_m_inf</span> <span class="o">+</span> <span class="n">n_m_sup</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+            <span class="n">matrix_duels_temp</span> <span class="o">=</span> <span class="n">matrix_duels_s</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">scores_temp</span> <span class="o">=</span> <span class="n">scores_s</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_vote_strategically_</span><span class="p">(</span><span class="n">matrix_duels_temp</span><span class="p">,</span> <span class="n">scores_temp</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_m</span><span class="p">)</span>
+            <span class="n">w_temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">scores_temp</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;UM: w_temp =&quot;</span><span class="p">,</span> <span class="n">w_temp</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">w_temp</span> <span class="o">==</span> <span class="n">c</span><span class="p">:</span>
+                <span class="n">n_m_sup</span> <span class="o">=</span> <span class="n">n_m</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">n_m_inf</span> <span class="o">=</span> <span class="n">n_m</span>
+        <span class="k">return</span> <span class="n">n_m_sup</span>
+
     <span class="c1"># %% Coalition Manipulation (CM)</span>
 
     <span class="k">def</span> <span class="nf">_cm_main_work_c_fast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
@@ -818,6 +851,15 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">scores_temp</span><span class="p">[</span><span class="n">w_temp</span><span class="p">]</span> <span class="o">-</span> <span class="n">scores_temp</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">c</span> <span class="o">&gt;</span> <span class="n">w_temp</span><span class="p">),</span>
             <span class="s1">&#39;CM: Update necessary_coalition_size_cm = scores_s[w_s] - scores_s[c] + (c &gt; w_s) =&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">optimize_bounds</span> <span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_ut</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]):</span>
+            <span class="k">return</span> <span class="kc">True</span>  <span class="c1"># is_quick_escape</span>
+
+        <span class="c1"># Relatively easy upper bound: if we can UM, we can CM.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_sufficient</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sufficient_coalition_size_um_c_</span><span class="p">(</span><span class="n">c</span><span class="p">),</span>
+            <span class="s1">&#39;CM: Update sufficient_coalition_size_cm = sufficient_coalition_size_um =&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="kc">False</span>  <span class="c1"># Not a quick escape, we did all the job!</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">optimize_bounds</span> <span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_ut</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]):</span>
             <span class="k">return</span> <span class="kc">True</span>  <span class="c1"># is_quick_escape</span>
 
         <span class="k">while</span> <span class="n">w_temp</span> <span class="o">!=</span> <span class="n">c</span><span class="p">:</span>
