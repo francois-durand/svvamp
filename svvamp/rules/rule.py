@@ -247,6 +247,19 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         """dict: The options. Key: name of the option. Value: value of the option."""
         return {k: getattr(self, k) for k in self.options_parameters.keys()}
 
+    def update_options(self, options):
+        """Update options.
+
+        For example, instead of ``rule.cm_option='exact'``, you can write ``rule.update_options{'cm_option': 'exact'}``.
+
+        Parameters
+        ----------
+        options : dict
+            Key: option name. Value: option value.
+        """
+        for k, v in options.items():
+            setattr(self, k, v)
+
     @classmethod
     def check_option_allowed(cls, option, value):
         """Check whether a pair (option, value) is allowed.

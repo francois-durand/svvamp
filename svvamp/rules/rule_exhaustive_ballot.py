@@ -383,9 +383,13 @@ class RuleExhaustiveBallot(Rule):
         if self.profile_ is not None:
             delattr(self.profile_, 'exhaustive_ballot')
         # See if new profile has an exhaustive_ballot, with the same options
-        if hasattr(profile, 'exhaustive_ballot') and self.options == profile.exhaustive_ballot.options:
+        if hasattr(profile, 'exhaustive_ballot'):
+            # Save my options
+            my_options = self.options
             # Copy all its inner variables into mine
             self.__dict__.update(profile.exhaustive_ballot.__dict__)
+            # Reload my options
+            self.update_options(my_options)
         else:
             # 'Usual' behavior
             self.delete_cache(suffix='_')
