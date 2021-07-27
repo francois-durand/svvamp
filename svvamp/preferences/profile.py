@@ -39,7 +39,7 @@ from svvamp.utils.pseudo_bool import equal_true
 class Profile(my_log.MyLog):
 
     def __init__(self, preferences_ut=None, preferences_rk=None, preferences_borda_rk=None,
-                 log_creation=None, labels_candidates=None, sort_voters=True):
+                 log_creation=None, labels_candidates=None, sort_voters=False):
         """Create a profile of voters with preferences over some candidates.
 
         Parameters
@@ -60,7 +60,8 @@ class Profile(my_log.MyLog):
             strict order of preference (their row in :attr:`~svvamp.Population.preferences_rk`), then by their weak
             order of preference (their row in :attr:`~svvamp.Population.preferences_borda_ut`). Note that two voters
             having the same strict order may have different weak orders, and vice versa. The objective of this
-            sorting is to accelerate some algorithms (typically Individual Manipulation).
+            sorting is to accelerate some algorithms (typically Individual Manipulation). It can also be convenient
+            to visualize the profile.
 
         Notes
         -----
@@ -2272,7 +2273,8 @@ class Profile(my_log.MyLog):
             >>> initialize_random_seeds()
             >>> preferences_ut_test = np.random.randint(-5, 5, (10, 5))
             >>> profile = Profile(preferences_ut=preferences_ut_test,
-            ...                   labels_candidates=['Alice', 'Bob', 'Catherine', 'Dave', 'Ellen'])
+            ...                   labels_candidates=['Alice', 'Bob', 'Catherine', 'Dave', 'Ellen'],
+            ...                   sort_voters=True)
             >>> profile.demo(log_depth=0)  # doctest: +NORMALIZE_WHITESPACE
             <BLANKLINE>
             ************************

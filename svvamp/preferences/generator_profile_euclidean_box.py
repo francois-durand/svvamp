@@ -61,7 +61,7 @@ class GeneratorProfileEuclideanBox(GeneratorProfile):
         (10, 3)
     """
 
-    def __init__(self, n_v, n_c, box_dimensions, shift=None, sort_voters=True):
+    def __init__(self, n_v, n_c, box_dimensions, shift=None, sort_voters=False):
         self.n_v = n_v
         self.n_c = n_c
         self.box_dimensions = np.array(box_dimensions)
@@ -76,4 +76,5 @@ class GeneratorProfileEuclideanBox(GeneratorProfile):
         candidates_positions = self.shift + np.random.rand(self.n_c, self.n_dim) * self.box_dimensions
         preferences_utilities = - distance.cdist(voters_positions, candidates_positions, 'euclidean')
         preferences_utilities -= np.average(preferences_utilities)
-        return Profile(preferences_ut=preferences_utilities, log_creation=self.log_creation)
+        return Profile(preferences_ut=preferences_utilities, log_creation=self.log_creation,
+                       sort_voters=self.sort_voters)

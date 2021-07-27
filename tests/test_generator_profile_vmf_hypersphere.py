@@ -7,7 +7,8 @@ def test():
     When there is one group only, you may specify `vmf_probability` but it is ignored:
 
         >>> initialize_random_seeds()
-        >>> generator = GeneratorProfileVMFHypersphere(n_v=5, n_c=3, vmf_concentration=10, vmf_probability=1)
+        >>> generator = GeneratorProfileVMFHypersphere(n_v=5, n_c=3, vmf_concentration=10, vmf_probability=1,
+        ...                                            sort_voters=True)
         >>> profile = generator()
         >>> profile.preferences_ut
         array([[ 0.95891992, -0.12067454,  0.25672991],

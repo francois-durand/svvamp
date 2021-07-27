@@ -68,7 +68,7 @@ class GeneratorProfileVMFHypercircle(GeneratorProfile):
     Typical usage:
 
         >>> initialize_random_seeds()
-        >>> generator = GeneratorProfileVMFHypercircle(n_v=5, n_c=3, vmf_concentration=10)
+        >>> generator = GeneratorProfileVMFHypercircle(n_v=5, n_c=3, vmf_concentration=10, sort_voters=True)
         >>> profile = generator()
         >>> profile.preferences_ut
         array([[ 0.67886167, -0.73231774,  0.05345607],
@@ -80,7 +80,8 @@ class GeneratorProfileVMFHypercircle(GeneratorProfile):
     You can specify a pole:
 
         >>> initialize_random_seeds()
-        >>> generator = GeneratorProfileVMFHypercircle(n_v=5, n_c=3, vmf_concentration=10, vmf_pole=[.7, 0, -.7])
+        >>> generator = GeneratorProfileVMFHypercircle(n_v=5, n_c=3, vmf_concentration=10, vmf_pole=[.7, 0, -.7],
+        ...                                            sort_voters=True)
         >>> profile = generator()
         >>> profile.preferences_ut
         array([[ 0.8147627 , -0.36132374, -0.45343896],
@@ -93,7 +94,7 @@ class GeneratorProfileVMFHypercircle(GeneratorProfile):
 
         >>> initialize_random_seeds()
         >>> generator = GeneratorProfileVMFHypercircle(n_v=5, n_c=3, vmf_concentration=[np.inf, np.inf],
-        ...                                            vmf_probability=[.9, .1])
+        ...                                            vmf_probability=[.9, .1], sort_voters=True)
         >>> profile = generator()
         >>> profile.preferences_ut
         array([[ 1.19716876,  0.82383355, -2.02100232],
@@ -105,7 +106,8 @@ class GeneratorProfileVMFHypercircle(GeneratorProfile):
     If the probabilities are not explicitly given, poles have equal probabilities:
 
         >>> initialize_random_seeds()
-        >>> generator = GeneratorProfileVMFHypercircle(n_v=5, n_c=3, vmf_concentration=[np.inf, np.inf])
+        >>> generator = GeneratorProfileVMFHypercircle(n_v=5, n_c=3, vmf_concentration=[np.inf, np.inf],
+        ...                                            sort_voters=True)
         >>> profile = generator()
         >>> profile.preferences_ut
         array([[ 1.19716876,  0.82383355, -2.02100232],
@@ -121,7 +123,7 @@ class GeneratorProfileVMFHypercircle(GeneratorProfile):
     Wood (1994) - Simulation of the von Mises Fisher distribution
     """
 
-    def __init__(self, n_v, n_c, vmf_concentration, vmf_probability=None, vmf_pole=None, sort_voters=True):
+    def __init__(self, n_v, n_c, vmf_concentration, vmf_probability=None, vmf_pole=None, sort_voters=False):
         self.n_v = n_v
         self.n_c = n_c
         # Ensure that _vmf_concentration is an np.array. Compute k, its size.
@@ -180,4 +182,4 @@ class GeneratorProfileVMFHypercircle(GeneratorProfile):
                                         self.unitary_parallel)
         preferences_ut -= 2 * preferences_parallel
         # Conclude
-        return Profile(preferences_ut=preferences_ut, log_creation=self.log_creation)
+        return Profile(preferences_ut=preferences_ut, log_creation=self.log_creation, sort_voters=self.sort_voters)

@@ -62,7 +62,7 @@ class GeneratorProfileGaussianWell(GeneratorProfile):
         (10, 3)
     """
 
-    def __init__(self, n_v, n_c, sigma, shift=None, sort_voters=True):
+    def __init__(self, n_v, n_c, sigma, shift=None, sort_voters=False):
         self.n_v = n_v
         self.n_c = n_c
         self.sigma = np.array(sigma)
@@ -77,4 +77,5 @@ class GeneratorProfileGaussianWell(GeneratorProfile):
         candidates_positions = self.shift + np.random.randn(self.n_c, self.n_dim) * self.sigma
         preferences_utilities = - distance.cdist(voters_positions, candidates_positions, 'euclidean')
         preferences_utilities -= np.average(preferences_utilities)
-        return Profile(preferences_ut=preferences_utilities, log_creation=self.log_creation)
+        return Profile(preferences_ut=preferences_utilities, log_creation=self.log_creation,
+                       sort_voters=self.sort_voters)

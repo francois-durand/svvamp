@@ -73,7 +73,7 @@ class GeneratorProfileVMFHypersphere(GeneratorProfile):
     Typical usage:
 
         >>> initialize_random_seeds()
-        >>> generator = GeneratorProfileVMFHypersphere(n_v=5, n_c=3, vmf_concentration=10)
+        >>> generator = GeneratorProfileVMFHypersphere(n_v=5, n_c=3, vmf_concentration=10, sort_voters=True)
         >>> profile = generator()
         >>> profile.preferences_ut
         array([[ 0.95891992, -0.12067454,  0.25672991],
@@ -85,7 +85,8 @@ class GeneratorProfileVMFHypersphere(GeneratorProfile):
     You can specify a pole:
 
         >>> initialize_random_seeds()
-        >>> generator = GeneratorProfileVMFHypersphere(n_v=5, n_c=3, vmf_concentration=10, vmf_pole=[.7, .7, 0])
+        >>> generator = GeneratorProfileVMFHypersphere(n_v=5, n_c=3, vmf_concentration=10, vmf_pole=[.7, .7, 0],
+        ...                                            sort_voters=True)
         >>> profile = generator()
         >>> profile.preferences_ut
         array([[ 0.75351327,  0.5734909 , -0.32144353],
@@ -98,7 +99,7 @@ class GeneratorProfileVMFHypersphere(GeneratorProfile):
 
         >>> initialize_random_seeds()
         >>> generator = GeneratorProfileVMFHypersphere(n_v=5, n_c=3, vmf_concentration=[np.inf, np.inf],
-        ...                                            vmf_probability=[.9, .1])
+        ...                                            vmf_probability=[.9, .1], sort_voters=True)
         >>> profile = generator()
         >>> profile.preferences_ut
         array([[ 2.2408932 ,  1.86755799, -0.97727788],
@@ -110,7 +111,8 @@ class GeneratorProfileVMFHypersphere(GeneratorProfile):
     If the probabilities are not explicitly given, poles have equal probabilities:
 
         >>> initialize_random_seeds()
-        >>> generator = GeneratorProfileVMFHypersphere(n_v=5, n_c=3, vmf_concentration=[np.inf, np.inf])
+        >>> generator = GeneratorProfileVMFHypersphere(n_v=5, n_c=3, vmf_concentration=[np.inf, np.inf],
+        ...                                            sort_voters=True)
         >>> profile = generator()
         >>> profile.preferences_ut
         array([[ 2.2408932 ,  1.86755799, -0.97727788],
@@ -122,7 +124,8 @@ class GeneratorProfileVMFHypersphere(GeneratorProfile):
     With some stretching:
 
         >>> initialize_random_seeds()
-        >>> generator = GeneratorProfileVMFHypersphere(n_v=5, n_c=3, vmf_concentration=0, stretching=100)
+        >>> generator = GeneratorProfileVMFHypersphere(n_v=5, n_c=3, vmf_concentration=0, stretching=100,
+        ...                                            sort_voters=True)
         >>> profile = generator()
         >>> profile.preferences_ut
         array([[ 0.14719473,  0.14577802,  0.14320266],
@@ -132,7 +135,8 @@ class GeneratorProfileVMFHypersphere(GeneratorProfile):
                [ 0.59993219,  0.59426747,  0.60493974]])
 
         >>> initialize_random_seeds()
-        >>> generator = GeneratorProfileVMFHypersphere(n_v=5, n_c=3, vmf_concentration=0, stretching=.01)
+        >>> generator = GeneratorProfileVMFHypersphere(n_v=5, n_c=3, vmf_concentration=0, stretching=.01,
+        ...                                            sort_voters=True)
         >>> profile = generator()
         >>> profile.preferences_ut
         array([[ 0.18174638,  0.04007574, -0.21746036],
@@ -149,7 +153,7 @@ class GeneratorProfileVMFHypersphere(GeneratorProfile):
     """
 
     def __init__(self, n_v, n_c, vmf_concentration, vmf_probability=None, vmf_pole=None, stretching=1,
-                 sort_voters=True):
+                 sort_voters=False):
         self.n_v = n_v
         self.n_c = n_c
         # Ensure that _vmf_concentration is an np.array. Compute k, its size.
@@ -196,4 +200,4 @@ class GeneratorProfileVMFHypersphere(GeneratorProfile):
             preferences_ut = (preferences_ut / self.stretching
                               + np.sum(preferences_ut, 1)[:, np.newaxis] * (1 - 1 / self.stretching) / self.n_c)
         # Conclude
-        return Profile(preferences_ut=preferences_ut, log_creation=self.log_creation)
+        return Profile(preferences_ut=preferences_ut, log_creation=self.log_creation, sort_voters=self.sort_voters)
