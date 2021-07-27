@@ -4,6 +4,17 @@
 History
 =======
 
+---------------------------------
+0.6.5 (2021-07-27): Accelerations
+---------------------------------
+
+* Accelerate ``ProfileSubsetCandidates`` (used for IIA but also for some voting rules such as ``RuleTideman``).
+* Add ``ProfileUM``. This is used to speed up the generic exact algorithm for UM in the case of voting rules based
+  on rankings.
+* ``RuleTideman``: accelerate counting the ballot and computing the winner (especially useful for exact UM).
+* Accelerate ``preferences_ut_to_matrix_duels_ut``.
+* Accelerate ``matrix_victories_to_smith_set``.
+
 -----------------------------------------------
 0.6.4 (2021-07-27): Option "faster" for Maximin
 -----------------------------------------------
