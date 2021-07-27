@@ -22,7 +22,7 @@ This file is part of SVVAMP.
 import numpy as np
 from svvamp.utils.misc import initialize_random_seeds
 from svvamp.utils.util_cache import cached_property
-from svvamp.preferences.profile import preferences_ut_to_preferences_rk
+from svvamp.preferences.profile import preferences_ut_to_preferences_rk, preferences_ut_to_preferences_borda_ut
 from svvamp.preferences.profile import Profile
 
 
@@ -91,9 +91,41 @@ class ProfileSubsetCandidates(Profile):
         self.parent_profile = parent_profile
         # noinspection PyTypeChecker
         self.candidates_subset = candidates_subset
-        super().__init__(preferences_ut=parent_profile.preferences_ut[:, candidates_subset],
-                         preferences_borda_rk=self.parent_profile.preferences_borda_rk[:, candidates_subset],
-                         sort_voters=False)
+        super().__init__(preferences_ut=None, preferences_borda_rk=None, sort_voters=False)
+
+    # %% Preferences
+
+    @cached_property
+    def n_v(self):
+        return self.parent_profile.n_v
+
+    @cached_property
+    def n_c(self):
+        candidates_subset = np.array(self.candidates_subset)
+        if candidates_subset.dtype == bool:
+            return np.sum(candidates_subset)
+        else:
+            return len(candidates_subset)
+
+    @cached_property
+    def labels_candidates(self):
+        return self.parent_profile.labels_candidates[self.candidates_subset]
+
+    @cached_property
+    def preferences_ut(self):
+        return self.parent_profile.preferences_ut[:, self.candidates_subset]
+
+    @cached_property
+    def preferences_borda_rk(self):
+        return self.parent_profile.preferences_borda_rk[:, self.candidates_subset]
+
+    @cached_property
+    def preferences_rk(self):
+        return preferences_ut_to_preferences_rk(self.preferences_borda_rk)
+
+    @cached_property
+    def preferences_borda_ut(self):
+        return preferences_ut_to_preferences_borda_ut(self.preferences_ut)
 
     # %% Matrix of duels
 

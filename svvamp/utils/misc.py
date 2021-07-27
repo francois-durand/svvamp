@@ -108,13 +108,7 @@ def preferences_ut_to_matrix_duels_ut(preferences_ut):
                [0, 1, 0]])
     """
     preferences_ut = np.array(preferences_ut)
-    n_v, n_c = preferences_ut.shape
-    matrix_duels = np.zeros((n_c, n_c), dtype=np.int)
-    for c in range(n_c):
-        for d in range(c + 1, n_c):
-            matrix_duels[c, d] = np.sum(preferences_ut[:, c] > preferences_ut[:, d])
-            matrix_duels[d, c] = np.sum(preferences_ut[:, d] > preferences_ut[:, c])
-    return matrix_duels
+    return np.sum(preferences_ut[:, :, np.newaxis] > preferences_ut[:, np.newaxis, :], axis=0)
 
 
 def matrix_victories_to_smith_set(matrix_victories):
@@ -145,9 +139,22 @@ def matrix_victories_to_smith_set(matrix_victories):
         ... ])
         >>> matrix_victories_to_smith_set(matrix_victories)
         [0, 2, 3, 5, 6]
+
+        >>> matrix_victories = np.array([
+        ...     [0, 1, 1],
+        ...     [0, 0, 1],
+        ...     [0, 0, 0],
+        ... ])
+        >>> matrix_victories_to_smith_set(matrix_victories)
+        [0]
     """
     n_c = matrix_victories.shape[0]
     copeland_scores = matrix_victories.sum(axis=1)
+    # Let us gain some time if there is a Condorcet winner
+    best_candidate = np.argmax(copeland_scores)
+    if copeland_scores[best_candidate] == n_c - 1 + matrix_victories[0, 0]:
+        return [best_candidate]
+    # General case
     copeland_decreasing = sorted(copeland_scores, reverse=True)
     candidates_by_copeland_best_worst = sorted(range(n_c), key=copeland_scores.__getitem__, reverse=True)
     matrix_victories_sorted = (

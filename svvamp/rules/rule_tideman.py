@@ -26,7 +26,7 @@ from svvamp.preferences.profile import Profile
 from svvamp.preferences.profile_subset_candidates import ProfileSubsetCandidates
 from svvamp.utils.util_cache import cached_property
 from svvamp.utils.pseudo_bool import equal_true
-from svvamp.utils.misc import preferences_ut_to_matrix_duels_ut
+from svvamp.utils.misc import preferences_ut_to_matrix_duels_ut, matrix_victories_to_smith_set
 
 
 class RuleTideman(Rule):
@@ -243,8 +243,9 @@ class RuleTideman(Rule):
         while True:
             # Eliminate candidates outside Smith set
             # Here, scores_r is 1 for being in the Smith set, 0 otherwise
-            profile_r = ProfileSubsetCandidates(parent_profile=self.profile_, candidates_subset=candidates_alive)
-            smith_set_r = profile_r.smith_set_rk
+            matrix_victories_rk_r = self.profile_.matrix_victories_rk[candidates_alive, :][:, candidates_alive]
+            smith_set_r = matrix_victories_to_smith_set(matrix_victories_rk_r)
+            # La suite
             candidates_alive_new = candidates_alive[smith_set_r]
             scores_r = [(1 if c in candidates_alive_new else 0) for c in range(self.profile_.n_c)]
             scores.append(scores_r)

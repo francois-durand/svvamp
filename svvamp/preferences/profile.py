@@ -75,9 +75,10 @@ class Profile(my_log.MyLog):
         If voter ``v`` attributes the same utility to several candidates, then the first time the attribute
         ``preferences_rk`` is called, a random ranking will be decided for these tied candidates (once and for all).
 
-        If you provide both, then SVVAMP DOES NOT CHECK that they are coherent. You should ensure that they are,
+        If you provide both, then SVVAMP DOES NOT CHECK that they are consistent. You should ensure that they are,
         in the sense that if ``v`` ranks ``c`` before ``d``, then she her utility for ``c`` must be at least equal to
-        her utility for ``d``.
+        her utility for ``d``. Similarly, you can provide both ``preferences_rk`` and ``preferences_borda_rk``, but
+        SVVAMP DOES NOT CHECK that they are consistent.
 
         ``preferences_rk`` will be used for sincere voting when a voting system accepts only strict orders.
 
@@ -128,8 +129,6 @@ class Profile(my_log.MyLog):
         """
         super().__init__(log_identity="PROFILE")
 
-        if preferences_rk is not None and preferences_borda_rk is not None:
-            raise ValueError('Please provide preferences_rk or preferences_borda_rk, but not both.')
         if preferences_ut is None:
             self._preferences_ut_input = None
         else:
@@ -155,8 +154,8 @@ class Profile(my_log.MyLog):
             n_v = self._preferences_rk_input.shape[0]
         else:
             n_v = self._preferences_ut_input.shape[0]
-        if n_v < 2:
-            raise ValueError("A profile must have at least 2 voters.")
+        # if n_v < 2:
+        #     raise ValueError("A profile must have at least 2 voters.")
         return n_v
 
     @cached_property

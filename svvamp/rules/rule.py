@@ -30,6 +30,7 @@ from svvamp.utils.misc import compute_next_subset_with_w, compute_next_borda_cle
 from svvamp.utils.pseudo_bool import pseudo_bool, neginf_to_nan, neginf_to_zero, equal_true, equal_false, \
     pseudo_bool_not
 from svvamp.preferences.profile import Profile
+from svvamp.preferences.profile_um import ProfileUM
 from svvamp.preferences.profile_subset_candidates import ProfileSubsetCandidates
 
 
@@ -2355,14 +2356,16 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         """Do the main work in UM loop for candidate ``c``, with option 'exact', for a voting system based only on
         strict rankings. Must decide ``_candidates_um[c]`` (to True, False or NaN). Do not update ``_is_um``.
         """
-        preferences_rk_test = np.copy(self.profile_.preferences_rk)
+        profile_s = Profile(
+            preferences_rk=self.profile_.preferences_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :],
+            preferences_borda_rk=self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :]
+        )
         base_ballot = [c] + list([i for i in range(self.profile_.n_c) if i != c])  # Put c first for the first try...
+        n_m = self.profile_.matrix_duels_ut[c, self.w_]
         for ballot in itertools.permutations(base_ballot):
             self.mylogv("UM: Ballot =", ballot, 3)
-            preferences_rk_test[self.v_wants_to_help_c_[:, c], :] = ballot
-            w_test = self._copy(
-                profile=Profile(preferences_rk=preferences_rk_test, sort_voters=False)
-            ).w_
+            profile_um = ProfileUM(profile_s=profile_s, n_m=n_m, ballot_rk=ballot)
+            w_test = self._copy(profile=profile_um).w_
             if w_test == c:
                 self._candidates_um[c] = True
                 return
