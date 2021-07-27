@@ -269,6 +269,10 @@ class RuleMaximin(Rule):
 
     * :meth:`is_cm_`: Deciding CM is NP-complete, even for 2 manipulators.
 
+        * :attr:`cm_option` = ``'faster'``: Zuckerman et al. (2011) (cf. below). The difference with option ``fast`` is
+          that, if CM is proven possible or impossible, we optimize the bounds only based on UM, and not on CM. Hence
+          this option is as precise as ``fast`` to compute ``is_cm_``, but less precise for the bounds
+          ``necessary_coalition_size_cm_`` and ``sufficient_coalition_size_cm_``.
         * :attr:`cm_option` = ``'fast'``: Zuckerman et al. (2011). This approximation algorithm is polynomial and has
           a multiplicative factor of error of 5/3 on the number of manipulators needed.
         * :attr:`cm_option` = ``'exact'``: Non-polynomial algorithm from superclass :class:`Rule`.
@@ -296,7 +300,7 @@ class RuleMaximin(Rule):
         'tm_option': {'allowed': ['exact'], 'default': 'exact'},
         'um_option': {'allowed': ['exact'], 'default': 'exact'},
         'icm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'cm_option': {'allowed': ['fast', 'exact'], 'default': 'fast'}
+        'cm_option': {'allowed': ['faster', 'fast', 'exact'], 'default': 'fast'}
     })
 
     def __init__(self, **kwargs):
@@ -694,6 +698,14 @@ class RuleMaximin(Rule):
         if not optimize_bounds and (self.profile_.matrix_duels_ut[c, self.w_] >= self._sufficient_coalition_size_cm[c]):
             return True  # is_quick_escape
 
+        # If the option is `faster` and if is_cm_c_ is decided, then we can exit here, because we do not want to
+        # improve the bounds anymore.
+        if self.cm_option == 'faster':
+            if self.profile_.matrix_duels_ut[c, self.w_] >= self._sufficient_coalition_size_cm[c]:
+                return False  # not a quick escape
+            if self._necessary_coalition_size_cm[c] > self.profile_.matrix_duels_ut[c, self.w_]:
+                return False  # not a quick escape
+
         while w_temp != c:
             self.mylogv("CM: w_temp =", w_temp, 3)
             self.mylogv("CM: c =", c, 3)
@@ -731,7 +743,7 @@ class RuleMaximin(Rule):
         """
         is_quick_escape_fast = self._cm_main_work_c_fast(c, optimize_bounds)
         if not self.cm_option == "exact":
-            # With 'fast' option, we stop here anyway.
+            # With 'fast' or 'faster' option, we stop here anyway.
             return is_quick_escape_fast
 
         # From this point, we have necessarily the 'exact' option (which is, in fact, only an exhaustive exploration

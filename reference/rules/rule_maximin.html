@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>RuleMaximin &mdash; SVVAMP 0.6.3 documentation</title>
+  <title>RuleMaximin &mdash; SVVAMP 0.6.4 documentation</title>
   
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                0.6.3
+                0.6.4
               </div>
             
           
@@ -477,6 +477,10 @@ In case of a tie, the candidate with lowest index wins.</p>
 <li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_cm_()</span></code>: Deciding CM is NP-complete, even for 2 manipulators.</p>
 <blockquote>
 <div><ul class="simple">
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'faster'</span></code>: Zuckerman et al. (2011) (cf. below). The difference with option <code class="docutils literal notranslate"><span class="pre">fast</span></code> is
+that, if CM is proven possible or impossible, we optimize the bounds only based on UM, and not on CM. Hence
+this option is as precise as <code class="docutils literal notranslate"><span class="pre">fast</span></code> to compute <code class="docutils literal notranslate"><span class="pre">is_cm_</span></code>, but less precise for the bounds
+<code class="docutils literal notranslate"><span class="pre">necessary_coalition_size_cm_</span></code> and <code class="docutils literal notranslate"><span class="pre">sufficient_coalition_size_cm_</span></code>.</p></li>
 <li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'fast'</span></code>: Zuckerman et al. (2011). This approximation algorithm is polynomial and has
 a multiplicative factor of error of 5/3 on the number of manipulators needed.</p></li>
 <li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'exact'</span></code>: Non-polynomial algorithm from superclass <a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>

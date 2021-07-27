@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>svvamp.rules.rule_maximin &mdash; SVVAMP 0.6.3 documentation</title>
+  <title>svvamp.rules.rule_maximin &mdash; SVVAMP 0.6.4 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.6.3
+                0.6.4
               </div>
             
           
@@ -437,6 +437,10 @@
 
 <span class="sd">    * :meth:`is_cm_`: Deciding CM is NP-complete, even for 2 manipulators.</span>
 
+<span class="sd">        * :attr:`cm_option` = ``&#39;faster&#39;``: Zuckerman et al. (2011) (cf. below). The difference with option ``fast`` is</span>
+<span class="sd">          that, if CM is proven possible or impossible, we optimize the bounds only based on UM, and not on CM. Hence</span>
+<span class="sd">          this option is as precise as ``fast`` to compute ``is_cm_``, but less precise for the bounds</span>
+<span class="sd">          ``necessary_coalition_size_cm_`` and ``sufficient_coalition_size_cm_``.</span>
 <span class="sd">        * :attr:`cm_option` = ``&#39;fast&#39;``: Zuckerman et al. (2011). This approximation algorithm is polynomial and has</span>
 <span class="sd">          a multiplicative factor of error of 5/3 on the number of manipulators needed.</span>
 <span class="sd">        * :attr:`cm_option` = ``&#39;exact&#39;``: Non-polynomial algorithm from superclass :class:`Rule`.</span>
@@ -464,7 +468,7 @@
         <span class="s1">&#39;tm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">},</span>
         <span class="s1">&#39;um_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">},</span>
         <span class="s1">&#39;icm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">},</span>
-        <span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;fast&#39;</span><span class="p">,</span> <span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;fast&#39;</span><span class="p">}</span>
+        <span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;faster&#39;</span><span class="p">,</span> <span class="s1">&#39;fast&#39;</span><span class="p">,</span> <span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;fast&#39;</span><span class="p">}</span>
     <span class="p">})</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -862,6 +866,14 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">optimize_bounds</span> <span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_ut</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]):</span>
             <span class="k">return</span> <span class="kc">True</span>  <span class="c1"># is_quick_escape</span>
 
+        <span class="c1"># If the option is `faster` and if is_cm_c_ is decided, then we can exit here, because we do not want to</span>
+        <span class="c1"># improve the bounds anymore.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span> <span class="o">==</span> <span class="s1">&#39;faster&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_ut</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="kc">False</span>  <span class="c1"># not a quick escape</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_ut</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="kc">False</span>  <span class="c1"># not a quick escape</span>
+
         <span class="k">while</span> <span class="n">w_temp</span> <span class="o">!=</span> <span class="n">c</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;CM: w_temp =&quot;</span><span class="p">,</span> <span class="n">w_temp</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;CM: c =&quot;</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
@@ -899,7 +911,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">is_quick_escape_fast</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cm_main_work_c_fast</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span> <span class="o">==</span> <span class="s2">&quot;exact&quot;</span><span class="p">:</span>
-            <span class="c1"># With &#39;fast&#39; option, we stop here anyway.</span>
+            <span class="c1"># With &#39;fast&#39; or &#39;faster&#39; option, we stop here anyway.</span>
             <span class="k">return</span> <span class="n">is_quick_escape_fast</span>
 
         <span class="c1"># From this point, we have necessarily the &#39;exact&#39; option (which is, in fact, only an exhaustive exploration</span>

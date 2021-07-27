@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>History &mdash; SVVAMP 0.6.3 documentation</title>
+  <title>History &mdash; SVVAMP 0.6.4 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.6.3
+                0.6.4
               </div>
             
           
@@ -101,6 +101,7 @@
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">History</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#option-faster-for-maximin">0.6.4 (2021-07-27): Option “faster” for Maximin</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#accelerate-profilesubsetcandidates">0.6.3 (2021-07-27): Accelerate ProfileSubsetCandidates</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#accelerate-maximin">0.6.2 (2021-07-27): Accelerate Maximin</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#accelerate-profile">0.6.1 (2021-07-27): Accelerate Profile</a></li>
@@ -215,6 +216,13 @@
 </style>
 <div class="section" id="history">
 <h1>History<a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="option-faster-for-maximin">
+<h2>0.6.4 (2021-07-27): Option “faster” for Maximin<a class="headerlink" href="#option-faster-for-maximin" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">RuleMaximin</span></code>: implement <code class="docutils literal notranslate"><span class="pre">cm_option=faster</span></code>, which is as precise as <code class="docutils literal notranslate"><span class="pre">fast</span></code> to compute <code class="docutils literal notranslate"><span class="pre">is_cm_</span></code>, less precise
+to compute the bounds <code class="docutils literal notranslate"><span class="pre">necessary_coalition_size_cm_</span></code> and <code class="docutils literal notranslate"><span class="pre">sufficient_coalition_size_cm_</span></code>, but a lot faster.</p></li>
+</ul>
+</div>
 <div class="section" id="accelerate-profilesubsetcandidates">
 <h2>0.6.3 (2021-07-27): Accelerate ProfileSubsetCandidates<a class="headerlink" href="#accelerate-profilesubsetcandidates" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
