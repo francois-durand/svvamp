@@ -4,6 +4,13 @@
 History
 =======
 
+-----------------------------------------------
+0.6.4 (2021-07-27): Option "faster" for Maximin
+-----------------------------------------------
+
+* ``RuleMaximin``: implement ``cm_option=faster``, which is as precise as ``fast`` to compute ``is_cm_``, less precise
+  to compute the bounds ``necessary_coalition_size_cm_`` and ``sufficient_coalition_size_cm_``, but a lot faster.
+
 ------------------------------------------------------
 0.6.3 (2021-07-27): Accelerate ProfileSubsetCandidates
 ------------------------------------------------------
