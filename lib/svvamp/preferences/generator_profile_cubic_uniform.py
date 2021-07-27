@@ -47,11 +47,12 @@ class GeneratorProfileCubicUniform(GeneratorProfile):
         (10, 3)
     """
 
-    def __init__(self, n_v, n_c, sort_voters=True):
+    def __init__(self, n_v, n_c, sort_voters=False):
         self.n_v = n_v
         self.n_c = n_c
         self.log_creation = ['Cubic uniform', n_c, n_v]
         super().__init__(sort_voters=sort_voters)
 
     def __call__(self):
-        return Profile(preferences_ut=2 * np.random.rand(self.n_v, self.n_c) - 1, log_creation=self.log_creation)
+        return Profile(preferences_ut=2 * np.random.rand(self.n_v, self.n_c) - 1, log_creation=self.log_creation,
+                       sort_voters=self.sort_voters)

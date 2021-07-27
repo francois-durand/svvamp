@@ -405,9 +405,13 @@ class RuleIRV(Rule):
         if self.profile_ is not None:
             delattr(self.profile_, 'irv')
         # See if new profile has an irv, with the same options
-        if hasattr(profile, 'irv') and self.options == profile.irv.options:
-            # Copy all its inner variables into mine.
+        if hasattr(profile, 'irv'):
+            # Save my options
+            my_options = self.options
+            # Copy all its inner variables into mine
             self.__dict__.update(profile.irv.__dict__)
+            # Reload my options
+            self.update_options(my_options)
         else:
             # 'Usual' behavior
             self.delete_cache(suffix='_')

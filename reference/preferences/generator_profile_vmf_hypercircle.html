@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>GeneratorProfileVMFHypercircle &mdash; SVVAMP 0.6.6 documentation</title>
+  <title>GeneratorProfileVMFHypercircle &mdash; SVVAMP 0.6.7 documentation</title>
   
 
   
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                0.6.6
+                0.6.7
               </div>
             
           
@@ -216,7 +216,7 @@
 <h1>GeneratorProfileVMFHypercircle<a class="headerlink" href="#generatorprofilevmfhypercircle" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="svvamp.GeneratorProfileVMFHypercircle">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">svvamp.</span></span><span class="sig-name descname"><span class="pre">GeneratorProfileVMFHypercircle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmf_concentration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmf_probability</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmf_pole</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_voters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/preferences/generator_profile_vmf_hypercircle.html#GeneratorProfileVMFHypercircle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.GeneratorProfileVMFHypercircle" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">svvamp.</span></span><span class="sig-name descname"><span class="pre">GeneratorProfileVMFHypercircle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmf_concentration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmf_probability</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmf_pole</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_voters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/preferences/generator_profile_vmf_hypercircle.html#GeneratorProfileVMFHypercircle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.GeneratorProfileVMFHypercircle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Profile generator using the Von Mises-Fisher distribution on the <code class="docutils literal notranslate"><span class="pre">n_c</span> <span class="pre">-</span> <span class="pre">2</span></code>-sphere</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -247,7 +247,7 @@ necessary). Then, <code class="docutils literal notranslate"><span class="pre">v
 <p class="rubric">Examples</p>
 <p>Typical usage:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">initialize_random_seeds</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">generator</span> <span class="o">=</span> <span class="n">GeneratorProfileVMFHypercircle</span><span class="p">(</span><span class="n">n_v</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_c</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">vmf_concentration</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generator</span> <span class="o">=</span> <span class="n">GeneratorProfileVMFHypercircle</span><span class="p">(</span><span class="n">n_v</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_c</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">vmf_concentration</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">sort_voters</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">generator</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">preferences_ut</span>
 <span class="go">array([[ 0.67886167, -0.73231774,  0.05345607],</span>
@@ -259,7 +259,8 @@ necessary). Then, <code class="docutils literal notranslate"><span class="pre">v
 </div>
 <p>You can specify a pole:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">initialize_random_seeds</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">generator</span> <span class="o">=</span> <span class="n">GeneratorProfileVMFHypercircle</span><span class="p">(</span><span class="n">n_v</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_c</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">vmf_concentration</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">vmf_pole</span><span class="o">=</span><span class="p">[</span><span class="mf">.7</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mf">.7</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generator</span> <span class="o">=</span> <span class="n">GeneratorProfileVMFHypercircle</span><span class="p">(</span><span class="n">n_v</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_c</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">vmf_concentration</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">vmf_pole</span><span class="o">=</span><span class="p">[</span><span class="mf">.7</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mf">.7</span><span class="p">],</span>
+<span class="gp">... </span>                                           <span class="n">sort_voters</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">generator</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">preferences_ut</span>
 <span class="go">array([[ 0.8147627 , -0.36132374, -0.45343896],</span>
@@ -272,7 +273,7 @@ necessary). Then, <code class="docutils literal notranslate"><span class="pre">v
 <p>With several poles:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">initialize_random_seeds</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">generator</span> <span class="o">=</span> <span class="n">GeneratorProfileVMFHypercircle</span><span class="p">(</span><span class="n">n_v</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_c</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">vmf_concentration</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">],</span>
-<span class="gp">... </span>                                           <span class="n">vmf_probability</span><span class="o">=</span><span class="p">[</span><span class="mf">.9</span><span class="p">,</span> <span class="mf">.1</span><span class="p">])</span>
+<span class="gp">... </span>                                           <span class="n">vmf_probability</span><span class="o">=</span><span class="p">[</span><span class="mf">.9</span><span class="p">,</span> <span class="mf">.1</span><span class="p">],</span> <span class="n">sort_voters</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">generator</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">preferences_ut</span>
 <span class="go">array([[ 1.19716876,  0.82383355, -2.02100232],</span>
@@ -284,7 +285,8 @@ necessary). Then, <code class="docutils literal notranslate"><span class="pre">v
 </div>
 <p>If the probabilities are not explicitly given, poles have equal probabilities:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">initialize_random_seeds</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">generator</span> <span class="o">=</span> <span class="n">GeneratorProfileVMFHypercircle</span><span class="p">(</span><span class="n">n_v</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_c</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">vmf_concentration</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generator</span> <span class="o">=</span> <span class="n">GeneratorProfileVMFHypercircle</span><span class="p">(</span><span class="n">n_v</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_c</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">vmf_concentration</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">],</span>
+<span class="gp">... </span>                                           <span class="n">sort_voters</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">generator</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">preferences_ut</span>
 <span class="go">array([[ 1.19716876,  0.82383355, -2.02100232],</span>

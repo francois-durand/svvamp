@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>GeneratorProfileVMFHypersphere &mdash; SVVAMP 0.6.6 documentation</title>
+  <title>GeneratorProfileVMFHypersphere &mdash; SVVAMP 0.6.7 documentation</title>
   
 
   
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                0.6.6
+                0.6.7
               </div>
             
           
@@ -216,7 +216,7 @@
 <h1>GeneratorProfileVMFHypersphere<a class="headerlink" href="#generatorprofilevmfhypersphere" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="svvamp.GeneratorProfileVMFHypersphere">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">svvamp.</span></span><span class="sig-name descname"><span class="pre">GeneratorProfileVMFHypersphere</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmf_concentration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmf_probability</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmf_pole</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stretching</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_voters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/preferences/generator_profile_vmf_hypersphere.html#GeneratorProfileVMFHypersphere"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.GeneratorProfileVMFHypersphere" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">svvamp.</span></span><span class="sig-name descname"><span class="pre">GeneratorProfileVMFHypersphere</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmf_concentration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmf_probability</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmf_pole</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stretching</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_voters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/preferences/generator_profile_vmf_hypersphere.html#GeneratorProfileVMFHypersphere"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.GeneratorProfileVMFHypersphere" title="Permalink to this definition">¶</a></dt>
 <dd><p>Profile generator using the Von Mises-Fisher distribution on the <code class="docutils literal notranslate"><span class="pre">n_c</span> <span class="pre">-</span> <span class="pre">1</span></code>-sphere</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -250,7 +250,7 @@ independently and uniformly on the sphere.</p>
 <p class="rubric">Examples</p>
 <p>Typical usage:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">initialize_random_seeds</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">generator</span> <span class="o">=</span> <span class="n">GeneratorProfileVMFHypersphere</span><span class="p">(</span><span class="n">n_v</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_c</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">vmf_concentration</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generator</span> <span class="o">=</span> <span class="n">GeneratorProfileVMFHypersphere</span><span class="p">(</span><span class="n">n_v</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_c</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">vmf_concentration</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">sort_voters</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">generator</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">preferences_ut</span>
 <span class="go">array([[ 0.95891992, -0.12067454,  0.25672991],</span>
@@ -262,7 +262,8 @@ independently and uniformly on the sphere.</p>
 </div>
 <p>You can specify a pole:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">initialize_random_seeds</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">generator</span> <span class="o">=</span> <span class="n">GeneratorProfileVMFHypersphere</span><span class="p">(</span><span class="n">n_v</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_c</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">vmf_concentration</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">vmf_pole</span><span class="o">=</span><span class="p">[</span><span class="mf">.7</span><span class="p">,</span> <span class="mf">.7</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generator</span> <span class="o">=</span> <span class="n">GeneratorProfileVMFHypersphere</span><span class="p">(</span><span class="n">n_v</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_c</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">vmf_concentration</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">vmf_pole</span><span class="o">=</span><span class="p">[</span><span class="mf">.7</span><span class="p">,</span> <span class="mf">.7</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+<span class="gp">... </span>                                           <span class="n">sort_voters</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">generator</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">preferences_ut</span>
 <span class="go">array([[ 0.75351327,  0.5734909 , -0.32144353],</span>
@@ -275,7 +276,7 @@ independently and uniformly on the sphere.</p>
 <p>With several poles:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">initialize_random_seeds</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">generator</span> <span class="o">=</span> <span class="n">GeneratorProfileVMFHypersphere</span><span class="p">(</span><span class="n">n_v</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_c</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">vmf_concentration</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">],</span>
-<span class="gp">... </span>                                           <span class="n">vmf_probability</span><span class="o">=</span><span class="p">[</span><span class="mf">.9</span><span class="p">,</span> <span class="mf">.1</span><span class="p">])</span>
+<span class="gp">... </span>                                           <span class="n">vmf_probability</span><span class="o">=</span><span class="p">[</span><span class="mf">.9</span><span class="p">,</span> <span class="mf">.1</span><span class="p">],</span> <span class="n">sort_voters</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">generator</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">preferences_ut</span>
 <span class="go">array([[ 2.2408932 ,  1.86755799, -0.97727788],</span>
@@ -287,7 +288,8 @@ independently and uniformly on the sphere.</p>
 </div>
 <p>If the probabilities are not explicitly given, poles have equal probabilities:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">initialize_random_seeds</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">generator</span> <span class="o">=</span> <span class="n">GeneratorProfileVMFHypersphere</span><span class="p">(</span><span class="n">n_v</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_c</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">vmf_concentration</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generator</span> <span class="o">=</span> <span class="n">GeneratorProfileVMFHypersphere</span><span class="p">(</span><span class="n">n_v</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_c</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">vmf_concentration</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">],</span>
+<span class="gp">... </span>                                           <span class="n">sort_voters</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">generator</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">preferences_ut</span>
 <span class="go">array([[ 2.2408932 ,  1.86755799, -0.97727788],</span>
@@ -299,7 +301,8 @@ independently and uniformly on the sphere.</p>
 </div>
 <p>With some stretching:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">initialize_random_seeds</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">generator</span> <span class="o">=</span> <span class="n">GeneratorProfileVMFHypersphere</span><span class="p">(</span><span class="n">n_v</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_c</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">vmf_concentration</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stretching</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generator</span> <span class="o">=</span> <span class="n">GeneratorProfileVMFHypersphere</span><span class="p">(</span><span class="n">n_v</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_c</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">vmf_concentration</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stretching</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+<span class="gp">... </span>                                           <span class="n">sort_voters</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">generator</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">preferences_ut</span>
 <span class="go">array([[ 0.14719473,  0.14577802,  0.14320266],</span>
@@ -310,7 +313,8 @@ independently and uniformly on the sphere.</p>
 </pre></div>
 </div>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">initialize_random_seeds</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">generator</span> <span class="o">=</span> <span class="n">GeneratorProfileVMFHypersphere</span><span class="p">(</span><span class="n">n_v</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_c</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">vmf_concentration</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stretching</span><span class="o">=</span><span class="mf">.01</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generator</span> <span class="o">=</span> <span class="n">GeneratorProfileVMFHypersphere</span><span class="p">(</span><span class="n">n_v</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_c</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">vmf_concentration</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stretching</span><span class="o">=</span><span class="mf">.01</span><span class="p">,</span>
+<span class="gp">... </span>                                           <span class="n">sort_voters</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">generator</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">preferences_ut</span>
 <span class="go">array([[ 0.18174638,  0.04007574, -0.21746036],</span>

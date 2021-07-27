@@ -79,7 +79,7 @@ class GeneratorProfileSpheroid(GeneratorProfile):
         (10, 3)
     """
 
-    def __init__(self, n_v, n_c, stretching=1, sort_voters=True):
+    def __init__(self, n_v, n_c, stretching=1, sort_voters=False):
         self.n_v = n_v
         self.n_c = n_c
         self.stretching = stretching
@@ -103,4 +103,4 @@ class GeneratorProfileSpheroid(GeneratorProfile):
         elif self.stretching > 1:
             preferences_ut = (preferences_ut / self.stretching
                               + np.sum(preferences_ut, 1)[:, np.newaxis] * (1 - 1 / self.stretching) / self.n_c)
-        return Profile(preferences_ut=preferences_ut, log_creation=self.log_creation)
+        return Profile(preferences_ut=preferences_ut, log_creation=self.log_creation, sort_voters=self.sort_voters)

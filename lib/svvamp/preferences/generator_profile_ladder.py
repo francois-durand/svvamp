@@ -54,7 +54,7 @@ class GeneratorProfileLadder(GeneratorProfile):
         (10, 3)
     """
 
-    def __init__(self, n_v, n_c, n_rungs, sort_voters=True):
+    def __init__(self, n_v, n_c, n_rungs, sort_voters=False):
         self.n_v = n_v
         self.n_c = n_c
         self.n_rungs = n_rungs
@@ -64,4 +64,4 @@ class GeneratorProfileLadder(GeneratorProfile):
     def __call__(self):
         return Profile(
             preferences_ut=np.random.randint(self.n_rungs, size=(self.n_v, self.n_c)) * 2 / (self.n_rungs - 1) - 1,
-            log_creation=self.log_creation)
+            log_creation=self.log_creation, sort_voters=self.sort_voters)

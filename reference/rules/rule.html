@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Rule &mdash; SVVAMP 0.6.6 documentation</title>
+  <title>Rule &mdash; SVVAMP 0.6.7 documentation</title>
   
 
   
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                0.6.6
+                0.6.7
               </div>
             
           
@@ -1142,6 +1142,18 @@ we have by convention <code class="docutils literal notranslate"><span class="pr
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">um_option</span></span><a class="headerlink" href="#svvamp.Rule.um_option" title="Permalink to this definition">¶</a></dt>
 <dd><p>String. Option used to compute <a class="reference internal" href="#svvamp.Rule.is_um_" title="svvamp.Rule.is_um_"><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_um_()</span></code></a> and related methods.</p>
 <p>To know what options are accepted for a given voting system, use <code class="xref py py-attr docutils literal notranslate"><span class="pre">options_parameters</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.Rule.update_options">
+<span class="sig-name descname"><span class="pre">update_options</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/rules/rule.html#Rule.update_options"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.Rule.update_options" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update options.</p>
+<p>For example, instead of <code class="docutils literal notranslate"><span class="pre">rule.cm_option='exact'</span></code>, you can write <code class="docutils literal notranslate"><span class="pre">rule.update_options{'cm_option':</span> <span class="pre">'exact'}</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>options</strong> (<em>dict</em>) – Key: option name. Value: option value.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">

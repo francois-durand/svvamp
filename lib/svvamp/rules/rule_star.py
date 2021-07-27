@@ -440,7 +440,7 @@ class RuleSTAR(Rule):
         preferences_test = np.copy(self.profile_.preferences_ut)
         preferences_test[self.v_wants_to_help_c_[:, c], :] = self.min_grade
         preferences_test[self.v_wants_to_help_c_[:, c], c] = self.max_grade
-        w_test = self._copy(profile=Profile(preferences_ut=preferences_test)).w_
+        w_test = self._copy(profile=Profile(preferences_ut=preferences_test, sort_voters=False)).w_
         self._candidates_tm[c] = (w_test == c)
 
     # %% Unison Manipulation (UM)

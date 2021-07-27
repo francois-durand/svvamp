@@ -30,7 +30,7 @@ from svvamp.preferences.profile import Profile
 
 class ProfileFromFile(Profile):
 
-    def __init__(self, file_name, sort_candidates=False, sort_voters=True):
+    def __init__(self, file_name, sort_candidates=False, sort_voters=False):
         """Profile from a file.
 
         Parameters
@@ -72,7 +72,7 @@ class ProfileFromFile(Profile):
         else:
             preferences_ut, labels_candidates = preflib_to_preferences_ut(file_name)
         if sort_candidates:
-            pop_temp = Profile(preferences_ut)
+            pop_temp = Profile(preferences_ut, sort_voters=False)
             nb_victories_temp = np.sum(pop_temp.matrix_victories_ut_rel, 1)
             scores_temp = nb_victories_temp + pop_temp.borda_score_c_ut / pop_temp.n_c / pop_temp.n_v
             candidates_best_to_worst = np.argsort(- scores_temp, kind='mergesort')

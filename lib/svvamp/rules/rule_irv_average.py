@@ -306,7 +306,7 @@ class RuleIRVAverage(Rule):
     # %% Coalition Manipulation (CM)
 
     def _cm_aux_(self, c, ballots_m, preferences_rk_s):
-        profile_test = Profile(preferences_rk=np.concatenate((preferences_rk_s, ballots_m)))
+        profile_test = Profile(preferences_rk=np.concatenate((preferences_rk_s, ballots_m)), sort_voters=False)
         if profile_test.n_v != self.profile_.n_v:
             raise AssertionError('Uh-oh!')
         winner_test = self.__class__()(profile_test).w_

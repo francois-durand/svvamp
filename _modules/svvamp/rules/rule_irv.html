@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>svvamp.rules.rule_irv &mdash; SVVAMP 0.6.6 documentation</title>
+  <title>svvamp.rules.rule_irv &mdash; SVVAMP 0.6.7 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.6.6
+                0.6.7
               </div>
             
           
@@ -573,9 +573,13 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="nb">delattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="p">,</span> <span class="s1">&#39;irv&#39;</span><span class="p">)</span>
         <span class="c1"># See if new profile has an irv, with the same options</span>
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="s1">&#39;irv&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">==</span> <span class="n">profile</span><span class="o">.</span><span class="n">irv</span><span class="o">.</span><span class="n">options</span><span class="p">:</span>
-            <span class="c1"># Copy all its inner variables into mine.</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="s1">&#39;irv&#39;</span><span class="p">):</span>
+            <span class="c1"># Save my options</span>
+            <span class="n">my_options</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span>
+            <span class="c1"># Copy all its inner variables into mine</span>
             <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">profile</span><span class="o">.</span><span class="n">irv</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
+            <span class="c1"># Reload my options</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update_options</span><span class="p">(</span><span class="n">my_options</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># &#39;Usual&#39; behavior</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">delete_cache</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;_&#39;</span><span class="p">)</span>

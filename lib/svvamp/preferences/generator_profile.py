@@ -34,7 +34,7 @@ class GeneratorProfile:
     Cf. :class:`GeneratorProfileEuclideanBox`.
     """
 
-    def __init__(self, sort_voters=True):
+    def __init__(self, sort_voters=False):
         """Store the parameters of the generator.
         """
         self.sort_voters = sort_voters

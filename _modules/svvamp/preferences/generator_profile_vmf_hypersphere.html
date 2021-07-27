@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>svvamp.preferences.generator_profile_vmf_hypersphere &mdash; SVVAMP 0.6.6 documentation</title>
+  <title>svvamp.preferences.generator_profile_vmf_hypersphere &mdash; SVVAMP 0.6.7 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.6.6
+                0.6.7
               </div>
             
           
@@ -241,7 +241,7 @@
 <span class="sd">    Typical usage:</span>
 
 <span class="sd">        &gt;&gt;&gt; initialize_random_seeds()</span>
-<span class="sd">        &gt;&gt;&gt; generator = GeneratorProfileVMFHypersphere(n_v=5, n_c=3, vmf_concentration=10)</span>
+<span class="sd">        &gt;&gt;&gt; generator = GeneratorProfileVMFHypersphere(n_v=5, n_c=3, vmf_concentration=10, sort_voters=True)</span>
 <span class="sd">        &gt;&gt;&gt; profile = generator()</span>
 <span class="sd">        &gt;&gt;&gt; profile.preferences_ut</span>
 <span class="sd">        array([[ 0.95891992, -0.12067454,  0.25672991],</span>
@@ -253,7 +253,8 @@
 <span class="sd">    You can specify a pole:</span>
 
 <span class="sd">        &gt;&gt;&gt; initialize_random_seeds()</span>
-<span class="sd">        &gt;&gt;&gt; generator = GeneratorProfileVMFHypersphere(n_v=5, n_c=3, vmf_concentration=10, vmf_pole=[.7, .7, 0])</span>
+<span class="sd">        &gt;&gt;&gt; generator = GeneratorProfileVMFHypersphere(n_v=5, n_c=3, vmf_concentration=10, vmf_pole=[.7, .7, 0],</span>
+<span class="sd">        ...                                            sort_voters=True)</span>
 <span class="sd">        &gt;&gt;&gt; profile = generator()</span>
 <span class="sd">        &gt;&gt;&gt; profile.preferences_ut</span>
 <span class="sd">        array([[ 0.75351327,  0.5734909 , -0.32144353],</span>
@@ -266,7 +267,7 @@
 
 <span class="sd">        &gt;&gt;&gt; initialize_random_seeds()</span>
 <span class="sd">        &gt;&gt;&gt; generator = GeneratorProfileVMFHypersphere(n_v=5, n_c=3, vmf_concentration=[np.inf, np.inf],</span>
-<span class="sd">        ...                                            vmf_probability=[.9, .1])</span>
+<span class="sd">        ...                                            vmf_probability=[.9, .1], sort_voters=True)</span>
 <span class="sd">        &gt;&gt;&gt; profile = generator()</span>
 <span class="sd">        &gt;&gt;&gt; profile.preferences_ut</span>
 <span class="sd">        array([[ 2.2408932 ,  1.86755799, -0.97727788],</span>
@@ -278,7 +279,8 @@
 <span class="sd">    If the probabilities are not explicitly given, poles have equal probabilities:</span>
 
 <span class="sd">        &gt;&gt;&gt; initialize_random_seeds()</span>
-<span class="sd">        &gt;&gt;&gt; generator = GeneratorProfileVMFHypersphere(n_v=5, n_c=3, vmf_concentration=[np.inf, np.inf])</span>
+<span class="sd">        &gt;&gt;&gt; generator = GeneratorProfileVMFHypersphere(n_v=5, n_c=3, vmf_concentration=[np.inf, np.inf],</span>
+<span class="sd">        ...                                            sort_voters=True)</span>
 <span class="sd">        &gt;&gt;&gt; profile = generator()</span>
 <span class="sd">        &gt;&gt;&gt; profile.preferences_ut</span>
 <span class="sd">        array([[ 2.2408932 ,  1.86755799, -0.97727788],</span>
@@ -290,7 +292,8 @@
 <span class="sd">    With some stretching:</span>
 
 <span class="sd">        &gt;&gt;&gt; initialize_random_seeds()</span>
-<span class="sd">        &gt;&gt;&gt; generator = GeneratorProfileVMFHypersphere(n_v=5, n_c=3, vmf_concentration=0, stretching=100)</span>
+<span class="sd">        &gt;&gt;&gt; generator = GeneratorProfileVMFHypersphere(n_v=5, n_c=3, vmf_concentration=0, stretching=100,</span>
+<span class="sd">        ...                                            sort_voters=True)</span>
 <span class="sd">        &gt;&gt;&gt; profile = generator()</span>
 <span class="sd">        &gt;&gt;&gt; profile.preferences_ut</span>
 <span class="sd">        array([[ 0.14719473,  0.14577802,  0.14320266],</span>
@@ -300,7 +303,8 @@
 <span class="sd">               [ 0.59993219,  0.59426747,  0.60493974]])</span>
 
 <span class="sd">        &gt;&gt;&gt; initialize_random_seeds()</span>
-<span class="sd">        &gt;&gt;&gt; generator = GeneratorProfileVMFHypersphere(n_v=5, n_c=3, vmf_concentration=0, stretching=.01)</span>
+<span class="sd">        &gt;&gt;&gt; generator = GeneratorProfileVMFHypersphere(n_v=5, n_c=3, vmf_concentration=0, stretching=.01,</span>
+<span class="sd">        ...                                            sort_voters=True)</span>
 <span class="sd">        &gt;&gt;&gt; profile = generator()</span>
 <span class="sd">        &gt;&gt;&gt; profile.preferences_ut</span>
 <span class="sd">        array([[ 0.18174638,  0.04007574, -0.21746036],</span>
@@ -317,7 +321,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_v</span><span class="p">,</span> <span class="n">n_c</span><span class="p">,</span> <span class="n">vmf_concentration</span><span class="p">,</span> <span class="n">vmf_probability</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vmf_pole</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stretching</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-                 <span class="n">sort_voters</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+                 <span class="n">sort_voters</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_v</span> <span class="o">=</span> <span class="n">n_v</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_c</span> <span class="o">=</span> <span class="n">n_c</span>
         <span class="c1"># Ensure that _vmf_concentration is an np.array. Compute k, its size.</span>
@@ -364,7 +368,7 @@
             <span class="n">preferences_ut</span> <span class="o">=</span> <span class="p">(</span><span class="n">preferences_ut</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">stretching</span>
                               <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">preferences_ut</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">stretching</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_c</span><span class="p">)</span>
         <span class="c1"># Conclude</span>
-        <span class="k">return</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="n">preferences_ut</span><span class="p">,</span> <span class="n">log_creation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">log_creation</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="n">preferences_ut</span><span class="p">,</span> <span class="n">log_creation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">log_creation</span><span class="p">,</span> <span class="n">sort_voters</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sort_voters</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>svvamp.preferences.generator_profile_vmf_hypercircle &mdash; SVVAMP 0.6.6 documentation</title>
+  <title>svvamp.preferences.generator_profile_vmf_hypercircle &mdash; SVVAMP 0.6.7 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.6.6
+                0.6.7
               </div>
             
           
@@ -236,7 +236,7 @@
 <span class="sd">    Typical usage:</span>
 
 <span class="sd">        &gt;&gt;&gt; initialize_random_seeds()</span>
-<span class="sd">        &gt;&gt;&gt; generator = GeneratorProfileVMFHypercircle(n_v=5, n_c=3, vmf_concentration=10)</span>
+<span class="sd">        &gt;&gt;&gt; generator = GeneratorProfileVMFHypercircle(n_v=5, n_c=3, vmf_concentration=10, sort_voters=True)</span>
 <span class="sd">        &gt;&gt;&gt; profile = generator()</span>
 <span class="sd">        &gt;&gt;&gt; profile.preferences_ut</span>
 <span class="sd">        array([[ 0.67886167, -0.73231774,  0.05345607],</span>
@@ -248,7 +248,8 @@
 <span class="sd">    You can specify a pole:</span>
 
 <span class="sd">        &gt;&gt;&gt; initialize_random_seeds()</span>
-<span class="sd">        &gt;&gt;&gt; generator = GeneratorProfileVMFHypercircle(n_v=5, n_c=3, vmf_concentration=10, vmf_pole=[.7, 0, -.7])</span>
+<span class="sd">        &gt;&gt;&gt; generator = GeneratorProfileVMFHypercircle(n_v=5, n_c=3, vmf_concentration=10, vmf_pole=[.7, 0, -.7],</span>
+<span class="sd">        ...                                            sort_voters=True)</span>
 <span class="sd">        &gt;&gt;&gt; profile = generator()</span>
 <span class="sd">        &gt;&gt;&gt; profile.preferences_ut</span>
 <span class="sd">        array([[ 0.8147627 , -0.36132374, -0.45343896],</span>
@@ -261,7 +262,7 @@
 
 <span class="sd">        &gt;&gt;&gt; initialize_random_seeds()</span>
 <span class="sd">        &gt;&gt;&gt; generator = GeneratorProfileVMFHypercircle(n_v=5, n_c=3, vmf_concentration=[np.inf, np.inf],</span>
-<span class="sd">        ...                                            vmf_probability=[.9, .1])</span>
+<span class="sd">        ...                                            vmf_probability=[.9, .1], sort_voters=True)</span>
 <span class="sd">        &gt;&gt;&gt; profile = generator()</span>
 <span class="sd">        &gt;&gt;&gt; profile.preferences_ut</span>
 <span class="sd">        array([[ 1.19716876,  0.82383355, -2.02100232],</span>
@@ -273,7 +274,8 @@
 <span class="sd">    If the probabilities are not explicitly given, poles have equal probabilities:</span>
 
 <span class="sd">        &gt;&gt;&gt; initialize_random_seeds()</span>
-<span class="sd">        &gt;&gt;&gt; generator = GeneratorProfileVMFHypercircle(n_v=5, n_c=3, vmf_concentration=[np.inf, np.inf])</span>
+<span class="sd">        &gt;&gt;&gt; generator = GeneratorProfileVMFHypercircle(n_v=5, n_c=3, vmf_concentration=[np.inf, np.inf],</span>
+<span class="sd">        ...                                            sort_voters=True)</span>
 <span class="sd">        &gt;&gt;&gt; profile = generator()</span>
 <span class="sd">        &gt;&gt;&gt; profile.preferences_ut</span>
 <span class="sd">        array([[ 1.19716876,  0.82383355, -2.02100232],</span>
@@ -289,7 +291,7 @@
 <span class="sd">    Wood (1994) - Simulation of the von Mises Fisher distribution</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_v</span><span class="p">,</span> <span class="n">n_c</span><span class="p">,</span> <span class="n">vmf_concentration</span><span class="p">,</span> <span class="n">vmf_probability</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vmf_pole</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sort_voters</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_v</span><span class="p">,</span> <span class="n">n_c</span><span class="p">,</span> <span class="n">vmf_concentration</span><span class="p">,</span> <span class="n">vmf_probability</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vmf_pole</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sort_voters</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_v</span> <span class="o">=</span> <span class="n">n_v</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_c</span> <span class="o">=</span> <span class="n">n_c</span>
         <span class="c1"># Ensure that _vmf_concentration is an np.array. Compute k, its size.</span>
@@ -348,7 +350,7 @@
                                         <span class="bp">self</span><span class="o">.</span><span class="n">unitary_parallel</span><span class="p">)</span>
         <span class="n">preferences_ut</span> <span class="o">-=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">preferences_parallel</span>
         <span class="c1"># Conclude</span>
-        <span class="k">return</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="n">preferences_ut</span><span class="p">,</span> <span class="n">log_creation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">log_creation</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="n">preferences_ut</span><span class="p">,</span> <span class="n">log_creation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">log_creation</span><span class="p">,</span> <span class="n">sort_voters</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sort_voters</span><span class="p">)</span></div>
 </pre></div>
 
            </div>
