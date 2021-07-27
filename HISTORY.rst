@@ -5,6 +5,14 @@ History
 =======
 
 --------------------------------------
+0.6.2 (2021-07-27): Accelerate Maximin
+--------------------------------------
+
+* Accelerate ``RuleMaximin.necessary_coalition_size_cm_`` and ``RuleMaximin.sufficient_coalition_size_cm_``.
+* Add ``RuleMaximin.sufficient_coalition_size_um_c_``: number of manipulators that are sufficient (and necessary)
+  for UM.
+
+--------------------------------------
 0.6.1 (2021-07-27): Accelerate Profile
 --------------------------------------
 
