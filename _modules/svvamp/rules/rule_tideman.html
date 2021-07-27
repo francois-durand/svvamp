@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>svvamp.rules.rule_tideman &mdash; SVVAMP 0.6.4 documentation</title>
+  <title>svvamp.rules.rule_tideman &mdash; SVVAMP 0.6.5 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.6.4
+                0.6.5
               </div>
             
           
@@ -194,7 +194,7 @@
 <span class="kn">from</span> <span class="nn">svvamp.preferences.profile_subset_candidates</span> <span class="kn">import</span> <span class="n">ProfileSubsetCandidates</span>
 <span class="kn">from</span> <span class="nn">svvamp.utils.util_cache</span> <span class="kn">import</span> <span class="n">cached_property</span>
 <span class="kn">from</span> <span class="nn">svvamp.utils.pseudo_bool</span> <span class="kn">import</span> <span class="n">equal_true</span>
-<span class="kn">from</span> <span class="nn">svvamp.utils.misc</span> <span class="kn">import</span> <span class="n">preferences_ut_to_matrix_duels_ut</span>
+<span class="kn">from</span> <span class="nn">svvamp.utils.misc</span> <span class="kn">import</span> <span class="n">preferences_ut_to_matrix_duels_ut</span><span class="p">,</span> <span class="n">matrix_victories_to_smith_set</span>
 
 
 <div class="viewcode-block" id="RuleTideman"><a class="viewcode-back" href="../../../reference/rules/rule_tideman.html#svvamp.RuleTideman">[docs]</a><span class="k">class</span> <span class="nc">RuleTideman</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
@@ -411,8 +411,9 @@
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
             <span class="c1"># Eliminate candidates outside Smith set</span>
             <span class="c1"># Here, scores_r is 1 for being in the Smith set, 0 otherwise</span>
-            <span class="n">profile_r</span> <span class="o">=</span> <span class="n">ProfileSubsetCandidates</span><span class="p">(</span><span class="n">parent_profile</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="p">,</span> <span class="n">candidates_subset</span><span class="o">=</span><span class="n">candidates_alive</span><span class="p">)</span>
-            <span class="n">smith_set_r</span> <span class="o">=</span> <span class="n">profile_r</span><span class="o">.</span><span class="n">smith_set_rk</span>
+            <span class="n">matrix_victories_rk_r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_victories_rk</span><span class="p">[</span><span class="n">candidates_alive</span><span class="p">,</span> <span class="p">:][:,</span> <span class="n">candidates_alive</span><span class="p">]</span>
+            <span class="n">smith_set_r</span> <span class="o">=</span> <span class="n">matrix_victories_to_smith_set</span><span class="p">(</span><span class="n">matrix_victories_rk_r</span><span class="p">)</span>
+            <span class="c1"># La suite</span>
             <span class="n">candidates_alive_new</span> <span class="o">=</span> <span class="n">candidates_alive</span><span class="p">[</span><span class="n">smith_set_r</span><span class="p">]</span>
             <span class="n">scores_r</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">1</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">candidates_alive_new</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">)]</span>
             <span class="n">scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">scores_r</span><span class="p">)</span>
