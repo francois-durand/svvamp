@@ -292,8 +292,7 @@ class RuleBaldwin(Rule):
             precheck_icm=False, log_identity="BALDWIN", **kwargs
         )
 
-    @cached_property
-    def _count_ballots_(self):
+    def _count_ballots_aux_(self):
         """
         Returns
         -------
@@ -303,23 +302,27 @@ class RuleBaldwin(Rule):
         self.mylog("Count ballots", 1)
         scores = np.zeros((self.profile_.n_c - 1, self.profile_.n_c))
         worst_to_best = []
-        preferences_borda_temp = self.profile_.preferences_borda_rk.astype(float)
         w = None
+        matrix_duels_rk = self.profile_.matrix_duels_rk
+        scores_borda_temp = np.sum(matrix_duels_rk, axis=1).astype(float)
         for r in range(self.profile_.n_c - 1):  # Round r
-            scores[r, :] = np.sum(preferences_borda_temp, 0)
+            scores[r, :] = scores_borda_temp
             loser = np.where(scores[r, :] == np.min(scores[r, :]))[0][-1]  # Tie-breaking: higher index
             worst_to_best.append(loser)
             if r == self.profile_.n_c - 2:
-                preferences_borda_temp[0, loser] = np.inf
-                w = np.argmin(preferences_borda_temp[0, :])
+                scores_borda_temp[loser] = np.inf
+                w = np.argmin(scores_borda_temp)
                 worst_to_best.append(w)
                 break
             # Prepare for next round
-            # If v was ranking c above loser, then c loses 1 point:
-            preferences_borda_temp[preferences_borda_temp > preferences_borda_temp[:, loser][:, np.newaxis]] -= 1
-            preferences_borda_temp[:, loser] = np.inf
+            scores_borda_temp -= self.profile_.matrix_duels_rk[:, loser]
+            scores_borda_temp[loser] = np.inf
         candidates_by_scores_best_to_worst = np.array(worst_to_best[::-1])
         return {'scores': scores, 'w': w, 'candidates_by_scores_best_to_worst': candidates_by_scores_best_to_worst}
+
+    @cached_property
+    def _count_ballots_(self):
+        return self._count_ballots_aux_()
 
     @cached_property
     def scores_(self):

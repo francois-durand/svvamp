@@ -1577,7 +1577,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         while ballot is not None:  # Loop on possible ballots
             self.mylogv("IM: Ballot =", ballot, 3)
             preferences_borda_test[v, :] = ballot
-            w_test = self._copy(profile=Profile(preferences_ut=preferences_borda_test)).w_
+            w_test = self._copy(profile=Profile(preferences_ut=preferences_borda_test, sort_voters=False)).w_
             if np.isneginf(self._v_im_for_c[v, w_test]):
                 # Implicitly, it also means that v prefers c to w (cf. specifications of _im_initialize_general).
                 self._v_im_for_c[v, w_test] = True
@@ -1614,7 +1614,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             # Implicitly, it also means that v prefers c to w (cf. specifications of _im_initialize_general).
             preferences_ut_test[v, :] = -1
             preferences_ut_test[v, c] = 1
-            w_test = self._copy(Profile(preferences_ut=preferences_ut_test)).w_
+            w_test = self._copy(Profile(preferences_ut=preferences_ut_test, sort_voters=False)).w_
             if w_test == c:
                 self._v_im_for_c[v, c] = True
                 self._candidates_im[c] = True
@@ -1988,7 +1988,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         preferences_test = np.copy(self.profile_.preferences_ut)
         preferences_test[self.v_wants_to_help_c_[:, c], :] = -1
         preferences_test[self.v_wants_to_help_c_[:, c], c] = 1
-        w_test = self._copy(profile=Profile(preferences_ut=preferences_test)).w_
+        w_test = self._copy(profile=Profile(preferences_ut=preferences_test, sort_voters=False)).w_
         self._candidates_tm[c] = (w_test == c)
 
     def _tm_conclude_c_(self, c):
@@ -2057,7 +2057,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         self._tm_conclude_c_(c)
 
     def _compute_trivial_strategy_ordinal_(self, c):
-        """Compute trivial strategy for an voting system based on strict rankings.
+        """Compute trivial strategy for a voting system based on strict rankings.
 
         Parameters
         ----------
@@ -2358,7 +2358,8 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         """
         profile_s = Profile(
             preferences_rk=self.profile_.preferences_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :],
-            preferences_borda_rk=self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :]
+            preferences_borda_rk=self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :],
+            sort_voters=False
         )
         base_ballot = [c] + list([i for i in range(self.profile_.n_c) if i != c])  # Put c first for the first try...
         n_m = self.profile_.matrix_duels_ut[c, self.w_]
@@ -3296,7 +3297,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         manipulator_favorite = np.full(n_m, self.profile_.n_c - 1)
         while preferences_borda_temp is not None:
             # self.mylogm('preferences_borda_temp =', preferences_borda_temp, 3)
-            w_test = self._copy(profile=Profile(preferences_ut=preferences_borda_temp)).w_
+            w_test = self._copy(profile=Profile(preferences_ut=preferences_borda_temp, sort_voters=False)).w_
             if w_test == c:
                 self._update_sufficient(self._sufficient_coalition_size_cm, c, n_m,
                                         'CM: Manipulation found by exhaustive test =>\n'
