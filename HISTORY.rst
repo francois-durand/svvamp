@@ -4,6 +4,14 @@
 History
 =======
 
+------------------------------------------------------
+0.6.3 (2021-07-27): Accelerate ProfileSubsetCandidates
+------------------------------------------------------
+
+* ``Profile`` now has a parameter ``preferences_borda_rk``. At initialization, it can be given instead of
+  ``preferences_rk``.
+* ``ProfileSubsetCandidates``: accelerate the initialization method.
+
 --------------------------------------
 0.6.2 (2021-07-27): Accelerate Maximin
 --------------------------------------
