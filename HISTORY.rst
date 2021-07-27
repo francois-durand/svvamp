@@ -4,6 +4,19 @@
 History
 =======
 
+---------------------------------
+0.6.7 (2021-07-27): Accelerations
+---------------------------------
+
+* The option ``sort_voters`` in ``Profile`` and related classes (such as ``GeneratorProfile`` and its subclasses) is
+  now False by default.
+* ``Rule``: accelerate exact IM, UM and CM (generic exact algorithms for ranking-based rules).
+* ``RuleBaldwin``: accelerate counting the ballot and computing the winner (especially useful for exact UM).
+* ``RuleSTAR``: accelerate TM.
+* ``RuleICRV``, ``RuleIRVAverage``, ``RuleSmithIRV``, ``RuleTideman``, ``RuleWoodall``: accelerate CM.
+* Improve the management of options in ``RuleExhaustiveBallot`` and ``RuleIRV``. In some (common) cases, it accelerates
+  the computation of related voting rules (``RuleCondorcetAbsIRV``, etc).
+
 ----------------------------------------
 0.6.6 (2021-07-27): Fix bug in ProfileUM
 ----------------------------------------
