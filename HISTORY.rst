@@ -4,6 +4,14 @@
 History
 =======
 
+--------------------------------------
+0.6.1 (2021-07-27): Accelerate Profile
+--------------------------------------
+
+* Accelerate ``Profile``: lazy evaluation of attributes ``preferences_rk``, ``preferences_ut``, ``preferences_borda_rk``
+  and ````preferences_borda_ut``. This leads to a very significant acceleration for many methods (typically TM, UM and
+  IIA, but also CM and IM for some voting rules).
+
 ---------------------------------------
 0.6.0 (2021-07-26): ExperimentsCompiler
 ---------------------------------------
