@@ -124,68 +124,106 @@ class Profile(my_log.MyLog):
         """
         super().__init__(log_identity="PROFILE")
 
-        # Preference arrays (except preferences_borda_ut, which is not needed at this point).
-        if preferences_rk is None:
-            preferences_rk = preferences_ut_to_preferences_rk(preferences_ut)
-        self._preferences_rk = np.array(preferences_rk)
-        self._preferences_borda_rk = preferences_rk_to_preferences_borda_rk(self._preferences_rk)
         if preferences_ut is None:
-            preferences_ut = self._preferences_borda_rk
-        self._preferences_ut = np.array(preferences_ut)
-
-        # Number of voters and candidates
-        self.n_v = None
-        """int : Number of voters."""
-        self.n_c = None
-        """int : Number of candidates."""
-        self.n_v, self.n_c = self._preferences_ut.shape
-        if self.n_v < 2 or self.n_c < 2:
-            raise ValueError("A population must have at least 2 voters and 2 candidates.")
-
-        if sort_voters:
-            self._preferences_borda_ut = preferences_ut_to_preferences_borda_ut(self._preferences_ut)
-            # Sort voters by weak order (deducted from utility)
-            list_borda_ut = self._preferences_borda_ut.tolist()
-            # noinspection PyTypeChecker,PyUnresolvedReferences
-            indexes = sorted(range(len(list_borda_ut)), key=list_borda_ut.__getitem__)
-            self._preferences_rk = self._preferences_rk[indexes, ::]
-            self._preferences_ut = self._preferences_ut[indexes, ::]
-            self._preferences_borda_rk = self._preferences_borda_rk[indexes, ::]
-            self._preferences_borda_ut = self._preferences_borda_ut[indexes, ::]
-            # Sort voters by strict ranking
-            list_rankings = self._preferences_rk.tolist()
-            indexes = sorted(range(len(list_rankings)), key=list_rankings.__getitem__)
-            self._preferences_rk = self._preferences_rk[indexes, ::]
-            self._preferences_ut = self._preferences_ut[indexes, ::]
-            self._preferences_borda_rk = self._preferences_borda_rk[indexes, ::]
-            self._preferences_borda_ut = self._preferences_borda_ut[indexes, ::]
+            self._preferences_ut_input = None
         else:
-            self._preferences_borda_ut = None  # Compute later only if needed.
-
-        # Misc variables
-        self._labels_candidates = labels_candidates
+            self._preferences_ut_input = np.array(preferences_ut)
+        if preferences_rk is None:
+            self._preferences_rk_input = None
+        else:
+            self._preferences_rk_input = np.array(preferences_rk)
         self.log_creation = log_creation
+        self._labels_candidates = labels_candidates
+        self._sort_voters = sort_voters
 
     # %% Basic variables
+
+    @cached_property
+    def n_v(self):
+        """int : Number of voters."""
+        if self._preferences_rk_input is not None:
+            n_v = self._preferences_rk_input.shape[0]
+        else:
+            n_v = self._preferences_ut_input.shape[0]
+        if n_v < 2:
+            raise ValueError("A profile must have at least 2 voters.")
+        return n_v
+
+    @cached_property
+    def n_c(self):
+        """int : Number of candidates."""
+        if self._preferences_rk_input is not None:
+            n_c = self._preferences_rk_input.shape[1]
+        else:
+            n_c = self._preferences_ut_input.shape[1]
+        if n_c < 2:
+            raise ValueError("A profile must have at least 2 candidates.")
+        return n_c
+
+    @cached_property
+    def _preferences_rk_unsorted(self):
+        """preferences_rk, before sorting by voter."""
+        if self._preferences_rk_input is None:
+            return preferences_ut_to_preferences_rk(self._preferences_ut_input)
+        else:
+            return np.array(self._preferences_rk_input)
+
+    @cached_property
+    def _preferences_borda_rk_unsorted(self):
+        """preferences_borda_rk, before sorting by voter."""
+        return preferences_rk_to_preferences_borda_rk(self._preferences_rk_unsorted)
+
+    @cached_property
+    def _preferences_ut_unsorted(self):
+        """preferences_ut, before sorting by voter."""
+        if self._preferences_ut_input is None:
+            return self._preferences_borda_rk_unsorted
+        else:
+            return np.array(self._preferences_ut_input)
+
+    @cached_property
+    def _preferences_borda_ut_unsorted(self):
+        """preferences_borda_ut, before sorting by voter."""
+        return preferences_ut_to_preferences_borda_ut(self._preferences_ut_unsorted)
+
+    @cached_property
+    def _index_sort_voters(self):
+        """Index used to sort by voter."""
+        # Sort voters by strict ranking, then by weak order (deducted from utility)
+        sort_criterion = np.concatenate(
+            (self._preferences_rk_unsorted, self._preferences_borda_ut_unsorted),
+            axis=1
+        ).tolist()
+        indexes = sorted(range(self.n_v), key=sort_criterion.__getitem__)
+        return indexes
 
     @cached_property
     def preferences_rk(self):
         """2d array of integers. ``preferences_rk[v, k]`` is the candidate at rank ``k`` for voter ``v``. For
         example, ``preferences_rk[v, 0]`` is ``v``'s preferred candidate.
         """
-        return self._preferences_rk
+        if self._sort_voters:
+            return self._preferences_rk_unsorted[self._index_sort_voters, ::]
+        else:
+            return self._preferences_rk_unsorted
 
     @cached_property
     def preferences_ut(self):
         """2d array of floats. ``preferences_ut[v, c]`` is the utility of  candidate ``c`` as seen by voter ``v``."""
-        return self._preferences_ut
+        if self._sort_voters:
+            return self._preferences_ut_unsorted[self._index_sort_voters, ::]
+        else:
+            return self._preferences_ut_unsorted
 
     @cached_property
     def preferences_borda_rk(self):
         """2d array of integers. ``preferences_borda_rk[v, c]`` gains 1 point for each candidate ``d`` such that
         voter ``v`` ranks ``c`` before ``d``. So, these Borda scores are between ``0`` and ``C - 1``.
         """
-        return self._preferences_borda_rk
+        if self._sort_voters:
+            return self._preferences_borda_rk_unsorted[self._index_sort_voters, ::]
+        else:
+            return self._preferences_borda_rk_unsorted
 
     @cached_property
     def preferences_borda_ut(self):
@@ -193,9 +231,10 @@ class Profile(my_log.MyLog):
         prefers ``c`` to ``d`` (in the sense of utilities), and 0.5 point for each ``d`` such that ``v`` is
         indifferent between ``c`` and ``d``. So, these Borda scores are between ``0`` and ``C - 1``.
         """
-        if self._preferences_borda_ut is None:
-            self._preferences_borda_ut = preferences_ut_to_preferences_borda_ut(self.preferences_ut)
-        return self._preferences_borda_ut
+        if self._sort_voters:
+            return self._preferences_borda_ut_unsorted[self._index_sort_voters, ::]
+        else:
+            return self._preferences_borda_ut_unsorted
 
     @property
     def labels_candidates(self):
