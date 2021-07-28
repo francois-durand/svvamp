@@ -430,6 +430,12 @@ class RuleCondorcetAbsIRV(Rule):
 
     # TODO: should be implemented .
 
+    def _um_preliminary_checks_general_subclass_(self):
+        if equal_false(self.irv_.is_cm_):
+            self._is_um = False
+            self._candidates_um[:] = False
+            self._um_was_computed_with_candidates = True
+
     # %% Ignorant-Coalition Manipulation (ICM)
 
     # Use the general methods from class Rule.
