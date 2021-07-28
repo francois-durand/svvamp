@@ -3243,6 +3243,51 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
                     return
         # Other preliminary checks
         self._cm_preliminary_checks_c_subclass_(c, optimize_bounds)
+        if not optimize_bounds and (n_m >= self._sufficient_coalition_size_cm[c]
+                                    or self._necessary_coalition_size_cm[c] > n_m):
+            return
+        # Try to improve bounds with heuristic
+        self._cm_preliminary_optimize_bound_heuristic_(c, optimize_bounds)
+
+    def _cm_preliminary_optimize_bound_heuristic_(self, c, optimize_bounds):
+        """CM: Try to improve bounds with heuristic.
+
+        Try to improve bound ``_sufficient_coalition_size_cm[c]``.
+
+        If ``optimize_bounds`` is False, then return as soon as ``n_m >= _sufficient_coalition_size_cm[c]``
+        (where ``n_m`` is the number or manipulators).
+
+        This method can (and maybe should) be overridden in subclasses.
+        """
+        if not self.is_based_on_rk:
+            return
+        n_m = self.profile_.matrix_duels_ut[c, self.w_]
+        profile_s = Profile(
+            preferences_rk=self.profile_.preferences_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :],
+            preferences_borda_rk=self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :],
+            sort_voters=False
+        )
+        ballot_rk = profile_s.candidates_by_decreasing_borda_score_rk
+        ballot_rk = np.array([c] + [d for d in ballot_rk if d != c and d != self.w_] + [self.w_])
+        n_m_inf = int(self._necessary_coalition_size_cm[c] - 1)
+        n_m_sup = self._sufficient_coalition_size_cm[c]
+        if np.isinf(n_m_sup):
+            return
+        else:
+            n_m_sup = int(n_m_sup)
+        # Loop invariant: CM is always possible with n_m_sup manipulators, not proven possible with n_m_inf manipulators
+        while n_m_sup - n_m_inf > 1:
+            n_m_test = (n_m_inf + n_m_sup) // 2
+            profile_um = ProfileUM(profile_s=profile_s, n_m=n_m_test, ballot_rk=ballot_rk)
+            w_test = self._copy(profile=profile_um).w_
+            if w_test == c:
+                n_m_sup = n_m_test
+                if not optimize_bounds and n_m >= n_m_test:
+                    break
+            else:
+                n_m_inf = n_m_test
+        self._update_sufficient(self._sufficient_coalition_size_cm, c, n_m_sup,
+                                'CM: Heuristic Dichotomy => sufficient_coalition_size_cm[c] = ')
 
     def _cm_preliminary_checks_c_subclass_(self, c, optimize_bounds):
         """CM: preliminary checks for challenger ``c``.

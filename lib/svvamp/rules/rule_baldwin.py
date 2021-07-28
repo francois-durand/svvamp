@@ -256,7 +256,7 @@ class RuleBaldwin(Rule):
         necessary_coalition_size_cm =
         [0. 1. 2.]
         sufficient_coalition_size_cm =
-        [0. 6. 4.]
+        [0. 2. 3.]
 
     Notes
     -----

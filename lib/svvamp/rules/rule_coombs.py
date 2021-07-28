@@ -256,7 +256,7 @@ class RuleCoombs(Rule):
         necessary_coalition_size_cm =
         [0. 0. 0.]
         sufficient_coalition_size_cm =
-        [0. 6. 4.]
+        [0. 2. 3.]
 
     Notes
     -----

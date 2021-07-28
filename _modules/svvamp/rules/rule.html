@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>svvamp.rules.rule &mdash; SVVAMP 0.6.12 documentation</title>
+  <title>svvamp.rules.rule &mdash; SVVAMP 0.7.0 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.6.12
+                0.7.0
               </div>
             
           
@@ -3411,6 +3411,51 @@
                     <span class="k">return</span>
         <span class="c1"># Other preliminary checks</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_cm_preliminary_checks_c_subclass_</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">optimize_bounds</span> <span class="ow">and</span> <span class="p">(</span><span class="n">n_m</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
+                                    <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">n_m</span><span class="p">):</span>
+            <span class="k">return</span>
+        <span class="c1"># Try to improve bounds with heuristic</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cm_preliminary_optimize_bound_heuristic_</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_cm_preliminary_optimize_bound_heuristic_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;CM: Try to improve bounds with heuristic.</span>
+
+<span class="sd">        Try to improve bound ``_sufficient_coalition_size_cm[c]``.</span>
+
+<span class="sd">        If ``optimize_bounds`` is False, then return as soon as ``n_m &gt;= _sufficient_coalition_size_cm[c]``</span>
+<span class="sd">        (where ``n_m`` is the number or manipulators).</span>
+
+<span class="sd">        This method can (and maybe should) be overridden in subclasses.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_based_on_rk</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">n_m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_ut</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span>
+        <span class="n">profile_s</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span>
+            <span class="n">preferences_rk</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_rk</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_wants_to_help_c_</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]),</span> <span class="p">:],</span>
+            <span class="n">preferences_borda_rk</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_wants_to_help_c_</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]),</span> <span class="p">:],</span>
+            <span class="n">sort_voters</span><span class="o">=</span><span class="kc">False</span>
+        <span class="p">)</span>
+        <span class="n">ballot_rk</span> <span class="o">=</span> <span class="n">profile_s</span><span class="o">.</span><span class="n">candidates_by_decreasing_borda_score_rk</span>
+        <span class="n">ballot_rk</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">c</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">ballot_rk</span> <span class="k">if</span> <span class="n">d</span> <span class="o">!=</span> <span class="n">c</span> <span class="ow">and</span> <span class="n">d</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">])</span>
+        <span class="n">n_m_inf</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">n_m_sup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">n_m_sup</span><span class="p">):</span>
+            <span class="k">return</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">n_m_sup</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_m_sup</span><span class="p">)</span>
+        <span class="c1"># Loop invariant: CM is always possible with n_m_sup manipulators, not proven possible with n_m_inf manipulators</span>
+        <span class="k">while</span> <span class="n">n_m_sup</span> <span class="o">-</span> <span class="n">n_m_inf</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">n_m_test</span> <span class="o">=</span> <span class="p">(</span><span class="n">n_m_inf</span> <span class="o">+</span> <span class="n">n_m_sup</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+            <span class="n">profile_um</span> <span class="o">=</span> <span class="n">ProfileUM</span><span class="p">(</span><span class="n">profile_s</span><span class="o">=</span><span class="n">profile_s</span><span class="p">,</span> <span class="n">n_m</span><span class="o">=</span><span class="n">n_m_test</span><span class="p">,</span> <span class="n">ballot_rk</span><span class="o">=</span><span class="n">ballot_rk</span><span class="p">)</span>
+            <span class="n">w_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_copy</span><span class="p">(</span><span class="n">profile</span><span class="o">=</span><span class="n">profile_um</span><span class="p">)</span><span class="o">.</span><span class="n">w_</span>
+            <span class="k">if</span> <span class="n">w_test</span> <span class="o">==</span> <span class="n">c</span><span class="p">:</span>
+                <span class="n">n_m_sup</span> <span class="o">=</span> <span class="n">n_m_test</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">optimize_bounds</span> <span class="ow">and</span> <span class="n">n_m</span> <span class="o">&gt;=</span> <span class="n">n_m_test</span><span class="p">:</span>
+                    <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">n_m_inf</span> <span class="o">=</span> <span class="n">n_m_test</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_sufficient</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_m_sup</span><span class="p">,</span>
+                                <span class="s1">&#39;CM: Heuristic Dichotomy =&gt; sufficient_coalition_size_cm[c] = &#39;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_cm_preliminary_checks_c_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;CM: preliminary checks for challenger ``c``.</span>

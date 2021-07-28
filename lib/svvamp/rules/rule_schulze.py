@@ -261,7 +261,7 @@ class RuleSchulze(Rule):
         necessary_coalition_size_cm =
         [0. 1. 2.]
         sufficient_coalition_size_cm =
-        [0. 6. 3.]
+        [0. 2. 3.]
 
     Notes
     -----
