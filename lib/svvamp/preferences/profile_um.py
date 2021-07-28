@@ -22,6 +22,7 @@ This file is part of SVVAMP.
 import numpy as np
 from svvamp.utils.util_cache import cached_property
 from svvamp.preferences.profile import Profile
+from svvamp.preferences.plurality_elimination_engine_profile_um import PluralityEliminationEngineProfileUM
 
 
 class ProfileUM(Profile):
@@ -136,3 +137,6 @@ class ProfileUM(Profile):
             self.profile_s.matrix_duels_rk
             + self.n_m * (self.ballot_borda_rk[:, np.newaxis] > self.ballot_borda_rk[np.newaxis, :])
         )
+
+    def plurality_elimination_engine(self):
+        return PluralityEliminationEngineProfileUM(self)

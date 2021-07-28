@@ -34,6 +34,7 @@ from svvamp.utils.misc import preferences_ut_to_preferences_rk, preferences_rk_t
     preferences_ut_to_preferences_borda_ut, preferences_ut_to_matrix_duels_ut, is_resistant_condorcet, \
     matrix_victories_to_smith_set
 from svvamp.utils.pseudo_bool import equal_true
+from svvamp.preferences.plurality_elimination_engine_profile import PluralityEliminationEngineProfile
 
 
 class Profile(my_log.MyLog):
@@ -2763,3 +2764,6 @@ class Profile(my_log.MyLog):
     def to_csv(self, file_name):
         df = pd.DataFrame(self.preferences_ut, columns=self.labels_candidates)
         df.to_csv(file_name, sep=';')
+
+    def plurality_elimination_engine(self):
+        return PluralityEliminationEngineProfile(self)

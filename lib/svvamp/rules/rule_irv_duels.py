@@ -340,7 +340,19 @@ class RuleIRVDuels(Rule):
 
     @cached_property
     def w_(self):
-        return self._count_ballots_['w']
+        self.mylog("Count ballots", 1)
+        plurality_elimination_engine = self.profile_.plurality_elimination_engine()
+        for r in range(self.profile_.n_c - 1):
+            scores = plurality_elimination_engine.scores.copy()
+            selected_one = np.where(scores == np.nanmin(scores))[0][-1]
+            scores[selected_one] = np.nan
+            selected_two = np.where(scores == np.nanmin(scores))[0][-1]
+            if self.profile_.matrix_victories_rk_ctb[selected_one, selected_two] == 1:
+                loser = selected_two
+            else:
+                loser = selected_one
+            plurality_elimination_engine.eliminate_candidate_and_update_scores(loser)
+        return plurality_elimination_engine.candidates_alive[0]
 
     @cached_property
     def scores_(self):

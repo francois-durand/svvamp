@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>svvamp.rules.rule_exhaustive_ballot &mdash; SVVAMP 0.6.9 documentation</title>
+  <title>svvamp.rules.rule_exhaustive_ballot &mdash; SVVAMP 0.6.10 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.6.9
+                0.6.10
               </div>
             
           
@@ -665,19 +665,13 @@
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">w_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Compute w&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="n">preferences_borda_rk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>  <span class="c1"># We will put -1 when a candidate loses</span>
-        <span class="n">scores_r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">plurality_scores_rk</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
-        <span class="n">ballots_r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_rk</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">plurality_elimination_engine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">plurality_elimination_engine</span><span class="p">()</span>
         <span class="n">loser</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">r</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">preferences_borda_rk</span><span class="p">[:,</span> <span class="n">loser</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-                <span class="n">new_ballots</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">preferences_borda_rk</span><span class="p">[</span><span class="n">ballots_r</span> <span class="o">==</span> <span class="n">loser</span><span class="p">,</span> <span class="p">:],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-                <span class="n">ballots_r</span><span class="p">[</span><span class="n">ballots_r</span> <span class="o">==</span> <span class="n">loser</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_ballots</span>
-                <span class="n">scores_r</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">new_ballots</span><span class="p">,</span> <span class="n">minlength</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">)</span>
-                <span class="n">scores_r</span><span class="p">[</span><span class="n">loser</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+                <span class="n">plurality_elimination_engine</span><span class="o">.</span><span class="n">update_scores</span><span class="p">()</span>
+            <span class="n">scores_r</span> <span class="o">=</span> <span class="n">plurality_elimination_engine</span><span class="o">.</span><span class="n">scores</span>
             <span class="c1"># Result of Plurality voting</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;ballots_r =&quot;</span><span class="p">,</span> <span class="n">ballots_r</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;scores_r =&quot;</span><span class="p">,</span> <span class="n">scores_r</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="c1"># Does someone win immediately?</span>
             <span class="n">best_candidate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanargmax</span><span class="p">(</span><span class="n">scores_r</span><span class="p">)</span>
@@ -686,10 +680,10 @@
                 <span class="k">return</span> <span class="n">best_candidate</span>
             <span class="c1"># Who gets eliminated?</span>
             <span class="n">loser</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">scores_r</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">scores_r</span><span class="p">))[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># Tie-breaking: the last index</span>
+            <span class="n">plurality_elimination_engine</span><span class="o">.</span><span class="n">eliminate_candidate</span><span class="p">(</span><span class="n">loser</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;loser =&quot;</span><span class="p">,</span> <span class="n">loser</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
         <span class="c1"># After the last round...</span>
-        <span class="n">preferences_borda_rk</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">loser</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">preferences_borda_rk</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:])</span>
+        <span class="k">return</span> <span class="n">plurality_elimination_engine</span><span class="o">.</span><span class="n">candidates_alive</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">scores_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

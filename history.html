@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>History &mdash; SVVAMP 0.6.9 documentation</title>
+  <title>History &mdash; SVVAMP 0.6.10 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.6.9
+                0.6.10
               </div>
             
           
@@ -101,6 +101,7 @@
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">History</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#pluralityeliminationengine">0.6.10 (2021-07-28): PluralityEliminationEngine</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#accelerate-exhaustive-ballot-and-some-related-rules">0.6.9 (2021-07-28): Accelerate Exhaustive Ballot and some related rules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id1">0.6.8 (2021-07-27): Accelerate Exhaustive Ballot and some related rules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#accelerations">0.6.7 (2021-07-27): Accelerations</a></li>
@@ -221,6 +222,14 @@
 </style>
 <div class="section" id="history">
 <h1>History<a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="pluralityeliminationengine">
+<h2>0.6.10 (2021-07-28): PluralityEliminationEngine<a class="headerlink" href="#pluralityeliminationengine" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">PluralityEliminationEngine</span></code> and its subclasses, <code class="docutils literal notranslate"><span class="pre">PluralityEliminationEngineProfile</span></code> and
+<code class="docutils literal notranslate"><span class="pre">PluralityEliminationEngineProfileUM</span></code>. This is used to speed up the computation of the winner for
+<code class="docutils literal notranslate"><span class="pre">RuleExhaustiveBallot</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleICRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleIRVAverage</span></code>, <code class="docutils literal notranslate"><span class="pre">IRVDuels</span></code> and <code class="docutils literal notranslate"><span class="pre">RuleTideman</span></code>.</p></li>
+</ul>
+</div>
 <div class="section" id="accelerate-exhaustive-ballot-and-some-related-rules">
 <h2>0.6.9 (2021-07-28): Accelerate Exhaustive Ballot and some related rules<a class="headerlink" href="#accelerate-exhaustive-ballot-and-some-related-rules" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">

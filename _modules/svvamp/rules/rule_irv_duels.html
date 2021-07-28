@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>svvamp.rules.rule_irv_duels &mdash; SVVAMP 0.6.9 documentation</title>
+  <title>svvamp.rules.rule_irv_duels &mdash; SVVAMP 0.6.10 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.6.9
+                0.6.10
               </div>
             
           
@@ -508,7 +508,19 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">w_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s1">&#39;w&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Count ballots&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">plurality_elimination_engine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">plurality_elimination_engine</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">scores</span> <span class="o">=</span> <span class="n">plurality_elimination_engine</span><span class="o">.</span><span class="n">scores</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">selected_one</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">scores</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">scores</span><span class="p">))[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">scores</span><span class="p">[</span><span class="n">selected_one</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+            <span class="n">selected_two</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">scores</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">scores</span><span class="p">))[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_victories_rk_ctb</span><span class="p">[</span><span class="n">selected_one</span><span class="p">,</span> <span class="n">selected_two</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">loser</span> <span class="o">=</span> <span class="n">selected_two</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">loser</span> <span class="o">=</span> <span class="n">selected_one</span>
+            <span class="n">plurality_elimination_engine</span><span class="o">.</span><span class="n">eliminate_candidate_and_update_scores</span><span class="p">(</span><span class="n">loser</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">plurality_elimination_engine</span><span class="o">.</span><span class="n">candidates_alive</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">scores_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

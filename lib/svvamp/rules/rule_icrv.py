@@ -378,14 +378,11 @@ class RuleICRV(Rule):
     @cached_property
     def w_(self):
         self.mylog("Compute w", 1)
-        is_alive = np.ones(self.profile_.n_c, dtype=np.bool)
-        nb_alive = self.profile_.n_c
-        preferences_borda_rk = self.profile_.preferences_borda_rk.copy()  # We will put -1 when a candidate loses
-        scores_r = self.profile_.plurality_scores_rk.copy().astype(float)
-        ballots_r = self.profile_.preferences_rk[:, 0].copy()
-        loser = None
+        plurality_elimination_engine = self.profile_.plurality_elimination_engine()
         for r in range(self.profile_.n_c - 1):
             # Is there a Condorcet winner?
+            is_alive = plurality_elimination_engine.is_alive
+            nb_alive = plurality_elimination_engine.nb_candidates_alive
             is_condorcet_winner = (
                 is_alive
                 & (np.sum(self.profile_.matrix_victories_rk[:, is_alive], axis=1) == nb_alive - 1)
@@ -393,21 +390,17 @@ class RuleICRV(Rule):
             condorcet_winners = np.where(is_condorcet_winner)[0]
             if condorcet_winners.size > 0:
                 return condorcet_winners[0]
-            # Now, scores_r is the Plurality score (IRV-style)
+            # Now, elimination by Plurality
             if r != 0:
-                preferences_borda_rk[:, loser] = -1
-                new_ballots = np.argmax(preferences_borda_rk[ballots_r == loser, :], axis=1)
-                ballots_r[ballots_r == loser] = new_ballots
-                scores_r += np.bincount(new_ballots, minlength=self.profile_.n_c)
-                scores_r[loser] = np.nan
+                plurality_elimination_engine.update_scores()
             # Who gets eliminated?
-            loser = np.where(scores_r == np.nanmin(scores_r))[0][-1]  # Tie-breaking: the last index
-            is_alive[loser] = False
-            nb_alive -= 1
+            scores = plurality_elimination_engine.scores
+            loser = np.where(scores == np.nanmin(scores))[0][-1]  # Tie-breaking: the last index
+            plurality_elimination_engine.eliminate_candidate(loser)
             self.mylogv("loser =", loser, 3)
             # Save time if last round
-            if nb_alive == 1:
-                return np.where(is_alive)[0][0]
+            if plurality_elimination_engine.nb_candidates_alive == 1:
+                return plurality_elimination_engine.candidates_alive[0]
 
     @cached_property
     def scores_(self):
