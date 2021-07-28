@@ -10,7 +10,7 @@ class PluralityEliminationEngineProfileUM(PluralityEliminationEngine):
         self.preferences_borda_rk_s = profile.profile_s.preferences_borda_rk.copy()
         self.preference_borda_rk_m = profile.ballot_borda_rk.copy()
 
-        self.ballots_s = profile.profile_s.preferences_rk[:, 0].copy()
+        self.ballots_s = np.argmax(self.preferences_borda_rk_s, axis=1)
         self.ballot_m = profile.ballot_rk[0]
 
         self._scores = profile.profile_s.plurality_scores_rk.copy().astype(float)
