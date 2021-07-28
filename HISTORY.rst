@@ -4,6 +4,14 @@
 History
 =======
 
+----------------------------------------
+0.7.0 (2021-07-28): Better bounds for CM
+----------------------------------------
+
+* Introduce a heuristic method to improve the bounds ``necessary_coalition_size_cm_`` and
+  ``sufficient_coalition_size_cm_`` in the case of rules based on rankings.
+* Bug fix: in previous version (0.6.12), the IRV-CM precheck for UM was not activated for ``RuleCondorcetVtbIRV``.
+
 ----------------------------------------------------------
 0.6.12 (2021-07-28): Fix bug in PluralityEliminationEngine
 ----------------------------------------------------------
