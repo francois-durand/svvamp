@@ -282,38 +282,31 @@ class RuleIRVAverage(Rule):
     @cached_property
     def w_(self):
         self.mylog("Compute w", 1)
-        preferences_borda_rk = self.profile_.preferences_borda_rk.copy()  # We will put -1 when a candidate loses
-        scores_r = self.profile_.plurality_scores_rk.copy().astype(float)
-        ballots_r = self.profile_.preferences_rk[:, 0].copy()
-        n_c_alive = self.profile_.n_c
+        plurality_elimination_engine = self.profile_.plurality_elimination_engine()
         while True:
             # Result of Plurality voting
-            self.mylogv("ballots_r =", ballots_r, 3)
-            self.mylogv("scores_r =", scores_r, 3)
+            scores = plurality_elimination_engine.scores
+            self.mylogv("scores =", scores, 3)
             # Does someone win immediately?
-            best_candidate = np.nanargmax(scores_r)
-            best_score = scores_r[best_candidate]
+            best_candidate = np.nanargmax(scores)
+            best_score = scores[best_candidate]
             if best_score > self.profile_.n_v / 2:
                 return best_candidate
             # Who gets eliminated?
-            score_average = self.profile_.n_v / n_c_alive
-            least_score = np.nanmin(scores_r)
+            score_average = self.profile_.n_v / plurality_elimination_engine.nb_candidates_alive
+            least_score = np.nanmin(scores)
             if score_average == least_score:
                 # TODO: Eliminate only one, then iterate?
-                return np.where(scores_r == score_average)[0][0]
-            losers = np.where(scores_r < score_average)[0]
+                return np.where(scores == score_average)[0][0]
+            losers = np.where(scores < score_average)[0]
             self.mylogv("losers =", losers, 3)
             # Prepare the next round
-            n_c_alive -= len(losers)
-            if n_c_alive == 1:
-                preferences_borda_rk[0, losers] = -1
-                return np.argmax(preferences_borda_rk[0, :])
-            preferences_borda_rk[:, losers] = -1
+            if plurality_elimination_engine.nb_candidates_alive - len(losers) == 1:
+                for loser in losers:
+                    plurality_elimination_engine.eliminate_candidate(loser)
+                return plurality_elimination_engine.candidates_alive[0]
             for loser in losers:
-                new_ballots = np.argmax(preferences_borda_rk[ballots_r == loser, :], axis=1)
-                ballots_r[ballots_r == loser] = new_ballots
-                scores_r += np.bincount(new_ballots, minlength=self.profile_.n_c)
-            scores_r[losers] = np.nan
+                plurality_elimination_engine.eliminate_candidate_and_update_scores(loser)
 
     @cached_property
     def candidates_by_scores_best_to_worst_(self):

@@ -4,6 +4,14 @@
 History
 =======
 
+-----------------------------------------------
+0.6.10 (2021-07-28): PluralityEliminationEngine
+-----------------------------------------------
+
+* Add ``PluralityEliminationEngine`` and its subclasses, ``PluralityEliminationEngineProfile`` and
+  ``PluralityEliminationEngineProfileUM``. This is used to speed up the computation of the winner for
+  ``RuleExhaustiveBallot``, ``RuleICRV``, ``RuleIRVAverage``, ``IRVDuels`` and ``RuleTideman``.
+
 -----------------------------------------------------------------------
 0.6.9 (2021-07-28): Accelerate Exhaustive Ballot and some related rules
 -----------------------------------------------------------------------

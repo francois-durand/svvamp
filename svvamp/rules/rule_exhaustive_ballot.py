@@ -497,19 +497,13 @@ class RuleExhaustiveBallot(Rule):
     @cached_property
     def w_(self):
         self.mylog("Compute w", 1)
-        preferences_borda_rk = self.profile_.preferences_borda_rk.copy()  # We will put -1 when a candidate loses
-        scores_r = self.profile_.plurality_scores_rk.copy().astype(float)
-        ballots_r = self.profile_.preferences_rk[:, 0].copy()
+        plurality_elimination_engine = self.profile_.plurality_elimination_engine()
         loser = None
         for r in range(self.profile_.n_c - 1):
             if r != 0:
-                preferences_borda_rk[:, loser] = -1
-                new_ballots = np.argmax(preferences_borda_rk[ballots_r == loser, :], axis=1)
-                ballots_r[ballots_r == loser] = new_ballots
-                scores_r += np.bincount(new_ballots, minlength=self.profile_.n_c)
-                scores_r[loser] = np.nan
+                plurality_elimination_engine.update_scores()
+            scores_r = plurality_elimination_engine.scores
             # Result of Plurality voting
-            self.mylogv("ballots_r =", ballots_r, 3)
             self.mylogv("scores_r =", scores_r, 3)
             # Does someone win immediately?
             best_candidate = np.nanargmax(scores_r)
@@ -518,10 +512,10 @@ class RuleExhaustiveBallot(Rule):
                 return best_candidate
             # Who gets eliminated?
             loser = np.where(scores_r == np.nanmin(scores_r))[0][-1]  # Tie-breaking: the last index
+            plurality_elimination_engine.eliminate_candidate(loser)
             self.mylogv("loser =", loser, 3)
         # After the last round...
-        preferences_borda_rk[0, loser] = -1
-        return np.argmax(preferences_borda_rk[0, :])
+        return plurality_elimination_engine.candidates_alive[0]
 
     @cached_property
     def scores_(self):
