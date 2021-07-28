@@ -435,14 +435,15 @@ class RuleExhaustiveBallot(Rule):
 
     # %% Counting the ballots
 
-    @cached_property
-    def _counts_ballots_(self):
+    def _counts_ballots_aux_(self, compute_v_might_be_pivotal):
         self.mylog("Count ballots", 1)
         candidates = np.array(range(self.profile_.n_c))
         ballots = np.zeros((self.profile_.n_v, self.profile_.n_c - 1), dtype=np.int)
         scores = np.zeros((self.profile_.n_c - 1, self.profile_.n_c))
         margins = np.zeros((self.profile_.n_c - 1, self.profile_.n_c))
-        v_might_be_pivotal = np.zeros(self.profile_.n_v)
+        v_might_be_pivotal = None
+        if compute_v_might_be_pivotal:
+            v_might_be_pivotal = np.zeros(self.profile_.n_v)
         is_alive = np.ones(self.profile_.n_c, dtype=np.bool)
         worst_to_best = []
         for r in range(self.profile_.n_c - 1):
@@ -468,15 +469,16 @@ class RuleExhaustiveBallot(Rule):
             min_margin_r = np.nanmin(margins[r, margins[r, :] != 0])
             self.mylogv("margins_[r, :] =", margins[r, :], 3)
             # Are there pivot voters?
-            if min_margin_r == 1:
-                # Any voter who has not voted for ``loser`` can save her: she just needs to vote for her and a
-                # candidate who had a margin of 1 (or 2) will be eliminated.
-                v_might_be_pivotal = np.logical_or(v_might_be_pivotal, ballots[:, r] != loser)
-            elif min_margin_r == 2:
-                # To change the result of the round by one voter, it is necessary and sufficient one voter who voted
-                # for a candidate with margin 2 votes for ``loser`` instead.
-                v_might_be_pivotal = np.logical_or(v_might_be_pivotal, margins[r, ballots[:, r]] == 2)
-            self.mylogv("v_might_be_pivotal =", v_might_be_pivotal, 3)
+            if compute_v_might_be_pivotal:
+                if min_margin_r == 1:
+                    # Any voter who has not voted for ``loser`` can save her: she just needs to vote for her and a
+                    # candidate who had a margin of 1 (or 2) will be eliminated.
+                    v_might_be_pivotal = np.logical_or(v_might_be_pivotal, ballots[:, r] != loser)
+                elif min_margin_r == 2:
+                    # To change the result of the round by one voter, it is necessary and sufficient one voter who voted
+                    # for a candidate with margin 2 votes for ``loser`` instead.
+                    v_might_be_pivotal = np.logical_or(v_might_be_pivotal, margins[r, ballots[:, r]] == 2)
+                self.mylogv("v_might_be_pivotal =", v_might_be_pivotal, 3)
             # Update tables
             is_alive[loser] = False
             worst_to_best.append(loser)
@@ -487,6 +489,10 @@ class RuleExhaustiveBallot(Rule):
         return {'ballots': ballots, 'scores': scores, 'margins': margins, 'v_might_be_pivotal': v_might_be_pivotal,
                 'w': w, 'elimination_path': elimination_path,
                 'candidates_by_scores_best_to_worst': candidates_by_scores_best_to_worst}
+
+    @cached_property
+    def _counts_ballots_(self):
+        return self._counts_ballots_aux_(compute_v_might_be_pivotal=False)
 
     @cached_property
     def ballots_(self):
@@ -560,7 +566,7 @@ class RuleExhaustiveBallot(Rule):
 
     @cached_property
     def v_might_be_pivotal_(self):
-        return self._counts_ballots_['v_might_be_pivotal']
+        return self._counts_ballots_aux_(compute_v_might_be_pivotal=True)['v_might_be_pivotal']
 
     @cached_property
     def v_might_im_for_c_(self):

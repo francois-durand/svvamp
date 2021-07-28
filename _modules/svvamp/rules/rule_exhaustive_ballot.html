@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>svvamp.rules.rule_exhaustive_ballot &mdash; SVVAMP 0.6.7 documentation</title>
+  <title>svvamp.rules.rule_exhaustive_ballot &mdash; SVVAMP 0.6.8 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.6.7
+                0.6.8
               </div>
             
           
@@ -603,14 +603,15 @@
 
     <span class="c1"># %% Counting the ballots</span>
 
-    <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">_counts_ballots_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_counts_ballots_aux_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">compute_v_might_be_pivotal</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Count ballots&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">candidates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">))</span>
         <span class="n">ballots</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
         <span class="n">scores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">))</span>
         <span class="n">margins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">))</span>
-        <span class="n">v_might_be_pivotal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span><span class="p">)</span>
+        <span class="n">v_might_be_pivotal</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">compute_v_might_be_pivotal</span><span class="p">:</span>
+            <span class="n">v_might_be_pivotal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span><span class="p">)</span>
         <span class="n">is_alive</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">bool</span><span class="p">)</span>
         <span class="n">worst_to_best</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
@@ -636,15 +637,16 @@
             <span class="n">min_margin_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">margins</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="n">margins</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="p">:]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">])</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;margins_[r, :] =&quot;</span><span class="p">,</span> <span class="n">margins</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="p">:],</span> <span class="mi">3</span><span class="p">)</span>
             <span class="c1"># Are there pivot voters?</span>
-            <span class="k">if</span> <span class="n">min_margin_r</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="c1"># Any voter who has not voted for ``loser`` can save her: she just needs to vote for her and a</span>
-                <span class="c1"># candidate who had a margin of 1 (or 2) will be eliminated.</span>
-                <span class="n">v_might_be_pivotal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">v_might_be_pivotal</span><span class="p">,</span> <span class="n">ballots</span><span class="p">[:,</span> <span class="n">r</span><span class="p">]</span> <span class="o">!=</span> <span class="n">loser</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">min_margin_r</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-                <span class="c1"># To change the result of the round by one voter, it is necessary and sufficient one voter who voted</span>
-                <span class="c1"># for a candidate with margin 2 votes for ``loser`` instead.</span>
-                <span class="n">v_might_be_pivotal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">v_might_be_pivotal</span><span class="p">,</span> <span class="n">margins</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="n">ballots</span><span class="p">[:,</span> <span class="n">r</span><span class="p">]]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;v_might_be_pivotal =&quot;</span><span class="p">,</span> <span class="n">v_might_be_pivotal</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">compute_v_might_be_pivotal</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">min_margin_r</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="c1"># Any voter who has not voted for ``loser`` can save her: she just needs to vote for her and a</span>
+                    <span class="c1"># candidate who had a margin of 1 (or 2) will be eliminated.</span>
+                    <span class="n">v_might_be_pivotal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">v_might_be_pivotal</span><span class="p">,</span> <span class="n">ballots</span><span class="p">[:,</span> <span class="n">r</span><span class="p">]</span> <span class="o">!=</span> <span class="n">loser</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">min_margin_r</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="c1"># To change the result of the round by one voter, it is necessary and sufficient one voter who voted</span>
+                    <span class="c1"># for a candidate with margin 2 votes for ``loser`` instead.</span>
+                    <span class="n">v_might_be_pivotal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">v_might_be_pivotal</span><span class="p">,</span> <span class="n">margins</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="n">ballots</span><span class="p">[:,</span> <span class="n">r</span><span class="p">]]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;v_might_be_pivotal =&quot;</span><span class="p">,</span> <span class="n">v_might_be_pivotal</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="c1"># Update tables</span>
             <span class="n">is_alive</span><span class="p">[</span><span class="n">loser</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="n">worst_to_best</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loser</span><span class="p">)</span>
@@ -655,6 +657,10 @@
         <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;ballots&#39;</span><span class="p">:</span> <span class="n">ballots</span><span class="p">,</span> <span class="s1">&#39;scores&#39;</span><span class="p">:</span> <span class="n">scores</span><span class="p">,</span> <span class="s1">&#39;margins&#39;</span><span class="p">:</span> <span class="n">margins</span><span class="p">,</span> <span class="s1">&#39;v_might_be_pivotal&#39;</span><span class="p">:</span> <span class="n">v_might_be_pivotal</span><span class="p">,</span>
                 <span class="s1">&#39;w&#39;</span><span class="p">:</span> <span class="n">w</span><span class="p">,</span> <span class="s1">&#39;elimination_path&#39;</span><span class="p">:</span> <span class="n">elimination_path</span><span class="p">,</span>
                 <span class="s1">&#39;candidates_by_scores_best_to_worst&#39;</span><span class="p">:</span> <span class="n">candidates_by_scores_best_to_worst</span><span class="p">}</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">_counts_ballots_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_counts_ballots_aux_</span><span class="p">(</span><span class="n">compute_v_might_be_pivotal</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">ballots_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -728,7 +734,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">v_might_be_pivotal_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_counts_ballots_</span><span class="p">[</span><span class="s1">&#39;v_might_be_pivotal&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_counts_ballots_aux_</span><span class="p">(</span><span class="n">compute_v_might_be_pivotal</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="s1">&#39;v_might_be_pivotal&#39;</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">v_might_im_for_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

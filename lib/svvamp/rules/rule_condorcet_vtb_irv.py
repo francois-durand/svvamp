@@ -338,6 +338,18 @@ class RuleCondorcetVtbIRV(Rule):
             w = self.profile_.condorcet_winner_rk
             scores = np.sum(self.profile_.matrix_victories_rk, 1)
             candidates_by_scores_best_to_worst = (np.argsort(- scores, kind='mergesort'))
+        else:
+            eb = self.irv_.eb_
+            w = eb.w_
+            scores = eb.scores_
+            candidates_by_scores_best_to_worst = eb.candidates_by_scores_best_to_worst_
+        return {'w': w, 'scores': scores, 'candidates_by_scores_best_to_worst': candidates_by_scores_best_to_worst}
+
+    @cached_property
+    def _v_might_be_pivotal_(self):
+        self.mylog("Compute _v_might_be_pivotal_", 1)
+        if not np.isnan(self.profile_.condorcet_winner_rk):
+            w = self.w_
             v_might_be_pivotal = np.zeros(self.profile_.n_v)
             for c in np.where(self.profile_.matrix_duels_rk[w, :] <= self.profile_.n_v / 2 + 1)[0]:
                 if c == w:
@@ -348,9 +360,6 @@ class RuleCondorcetVtbIRV(Rule):
                 ] = True
         else:
             eb = self.irv_.eb_
-            w = eb.w_
-            scores = eb.scores_
-            candidates_by_scores_best_to_worst = eb.candidates_by_scores_best_to_worst_
             # First way of being (maybe) pivotal: change the result of IRV.
             v_might_be_pivotal = np.copy(eb.v_might_be_pivotal_)
             # Another way of being (maybe) pivotal: create a Condorcet winner.
@@ -367,8 +376,7 @@ class RuleCondorcetVtbIRV(Rule):
                         self.profile_.preferences_borda_rk[:, c][:, np.newaxis],
                         self.profile_.preferences_borda_rk[:, close_candidates]
                 ), 1)] = True
-        return {'w': w, 'scores': scores, 'candidates_by_scores_best_to_worst': candidates_by_scores_best_to_worst,
-                'v_might_be_pivotal': v_might_be_pivotal}
+        return v_might_be_pivotal
 
     @cached_property
     def w_(self):
@@ -398,7 +406,7 @@ class RuleCondorcetVtbIRV(Rule):
 
     @cached_property
     def v_might_im_for_c_(self):
-        return np.tile(self._counts_ballots_['v_might_be_pivotal'][:, np.newaxis], (1, self.profile_.n_c))
+        return np.tile(self._v_might_be_pivotal_[:, np.newaxis], (1, self.profile_.n_c))
 
     # %% Manipulation criteria of the voting system
 

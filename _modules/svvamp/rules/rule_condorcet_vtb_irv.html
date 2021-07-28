@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>svvamp.rules.rule_condorcet_vtb_irv &mdash; SVVAMP 0.6.7 documentation</title>
+  <title>svvamp.rules.rule_condorcet_vtb_irv &mdash; SVVAMP 0.6.8 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.6.7
+                0.6.8
               </div>
             
           
@@ -506,6 +506,18 @@
             <span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">condorcet_winner_rk</span>
             <span class="n">scores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_victories_rk</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
             <span class="n">candidates_by_scores_best_to_worst</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="o">-</span> <span class="n">scores</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;mergesort&#39;</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">eb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">irv_</span><span class="o">.</span><span class="n">eb_</span>
+            <span class="n">w</span> <span class="o">=</span> <span class="n">eb</span><span class="o">.</span><span class="n">w_</span>
+            <span class="n">scores</span> <span class="o">=</span> <span class="n">eb</span><span class="o">.</span><span class="n">scores_</span>
+            <span class="n">candidates_by_scores_best_to_worst</span> <span class="o">=</span> <span class="n">eb</span><span class="o">.</span><span class="n">candidates_by_scores_best_to_worst_</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;w&#39;</span><span class="p">:</span> <span class="n">w</span><span class="p">,</span> <span class="s1">&#39;scores&#39;</span><span class="p">:</span> <span class="n">scores</span><span class="p">,</span> <span class="s1">&#39;candidates_by_scores_best_to_worst&#39;</span><span class="p">:</span> <span class="n">candidates_by_scores_best_to_worst</span><span class="p">}</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">_v_might_be_pivotal_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Compute _v_might_be_pivotal_&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">condorcet_winner_rk</span><span class="p">):</span>
+            <span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span>
             <span class="n">v_might_be_pivotal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_rk</span><span class="p">[</span><span class="n">w</span><span class="p">,</span> <span class="p">:]</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]:</span>
                 <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="n">w</span><span class="p">:</span>
@@ -516,9 +528,6 @@
                 <span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">eb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">irv_</span><span class="o">.</span><span class="n">eb_</span>
-            <span class="n">w</span> <span class="o">=</span> <span class="n">eb</span><span class="o">.</span><span class="n">w_</span>
-            <span class="n">scores</span> <span class="o">=</span> <span class="n">eb</span><span class="o">.</span><span class="n">scores_</span>
-            <span class="n">candidates_by_scores_best_to_worst</span> <span class="o">=</span> <span class="n">eb</span><span class="o">.</span><span class="n">candidates_by_scores_best_to_worst_</span>
             <span class="c1"># First way of being (maybe) pivotal: change the result of IRV.</span>
             <span class="n">v_might_be_pivotal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">eb</span><span class="o">.</span><span class="n">v_might_be_pivotal_</span><span class="p">)</span>
             <span class="c1"># Another way of being (maybe) pivotal: create a Condorcet winner.</span>
@@ -535,8 +544,7 @@
                         <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[:,</span> <span class="n">c</span><span class="p">][:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[:,</span> <span class="n">close_candidates</span><span class="p">]</span>
                 <span class="p">),</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;w&#39;</span><span class="p">:</span> <span class="n">w</span><span class="p">,</span> <span class="s1">&#39;scores&#39;</span><span class="p">:</span> <span class="n">scores</span><span class="p">,</span> <span class="s1">&#39;candidates_by_scores_best_to_worst&#39;</span><span class="p">:</span> <span class="n">candidates_by_scores_best_to_worst</span><span class="p">,</span>
-                <span class="s1">&#39;v_might_be_pivotal&#39;</span><span class="p">:</span> <span class="n">v_might_be_pivotal</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">v_might_be_pivotal</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">w_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -566,7 +574,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">v_might_im_for_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_counts_ballots_</span><span class="p">[</span><span class="s1">&#39;v_might_be_pivotal&#39;</span><span class="p">][:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_v_might_be_pivotal_</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">))</span>
 
     <span class="c1"># %% Manipulation criteria of the voting system</span>
 
