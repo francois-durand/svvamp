@@ -4,6 +4,18 @@
 History
 =======
 
+----------------------------------------------------------
+0.6.12 (2021-07-28): Fix bug in PluralityEliminationEngine
+----------------------------------------------------------
+
+* Fix bug in ``PluralityEliminationEngine``: the previous version used to modify the original profile, which was
+  not desired.
+* ``PluralityEliminationEngineProfileUM`` relies only on ``preferences_borda_rk`` and not on ``preferences_rk``.
+  This accelerates ``RuleSmithIRV``.
+* ``RuleCondorcetAbsIRV`` and ``RuleCondorcetVtbIRV``: before computing UM, we test whether IRV is CM. If not,
+  then we can conclude that Condorcet-IRV is not CM, and in particular not UM.
+* Minor acceleration for ``RuleWoodall`` when the IRV winner is in the Smith set.
+
 -----------------------------------------
 0.6.11 (2021-07-28): Accelerate ProfileUM
 -----------------------------------------
