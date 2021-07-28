@@ -256,7 +256,7 @@ class RuleKimRoush(Rule):
         necessary_coalition_size_cm =
         [0. 0. 0.]
         sufficient_coalition_size_cm =
-        [ 0. inf inf]
+        [0. 2. 3.]
 
     Notes
     -----
@@ -376,3 +376,11 @@ class RuleKimRoush(Rule):
     @cached_property
     def v_might_im_for_c_(self):
         return np.full((self.profile_.n_v, self.profile_.n_c), self._count_ballots_['one_v_might_be_pivotal'])
+
+    # %% CM
+
+    def _cm_preliminary_checks_c_subclass_(self, c, optimize_bounds):
+        n_m = self.profile_.matrix_duels_ut[c, self.w_]
+        n_s = self.profile_.n_v - n_m
+        self._update_sufficient(self._sufficient_coalition_size_cm, c, (n_s + 1) * (self.profile_.n_c - 1),
+                                'CM: Obvious bound => sufficient_coalition_size_cm[c] = ')

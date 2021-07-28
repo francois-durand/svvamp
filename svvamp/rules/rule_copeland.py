@@ -19,7 +19,6 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
-import numpy as np
 from svvamp.rules.rule import Rule
 from svvamp.utils.util_cache import cached_property
 from svvamp.preferences.profile import Profile
