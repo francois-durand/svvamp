@@ -240,6 +240,9 @@ class RuleWoodall(Rule):
         self.mylog("Count ballots", 1)
         if self.profile_.exists_condorcet_winner_rk:
             return self.profile_.condorcet_winner_rk
+        elif self.irv_.w_ in self.profile_.smith_set_rk:
+            # Included in the following case, but faster
+            return self.irv_.w_
         else:
             return next(c for c in self.irv_.candidates_by_scores_best_to_worst_
                         if c in self.profile_.smith_set_rk)

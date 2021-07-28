@@ -8,7 +8,7 @@ class PluralityEliminationEngineProfile(PluralityEliminationEngine):
         super().__init__(profile)
         self.preferences_borda_rk = profile.preferences_borda_rk.copy()
         self.ballots = profile.preferences_rk[:, 0].copy()
-        self._scores = profile.plurality_scores_rk.astype(float)
+        self._scores = profile.plurality_scores_rk.copy().astype(float)
 
     def update_scores(self):
         self.preferences_borda_rk[:, self.loser] = -1

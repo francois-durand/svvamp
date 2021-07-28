@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>svvamp.rules.rule &mdash; SVVAMP 0.6.11 documentation</title>
+  <title>svvamp.rules.rule &mdash; SVVAMP 0.6.12 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.6.11
+                0.6.12
               </div>
             
           
@@ -2549,6 +2549,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;UM: Ballot =&quot;</span><span class="p">,</span> <span class="n">ballot</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="n">profile_um</span> <span class="o">=</span> <span class="n">ProfileUM</span><span class="p">(</span><span class="n">profile_s</span><span class="o">=</span><span class="n">profile_s</span><span class="p">,</span> <span class="n">n_m</span><span class="o">=</span><span class="n">n_m</span><span class="p">,</span> <span class="n">ballot_rk</span><span class="o">=</span><span class="n">ballot</span><span class="p">)</span>
             <span class="n">w_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_copy</span><span class="p">(</span><span class="n">profile</span><span class="o">=</span><span class="n">profile_um</span><span class="p">)</span><span class="o">.</span><span class="n">w_</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;UM: w_test =&quot;</span><span class="p">,</span> <span class="n">w_test</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">w_test</span> <span class="o">==</span> <span class="n">c</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_um</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
                 <span class="k">return</span>

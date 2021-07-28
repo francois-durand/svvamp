@@ -2381,6 +2381,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             self.mylogv("UM: Ballot =", ballot, 3)
             profile_um = ProfileUM(profile_s=profile_s, n_m=n_m, ballot_rk=ballot)
             w_test = self._copy(profile=profile_um).w_
+            self.mylogv("UM: w_test =", w_test, 3)
             if w_test == c:
                 self._candidates_um[c] = True
                 return
