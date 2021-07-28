@@ -337,6 +337,7 @@ class RuleSmithIRV(Rule):
         return winner_test == c
 
     def _cm_main_work_c_(self, c, optimize_bounds):
+        self.mylogv("CM: Compute CM for c =", c, 1)
         n_m = self.profile_.matrix_duels_ut[c, self.w_]
         n_s = self.profile_.n_v - n_m
         candidates = np.array(range(self.profile_.n_c))

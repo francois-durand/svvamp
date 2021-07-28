@@ -435,9 +435,8 @@ class RuleExhaustiveBallot(Rule):
 
     # %% Counting the ballots
 
-    def _counts_ballots_aux_(self, compute_v_might_be_pivotal):
+    def _count_ballots_aux_(self, compute_v_might_be_pivotal):
         self.mylog("Count ballots", 1)
-        candidates = np.array(range(self.profile_.n_c))
         ballots = np.zeros((self.profile_.n_v, self.profile_.n_c - 1), dtype=np.int)
         scores = np.zeros((self.profile_.n_c - 1, self.profile_.n_c))
         margins = np.zeros((self.profile_.n_c - 1, self.profile_.n_c))
@@ -446,21 +445,15 @@ class RuleExhaustiveBallot(Rule):
             v_might_be_pivotal = np.zeros(self.profile_.n_v)
         is_alive = np.ones(self.profile_.n_c, dtype=np.bool)
         worst_to_best = []
+        preferences_borda_rk_temp = self.profile_.preferences_borda_rk.copy()  # We will put -1 when a candidate loses
         for r in range(self.profile_.n_c - 1):
             # Compute the result of Plurality voting
             self.mylogv("is_alive =", is_alive, 3)
             self.mylogv("worst_to_best =", worst_to_best, 3)
-            alive_candidates = candidates[is_alive]
-            ballots[:, r] = alive_candidates[np.argmax(self.profile_.preferences_borda_rk[:, is_alive], 1)]
+            ballots[:, r] = np.argmax(preferences_borda_rk_temp, axis=1)
             self.mylogv("ballots[:, r] =", ballots[:, r], 3)
             scores[r, :] = np.bincount(ballots[:, r], minlength=self.profile_.n_c)
             scores[r, np.logical_not(is_alive)] = np.nan
-            # scores[r, is_alive] = np.sum(
-            #     np.equal(
-            #         self.profile_.preferences_borda_rk[is_alive],
-            #         np.max(self.profile_.preferences_borda_rk[:, is_alive], 1)[
-            #             :, np.newaxis]),
-            #     0)
             self.mylogv("scores[r, :] =", scores[r, :], 3)
             # Who gets eliminated?
             loser = np.where(scores[r, :] == np.nanmin(scores[r, :]))[0][-1]  # Tie-breaking: the last index
@@ -482,6 +475,7 @@ class RuleExhaustiveBallot(Rule):
             # Update tables
             is_alive[loser] = False
             worst_to_best.append(loser)
+            preferences_borda_rk_temp[:, loser] = -1
         w = np.argmax(is_alive)
         worst_to_best.append(w)
         elimination_path = np.array(worst_to_best)
@@ -491,18 +485,43 @@ class RuleExhaustiveBallot(Rule):
                 'candidates_by_scores_best_to_worst': candidates_by_scores_best_to_worst}
 
     @cached_property
-    def _counts_ballots_(self):
-        return self._counts_ballots_aux_(compute_v_might_be_pivotal=False)
+    def _count_ballots_(self):
+        return self._count_ballots_aux_(compute_v_might_be_pivotal=False)
 
     @cached_property
     def ballots_(self):
         """2d array of integers. ``ballots[v, r]`` is the candidate for which voter ``v`` votes at round ``r``.
         """
-        return self._counts_ballots_['ballots']
+        return self._count_ballots_['ballots']
 
     @cached_property
     def w_(self):
-        return self._counts_ballots_['w']
+        self.mylog("Compute w", 1)
+        preferences_borda_rk = self.profile_.preferences_borda_rk.copy()  # We will put -1 when a candidate loses
+        scores_r = self.profile_.plurality_scores_rk.copy().astype(float)
+        ballots_r = self.profile_.preferences_rk[:, 0].copy()
+        loser = None
+        for r in range(self.profile_.n_c - 1):
+            if r != 0:
+                preferences_borda_rk[:, loser] = -1
+                new_ballots = np.argmax(preferences_borda_rk[ballots_r == loser, :], axis=1)
+                ballots_r[ballots_r == loser] = new_ballots
+                scores_r += np.bincount(new_ballots, minlength=self.profile_.n_c)
+                scores_r[loser] = np.nan
+            # Result of Plurality voting
+            self.mylogv("ballots_r =", ballots_r, 3)
+            self.mylogv("scores_r =", scores_r, 3)
+            # Does someone win immediately?
+            best_candidate = np.nanargmax(scores_r)
+            best_score = scores_r[best_candidate]
+            if best_score > self.profile_.n_v / 2:
+                return best_candidate
+            # Who gets eliminated?
+            loser = np.where(scores_r == np.nanmin(scores_r))[0][-1]  # Tie-breaking: the last index
+            self.mylogv("loser =", loser, 3)
+        # After the last round...
+        preferences_borda_rk[0, loser] = -1
+        return np.argmax(preferences_borda_rk[0, :])
 
     @cached_property
     def scores_(self):
@@ -511,7 +530,7 @@ class RuleExhaustiveBallot(Rule):
         For eliminated candidates, ``scores[r, c] = numpy.nan``. In contrast, ``scores[r, c] = 0`` means that
         ``c`` is present at round ``r`` but no voter votes for ``c``.
         """
-        return self._counts_ballots_['scores']
+        return self._count_ballots_['scores']
 
     @cached_property
     def margins_(self):
@@ -535,14 +554,14 @@ class RuleExhaustiveBallot(Rule):
             array([[ 5.,  0.,  1.],
                    [ 4., nan,  0.]])
         """
-        return self._counts_ballots_['margins']
+        return self._count_ballots_['margins']
 
     @cached_property
     def candidates_by_scores_best_to_worst_(self):
         """1d array of integers. ``candidates_by_scores_best_to_worst`` is the list of all candidates in the reverse
         order of their elimination.
         """
-        return self._counts_ballots_['candidates_by_scores_best_to_worst']
+        return self._count_ballots_['candidates_by_scores_best_to_worst']
 
     @cached_property
     def elimination_path_(self):
@@ -562,11 +581,11 @@ class RuleExhaustiveBallot(Rule):
             >>> list(rule.elimination_path_)
             [1, 2, 0]
         """
-        return self._counts_ballots_['elimination_path']
+        return self._count_ballots_['elimination_path']
 
     @cached_property
     def v_might_be_pivotal_(self):
-        return self._counts_ballots_aux_(compute_v_might_be_pivotal=True)['v_might_be_pivotal']
+        return self._count_ballots_aux_(compute_v_might_be_pivotal=True)['v_might_be_pivotal']
 
     @cached_property
     def v_might_im_for_c_(self):

@@ -306,7 +306,7 @@ class RuleIRVDuels(Rule):
     # %% Counting the ballots
 
     @cached_property
-    def _counts_ballots_(self):
+    def _count_ballots_(self):
         self.mylog("Count ballots", 1)
         scores = np.full((2 * self.profile_.n_c - 2, self.profile_.n_c), np.nan)
         is_candidate_alive = np.ones(self.profile_.n_c, dtype=np.bool)
@@ -340,7 +340,7 @@ class RuleIRVDuels(Rule):
 
     @cached_property
     def w_(self):
-        return self._counts_ballots_['w']
+        return self._count_ballots_['w']
 
     @cached_property
     def scores_(self):
@@ -351,13 +351,13 @@ class RuleIRVDuels(Rule):
         * For odd rounds ``r``, only the two candidates who are selected for the elimination duels get scores.
           ``scores[r, c]`` is the number of voters who vote for ``c`` in this elimination duel.
         """
-        return self._counts_ballots_['scores']
+        return self._count_ballots_['scores']
 
     @cached_property
     def candidates_by_scores_best_to_worst_(self):
         """1d array of integers. Candidates are sorted in the reverse order of their elimination.
         """
-        return self._counts_ballots_['candidates_by_scores_best_to_worst']
+        return self._count_ballots_['candidates_by_scores_best_to_worst']
 
     # TODO: self.v_might_im_for_c
 

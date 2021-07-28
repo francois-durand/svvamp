@@ -332,18 +332,39 @@ class RuleCondorcetVtbIRV(Rule):
     # %% Counting the ballots
 
     @cached_property
-    def _counts_ballots_(self):
-        self.mylog("Count ballots", 1)
+    def w_(self):
         if not np.isnan(self.profile_.condorcet_winner_rk):
-            w = self.profile_.condorcet_winner_rk
-            scores = np.sum(self.profile_.matrix_victories_rk, 1)
-            candidates_by_scores_best_to_worst = (np.argsort(- scores, kind='mergesort'))
+            return self.profile_.condorcet_winner_rk
         else:
-            eb = self.irv_.eb_
-            w = eb.w_
-            scores = eb.scores_
-            candidates_by_scores_best_to_worst = eb.candidates_by_scores_best_to_worst_
-        return {'w': w, 'scores': scores, 'candidates_by_scores_best_to_worst': candidates_by_scores_best_to_worst}
+            return self.irv_.w_
+
+    @cached_property
+    def scores_(self):
+        """1d or 2d array.
+
+            * If there is a Condorcet winner, then ``scores[c]`` is the number of victories for ``c`` in
+              :attr:`matrix_duels_rk`.
+            * Otherwise, ``scores[r, c]`` is defined like in :class:`RuleIRV`: it is the number of voters who vote
+              for candidate ``c`` at round ``r``. For eliminated candidates, ``scores[r, c] = numpy.nan``. In contrast,
+              ``scores[r, c] = 0`` means that ``c`` is present at round ``r`` but no voter votes for ``c``.
+        """
+        if not np.isnan(self.profile_.condorcet_winner_rk):
+            return np.sum(self.profile_.matrix_victories_rk, 1)
+        else:
+            return self.irv_.scores_
+
+    @cached_property
+    def candidates_by_scores_best_to_worst_(self):
+        """1d array of integers.
+
+            * If there is a Condorcet winner, candidates are sorted according to  their (scalar) score.
+            * Otherwise, ``candidates_by_scores_best_to_worst`` is the list of all candidates in the reverse order of
+              their IRV elimination.
+        """
+        if not np.isnan(self.profile_.condorcet_winner_rk):
+            return np.argsort(- self.scores_, kind='mergesort')
+        else:
+            return self.irv_.candidates_by_scores_best_to_worst_
 
     @cached_property
     def _v_might_be_pivotal_(self):
@@ -377,32 +398,6 @@ class RuleCondorcetVtbIRV(Rule):
                         self.profile_.preferences_borda_rk[:, close_candidates]
                 ), 1)] = True
         return v_might_be_pivotal
-
-    @cached_property
-    def w_(self):
-        return self._counts_ballots_['w']
-
-    @cached_property
-    def scores_(self):
-        """1d or 2d array.
-
-            * If there is a Condorcet winner, then ``scores[c]`` is the number of victories for ``c`` in
-              :attr:`matrix_duels_rk`.
-            * Otherwise, ``scores[r, c]`` is defined like in :class:`RuleIRV`: it is the number of voters who vote
-              for candidate ``c`` at round ``r``. For eliminated candidates, ``scores[r, c] = numpy.nan``. In contrast,
-              ``scores[r, c] = 0`` means that ``c`` is present at round ``r`` but no voter votes for ``c``.
-        """
-        return self._counts_ballots_['scores']
-
-    @cached_property
-    def candidates_by_scores_best_to_worst_(self):
-        """1d array of integers.
-
-            * If there is a Condorcet winner, candidates are sorted according to  their (scalar) score.
-            * Otherwise, ``candidates_by_scores_best_to_worst`` is the list of all candidates in the reverse order of
-              their IRV elimination.
-        """
-        return self._counts_ballots_['candidates_by_scores_best_to_worst']
 
     @cached_property
     def v_might_im_for_c_(self):
@@ -740,6 +735,7 @@ class RuleCondorcetVtbIRV(Rule):
             >>> rule.necessary_coalition_size_cm_
             array([3., 3., 2., 0., 4.])
         """
+        self.mylogv("CM: Compute CM for c =", c, 1)
         n_m = self.profile_.matrix_duels_ut[c, self.w_]
         n_s = self.profile_.n_v - n_m
         candidates = np.array(range(self.profile_.n_c))

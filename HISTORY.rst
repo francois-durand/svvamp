@@ -5,6 +5,14 @@ History
 =======
 
 -----------------------------------------------------------------------
+0.6.9 (2021-07-28): Accelerate Exhaustive Ballot and some related rules
+-----------------------------------------------------------------------
+
+* Accelerate the computation of the winner for ``RuleCondorcetAbsIRV``, ``RuleCondorcetVtbIRV``,
+  ``RuleExhaustiveBallot``, ``RuleICRV``, ``RuleIRVAverage`` and ``RuleTideman``. This is especially useful
+  to accelerate some manipulation methods, such as TM, UM, IM or IIA.
+
+-----------------------------------------------------------------------
 0.6.8 (2021-07-27): Accelerate Exhaustive Ballot and some related rules
 -----------------------------------------------------------------------
 

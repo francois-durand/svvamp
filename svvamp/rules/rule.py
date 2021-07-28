@@ -2355,6 +2355,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         """Do the main work in UM loop for candidate ``c``, with option 'exact'. Must decide ``_candidates_um[c]`` (to
         True, False or NaN). Do not update ``_is_um``.
         """
+        self.mylogv("UM: Compute UM for c =", c, 1)
         if self.is_based_on_rk:
             self._um_main_work_c_exact_rankings_(c)
         elif self.is_based_on_ut_minus1_1:  # pragma: no cover
