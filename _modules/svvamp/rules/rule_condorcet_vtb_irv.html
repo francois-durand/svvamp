@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>svvamp.rules.rule_condorcet_vtb_irv &mdash; SVVAMP 0.6.8 documentation</title>
+  <title>svvamp.rules.rule_condorcet_vtb_irv &mdash; SVVAMP 0.6.9 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.6.8
+                0.6.9
               </div>
             
           
@@ -500,18 +500,39 @@
     <span class="c1"># %% Counting the ballots</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">_counts_ballots_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Count ballots&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">w_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">condorcet_winner_rk</span><span class="p">):</span>
-            <span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">condorcet_winner_rk</span>
-            <span class="n">scores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_victories_rk</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="n">candidates_by_scores_best_to_worst</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="o">-</span> <span class="n">scores</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;mergesort&#39;</span><span class="p">))</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">condorcet_winner_rk</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">eb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">irv_</span><span class="o">.</span><span class="n">eb_</span>
-            <span class="n">w</span> <span class="o">=</span> <span class="n">eb</span><span class="o">.</span><span class="n">w_</span>
-            <span class="n">scores</span> <span class="o">=</span> <span class="n">eb</span><span class="o">.</span><span class="n">scores_</span>
-            <span class="n">candidates_by_scores_best_to_worst</span> <span class="o">=</span> <span class="n">eb</span><span class="o">.</span><span class="n">candidates_by_scores_best_to_worst_</span>
-        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;w&#39;</span><span class="p">:</span> <span class="n">w</span><span class="p">,</span> <span class="s1">&#39;scores&#39;</span><span class="p">:</span> <span class="n">scores</span><span class="p">,</span> <span class="s1">&#39;candidates_by_scores_best_to_worst&#39;</span><span class="p">:</span> <span class="n">candidates_by_scores_best_to_worst</span><span class="p">}</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">irv_</span><span class="o">.</span><span class="n">w_</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">scores_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;1d or 2d array.</span>
+
+<span class="sd">            * If there is a Condorcet winner, then ``scores[c]`` is the number of victories for ``c`` in</span>
+<span class="sd">              :attr:`matrix_duels_rk`.</span>
+<span class="sd">            * Otherwise, ``scores[r, c]`` is defined like in :class:`RuleIRV`: it is the number of voters who vote</span>
+<span class="sd">              for candidate ``c`` at round ``r``. For eliminated candidates, ``scores[r, c] = numpy.nan``. In contrast,</span>
+<span class="sd">              ``scores[r, c] = 0`` means that ``c`` is present at round ``r`` but no voter votes for ``c``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">condorcet_winner_rk</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_victories_rk</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">irv_</span><span class="o">.</span><span class="n">scores_</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">candidates_by_scores_best_to_worst_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;1d array of integers.</span>
+
+<span class="sd">            * If there is a Condorcet winner, candidates are sorted according to  their (scalar) score.</span>
+<span class="sd">            * Otherwise, ``candidates_by_scores_best_to_worst`` is the list of all candidates in the reverse order of</span>
+<span class="sd">              their IRV elimination.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">condorcet_winner_rk</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">scores_</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;mergesort&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">irv_</span><span class="o">.</span><span class="n">candidates_by_scores_best_to_worst_</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">_v_might_be_pivotal_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -545,32 +566,6 @@
                         <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[:,</span> <span class="n">close_candidates</span><span class="p">]</span>
                 <span class="p">),</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="n">v_might_be_pivotal</span>
-
-    <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">w_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_counts_ballots_</span><span class="p">[</span><span class="s1">&#39;w&#39;</span><span class="p">]</span>
-
-    <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">scores_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;1d or 2d array.</span>
-
-<span class="sd">            * If there is a Condorcet winner, then ``scores[c]`` is the number of victories for ``c`` in</span>
-<span class="sd">              :attr:`matrix_duels_rk`.</span>
-<span class="sd">            * Otherwise, ``scores[r, c]`` is defined like in :class:`RuleIRV`: it is the number of voters who vote</span>
-<span class="sd">              for candidate ``c`` at round ``r``. For eliminated candidates, ``scores[r, c] = numpy.nan``. In contrast,</span>
-<span class="sd">              ``scores[r, c] = 0`` means that ``c`` is present at round ``r`` but no voter votes for ``c``.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_counts_ballots_</span><span class="p">[</span><span class="s1">&#39;scores&#39;</span><span class="p">]</span>
-
-    <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">candidates_by_scores_best_to_worst_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;1d array of integers.</span>
-
-<span class="sd">            * If there is a Condorcet winner, candidates are sorted according to  their (scalar) score.</span>
-<span class="sd">            * Otherwise, ``candidates_by_scores_best_to_worst`` is the list of all candidates in the reverse order of</span>
-<span class="sd">              their IRV elimination.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_counts_ballots_</span><span class="p">[</span><span class="s1">&#39;candidates_by_scores_best_to_worst&#39;</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">v_might_im_for_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -908,6 +903,7 @@
 <span class="sd">            &gt;&gt;&gt; rule.necessary_coalition_size_cm_</span>
 <span class="sd">            array([3., 3., 2., 0., 4.])</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;CM: Compute CM for c =&quot;</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">n_m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_ut</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span>
         <span class="n">n_s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span> <span class="o">-</span> <span class="n">n_m</span>
         <span class="n">candidates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">))</span>

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>History &mdash; SVVAMP 0.6.8 documentation</title>
+  <title>History &mdash; SVVAMP 0.6.9 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.6.8
+                0.6.9
               </div>
             
           
@@ -101,10 +101,11 @@
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">History</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#accelerate-exhaustive-ballot-and-some-related-rules">0.6.8 (2021-07-27): Accelerate Exhaustive Ballot and some related rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#accelerate-exhaustive-ballot-and-some-related-rules">0.6.9 (2021-07-28): Accelerate Exhaustive Ballot and some related rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">0.6.8 (2021-07-27): Accelerate Exhaustive Ballot and some related rules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#accelerations">0.6.7 (2021-07-27): Accelerations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#fix-bug-in-profileum">0.6.6 (2021-07-27): Fix bug in ProfileUM</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id1">0.6.5 (2021-07-27): Accelerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">0.6.5 (2021-07-27): Accelerations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#option-faster-for-maximin">0.6.4 (2021-07-27): Option “faster” for Maximin</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#accelerate-profilesubsetcandidates">0.6.3 (2021-07-27): Accelerate ProfileSubsetCandidates</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#accelerate-maximin">0.6.2 (2021-07-27): Accelerate Maximin</a></li>
@@ -112,7 +113,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#experimentscompiler">0.6.0 (2021-07-26): ExperimentsCompiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#fix-pypi-deployment">0.5.1 (2021-07-24): Fix PyPI deployment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#meta">0.5.0 (2021-07-24): Meta</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">0.4.3 (2021-07-21): Accelerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">0.4.3 (2021-07-21): Accelerations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#accelerate-plurality-scores-ut">0.4.2 (2021-07-20): Accelerate plurality_scores_ut</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#fix-missing-subpackage-in-deployment">0.4.1 (2021-07-20): Fix Missing Subpackage in Deployment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#black-copeland-split-cycle-star">0.4.0 (2021-07-19): Black, Copeland, Split Cycle, STAR</a></li>
@@ -221,7 +222,15 @@
 <div class="section" id="history">
 <h1>History<a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="accelerate-exhaustive-ballot-and-some-related-rules">
-<h2>0.6.8 (2021-07-27): Accelerate Exhaustive Ballot and some related rules<a class="headerlink" href="#accelerate-exhaustive-ballot-and-some-related-rules" title="Permalink to this headline">¶</a></h2>
+<h2>0.6.9 (2021-07-28): Accelerate Exhaustive Ballot and some related rules<a class="headerlink" href="#accelerate-exhaustive-ballot-and-some-related-rules" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Accelerate the computation of the winner for <code class="docutils literal notranslate"><span class="pre">RuleCondorcetAbsIRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleCondorcetVtbIRV</span></code>,
+<code class="docutils literal notranslate"><span class="pre">RuleExhaustiveBallot</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleICRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleIRVAverage</span></code> and <code class="docutils literal notranslate"><span class="pre">RuleTideman</span></code>. This is especially useful
+to accelerate some manipulation methods, such as TM, UM, IM or IIA.</p></li>
+</ul>
+</div>
+<div class="section" id="id1">
+<h2>0.6.8 (2021-07-27): Accelerate Exhaustive Ballot and some related rules<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">RuleExhaustiveBallot</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleCondorcetAbsIRV</span></code> and <code class="docutils literal notranslate"><span class="pre">RuleCondorcetVtbIRV</span></code>: accelerate counting the ballots. This
 also speeds up <code class="docutils literal notranslate"><span class="pre">RuleIRV</span></code>, which relies directly on <code class="docutils literal notranslate"><span class="pre">RuleExhaustiveBallot</span></code>.</p></li>
@@ -246,8 +255,8 @@ the computation of related voting rules (<code class="docutils literal notransla
 <li><p>Fix bug: <code class="docutils literal notranslate"><span class="pre">preferences_rk</span></code> was an array of floats, it is now an array of integers.</p></li>
 </ul>
 </div>
-<div class="section" id="id1">
-<h2>0.6.5 (2021-07-27): Accelerations<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h2>0.6.5 (2021-07-27): Accelerations<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Accelerate <code class="docutils literal notranslate"><span class="pre">ProfileSubsetCandidates</span></code> (used for IIA but also for some voting rules such as <code class="docutils literal notranslate"><span class="pre">RuleTideman</span></code>).</p></li>
 <li><p>Add <code class="docutils literal notranslate"><span class="pre">ProfileUM</span></code>. This is used to speed up the generic exact algorithm for UM in the case of voting rules based
@@ -351,8 +360,8 @@ other profile generators.</p></li>
 </li>
 </ul>
 </div>
-<div class="section" id="id2">
-<h2>0.4.3 (2021-07-21): Accelerations<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h2>0.4.3 (2021-07-21): Accelerations<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">Rule</span></code>: accelerate trivial manipulation (TM) for rules based on rankings.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Profile</span></code>: compute <code class="docutils literal notranslate"><span class="pre">preferences_borda_ut</span></code> only when needed. In particular, if often accelerates trivial

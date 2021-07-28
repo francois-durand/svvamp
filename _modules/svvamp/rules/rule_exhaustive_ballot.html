@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>svvamp.rules.rule_exhaustive_ballot &mdash; SVVAMP 0.6.8 documentation</title>
+  <title>svvamp.rules.rule_exhaustive_ballot &mdash; SVVAMP 0.6.9 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.6.8
+                0.6.9
               </div>
             
           
@@ -603,9 +603,8 @@
 
     <span class="c1"># %% Counting the ballots</span>
 
-    <span class="k">def</span> <span class="nf">_counts_ballots_aux_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">compute_v_might_be_pivotal</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_count_ballots_aux_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">compute_v_might_be_pivotal</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Count ballots&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="n">candidates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">))</span>
         <span class="n">ballots</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
         <span class="n">scores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">))</span>
         <span class="n">margins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">))</span>
@@ -614,21 +613,15 @@
             <span class="n">v_might_be_pivotal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span><span class="p">)</span>
         <span class="n">is_alive</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">bool</span><span class="p">)</span>
         <span class="n">worst_to_best</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">preferences_borda_rk_temp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>  <span class="c1"># We will put -1 when a candidate loses</span>
         <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
             <span class="c1"># Compute the result of Plurality voting</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;is_alive =&quot;</span><span class="p">,</span> <span class="n">is_alive</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;worst_to_best =&quot;</span><span class="p">,</span> <span class="n">worst_to_best</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-            <span class="n">alive_candidates</span> <span class="o">=</span> <span class="n">candidates</span><span class="p">[</span><span class="n">is_alive</span><span class="p">]</span>
-            <span class="n">ballots</span><span class="p">[:,</span> <span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="n">alive_candidates</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[:,</span> <span class="n">is_alive</span><span class="p">],</span> <span class="mi">1</span><span class="p">)]</span>
+            <span class="n">ballots</span><span class="p">[:,</span> <span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">preferences_borda_rk_temp</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;ballots[:, r] =&quot;</span><span class="p">,</span> <span class="n">ballots</span><span class="p">[:,</span> <span class="n">r</span><span class="p">],</span> <span class="mi">3</span><span class="p">)</span>
             <span class="n">scores</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">ballots</span><span class="p">[:,</span> <span class="n">r</span><span class="p">],</span> <span class="n">minlength</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">)</span>
             <span class="n">scores</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="n">is_alive</span><span class="p">)]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
-            <span class="c1"># scores[r, is_alive] = np.sum(</span>
-            <span class="c1">#     np.equal(</span>
-            <span class="c1">#         self.profile_.preferences_borda_rk[is_alive],</span>
-            <span class="c1">#         np.max(self.profile_.preferences_borda_rk[:, is_alive], 1)[</span>
-            <span class="c1">#             :, np.newaxis]),</span>
-            <span class="c1">#     0)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;scores[r, :] =&quot;</span><span class="p">,</span> <span class="n">scores</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="p">:],</span> <span class="mi">3</span><span class="p">)</span>
             <span class="c1"># Who gets eliminated?</span>
             <span class="n">loser</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">scores</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="p">:]</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">scores</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="p">:]))[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># Tie-breaking: the last index</span>
@@ -650,6 +643,7 @@
             <span class="c1"># Update tables</span>
             <span class="n">is_alive</span><span class="p">[</span><span class="n">loser</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="n">worst_to_best</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loser</span><span class="p">)</span>
+            <span class="n">preferences_borda_rk_temp</span><span class="p">[:,</span> <span class="n">loser</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
         <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">is_alive</span><span class="p">)</span>
         <span class="n">worst_to_best</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
         <span class="n">elimination_path</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">worst_to_best</span><span class="p">)</span>
@@ -659,18 +653,43 @@
                 <span class="s1">&#39;candidates_by_scores_best_to_worst&#39;</span><span class="p">:</span> <span class="n">candidates_by_scores_best_to_worst</span><span class="p">}</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">_counts_ballots_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_counts_ballots_aux_</span><span class="p">(</span><span class="n">compute_v_might_be_pivotal</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_count_ballots_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_aux_</span><span class="p">(</span><span class="n">compute_v_might_be_pivotal</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">ballots_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;2d array of integers. ``ballots[v, r]`` is the candidate for which voter ``v`` votes at round ``r``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_counts_ballots_</span><span class="p">[</span><span class="s1">&#39;ballots&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s1">&#39;ballots&#39;</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">w_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_counts_ballots_</span><span class="p">[</span><span class="s1">&#39;w&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Compute w&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">preferences_borda_rk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>  <span class="c1"># We will put -1 when a candidate loses</span>
+        <span class="n">scores_r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">plurality_scores_rk</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">ballots_r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_rk</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">loser</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">r</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">preferences_borda_rk</span><span class="p">[:,</span> <span class="n">loser</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+                <span class="n">new_ballots</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">preferences_borda_rk</span><span class="p">[</span><span class="n">ballots_r</span> <span class="o">==</span> <span class="n">loser</span><span class="p">,</span> <span class="p">:],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">ballots_r</span><span class="p">[</span><span class="n">ballots_r</span> <span class="o">==</span> <span class="n">loser</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_ballots</span>
+                <span class="n">scores_r</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">new_ballots</span><span class="p">,</span> <span class="n">minlength</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">)</span>
+                <span class="n">scores_r</span><span class="p">[</span><span class="n">loser</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+            <span class="c1"># Result of Plurality voting</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;ballots_r =&quot;</span><span class="p">,</span> <span class="n">ballots_r</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;scores_r =&quot;</span><span class="p">,</span> <span class="n">scores_r</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="c1"># Does someone win immediately?</span>
+            <span class="n">best_candidate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanargmax</span><span class="p">(</span><span class="n">scores_r</span><span class="p">)</span>
+            <span class="n">best_score</span> <span class="o">=</span> <span class="n">scores_r</span><span class="p">[</span><span class="n">best_candidate</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">best_score</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span> <span class="o">/</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">best_candidate</span>
+            <span class="c1"># Who gets eliminated?</span>
+            <span class="n">loser</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">scores_r</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">scores_r</span><span class="p">))[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># Tie-breaking: the last index</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;loser =&quot;</span><span class="p">,</span> <span class="n">loser</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="c1"># After the last round...</span>
+        <span class="n">preferences_borda_rk</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">loser</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">preferences_borda_rk</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:])</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">scores_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -679,7 +698,7 @@
 <span class="sd">        For eliminated candidates, ``scores[r, c] = numpy.nan``. In contrast, ``scores[r, c] = 0`` means that</span>
 <span class="sd">        ``c`` is present at round ``r`` but no voter votes for ``c``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_counts_ballots_</span><span class="p">[</span><span class="s1">&#39;scores&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s1">&#39;scores&#39;</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">margins_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -703,14 +722,14 @@
 <span class="sd">            array([[ 5.,  0.,  1.],</span>
 <span class="sd">                   [ 4., nan,  0.]])</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_counts_ballots_</span><span class="p">[</span><span class="s1">&#39;margins&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s1">&#39;margins&#39;</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">candidates_by_scores_best_to_worst_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;1d array of integers. ``candidates_by_scores_best_to_worst`` is the list of all candidates in the reverse</span>
 <span class="sd">        order of their elimination.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_counts_ballots_</span><span class="p">[</span><span class="s1">&#39;candidates_by_scores_best_to_worst&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s1">&#39;candidates_by_scores_best_to_worst&#39;</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">elimination_path_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -730,11 +749,11 @@
 <span class="sd">            &gt;&gt;&gt; list(rule.elimination_path_)</span>
 <span class="sd">            [1, 2, 0]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_counts_ballots_</span><span class="p">[</span><span class="s1">&#39;elimination_path&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s1">&#39;elimination_path&#39;</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">v_might_be_pivotal_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_counts_ballots_aux_</span><span class="p">(</span><span class="n">compute_v_might_be_pivotal</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="s1">&#39;v_might_be_pivotal&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_aux_</span><span class="p">(</span><span class="n">compute_v_might_be_pivotal</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="s1">&#39;v_might_be_pivotal&#39;</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">v_might_im_for_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

@@ -235,7 +235,7 @@ class RuleTideman(Rule):
     # %% Counting the ballots
 
     @cached_property
-    def _counts_ballots_(self):
+    def _count_ballots_(self):
         self.mylog("Count ballots", 1)
         scores = []
         candidates_alive = np.array(range(self.profile_.n_c))
@@ -275,15 +275,43 @@ class RuleTideman(Rule):
 
     @cached_property
     def w_(self):
-        return self._counts_ballots_['w']
+        self.mylog("Compute w", 1)
+        candidates_alive = np.array(range(self.profile_.n_c))
+        preferences_borda_rk = self.profile_.preferences_borda_rk.copy()  # We will put -1 when a candidate loses
+        scores_r = self.profile_.plurality_scores_rk.copy().astype(float)
+        ballots_r = self.profile_.preferences_rk[:, 0].copy()
+        plurality_loser = None
+        while True:
+            # Eliminate candidates outside Smith set
+            matrix_victories_rk_r = self.profile_.matrix_victories_rk[candidates_alive, :][:, candidates_alive]
+            smith_set_r = matrix_victories_to_smith_set(matrix_victories_rk_r)
+            smith_losers = np.delete(candidates_alive, smith_set_r)
+            candidates_alive = candidates_alive[smith_set_r]
+            if len(candidates_alive) == 1:
+                return candidates_alive[0]
+            # Eliminate candidate with the lowest Plurality score
+            if plurality_loser is not None:
+                new_ballots = np.argmax(preferences_borda_rk[ballots_r == plurality_loser, :], axis=1)
+                ballots_r[ballots_r == plurality_loser] = new_ballots
+                scores_r += np.bincount(new_ballots, minlength=self.profile_.n_c)
+                scores_r[plurality_loser] = np.nan
+            for loser in smith_losers:
+                new_ballots = np.argmax(preferences_borda_rk[ballots_r == loser, :], axis=1)
+                ballots_r[ballots_r == loser] = new_ballots
+                scores_r += np.bincount(new_ballots, minlength=self.profile_.n_c)
+            scores_r[smith_losers] = np.nan
+            plurality_loser = np.where(scores_r == np.nanmin(scores_r))[0][-1]  # Tie-breaking: the last index
+            candidates_alive = np.array([c for c in candidates_alive if c != plurality_loser])
+            if len(candidates_alive) == 1:
+                return candidates_alive[0]
 
     @cached_property
     def scores_(self):
-        return self._counts_ballots_['scores']
+        return self._count_ballots_['scores']
 
     @cached_property
     def elimination_path_(self):
-        return self._counts_ballots_['elimination_path']
+        return self._count_ballots_['elimination_path']
 
     @cached_property
     def candidates_by_scores_best_to_worst_(self):

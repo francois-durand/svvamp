@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>svvamp.rules.rule &mdash; SVVAMP 0.6.8 documentation</title>
+  <title>svvamp.rules.rule &mdash; SVVAMP 0.6.9 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.6.8
+                0.6.9
               </div>
             
           
@@ -2523,6 +2523,7 @@
         <span class="sd">&quot;&quot;&quot;Do the main work in UM loop for candidate ``c``, with option &#39;exact&#39;. Must decide ``_candidates_um[c]`` (to</span>
 <span class="sd">        True, False or NaN). Do not update ``_is_um``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;UM: Compute UM for c =&quot;</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_based_on_rk</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_um_main_work_c_exact_rankings_</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_based_on_ut_minus1_1</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>

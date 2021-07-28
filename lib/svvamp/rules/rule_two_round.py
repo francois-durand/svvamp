@@ -290,7 +290,7 @@ class RuleTwoRound(Rule):
     # %% Counting the ballots
 
     @cached_property
-    def _counts_ballots_(self):
+    def _count_ballots_(self):
         self.mylog("Count ballots", 1)
         # First round
         scores_r = np.copy(self.profile_.plurality_scores_rk)
@@ -306,16 +306,16 @@ class RuleTwoRound(Rule):
     @cached_property
     def selected_one_(self):
         """Integer. The candidate with highest score at first round."""
-        return self._counts_ballots_['selected_one']
+        return self._count_ballots_['selected_one']
 
     @cached_property
     def selected_two_(self):
         """Integer. The candidate with second highest score at first round."""
-        return self._counts_ballots_['selected_two']
+        return self._count_ballots_['selected_two']
 
     @cached_property
     def w_(self):
-        return self._counts_ballots_['w']
+        return self._count_ballots_['w']
 
     @cached_property
     def ballots_(self):

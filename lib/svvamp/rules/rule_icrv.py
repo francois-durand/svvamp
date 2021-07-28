@@ -334,7 +334,7 @@ class RuleICRV(Rule):
     # %% Counting the ballots
 
     @cached_property
-    def _counts_ballots_(self):
+    def _count_ballots_(self):
         self.mylog("Count ballots", 1)
         scores = []
         is_candidate_alive = np.ones(self.profile_.n_c, dtype=np.bool)
@@ -377,7 +377,37 @@ class RuleICRV(Rule):
 
     @cached_property
     def w_(self):
-        return self._counts_ballots_['w']
+        self.mylog("Compute w", 1)
+        is_alive = np.ones(self.profile_.n_c, dtype=np.bool)
+        nb_alive = self.profile_.n_c
+        preferences_borda_rk = self.profile_.preferences_borda_rk.copy()  # We will put -1 when a candidate loses
+        scores_r = self.profile_.plurality_scores_rk.copy().astype(float)
+        ballots_r = self.profile_.preferences_rk[:, 0].copy()
+        loser = None
+        for r in range(self.profile_.n_c - 1):
+            # Is there a Condorcet winner?
+            is_condorcet_winner = (
+                is_alive
+                & (np.sum(self.profile_.matrix_victories_rk[:, is_alive], axis=1) == nb_alive - 1)
+            )
+            condorcet_winners = np.where(is_condorcet_winner)[0]
+            if condorcet_winners.size > 0:
+                return condorcet_winners[0]
+            # Now, scores_r is the Plurality score (IRV-style)
+            if r != 0:
+                preferences_borda_rk[:, loser] = -1
+                new_ballots = np.argmax(preferences_borda_rk[ballots_r == loser, :], axis=1)
+                ballots_r[ballots_r == loser] = new_ballots
+                scores_r += np.bincount(new_ballots, minlength=self.profile_.n_c)
+                scores_r[loser] = np.nan
+            # Who gets eliminated?
+            loser = np.where(scores_r == np.nanmin(scores_r))[0][-1]  # Tie-breaking: the last index
+            is_alive[loser] = False
+            nb_alive -= 1
+            self.mylogv("loser =", loser, 3)
+            # Save time if last round
+            if nb_alive == 1:
+                return np.where(is_alive)[0][0]
 
     @cached_property
     def scores_(self):
@@ -389,7 +419,7 @@ class RuleICRV(Rule):
         For odd rounds ``r``, ``scores[r, c]`` is the number of voters who rank ``c`` first (among non-eliminated
         candidates).
         """
-        return self._counts_ballots_['scores']
+        return self._count_ballots_['scores']
 
     @cached_property
     def candidates_by_scores_best_to_worst_(self):
@@ -400,7 +430,7 @@ class RuleICRV(Rule):
 
         Other candidates are sorted in the reverse order of their IRV elimination.
         """
-        return self._counts_ballots_['candidates_by_scores_best_to_worst']
+        return self._count_ballots_['candidates_by_scores_best_to_worst']
 
     # TODO: self._v_might_im_for_c
 
