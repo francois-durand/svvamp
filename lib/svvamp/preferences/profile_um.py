@@ -138,5 +138,21 @@ class ProfileUM(Profile):
             + self.n_m * (self.ballot_borda_rk[:, np.newaxis] > self.ballot_borda_rk[np.newaxis, :])
         )
 
+    @cached_property
+    def plurality_scores_rk(self):
+        plurality_scores_rk = np.zeros(self.n_c)
+        plurality_scores_rk[self.ballot_rk[0]] = self.n_m
+        plurality_scores_rk += self.profile_s.plurality_scores_rk
+        return plurality_scores_rk
+
+    @cached_property
+    def plurality_scores_ut(self):
+        plurality_scores_ut = np.zeros(self.n_c)
+        preferred_candidates = np.where(self.ballot_ut == np.max(self.ballot_ut))[0]
+        if preferred_candidates.size == 1:
+            plurality_scores_ut[preferred_candidates[0]] = self.n_m
+        plurality_scores_ut += self.profile_s.plurality_scores_ut
+        return plurality_scores_ut
+
     def plurality_elimination_engine(self):
         return PluralityEliminationEngineProfileUM(self)
