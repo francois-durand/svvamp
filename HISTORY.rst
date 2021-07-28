@@ -4,6 +4,12 @@
 History
 =======
 
+-----------------------------------------
+0.6.11 (2021-07-28): Accelerate ProfileUM
+-----------------------------------------
+
+* ``ProfileUM``: implement a dedicated implementation for ``plurality_scores_rk`` and ``plurality_scores_ut``.
+
 -----------------------------------------------
 0.6.10 (2021-07-28): PluralityEliminationEngine
 -----------------------------------------------
