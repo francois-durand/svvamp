@@ -286,7 +286,14 @@ class RuleWoodall(Rule):
 
     # %% Unison manipulation (UM)
 
-    # TODO: should be implemented .
+    def _um_preliminary_checks_c_(self, c):
+        if self.um_option not in {'fast', 'lazy'} or self.cm_option not in {'fast', 'lazy'}:
+            if (
+                self.w_ == self.profile_.condorcet_winner_rk_ctb
+                and not self.profile_.c_might_be_there_when_cw_is_eliminated_irv_style[c]
+            ):
+                # Impossible to manipulate with n_m manipulators
+                self._candidates_um[c] = False
 
     # %% Ignorant-Coalition Manipulation (ICM)
 

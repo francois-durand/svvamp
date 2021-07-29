@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>svvamp.rules.rule_smith_irv &mdash; SVVAMP 0.8.0 documentation</title>
+  <title>svvamp.rules.rule_smith_irv &mdash; SVVAMP 0.8.1 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.8.0
+                0.8.1
               </div>
             
           
@@ -468,7 +468,14 @@
 
     <span class="c1"># %% Unison manipulation (UM)</span>
 
-    <span class="c1"># TODO: should be implemented .</span>
+    <span class="k">def</span> <span class="nf">_um_preliminary_checks_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">um_option</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;fast&#39;</span><span class="p">,</span> <span class="s1">&#39;lazy&#39;</span><span class="p">}</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;fast&#39;</span><span class="p">,</span> <span class="s1">&#39;lazy&#39;</span><span class="p">}:</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">w_</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">condorcet_winner_rk_ctb</span>
+                <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">c_might_be_there_when_cw_is_eliminated_irv_style</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
+            <span class="p">):</span>
+                <span class="c1"># Impossible to manipulate with n_m manipulators</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_um</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="c1"># %% Ignorant-Coalition Manipulation (ICM)</span>
 

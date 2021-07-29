@@ -954,6 +954,15 @@ class RuleIRV(Rule):
         self._example_path_um = {c: None for c in range(self.profile_.n_c)}
         return True
 
+    def _um_preliminary_checks_c_(self, c):
+        if self.um_option not in {'fast', 'lazy'} or self.cm_option not in {'fast', 'lazy'}:
+            if (
+                self.w_ == self.profile_.condorcet_winner_rk_ctb
+                and not self.profile_.c_might_be_there_when_cw_is_eliminated_irv_style[c]
+            ):
+                # Impossible to manipulate with n_m manipulators
+                self._candidates_um[c] = False
+
     def _um_aux_fast(self, c, n_m, preferences_borda_s):
         """Fast algorithm used for UM.
 
@@ -1529,7 +1538,7 @@ class RuleIRV(Rule):
         # print(preferences_borda_s)
         # print(matrix_duels_temp)
         candidates = np.array(range(self.profile_.n_c))
-        ballots_m = [[] for v in range(n_m)]
+        ballots_m = [[] for _ in range(n_m)]
 
         # Step 1: ensure the elimination path
         # And consequences on the majority matrix

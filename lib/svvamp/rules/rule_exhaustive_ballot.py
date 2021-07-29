@@ -498,7 +498,6 @@ class RuleExhaustiveBallot(Rule):
     def w_(self):
         self.mylog("Compute w", 1)
         plurality_elimination_engine = self.profile_.plurality_elimination_engine()
-        loser = None
         for r in range(self.profile_.n_c - 1):
             if r != 0:
                 plurality_elimination_engine.update_scores()
@@ -1263,6 +1262,15 @@ class RuleExhaustiveBallot(Rule):
     def _um_is_initialized_general_subclass_(self):
         self._example_path_um = {c: None for c in range(self.profile_.n_c)}
         return True
+
+    def _um_preliminary_checks_c_(self, c):
+        if self.um_option not in {'fast', 'lazy'} or self.cm_option not in {'fast', 'lazy'}:
+            if (
+                self.w_ == self.profile_.condorcet_winner_rk_ctb
+                and not self.profile_.c_might_be_there_when_cw_is_eliminated_irv_style[c]
+            ):
+                # Impossible to manipulate with n_m manipulators
+                self._candidates_um[c] = False
 
     def _um_main_work_c_(self, c):
         """
