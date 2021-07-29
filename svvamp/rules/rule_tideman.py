@@ -214,7 +214,7 @@ class RuleTideman(Rule):
     def __init__(self, **kwargs):
         super().__init__(
             with_two_candidates_reduces_to_plurality=True, is_based_on_rk=True,
-            precheck_um=False, precheck_icm=False,
+            precheck_icm=False,
             log_identity="TIDEMAN", **kwargs
         )
 
