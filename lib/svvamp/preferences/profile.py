@@ -2811,3 +2811,46 @@ class Profile(my_log.MyLog):
         subset of candidates containing `w` such that `w` has at most `n_v / card(subset)` plurality votes.
         """
         return self.exists_condorcet_order_rk_ctb and not(np.any(self.c_might_be_there_when_cw_is_eliminated_irv_style))
+
+    @cached_property
+    def necessary_coalition_size_to_break_irv_immunity(self):
+        """Necessary coalition size to break IRV immunity.
+
+        Returns
+        -------
+        ndarray or None
+            If there is no :attr:`condorcet_winner_rk_ctb`, then return None.
+            If there is a :attr:`condorcet_winner_rk_ctb`, denote her `w`. For a given `c`, consider the voters
+            who would be sincere in case of manipulation for `c`, i.e. those who do not prefer `c` to `w`. Now,
+            consider a subset of candidates that includes `c` and `w`. The sincere voters ensure that `w` has a certain
+            plurality score `s`. To eliminate `w` in this configuration, it is necessary that the total number of voters
+            (sincere + manipulators) is greater than `s` multiplied by the number of candidates in the subset.
+            Implicitly, this implies a necessary number of manipulators. Taking the minimal value of this necessary
+            number over all possible subsets, this gives `necessary_coalition_size_to_break_irv_immunity[c]`. In an
+            IRV-style election, it is necessary to have at least this number of manipulators to manipulate in favor
+            of `c`.
+        """
+        if not self.exists_condorcet_winner_rk_ctb:
+            return None
+        w = self.condorcet_winner_rk_ctb
+        result = np.zeros(self.n_c, dtype=int)
+        for c in range(self.n_c):
+            if c == w:
+                continue
+            other_candidates = [d for d in range(self.n_c) if d != c and d != w]
+            n_s = self.n_v - self.matrix_duels_ut[c, w]
+            voters_s = (self.preferences_ut[:, w] >= self.preferences_ut[:, c])
+            n_m = None
+            for n_opponents in range(0, self.n_c - 1):
+                nb_candidates_r = n_opponents + 2
+                for subset in itertools.combinations(other_candidates, n_opponents):
+                    candidates_r = np.array([w] + [c] + list(subset))
+                    preferences_borda_rk_s_r = self.preferences_borda_rk[voters_s, :][:, candidates_r]
+                    score_w_s_r = np.sum(np.argmax(preferences_borda_rk_s_r, axis=1) == 0)
+                    n_m_new = score_w_s_r * nb_candidates_r - n_s
+                    if n_m is None:
+                        n_m = n_m_new
+                    else:
+                        n_m = min(n_m, n_m_new)
+            result[c] = n_m
+        return result

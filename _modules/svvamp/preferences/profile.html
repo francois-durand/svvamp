@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>svvamp.preferences.profile &mdash; SVVAMP 0.8.1 documentation</title>
+  <title>svvamp.preferences.profile &mdash; SVVAMP 0.8.2 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.8.1
+                0.8.2
               </div>
             
           
@@ -2978,7 +2978,50 @@
 <span class="sd">        we have that `c_might_be_there_when_cw_is_eliminated_irv_style[c] ` is False. In other words, there is no</span>
 <span class="sd">        subset of candidates containing `w` such that `w` has at most `n_v / card(subset)` plurality votes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">exists_condorcet_order_rk_ctb</span> <span class="ow">and</span> <span class="ow">not</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">c_might_be_there_when_cw_is_eliminated_irv_style</span><span class="p">))</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">exists_condorcet_order_rk_ctb</span> <span class="ow">and</span> <span class="ow">not</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">c_might_be_there_when_cw_is_eliminated_irv_style</span><span class="p">))</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">necessary_coalition_size_to_break_irv_immunity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Necessary coalition size to break IRV immunity.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ndarray or None</span>
+<span class="sd">            If there is no :attr:`condorcet_winner_rk_ctb`, then return None.</span>
+<span class="sd">            If there is a :attr:`condorcet_winner_rk_ctb`, denote her `w`. For a given `c`, consider the voters</span>
+<span class="sd">            who would be sincere in case of manipulation for `c`, i.e. those who do not prefer `c` to `w`. Now,</span>
+<span class="sd">            consider a subset of candidates that includes `c` and `w`. The sincere voters ensure that `w` has a certain</span>
+<span class="sd">            plurality score `s`. To eliminate `w` in this configuration, it is necessary that the total number of voters</span>
+<span class="sd">            (sincere + manipulators) is greater than `s` multiplied by the number of candidates in the subset.</span>
+<span class="sd">            Implicitly, this implies a necessary number of manipulators. Taking the minimal value of this necessary</span>
+<span class="sd">            number over all possible subsets, this gives `necessary_coalition_size_to_break_irv_immunity[c]`. In an</span>
+<span class="sd">            IRV-style election, it is necessary to have at least this number of manipulators to manipulate in favor</span>
+<span class="sd">            of `c`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">exists_condorcet_winner_rk_ctb</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">condorcet_winner_rk_ctb</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_c</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_c</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="n">w</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">other_candidates</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_c</span><span class="p">)</span> <span class="k">if</span> <span class="n">d</span> <span class="o">!=</span> <span class="n">c</span> <span class="ow">and</span> <span class="n">d</span> <span class="o">!=</span> <span class="n">w</span><span class="p">]</span>
+            <span class="n">n_s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_v</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix_duels_ut</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="n">w</span><span class="p">]</span>
+            <span class="n">voters_s</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preferences_ut</span><span class="p">[:,</span> <span class="n">w</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preferences_ut</span><span class="p">[:,</span> <span class="n">c</span><span class="p">])</span>
+            <span class="n">n_m</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">n_opponents</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">nb_candidates_r</span> <span class="o">=</span> <span class="n">n_opponents</span> <span class="o">+</span> <span class="mi">2</span>
+                <span class="k">for</span> <span class="n">subset</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">other_candidates</span><span class="p">,</span> <span class="n">n_opponents</span><span class="p">):</span>
+                    <span class="n">candidates_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">w</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">subset</span><span class="p">))</span>
+                    <span class="n">preferences_borda_rk_s_r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[</span><span class="n">voters_s</span><span class="p">,</span> <span class="p">:][:,</span> <span class="n">candidates_r</span><span class="p">]</span>
+                    <span class="n">score_w_s_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">preferences_borda_rk_s_r</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+                    <span class="n">n_m_new</span> <span class="o">=</span> <span class="n">score_w_s_r</span> <span class="o">*</span> <span class="n">nb_candidates_r</span> <span class="o">-</span> <span class="n">n_s</span>
+                    <span class="k">if</span> <span class="n">n_m</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">n_m</span> <span class="o">=</span> <span class="n">n_m_new</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">n_m</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">n_m</span><span class="p">,</span> <span class="n">n_m_new</span><span class="p">)</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">n_m</span>
+        <span class="k">return</span> <span class="n">result</span></div>
 </pre></div>
 
            </div>

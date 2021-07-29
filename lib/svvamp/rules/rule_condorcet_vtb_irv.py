@@ -446,7 +446,7 @@ class RuleCondorcetVtbIRV(Rule):
 
     # %% Coalition Manipulation (CM)
 
-    @property
+    @cached_property
     def losing_candidates_(self):
         """If ``irv_.w_ does not win, then we put her first. Other losers are sorted as usual. (scores in
         ``matrix_duels_ut``).

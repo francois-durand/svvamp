@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Profile &mdash; SVVAMP 0.8.1 documentation</title>
+  <title>Profile &mdash; SVVAMP 0.8.2 documentation</title>
   
 
   
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                0.8.1
+                0.8.2
               </div>
             
           
@@ -1542,6 +1542,29 @@ with tie-breaks on candidates.</p>
 <span class="go">1</span>
 </pre></div>
 </div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.Profile.necessary_coalition_size_to_break_irv_immunity">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">necessary_coalition_size_to_break_irv_immunity</span></span><a class="headerlink" href="#svvamp.Profile.necessary_coalition_size_to_break_irv_immunity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Necessary coalition size to break IRV immunity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>If there is no <a class="reference internal" href="#svvamp.Profile.condorcet_winner_rk_ctb" title="svvamp.Profile.condorcet_winner_rk_ctb"><code class="xref py py-attr docutils literal notranslate"><span class="pre">condorcet_winner_rk_ctb</span></code></a>, then return None.
+If there is a <a class="reference internal" href="#svvamp.Profile.condorcet_winner_rk_ctb" title="svvamp.Profile.condorcet_winner_rk_ctb"><code class="xref py py-attr docutils literal notranslate"><span class="pre">condorcet_winner_rk_ctb</span></code></a>, denote her <cite>w</cite>. For a given <cite>c</cite>, consider the voters
+who would be sincere in case of manipulation for <cite>c</cite>, i.e. those who do not prefer <cite>c</cite> to <cite>w</cite>. Now,
+consider a subset of candidates that includes <cite>c</cite> and <cite>w</cite>. The sincere voters ensure that <cite>w</cite> has a certain
+plurality score <cite>s</cite>. To eliminate <cite>w</cite> in this configuration, it is necessary that the total number of voters
+(sincere + manipulators) is greater than <cite>s</cite> multiplied by the number of candidates in the subset.
+Implicitly, this implies a necessary number of manipulators. Taking the minimal value of this necessary
+number over all possible subsets, this gives <cite>necessary_coalition_size_to_break_irv_immunity[c]</cite>. In an
+IRV-style election, it is necessary to have at least this number of manipulators to manipulate in favor
+of <cite>c</cite>.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>ndarray or None</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">

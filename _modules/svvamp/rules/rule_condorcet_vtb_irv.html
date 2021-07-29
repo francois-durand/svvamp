@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>svvamp.rules.rule_condorcet_vtb_irv &mdash; SVVAMP 0.8.1 documentation</title>
+  <title>svvamp.rules.rule_condorcet_vtb_irv &mdash; SVVAMP 0.8.2 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.8.1
+                0.8.2
               </div>
             
           
@@ -614,7 +614,7 @@
 
     <span class="c1"># %% Coalition Manipulation (CM)</span>
 
-    <span class="nd">@property</span>
+    <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">losing_candidates_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;If ``irv_.w_ does not win, then we put her first. Other losers are sorted as usual. (scores in</span>
 <span class="sd">        ``matrix_duels_ut``).</span>
