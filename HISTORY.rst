@@ -4,6 +4,14 @@
 History
 =======
 
+---------------------------------------------------
+0.8.1 (2021-07-28): Use IRV-immune candidate for UM
+---------------------------------------------------
+
+* ``RuleCondorcetAbsIRV``, ``RuleCondorcetVtbIRV``, ``RuleExhaustiveBallot``, ``RuleICRV``, ``RuleIRV``,
+  ``RuleIRVAverage``, ``RuleSmithIRV``, ``RuleTideman`` and ``RuleWoodall``: add a precheck for UM based on the
+  notion of IRV-immune candidate.
+
 ----------------------------------------
 0.8.0 (2021-07-28): IRV-immune candidate
 ----------------------------------------
