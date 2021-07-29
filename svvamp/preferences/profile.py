@@ -2841,13 +2841,13 @@ class Profile(my_log.MyLog):
             n_s = self.n_v - self.matrix_duels_ut[c, w]
             voters_s = (self.preferences_ut[:, w] >= self.preferences_ut[:, c])
             n_m = None
-            for n_opponents in range(1, self.n_c - 1):
-                size_subset = n_opponents + 2
+            for n_opponents in range(0, self.n_c - 1):
+                nb_candidates_r = n_opponents + 2
                 for subset in itertools.combinations(other_candidates, n_opponents):
                     candidates_r = np.array([w] + [c] + list(subset))
-                    preferences_borda_rk_s_r = self.preferences_borda_rk[voters_s, :][:, subset]
+                    preferences_borda_rk_s_r = self.preferences_borda_rk[voters_s, :][:, candidates_r]
                     score_w_s_r = np.sum(np.argmax(preferences_borda_rk_s_r, axis=1) == 0)
-                    n_m_new = score_w_s_r * size_subset - n_s
+                    n_m_new = score_w_s_r * nb_candidates_r - n_s
                     if n_m is None:
                         n_m = n_m_new
                     else:
