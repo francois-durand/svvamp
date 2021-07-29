@@ -435,7 +435,7 @@
 <span class="sd">      candidates (i.e. is a Condorcet winner in this subset, in the sense of :attr:`matrix_victories_rk`), then ``w``</span>
 <span class="sd">      is declared the winner.</span>
 <span class="sd">    * Odd round ``r``: the candidate who is ranked first (among non-eliminated candidates) by least voters is</span>
-<span class="sd">    eliminated, like in :class:`RuleIRV`.</span>
+<span class="sd">      eliminated, like in :class:`RuleIRV`.</span>
 
 <span class="sd">    This method meets the Condorcet criterion.</span>
 
@@ -625,6 +625,23 @@
                 <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_ut</span><span class="p">[</span><span class="n">losing_candidates</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">],</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;mergesort&#39;</span><span class="p">)]</span>
             <span class="n">losing_candidates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(([</span><span class="bp">self</span><span class="o">.</span><span class="n">irv_</span><span class="o">.</span><span class="n">w_</span><span class="p">],</span> <span class="n">losing_candidates</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">losing_candidates</span>
+
+    <span class="k">def</span> <span class="nf">_cm_preliminary_checks_c_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;CM: preliminary checks for challenger ``c``.</span>
+
+<span class="sd">        Let us consider the case where `w` is the Condorcet winner (rk ctb). Then even after manipulation, `c` cannot</span>
+<span class="sd">        be the Condorcet winner on a subset that contains `w`. Hence at some point, `w` must be eliminated, IRV-style,</span>
+<span class="sd">        at a moment where `c` is still present in the election.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span> <span class="o">!=</span> <span class="s1">&#39;fast&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">w_</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">condorcet_winner_rk_ctb</span>
+                <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">c_might_be_there_when_cw_is_eliminated_irv_style</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
+            <span class="p">):</span>
+                <span class="c1"># Impossible to manipulate with n_m manipulators</span>
+                <span class="n">n_m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_ut</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_update_necessary</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                                       <span class="s1">&#39;CM: Update necessary_coalition_size_cm[c] = n_m + 1 =&#39;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_cm_aux_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">ballots_m</span><span class="p">,</span> <span class="n">preferences_rk_s</span><span class="p">):</span>
         <span class="n">profile_test</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_rk</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">preferences_rk_s</span><span class="p">,</span> <span class="n">ballots_m</span><span class="p">)),</span> <span class="n">sort_voters</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>

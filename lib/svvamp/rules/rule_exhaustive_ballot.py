@@ -1371,6 +1371,15 @@ class RuleExhaustiveBallot(Rule):
             self.mylogv('CM: Preliminary checks: Update _example_path_cm[c] = _example_path_TM[c] =',
                         self.example_path_tm_c_(c), 3)
             self._example_path_cm[c] = self.example_path_tm_c_(c)
+        if self.cm_option != 'fast':
+            if (
+                self.w_ == self.profile_.condorcet_winner_rk_ctb
+                and not self.profile_.c_might_be_there_when_cw_is_eliminated_irv_style[c]
+            ):
+                # Impossible to manipulate with n_m manipulators
+                n_m = self.profile_.matrix_duels_ut[c, self.w_]
+                self._update_necessary(self._necessary_coalition_size_cm, c, n_m + 1,
+                                       'CM: Update necessary_coalition_size_cm[c] = n_m + 1 =')
 
     def _cm_main_work_c_(self, c, optimize_bounds):
         """

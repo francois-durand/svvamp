@@ -267,7 +267,7 @@ class RuleICRV(Rule):
       candidates (i.e. is a Condorcet winner in this subset, in the sense of :attr:`matrix_victories_rk`), then ``w``
       is declared the winner.
     * Odd round ``r``: the candidate who is ranked first (among non-eliminated candidates) by least voters is
-    eliminated, like in :class:`RuleIRV`.
+      eliminated, like in :class:`RuleIRV`.
 
     This method meets the Condorcet criterion.
 
@@ -457,6 +457,23 @@ class RuleICRV(Rule):
                 - self.profile_.matrix_duels_ut[losing_candidates, self.w_], kind='mergesort')]
             losing_candidates = np.concatenate(([self.irv_.w_], losing_candidates))
         return losing_candidates
+
+    def _cm_preliminary_checks_c_subclass_(self, c, optimize_bounds):
+        """CM: preliminary checks for challenger ``c``.
+
+        Let us consider the case where `w` is the Condorcet winner (rk ctb). Then even after manipulation, `c` cannot
+        be the Condorcet winner on a subset that contains `w`. Hence at some point, `w` must be eliminated, IRV-style,
+        at a moment where `c` is still present in the election.
+        """
+        if self.cm_option != 'fast':
+            if (
+                self.w_ == self.profile_.condorcet_winner_rk_ctb
+                and not self.profile_.c_might_be_there_when_cw_is_eliminated_irv_style[c]
+            ):
+                # Impossible to manipulate with n_m manipulators
+                n_m = self.profile_.matrix_duels_ut[c, self.w_]
+                self._update_necessary(self._necessary_coalition_size_cm, c, n_m + 1,
+                                       'CM: Update necessary_coalition_size_cm[c] = n_m + 1 =')
 
     def _cm_aux_(self, c, ballots_m, preferences_rk_s):
         profile_test = Profile(preferences_rk=np.concatenate((preferences_rk_s, ballots_m)), sort_voters=False)

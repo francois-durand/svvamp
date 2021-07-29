@@ -246,6 +246,25 @@
 </dd></dl>
 
 <dl class="py property">
+<dt class="sig sig-object py" id="svvamp.Profile.c_might_be_there_when_cw_is_eliminated_irv_style">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">c_might_be_there_when_cw_is_eliminated_irv_style</span></span><a class="headerlink" href="#svvamp.Profile.c_might_be_there_when_cw_is_eliminated_irv_style" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether a candidate c might be present in a round where the Condorcet winner is eliminated, IRV-style.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>If there is no <a class="reference internal" href="#svvamp.Profile.condorcet_winner_rk_ctb" title="svvamp.Profile.condorcet_winner_rk_ctb"><code class="xref py py-attr docutils literal notranslate"><span class="pre">condorcet_winner_rk_ctb</span></code></a>, then return None.
+If there is a <a class="reference internal" href="#svvamp.Profile.condorcet_winner_rk_ctb" title="svvamp.Profile.condorcet_winner_rk_ctb"><code class="xref py py-attr docutils literal notranslate"><span class="pre">condorcet_winner_rk_ctb</span></code></a>, denote her <cite>w</cite>.
+<cite>c_might_be_there_when_cw_rk_is_eliminated_irv_style[c]</cite> is True iff there exists a subset of candidates
+including <cite>c</cite> and <cite>w</cite> such that, in a Plurality election over this subset of candidates, <cite>w</cite> has at most
+<cite>n_v / card(subset)</cite> votes. What is interesting is the negation: if it is False, then it is impossible
+for <cite>c</cite> to manipulate in several IRV-related rules, because <cite>c</cite> cannot be there when <cite>w</cite> is eliminated.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>ndarray or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="svvamp.Profile.candidates_by_decreasing_borda_score_rk">
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">candidates_by_decreasing_borda_score_rk</span></span><a class="headerlink" href="#svvamp.Profile.candidates_by_decreasing_borda_score_rk" title="Permalink to this definition">¶</a></dt>
 <dd><p>1d array of integers. <code class="docutils literal notranslate"><span class="pre">candidates_by_decreasing_borda_score_rk[k]</span></code> is the candidate ranked <code class="docutils literal notranslate"><span class="pre">k</span></code>        <sup>th</sup> by decreasing Borda score (using <code class="xref py py-attr docutils literal notranslate"><span class="pre">borda_score_c_rk</span></code>, i.e. strict

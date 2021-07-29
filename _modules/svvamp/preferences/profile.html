@@ -188,6 +188,7 @@
 <span class="sd">    along with SVVAMP.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="kn">import</span> <span class="nn">itertools</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -2934,7 +2935,40 @@
         <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;;&#39;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">plurality_elimination_engine</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">PluralityEliminationEngineProfile</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">PluralityEliminationEngineProfile</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">c_might_be_there_when_cw_is_eliminated_irv_style</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Whether a candidate c might be present in a round where the Condorcet winner is eliminated, IRV-style.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ndarray or None</span>
+<span class="sd">            If there is no :attr:`condorcet_winner_rk_ctb`, then return None.</span>
+<span class="sd">            If there is a :attr:`condorcet_winner_rk_ctb`, denote her `w`.</span>
+<span class="sd">            `c_might_be_there_when_cw_rk_is_eliminated_irv_style[c]` is True iff there exists a subset of candidates</span>
+<span class="sd">            including `c` and `w` such that, in a Plurality election over this subset of candidates, `w` has at most</span>
+<span class="sd">            `n_v / card(subset)` votes. What is interesting is the negation: if it is False, then it is impossible</span>
+<span class="sd">            for `c` to manipulate in several IRV-related rules, because `c` cannot be there when `w` is eliminated.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">exists_condorcet_winner_rk_ctb</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">condorcet_winner_rk_ctb</span>
+        <span class="n">c_might_be_there_when_w_is_eliminated_irv_style</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_c</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+        <span class="n">c_might_be_there_when_w_is_eliminated_irv_style</span><span class="p">[</span><span class="n">w</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># To allow for np.all(), but remove at the end</span>
+        <span class="n">other_candidates</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_c</span><span class="p">)</span> <span class="k">if</span> <span class="n">c</span> <span class="o">!=</span> <span class="n">w</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">n_opponents</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_c</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">subset</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">other_candidates</span><span class="p">,</span> <span class="n">n_opponents</span><span class="p">):</span>
+                <span class="n">candidates_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">w</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">subset</span><span class="p">))</span>
+                <span class="n">preferences_borda_rk_r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[:,</span> <span class="n">candidates_r</span><span class="p">]</span>
+                <span class="n">score_w_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">preferences_borda_rk_r</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">score_w_r</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_v</span> <span class="o">/</span> <span class="p">(</span><span class="n">n_opponents</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                    <span class="n">c_might_be_there_when_w_is_eliminated_irv_style</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">subset</span><span class="p">)]</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">c_might_be_there_when_w_is_eliminated_irv_style</span><span class="p">):</span>
+                        <span class="n">c_might_be_there_when_w_is_eliminated_irv_style</span><span class="p">[</span><span class="n">w</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+                        <span class="k">return</span> <span class="n">c_might_be_there_when_w_is_eliminated_irv_style</span>
+        <span class="n">c_might_be_there_when_w_is_eliminated_irv_style</span><span class="p">[</span><span class="n">w</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="n">c_might_be_there_when_w_is_eliminated_irv_style</span></div>
 </pre></div>
 
            </div>

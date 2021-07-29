@@ -20,6 +20,7 @@ This file is part of SVVAMP.
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import itertools
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -2767,3 +2768,36 @@ class Profile(my_log.MyLog):
 
     def plurality_elimination_engine(self):
         return PluralityEliminationEngineProfile(self)
+
+    @cached_property
+    def c_might_be_there_when_cw_is_eliminated_irv_style(self):
+        """Whether a candidate c might be present in a round where the Condorcet winner is eliminated, IRV-style.
+
+        Returns
+        -------
+        ndarray or None
+            If there is no :attr:`condorcet_winner_rk_ctb`, then return None.
+            If there is a :attr:`condorcet_winner_rk_ctb`, denote her `w`.
+            `c_might_be_there_when_cw_rk_is_eliminated_irv_style[c]` is True iff there exists a subset of candidates
+            including `c` and `w` such that, in a Plurality election over this subset of candidates, `w` has at most
+            `n_v / card(subset)` votes. What is interesting is the negation: if it is False, then it is impossible
+            for `c` to manipulate in several IRV-related rules, because `c` cannot be there when `w` is eliminated.
+        """
+        if not self.exists_condorcet_winner_rk_ctb:
+            return None
+        w = self.condorcet_winner_rk_ctb
+        c_might_be_there_when_w_is_eliminated_irv_style = np.zeros(self.n_c, dtype=bool)
+        c_might_be_there_when_w_is_eliminated_irv_style[w] = True  # To allow for np.all(), but remove at the end
+        other_candidates = [c for c in range(self.n_c) if c != w]
+        for n_opponents in range(2, self.n_c):
+            for subset in itertools.combinations(other_candidates, n_opponents):
+                candidates_r = np.array([w] + list(subset))
+                preferences_borda_rk_r = self.preferences_borda_rk[:, candidates_r]
+                score_w_r = np.sum(np.argmax(preferences_borda_rk_r, axis=1) == 0)
+                if score_w_r <= self.n_v / (n_opponents + 1):
+                    c_might_be_there_when_w_is_eliminated_irv_style[np.array(subset)] = True
+                    if np.all(c_might_be_there_when_w_is_eliminated_irv_style):
+                        c_might_be_there_when_w_is_eliminated_irv_style[w] = False
+                        return c_might_be_there_when_w_is_eliminated_irv_style
+        c_might_be_there_when_w_is_eliminated_irv_style[w] = False
+        return c_might_be_there_when_w_is_eliminated_irv_style

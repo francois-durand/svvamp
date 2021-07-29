@@ -216,7 +216,7 @@ class RuleSmithIRV(Rule):
     def __init__(self, **kwargs):
         super().__init__(
             with_two_candidates_reduces_to_plurality=True, is_based_on_rk=True,
-            precheck_um=False, precheck_icm=False,
+            precheck_icm=False,
             log_identity="SMITH_IRV", **kwargs
         )
 
@@ -328,6 +328,24 @@ class RuleSmithIRV(Rule):
                 - self.profile_.matrix_duels_ut[losing_candidates, self.w_], kind='mergesort')]
             losing_candidates = np.concatenate(([self.irv_.w_], losing_candidates))
         return losing_candidates
+
+    def _cm_preliminary_checks_c_subclass_(self, c, optimize_bounds):
+        """CM: preliminary checks for challenger ``c``.
+
+        Let us consider the case where `w` is the Condorcet winner (rk ctb). Then even after manipulation, `w` beats
+        `c`. We must have `c` in the (manipulated) Smith Set, hence we must have `w` too. As a consequence, we must
+        lead an IRV election on a set that contains `c` and `w`. Hence at some point, `w` must be eliminated, IRV-style,
+        at a moment where `c` is still present in the election.
+        """
+        if self.cm_option != 'fast':
+            if (
+                self.w_ == self.profile_.condorcet_winner_rk_ctb
+                and not self.profile_.c_might_be_there_when_cw_is_eliminated_irv_style[c]
+            ):
+                # Impossible to manipulate with n_m manipulators
+                n_m = self.profile_.matrix_duels_ut[c, self.w_]
+                self._update_necessary(self._necessary_coalition_size_cm, c, n_m + 1,
+                                       'CM: Update necessary_coalition_size_cm[c] = n_m + 1 =')
 
     def _cm_aux_(self, c, ballots_m, preferences_rk_s):
         profile_test = Profile(preferences_rk=np.concatenate((preferences_rk_s, ballots_m)), sort_voters=False)
