@@ -5,6 +5,22 @@ History
 =======
 
 ----------------------------------------
+0.8.0 (2021-07-28): IRV-immune candidate
+----------------------------------------
+
+* Introduce the notion of *IRV-immune candidate*. A candidate `w` is IRV-immune iff in any subset of candidates
+  containing `w`, the plurality score of `w` is more than `n_v / card(subset)`. This implies that in IRV (and most
+  related rules), `w` is the winner and CM is impossible.
+* Add ``Profile.exists_irv_immune_candidate``: whether there exists an IRV-immune candidate.
+* Add ``Profile.c_might_be_there_when_cw_is_eliminated_irv_style``: whether a candidate `c` might be present in a
+  round where the Condorcet winner is eliminated, IRV-style. In IRV (and most related rules), this condition is
+  necessary to be able to cast CM in favor of `c`.
+* Use the above mentioned notions to improve the CM algorithm of ``RuleCondorcetAbsIRV``, ``RuleCondorcetVtbIRV``,
+  ``RuleExhaustiveBallot``, ``RuleICRV``, ``RuleIRV``, ``RuleIRVAverage``, ``RuleSmithIRV``, ``RuleTideman`` and
+  ``RuleWoodall``.
+* Add a UM precheck before CM in ``RuleSmithIRV``, ``RuleTideman`` and ``RuleWoodall``.
+
+----------------------------------------
 0.7.0 (2021-07-28): Better bounds for CM
 ----------------------------------------
 
