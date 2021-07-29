@@ -352,17 +352,15 @@ class RuleTideman(Rule):
         `c`. At any step, we must always have `c` in the (manipulated) Smith Set, hence we must have `w` too.
         As at some point, `w` must be eliminated, IRV-style, at a moment where `c` is still present in the election.
         """
-        if self.cm_option != 'fast':
-            if (
-                self.w_ == self.profile_.condorcet_winner_rk_ctb
-                and not self.profile_.c_might_be_there_when_cw_is_eliminated_irv_style[c]
-            ):
-                # Impossible to manipulate with n_m manipulators
-                n_m = self.profile_.matrix_duels_ut[c, self.w_]
-                self._update_necessary(self._necessary_coalition_size_cm, c, n_m + 1,
-                                       'CM: Update necessary_coalition_size_cm[c] = n_m + 1 =')
+        if self.cm_option not in {'fast', 'lazy'}:
+            if self.w_ == self.profile_.condorcet_winner_rk_ctb:
+                self._update_necessary(
+                    self._necessary_coalition_size_cm, c,
+                    self.profile_.necessary_coalition_size_to_break_irv_immunity[c],
+                    'CM: Preliminary checks: IRV-Immunity => \n    necessary_coalition_size_cm[c] = '
+                )
 
-    @property
+    @cached_property
     def losing_candidates_(self):
         """If ``irv_.w_ does not win, then we put her first. Other losers are sorted as usual. (scores in
         ``matrix_duels_ut``).
