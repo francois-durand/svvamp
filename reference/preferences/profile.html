@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Profile &mdash; SVVAMP 0.7.0 documentation</title>
+  <title>Profile &mdash; SVVAMP 0.8.0 documentation</title>
   
 
   
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                0.7.0
+                0.8.0
               </div>
             
           
@@ -989,6 +989,15 @@ with <code class="docutils literal notranslate"><span class="pre">n_c</span> <sp
 <span class="go">True</span>
 </pre></div>
 </div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.Profile.exists_irv_immune_candidate">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">exists_irv_immune_candidate</span></span><a class="headerlink" href="#svvamp.Profile.exists_irv_immune_candidate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether there exists a ‘IRV-immune’ candidate.</p>
+<p>A candidate <cite>w</cite> is IRV-immune iff she is Condorcet winner (rk ctb) and for any other candidate <cite>c</cite>,
+we have that <cite>c_might_be_there_when_cw_is_eliminated_irv_style[c] ` is False. In other words, there is no
+subset of candidates containing `w</cite> such that <cite>w</cite> has at most <cite>n_v / card(subset)</cite> plurality votes.</p>
 </dd></dl>
 
 <dl class="py property">

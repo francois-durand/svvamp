@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>svvamp.preferences.profile &mdash; SVVAMP 0.7.0 documentation</title>
+  <title>svvamp.preferences.profile &mdash; SVVAMP 0.8.0 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.7.0
+                0.8.0
               </div>
             
           
@@ -2968,7 +2968,17 @@
                         <span class="n">c_might_be_there_when_w_is_eliminated_irv_style</span><span class="p">[</span><span class="n">w</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
                         <span class="k">return</span> <span class="n">c_might_be_there_when_w_is_eliminated_irv_style</span>
         <span class="n">c_might_be_there_when_w_is_eliminated_irv_style</span><span class="p">[</span><span class="n">w</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="k">return</span> <span class="n">c_might_be_there_when_w_is_eliminated_irv_style</span></div>
+        <span class="k">return</span> <span class="n">c_might_be_there_when_w_is_eliminated_irv_style</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">exists_irv_immune_candidate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Whether there exists a &#39;IRV-immune&#39; candidate.</span>
+
+<span class="sd">        A candidate `w` is IRV-immune iff she is Condorcet winner (rk ctb) and for any other candidate `c`,</span>
+<span class="sd">        we have that `c_might_be_there_when_cw_is_eliminated_irv_style[c] ` is False. In other words, there is no</span>
+<span class="sd">        subset of candidates containing `w` such that `w` has at most `n_v / card(subset)` plurality votes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">exists_condorcet_order_rk_ctb</span> <span class="ow">and</span> <span class="ow">not</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">c_might_be_there_when_cw_is_eliminated_irv_style</span><span class="p">))</span></div>
 </pre></div>
 
            </div>

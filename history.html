@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>History &mdash; SVVAMP 0.7.0 documentation</title>
+  <title>History &mdash; SVVAMP 0.8.0 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.7.0
+                0.8.0
               </div>
             
           
@@ -101,6 +101,7 @@
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">History</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#irv-immune-candidate">0.8.0 (2021-07-28): IRV-immune candidate</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#better-bounds-for-cm">0.7.0 (2021-07-28): Better bounds for CM</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#fix-bug-in-pluralityeliminationengine">0.6.12 (2021-07-28): Fix bug in PluralityEliminationEngine</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#accelerate-profileum">0.6.11 (2021-07-28): Accelerate ProfileUM</a></li>
@@ -225,6 +226,22 @@
 </style>
 <div class="section" id="history">
 <h1>History<a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="irv-immune-candidate">
+<h2>0.8.0 (2021-07-28): IRV-immune candidate<a class="headerlink" href="#irv-immune-candidate" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Introduce the notion of <em>IRV-immune candidate</em>. A candidate <cite>w</cite> is IRV-immune iff in any subset of candidates
+containing <cite>w</cite>, the plurality score of <cite>w</cite> is more than <cite>n_v / card(subset)</cite>. This implies that in IRV (and most
+related rules), <cite>w</cite> is the winner and CM is impossible.</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">Profile.exists_irv_immune_candidate</span></code>: whether there exists an IRV-immune candidate.</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">Profile.c_might_be_there_when_cw_is_eliminated_irv_style</span></code>: whether a candidate <cite>c</cite> might be present in a
+round where the Condorcet winner is eliminated, IRV-style. In IRV (and most related rules), this condition is
+necessary to be able to cast CM in favor of <cite>c</cite>.</p></li>
+<li><p>Use the above mentioned notions to improve the CM algorithm of <code class="docutils literal notranslate"><span class="pre">RuleCondorcetAbsIRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleCondorcetVtbIRV</span></code>,
+<code class="docutils literal notranslate"><span class="pre">RuleExhaustiveBallot</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleICRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleIRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleIRVAverage</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleSmithIRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleTideman</span></code> and
+<code class="docutils literal notranslate"><span class="pre">RuleWoodall</span></code>.</p></li>
+<li><p>Add a UM precheck before CM in <code class="docutils literal notranslate"><span class="pre">RuleSmithIRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleTideman</span></code> and <code class="docutils literal notranslate"><span class="pre">RuleWoodall</span></code>.</p></li>
+</ul>
+</div>
 <div class="section" id="better-bounds-for-cm">
 <h2>0.7.0 (2021-07-28): Better bounds for CM<a class="headerlink" href="#better-bounds-for-cm" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
