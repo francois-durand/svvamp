@@ -4,8 +4,18 @@
 History
 =======
 
+------------------------------------------------------------------
+0.8.2 (2021-07-29): Necessary coalition size to break IRV-Immunity
+------------------------------------------------------------------
+
+* Add ``Profile.necessary_coalition_size_to_break_irv_immunity``: necessary coalition size to break IRV immunity (for
+  each candidate different from the IRV-immune candidate, if one exists).
+* Use this notion to improve the bound ``necessary_coalition_size_cm_`` for ``RuleCondorcetAbsIRV``,
+  ``RuleCondorcetVtbIRV``, ``RuleExhaustiveBallot``, ``RuleICRV``, ``RuleIRV``, ``RuleIRVAverage``, ``RuleSmithIRV``,
+  ``RuleTideman`` and ``RuleWoodall``.
+
 ---------------------------------------------------
-0.8.1 (2021-07-28): Use IRV-immune candidate for UM
+0.8.1 (2021-07-29): Use IRV-immune candidate for UM
 ---------------------------------------------------
 
 * ``RuleCondorcetAbsIRV``, ``RuleCondorcetVtbIRV``, ``RuleExhaustiveBallot``, ``RuleICRV``, ``RuleIRV``,
@@ -13,7 +23,7 @@ History
   notion of IRV-immune candidate.
 
 ----------------------------------------
-0.8.0 (2021-07-28): IRV-immune candidate
+0.8.0 (2021-07-29): IRV-immune candidate
 ----------------------------------------
 
 * Introduce the notion of *IRV-immune candidate*. A candidate `w` is IRV-immune iff in any subset of candidates
