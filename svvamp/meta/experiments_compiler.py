@@ -87,6 +87,7 @@ class ExperimentsCompiler:
         d_criterion_legend = {
             'exists_condorcet_winner_rk': 'Condorcet winner',
             'exists_condorcet_order_rk': 'Condorcet order',
+            'exists_irv_immune_candidate': 'IRV-immune candidate',
             'exists_resistant_condorcet_winner': 'Resistant Condorcet winner',
             'exists_majority_favorite_rk': 'Majority favorite'
         }
