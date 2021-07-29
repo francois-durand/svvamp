@@ -90,6 +90,7 @@ class StudyProfileCriteria():
                 'exists_majority_favorite_rk',
                 'exists_majority_favorite_ut_ctb',
                 'exists_majority_favorite_ut',
+                'exists_irv_immune_candidate',
                 'not_exists_condorcet_admissible',
                 'not_exists_weak_condorcet_winner',
                 'not_exists_condorcet_winner_rk_ctb',
