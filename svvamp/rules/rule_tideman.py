@@ -23,7 +23,6 @@ import numpy as np
 from svvamp.rules.rule import Rule
 from svvamp.rules.rule_irv import RuleIRV
 from svvamp.preferences.profile import Profile
-from svvamp.preferences.profile_subset_candidates import ProfileSubsetCandidates
 from svvamp.utils.util_cache import cached_property
 from svvamp.utils.pseudo_bool import equal_true
 from svvamp.utils.misc import preferences_ut_to_matrix_duels_ut, matrix_victories_to_smith_set
@@ -331,7 +330,14 @@ class RuleTideman(Rule):
 
     # %% Unison manipulation (UM)
 
-    # TODO: should be implemented .
+    def _um_preliminary_checks_c_(self, c):
+        if self.um_option not in {'fast', 'lazy'} or self.cm_option not in {'fast', 'lazy'}:
+            if (
+                self.w_ == self.profile_.condorcet_winner_rk_ctb
+                and not self.profile_.c_might_be_there_when_cw_is_eliminated_irv_style[c]
+            ):
+                # Impossible to manipulate with n_m manipulators
+                self._candidates_um[c] = False
 
     # %% Ignorant-Coalition Manipulation (ICM)
 
