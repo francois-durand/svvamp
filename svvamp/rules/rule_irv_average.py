@@ -330,6 +330,23 @@ class RuleIRVAverage(Rule):
 
     # %% Coalition Manipulation (CM)
 
+    def _cm_preliminary_checks_c_subclass_(self, c, optimize_bounds):
+        """CM: preliminary checks for challenger ``c``.
+
+        Let us consider the case where `w` is the Condorcet winner (rk ctb) (otherwise it is easy to manipulate, at
+        least if utility preferences are strict). Then at some point, `w` must have a plurality score under average, at
+        a moment where `c` is still present in the election.
+        """
+        if self.cm_option != 'fast':
+            if (
+                self.w_ == self.profile_.condorcet_winner_rk_ctb
+                and not self.profile_.c_might_be_there_when_cw_is_eliminated_irv_style[c]
+            ):
+                # Impossible to manipulate with n_m manipulators
+                n_m = self.profile_.matrix_duels_ut[c, self.w_]
+                self._update_necessary(self._necessary_coalition_size_cm, c, n_m + 1,
+                                       'CM: Update necessary_coalition_size_cm[c] = n_m + 1 =')
+
     def _cm_aux_(self, c, ballots_m, preferences_rk_s):
         profile_test = Profile(preferences_rk=np.concatenate((preferences_rk_s, ballots_m)), sort_voters=False)
         if profile_test.n_v != self.profile_.n_v:
