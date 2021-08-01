@@ -248,8 +248,8 @@ class ExperimentAnalyzer:
                     inf, sup = getattr(election, criterion)
                     t2 = time.time()
                     results_vs_numerical_criteria[i_task][i_criterion]['time'] += t2 - t1
-                    results_vs_numerical_criteria[i_task][i_criterion]['inf'] = inf
-                    results_vs_numerical_criteria[i_task][i_criterion]['sup'] = sup
+                    results_vs_numerical_criteria[i_task][i_criterion]['inf'] += inf
+                    results_vs_numerical_criteria[i_task][i_criterion]['sup'] += sup
                 # Manipulation criteria (by candidate)
                 for i_criterion, criterion in enumerate(study_rule_criteria.manipulation_criteria_c):
                     t1 = time.time()
