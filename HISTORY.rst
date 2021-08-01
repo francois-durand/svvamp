@@ -8,7 +8,7 @@ History
 0.8.3 (2021-08-01): Fix bug in ExperimentAnalyzer
 -------------------------------------------------
 
-* Fix bug in ``ExperimentAnalyzer``: for t``StudyRuleCriteria.numerical_criteria``, the aggregation was not done
+* Fix bug in ``ExperimentAnalyzer``: for ``StudyRuleCriteria.numerical_criteria``, the aggregation was not done
   properly.
 * Several cosmetic changes in ``ExperimentsCompiler``.
 
