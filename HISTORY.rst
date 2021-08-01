@@ -4,6 +4,14 @@
 History
 =======
 
+-------------------------------------------------
+0.8.3 (2021-08-01): Fix bug in ExperimentAnalyzer
+-------------------------------------------------
+
+* Fix bug in ``ExperimentAnalyzer``: for t``StudyRuleCriteria.numerical_criteria``, the aggregation was not done
+  properly.
+* Several cosmetic changes in ``ExperimentsCompiler``.
+
 ------------------------------------------------------------------
 0.8.2 (2021-07-29): Necessary coalition size to break IRV-Immunity
 ------------------------------------------------------------------
