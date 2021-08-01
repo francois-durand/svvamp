@@ -20,6 +20,7 @@ This file is part of SVVAMP.
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import os
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
@@ -35,6 +36,9 @@ class ExperimentsCompiler:
         self.results_directory = Path(results_directory)
         self.tikz_directory = Path(tikz_directory)
         self.figsize = figsize
+        # Create tikz folder if it does not exist
+        if not os.path.isdir(tikz_directory):
+            os.mkdir(tikz_directory)
         # Create the mother of all dataframes
         dataframes = []
         for f in self.results_directory.iterdir():
@@ -70,26 +74,34 @@ class ExperimentsCompiler:
         self.rules_order = sorted(list(df_temp.index), key=order_rules)
         # Number of rules
         self.n_rules = len(self.rules_order)
+        # Corrected abbreviations of the rules
+        self.d_abbr_new = {'CIRV': 'CI', 'SIRV': 'SI', 'STAR': 'Sta', 'IRVD': 'Vie'}
 
     def profiles_scatter_plot(self, tikz_file='profiles_scatter_plot.tex'):
         df_scatter = self.df[
             self.df['Criterion'] == 'exists_condorcet_admissible'  # No matter the criterion
             ]
-        plt.subplots(figsize=self.figsize)
+        fig, ax = plt.subplots(figsize=self.figsize)
         plt.scatter(x=df_scatter['V'], y=df_scatter['C'])
-        plt.xlabel('Number of voters V')
+        plt.grid(axis='y')
+        ax.set_axisbelow(True)
+        plt.xlabel('Number of voters $V$')
         plt.xscale('log')
-        plt.ylabel('Number of candidates C')
-        tikzplotlib.save(self.tikz_directory / (self.prefix_tikz_file + tikz_file))
+        plt.xlim(xmin=1000)
+        plt.ylabel('Number of candidates $C$')
+        y_min = np.min(df_scatter['C'])
+        y_max = np.max(df_scatter['C'])
+        plt.yticks(range(y_min, y_max + 1))
+        self.my_tikzplotlib_save(tikz_file)
         return df_scatter
 
     def profile_features_bar_plot(self, tikz_file='profile_features_bar_plot.tex'):
         d_criterion_legend = {
-            'exists_condorcet_winner_rk': 'Condorcet winner',
-            'exists_condorcet_order_rk': 'Condorcet order',
-            'exists_irv_immune_candidate': 'IRV-immune candidate',
-            'exists_resistant_condorcet_winner': 'Resistant Condorcet winner',
-            'exists_majority_favorite_rk': 'Majority favorite'
+            'exists_condorcet_winner_rk': 'CW',
+            'exists_condorcet_order_rk': 'CO',
+            # 'exists_irv_immune_candidate': 'IRV-immune candidate',
+            'exists_resistant_condorcet_winner': 'RCW',
+            'exists_majority_favorite_rk': 'MF'
         }
         d_criterion_rate = {}
         for criterion in d_criterion_legend.keys():
@@ -107,12 +119,13 @@ class ExperimentsCompiler:
         plt.bar(x, y)
         plt.grid(axis='y')
         ax.set_axisbelow(True)
+        plt.ylim(0, 1.05)
         plt.yticks(np.arange(0, 1.1, step=0.1))
         plt.ylabel('Proportion of profiles')
-        tikzplotlib.save(self.tikz_directory / (self.prefix_tikz_file + tikz_file))
+        self.my_tikzplotlib_save(tikz_file, x_ticks_labels=d_criterion_legend.values())
         return df_plot
 
-    def rate_bar_plot(self, criterion, ylabel, tikz_file):
+    def rate_bar_plot(self, criterion, ylabel, tikz_file, draw_rcw_line=False):
         # Create the pivot table
         df_plot = self.df[self.df['Criterion'] == criterion].pivot_table(
             values=['Rate (lower bound)', 'Rate (upper bound)', 'Rate (uncertainty)'],
@@ -122,6 +135,8 @@ class ExperimentsCompiler:
         df_plot.sort_values(by=['Rate (lower bound)', 'Rate (upper bound)', ], inplace=True)
         # Plot
         fig, ax = plt.subplots(figsize=self.figsize)
+        if draw_rcw_line:
+            self.resistant_condorcet_line()
         plt.bar(
             df_plot.index,
             df_plot['Rate (lower bound)'],
@@ -130,13 +145,15 @@ class ExperimentsCompiler:
         plt.grid(axis='y')
         ax.set_axisbelow(True)
         plt.xlim(-1, self.n_rules)
+        plt.ylim(0, 1.05)
         plt.yticks(np.arange(0, 1.1, step=0.1))
         plt.ylabel(ylabel)
-        tikzplotlib.save(self.tikz_directory / (self.prefix_tikz_file + tikz_file))
+        self.my_tikzplotlib_save(tikz_file, x_ticks_labels=df_plot.index)
         return df_plot
 
     def cm_rate_bar_plot(self, tikz_file='cm_rate_bar_plot.tex'):
-        return self.rate_bar_plot(criterion='is_cm_', ylabel='CM rate', tikz_file=tikz_file)
+        return self.rate_bar_plot(criterion='is_cm_', ylabel='CM rate', tikz_file=tikz_file,
+                                  draw_rcw_line=True)
 
     def tm_rate_bar_plot(self, tikz_file='tm_rate_bar_plot.tex'):
         return self.rate_bar_plot(criterion='is_tm_', ylabel='TM rate', tikz_file=tikz_file)
@@ -180,15 +197,17 @@ class ExperimentsCompiler:
                yerr=(np.zeros(len(df_plot.index)), df_plot[('UM', 'Rate (uncertainty)')]))
         ax.bar(x + bar_width, df_plot[('CM', 'Rate (lower bound)')], bar_width, label='CM rate',
                yerr=(np.zeros(len(df_plot.index)), df_plot[('CM', 'Rate (uncertainty)')]))
+        self.resistant_condorcet_line()
         plt.grid(axis='y')
         ax.set_axisbelow(True)
         ax.set_xticks(x)
         ax.set_xticklabels(df_plot.index)
         plt.xlim(-1, self.n_rules)
+        plt.ylim(0, 1.05)
         plt.yticks(np.arange(0, 1.1, step=0.1))
         plt.ylabel('Rate')
-        ax.legend(loc='lower right')
-        tikzplotlib.save(self.tikz_directory / (self.prefix_tikz_file + tikz_file))
+        ax.legend(loc='upper left')
+        self.my_tikzplotlib_save(tikz_file, x_ticks_labels=df_plot.index)
         return df_plot
 
     def condorcet_consistency_bar_plot(self, tikz_file='condorcet_consistency_bar_plot.tex'):
@@ -237,6 +256,7 @@ class ExperimentsCompiler:
         x = np.arange(len(df_violation.index))
         bar_width = 0.35
         fig, ax = plt.subplots(figsize=self.figsize)
+        self.resistant_condorcet_line()
         ax.bar(x - bar_width / 2, df_violation[('Sincere', 'Rate (lower bound)')], bar_width, label='Sincere')
         ax.bar(x + bar_width / 2, df_violation[('CM', 'Rate (lower bound)')], bar_width, label='With CM',
                yerr=(np.zeros(len(df_violation.index)), df_violation[('CM', 'Rate (uncertainty)')]))
@@ -245,10 +265,11 @@ class ExperimentsCompiler:
         ax.set_xticks(x)
         ax.set_xticklabels(df_violation.index)
         plt.xlim(-1, self.n_rules)
+        plt.ylim(0, 1.05)
         plt.yticks(np.arange(0, 1.1, step=0.1))
         plt.ylabel('Condorcet violation rate')
-        ax.legend()
-        tikzplotlib.save(self.tikz_directory / (self.prefix_tikz_file + tikz_file))
+        ax.legend(loc='upper left')
+        self.my_tikzplotlib_save(tikz_file, x_ticks_labels=df_violation.index)
         return df_violation
 
     def loss_social_welfare_bar_plot(self, tikz_file='loss_social_welfare_bar_plot.tex'):
@@ -282,17 +303,18 @@ class ExperimentsCompiler:
         bar_width = 0.35
         fig, ax = plt.subplots(figsize=self.figsize)
         ax.bar(x - bar_width / 2, df_loss_sw[('Sincere', 'Rate (lower bound)')], bar_width, label='Sincere')
-        ax.bar(x + bar_width / 2, df_loss_sw[('CM', 'Rate (lower bound)')], bar_width, label='Despite CM',
+        ax.bar(x + bar_width / 2, df_loss_sw[('CM', 'Rate (lower bound)')], bar_width, label='With CM',
                yerr=(np.zeros(len(df_loss_sw.index)), df_loss_sw[('CM', 'Rate (uncertainty)')]))
         plt.grid(axis='y')
         ax.set_axisbelow(True)
         ax.set_xticks(x)
         ax.set_xticklabels(df_loss_sw.index)
         plt.xlim(-1, self.n_rules)
+        plt.ylim(0, 1.05)
         plt.yticks(np.arange(0, 1.1, step=0.1))
         plt.ylabel('Loss of normalized social welfare')
         ax.legend(loc='upper left')
-        tikzplotlib.save(self.tikz_directory / (self.prefix_tikz_file + tikz_file))
+        self.my_tikzplotlib_save(tikz_file, x_ticks_labels=df_loss_sw.index)
         return df_loss_sw
 
     def nb_candidates_cm_line_plot(self, rules=None, tikz_file='nb_candidates_cm_line_plot.tex'):
@@ -309,9 +331,12 @@ class ExperimentsCompiler:
             df_nb_candidates_cm = df_nb_candidates_cm.loc[
                 [rule for rule in df_nb_candidates_cm.index if rule in rules], :]
         # Sort the df
-        df_nb_candidates_cm['mean'] = df_nb_candidates_cm.mean(axis=1)
-        df_nb_candidates_cm.sort_values('mean', inplace=True, ascending=False)
-        df_nb_candidates_cm.drop('mean', axis=1, inplace=True)
+        # df_nb_candidates_cm['mean'] = df_nb_candidates_cm.mean(axis=1)
+        # df_nb_candidates_cm.sort_values('mean', inplace=True, ascending=False)
+        # df_nb_candidates_cm.drop('mean', axis=1, inplace=True)
+        df_nb_candidates_cm.sort_values(df_nb_candidates_cm.columns[-1], inplace=True, ascending=False)
+        # Replace the names of the rules
+        df_nb_candidates_cm.index = self.replace_rule_names(df_nb_candidates_cm.index)
         # Plot
         fig, ax = plt.subplots(figsize=self.figsize)
         df_nb_candidates_cm.T.plot(ax=ax)
@@ -320,10 +345,10 @@ class ExperimentsCompiler:
         plt.xlabel('Number of candidates')
         plt.xlim(3, df_nb_candidates_cm.columns[-1])
         plt.yticks(range(df_nb_candidates_cm.columns[-1]))
-        plt.ylabel('Average number of candidates who can benefit from CM')
+        plt.ylabel('Av. number of challengers who can win by CM')
         plt.ylim(0, df_nb_candidates_cm.columns[-1] - .5)
-        plt.legend(loc='center right')
-        tikzplotlib.save(self.tikz_directory / (self.prefix_tikz_file + tikz_file))
+        plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+        self.my_tikzplotlib_save(tikz_file, axis_width=r'\axisSmallerWidth', axis_height=r'\axisHeight')
         return df_nb_candidates_cm
 
     def nb_candidates_cm_bar_plot(self, tikz_file='nb_candidates_cm_bar_plot.tex'):
@@ -349,6 +374,7 @@ class ExperimentsCompiler:
         df_plot.sort_values(by=['Rate (lower bound)', 'Rate (upper bound)'], inplace=True)
         # Plot
         fig, ax = plt.subplots(figsize=self.figsize)
+        self.resistant_condorcet_line()
         plt.bar(
             df_plot.index,
             df_plot['Rate (lower bound)'],
@@ -357,9 +383,10 @@ class ExperimentsCompiler:
         plt.grid(axis='y')
         ax.set_axisbelow(True)
         plt.xlim(-1, self.n_rules)
+        plt.ylim(0, 1.05)
         plt.yticks(np.arange(0, 1.1, step=0.1))
-        plt.ylabel('Average proportion of candidates who can benefit from CM')
-        tikzplotlib.save(self.tikz_directory / (self.prefix_tikz_file + tikz_file))
+        plt.ylabel('Av. ratio of challengers who can win by CM')
+        self.my_tikzplotlib_save(tikz_file, x_ticks_labels=df_plot.index)
         return df_plot
 
     def cm_power_index_bar_plot(self, tikz_file='cm_power_index_bar_plot.tex'):
@@ -370,20 +397,24 @@ class ExperimentsCompiler:
         )
         df_plot = df_plot.loc[self.rules_order, ['Rate (lower bound)', 'Rate (upper bound)', 'Rate (uncertainty)']]
         df_plot.sort_values(by=['Rate (lower bound)', 'Rate (upper bound)', ], inplace=True)
+        # Set y_max
+        y_max = df_plot['Rate (lower bound)'].max()
+        y_quantum = 1 if y_max > 4.25 else 0.5
+        y_max = (np.ceil(y_max / y_quantum - 0.5) + 0.51) * y_quantum
         # Plot
+        uncertainty_to_plot = np.minimum(df_plot['Rate (upper bound)'], y_max) - df_plot['Rate (lower bound)']
         fig, ax = plt.subplots(figsize=self.figsize)
         plt.bar(
             df_plot.index,
             df_plot['Rate (lower bound)'],
-            yerr=(np.zeros(len(df_plot.index)), df_plot['Rate (uncertainty)'])
+            yerr=(np.zeros(len(df_plot.index)), uncertainty_to_plot)
         )
         plt.grid(axis='y')
         ax.set_axisbelow(True)
         plt.xlim(-1, self.n_rules)
-        y_max = np.ceil(df_plot['Rate (lower bound)'].max()) + .5
         plt.ylim(0, y_max)
         plt.ylabel('CM power index')
-        tikzplotlib.save(self.tikz_directory / (self.prefix_tikz_file + tikz_file))
+        self.my_tikzplotlib_save(tikz_file, x_ticks_labels=df_plot.index)
         return df_plot
 
     def cm_complexity_index_bar_plot(self, tikz_file='cm_complexity_index_bar_plot.tex'):
@@ -425,9 +456,10 @@ class ExperimentsCompiler:
         plt.grid(axis='y')
         ax.set_axisbelow(True)
         plt.xlim(-1, self.n_rules)
+        plt.ylim(0, 1.05)
         plt.yticks(np.arange(0, 1.1, step=0.1))
         plt.ylabel('CM complexity index')
-        tikzplotlib.save(self.tikz_directory / (self.prefix_tikz_file + tikz_file))
+        self.my_tikzplotlib_save(tikz_file, x_ticks_labels=df_complexity_index.index)
         return df_complexity_index
 
     def df_computation_time(self):
@@ -446,3 +478,51 @@ class ExperimentsCompiler:
         df_cum_time.reset_index(inplace=True)
         df_cum_time.sort_values(by='Computation time', ascending=False, inplace=True)
         return df_cum_time
+
+    def resistant_condorcet_line(self):
+        rcw_rate = self.df[
+            self.df['Criterion'] == 'exists_resistant_condorcet_winner'
+        ].pivot_table(
+            values=['Rate (lower bound)'],
+            index='Rule'
+        ).iloc[0, 0]
+        nb_rules = self.df[
+            self.df['Criterion'] == 'is_cm_'
+        ].pivot_table(
+            values=['Rate (lower bound)'],
+            index='Rule'
+        ).index.size
+        plt.hlines(1 - rcw_rate, -1, nb_rules, 'purple', linestyles='dashed', zorder=-1)
+        plt.text(8.5, 1 - rcw_rate + 0.03, 'RCW bound', color='purple',
+                 horizontalalignment='center', verticalalignment='bottom', fontsize='medium')
+
+    def my_tikzplotlib_save(self, tikz_file, x_ticks_labels=None,
+                            axis_width=r'\axisWidth', axis_height=r'\axisHeight'):
+        tikzplotlib.save(self.tikz_directory / (self.prefix_tikz_file + tikz_file),
+                         axis_width=axis_width, axis_height=axis_height)
+        with open(self.tikz_directory / (self.prefix_tikz_file + tikz_file), 'r') as f:
+            file_data = f.read()
+        # Set 'fill opacity' of the legend to 1
+        file_data = file_data.replace('fill opacity=0.8,', 'fill opacity=1,')
+        # Add yticks as they are in the matplotlib plot
+        file_data = file_data.replace(
+            'ytick style={',
+            'ytick={' + ', '.join([str(y) for y in plt.yticks()[0]]) + '},\n'
+            + 'ytick style={'
+        )
+        # Prevent from scaling down the plt.text
+        file_data = file_data.replace('scale=0.5,', 'scale=1.0,')
+        # Fix the x ticks in the tikz file
+        if x_ticks_labels is not None:
+            file_data = file_data.replace(
+                    'y grid style={',
+                    'xtick={' + ', '.join([str(i) for i in range(len(x_ticks_labels))]) + '},\n'
+                    + 'xticklabels = {' + ', '.join(self.replace_rule_names(x_ticks_labels)) + '},\n'
+                    + 'y grid style={'
+                )
+        with open(self.tikz_directory / (self.prefix_tikz_file + tikz_file), 'w') as f:
+            f.write(file_data)
+
+    def replace_rule_names(self, x_ticks_labels):
+        return [self.d_abbr_new[abbr] if abbr in self.d_abbr_new.keys() else abbr
+                for abbr in x_ticks_labels]
