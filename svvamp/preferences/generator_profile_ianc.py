@@ -20,7 +20,7 @@ This file is part of SVVAMP.
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
 from collections import Counter
-from math import lcm, gcd, prod, factorial
+from math import gcd, prod, factorial
 
 import numpy as np
 
@@ -158,6 +158,20 @@ def _enumerate_partitions(n: int):
         a[k] = x + y
         y = x + y - 1
         yield a[:k + 1]
+
+
+def lcm(*args):
+    """Least common multiple.
+
+    Built-in in the math module from Python 3.9. We add it here to be compatible with older versions.
+
+    Examples
+    --------
+        >>> lcm(3, 12, 20)
+        60
+    """
+    # noinspection PyUnresolvedReferences
+    return np.lcm.reduce(args)
 
 
 def _pairs_lam_mu_and_probabilities(n: int, m: int):
