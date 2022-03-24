@@ -51,7 +51,7 @@ class GeneratorProfileSpheroid(GeneratorProfile):
 
         * ``stretching = 0``: pure Von Neumann-Morgenstern utility, normalized to :math:`\\sum_c u_v(c) = 0` (
           spherical model with ``n_c-2`` dimensions).
-       * ``stretching = 1``: spherical model with ``n_c-1`` dimensions.
+        * ``stretching = 1``: spherical model with ``n_c-1`` dimensions.
         * ``stretching = inf``: axial/cylindrical model with only two possible values, all-approval [1, ...,
           1] and all-reject [-1, ..., -1].
 
