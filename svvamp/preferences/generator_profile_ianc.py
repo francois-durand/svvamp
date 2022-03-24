@@ -20,7 +20,7 @@ This file is part of SVVAMP.
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
 from collections import Counter
-from math import gcd, factorial
+from math import factorial
 
 import numpy as np
 
@@ -172,6 +172,21 @@ def lcm(*args):
     """
     # noinspection PyUnresolvedReferences
     return np.lcm.reduce(args)
+
+
+def gcd(*args):
+    """Least common multiple.
+
+    The version of the math module accepts more than 2 arguments since Python 3.9.
+    We add it here to be compatible with older versions.
+
+    Examples
+    --------
+        >>> gcd(9, 12, 21)
+        3
+    """
+    # noinspection PyUnresolvedReferences
+    return np.gcd.reduce(args)
 
 
 def _pairs_lam_mu_and_probabilities(n: int, m: int):
