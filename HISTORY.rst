@@ -4,6 +4,12 @@
 History
 =======
 
+----------------------------------------
+0.9.0 (2022-03-24): GeneratorProfileIanc
+----------------------------------------
+
+* Add `GeneratorProfileIanc`: profile generator for the Impartial, Anonymous and Neutral Culture.
+
 -------------------------------------------------
 0.8.3 (2021-08-01): Fix bug in ExperimentAnalyzer
 -------------------------------------------------
