@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GeneratorProfileEuclideanBox &mdash; SVVAMP 0.9.0 documentation</title>
+  <title>GeneratorProfileIanc &mdash; SVVAMP 0.9.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,8 +19,8 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="GeneratorProfileGaussianWell" href="generator_profile_gaussian_well.html" />
-    <link rel="prev" title="GeneratorProfileCubicUniform" href="generator_profile_cubic_uniform.html" /> 
+    <link rel="next" title="GeneratorProfileLadder" href="generator_profile_ladder.html" />
+    <link rel="prev" title="GeneratorProfileGaussianWell" href="generator_profile_gaussian_well.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -52,9 +52,9 @@
 <li class="toctree-l3"><a class="reference internal" href="profile.html">Profile</a></li>
 <li class="toctree-l3"><a class="reference internal" href="profile_from_file.html">ProfileFromFile</a></li>
 <li class="toctree-l3"><a class="reference internal" href="generator_profile_cubic_uniform.html">GeneratorProfileCubicUniform</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">GeneratorProfileEuclideanBox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generator_profile_euclidean_box.html">GeneratorProfileEuclideanBox</a></li>
 <li class="toctree-l3"><a class="reference internal" href="generator_profile_gaussian_well.html">GeneratorProfileGaussianWell</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generator_profile_ianc.html">GeneratorProfileIanc</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">GeneratorProfileIanc</a></li>
 <li class="toctree-l3"><a class="reference internal" href="generator_profile_ladder.html">GeneratorProfileLadder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="generator_profile_spheroid.html">GeneratorProfileSpheroid</a></li>
 <li class="toctree-l3"><a class="reference internal" href="generator_profile_vmf_hypercircle.html">GeneratorProfileVMFHypercircle</a></li>
@@ -84,9 +84,9 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../index.html">Reference</a> &raquo;</li>
-      <li>GeneratorProfileEuclideanBox</li>
+      <li>GeneratorProfileIanc</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../_sources/reference/preferences/generator_profile_euclidean_box.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/reference/preferences/generator_profile_ianc.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -118,33 +118,32 @@
     text-align: unset;
 }
 </style>
-<section id="generatorprofileeuclideanbox">
-<h1>GeneratorProfileEuclideanBox<a class="headerlink" href="#generatorprofileeuclideanbox" title="Permalink to this headline"></a></h1>
+<section id="generatorprofileianc">
+<h1>GeneratorProfileIanc<a class="headerlink" href="#generatorprofileianc" title="Permalink to this headline"></a></h1>
 <dl class="py class">
-<dt class="sig sig-object py" id="svvamp.GeneratorProfileEuclideanBox">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">svvamp.</span></span><span class="sig-name descname"><span class="pre">GeneratorProfileEuclideanBox</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_dimensions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_voters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/preferences/generator_profile_euclidean_box.html#GeneratorProfileEuclideanBox"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.GeneratorProfileEuclideanBox" title="Permalink to this definition"></a></dt>
-<dd><p>Profile generator using the ‘Euclidean box’ model.</p>
+<dt class="sig sig-object py" id="svvamp.GeneratorProfileIanc">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">svvamp.</span></span><span class="sig-name descname"><span class="pre">GeneratorProfileIanc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_voters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/preferences/generator_profile_ianc.html#GeneratorProfileIanc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.GeneratorProfileIanc" title="Permalink to this definition"></a></dt>
+<dd><p>Profile generator: Impartial, Anonymous and Neutral Culture.</p>
+<p>Cf. Eğecioğlu, Ömer &amp; Giritligil, Ayça E. (2013). The impartial, anonymous,
+and neutral culture model: a probability model for sampling public
+preference structures. The Journal of mathematical sociology, 37(4), 203-222.</p>
+<p>The code is adapted from:</p>
+<ul class="simple">
+<li><p>A Mathematica program by Ömer Eğecioğlu: <a class="reference external" href="https://sites.cs.ucsb.edu/~omer/randomvote.nb">https://sites.cs.ucsb.edu/~omer/randomvote.nb</a>.</p></li>
+<li><p>The Python function <cite>accel_asc</cite> by Jerome Kelleher: <a class="reference external" href="https://jeromekelleher.net/generating-integer-partitions.html">https://jeromekelleher.net/generating-integer-partitions.html</a>.</p></li>
+</ul>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>n_v</strong> (<em>int</em>) – Number of voters.</p></li>
 <li><p><strong>n_c</strong> (<em>int</em>) – Number of candidates.</p></li>
-<li><p><strong>box_dimensions</strong> (<em>list</em><em> or </em><em>ndarray</em>) – 1d array of numbers. The length of the Euclidean box along each axis.</p></li>
-<li><p><strong>shift</strong> (<em>list</em><em> or </em><em>ndarray</em>) – 1d array of numbers, same dimension as <code class="docutils literal notranslate"><span class="pre">box_dimensions</span></code>. Shift for the mean position of the candidates.</p></li>
 <li><p><strong>sort_voters</strong> (<em>bool</em>) – This argument is passed to <a class="reference internal" href="profile.html#svvamp.Profile" title="svvamp.Profile"><code class="xref py py-class docutils literal notranslate"><span class="pre">Profile</span></code></a>.</p></li>
 </ul>
 </dd>
 </dl>
-<p class="rubric">Notes</p>
-<p>Denote <code class="docutils literal notranslate"><span class="pre">n_dim</span></code> the number of elements in <code class="docutils literal notranslate"><span class="pre">box_dimensions</span></code>. For each voter and each candidate, a position is
-independently and uniformly drawn in a rectangular box of dimensions <code class="docutils literal notranslate"><span class="pre">box_dimensions[0]</span></code>,… ,
-<code class="docutils literal notranslate"><span class="pre">box_dimensions[n_dim</span> <span class="pre">-</span> <span class="pre">1]</span></code>. If <code class="docutils literal notranslate"><span class="pre">shift</span></code> is used, the distribution of positions for candidates is displaced by
-this vector.</p>
-<p>Let <code class="docutils literal notranslate"><span class="pre">d[v,</span> <span class="pre">c]</span></code> denote the Euclidean distance between voter <code class="docutils literal notranslate"><span class="pre">v</span></code> and candidate <code class="docutils literal notranslate"><span class="pre">c</span></code>. Then
-<code class="docutils literal notranslate"><span class="pre">preferences_ut[v,</span> <span class="pre">c]</span> <span class="pre">=</span> <span class="pre">A</span> <span class="pre">-</span> <span class="pre">d[v,</span> <span class="pre">c]</span></code>, where <code class="docutils literal notranslate"><span class="pre">A</span></code> is such that the average utility is 0 over the whole profile.</p>
-<p>Remark: if <code class="docutils literal notranslate"><span class="pre">n_dim</span> <span class="pre">=</span> <span class="pre">1</span></code>, then the profile is single-peaked.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">generator</span> <span class="o">=</span> <span class="n">GeneratorProfileEuclideanBox</span><span class="p">(</span><span class="n">n_v</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">n_c</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">box_dimensions</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generator</span> <span class="o">=</span> <span class="n">GeneratorProfileIanc</span><span class="p">(</span><span class="n">n_v</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">n_c</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">generator</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">preferences_rk</span><span class="o">.</span><span class="n">shape</span>
 <span class="go">(10, 3)</span>
@@ -158,8 +157,8 @@ this vector.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="generator_profile_cubic_uniform.html" class="btn btn-neutral float-left" title="GeneratorProfileCubicUniform" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="generator_profile_gaussian_well.html" class="btn btn-neutral float-right" title="GeneratorProfileGaussianWell" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="generator_profile_gaussian_well.html" class="btn btn-neutral float-left" title="GeneratorProfileGaussianWell" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="generator_profile_ladder.html" class="btn btn-neutral float-right" title="GeneratorProfileLadder" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

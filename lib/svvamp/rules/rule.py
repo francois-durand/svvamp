@@ -573,7 +573,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
 
         * If :attr:`scores_` is a 1d array, then ``score_w_`` is :attr:`w_`'s numerical score.
         * If :attr:`scores_` is a 2d array, then ``score_w_`` is :attr:`w_`'s score vector:
-        ``score_w_ = scores_[:, w_]``.
+          ``score_w_ = scores_[:, w_]``.
         """
         # Exception: if scores are read in rows (Schulze, Ranked pairs), this needs to be redefined.
         self.mylog("Compute winner's score", 1)
@@ -1033,7 +1033,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     @cached_property
     def is_not_iia_(self):
         """Boolean. ``True`` if there exists a subset of candidates including the sincere winner
-        :attr:`w`_, such that if the election is held with this subset of candidates, then :attr:`w_` is not the
+        :attr:`w_`, such that if the election is held with this subset of candidates, then :attr:`w_` is not the
         winner anymore. If the algorithm cannot decide, then the result is ``numpy.nan``.
         """
         if np.isnan(self.is_iia_):
