@@ -20,7 +20,7 @@ This file is part of SVVAMP.
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
 from collections import Counter
-from math import gcd, prod, factorial
+from math import gcd, factorial
 
 import numpy as np
 
@@ -104,7 +104,7 @@ def _z_partition(lam: list):
         >>> factorial(7) // _z_partition([3, 2, 2])
         210
     """
-    return prod([
+    return np.prod([
         (cycle_length ** n_occurrences) * factorial(n_occurrences)
         for cycle_length, n_occurrences in Counter(lam).items()
     ])
