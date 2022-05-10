@@ -12,6 +12,7 @@ Preferences
    preferences/generator_profile_cubic_uniform
    preferences/generator_profile_euclidean_box
    preferences/generator_profile_gaussian_well
+   preferences/generator_profile_ianc
    preferences/generator_profile_ladder
    preferences/generator_profile_spheroid
    preferences/generator_profile_vmf_hypercircle

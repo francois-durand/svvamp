@@ -2,7 +2,6 @@ matplotlib
 networkx
 numpy
 pandas
-pathlib
 tikzplotlib
 scipy
 sphinx>=1.4

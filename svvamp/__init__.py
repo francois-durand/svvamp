@@ -2,7 +2,7 @@
 
 __author__ = """François Durand"""
 __email__ = 'fradurand@gmail.com'
-__version__ = '0.8.3'
+__version__ = '0.9.1'
 
 
 # Utils
@@ -19,6 +19,7 @@ from svvamp.preferences.generator_profile import GeneratorProfile
 from svvamp.preferences.generator_profile_cubic_uniform import GeneratorProfileCubicUniform
 from svvamp.preferences.generator_profile_euclidean_box import GeneratorProfileEuclideanBox
 from svvamp.preferences.generator_profile_gaussian_well import GeneratorProfileGaussianWell
+from svvamp.preferences.generator_profile_ianc import GeneratorProfileIanc
 from svvamp.preferences.generator_profile_ladder import GeneratorProfileLadder
 from svvamp.preferences.generator_profile_noise import GeneratorProfileNoise
 from svvamp.preferences.generator_profile_noised_file import GeneratorProfileNoisedFile

@@ -4,6 +4,20 @@
 History
 =======
 
+----------------------------------------
+0.9.1 (2022-03-24): Compatibility issues
+----------------------------------------
+
+* ``GeneratorProfileIanc`` is now compatible with Python < 3.8.
+* However, starting from this release, the official compatibility of SVVAMP is with Python
+  3.8, 3.9 and 3.10 (no support for Python 3.6 and 3.7).
+
+----------------------------------------
+0.9.0 (2022-03-24): GeneratorProfileIanc
+----------------------------------------
+
+* Add ``GeneratorProfileIanc``: profile generator for the Impartial, Anonymous and Neutral Culture.
+
 -------------------------------------------------
 0.8.3 (2021-08-01): Fix bug in ExperimentAnalyzer
 -------------------------------------------------

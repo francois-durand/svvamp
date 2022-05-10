@@ -10,7 +10,7 @@ with open('README.rst') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = ['matplotlib', 'networkx', 'numpy', 'pandas', 'pathlib', 'scipy', 'tikzplotlib']
+requirements = ['matplotlib', 'networkx', 'numpy', 'pandas', 'scipy', 'tikzplotlib']
 
 setup_requirements = ['pytest-runner', ]
 
@@ -26,9 +26,9 @@ setup(
         'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
         'Natural Language :: English',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
     ],
     description="Simulator of Various Voting Algorithms in Manipulating Populations",
     install_requires=requirements,
@@ -43,6 +43,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/francois-durand/svvamp',
-    version='0.8.3',
+    version='0.9.1',
     zip_safe=False,
 )
