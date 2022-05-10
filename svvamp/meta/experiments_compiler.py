@@ -345,7 +345,7 @@ class ExperimentsCompiler:
         plt.xlabel('Number of candidates')
         plt.xlim(3, df_nb_candidates_cm.columns[-1])
         plt.yticks(range(df_nb_candidates_cm.columns[-1]))
-        plt.ylabel('Av. number of challengers who can win by CM')
+        plt.ylabel('Average number of CM winners')
         plt.ylim(0, df_nb_candidates_cm.columns[-1] - .5)
         plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
         self.my_tikzplotlib_save(tikz_file, axis_width=r'\axisSmallerWidth', axis_height=r'\axisHeight')
@@ -385,7 +385,7 @@ class ExperimentsCompiler:
         plt.xlim(-1, self.n_rules)
         plt.ylim(0, 1.05)
         plt.yticks(np.arange(0, 1.1, step=0.1))
-        plt.ylabel('Av. ratio of challengers who can win by CM')
+        plt.ylabel('Average ratio of CM winners')
         self.my_tikzplotlib_save(tikz_file, x_ticks_labels=df_plot.index)
         return df_plot
 
@@ -493,7 +493,7 @@ class ExperimentsCompiler:
             index='Rule'
         ).index.size
         plt.hlines(1 - rcw_rate, -1, nb_rules, 'purple', linestyles='dashed', zorder=-1)
-        plt.text(8.5, 1 - rcw_rate + 0.03, 'RCW bound', color='purple',
+        plt.text(6.5, 1 - rcw_rate + 0.03, 'RCW bound', color='purple',
                  horizontalalignment='center', verticalalignment='bottom', fontsize='medium')
 
     def my_tikzplotlib_save(self, tikz_file, x_ticks_labels=None,
