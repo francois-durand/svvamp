@@ -372,8 +372,6 @@ class RuleBaldwin(Rule):
 
         * Try to improve the bound ``_sufficient_coalition_size_cm[c]``.
 
-        Use the Zuckerman algorithm, designed for Borda, as a heuristic for Baldwin.
-
             >>> profile = Profile(preferences_rk=[
             ...     [0, 2, 1],
             ...     [0, 2, 1],
@@ -409,28 +407,45 @@ class RuleBaldwin(Rule):
             # This is a quick escape: we have not optimized the bounds the best we could.
             return True
 
-        # Second part: Zuckerman heuristic.
-        scores_test = np.sum(ballots_sincere, 0)
-        # We add a tie-breaking term [(C-1)/C, (C-2)/C, ..., 0] to ease the computations.
-        scores_test = scores_test + (np.array(range(self.profile_.n_c - 1, -1, -1)) / self.profile_.n_c)
+        # Second part: manipulation heuristic.
+        optimal_subset = sorted(set(optimal_subset) | {self.w_})
+        d_cand_i = {cand: i for i, cand in enumerate(optimal_subset)}
+        i_w = d_cand_i[self.w_]
+        i_c = d_cand_i[c]
+        k = len(optimal_subset)
+        scores_test = matrix_duels_sincere[:, optimal_subset][optimal_subset, :].sum(axis=1)
+        # We add a tie-breaking term [(k-1)/k, (k-2)/k, ..., 0] to ease the computations.
+        scores_test = scores_test + (np.array(range(k - 1, -1, -1)) / k)
+        self.mylogv('CM: Fast algorithm: optimal_subset =', optimal_subset, 3)
         self.mylogv('CM: Fast algorithm: scores_test =', scores_test, 3)
-        ballots_manipulators = []
+        ballots_manipulators_subset = []
         for _ in range(n_m):
             # Balancing ballot: put candidates in the order of their current scores (least point to the most
             # dangerous).
             candidates_by_decreasing_score = np.argsort(- scores_test, kind='mergesort')
             ballot = np.argsort(candidates_by_decreasing_score)
-            # Now put ``c`` on top. And modify other Borda scores accordingly on the ballot.
-            ballot -= np.greater(ballot, ballot[c])
-            ballot[c] = self.profile_.n_c - 1
-            # Now put ``w`` at bottom. And modify other Borda scores accordingly on the ballot.
-            ballot += np.less(ballot, ballot[self.w_])
-            ballot[self.w_] = 0
+            # Our priority is to kill w, so we put her at the bottom
+            ballot += np.less(ballot, ballot[i_w])
+            ballot[i_w] = 0
+            # If w is already at the bottom, we can safely give an advantage to c for future rounds.
+            if np.all(scores_test[i_w] < np.array(scores_test)):
+                ballot -= np.greater(ballot, ballot[i_c])
+                ballot[i_c] = k - 1
             self.mylogv('CM: Fast algorithm: ballot =', ballot, 3)
             # New scores = old scores + ballot.
             scores_test += ballot
             self.mylogv('CM: Fast algorithm: scores_test =', scores_test, 3)
-            ballots_manipulators.append(ballot)
+            ballots_manipulators_subset.append(ballot)
+        ballots_manipulators = np.zeros((n_m, n_c), dtype=int)
+        ballots_manipulators[:, optimal_subset] = ballots_manipulators_subset
+        ballots_manipulators[:, optimal_subset] += n_c - k
+        if k < n_c:
+            other_candidates_by_decreasing_score = [
+                cand for cand in np.argsort(- matrix_duels_sincere.sum(axis=1), kind='mergesort')
+                if not cand in optimal_subset
+            ]
+            ballots_manipulators[:, other_candidates_by_decreasing_score] = np.arange(n_c - k)[np.newaxis, :]
+        self.mylogv('CM: Fast algorithm: ballots_manipulators =', ballots_manipulators, 3)
         ballots = np.vstack((ballots_sincere, ballots_manipulators))
         w_test = RuleBaldwin()(profile=Profile(preferences_ut=ballots)).w_
         if w_test == c:
