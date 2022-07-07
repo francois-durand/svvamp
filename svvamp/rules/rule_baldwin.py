@@ -285,6 +285,7 @@ class RuleBaldwin(Rule):
 
     options_parameters = Rule.options_parameters.copy()
     options_parameters['icm_option'] = {'allowed': ['exact'], 'default': 'exact'}
+    options_parameters['cm_option'] = {'allowed': ['fast', 'exact'], 'default': 'fast'}
 
     def __init__(self, **kwargs):
         super().__init__(
@@ -363,3 +364,101 @@ class RuleBaldwin(Rule):
         # ==> candidate 1 wins.
         # Conclusion: this voting system does not meet Condorcet criterion (ut/rel).
         return True
+
+    # %% Coalition Manipulation (CM)
+
+    def _cm_main_work_c_fast_(self, c, optimize_bounds):
+        """Do the main work in CM loop for candidate ``c``.
+
+        * Try to improve the bound ``_sufficient_coalition_size_cm[c]``.
+
+        Use the Zuckerman algorithm, designed for Borda, as a heuristic for Baldwin.
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleBaldwin()(profile)
+            >>> rule.candidates_cm_
+            array([0., 0., 0.])
+        """
+        # First part: is there a subset (including c) such that w has less than the average?
+        n_v = self.profile_.n_v
+        n_c = self.profile_.n_c
+        n_m = self.profile_.matrix_duels_ut[c, self.w_]
+        ballots_sincere = self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :]
+        profile_sincere = Profile(preferences_borda_rk=ballots_sincere)
+        matrix_duels_sincere = profile_sincere.matrix_duels_rk
+        row_w = matrix_duels_sincere[self.w_, :]
+        optimal_subset = list({c for c in range(n_c) if c != self.w_ and row_w[c] < n_v / 2} | {c})
+        self.mylogv('CM: Further check: optimal_subset =', optimal_subset, 3)
+        optimal_average_score = row_w[optimal_subset].sum() / len(optimal_subset)
+        self.mylogv('CM: Further check: optimal_average_score =', optimal_average_score, 3)
+        if optimal_average_score > n_v / 2 or (optimal_average_score == n_v / 2 and c > self.w_):
+            necessary = n_m + 1
+            self.mylogv('CM: Further check: necessary =', necessary)
+            self._update_necessary(self._necessary_coalition_size_cm, c, necessary,
+                                   'CM: Further check: necessary_coalition_size_cm =')
+        # An opportunity to escape before real work
+        if self._necessary_coalition_size_cm[c] == self._sufficient_coalition_size_cm[c]:
+            return False
+        if not optimize_bounds and n_m < self._necessary_coalition_size_cm[c]:
+            # This is a quick escape: we have not optimized the bounds the best we could.
+            return True
+
+        # Second part: Zuckerman heuristic.
+        scores_test = np.sum(ballots_sincere, 0)
+        # We add a tie-breaking term [(C-1)/C, (C-2)/C, ..., 0] to ease the computations.
+        scores_test = scores_test + (np.array(range(self.profile_.n_c - 1, -1, -1)) / self.profile_.n_c)
+        self.mylogv('CM: Fast algorithm: scores_test =', scores_test, 3)
+        ballots_manipulators = []
+        for _ in range(n_m):
+            # Balancing ballot: put candidates in the order of their current scores (least point to the most
+            # dangerous).
+            candidates_by_decreasing_score = np.argsort(- scores_test, kind='mergesort')
+            ballot = np.argsort(candidates_by_decreasing_score)
+            # Now put ``c`` on top. And modify other Borda scores accordingly on the ballot.
+            ballot -= np.greater(ballot, ballot[c])
+            ballot[c] = self.profile_.n_c - 1
+            # Now put ``w`` at bottom. And modify other Borda scores accordingly on the ballot.
+            ballot += np.less(ballot, ballot[self.w_])
+            ballot[self.w_] = 0
+            self.mylogv('CM: Fast algorithm: ballot =', ballot, 3)
+            # New scores = old scores + ballot.
+            scores_test += ballot
+            self.mylogv('CM: Fast algorithm: scores_test =', scores_test, 3)
+            ballots_manipulators.append(ballot)
+        ballots = np.vstack((ballots_sincere, ballots_manipulators))
+        w_test = RuleBaldwin()(profile=Profile(preferences_ut=ballots)).w_
+        if w_test == c:
+            sufficient = n_m
+            self.mylogv('CM: Fast algorithm: sufficient =', sufficient)
+            self._update_sufficient(self._sufficient_coalition_size_cm, c, sufficient,
+                                    'CM: Fast algorithm: sufficient_coalition_size_cm =')
+        is_quick_escape = False  # We will not do better if we come back in this method
+        return is_quick_escape
+
+    def _cm_main_work_c_(self, c, optimize_bounds):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleBaldwin(cm_option='exact')(profile)
+            >>> rule.candidates_cm_
+            array([0., 0., 0.])
+        """
+        is_quick_escape_fast = self._cm_main_work_c_fast_(c, optimize_bounds)
+        if not self.cm_option == "exact":
+            # With 'fast' option, we stop here anyway.
+            return is_quick_escape_fast
+        # From this point, we have necessarily the 'exact' option (which is, in fact, only an exhaustive exploration
+        # with = ``n_m`` manipulators).
+        is_quick_escape_exact = self._cm_main_work_c_exact_(c, optimize_bounds)
+        return is_quick_escape_fast or is_quick_escape_exact
