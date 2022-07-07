@@ -13,7 +13,9 @@ Preferences
    preferences/generator_profile_euclidean_box
    preferences/generator_profile_gaussian_well
    preferences/generator_profile_ianc
+   preferences/generator_profile_ic
    preferences/generator_profile_ladder
+   preferences/generator_profile_perturbed_culture
    preferences/generator_profile_spheroid
    preferences/generator_profile_vmf_hypercircle
    preferences/generator_profile_vmf_hypersphere
