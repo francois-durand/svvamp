@@ -391,3 +391,29 @@ class RuleKemeny(Rule):
     @cached_property
     def meets_condorcet_c_rk_ctb(self):
         return True
+
+    # %% Coalition Manipulation (CM)
+
+    def _cm_preliminary_checks_c_subclass_(self, c, optimize_bounds):
+        # We want a Kemeny order like r = c > j_1 > ... > j_k > w > j_{k+1} > ... j_{n_c - 2}.
+        # In particular, this order must be at least as good as putting w on top with:
+        # r' = w > c > j_1 > ... > j_k > j_{k+1} > ... j_{n_c - 2}. So we must have:
+        #   * score(r) - score(r') >= 0
+        #   * [W(c, w) + W(j_1, w) + ... + W(j_k, w)] - [W(w, c) + W(w, j_1) + ... + W(w, j_k)] >= 0
+        #   * A(c, w) + A(j_1, w) + ... + A(j_k, w) >= 0  (where A is the antisymmetric matrix of duels)
+        #   * A_s(c, w) + n_m + (A(j_1, w) + n_m) + ... + (A(j_k, w) + n_m) >= 0
+        # It must only be true for a well-chosen subset {j_1, \ldots, j_k}, which is true iff it holds for the most
+        # favorable subset where each (A(j, w) + n_m) is positive. So:
+        #   * A_s(c, w) + n_m + \sum_{j != c, w} max(0, A(j, w) + n_m)) >= 0.
+        #   * M(c, w) + \sum_{j != c, w} max(O, M(j, w)) >= 0, where M = A + n_m.
+        n_c = self.profile_.n_c
+        n_m = self.profile_.matrix_duels_ut[c, self.w_]
+        profile_sincere = Profile(
+            preferences_borda_rk=self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :]
+        )
+        matrix_duels_sincere = profile_sincere.matrix_duels_rk
+        m_column_w = matrix_duels_sincere[:, self.w_] - matrix_duels_sincere[self.w_, :] + n_m
+        neither_c_nor_w = np.array([j not in {c, self.w_} for j in range(n_c)])
+        if m_column_w[c] + np.sum(np.maximum(0, m_column_w[neither_c_nor_w])) < 0:
+            self._update_necessary(self._necessary_coalition_size_cm, c, n_m + 1,
+                                   'CM: Preliminary check: necessary_coalition_size_cm =')
