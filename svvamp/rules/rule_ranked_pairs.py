@@ -412,7 +412,7 @@ class RuleRankedPairs(Rule):
             + (np.arange(n_c - 1, -1, -1) / n_c**2)[np.newaxis, :]
         )  # This embeds the tie-breaking rule on pairwise comparisons
         is_not_c = (np.arange(n_c) != c)
-        worst_defeat_k = np.max(matrix_duels_sincere[is_not_c, :][:, is_not_c], axis=0)
+        worst_defeat_k = np.max(matrix_duels_sincere[:, is_not_c], axis=0)
         score_k_against_c = matrix_duels_sincere[is_not_c, c]
         n_m_necessary = np.ceil(np.max(score_k_against_c - worst_defeat_k))
         self._update_necessary(self._necessary_coalition_size_cm, c, n_m_necessary,
