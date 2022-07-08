@@ -52,6 +52,7 @@ from svvamp.rules.rule_plurality import RulePlurality
 from svvamp.rules.rule_range_voting import RuleRangeVoting
 from svvamp.rules.rule_ranked_pairs import RuleRankedPairs
 from svvamp.rules.rule_schulze import RuleSchulze
+from svvamp.rules.rule_slater import RuleSlater
 from svvamp.rules.rule_split_cycle import RuleSplitCycle
 from svvamp.rules.rule_star import RuleSTAR
 from svvamp.rules.rule_two_round import RuleTwoRound
