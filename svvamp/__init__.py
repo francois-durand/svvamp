@@ -42,6 +42,7 @@ from svvamp.rules.rule_coombs import RuleCoombs
 from svvamp.rules.rule_copeland import RuleCopeland
 from svvamp.rules.rule_irv_duels import RuleIRVDuels
 from svvamp.rules.rule_iterated_bucklin import RuleIteratedBucklin
+from svvamp.rules.rule_k_approval import RuleKApproval
 from svvamp.rules.rule_kemeny import RuleKemeny
 from svvamp.rules.rule_kim_roush import RuleKimRoush
 from svvamp.rules.rule_majority_judgment import RuleMajorityJudgment
