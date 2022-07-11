@@ -370,7 +370,7 @@ class RuleBaldwin(Rule):
     def _cm_main_work_c_fast_(self, c, optimize_bounds):
         """Do the main work in CM loop for candidate ``c``.
 
-        * Try to improve the bound ``_sufficient_coalition_size_cm[c]``.
+        * Try to improve the bounds ``_sufficient_coalition_size_cm[c]`` and ``_necessary_coalition_size_cm[c]``.
 
             >>> profile = Profile(preferences_rk=[
             ...     [0, 2, 1],
@@ -442,7 +442,7 @@ class RuleBaldwin(Rule):
         if k < n_c:
             other_candidates_by_decreasing_score = [
                 cand for cand in np.argsort(- matrix_duels_sincere.sum(axis=1), kind='mergesort')
-                if not cand in optimal_subset
+                if cand not in optimal_subset
             ]
             ballots_manipulators[:, other_candidates_by_decreasing_score] = np.arange(n_c - k)[np.newaxis, :]
         self.mylogv('CM: Fast algorithm: ballots_manipulators =', ballots_manipulators, 3)

@@ -383,3 +383,115 @@ class RuleNanson(Rule):
     @cached_property
     def meets_condorcet_c_rk_ctb(self):
         return True
+
+    # %% Coalition Manipulation (CM)
+
+    def _cm_main_work_c_fast_(self, c, optimize_bounds):
+        """Do the main work in CM loop for candidate ``c``.
+
+        * Try to improve the bounds ``_sufficient_coalition_size_cm[c]`` and ``_necessary_coalition_size_cm[c]``.
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleNanson()(profile)
+            >>> rule.candidates_cm_
+            array([0., 0., 0.])
+        """
+        # First part: is there a subset (including c) such that w has less than the average?
+        n_v = self.profile_.n_v
+        n_c = self.profile_.n_c
+        n_m = self.profile_.matrix_duels_ut[c, self.w_]
+        ballots_sincere = self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :]
+        profile_sincere = Profile(preferences_borda_rk=ballots_sincere)
+        matrix_duels_sincere = profile_sincere.matrix_duels_rk
+        row_w = matrix_duels_sincere[self.w_, :]
+        optimal_subset = list({c for c in range(n_c) if c != self.w_ and row_w[c] < n_v / 2} | {c})
+        self.mylogv('CM: Further check: optimal_subset =', optimal_subset, 3)
+        optimal_average_score = row_w[optimal_subset].sum() / len(optimal_subset)
+        self.mylogv('CM: Further check: optimal_average_score =', optimal_average_score, 3)
+        if optimal_average_score > n_v / 2 or (optimal_average_score == n_v / 2 and c > self.w_):
+            necessary = n_m + 1
+            self.mylogv('CM: Further check: necessary =', necessary)
+            self._update_necessary(self._necessary_coalition_size_cm, c, necessary,
+                                   'CM: Further check: necessary_coalition_size_cm =')
+        # An opportunity to escape before real work
+        if self._necessary_coalition_size_cm[c] == self._sufficient_coalition_size_cm[c]:
+            return False
+        if not optimize_bounds and n_m < self._necessary_coalition_size_cm[c]:
+            # This is a quick escape: we have not optimized the bounds the best we could.
+            return True
+
+        # Second part: manipulation heuristic.
+        optimal_subset = sorted(set(optimal_subset) | {self.w_})
+        d_cand_i = {cand: i for i, cand in enumerate(optimal_subset)}
+        i_w = d_cand_i[self.w_]
+        i_c = d_cand_i[c]
+        k = len(optimal_subset)
+        scores_test = matrix_duels_sincere[:, optimal_subset][optimal_subset, :].sum(axis=1)
+        # We add a tie-breaking term [(k-1)/k, (k-2)/k, ..., 0] to ease the computations.
+        scores_test = scores_test + (np.array(range(k - 1, -1, -1)) / k)
+        self.mylogv('CM: Fast algorithm: optimal_subset =', optimal_subset, 3)
+        self.mylogv('CM: Fast algorithm: scores_test =', scores_test, 3)
+        ballots_manipulators_subset = []
+        for _ in range(n_m):
+            # Balancing ballot: put candidates in the order of their current scores (least point to the most
+            # dangerous).
+            candidates_by_decreasing_score = np.argsort(- scores_test, kind='mergesort')
+            ballot = np.argsort(candidates_by_decreasing_score)
+            # Our priority is to kill w, so we put her at the bottom
+            ballot += np.less(ballot, ballot[i_w])
+            ballot[i_w] = 0
+            # We want to save c, so we put her on top
+            ballot -= np.greater(ballot, ballot[i_c])
+            ballot[i_c] = k - 1
+            self.mylogv('CM: Fast algorithm: ballot =', ballot, 3)
+            # New scores = old scores + ballot.
+            scores_test += ballot
+            self.mylogv('CM: Fast algorithm: scores_test =', scores_test, 3)
+            ballots_manipulators_subset.append(ballot)
+        ballots_manipulators = np.zeros((n_m, n_c), dtype=int)
+        ballots_manipulators[:, optimal_subset] = ballots_manipulators_subset
+        ballots_manipulators[:, optimal_subset] += n_c - k
+        if k < n_c:
+            other_candidates_by_decreasing_score = [
+                cand for cand in np.argsort(- matrix_duels_sincere.sum(axis=1), kind='mergesort')
+                if cand not in optimal_subset
+            ]
+            ballots_manipulators[:, other_candidates_by_decreasing_score] = np.arange(n_c - k)[np.newaxis, :]
+        self.mylogv('CM: Fast algorithm: ballots_manipulators =', ballots_manipulators, 3)
+        ballots = np.vstack((ballots_sincere, ballots_manipulators))
+        w_test = RuleNanson()(profile=Profile(preferences_ut=ballots)).w_
+        if w_test == c:
+            sufficient = n_m
+            self.mylogv('CM: Fast algorithm: sufficient =', sufficient)
+            self._update_sufficient(self._sufficient_coalition_size_cm, c, sufficient,
+                                    'CM: Fast algorithm: sufficient_coalition_size_cm =')
+        is_quick_escape = False  # We will not do better if we come back in this method
+        return is_quick_escape
+
+    def _cm_main_work_c_(self, c, optimize_bounds):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleNanson(cm_option='exact')(profile)
+            >>> rule.candidates_cm_
+            array([0., 0., 0.])
+        """
+        is_quick_escape_fast = self._cm_main_work_c_fast_(c, optimize_bounds)
+        if not self.cm_option == "exact":
+            # With 'fast' option, we stop here anyway.
+            return is_quick_escape_fast
+        # From this point, we have necessarily the 'exact' option (which is, in fact, only an exhaustive exploration
+        # with = ``n_m`` manipulators).
+        is_quick_escape_exact = self._cm_main_work_c_exact_(c, optimize_bounds)
+        return is_quick_escape_fast or is_quick_escape_exact
