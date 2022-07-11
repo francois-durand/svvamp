@@ -380,7 +380,35 @@ class RuleKimRoush(Rule):
     # %% CM
 
     def _cm_preliminary_checks_c_subclass_(self, c, optimize_bounds):
+        n_c = self.profile_.n_c
         n_m = self.profile_.matrix_duels_ut[c, self.w_]
         n_s = self.profile_.n_v - n_m
-        self._update_sufficient(self._sufficient_coalition_size_cm, c, (n_s + 1) * (self.profile_.n_c - 1),
+        self._update_sufficient(self._sufficient_coalition_size_cm, c, (n_s + 1) * (n_c - 1),
                                 'CM: Obvious bound => sufficient_coalition_size_cm[c] = ')
+        # c must not be eliminated during the first round
+        self._update_necessary(self._necessary_coalition_size_cm, c, - self.scores_[0, c] * n_c - n_s,
+                               'CM: Obvious bound => necessary_coalition_size_cm[c] = ')
+        # We need to make `w` lose. Two options:
+        # * Have more than `n_v / k` vetos. But as long as `c` is here, the only sincere voters who can cast a
+        #   veto against `w` are those who rank `c` before `w` (which is possible only if they have the same
+        #   utility for `w` and `c`). So there must exist a `k` such that
+        #   `(n_s + n_m) / k < can_veto_w + n_m`. In particular it must hold that
+        #   `(n_s + n_m) / n_c < can_veto_w + n_m`, which leads to
+        #   `n_m > (n_s - n_c * can_veto_w) / (n_c - 1)`.
+        preferences_borda_rk_s = self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :]
+        can_veto_w = preferences_borda_rk_s[:, self.w_] < preferences_borda_rk_s[:, c]
+        n_m_necessary = 1 + np.floor((n_s - n_c * np.sum(can_veto_w)) / (n_c - 1))
+        # * Have exactly `n_v / k` vetos, and that any other candidate has the same number of vetos. Similarly
+        #   to the previous case, it implies that `n_m >= (n_s - n_c * can_veto_w) / (n_c - 1)`. Since the `>` case
+        #   is already covered by the previous bullet point, focus on the `==` case. Then
+        #   `(n_s + n_m) / n_c == can_veto_w + n_m`, i.e. if `w` is eliminated, it must be at first round and with
+        #   all manipulators voting against her. But it needs that all candidates have the same score, and that
+        #   `c == 0` to benefit from the tie-breaking rule.
+        if c == 0:
+            n_vetos_s = np.sum(preferences_borda_rk_s == 0, axis=0)
+            min_vetos_except_w = min(n_vetos_s[np.arange(n_c) != self.w_])
+            max_vetos_except_w = max(n_vetos_s[np.arange(n_c) != self.w_])
+            if min_vetos_except_w == max_vetos_except_w:
+                n_m_necessary = n_vetos_s[c] - n_vetos_s[self.w_]
+        self._update_necessary(self._necessary_coalition_size_cm, c, n_m_necessary,
+                               'CM: w must lose => necessary_coalition_size_cm[c] = ')
