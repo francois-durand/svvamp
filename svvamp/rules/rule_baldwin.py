@@ -428,7 +428,7 @@ class RuleBaldwin(Rule):
             ballot += np.less(ballot, ballot[i_w])
             ballot[i_w] = 0
             # If w is already at the bottom, we can safely give an advantage to c for future rounds.
-            if np.all(scores_test[i_w] < np.array(scores_test)):
+            if np.all(scores_test[i_w] <= np.array(scores_test)):
                 ballot -= np.greater(ballot, ballot[i_c])
                 ballot[i_c] = k - 1
             self.mylogv('CM: Fast algorithm: ballot =', ballot, 3)
