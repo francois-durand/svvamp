@@ -253,12 +253,12 @@ class RuleNanson(Rule):
         ***********************************
         *   Coalition Manipulation (CM)   *
         ***********************************
-        is_cm = nan
-        log_cm: cm_option = lazy, um_option = lazy, tm_option = exact
+        is_cm = False
+        log_cm: cm_option = fast, um_option = lazy, tm_option = exact
         candidates_cm =
-        [ 0.  0. nan]
+        [0. 0. 0.]
         necessary_coalition_size_cm =
-        [0. 1. 2.]
+        [0. 1. 3.]
         sufficient_coalition_size_cm =
         [0. 2. 3.]
 
@@ -287,6 +287,7 @@ class RuleNanson(Rule):
 
     options_parameters = Rule.options_parameters.copy()
     options_parameters['icm_option'] = {'allowed': ['exact'], 'default': 'exact'}
+    options_parameters['cm_option'] = {'allowed': ['fast', 'exact'], 'default': 'fast'}
 
     def __init__(self, **kwargs):
         super().__init__(
@@ -455,7 +456,8 @@ class RuleNanson(Rule):
             self.mylogv('CM: Fast algorithm: scores_test =', scores_test, 3)
             ballots_manipulators_subset.append(ballot)
         ballots_manipulators = np.zeros((n_m, n_c), dtype=int)
-        ballots_manipulators[:, optimal_subset] = ballots_manipulators_subset
+        if n_m >= 1:  # Otherwise, `ballots_manipulators_subset` is empty hence numpy cannot cast the array.
+            ballots_manipulators[:, optimal_subset] = ballots_manipulators_subset
         ballots_manipulators[:, optimal_subset] += n_c - k
         if k < n_c:
             other_candidates_by_decreasing_score = [
