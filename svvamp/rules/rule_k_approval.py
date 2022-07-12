@@ -301,7 +301,7 @@ class RuleKApproval(Rule):
 
     @cached_property
     def scores_(self):
-        """1d array of integers. ``scores_[c]`` the number of approvals for candidate ``c``.
+        """1d array of integers. ``scores_[c]`` is the number of approvals for candidate ``c``.
         """
         self.mylog("Compute scores", 1)
         return np.sum(self.ballots_, axis=0)

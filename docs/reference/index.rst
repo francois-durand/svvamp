@@ -43,6 +43,7 @@ Voting rules
    rules/rule_irv_average
    rules/rule_irv_duels
    rules/rule_iterated_bucklin
+   rules/rule_k_approval
    rules/rule_kemeny
    rules/rule_kim_roush
    rules/rule_majority_judgment
@@ -52,6 +53,7 @@ Voting rules
    rules/rule_range_voting
    rules/rule_ranked_pairs
    rules/rule_schulze
+   rules/rule_slater
    rules/rule_smith_irv
    rules/rule_split_cycle
    rules/rule_star
