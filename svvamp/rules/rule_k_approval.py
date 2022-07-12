@@ -23,6 +23,7 @@ import numpy as np
 from svvamp.rules.rule import Rule
 from svvamp.utils.util_cache import cached_property
 from svvamp.preferences.profile import Profile
+from svvamp.utils import type_checker
 
 
 class RuleKApproval(Rule):
@@ -73,15 +74,19 @@ class RuleKApproval(Rule):
          [2 0 1]
          [2 1 0]]
         ballots =
-        [2 1 2 1 0]
+        [[ True  True False]
+         [ True False  True]
+         [ True  True False]
+         [ True False  True]
+         [False  True  True]]
         scores =
-        [-1 -2 -2]
+        [4 3 3]
         candidates_by_scores_best_to_worst
         [0 1 2]
         scores_best_to_worst
-        [-1 -2 -2]
+        [4 3 3]
         w = 0
-        score_w = -1
+        score_w = 4
         total_utility_w = 1.0
         <BLANKLINE>
         *********************************
@@ -156,7 +161,7 @@ class RuleKApproval(Rule):
         *********************************************
         *   Basic properties of the voting system   *
         *********************************************
-        with_two_candidates_reduces_to_plurality =  True
+        with_two_candidates_reduces_to_plurality =  False
         is_based_on_rk =  True
         is_based_on_ut_minus1_1 =  False
         meets_iia =  False
@@ -271,6 +276,7 @@ class RuleKApproval(Rule):
 
     options_parameters = Rule.options_parameters.copy()
     options_parameters.update({
+        'k': {'allowed': type_checker.is_number, 'default': 1},
         'im_option': {'allowed': ['exact'], 'default': 'exact'},
         'tm_option': {'allowed': ['exact'], 'default': 'exact'},
         'um_option': {'allowed': ['exact'], 'default': 'exact'},
@@ -278,12 +284,12 @@ class RuleKApproval(Rule):
         'cm_option': {'allowed': ['exact'], 'default': 'exact'}
     })
 
-    def __init__(self, k, **kwargs):
-        self.k = k
+    def __init__(self, k=1, **kwargs):
+        self.k = None
         super().__init__(
-            with_two_candidates_reduces_to_plurality=False, is_based_on_rk=True,
+            with_two_candidates_reduces_to_plurality=(k == 1), is_based_on_rk=True,
             precheck_um=False, precheck_icm=False, precheck_tm=False,
-            log_identity="K-APPROVAL", **kwargs
+            log_identity="K-APPROVAL", k=k, **kwargs
         )
 
     @cached_property
