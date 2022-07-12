@@ -249,12 +249,12 @@ class RuleKimRoush(Rule):
         ***********************************
         *   Coalition Manipulation (CM)   *
         ***********************************
-        is_cm = nan
+        is_cm = False
         log_cm: cm_option = lazy, um_option = lazy, icm_option = lazy, tm_option = exact
         candidates_cm =
-        [ 0.  0. nan]
-        necessary_coalition_size_cm =
         [0. 0. 0.]
+        necessary_coalition_size_cm =
+        [0. 1. 3.]
         sufficient_coalition_size_cm =
         [0. 2. 3.]
 
