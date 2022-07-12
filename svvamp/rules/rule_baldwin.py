@@ -437,7 +437,8 @@ class RuleBaldwin(Rule):
             self.mylogv('CM: Fast algorithm: scores_test =', scores_test, 3)
             ballots_manipulators_subset.append(ballot)
         ballots_manipulators = np.zeros((n_m, n_c), dtype=int)
-        ballots_manipulators[:, optimal_subset] = ballots_manipulators_subset
+        if n_m >= 1:  # Otherwise, `ballots_manipulators_subset` is empty hence numpy cannot cast the array.
+            ballots_manipulators[:, optimal_subset] = ballots_manipulators_subset
         ballots_manipulators[:, optimal_subset] += n_c - k
         if k < n_c:
             other_candidates_by_decreasing_score = [
