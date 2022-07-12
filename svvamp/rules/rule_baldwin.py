@@ -249,12 +249,12 @@ class RuleBaldwin(Rule):
         ***********************************
         *   Coalition Manipulation (CM)   *
         ***********************************
-        is_cm = nan
-        log_cm: cm_option = lazy, um_option = lazy, tm_option = exact
+        is_cm = False
+        log_cm: cm_option = fast, um_option = lazy, tm_option = exact
         candidates_cm =
-        [ 0.  0. nan]
+        [0. 0. 0.]
         necessary_coalition_size_cm =
-        [0. 1. 2.]
+        [0. 1. 3.]
         sufficient_coalition_size_cm =
         [0. 2. 3.]
 
