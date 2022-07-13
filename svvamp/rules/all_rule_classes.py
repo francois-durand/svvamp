@@ -9,6 +9,7 @@ from svvamp.rules.rule_coombs import RuleCoombs
 from svvamp.rules.rule_copeland import RuleCopeland
 from svvamp.rules.rule_irv_duels import RuleIRVDuels
 from svvamp.rules.rule_iterated_bucklin import RuleIteratedBucklin
+from svvamp.rules.rule_k_approval import RuleKApproval
 from svvamp.rules.rule_kemeny import RuleKemeny
 from svvamp.rules.rule_kim_roush import RuleKimRoush
 from svvamp.rules.rule_majority_judgment import RuleMajorityJudgment
@@ -18,6 +19,7 @@ from svvamp.rules.rule_plurality import RulePlurality
 from svvamp.rules.rule_range_voting import RuleRangeVoting
 from svvamp.rules.rule_ranked_pairs import RuleRankedPairs
 from svvamp.rules.rule_schulze import RuleSchulze
+from svvamp.rules.rule_slater import RuleSlater
 from svvamp.rules.rule_split_cycle import RuleSplitCycle
 from svvamp.rules.rule_star import RuleSTAR
 from svvamp.rules.rule_two_round import RuleTwoRound
@@ -39,12 +41,12 @@ ALL_RULE_CLASSES = [
     RuleBaldwin, RuleBlack, RuleBorda, RuleBucklin,
     RuleCondorcetSumDefeats, RuleCoombs, RuleCopeland,
     RuleIRVDuels, RuleIteratedBucklin,
-    RuleKemeny, RuleKimRoush,
+    RuleKApproval, RuleKemeny, RuleKimRoush,
     RuleMajorityJudgment, RuleMaximin,
     RuleNanson,
     RulePlurality,
     RuleRangeVoting, RuleRankedPairs,
-    RuleSchulze, RuleSplitCycle, RuleSTAR,
+    RuleSchulze, RuleSlater, RuleSplitCycle, RuleSTAR,
     RuleTwoRound,
     RuleVeto,
     RuleExhaustiveBallot, RuleIRV, RuleCondorcetAbsIRV, RuleCondorcetVtbIRV,
