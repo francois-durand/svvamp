@@ -332,7 +332,7 @@ class RuleRankedPairs(Rule):
                 dig.add_edge(c, d, weight=self.profile_.matrix_duels_rk[c, d])
         candidates_by_scores_best_to_worst = list(nx.topological_sort(dig))
         w = candidates_by_scores_best_to_worst[0]
-        scores = nx.to_numpy_matrix(dig)
+        scores = nx.convert_matrix.to_numpy_matrix(dig)
         return {'scores': scores, 'w': w, 'candidates_by_scores_best_to_worst': candidates_by_scores_best_to_worst}
 
     @cached_property
