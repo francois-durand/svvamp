@@ -25,7 +25,7 @@ import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
 from pathlib import Path
-import tikzplotlib
+# import tikzplotlib
 
 
 class ExperimentsCompiler:
@@ -498,30 +498,31 @@ class ExperimentsCompiler:
 
     def my_tikzplotlib_save(self, tikz_file, x_ticks_labels=None,
                             axis_width=r'\axisWidth', axis_height=r'\axisHeight'):
-        tikzplotlib.save(self.tikz_directory / (self.prefix_tikz_file + tikz_file),
-                         axis_width=axis_width, axis_height=axis_height)
-        with open(self.tikz_directory / (self.prefix_tikz_file + tikz_file), 'r') as f:
-            file_data = f.read()
-        # Set 'fill opacity' of the legend to 1
-        file_data = file_data.replace('fill opacity=0.8,', 'fill opacity=1,')
-        # Add yticks as they are in the matplotlib plot
-        file_data = file_data.replace(
-            'ytick style={',
-            'ytick={' + ', '.join([str(y) for y in plt.yticks()[0]]) + '},\n'
-            + 'ytick style={'
-        )
-        # Prevent from scaling down the plt.text
-        file_data = file_data.replace('scale=0.5,', 'scale=1.0,')
-        # Fix the x ticks in the tikz file
-        if x_ticks_labels is not None:
-            file_data = file_data.replace(
-                    'y grid style={',
-                    'xtick={' + ', '.join([str(i) for i in range(len(x_ticks_labels))]) + '},\n'
-                    + 'xticklabels = {' + ', '.join(self.replace_rule_names(x_ticks_labels)) + '},\n'
-                    + 'y grid style={'
-                )
-        with open(self.tikz_directory / (self.prefix_tikz_file + tikz_file), 'w') as f:
-            f.write(file_data)
+        # tikzplotlib.save(self.tikz_directory / (self.prefix_tikz_file + tikz_file),
+        #                  axis_width=axis_width, axis_height=axis_height)
+        # with open(self.tikz_directory / (self.prefix_tikz_file + tikz_file), 'r') as f:
+        #     file_data = f.read()
+        # # Set 'fill opacity' of the legend to 1
+        # file_data = file_data.replace('fill opacity=0.8,', 'fill opacity=1,')
+        # # Add yticks as they are in the matplotlib plot
+        # file_data = file_data.replace(
+        #     'ytick style={',
+        #     'ytick={' + ', '.join([str(y) for y in plt.yticks()[0]]) + '},\n'
+        #     + 'ytick style={'
+        # )
+        # # Prevent from scaling down the plt.text
+        # file_data = file_data.replace('scale=0.5,', 'scale=1.0,')
+        # # Fix the x ticks in the tikz file
+        # if x_ticks_labels is not None:
+        #     file_data = file_data.replace(
+        #             'y grid style={',
+        #             'xtick={' + ', '.join([str(i) for i in range(len(x_ticks_labels))]) + '},\n'
+        #             + 'xticklabels = {' + ', '.join(self.replace_rule_names(x_ticks_labels)) + '},\n'
+        #             + 'y grid style={'
+        #         )
+        # with open(self.tikz_directory / (self.prefix_tikz_file + tikz_file), 'w') as f:
+        #     f.write(file_data)
+        pass
 
     def replace_rule_names(self, x_ticks_labels):
         return [self.d_abbr_new[abbr] if abbr in self.d_abbr_new.keys() else abbr
