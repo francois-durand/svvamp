@@ -322,7 +322,7 @@ class RuleTwoRound(Rule):
         """2d array of integers. ``ballots[v, r]`` is the candidate for which voter ``v`` votes at round ``r``,
         where ``r`` = 0 (first round) or ``r`` = 1 (second round).
         """
-        ballots = np.zeros((self.profile_.n_v, 2), dtype=np.int)
+        ballots = np.zeros((self.profile_.n_v, 2), dtype=int)
         ballots[:, 0] = self.profile_.preferences_rk[:, 0]
         c, d = self.selected_one_, self.selected_two_
         ballots[self.profile_.preferences_borda_rk[:, c] > self.profile_.preferences_borda_rk[:, d], 1] = c

@@ -357,7 +357,7 @@ class RuleICRV(Rule):
                 candidates_by_scores_best_to_worst = np.concatenate((
                     candidates_alive[np.argsort(-scores_r[is_candidate_alive], kind='mergesort')],
                     worst_to_best[::-1]
-                )).astype(dtype=np.int)
+                )).astype(dtype=int)
                 return {'scores': scores, 'w': w,
                         'candidates_by_scores_best_to_worst': candidates_by_scores_best_to_worst}
 
@@ -463,7 +463,7 @@ class RuleICRV(Rule):
         else:
             # Put irv_.w_ first.
             losing_candidates = np.array(
-                [c for c in range(self.profile_.n_c) if c != self.w_ and c != self.irv_.w_]).astype(np.int)
+                [c for c in range(self.profile_.n_c) if c != self.w_ and c != self.irv_.w_]).astype(int)
             losing_candidates = losing_candidates[np.argsort(
                 - self.profile_.matrix_duels_ut[losing_candidates, self.w_], kind='mergesort')]
             losing_candidates = np.concatenate(([self.irv_.w_], losing_candidates))

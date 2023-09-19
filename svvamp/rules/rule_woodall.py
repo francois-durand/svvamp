@@ -332,7 +332,7 @@ class RuleWoodall(Rule):
         else:
             # Put irv_.w_ first.
             losing_candidates = np.array(
-                [c for c in range(self.profile_.n_c) if c != self.w_ and c != self.irv_.w_]).astype(np.int)
+                [c for c in range(self.profile_.n_c) if c != self.w_ and c != self.irv_.w_]).astype(int)
             losing_candidates = losing_candidates[np.argsort(
                 - self.profile_.matrix_duels_ut[losing_candidates, self.w_], kind='mergesort')]
             losing_candidates = np.concatenate(([self.irv_.w_], losing_candidates))

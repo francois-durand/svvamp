@@ -437,7 +437,7 @@ class RuleExhaustiveBallot(Rule):
 
     def _count_ballots_aux_(self, compute_v_might_be_pivotal):
         self.mylog("Count ballots", 1)
-        ballots = np.zeros((self.profile_.n_v, self.profile_.n_c - 1), dtype=np.int)
+        ballots = np.zeros((self.profile_.n_v, self.profile_.n_c - 1), dtype=int)
         scores = np.zeros((self.profile_.n_c - 1, self.profile_.n_c))
         margins = np.zeros((self.profile_.n_c - 1, self.profile_.n_c))
         v_might_be_pivotal = None
