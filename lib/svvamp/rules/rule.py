@@ -1346,7 +1346,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         _ = self._im_is_initialized_general_
         if not self._im_was_computed_with_voters:
             self._compute_im_(mode='im_with_voters_')
-        return self._voters_im.astype(np.float)
+        return self._voters_im.astype(float)
 
     @cached_property
     def candidates_im_(self):
@@ -1357,7 +1357,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         _ = self._im_is_initialized_general_
         if not self._im_was_computed_with_candidates:
             self._compute_im_(mode='im_with_candidates_')
-        return self._candidates_im.astype(np.float)
+        return self._candidates_im.astype(float)
 
     @cached_property
     def v_im_for_c_(self):
@@ -1368,7 +1368,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         _ = self._im_is_initialized_general_
         if not self._im_was_computed_full:
             self._compute_im_(mode='v_im_for_c_')
-        return self._v_im_for_c.astype(np.float)
+        return self._v_im_for_c.astype(float)
 
     def is_im_v_(self, v):
         """Individual manipulation, focus on one voter.
@@ -1404,7 +1404,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         _ = self._im_is_initialized_general_
         if np.any(np.isneginf(self._v_im_for_c[v, :])):
             self._compute_im_v_(v, c_is_wanted=np.ones(self.profile_.n_c, dtype=np.bool), stop_if_true=False)
-        return pseudo_bool(self._voters_im[v]), self._v_im_for_c[v, :].astype(np.float)
+        return pseudo_bool(self._voters_im[v]), self._v_im_for_c[v, :].astype(float)
 
     @cached_property
     def _im_is_initialized_general_(self):
@@ -1801,7 +1801,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         _ = self._tm_is_initialized_general_
         if not self._tm_was_computed_with_candidates:
             self._compute_tm_(with_candidates=True)
-        return self._candidates_tm.astype(np.float)
+        return self._candidates_tm.astype(float)
 
     @cached_property
     def _tm_is_initialized_general_(self):
@@ -2142,7 +2142,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         _ = self._um_is_initialized_general_
         if not self._um_was_computed_with_candidates:
             self._compute_um_(with_candidates=True)
-        return self._candidates_um.astype(np.float)
+        return self._candidates_um.astype(float)
 
     @cached_property
     def _um_is_initialized_general_(self):
@@ -2522,8 +2522,8 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         _ = self._icm_is_initialized_general_
         if equal_false(self._bounds_optimized_icm[c]):
             self._compute_icm_c_(c, optimize_bounds=True)
-        return (pseudo_bool(self._candidates_icm[c]), np.float(self._necessary_coalition_size_icm[c]),
-                np.float(self._sufficient_coalition_size_icm[c]))
+        return (pseudo_bool(self._candidates_icm[c]), float(self._necessary_coalition_size_icm[c]),
+                float(self._sufficient_coalition_size_icm[c]))
 
     @cached_property
     def candidates_icm_(self):
@@ -2534,15 +2534,15 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         _ = self._icm_is_initialized_general_
         if not self._icm_was_computed_with_candidates:
             self._compute_icm_(with_candidates=True, optimize_bounds=False)
-        return self._candidates_icm.astype(np.float)
+        return self._candidates_icm.astype(float)
 
     @cached_property
     def _coalition_sizes_icm_(self):
         _ = self._icm_is_initialized_general_
         if not self._icm_was_computed_full:
             self._compute_icm_(with_candidates=True, optimize_bounds=True)
-        return {'necessary_coalition_size_icm': self._necessary_coalition_size_icm.astype(np.float),
-                'sufficient_coalition_size_icm': self._sufficient_coalition_size_icm.astype(np.float)}
+        return {'necessary_coalition_size_icm': self._necessary_coalition_size_icm.astype(float),
+                'sufficient_coalition_size_icm': self._sufficient_coalition_size_icm.astype(float)}
 
     @cached_property
     def necessary_coalition_size_icm_(self):
@@ -2908,8 +2908,8 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         _ = self._cm_is_initialized_general_
         if equal_false(self._bounds_optimized_cm[c]):
             self._compute_cm_c_(c, optimize_bounds=True)
-        return (pseudo_bool(self._candidates_cm[c]), np.float(self._necessary_coalition_size_cm[c]),
-                np.float(self._sufficient_coalition_size_cm[c]))
+        return (pseudo_bool(self._candidates_cm[c]), float(self._necessary_coalition_size_cm[c]),
+                float(self._sufficient_coalition_size_cm[c]))
 
     @cached_property
     def candidates_cm_(self):
@@ -2920,15 +2920,15 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         _ = self._cm_is_initialized_general_
         if not self._cm_was_computed_with_candidates:
             self._compute_cm_(with_candidates=True, optimize_bounds=False)
-        return self._candidates_cm.astype(np.float)
+        return self._candidates_cm.astype(float)
 
     @cached_property
     def _coalition_sizes_cm_(self):
         _ = self._cm_is_initialized_general_
         if not self._cm_was_computed_full:
             self._compute_cm_(with_candidates=True, optimize_bounds=True)
-        return {'necessary_coalition_size_cm': self._necessary_coalition_size_cm.astype(np.float),
-                'sufficient_coalition_size_cm': self._sufficient_coalition_size_cm.astype(np.float)}
+        return {'necessary_coalition_size_cm': self._necessary_coalition_size_cm.astype(float),
+                'sufficient_coalition_size_cm': self._sufficient_coalition_size_cm.astype(float)}
 
     @cached_property
     def necessary_coalition_size_cm_(self):

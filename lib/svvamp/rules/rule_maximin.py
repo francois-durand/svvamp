@@ -522,7 +522,7 @@ class RuleMaximin(Rule):
             self.mylogv("IM: c =", c, 3)
             nb_wanted_undecided -= 1
 
-            matrix_duels_r = np.copy(self.profile_.matrix_duels_ut).astype(np.float)
+            matrix_duels_r = np.copy(self.profile_.matrix_duels_ut).astype(float)
             for x in range(self.profile_.n_c):
                 matrix_duels_r[x, x] = np.inf
                 for y in range(x + 1, self.profile_.n_c):

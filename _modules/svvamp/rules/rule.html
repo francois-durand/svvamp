@@ -1451,7 +1451,7 @@
         <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_im_is_initialized_general_</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_im_was_computed_with_voters</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_compute_im_</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;im_with_voters_&#39;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_voters_im</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_voters_im</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">candidates_im_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1462,7 +1462,7 @@
         <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_im_is_initialized_general_</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_im_was_computed_with_candidates</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_compute_im_</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;im_with_candidates_&#39;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_im</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_im</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">v_im_for_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1473,7 +1473,7 @@
         <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_im_is_initialized_general_</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_im_was_computed_full</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_compute_im_</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;v_im_for_c_&#39;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_v_im_for_c</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_v_im_for_c</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Rule.is_im_v_">
 <a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule.is_im_v_">[docs]</a>
@@ -1514,7 +1514,7 @@
         <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_im_is_initialized_general_</span>
         <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isneginf</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_v_im_for_c</span><span class="p">[</span><span class="n">v</span><span class="p">,</span> <span class="p">:])):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_compute_im_v_</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">c_is_wanted</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">bool</span><span class="p">),</span> <span class="n">stop_if_true</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">pseudo_bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_voters_im</span><span class="p">[</span><span class="n">v</span><span class="p">]),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_v_im_for_c</span><span class="p">[</span><span class="n">v</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">pseudo_bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_voters_im</span><span class="p">[</span><span class="n">v</span><span class="p">]),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_v_im_for_c</span><span class="p">[</span><span class="n">v</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span></div>
 
 
     <span class="nd">@cached_property</span>
@@ -1915,7 +1915,7 @@
         <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tm_is_initialized_general_</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tm_was_computed_with_candidates</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_compute_tm_</span><span class="p">(</span><span class="n">with_candidates</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_tm</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_tm</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">_tm_is_initialized_general_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -2259,7 +2259,7 @@
         <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_um_is_initialized_general_</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_um_was_computed_with_candidates</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_compute_um_</span><span class="p">(</span><span class="n">with_candidates</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_um</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_um</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">_um_is_initialized_general_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -2644,8 +2644,8 @@
         <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_icm_is_initialized_general_</span>
         <span class="k">if</span> <span class="n">equal_false</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bounds_optimized_icm</span><span class="p">[</span><span class="n">c</span><span class="p">]):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_compute_icm_c_</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">pseudo_bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_candidates_icm</span><span class="p">[</span><span class="n">c</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_icm</span><span class="p">[</span><span class="n">c</span><span class="p">]),</span>
-                <span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_icm</span><span class="p">[</span><span class="n">c</span><span class="p">]))</span></div>
+        <span class="k">return</span> <span class="p">(</span><span class="n">pseudo_bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_candidates_icm</span><span class="p">[</span><span class="n">c</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_icm</span><span class="p">[</span><span class="n">c</span><span class="p">]),</span>
+                <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_icm</span><span class="p">[</span><span class="n">c</span><span class="p">]))</span></div>
 
 
     <span class="nd">@cached_property</span>
@@ -2657,15 +2657,15 @@
         <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_icm_is_initialized_general_</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_icm_was_computed_with_candidates</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_compute_icm_</span><span class="p">(</span><span class="n">with_candidates</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_icm</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_icm</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">_coalition_sizes_icm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_icm_is_initialized_general_</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_icm_was_computed_full</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_compute_icm_</span><span class="p">(</span><span class="n">with_candidates</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;necessary_coalition_size_icm&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_icm</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">),</span>
-                <span class="s1">&#39;sufficient_coalition_size_icm&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_icm</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)}</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;necessary_coalition_size_icm&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_icm</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">),</span>
+                <span class="s1">&#39;sufficient_coalition_size_icm&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_icm</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)}</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">necessary_coalition_size_icm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -3036,8 +3036,8 @@
         <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cm_is_initialized_general_</span>
         <span class="k">if</span> <span class="n">equal_false</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bounds_optimized_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_compute_cm_c_</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">pseudo_bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_candidates_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]),</span>
-                <span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]))</span></div>
+        <span class="k">return</span> <span class="p">(</span><span class="n">pseudo_bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_candidates_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]),</span>
+                <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]))</span></div>
 
 
     <span class="nd">@cached_property</span>
@@ -3049,15 +3049,15 @@
         <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cm_is_initialized_general_</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cm_was_computed_with_candidates</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_compute_cm_</span><span class="p">(</span><span class="n">with_candidates</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_cm</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_cm</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">_coalition_sizes_cm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cm_is_initialized_general_</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cm_was_computed_full</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_compute_cm_</span><span class="p">(</span><span class="n">with_candidates</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;necessary_coalition_size_cm&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">),</span>
-                <span class="s1">&#39;sufficient_coalition_size_cm&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)}</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;necessary_coalition_size_cm&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">),</span>
+                <span class="s1">&#39;sufficient_coalition_size_cm&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)}</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">necessary_coalition_size_cm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
