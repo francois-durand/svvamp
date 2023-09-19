@@ -229,7 +229,7 @@ class RuleIRVAverage(Rule):
         score_temp = np.copy(self.profile_.plurality_scores_rk).astype(float)
         score_average = self.profile_.n_v / self.profile_.n_c
         candidates = np.array(range(self.profile_.n_c))
-        is_alive = np.ones(self.profile_.n_c, dtype=np.bool)
+        is_alive = np.ones(self.profile_.n_c, dtype=bool)
         while True:  # This is a round
             scores.append(np.copy(score_temp))
             least_score = np.min(score_temp)

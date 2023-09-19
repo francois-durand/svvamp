@@ -337,7 +337,7 @@ class RuleICRV(Rule):
     def _count_ballots_(self):
         self.mylog("Count ballots", 1)
         scores = []
-        is_candidate_alive = np.ones(self.profile_.n_c, dtype=np.bool)
+        is_candidate_alive = np.ones(self.profile_.n_c, dtype=bool)
         worst_to_best = []
         r = 0
         while True:
