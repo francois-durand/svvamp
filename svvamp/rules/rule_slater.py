@@ -365,3 +365,22 @@ class RuleSlater(Rule):
     @cached_property
     def meets_condorcet_c_rk_ctb(self):
         return True
+
+    # %% Coalition Manipulation (CM)
+
+    def _cm_main_work_c_fast_(self, c, optimize_bounds):
+        """Do the main work in CM loop for candidate ``c``.
+
+        * Try to improve bounds ``_sufficient_coalition_size_cm[c]`` and ``_necessary_coalition_size_cm[c]``.
+        """
+        return False
+
+    def _cm_main_work_c_(self, c, optimize_bounds):
+        is_quick_escape_fast = self._cm_main_work_c_fast_(c, optimize_bounds)
+        if not self.cm_option == "exact":
+            # With 'fast' option, we stop here anyway.
+            return is_quick_escape_fast
+        # From this point, we have necessarily the 'exact' option (which is, in fact, only an exhaustive exploration
+        # with = ``n_m`` manipulators).
+        is_quick_escape_exact = self._cm_main_work_c_exact_(c, optimize_bounds)
+        return is_quick_escape_fast or is_quick_escape_exact
