@@ -190,7 +190,7 @@ class StudyProfileCriteria():
                 boolean_criteria:
                     exists_condorcet_winner_rk
                 numerical_criteria:
-                    ('mean_utility_min', <function amin at ...>, 'mean_u_min_min')
+                    ('mean_utility_min', <function ...min at ...>, 'mean_u_min_min')
                 special_candidates_criteria:
                     condorcet_winner_rk
                 array_criteria:
