@@ -302,7 +302,7 @@ class StudyProfileCriteria():
             StudyProfileCriteria with:
                 boolean_criteria: None
                 numerical_criteria:
-                    ('mean_utility_min', <function amax at ...>, 'mean_u_min_max')
+                    ('mean_utility_min', <function ...max at ...>, 'mean_u_min_max')
                 special_candidates_criteria: None
                 array_criteria: None
                 matrix_criteria: None
