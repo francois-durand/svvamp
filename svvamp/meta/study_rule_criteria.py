@@ -151,8 +151,8 @@ class StudyRuleCriteria:
                     w_is_condorcet_admissible_
                     w_is_weak_condorcet_winner_
                 utility_criteria:
-                    ('mean_utility_w_', <function amax at ...>, 'mean_u_max')
-                    ('mean_utility_w_', <function amin at ...>, 'mean_u_min')
+                    ('mean_utility_w_', <function ...max at ...>, 'mean_u_max')
+                    ('mean_utility_w_', <function ...min at ...>, 'mean_u_min')
                 numerical_criteria:
                     nb_candidates_cm_
                     worst_relative_welfare_with_cm_
@@ -218,7 +218,7 @@ class StudyRuleCriteria:
                 result_criteria:
                     w_is_condorcet_admissible_
                 utility_criteria:
-                    ('mean_utility_w_', <function amin at ...>, 'mean_u_min')
+                    ('mean_utility_w_', <function ...min at ...>, 'mean_u_min')
                 numerical_criteria:
                     nb_candidates_cm_
         """
