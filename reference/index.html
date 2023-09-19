@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Reference &mdash; SVVAMP 0.9.1 documentation</title>
@@ -11,10 +11,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=9dc39874"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -28,14 +29,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> SVVAMP
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            SVVAMP
           </a>
               <div class="version">
                 0.9.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -55,7 +60,9 @@
 <li class="toctree-l3"><a class="reference internal" href="preferences/generator_profile_euclidean_box.html">GeneratorProfileEuclideanBox</a></li>
 <li class="toctree-l3"><a class="reference internal" href="preferences/generator_profile_gaussian_well.html">GeneratorProfileGaussianWell</a></li>
 <li class="toctree-l3"><a class="reference internal" href="preferences/generator_profile_ianc.html">GeneratorProfileIanc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/generator_profile_ic.html">GeneratorProfileIc</a></li>
 <li class="toctree-l3"><a class="reference internal" href="preferences/generator_profile_ladder.html">GeneratorProfileLadder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/generator_profile_perturbed_culture.html">GeneratorProfilePerturbedCulture</a></li>
 <li class="toctree-l3"><a class="reference internal" href="preferences/generator_profile_spheroid.html">GeneratorProfileSpheroid</a></li>
 <li class="toctree-l3"><a class="reference internal" href="preferences/generator_profile_vmf_hypercircle.html">GeneratorProfileVMFHypercircle</a></li>
 <li class="toctree-l3"><a class="reference internal" href="preferences/generator_profile_vmf_hypersphere.html">GeneratorProfileVMFHypersphere</a></li>
@@ -79,6 +86,7 @@
 <li class="toctree-l3"><a class="reference internal" href="rules/rule_irv_average.html">RuleIRVAverage</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rules/rule_irv_duels.html">RuleIRVDuels</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rules/rule_iterated_bucklin.html">RuleIteratedBucklin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_k_approval.html">RuleKApproval</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rules/rule_kemeny.html">RuleKemeny</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rules/rule_kim_roush.html">RuleKimRoush</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rules/rule_majority_judgment.html">RuleMajorityJudgment</a></li>
@@ -88,6 +96,7 @@
 <li class="toctree-l3"><a class="reference internal" href="rules/rule_range_voting.html">RuleRangeVoting</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rules/rule_ranked_pairs.html">RuleRankedPairs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rules/rule_schulze.html">RuleSchulze</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_slater.html">RuleSlater</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rules/rule_smith_irv.html">RuleSmithIRV</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rules/rule_split_cycle.html">RuleSplitCycle</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rules/rule_star.html">RuleSTAR</a></li>
@@ -117,8 +126,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Reference</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Reference</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/reference/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -128,86 +137,598 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="reference">
-<h1>Reference<a class="headerlink" href="#reference" title="Permalink to this headline"></a></h1>
+  <section id="reference">
+<h1>Reference<a class="headerlink" href="#reference" title="Link to this heading"></a></h1>
 <section id="preferences">
-<h2>Preferences<a class="headerlink" href="#preferences" title="Permalink to this headline"></a></h2>
+<h2>Preferences<a class="headerlink" href="#preferences" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="preferences/profile.html">Profile</a></li>
-<li class="toctree-l1"><a class="reference internal" href="preferences/profile_from_file.html">ProfileFromFile</a></li>
-<li class="toctree-l1"><a class="reference internal" href="preferences/generator_profile_cubic_uniform.html">GeneratorProfileCubicUniform</a></li>
-<li class="toctree-l1"><a class="reference internal" href="preferences/generator_profile_euclidean_box.html">GeneratorProfileEuclideanBox</a></li>
-<li class="toctree-l1"><a class="reference internal" href="preferences/generator_profile_gaussian_well.html">GeneratorProfileGaussianWell</a></li>
-<li class="toctree-l1"><a class="reference internal" href="preferences/generator_profile_ianc.html">GeneratorProfileIanc</a></li>
-<li class="toctree-l1"><a class="reference internal" href="preferences/generator_profile_ladder.html">GeneratorProfileLadder</a></li>
-<li class="toctree-l1"><a class="reference internal" href="preferences/generator_profile_spheroid.html">GeneratorProfileSpheroid</a></li>
-<li class="toctree-l1"><a class="reference internal" href="preferences/generator_profile_vmf_hypercircle.html">GeneratorProfileVMFHypercircle</a></li>
-<li class="toctree-l1"><a class="reference internal" href="preferences/generator_profile_vmf_hypersphere.html">GeneratorProfileVMFHypersphere</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preferences/profile.html">Profile</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="preferences/profile.html#svvamp.Profile"><code class="docutils literal notranslate"><span class="pre">Profile</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.borda_score_c_rk"><code class="docutils literal notranslate"><span class="pre">Profile.borda_score_c_rk</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.borda_score_c_ut"><code class="docutils literal notranslate"><span class="pre">Profile.borda_score_c_ut</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.c_might_be_there_when_cw_is_eliminated_irv_style"><code class="docutils literal notranslate"><span class="pre">Profile.c_might_be_there_when_cw_is_eliminated_irv_style</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.candidates_by_decreasing_borda_score_rk"><code class="docutils literal notranslate"><span class="pre">Profile.candidates_by_decreasing_borda_score_rk</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.candidates_by_decreasing_borda_score_ut"><code class="docutils literal notranslate"><span class="pre">Profile.candidates_by_decreasing_borda_score_ut</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.condorcet_admissible_candidates"><code class="docutils literal notranslate"><span class="pre">Profile.condorcet_admissible_candidates</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.condorcet_winner_rk"><code class="docutils literal notranslate"><span class="pre">Profile.condorcet_winner_rk</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.condorcet_winner_rk_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.condorcet_winner_rk_ctb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.condorcet_winner_ut_abs"><code class="docutils literal notranslate"><span class="pre">Profile.condorcet_winner_ut_abs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.condorcet_winner_ut_abs_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.condorcet_winner_ut_abs_ctb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.condorcet_winner_ut_rel"><code class="docutils literal notranslate"><span class="pre">Profile.condorcet_winner_ut_rel</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.condorcet_winner_ut_rel_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.condorcet_winner_ut_rel_ctb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.decreasing_borda_scores_rk"><code class="docutils literal notranslate"><span class="pre">Profile.decreasing_borda_scores_rk</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.decreasing_borda_scores_ut"><code class="docutils literal notranslate"><span class="pre">Profile.decreasing_borda_scores_ut</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.demo"><code class="docutils literal notranslate"><span class="pre">Profile.demo()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.exists_condorcet_admissible"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_admissible</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.exists_condorcet_order_rk"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_order_rk</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.exists_condorcet_order_rk_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_order_rk_ctb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.exists_condorcet_order_ut_abs"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_order_ut_abs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.exists_condorcet_order_ut_abs_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_order_ut_abs_ctb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.exists_condorcet_order_ut_rel"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_order_ut_rel</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.exists_condorcet_order_ut_rel_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_order_ut_rel_ctb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.exists_condorcet_winner_rk"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_winner_rk</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.exists_condorcet_winner_rk_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_winner_rk_ctb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.exists_condorcet_winner_ut_abs"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_winner_ut_abs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.exists_condorcet_winner_ut_abs_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_winner_ut_abs_ctb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.exists_condorcet_winner_ut_rel"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_winner_ut_rel</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.exists_condorcet_winner_ut_rel_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_winner_ut_rel_ctb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.exists_irv_immune_candidate"><code class="docutils literal notranslate"><span class="pre">Profile.exists_irv_immune_candidate</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.exists_majority_favorite_rk"><code class="docutils literal notranslate"><span class="pre">Profile.exists_majority_favorite_rk</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.exists_majority_favorite_rk_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.exists_majority_favorite_rk_ctb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.exists_majority_favorite_ut"><code class="docutils literal notranslate"><span class="pre">Profile.exists_majority_favorite_ut</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.exists_majority_favorite_ut_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.exists_majority_favorite_ut_ctb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.exists_resistant_condorcet_winner"><code class="docutils literal notranslate"><span class="pre">Profile.exists_resistant_condorcet_winner</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.exists_weak_condorcet_winner"><code class="docutils literal notranslate"><span class="pre">Profile.exists_weak_condorcet_winner</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.labels_candidates"><code class="docutils literal notranslate"><span class="pre">Profile.labels_candidates</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.majority_favorite_rk"><code class="docutils literal notranslate"><span class="pre">Profile.majority_favorite_rk</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.majority_favorite_rk_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.majority_favorite_rk_ctb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.majority_favorite_ut"><code class="docutils literal notranslate"><span class="pre">Profile.majority_favorite_ut</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.majority_favorite_ut_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.majority_favorite_ut_ctb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.matrix_duels_rk"><code class="docutils literal notranslate"><span class="pre">Profile.matrix_duels_rk</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.matrix_duels_ut"><code class="docutils literal notranslate"><span class="pre">Profile.matrix_duels_ut</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.matrix_victories_rk"><code class="docutils literal notranslate"><span class="pre">Profile.matrix_victories_rk</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.matrix_victories_rk_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.matrix_victories_rk_ctb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.matrix_victories_ut_abs"><code class="docutils literal notranslate"><span class="pre">Profile.matrix_victories_ut_abs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.matrix_victories_ut_abs_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.matrix_victories_ut_abs_ctb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.matrix_victories_ut_rel"><code class="docutils literal notranslate"><span class="pre">Profile.matrix_victories_ut_rel</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.matrix_victories_ut_rel_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.matrix_victories_ut_rel_ctb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.mean_utility_c"><code class="docutils literal notranslate"><span class="pre">Profile.mean_utility_c</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.mean_utility_max"><code class="docutils literal notranslate"><span class="pre">Profile.mean_utility_max</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.mean_utility_mean"><code class="docutils literal notranslate"><span class="pre">Profile.mean_utility_mean</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.mean_utility_min"><code class="docutils literal notranslate"><span class="pre">Profile.mean_utility_min</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.mean_utility_std"><code class="docutils literal notranslate"><span class="pre">Profile.mean_utility_std</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.n_c"><code class="docutils literal notranslate"><span class="pre">Profile.n_c</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.n_v"><code class="docutils literal notranslate"><span class="pre">Profile.n_v</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.nb_condorcet_admissible"><code class="docutils literal notranslate"><span class="pre">Profile.nb_condorcet_admissible</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.nb_weak_condorcet_winners"><code class="docutils literal notranslate"><span class="pre">Profile.nb_weak_condorcet_winners</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.necessary_coalition_size_to_break_irv_immunity"><code class="docutils literal notranslate"><span class="pre">Profile.necessary_coalition_size_to_break_irv_immunity</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.not_exists_condorcet_admissible"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_admissible</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.not_exists_condorcet_order_rk"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_order_rk</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.not_exists_condorcet_order_rk_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_order_rk_ctb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.not_exists_condorcet_order_ut_abs"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_order_ut_abs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.not_exists_condorcet_order_ut_abs_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_order_ut_abs_ctb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.not_exists_condorcet_order_ut_rel"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_order_ut_rel</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.not_exists_condorcet_order_ut_rel_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_order_ut_rel_ctb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.not_exists_condorcet_winner_rk"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_winner_rk</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.not_exists_condorcet_winner_rk_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_winner_rk_ctb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.not_exists_condorcet_winner_ut_abs"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_winner_ut_abs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.not_exists_condorcet_winner_ut_abs_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_winner_ut_abs_ctb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.not_exists_condorcet_winner_ut_rel"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_winner_ut_rel</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.not_exists_condorcet_winner_ut_rel_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_winner_ut_rel_ctb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.not_exists_majority_favorite_rk"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_majority_favorite_rk</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.not_exists_majority_favorite_rk_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_majority_favorite_rk_ctb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.not_exists_majority_favorite_ut"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_majority_favorite_ut</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.not_exists_majority_favorite_ut_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_majority_favorite_ut_ctb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.not_exists_resistant_condorcet_winner"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_resistant_condorcet_winner</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.not_exists_weak_condorcet_winner"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_weak_condorcet_winner</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.plot3"><code class="docutils literal notranslate"><span class="pre">Profile.plot3()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.plot4"><code class="docutils literal notranslate"><span class="pre">Profile.plot4()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.plurality_scores_rk"><code class="docutils literal notranslate"><span class="pre">Profile.plurality_scores_rk</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.plurality_scores_ut"><code class="docutils literal notranslate"><span class="pre">Profile.plurality_scores_ut</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.preferences_borda_rk"><code class="docutils literal notranslate"><span class="pre">Profile.preferences_borda_rk</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.preferences_borda_ut"><code class="docutils literal notranslate"><span class="pre">Profile.preferences_borda_ut</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.preferences_rk"><code class="docutils literal notranslate"><span class="pre">Profile.preferences_rk</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.preferences_ut"><code class="docutils literal notranslate"><span class="pre">Profile.preferences_ut</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.relative_social_welfare_c"><code class="docutils literal notranslate"><span class="pre">Profile.relative_social_welfare_c</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.resistant_condorcet_winner"><code class="docutils literal notranslate"><span class="pre">Profile.resistant_condorcet_winner</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.smith_set_rk"><code class="docutils literal notranslate"><span class="pre">Profile.smith_set_rk</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.smith_set_rk_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.smith_set_rk_ctb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.smith_set_ut_abs"><code class="docutils literal notranslate"><span class="pre">Profile.smith_set_ut_abs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.smith_set_ut_abs_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.smith_set_ut_abs_ctb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.smith_set_ut_rel"><code class="docutils literal notranslate"><span class="pre">Profile.smith_set_ut_rel</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.smith_set_ut_rel_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.smith_set_ut_rel_ctb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.threshold_c_prevents_w_condorcet_ut_abs"><code class="docutils literal notranslate"><span class="pre">Profile.threshold_c_prevents_w_condorcet_ut_abs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.to_doctest_string"><code class="docutils literal notranslate"><span class="pre">Profile.to_doctest_string()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.total_utility_c"><code class="docutils literal notranslate"><span class="pre">Profile.total_utility_c</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.total_utility_max"><code class="docutils literal notranslate"><span class="pre">Profile.total_utility_max</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.total_utility_mean"><code class="docutils literal notranslate"><span class="pre">Profile.total_utility_mean</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.total_utility_min"><code class="docutils literal notranslate"><span class="pre">Profile.total_utility_min</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.total_utility_std"><code class="docutils literal notranslate"><span class="pre">Profile.total_utility_std</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.v_has_same_ordinal_preferences_as_previous_voter"><code class="docutils literal notranslate"><span class="pre">Profile.v_has_same_ordinal_preferences_as_previous_voter</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile.html#svvamp.Profile.weak_condorcet_winners"><code class="docutils literal notranslate"><span class="pre">Profile.weak_condorcet_winners</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="preferences/profile_from_file.html">ProfileFromFile</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="preferences/profile_from_file.html#svvamp.ProfileFromFile"><code class="docutils literal notranslate"><span class="pre">ProfileFromFile</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="preferences/generator_profile_cubic_uniform.html">GeneratorProfileCubicUniform</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="preferences/generator_profile_cubic_uniform.html#svvamp.GeneratorProfileCubicUniform"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileCubicUniform</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="preferences/generator_profile_euclidean_box.html">GeneratorProfileEuclideanBox</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="preferences/generator_profile_euclidean_box.html#svvamp.GeneratorProfileEuclideanBox"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileEuclideanBox</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="preferences/generator_profile_gaussian_well.html">GeneratorProfileGaussianWell</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="preferences/generator_profile_gaussian_well.html#svvamp.GeneratorProfileGaussianWell"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileGaussianWell</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="preferences/generator_profile_ianc.html">GeneratorProfileIanc</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="preferences/generator_profile_ianc.html#svvamp.GeneratorProfileIanc"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileIanc</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="preferences/generator_profile_ic.html">GeneratorProfileIc</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="preferences/generator_profile_ic.html#svvamp.GeneratorProfileIc"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileIc</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="preferences/generator_profile_ladder.html">GeneratorProfileLadder</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="preferences/generator_profile_ladder.html#svvamp.GeneratorProfileLadder"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileLadder</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="preferences/generator_profile_perturbed_culture.html">GeneratorProfilePerturbedCulture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="preferences/generator_profile_perturbed_culture.html#svvamp.GeneratorProfilePerturbedCulture"><code class="docutils literal notranslate"><span class="pre">GeneratorProfilePerturbedCulture</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="preferences/generator_profile_spheroid.html">GeneratorProfileSpheroid</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="preferences/generator_profile_spheroid.html#svvamp.GeneratorProfileSpheroid"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileSpheroid</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="preferences/generator_profile_vmf_hypercircle.html">GeneratorProfileVMFHypercircle</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="preferences/generator_profile_vmf_hypercircle.html#svvamp.GeneratorProfileVMFHypercircle"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileVMFHypercircle</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="preferences/generator_profile_vmf_hypersphere.html">GeneratorProfileVMFHypersphere</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="preferences/generator_profile_vmf_hypersphere.html#svvamp.GeneratorProfileVMFHypersphere"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileVMFHypersphere</span></code></a></li>
+</ul>
+</li>
 </ul>
 </div>
 </section>
 <section id="voting-rules">
-<h2>Voting rules<a class="headerlink" href="#voting-rules" title="Permalink to this headline"></a></h2>
+<h2>Voting rules<a class="headerlink" href="#voting-rules" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="rules/rule.html">Rule</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rules/rule_approval.html">RuleApproval</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rules/rule_baldwin.html">RuleBaldwin</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rules/rule_black.html">RuleBlack</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rules/rule_borda.html">RuleBorda</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rules/rule_bucklin.html">RuleBucklin</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rules/rule_condorcet_abs_irv.html">RuleCondorcetAbsIRV</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rules/rule_condorcet_sum_defeats.html">RuleCondorcetSumDefeats</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rules/rule_condorcet_vtb_irv.html">RuleCondorcetVtbIRV</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rules/rule_coombs.html">RuleCoombs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rules/rule_copeland.html">RuleCopeland</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rules/rule_exhaustive_ballot.html">RuleExhaustiveBallot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rules/rule_icrv.html">RuleICRV</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rules/rule_irv.html">RuleIRV</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rules/rule_irv_average.html">RuleIRVAverage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rules/rule_irv_duels.html">RuleIRVDuels</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rules/rule_iterated_bucklin.html">RuleIteratedBucklin</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rules/rule_kemeny.html">RuleKemeny</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rules/rule_kim_roush.html">RuleKimRoush</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rules/rule_majority_judgment.html">RuleMajorityJudgment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rules/rule_maximin.html">RuleMaximin</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rules/rule_nanson.html">RuleNanson</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rules/rule_plurality.html">RulePlurality</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rules/rule_range_voting.html">RuleRangeVoting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rules/rule_ranked_pairs.html">RuleRankedPairs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rules/rule_schulze.html">RuleSchulze</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rules/rule_smith_irv.html">RuleSmithIRV</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rules/rule_split_cycle.html">RuleSplitCycle</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rules/rule_star.html">RuleSTAR</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rules/rule_tideman.html">RuleTideman</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rules/rule_two_round.html">RuleTwoRound</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rules/rule_veto.html">RuleVeto</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rules/rule_woodall.html">RuleWoodall</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rules/rule.html">Rule</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rules/rule.html#svvamp.Rule"><code class="docutils literal notranslate"><span class="pre">Rule</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.ballots_"><code class="docutils literal notranslate"><span class="pre">Rule.ballots_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.c_has_supporters_"><code class="docutils literal notranslate"><span class="pre">Rule.c_has_supporters_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.candidates_by_scores_best_to_worst_"><code class="docutils literal notranslate"><span class="pre">Rule.candidates_by_scores_best_to_worst_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.candidates_cm_"><code class="docutils literal notranslate"><span class="pre">Rule.candidates_cm_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.candidates_icm_"><code class="docutils literal notranslate"><span class="pre">Rule.candidates_icm_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.candidates_im_"><code class="docutils literal notranslate"><span class="pre">Rule.candidates_im_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.candidates_tm_"><code class="docutils literal notranslate"><span class="pre">Rule.candidates_tm_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.candidates_um_"><code class="docutils literal notranslate"><span class="pre">Rule.candidates_um_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.check_option_allowed"><code class="docutils literal notranslate"><span class="pre">Rule.check_option_allowed()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.cm_option"><code class="docutils literal notranslate"><span class="pre">Rule.cm_option</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.cm_power_index_"><code class="docutils literal notranslate"><span class="pre">Rule.cm_power_index_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.demo_manipulation_"><code class="docutils literal notranslate"><span class="pre">Rule.demo_manipulation_()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.demo_profile_"><code class="docutils literal notranslate"><span class="pre">Rule.demo_profile_()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.demo_results_"><code class="docutils literal notranslate"><span class="pre">Rule.demo_results_()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.elects_condorcet_winner_rk_even_with_cm_"><code class="docutils literal notranslate"><span class="pre">Rule.elects_condorcet_winner_rk_even_with_cm_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.example_subset_iia_"><code class="docutils literal notranslate"><span class="pre">Rule.example_subset_iia_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.example_winner_iia_"><code class="docutils literal notranslate"><span class="pre">Rule.example_winner_iia_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.icm_option"><code class="docutils literal notranslate"><span class="pre">Rule.icm_option</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.iia_subset_maximum_size"><code class="docutils literal notranslate"><span class="pre">Rule.iia_subset_maximum_size</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.im_option"><code class="docutils literal notranslate"><span class="pre">Rule.im_option</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.is_cm_"><code class="docutils literal notranslate"><span class="pre">Rule.is_cm_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.is_cm_c_"><code class="docutils literal notranslate"><span class="pre">Rule.is_cm_c_()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.is_cm_c_with_bounds_"><code class="docutils literal notranslate"><span class="pre">Rule.is_cm_c_with_bounds_()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.is_icm_"><code class="docutils literal notranslate"><span class="pre">Rule.is_icm_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.is_icm_c_"><code class="docutils literal notranslate"><span class="pre">Rule.is_icm_c_()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.is_icm_c_with_bounds_"><code class="docutils literal notranslate"><span class="pre">Rule.is_icm_c_with_bounds_()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.is_iia_"><code class="docutils literal notranslate"><span class="pre">Rule.is_iia_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.is_im_"><code class="docutils literal notranslate"><span class="pre">Rule.is_im_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.is_im_c_"><code class="docutils literal notranslate"><span class="pre">Rule.is_im_c_()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.is_im_c_with_voters_"><code class="docutils literal notranslate"><span class="pre">Rule.is_im_c_with_voters_()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.is_im_v_"><code class="docutils literal notranslate"><span class="pre">Rule.is_im_v_()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.is_im_v_with_candidates_"><code class="docutils literal notranslate"><span class="pre">Rule.is_im_v_with_candidates_()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.is_not_iia_"><code class="docutils literal notranslate"><span class="pre">Rule.is_not_iia_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.is_tm_"><code class="docutils literal notranslate"><span class="pre">Rule.is_tm_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.is_tm_c_"><code class="docutils literal notranslate"><span class="pre">Rule.is_tm_c_()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.is_um_"><code class="docutils literal notranslate"><span class="pre">Rule.is_um_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.is_um_c_"><code class="docutils literal notranslate"><span class="pre">Rule.is_um_c_()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.log_"><code class="docutils literal notranslate"><span class="pre">Rule.log_()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.log_cm_"><code class="docutils literal notranslate"><span class="pre">Rule.log_cm_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.log_icm_"><code class="docutils literal notranslate"><span class="pre">Rule.log_icm_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.log_iia_"><code class="docutils literal notranslate"><span class="pre">Rule.log_iia_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.log_im_"><code class="docutils literal notranslate"><span class="pre">Rule.log_im_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.log_tm_"><code class="docutils literal notranslate"><span class="pre">Rule.log_tm_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.log_um_"><code class="docutils literal notranslate"><span class="pre">Rule.log_um_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.losing_candidates_"><code class="docutils literal notranslate"><span class="pre">Rule.losing_candidates_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.mean_utility_w_"><code class="docutils literal notranslate"><span class="pre">Rule.mean_utility_w_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.meets_condorcet_c_rk"><code class="docutils literal notranslate"><span class="pre">Rule.meets_condorcet_c_rk</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.meets_condorcet_c_rk_ctb"><code class="docutils literal notranslate"><span class="pre">Rule.meets_condorcet_c_rk_ctb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.meets_condorcet_c_ut_abs"><code class="docutils literal notranslate"><span class="pre">Rule.meets_condorcet_c_ut_abs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.meets_condorcet_c_ut_abs_ctb"><code class="docutils literal notranslate"><span class="pre">Rule.meets_condorcet_c_ut_abs_ctb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.meets_condorcet_c_ut_rel"><code class="docutils literal notranslate"><span class="pre">Rule.meets_condorcet_c_ut_rel</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.meets_condorcet_c_ut_rel_ctb"><code class="docutils literal notranslate"><span class="pre">Rule.meets_condorcet_c_ut_rel_ctb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.meets_ignmc_c"><code class="docutils literal notranslate"><span class="pre">Rule.meets_ignmc_c</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.meets_ignmc_c_ctb"><code class="docutils literal notranslate"><span class="pre">Rule.meets_ignmc_c_ctb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.meets_infmc_c"><code class="docutils literal notranslate"><span class="pre">Rule.meets_infmc_c</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.meets_infmc_c_ctb"><code class="docutils literal notranslate"><span class="pre">Rule.meets_infmc_c_ctb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.meets_majority_favorite_c_rk"><code class="docutils literal notranslate"><span class="pre">Rule.meets_majority_favorite_c_rk</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.meets_majority_favorite_c_rk_ctb"><code class="docutils literal notranslate"><span class="pre">Rule.meets_majority_favorite_c_rk_ctb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.meets_majority_favorite_c_ut"><code class="docutils literal notranslate"><span class="pre">Rule.meets_majority_favorite_c_ut</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.meets_majority_favorite_c_ut_ctb"><code class="docutils literal notranslate"><span class="pre">Rule.meets_majority_favorite_c_ut_ctb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.nb_candidates_cm_"><code class="docutils literal notranslate"><span class="pre">Rule.nb_candidates_cm_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.necessary_coalition_size_cm_"><code class="docutils literal notranslate"><span class="pre">Rule.necessary_coalition_size_cm_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.necessary_coalition_size_icm_"><code class="docutils literal notranslate"><span class="pre">Rule.necessary_coalition_size_icm_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.options"><code class="docutils literal notranslate"><span class="pre">Rule.options</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.relative_social_welfare_w_"><code class="docutils literal notranslate"><span class="pre">Rule.relative_social_welfare_w_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.score_w_"><code class="docutils literal notranslate"><span class="pre">Rule.score_w_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.scores_"><code class="docutils literal notranslate"><span class="pre">Rule.scores_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.scores_best_to_worst_"><code class="docutils literal notranslate"><span class="pre">Rule.scores_best_to_worst_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.sufficient_coalition_size_cm_"><code class="docutils literal notranslate"><span class="pre">Rule.sufficient_coalition_size_cm_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.sufficient_coalition_size_icm_"><code class="docutils literal notranslate"><span class="pre">Rule.sufficient_coalition_size_icm_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.tm_option"><code class="docutils literal notranslate"><span class="pre">Rule.tm_option</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.total_utility_w_"><code class="docutils literal notranslate"><span class="pre">Rule.total_utility_w_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.um_option"><code class="docutils literal notranslate"><span class="pre">Rule.um_option</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.update_options"><code class="docutils literal notranslate"><span class="pre">Rule.update_options()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.v_im_for_c_"><code class="docutils literal notranslate"><span class="pre">Rule.v_im_for_c_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.v_might_im_for_c_"><code class="docutils literal notranslate"><span class="pre">Rule.v_might_im_for_c_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.v_wants_to_help_c_"><code class="docutils literal notranslate"><span class="pre">Rule.v_wants_to_help_c_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.voters_im_"><code class="docutils literal notranslate"><span class="pre">Rule.voters_im_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.w_"><code class="docutils literal notranslate"><span class="pre">Rule.w_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.w_is_condorcet_admissible_"><code class="docutils literal notranslate"><span class="pre">Rule.w_is_condorcet_admissible_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.w_is_condorcet_winner_rk_"><code class="docutils literal notranslate"><span class="pre">Rule.w_is_condorcet_winner_rk_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.w_is_condorcet_winner_rk_ctb_"><code class="docutils literal notranslate"><span class="pre">Rule.w_is_condorcet_winner_rk_ctb_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.w_is_condorcet_winner_ut_abs_"><code class="docutils literal notranslate"><span class="pre">Rule.w_is_condorcet_winner_ut_abs_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.w_is_condorcet_winner_ut_abs_ctb_"><code class="docutils literal notranslate"><span class="pre">Rule.w_is_condorcet_winner_ut_abs_ctb_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.w_is_condorcet_winner_ut_rel_"><code class="docutils literal notranslate"><span class="pre">Rule.w_is_condorcet_winner_ut_rel_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.w_is_condorcet_winner_ut_rel_ctb_"><code class="docutils literal notranslate"><span class="pre">Rule.w_is_condorcet_winner_ut_rel_ctb_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.w_is_not_condorcet_admissible_"><code class="docutils literal notranslate"><span class="pre">Rule.w_is_not_condorcet_admissible_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.w_is_not_condorcet_winner_rk_"><code class="docutils literal notranslate"><span class="pre">Rule.w_is_not_condorcet_winner_rk_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.w_is_not_condorcet_winner_rk_ctb_"><code class="docutils literal notranslate"><span class="pre">Rule.w_is_not_condorcet_winner_rk_ctb_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.w_is_not_condorcet_winner_ut_abs_"><code class="docutils literal notranslate"><span class="pre">Rule.w_is_not_condorcet_winner_ut_abs_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.w_is_not_condorcet_winner_ut_abs_ctb_"><code class="docutils literal notranslate"><span class="pre">Rule.w_is_not_condorcet_winner_ut_abs_ctb_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.w_is_not_condorcet_winner_ut_rel_"><code class="docutils literal notranslate"><span class="pre">Rule.w_is_not_condorcet_winner_ut_rel_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.w_is_not_condorcet_winner_ut_rel_ctb_"><code class="docutils literal notranslate"><span class="pre">Rule.w_is_not_condorcet_winner_ut_rel_ctb_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.w_is_not_resistant_condorcet_winner_"><code class="docutils literal notranslate"><span class="pre">Rule.w_is_not_resistant_condorcet_winner_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.w_is_not_weak_condorcet_winner_"><code class="docutils literal notranslate"><span class="pre">Rule.w_is_not_weak_condorcet_winner_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.w_is_resistant_condorcet_winner_"><code class="docutils literal notranslate"><span class="pre">Rule.w_is_resistant_condorcet_winner_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.w_is_weak_condorcet_winner_"><code class="docutils literal notranslate"><span class="pre">Rule.w_is_weak_condorcet_winner_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.w_missed_condorcet_admissible_"><code class="docutils literal notranslate"><span class="pre">Rule.w_missed_condorcet_admissible_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.w_missed_condorcet_winner_rk_"><code class="docutils literal notranslate"><span class="pre">Rule.w_missed_condorcet_winner_rk_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.w_missed_condorcet_winner_rk_ctb_"><code class="docutils literal notranslate"><span class="pre">Rule.w_missed_condorcet_winner_rk_ctb_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.w_missed_condorcet_winner_ut_abs_"><code class="docutils literal notranslate"><span class="pre">Rule.w_missed_condorcet_winner_ut_abs_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.w_missed_condorcet_winner_ut_abs_ctb_"><code class="docutils literal notranslate"><span class="pre">Rule.w_missed_condorcet_winner_ut_abs_ctb_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.w_missed_condorcet_winner_ut_rel_"><code class="docutils literal notranslate"><span class="pre">Rule.w_missed_condorcet_winner_ut_rel_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.w_missed_condorcet_winner_ut_rel_ctb_"><code class="docutils literal notranslate"><span class="pre">Rule.w_missed_condorcet_winner_ut_rel_ctb_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.w_missed_resistant_condorcet_winner_"><code class="docutils literal notranslate"><span class="pre">Rule.w_missed_resistant_condorcet_winner_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.w_missed_weak_condorcet_winner_"><code class="docutils literal notranslate"><span class="pre">Rule.w_missed_weak_condorcet_winner_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.worst_relative_welfare_with_cm_"><code class="docutils literal notranslate"><span class="pre">Rule.worst_relative_welfare_with_cm_</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rules/rule_approval.html">RuleApproval</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rules/rule_approval.html#svvamp.RuleApproval"><code class="docutils literal notranslate"><span class="pre">RuleApproval</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_approval.html#svvamp.RuleApproval.ballots_"><code class="docutils literal notranslate"><span class="pre">RuleApproval.ballots_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_approval.html#svvamp.RuleApproval.scores_"><code class="docutils literal notranslate"><span class="pre">RuleApproval.scores_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_approval.html#svvamp.RuleApproval.w_"><code class="docutils literal notranslate"><span class="pre">RuleApproval.w_</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rules/rule_baldwin.html">RuleBaldwin</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rules/rule_baldwin.html#svvamp.RuleBaldwin"><code class="docutils literal notranslate"><span class="pre">RuleBaldwin</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_baldwin.html#svvamp.RuleBaldwin.candidates_by_scores_best_to_worst_"><code class="docutils literal notranslate"><span class="pre">RuleBaldwin.candidates_by_scores_best_to_worst_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_baldwin.html#svvamp.RuleBaldwin.scores_"><code class="docutils literal notranslate"><span class="pre">RuleBaldwin.scores_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_baldwin.html#svvamp.RuleBaldwin.w_"><code class="docutils literal notranslate"><span class="pre">RuleBaldwin.w_</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rules/rule_black.html">RuleBlack</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rules/rule_black.html#svvamp.RuleBlack"><code class="docutils literal notranslate"><span class="pre">RuleBlack</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_black.html#svvamp.RuleBlack.candidates_by_scores_best_to_worst_"><code class="docutils literal notranslate"><span class="pre">RuleBlack.candidates_by_scores_best_to_worst_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_black.html#svvamp.RuleBlack.scores_"><code class="docutils literal notranslate"><span class="pre">RuleBlack.scores_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_black.html#svvamp.RuleBlack.w_"><code class="docutils literal notranslate"><span class="pre">RuleBlack.w_</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rules/rule_borda.html">RuleBorda</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rules/rule_borda.html#svvamp.RuleBorda"><code class="docutils literal notranslate"><span class="pre">RuleBorda</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_borda.html#svvamp.RuleBorda.scores_"><code class="docutils literal notranslate"><span class="pre">RuleBorda.scores_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_borda.html#svvamp.RuleBorda.w_"><code class="docutils literal notranslate"><span class="pre">RuleBorda.w_</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rules/rule_bucklin.html">RuleBucklin</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rules/rule_bucklin.html#svvamp.RuleBucklin"><code class="docutils literal notranslate"><span class="pre">RuleBucklin</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_bucklin.html#svvamp.RuleBucklin.candidates_by_scores_best_to_worst_"><code class="docutils literal notranslate"><span class="pre">RuleBucklin.candidates_by_scores_best_to_worst_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_bucklin.html#svvamp.RuleBucklin.scores_"><code class="docutils literal notranslate"><span class="pre">RuleBucklin.scores_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_bucklin.html#svvamp.RuleBucklin.w_"><code class="docutils literal notranslate"><span class="pre">RuleBucklin.w_</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rules/rule_condorcet_abs_irv.html">RuleCondorcetAbsIRV</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rules/rule_condorcet_abs_irv.html#svvamp.RuleCondorcetAbsIRV"><code class="docutils literal notranslate"><span class="pre">RuleCondorcetAbsIRV</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_condorcet_abs_irv.html#svvamp.RuleCondorcetAbsIRV.candidates_by_scores_best_to_worst_"><code class="docutils literal notranslate"><span class="pre">RuleCondorcetAbsIRV.candidates_by_scores_best_to_worst_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_condorcet_abs_irv.html#svvamp.RuleCondorcetAbsIRV.scores_"><code class="docutils literal notranslate"><span class="pre">RuleCondorcetAbsIRV.scores_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_condorcet_abs_irv.html#svvamp.RuleCondorcetAbsIRV.w_"><code class="docutils literal notranslate"><span class="pre">RuleCondorcetAbsIRV.w_</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rules/rule_condorcet_sum_defeats.html">RuleCondorcetSumDefeats</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rules/rule_condorcet_sum_defeats.html#svvamp.RuleCondorcetSumDefeats"><code class="docutils literal notranslate"><span class="pre">RuleCondorcetSumDefeats</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_condorcet_sum_defeats.html#svvamp.RuleCondorcetSumDefeats.scores_"><code class="docutils literal notranslate"><span class="pre">RuleCondorcetSumDefeats.scores_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_condorcet_sum_defeats.html#svvamp.RuleCondorcetSumDefeats.w_"><code class="docutils literal notranslate"><span class="pre">RuleCondorcetSumDefeats.w_</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rules/rule_condorcet_vtb_irv.html">RuleCondorcetVtbIRV</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rules/rule_condorcet_vtb_irv.html#svvamp.RuleCondorcetVtbIRV"><code class="docutils literal notranslate"><span class="pre">RuleCondorcetVtbIRV</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_condorcet_vtb_irv.html#svvamp.RuleCondorcetVtbIRV.candidates_by_scores_best_to_worst_"><code class="docutils literal notranslate"><span class="pre">RuleCondorcetVtbIRV.candidates_by_scores_best_to_worst_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_condorcet_vtb_irv.html#svvamp.RuleCondorcetVtbIRV.scores_"><code class="docutils literal notranslate"><span class="pre">RuleCondorcetVtbIRV.scores_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_condorcet_vtb_irv.html#svvamp.RuleCondorcetVtbIRV.w_"><code class="docutils literal notranslate"><span class="pre">RuleCondorcetVtbIRV.w_</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rules/rule_coombs.html">RuleCoombs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rules/rule_coombs.html#svvamp.RuleCoombs"><code class="docutils literal notranslate"><span class="pre">RuleCoombs</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_coombs.html#svvamp.RuleCoombs.candidates_by_scores_best_to_worst_"><code class="docutils literal notranslate"><span class="pre">RuleCoombs.candidates_by_scores_best_to_worst_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_coombs.html#svvamp.RuleCoombs.scores_"><code class="docutils literal notranslate"><span class="pre">RuleCoombs.scores_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_coombs.html#svvamp.RuleCoombs.w_"><code class="docutils literal notranslate"><span class="pre">RuleCoombs.w_</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rules/rule_copeland.html">RuleCopeland</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rules/rule_copeland.html#svvamp.RuleCopeland"><code class="docutils literal notranslate"><span class="pre">RuleCopeland</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_copeland.html#svvamp.RuleCopeland.scores_"><code class="docutils literal notranslate"><span class="pre">RuleCopeland.scores_</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rules/rule_exhaustive_ballot.html">RuleExhaustiveBallot</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rules/rule_exhaustive_ballot.html#svvamp.RuleExhaustiveBallot"><code class="docutils literal notranslate"><span class="pre">RuleExhaustiveBallot</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_exhaustive_ballot.html#svvamp.RuleExhaustiveBallot.ballots_"><code class="docutils literal notranslate"><span class="pre">RuleExhaustiveBallot.ballots_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_exhaustive_ballot.html#svvamp.RuleExhaustiveBallot.candidates_by_scores_best_to_worst_"><code class="docutils literal notranslate"><span class="pre">RuleExhaustiveBallot.candidates_by_scores_best_to_worst_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_exhaustive_ballot.html#svvamp.RuleExhaustiveBallot.elimination_path_"><code class="docutils literal notranslate"><span class="pre">RuleExhaustiveBallot.elimination_path_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_exhaustive_ballot.html#svvamp.RuleExhaustiveBallot.margins_"><code class="docutils literal notranslate"><span class="pre">RuleExhaustiveBallot.margins_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_exhaustive_ballot.html#svvamp.RuleExhaustiveBallot.scores_"><code class="docutils literal notranslate"><span class="pre">RuleExhaustiveBallot.scores_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_exhaustive_ballot.html#svvamp.RuleExhaustiveBallot.w_"><code class="docutils literal notranslate"><span class="pre">RuleExhaustiveBallot.w_</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rules/rule_icrv.html">RuleICRV</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rules/rule_icrv.html#svvamp.RuleICRV"><code class="docutils literal notranslate"><span class="pre">RuleICRV</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_icrv.html#svvamp.RuleICRV.candidates_by_scores_best_to_worst_"><code class="docutils literal notranslate"><span class="pre">RuleICRV.candidates_by_scores_best_to_worst_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_icrv.html#svvamp.RuleICRV.scores_"><code class="docutils literal notranslate"><span class="pre">RuleICRV.scores_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_icrv.html#svvamp.RuleICRV.w_"><code class="docutils literal notranslate"><span class="pre">RuleICRV.w_</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rules/rule_irv.html">RuleIRV</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rules/rule_irv.html#svvamp.RuleIRV"><code class="docutils literal notranslate"><span class="pre">RuleIRV</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_irv.html#svvamp.RuleIRV.ballots_"><code class="docutils literal notranslate"><span class="pre">RuleIRV.ballots_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_irv.html#svvamp.RuleIRV.candidates_by_scores_best_to_worst_"><code class="docutils literal notranslate"><span class="pre">RuleIRV.candidates_by_scores_best_to_worst_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_irv.html#svvamp.RuleIRV.elimination_path_"><code class="docutils literal notranslate"><span class="pre">RuleIRV.elimination_path_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_irv.html#svvamp.RuleIRV.margins_"><code class="docutils literal notranslate"><span class="pre">RuleIRV.margins_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_irv.html#svvamp.RuleIRV.scores_"><code class="docutils literal notranslate"><span class="pre">RuleIRV.scores_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_irv.html#svvamp.RuleIRV.w_"><code class="docutils literal notranslate"><span class="pre">RuleIRV.w_</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rules/rule_irv_average.html">RuleIRVAverage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rules/rule_irv_average.html#svvamp.RuleIRVAverage"><code class="docutils literal notranslate"><span class="pre">RuleIRVAverage</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_irv_average.html#svvamp.RuleIRVAverage.candidates_by_scores_best_to_worst_"><code class="docutils literal notranslate"><span class="pre">RuleIRVAverage.candidates_by_scores_best_to_worst_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_irv_average.html#svvamp.RuleIRVAverage.scores_"><code class="docutils literal notranslate"><span class="pre">RuleIRVAverage.scores_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_irv_average.html#svvamp.RuleIRVAverage.w_"><code class="docutils literal notranslate"><span class="pre">RuleIRVAverage.w_</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rules/rule_irv_duels.html">RuleIRVDuels</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rules/rule_irv_duels.html#svvamp.RuleIRVDuels"><code class="docutils literal notranslate"><span class="pre">RuleIRVDuels</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_irv_duels.html#svvamp.RuleIRVDuels.candidates_by_scores_best_to_worst_"><code class="docutils literal notranslate"><span class="pre">RuleIRVDuels.candidates_by_scores_best_to_worst_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_irv_duels.html#svvamp.RuleIRVDuels.scores_"><code class="docutils literal notranslate"><span class="pre">RuleIRVDuels.scores_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_irv_duels.html#svvamp.RuleIRVDuels.w_"><code class="docutils literal notranslate"><span class="pre">RuleIRVDuels.w_</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rules/rule_iterated_bucklin.html">RuleIteratedBucklin</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rules/rule_iterated_bucklin.html#svvamp.RuleIteratedBucklin"><code class="docutils literal notranslate"><span class="pre">RuleIteratedBucklin</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_iterated_bucklin.html#svvamp.RuleIteratedBucklin.candidates_by_scores_best_to_worst_"><code class="docutils literal notranslate"><span class="pre">RuleIteratedBucklin.candidates_by_scores_best_to_worst_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_iterated_bucklin.html#svvamp.RuleIteratedBucklin.scores_"><code class="docutils literal notranslate"><span class="pre">RuleIteratedBucklin.scores_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_iterated_bucklin.html#svvamp.RuleIteratedBucklin.w_"><code class="docutils literal notranslate"><span class="pre">RuleIteratedBucklin.w_</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rules/rule_k_approval.html">RuleKApproval</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rules/rule_k_approval.html#svvamp.RuleKApproval"><code class="docutils literal notranslate"><span class="pre">RuleKApproval</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_k_approval.html#svvamp.RuleKApproval.ballots_"><code class="docutils literal notranslate"><span class="pre">RuleKApproval.ballots_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_k_approval.html#svvamp.RuleKApproval.scores_"><code class="docutils literal notranslate"><span class="pre">RuleKApproval.scores_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_k_approval.html#svvamp.RuleKApproval.w_"><code class="docutils literal notranslate"><span class="pre">RuleKApproval.w_</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rules/rule_kemeny.html">RuleKemeny</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rules/rule_kemeny.html#svvamp.RuleKemeny"><code class="docutils literal notranslate"><span class="pre">RuleKemeny</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_kemeny.html#svvamp.RuleKemeny.candidates_by_scores_best_to_worst_"><code class="docutils literal notranslate"><span class="pre">RuleKemeny.candidates_by_scores_best_to_worst_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_kemeny.html#svvamp.RuleKemeny.scores_"><code class="docutils literal notranslate"><span class="pre">RuleKemeny.scores_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_kemeny.html#svvamp.RuleKemeny.w_"><code class="docutils literal notranslate"><span class="pre">RuleKemeny.w_</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rules/rule_kim_roush.html">RuleKimRoush</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rules/rule_kim_roush.html#svvamp.RuleKimRoush"><code class="docutils literal notranslate"><span class="pre">RuleKimRoush</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_kim_roush.html#svvamp.RuleKimRoush.candidates_by_scores_best_to_worst_"><code class="docutils literal notranslate"><span class="pre">RuleKimRoush.candidates_by_scores_best_to_worst_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_kim_roush.html#svvamp.RuleKimRoush.scores_"><code class="docutils literal notranslate"><span class="pre">RuleKimRoush.scores_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_kim_roush.html#svvamp.RuleKimRoush.w_"><code class="docutils literal notranslate"><span class="pre">RuleKimRoush.w_</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rules/rule_majority_judgment.html">RuleMajorityJudgment</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rules/rule_majority_judgment.html#svvamp.RuleMajorityJudgment"><code class="docutils literal notranslate"><span class="pre">RuleMajorityJudgment</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_majority_judgment.html#svvamp.RuleMajorityJudgment.ballots_"><code class="docutils literal notranslate"><span class="pre">RuleMajorityJudgment.ballots_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_majority_judgment.html#svvamp.RuleMajorityJudgment.scores_"><code class="docutils literal notranslate"><span class="pre">RuleMajorityJudgment.scores_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_majority_judgment.html#svvamp.RuleMajorityJudgment.w_"><code class="docutils literal notranslate"><span class="pre">RuleMajorityJudgment.w_</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rules/rule_maximin.html">RuleMaximin</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rules/rule_maximin.html#svvamp.RuleMaximin"><code class="docutils literal notranslate"><span class="pre">RuleMaximin</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_maximin.html#svvamp.RuleMaximin.scores_"><code class="docutils literal notranslate"><span class="pre">RuleMaximin.scores_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_maximin.html#svvamp.RuleMaximin.w_"><code class="docutils literal notranslate"><span class="pre">RuleMaximin.w_</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rules/rule_nanson.html">RuleNanson</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rules/rule_nanson.html#svvamp.RuleNanson"><code class="docutils literal notranslate"><span class="pre">RuleNanson</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_nanson.html#svvamp.RuleNanson.candidates_by_scores_best_to_worst_"><code class="docutils literal notranslate"><span class="pre">RuleNanson.candidates_by_scores_best_to_worst_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_nanson.html#svvamp.RuleNanson.scores_"><code class="docutils literal notranslate"><span class="pre">RuleNanson.scores_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_nanson.html#svvamp.RuleNanson.w_"><code class="docutils literal notranslate"><span class="pre">RuleNanson.w_</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rules/rule_plurality.html">RulePlurality</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rules/rule_plurality.html#svvamp.RulePlurality"><code class="docutils literal notranslate"><span class="pre">RulePlurality</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_plurality.html#svvamp.RulePlurality.ballots_"><code class="docutils literal notranslate"><span class="pre">RulePlurality.ballots_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_plurality.html#svvamp.RulePlurality.scores_"><code class="docutils literal notranslate"><span class="pre">RulePlurality.scores_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_plurality.html#svvamp.RulePlurality.w_"><code class="docutils literal notranslate"><span class="pre">RulePlurality.w_</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rules/rule_range_voting.html">RuleRangeVoting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rules/rule_range_voting.html#svvamp.RuleRangeVoting"><code class="docutils literal notranslate"><span class="pre">RuleRangeVoting</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_range_voting.html#svvamp.RuleRangeVoting.ballots_"><code class="docutils literal notranslate"><span class="pre">RuleRangeVoting.ballots_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_range_voting.html#svvamp.RuleRangeVoting.scores_"><code class="docutils literal notranslate"><span class="pre">RuleRangeVoting.scores_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_range_voting.html#svvamp.RuleRangeVoting.w_"><code class="docutils literal notranslate"><span class="pre">RuleRangeVoting.w_</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rules/rule_ranked_pairs.html">RuleRankedPairs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rules/rule_ranked_pairs.html#svvamp.RuleRankedPairs"><code class="docutils literal notranslate"><span class="pre">RuleRankedPairs</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_ranked_pairs.html#svvamp.RuleRankedPairs.candidates_by_scores_best_to_worst_"><code class="docutils literal notranslate"><span class="pre">RuleRankedPairs.candidates_by_scores_best_to_worst_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_ranked_pairs.html#svvamp.RuleRankedPairs.score_w_"><code class="docutils literal notranslate"><span class="pre">RuleRankedPairs.score_w_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_ranked_pairs.html#svvamp.RuleRankedPairs.scores_"><code class="docutils literal notranslate"><span class="pre">RuleRankedPairs.scores_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_ranked_pairs.html#svvamp.RuleRankedPairs.scores_best_to_worst_"><code class="docutils literal notranslate"><span class="pre">RuleRankedPairs.scores_best_to_worst_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_ranked_pairs.html#svvamp.RuleRankedPairs.w_"><code class="docutils literal notranslate"><span class="pre">RuleRankedPairs.w_</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rules/rule_schulze.html">RuleSchulze</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rules/rule_schulze.html#svvamp.RuleSchulze"><code class="docutils literal notranslate"><span class="pre">RuleSchulze</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_schulze.html#svvamp.RuleSchulze.candidates_by_scores_best_to_worst_"><code class="docutils literal notranslate"><span class="pre">RuleSchulze.candidates_by_scores_best_to_worst_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_schulze.html#svvamp.RuleSchulze.score_w_"><code class="docutils literal notranslate"><span class="pre">RuleSchulze.score_w_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_schulze.html#svvamp.RuleSchulze.scores_"><code class="docutils literal notranslate"><span class="pre">RuleSchulze.scores_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_schulze.html#svvamp.RuleSchulze.scores_best_to_worst_"><code class="docutils literal notranslate"><span class="pre">RuleSchulze.scores_best_to_worst_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_schulze.html#svvamp.RuleSchulze.w_"><code class="docutils literal notranslate"><span class="pre">RuleSchulze.w_</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rules/rule_slater.html">RuleSlater</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rules/rule_slater.html#svvamp.RuleSlater"><code class="docutils literal notranslate"><span class="pre">RuleSlater</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_slater.html#svvamp.RuleSlater.candidates_by_scores_best_to_worst_"><code class="docutils literal notranslate"><span class="pre">RuleSlater.candidates_by_scores_best_to_worst_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_slater.html#svvamp.RuleSlater.scores_"><code class="docutils literal notranslate"><span class="pre">RuleSlater.scores_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_slater.html#svvamp.RuleSlater.w_"><code class="docutils literal notranslate"><span class="pre">RuleSlater.w_</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rules/rule_smith_irv.html">RuleSmithIRV</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rules/rule_smith_irv.html#svvamp.RuleSmithIRV"><code class="docutils literal notranslate"><span class="pre">RuleSmithIRV</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_smith_irv.html#svvamp.RuleSmithIRV.candidates_by_scores_best_to_worst_"><code class="docutils literal notranslate"><span class="pre">RuleSmithIRV.candidates_by_scores_best_to_worst_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_smith_irv.html#svvamp.RuleSmithIRV.scores_"><code class="docutils literal notranslate"><span class="pre">RuleSmithIRV.scores_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_smith_irv.html#svvamp.RuleSmithIRV.w_"><code class="docutils literal notranslate"><span class="pre">RuleSmithIRV.w_</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rules/rule_split_cycle.html">RuleSplitCycle</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rules/rule_split_cycle.html#svvamp.RuleSplitCycle"><code class="docutils literal notranslate"><span class="pre">RuleSplitCycle</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_split_cycle.html#svvamp.RuleSplitCycle.candidates_by_scores_best_to_worst_"><code class="docutils literal notranslate"><span class="pre">RuleSplitCycle.candidates_by_scores_best_to_worst_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_split_cycle.html#svvamp.RuleSplitCycle.scores_"><code class="docutils literal notranslate"><span class="pre">RuleSplitCycle.scores_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_split_cycle.html#svvamp.RuleSplitCycle.w_"><code class="docutils literal notranslate"><span class="pre">RuleSplitCycle.w_</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rules/rule_star.html">RuleSTAR</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rules/rule_star.html#svvamp.RuleSTAR"><code class="docutils literal notranslate"><span class="pre">RuleSTAR</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_star.html#svvamp.RuleSTAR.candidates_by_scores_best_to_worst_"><code class="docutils literal notranslate"><span class="pre">RuleSTAR.candidates_by_scores_best_to_worst_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_star.html#svvamp.RuleSTAR.scores_"><code class="docutils literal notranslate"><span class="pre">RuleSTAR.scores_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_star.html#svvamp.RuleSTAR.w_"><code class="docutils literal notranslate"><span class="pre">RuleSTAR.w_</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rules/rule_tideman.html">RuleTideman</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rules/rule_tideman.html#svvamp.RuleTideman"><code class="docutils literal notranslate"><span class="pre">RuleTideman</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_tideman.html#svvamp.RuleTideman.candidates_by_scores_best_to_worst_"><code class="docutils literal notranslate"><span class="pre">RuleTideman.candidates_by_scores_best_to_worst_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_tideman.html#svvamp.RuleTideman.scores_"><code class="docutils literal notranslate"><span class="pre">RuleTideman.scores_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_tideman.html#svvamp.RuleTideman.w_"><code class="docutils literal notranslate"><span class="pre">RuleTideman.w_</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rules/rule_two_round.html">RuleTwoRound</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rules/rule_two_round.html#svvamp.RuleTwoRound"><code class="docutils literal notranslate"><span class="pre">RuleTwoRound</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_two_round.html#svvamp.RuleTwoRound.ballots_"><code class="docutils literal notranslate"><span class="pre">RuleTwoRound.ballots_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_two_round.html#svvamp.RuleTwoRound.candidates_by_scores_best_to_worst_"><code class="docutils literal notranslate"><span class="pre">RuleTwoRound.candidates_by_scores_best_to_worst_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_two_round.html#svvamp.RuleTwoRound.scores_"><code class="docutils literal notranslate"><span class="pre">RuleTwoRound.scores_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_two_round.html#svvamp.RuleTwoRound.selected_one_"><code class="docutils literal notranslate"><span class="pre">RuleTwoRound.selected_one_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_two_round.html#svvamp.RuleTwoRound.selected_two_"><code class="docutils literal notranslate"><span class="pre">RuleTwoRound.selected_two_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_two_round.html#svvamp.RuleTwoRound.w_"><code class="docutils literal notranslate"><span class="pre">RuleTwoRound.w_</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rules/rule_veto.html">RuleVeto</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rules/rule_veto.html#svvamp.RuleVeto"><code class="docutils literal notranslate"><span class="pre">RuleVeto</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_veto.html#svvamp.RuleVeto.ballots_"><code class="docutils literal notranslate"><span class="pre">RuleVeto.ballots_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_veto.html#svvamp.RuleVeto.scores_"><code class="docutils literal notranslate"><span class="pre">RuleVeto.scores_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_veto.html#svvamp.RuleVeto.w_"><code class="docutils literal notranslate"><span class="pre">RuleVeto.w_</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rules/rule_woodall.html">RuleWoodall</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rules/rule_woodall.html#svvamp.RuleWoodall"><code class="docutils literal notranslate"><span class="pre">RuleWoodall</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_woodall.html#svvamp.RuleWoodall.candidates_by_scores_best_to_worst_"><code class="docutils literal notranslate"><span class="pre">RuleWoodall.candidates_by_scores_best_to_worst_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_woodall.html#svvamp.RuleWoodall.scores_"><code class="docutils literal notranslate"><span class="pre">RuleWoodall.scores_</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule_woodall.html#svvamp.RuleWoodall.w_"><code class="docutils literal notranslate"><span class="pre">RuleWoodall.w_</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 </section>

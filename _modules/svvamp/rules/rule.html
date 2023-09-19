@@ -10,10 +10,11 @@
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
-        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=9dc39874"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -25,14 +26,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../index.html" class="icon icon-home"> SVVAMP
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            SVVAMP
           </a>
               <div class="version">
                 0.9.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -63,9 +68,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-      <li>svvamp.rules.rule</li>
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">svvamp.rules.rule</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -111,8 +116,10 @@
 <span class="kn">from</span> <span class="nn">svvamp.preferences.profile_subset_candidates</span> <span class="kn">import</span> <span class="n">ProfileSubsetCandidates</span>
 
 
-<div class="viewcode-block" id="Rule"><a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule">[docs]</a><span class="k">class</span> <span class="nc">Rule</span><span class="p">(</span><span class="n">DeleteCacheMixin</span><span class="p">,</span> <span class="n">my_log</span><span class="o">.</span><span class="n">MyLog</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;A voting rule.</span>
+<div class="viewcode-block" id="Rule">
+<a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule">[docs]</a>
+<span class="k">class</span> <span class="nc">Rule</span><span class="p">(</span><span class="n">DeleteCacheMixin</span><span class="p">,</span> <span class="n">my_log</span><span class="o">.</span><span class="n">MyLog</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A voting rule.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -295,14 +302,14 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">_copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;A simple copy of the rule.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;A simple copy of the rule.</span>
 
 <span class="sd">        It is used to compute the results of a virtual election (for tests like IIA, TM, IM...).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_result_options</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_initialize_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Initialize the options.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the options.</span>
 
 <span class="sd">        Arguments: option1=value1, option2=value2, etc. Checks iff option1, option2 are known in</span>
 <span class="sd">        self.options_parameters. For each option in self.options_parameters:</span>
@@ -321,11 +328,13 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">options</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;dict: The options. Key: name of the option. Value: value of the option.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;dict: The options. Key: name of the option. Value: value of the option.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">options_parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">()}</span>
 
-<div class="viewcode-block" id="Rule.update_options"><a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule.update_options">[docs]</a>    <span class="k">def</span> <span class="nf">update_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Update options.</span>
+<div class="viewcode-block" id="Rule.update_options">
+<a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule.update_options">[docs]</a>
+    <span class="k">def</span> <span class="nf">update_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update options.</span>
 
 <span class="sd">        For example, instead of ``rule.cm_option=&#39;exact&#39;``, you can write ``rule.update_options{&#39;cm_option&#39;: &#39;exact&#39;}``.</span>
 
@@ -337,9 +346,12 @@
         <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Rule.check_option_allowed"><a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule.check_option_allowed">[docs]</a>    <span class="nd">@classmethod</span>
+
+<div class="viewcode-block" id="Rule.check_option_allowed">
+<a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule.check_option_allowed">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">check_option_allowed</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Check whether a pair (option, value) is allowed.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check whether a pair (option, value) is allowed.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -363,12 +375,15 @@
         <span class="k">if</span> <span class="n">option</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">options_parameters</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Option </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">option</span><span class="p">)</span><span class="si">}</span><span class="s2"> is unknown for </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
         <span class="n">allowed</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">options_parameters</span><span class="p">[</span><span class="n">option</span><span class="p">][</span><span class="s1">&#39;allowed&#39;</span><span class="p">]</span>
-        <span class="n">this_value_is_allowed</span> <span class="o">=</span> <span class="p">(</span><span class="n">callable</span><span class="p">(</span><span class="n">allowed</span><span class="p">)</span> <span class="ow">and</span> <span class="n">allowed</span><span class="p">(</span><span class="n">value</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span><span class="ow">not</span> <span class="n">callable</span><span class="p">(</span><span class="n">allowed</span><span class="p">)</span> <span class="ow">and</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">allowed</span><span class="p">)</span>
+        <span class="n">this_value_is_allowed</span> <span class="o">=</span> <span class="p">(</span><span class="nb">callable</span><span class="p">(</span><span class="n">allowed</span><span class="p">)</span> <span class="ow">and</span> <span class="n">allowed</span><span class="p">(</span><span class="n">value</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">callable</span><span class="p">(</span><span class="n">allowed</span><span class="p">)</span> <span class="ow">and</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">allowed</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">this_value_is_allowed</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">option</span><span class="si">}</span><span class="s2">&#39; = </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="si">}</span><span class="s2"> is not allowed in </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Rule.log_"><a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule.log_">[docs]</a>    <span class="k">def</span> <span class="nf">log_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method_name</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Log corresponding to a particular manipulation method.</span>
+
+<div class="viewcode-block" id="Rule.log_">
+<a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule.log_">[docs]</a>
+    <span class="k">def</span> <span class="nf">log_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Log corresponding to a particular manipulation method.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="s1">&#39;_iia_&#39;</span> <span class="ow">in</span> <span class="n">method_name</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_iia_</span>
@@ -383,8 +398,9 @@
         <span class="k">if</span> <span class="s1">&#39;_cm_&#39;</span> <span class="ow">in</span> <span class="n">method_name</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_cm_</span></div>
 
+
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">profile</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        profile : Profile</span>
@@ -399,7 +415,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">meets_condorcet_c_ut_rel_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. ``True`` iff the voting system meets the &#39;relative Condorcet criterion with ctb&#39;. I.e.: if a</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. ``True`` iff the voting system meets the &#39;relative Condorcet criterion with ctb&#39;. I.e.: if a</span>
 <span class="sd">        candidate is a :attr:`~svvamp.Profile.condorcet_winner_ut_rel_ctb`, she wins.</span>
 
 <span class="sd">        Implies: :attr:`~meets_condorcet_c_ut_rel`, :attr:`~meets_condorcet_c_ut_abs_ctb`.</span>
@@ -408,7 +424,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">meets_condorcet_c_rk_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. ``True`` iff the voting system meets the &#39;Condorcet criterion (rk) with ctb&#39;. I.e.: if a</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. ``True`` iff the voting system meets the &#39;Condorcet criterion (rk) with ctb&#39;. I.e.: if a</span>
 <span class="sd">        candidate is a :attr:`~svvamp.Profile.condorcet_winner_rk_ctb`, she wins.</span>
 
 <span class="sd">        Implies: :attr:`~meets_condorcet_c_rk`, :attr:`~meets_condorcet_c_ut_abs_ctb`,</span>
@@ -418,7 +434,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">meets_condorcet_c_ut_abs_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. ``True`` iff the voting system meets the &#39;absolute Condorcet criterion with ctb&#39;. I.e.: if a</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. ``True`` iff the voting system meets the &#39;absolute Condorcet criterion with ctb&#39;. I.e.: if a</span>
 <span class="sd">        candidate is a :attr:`~svvamp.Profile.condorcet_winner_ut_abs_ctb`, she wins.</span>
 
 <span class="sd">        Is implied by: :attr:`~meets_condorcet_c_rk_ctb`, :attr:`~meets_condorcet_c_ut_rel_ctb`.</span>
@@ -429,7 +445,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">meets_majority_favorite_c_rk_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. ``True`` iff the voting system meets the &#39;majority favorite criterion (rk) with ctb&#39;. I.e.:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. ``True`` iff the voting system meets the &#39;majority favorite criterion (rk) with ctb&#39;. I.e.:</span>
 
 <span class="sd">            *   It :attr:`~meets_majority_favorite_c_rk`,</span>
 <span class="sd">            *   And if :attr:`~svvamp.Profile.n_v`/2 voters rank candidate 0 first (rk), she wins.</span>
@@ -442,7 +458,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">meets_majority_favorite_c_ut_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. ``True`` iff the voting system meets the &#39;majority favorite criterion (ut) with ctb&#39;. I.e.:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. ``True`` iff the voting system meets the &#39;majority favorite criterion (ut) with ctb&#39;. I.e.:</span>
 
 <span class="sd">            *   It :attr:`~meets_majority_favorite_c_ut`,</span>
 <span class="sd">            *   And if :attr:`~svvamp.Profile.n_v`/2 voters strictly prefer candidate 0 to all other candidates,</span>
@@ -456,7 +472,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">meets_ignmc_c_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. ``True`` iff the voting system meets the &#39;ignorant majority coalition criterion with ctb&#39;. I.e.:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. ``True`` iff the voting system meets the &#39;ignorant majority coalition criterion with ctb&#39;. I.e.:</span>
 
 <span class="sd">            *   It :attr:`~meets_IgnMC_c`,</span>
 <span class="sd">            *   And any ignorant coalition of size :attr:`~svvamp.Profile.n_v`/2 can make candidate 0 win.</span>
@@ -469,7 +485,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">meets_infmc_c_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. ``True`` iff the voting system meets the &#39;informed majority coalition criterion with ctb&#39;. I.e.:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. ``True`` iff the voting system meets the &#39;informed majority coalition criterion with ctb&#39;. I.e.:</span>
 
 <span class="sd">            *   It :attr:`~meets_InfMC_c`,</span>
 <span class="sd">            *   And any informed coalition of size :attr:`~svvamp.Profile.n_v`/2 can make candidate 0 win.</span>
@@ -482,7 +498,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">meets_condorcet_c_ut_rel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. ``True`` iff the voting system meets the relative Condorcet criterion. I.e. if a candidate is a</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. ``True`` iff the voting system meets the relative Condorcet criterion. I.e. if a candidate is a</span>
 <span class="sd">        :attr:`~svvamp.Profile.condorcet_winner_ut_rel`, then she wins.</span>
 
 <span class="sd">        Is implied by: :attr:`~meets_condorcet_c_ut_rel_ctb`.</span>
@@ -493,7 +509,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">meets_condorcet_c_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. ``True`` iff the voting system meets the Condorcet criterion (rk). I.e. if a candidate is a</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. ``True`` iff the voting system meets the Condorcet criterion (rk). I.e. if a candidate is a</span>
 <span class="sd">        :attr:`~svvamp.Profile.condorcet_winner_rk`, then she wins.</span>
 
 <span class="sd">        Is implied by: :attr:`~meets_condorcet_c_rk_ctb`.</span>
@@ -504,7 +520,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">meets_condorcet_c_ut_abs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. ``True`` iff the voting system meets the absolute Condorcet criterion. I.e. if a candidate is a</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. ``True`` iff the voting system meets the absolute Condorcet criterion. I.e. if a candidate is a</span>
 <span class="sd">        :attr:`~svvamp.Profile.condorcet_winner_ut_abs`, then she wins.</span>
 
 <span class="sd">        Is implied by: :attr:`~meets_condorcet_c_rk`, :attr:`~meets_condorcet_c_ut_rel`,</span>
@@ -516,7 +532,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">meets_majority_favorite_c_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. ``True`` iff the voting system meets the majority favorite criterion (rk). I.e. if strictly more</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. ``True`` iff the voting system meets the majority favorite criterion (rk). I.e. if strictly more</span>
 <span class="sd">        than :attr:`~svvamp.Profile.n_v`/2 voters rank a candidate first (rk), then she wins.</span>
 
 <span class="sd">        Is implied by: :attr:`~meets_condorcet_c_rk`, :attr:`~meets_majority_favorite_c_rk_ctb`.</span>
@@ -527,7 +543,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">meets_majority_favorite_c_ut</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. ``True`` iff the voting system meets the majority favorite criterion (ut). I.e. if strictly more</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. ``True`` iff the voting system meets the majority favorite criterion (ut). I.e. if strictly more</span>
 <span class="sd">        than :attr:`~svvamp.Profile.n_v`/2 voters strictly prefer a candidate to all others (ut), she wins.</span>
 
 <span class="sd">        Is implied by: :attr:`~meets_condorcet_c_ut_abs`, :attr:`~meets_majority_favorite_c_ut_ctb`,</span>
@@ -540,7 +556,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">meets_ignmc_c</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. ``True`` iff the voting system meets the ignorant majority coalition criterion. I.e. any ignorant</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. ``True`` iff the voting system meets the ignorant majority coalition criterion. I.e. any ignorant</span>
 <span class="sd">        coalition of size strictly more than :attr:`~svvamp.Profile.n_v`/2 can make any candidate win. See Durand et</span>
 <span class="sd">        al.: &#39;Condorcet Criterion and Reduction in Coalitional Manipulability&#39;.</span>
 
@@ -554,7 +570,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">meets_infmc_c</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. ``True`` iff the voting system meets the informed majority coalition criterion. I.e. any informed</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. ``True`` iff the voting system meets the informed majority coalition criterion. I.e. any informed</span>
 <span class="sd">        coalition of size strictly more than :attr:`~svvamp.Profile.n_v`/2 can make any candidate win. See Durand et</span>
 <span class="sd">        al.: &#39;Condorcet Criterion and Reduction in Coalitional Manipulability&#39;.</span>
 
@@ -569,7 +585,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">scores_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Scores of the candidates in the election.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Scores of the candidates in the election.</span>
 
 <span class="sd">        See specific documentation for each voting rule. Typical type in most subclasses: 1d or 2d array. Typical</span>
 <span class="sd">        behavior in most subclasses:</span>
@@ -586,7 +602,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">ballots_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Ballots cast by the voters.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Ballots cast by the voters.</span>
 
 <span class="sd">        Default type: 2d array of integers. Default behavior:</span>
 <span class="sd">        ``ballots[v, k]`` = :attr:`~svvamp.Profile.preferences_rk`\ ``[v, k]``.</span>
@@ -598,7 +614,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">w_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Integer (winning candidate).</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Integer (winning candidate).</span>
 
 <span class="sd">        Default behavior: the candidate with highest value in vector :attr:`scores_` is declared the winner. In case</span>
 <span class="sd">        of a tie, the tied candidate with lowest index wins.</span>
@@ -612,7 +628,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">candidates_by_scores_best_to_worst_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;1d array of integers. All candidates, sorted from the winner to the last candidate in the election&#39;s result.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of integers. All candidates, sorted from the winner to the last candidate in the election&#39;s result.</span>
 
 <span class="sd">        Default behavior: ``candidates_by_scores_best_to_worst[k]`` is the candidate with ``k``\ :sup:`th` highest</span>
 <span class="sd">        value in :attr:`scores_`. By definition, ``candidates_by_scores_best_to_worst[0]`` = :attr:`w_`.</span>
@@ -625,7 +641,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">v_might_im_for_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;2d array of booleans. `</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;2d array of booleans. `</span>
 
 <span class="sd">        `v_might_im_for_c_[v, c]`` is True unless it is clearly and easily excluded that ``v`` has an individual</span>
 <span class="sd">        manipulation in favor of ``c``. Typically, if ``v`` is not pivotal (at all), then it is False. Specific</span>
@@ -642,7 +658,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">score_w_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Score of the sincere winner.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Score of the sincere winner.</span>
 
 <span class="sd">        Default type: number or 1d array.</span>
 
@@ -663,7 +679,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">scores_best_to_worst_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Scores of the candidates, from the winner to the last candidate of the election.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Scores of the candidates, from the winner to the last candidate of the election.</span>
 
 <span class="sd">        Default type: 1d or 2d array.</span>
 
@@ -689,205 +705,207 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">total_utility_w_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Float. The total utility for the sincere winner :attr:`w_`.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Float. The total utility for the sincere winner :attr:`w_`.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">total_utility_c</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">mean_utility_w_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Float. The mean utility for the sincere winner :attr:`w_`.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Float. The mean utility for the sincere winner :attr:`w_`.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">mean_utility_c</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">relative_social_welfare_w_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Float. The relative social welfare for the sincere winner :attr:`w_`.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Float. The relative social welfare for the sincere winner :attr:`w_`.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">relative_social_welfare_c</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span>
 
     <span class="c1"># %% Condorcet efficiency and variants</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">w_is_condorcet_admissible_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. ``True`` iff the sincere winner :attr:`w_` is Condorcet-admissible.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. ``True`` iff the sincere winner :attr:`w_` is Condorcet-admissible.</span>
 <span class="sd">        Cf. :attr:`~svvamp.Profile.condorcet_admissible_candidates`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">condorcet_admissible_candidates</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">w_is_not_condorcet_admissible_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. ``True`` iff the sincere winner :attr:`w_` is not a Condorcet-admissible candidate (whether some</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. ``True`` iff the sincere winner :attr:`w_` is not a Condorcet-admissible candidate (whether some</span>
 <span class="sd">        exist or not). Cf. :attr:`~svvamp.Profile.condorcet_admissible_candidates`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_is_condorcet_admissible_</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">w_missed_condorcet_admissible_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is not a Condorcet-admissible candidate, despite the fact</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is not a Condorcet-admissible candidate, despite the fact</span>
 <span class="sd">        that at least one exists. Cf. :attr:`~svvamp.Profile.condorcet_admissible_candidates`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">nb_condorcet_admissible</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_is_condorcet_admissible_</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">w_is_weak_condorcet_winner_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is a Weak Condorcet winner.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is a Weak Condorcet winner.</span>
 <span class="sd">        Cf. :attr:`~svvamp.Profile.weak_condorcet_winners`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">weak_condorcet_winners</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">w_is_not_weak_condorcet_winner_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is not a Weak Condorcet winner (whether some exist or not).</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is not a Weak Condorcet winner (whether some exist or not).</span>
 <span class="sd">        Cf. :attr:`~svvamp.Profile.weak_condorcet_winners`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_is_weak_condorcet_winner_</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">w_missed_weak_condorcet_winner_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is not a Weak Condorcet winner, despite the fact that at</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is not a Weak Condorcet winner, despite the fact that at</span>
 <span class="sd">        least one exists. Cf. :attr:`~svvamp.Profile.weak_condorcet_winners`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">nb_weak_condorcet_winners</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_is_weak_condorcet_winner_</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">w_is_condorcet_winner_rk_ctb_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is a :attr:`~svvamp.Profile.condorcet_winner_rk_ctb`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is a :attr:`~svvamp.Profile.condorcet_winner_rk_ctb`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">condorcet_winner_rk_ctb</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">w_is_not_condorcet_winner_rk_ctb_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is not a :attr:`~svvamp.Profile.condorcet_winner_rk_ctb`</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is not a :attr:`~svvamp.Profile.condorcet_winner_rk_ctb`</span>
 <span class="sd">        (whether one exists or not).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_is_condorcet_winner_rk_ctb_</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">w_missed_condorcet_winner_rk_ctb_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is not the :attr:`~svvamp.Profile.condorcet_winner_rk_ctb`,</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is not the :attr:`~svvamp.Profile.condorcet_winner_rk_ctb`,</span>
 <span class="sd">        despite the fact that she exists.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">condorcet_winner_rk_ctb</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_is_condorcet_winner_rk_ctb_</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">w_is_condorcet_winner_rk_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is a :attr:`~svvamp.Profile.condorcet_winner_rk`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is a :attr:`~svvamp.Profile.condorcet_winner_rk`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">condorcet_winner_rk</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">w_is_not_condorcet_winner_rk_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is not a :attr:`~svvamp.Profile.condorcet_winner_rk`</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is not a :attr:`~svvamp.Profile.condorcet_winner_rk`</span>
 <span class="sd">        (whether one exists or not).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_is_condorcet_winner_rk_</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">w_missed_condorcet_winner_rk_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is not the :attr:`~svvamp.Profile.condorcet_winner_rk`,</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is not the :attr:`~svvamp.Profile.condorcet_winner_rk`,</span>
 <span class="sd">        despite the fact that she exists.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">condorcet_winner_rk</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_is_condorcet_winner_rk_</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">w_is_condorcet_winner_ut_rel_ctb_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is a :attr:`~svvamp.Profile.condorcet_winner_ut_abs_ctb`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is a :attr:`~svvamp.Profile.condorcet_winner_ut_abs_ctb`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">condorcet_winner_ut_rel_ctb</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">w_is_not_condorcet_winner_ut_rel_ctb_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is not a :attr:`~svvamp.Profile.condorcet_winner_ut_abs_ctb`</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is not a :attr:`~svvamp.Profile.condorcet_winner_ut_abs_ctb`</span>
 <span class="sd">        (whether one exists or not).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_is_condorcet_winner_ut_rel_ctb_</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">w_missed_condorcet_winner_ut_rel_ctb_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is not the</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is not the</span>
 <span class="sd">        :attr:`~svvamp.Profile.condorcet_winner_ut_abs_ctb`, despite the fact that she exists.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">condorcet_winner_ut_rel_ctb</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_is_condorcet_winner_ut_rel_ctb_</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">w_is_condorcet_winner_ut_rel_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is a :attr:`~svvamp.Profile.condorcet_winner_ut_rel`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is a :attr:`~svvamp.Profile.condorcet_winner_ut_rel`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">condorcet_winner_ut_rel</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">w_is_not_condorcet_winner_ut_rel_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is not a :attr:`~svvamp.Profile.condorcet_winner_ut_rel`</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is not a :attr:`~svvamp.Profile.condorcet_winner_ut_rel`</span>
 <span class="sd">        (whether one exists or not).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_is_condorcet_winner_ut_rel_</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">w_missed_condorcet_winner_ut_rel_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is not the :attr:`~svvamp.Profile.condorcet_winner_ut_rel`,</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is not the :attr:`~svvamp.Profile.condorcet_winner_ut_rel`,</span>
 <span class="sd">        despite the fact that she exists.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">condorcet_winner_ut_rel</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_is_condorcet_winner_ut_rel_</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">w_is_condorcet_winner_ut_abs_ctb_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is a :attr:`~svvamp.Profile.condorcet_winner_ut_abs_ctb`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is a :attr:`~svvamp.Profile.condorcet_winner_ut_abs_ctb`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">condorcet_winner_ut_abs_ctb</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">w_is_not_condorcet_winner_ut_abs_ctb_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is not a :attr:`~svvamp.Profile.condorcet_winner_ut_abs_ctb`</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is not a :attr:`~svvamp.Profile.condorcet_winner_ut_abs_ctb`</span>
 <span class="sd">        (whether one exists or not).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_is_condorcet_winner_ut_abs_ctb_</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">w_missed_condorcet_winner_ut_abs_ctb_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is not the</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is not the</span>
 <span class="sd">        :attr:`~svvamp.Profile.condorcet_winner_ut_abs_ctb`, despite the fact that she exists.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">condorcet_winner_ut_abs_ctb</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_is_condorcet_winner_ut_abs_ctb_</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">w_is_condorcet_winner_ut_abs_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is a :attr:`~svvamp.Profile.condorcet_winner_ut_abs`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is a :attr:`~svvamp.Profile.condorcet_winner_ut_abs`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">condorcet_winner_ut_abs</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">w_is_not_condorcet_winner_ut_abs_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is not a :attr:`~svvamp.Profile.condorcet_winner_ut_abs`</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is not a :attr:`~svvamp.Profile.condorcet_winner_ut_abs`</span>
 <span class="sd">        (whether one exists or not).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_is_condorcet_winner_ut_abs_</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">w_missed_condorcet_winner_ut_abs_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is not the :attr:`~svvamp.Profile.condorcet_winner_ut_abs`,</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is not the :attr:`~svvamp.Profile.condorcet_winner_ut_abs`,</span>
 <span class="sd">        despite the fact that she exists.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">condorcet_winner_ut_abs</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_is_condorcet_winner_ut_abs_</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">w_is_resistant_condorcet_winner_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is a :attr:`~svvamp.Profile.resistant_condorcet_winner`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is a :attr:`~svvamp.Profile.resistant_condorcet_winner`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">resistant_condorcet_winner</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">w_is_not_resistant_condorcet_winner_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is not a :attr:`~svvamp.Profile.resistant_condorcet_winner`</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is not a :attr:`~svvamp.Profile.resistant_condorcet_winner`</span>
 <span class="sd">        (whether one exists or not).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_is_resistant_condorcet_winner_</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">w_missed_resistant_condorcet_winner_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is not the</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. True iff the sincere winner :attr:`w_` is not the</span>
 <span class="sd">        :attr:`~svvamp.Profile.resistant_condorcet_winner`, despite the fact that she exists.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">resistant_condorcet_winner</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_is_resistant_condorcet_winner_</span>
 
-<div class="viewcode-block" id="Rule.demo_profile_"><a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule.demo_profile_">[docs]</a>    <span class="k">def</span> <span class="nf">demo_profile_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log_depth</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Demonstrate the attributes of the loaded profile.</span>
+<div class="viewcode-block" id="Rule.demo_profile_">
+<a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule.demo_profile_">[docs]</a>
+    <span class="k">def</span> <span class="nf">demo_profile_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log_depth</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Demonstrate the attributes of the loaded profile.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -897,8 +915,11 @@
         <span class="n">print_big_title</span><span class="p">(</span><span class="s1">&#39;Profile Class&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">demo</span><span class="p">(</span><span class="n">log_depth</span><span class="o">=</span><span class="n">log_depth</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Rule.demo_results_"><a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule.demo_results_">[docs]</a>    <span class="k">def</span> <span class="nf">demo_results_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log_depth</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Demonstrate the methods related to the result of the election (without manipulation).</span>
+
+<div class="viewcode-block" id="Rule.demo_results_">
+<a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule.demo_results_">[docs]</a>
+    <span class="k">def</span> <span class="nf">demo_results_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log_depth</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Demonstrate the methods related to the result of the election (without manipulation).</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -977,11 +998,12 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">log_depth</span> <span class="o">=</span> <span class="n">old_log_depth</span></div>
 
+
     <span class="c1"># %% Setting the options</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">iia_subset_maximum_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Float or ``numpy.inf``. Maximum size of any subset of candidates that is used to compute</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Float or ``numpy.inf``. Maximum size of any subset of candidates that is used to compute</span>
 <span class="sd">        :meth:`not_iia` (and related methods). For a given voting system, this attribute has no</span>
 <span class="sd">        effect if there is an exact algorithm running in polynomial time implemented in SVVAMP.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1001,7 +1023,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">im_option</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;String. Option used to compute :meth:`is_im_` and related methods.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;String. Option used to compute :meth:`is_im_` and related methods.</span>
 
 <span class="sd">        To know what options are accepted for a given voting system, use :attr:`options_parameters`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1020,7 +1042,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">tm_option</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;String. Option used to compute :meth:`is_tm_` and related methods.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;String. Option used to compute :meth:`is_tm_` and related methods.</span>
 
 <span class="sd">        To know what options are accepted for a given voting system, use :attr:`options_parameters`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1041,7 +1063,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">um_option</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;String. Option used to compute :meth:`is_um_` and related methods.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;String. Option used to compute :meth:`is_um_` and related methods.</span>
 
 <span class="sd">        To know what options are accepted for a given voting system, use :attr:`options_parameters`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1062,7 +1084,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">icm_option</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;String. Option used to compute :meth:`is_icm_` and related methods.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;String. Option used to compute :meth:`is_icm_` and related methods.</span>
 
 <span class="sd">        To know what options are accepted for a given voting system, use :attr:`options_parameters`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1083,7 +1105,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">cm_option</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;String. Option used to compute :meth:`is_cm_` and related methods.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;String. Option used to compute :meth:`is_cm_` and related methods.</span>
 
 <span class="sd">        To know what options are accepted for a given voting system, use :attr:`options_parameters`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1104,12 +1126,12 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">log_iia_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;String. Parameters used to compute :meth:`is_not_iia_` and related methods.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;String. Parameters used to compute :meth:`is_not_iia_` and related methods.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="s2">&quot;iia_subset_maximum_size = &quot;</span> <span class="o">+</span> <span class="nb">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iia_subset_maximum_size</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">is_not_iia_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. ``True`` if there exists a subset of candidates including the sincere winner</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. ``True`` if there exists a subset of candidates including the sincere winner</span>
 <span class="sd">        :attr:`w_`, such that if the election is held with this subset of candidates, then :attr:`w_` is not the</span>
 <span class="sd">        winner anymore. If the algorithm cannot decide, then the result is ``numpy.nan``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1120,12 +1142,12 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">is_iia_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. Cf. :attr:`is_not_iia`.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. Cf. :attr:`is_not_iia`.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_iia_</span><span class="p">[</span><span class="s1">&#39;is_iia&#39;</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">example_winner_iia_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Integer (candidate). If the election is not IIA, ``example_winner_iia`` is the winner corresponding to the</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Integer (candidate). If the election is not IIA, ``example_winner_iia`` is the winner corresponding to the</span>
 <span class="sd">        counter-example ``example_subset_iia``. If the election is IIA (or if the algorithm cannot decide), then</span>
 <span class="sd">        ``example_winner_iia = numpy.nan``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1133,7 +1155,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">example_subset_iia_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;1d array of booleans. If the election is not IIA, ``example_subset_iia`` provides a subset of candidates</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of booleans. If the election is not IIA, ``example_subset_iia`` provides a subset of candidates</span>
 <span class="sd">        breaking IIA. ``example_subset_iia[c]`` is ``True`` iff candidate ``c`` belongs to the subset. If the</span>
 <span class="sd">        election is IIA (or if the algorithm cannot decide), then ``example_subset_iia = numpy.nan``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1141,7 +1163,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">_compute_iia_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Compute iia.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute iia.</span>
 
 <span class="sd">        :return: a dictionary whose keys are &#39;is_iia&#39;, &#39;example_subset_iia&#39;, &#39;example_winner_iia&#39;.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1193,7 +1215,7 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_iia_aux_</span><span class="p">(</span><span class="n">subset_minimum_size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_compute_iia_aux_when_guaranteed_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Auxiliary function of _compute_iia_, used when IIA is guaranteed.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Auxiliary function of _compute_iia_, used when IIA is guaranteed.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1209,7 +1231,7 @@
         <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;is_iia&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;example_subset_iia&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="s1">&#39;example_winner_iia&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">}</span>
 
     <span class="k">def</span> <span class="nf">_compute_iia_aux_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subset_minimum_size</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Auxiliary function of _compute_iia_: real work.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Auxiliary function of _compute_iia_: real work.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1251,7 +1273,7 @@
             <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;is_iia&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;example_winner_iia&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="s1">&#39;example_subset_iia&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">}</span>
 
     <span class="k">def</span> <span class="nf">_compute_winner_of_subset_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">candidates_r</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Compute the winner for a subset of candidates.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the winner for a subset of candidates.</span>
 
 <span class="sd">        This function is internally used to compute Independence of Irrelevant Alternatives (IIA).</span>
 
@@ -1273,7 +1295,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">v_wants_to_help_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;2d array of booleans. ``v_wants_to_help_c[v, c]`` is ``True`` iff voter ``v`` strictly prefers candidate</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;2d array of booleans. ``v_wants_to_help_c[v, c]`` is ``True`` iff voter ``v`` strictly prefers candidate</span>
 <span class="sd">        ``c`` to the sincere winner :attr:`w_`. If ``v`` attributes the same utility to ``c`` and ``w_``, then ``v``</span>
 <span class="sd">        is not interested.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1282,7 +1304,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">losing_candidates_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;1d of Integers. List of losing candidates, in a decreasing order of (heuristic) dangerousness</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d of Integers. List of losing candidates, in a decreasing order of (heuristic) dangerousness</span>
 
 <span class="sd">        This attribute is mostly intended for SVVAMP developers. It is used in most manipulation algorithms. The idea</span>
 <span class="sd">        is to try first the candidates for whom we think manipulation is more likely to succeed, in order to gain time.</span>
@@ -1301,14 +1323,14 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">c_has_supporters_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;1d array of booleans. ``c_has_supporters_[c]`` is ``True`` iff at least one voter prefers candidate ``c`` to</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of booleans. ``c_has_supporters_[c]`` is ``True`` iff at least one voter prefers candidate ``c`` to</span>
 <span class="sd">        the sincere winner :attr:`w_`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Compute c_has_supporters_&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_wants_to_help_c_</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_update_sufficient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sufficient_array</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Update an array _sufficient_coalition_size_.. for candidate c.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update an array _sufficient_coalition_size_.. for candidate c.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1333,7 +1355,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_update_necessary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">necessary_array</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Update an array _necessary_coalition_size_.. for candidate c.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update an array _necessary_coalition_size_.. for candidate c.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1361,12 +1383,12 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">log_im_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;String. Parameters used to compute :meth:`is_im_` and related methods.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;String. Parameters used to compute :meth:`is_im_` and related methods.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="s2">&quot;im_option = &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">im_option</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">is_im_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean. ``True`` if there exists a voter who can and wants to manipulate, ``False`` otherwise. If the</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. ``True`` if there exists a voter who can and wants to manipulate, ``False`` otherwise. If the</span>
 <span class="sd">        algorithm cannot decide, then ``numpy.nan``.</span>
 
 <span class="sd">        Voter ``v`` can and wants to manipulate for candidate ``c`` iff:</span>
@@ -1379,8 +1401,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_compute_im_</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;is_im_&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">pseudo_bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_is_im</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Rule.is_im_c_"><a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule.is_im_c_">[docs]</a>    <span class="k">def</span> <span class="nf">is_im_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Individual manipulation, focus on one candidate.</span>
+<div class="viewcode-block" id="Rule.is_im_c_">
+<a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule.is_im_c_">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_im_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Individual manipulation, focus on one candidate.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1397,8 +1421,11 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_compute_im_</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;is_im_c_&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">c</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">pseudo_bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_candidates_im</span><span class="p">[</span><span class="n">c</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="Rule.is_im_c_with_voters_"><a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule.is_im_c_with_voters_">[docs]</a>    <span class="k">def</span> <span class="nf">is_im_c_with_voters_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Individual manipulation, focus on one candidate, with details.</span>
+
+<div class="viewcode-block" id="Rule.is_im_c_with_voters_">
+<a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule.is_im_c_with_voters_">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_im_c_with_voters_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Individual manipulation, focus on one candidate, with details.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1415,9 +1442,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_compute_im_</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;is_im_c_with_voters_&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">c</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">pseudo_bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_candidates_im</span><span class="p">[</span><span class="n">c</span><span class="p">]),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_v_im_for_c</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]</span></div>
 
+
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">voters_im_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;1d array of booleans (or ``numpy.nan``). ``voters_im_[v]`` is ``True`` if voter ``v`` can and wants to</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of booleans (or ``numpy.nan``). ``voters_im_[v]`` is ``True`` if voter ``v`` can and wants to</span>
 <span class="sd">        manipulate for at least one candidate, ``False`` otherwise. If the algorithm cannot decide, then ``numpy.nan``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_im_is_initialized_general_</span>
@@ -1427,7 +1455,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">candidates_im_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;1d array of booleans (or ``numpy.nan``). ``candidates_im[c]`` is ``True`` if there exists a voter who can</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of booleans (or ``numpy.nan``). ``candidates_im[c]`` is ``True`` if there exists a voter who can</span>
 <span class="sd">        manipulate for candidate ``c``, ``False`` otherwise. If the algorithm cannot decide, then ``numpy.nan``. For</span>
 <span class="sd">        the sincere winner :attr:`w_`, we have by convention ``candidates_im_[w_] = False``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1438,7 +1466,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">v_im_for_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;2d array of booleans. ``v_im_for_c_[v, c]`` is ``True`` if voter ``v`` can manipulate for candidate ``c``,</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;2d array of booleans. ``v_im_for_c_[v, c]`` is ``True`` if voter ``v`` can manipulate for candidate ``c``,</span>
 <span class="sd">        ``False`` otherwise. If the algorithm cannot decide, then ``numpy.nan``. For the sincere winner :attr:w_`,</span>
 <span class="sd">        we have by convention ``v_im_for_c_[v, w_] = False``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1447,8 +1475,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_compute_im_</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;v_im_for_c_&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_v_im_for_c</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Rule.is_im_v_"><a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule.is_im_v_">[docs]</a>    <span class="k">def</span> <span class="nf">is_im_v_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Individual manipulation, focus on one voter.</span>
+<div class="viewcode-block" id="Rule.is_im_v_">
+<a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule.is_im_v_">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_im_v_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Individual manipulation, focus on one voter.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1465,8 +1495,11 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_compute_im_v_</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">c_is_wanted</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">bool</span><span class="p">),</span> <span class="n">stop_if_true</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">pseudo_bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_voters_im</span><span class="p">[</span><span class="n">v</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="Rule.is_im_v_with_candidates_"><a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule.is_im_v_with_candidates_">[docs]</a>    <span class="k">def</span> <span class="nf">is_im_v_with_candidates_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Individual manipulation, focus on one voter, with details.</span>
+
+<div class="viewcode-block" id="Rule.is_im_v_with_candidates_">
+<a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule.is_im_v_with_candidates_">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_im_v_with_candidates_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Individual manipulation, focus on one voter, with details.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1483,9 +1516,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_compute_im_v_</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">c_is_wanted</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">bool</span><span class="p">),</span> <span class="n">stop_if_true</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">pseudo_bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_voters_im</span><span class="p">[</span><span class="n">v</span><span class="p">]),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_v_im_for_c</span><span class="p">[</span><span class="n">v</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span></div>
 
+
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">_im_is_initialized_general_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Initialize IM variables and do preliminary checks.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize IM variables and do preliminary checks.</span>
 
 <span class="sd">        Since it is a cached property, the code is run only the first time IM is launched (whatever the  mode).</span>
 
@@ -1512,7 +1546,7 @@
         <span class="k">return</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="nf">_im_preliminary_checks_general_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Do preliminary checks for IM. Only first time IM is launched.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do preliminary checks for IM. Only first time IM is launched.</span>
 
 <span class="sd">        Can update some ``_v_im_for_c[v, c]`` to True or False (instead of -inf). In particular, it is mandatory that</span>
 <span class="sd">        it is updated to False if voter ``v`` does not prefer ``c`` to the sincere winner ``w``.</span>
@@ -1551,7 +1585,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">mylogm</span><span class="p">(</span><span class="s1">&#39;_v_im_for_c =&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_v_im_for_c</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_im_preliminary_checks_general_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Do preliminary checks for IM. Only first time IM is launched.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do preliminary checks for IM. Only first time IM is launched.</span>
 
 <span class="sd">        Can update some ``_v_im_for_c[v, c]`` to True or False (instead of -inf).</span>
 
@@ -1567,7 +1601,7 @@
         <span class="k">pass</span>
 
     <span class="k">def</span> <span class="nf">_im_initialize_v_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Initialize the IM loop for voter v and do preliminary checks. Launched every time we work on voter v.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the IM loop for voter v and do preliminary checks. Launched every time we work on voter v.</span>
 
 <span class="sd">        * If the voting system is ordinal and voter ``v`` has the same ordinal preferences as previous voter ``v - 1``,</span>
 <span class="sd">          then update the line ``_v_im_for_c[v, :]`` with what we know for ``v - 1``.</span>
@@ -1587,7 +1621,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_im_preliminary_checks_v_</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_im_preliminary_checks_v_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;IM: preliminary checks for voter v.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;IM: preliminary checks for voter v.</span>
 
 <span class="sd">        Try to decide some ``_v_im_for_c[v, c]``. If ``_v_im_for_c[v, c]`` becomes True, then ``_candidates_im[c]``,</span>
 <span class="sd">        ``_voters_im[v]`` and ``_is_im`` must become True as well. In the other cases, it is not necessary to update</span>
@@ -1597,7 +1631,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_im_preliminary_checks_v_subclass_</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_im_preliminary_checks_v_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;IM: preliminary checks for voter v.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;IM: preliminary checks for voter v.</span>
 
 <span class="sd">        Try to decide some ``_v_im_for_c[v, c]``. If ``_v_im_for_c[v, c]`` becomes True, then ``_candidates_im[c]``,</span>
 <span class="sd">        ``_voters_im[v]`` and ``_is_im`` must become True as well. In the other cases, it is not necessary to update</span>
@@ -1606,7 +1640,7 @@
         <span class="k">pass</span>
 
     <span class="k">def</span> <span class="nf">_im_main_work_v_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">c_is_wanted</span><span class="p">,</span> <span class="n">nb_wanted_undecided</span><span class="p">,</span> <span class="n">stop_if_true</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Do the main work in IM loop for voter v.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do the main work in IM loop for voter v.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1639,13 +1673,13 @@
 
     <span class="c1"># noinspection PyUnusedLocal</span>
     <span class="k">def</span> <span class="nf">_im_main_work_v_lazy_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">c_is_wanted</span><span class="p">,</span> <span class="n">nb_wanted_undecided</span><span class="p">,</span> <span class="n">stop_if_true</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Do the main work in IM loop for voter v, with option &#39;lazy&#39;. Cf. :meth:`_im_main_work_v_`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do the main work in IM loop for voter v, with option &#39;lazy&#39;. Cf. :meth:`_im_main_work_v_`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># When we don&#39;t know, we decide that we don&#39;t know!</span>
         <span class="n">neginf_to_nan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_v_im_for_c</span><span class="p">[</span><span class="n">v</span><span class="p">,</span> <span class="p">:])</span>
 
     <span class="k">def</span> <span class="nf">_im_main_work_v_exact_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">c_is_wanted</span><span class="p">,</span> <span class="n">nb_wanted_undecided</span><span class="p">,</span> <span class="n">stop_if_true</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Do the main work in IM loop for voter v, with option &#39;exact&#39;. Cf. :meth:`_im_main_work_v_`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do the main work in IM loop for voter v, with option &#39;exact&#39;. Cf. :meth:`_im_main_work_v_`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_based_on_rk</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_im_main_work_v_exact_rankings_</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">c_is_wanted</span><span class="p">,</span> <span class="n">nb_wanted_undecided</span><span class="p">,</span> <span class="n">stop_if_true</span><span class="p">)</span>
@@ -1658,7 +1692,7 @@
             <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 
     <span class="k">def</span> <span class="nf">_im_main_work_v_exact_rankings_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">c_is_wanted</span><span class="p">,</span> <span class="n">nb_wanted_undecided</span><span class="p">,</span> <span class="n">stop_if_true</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Do the main work in IM loop for voter v, with option &#39;exact&#39;, for a voting system based only on strict</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do the main work in IM loop for voter v, with option &#39;exact&#39;, for a voting system based only on strict</span>
 <span class="sd">        rankings. Cf. :meth:`_im_main_work_v_`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">preferences_borda_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">)</span>
@@ -1688,7 +1722,7 @@
 
     <span class="k">def</span> <span class="nf">_im_main_work_v_exact_utilities_minus1_1_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">c_is_wanted</span><span class="p">,</span>
                                                   <span class="n">nb_wanted_undecided</span><span class="p">,</span> <span class="n">stop_if_true</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
-        <span class="sd">&quot;&quot;&quot;Do the main work in IM loop for voter v, with option &#39;exact&#39;, for a voting system based only on utilities</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do the main work in IM loop for voter v, with option &#39;exact&#39;, for a voting system based only on utilities</span>
 <span class="sd">        and where it is optimal for a c-manipulator to pretend that ``c`` has utility 1 and other candidates utility 0.</span>
 <span class="sd">        Cf. :meth:`_im_main_work_v`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1720,7 +1754,7 @@
                 <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">_compute_im_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Compute IM.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute IM.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1785,7 +1819,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_im_was_computed_with_candidates</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="nf">_compute_im_v_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">c_is_wanted</span><span class="p">,</span> <span class="n">stop_if_true</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Compute IM for voter v.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute IM for voter v.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1824,12 +1858,12 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">log_tm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;String. Parameters used to compute :meth:`is_tm_` and related methods.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;String. Parameters used to compute :meth:`is_tm_` and related methods.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="s2">&quot;tm_option = &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">tm_option</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">is_tm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean (or ``numpy.nan``). ``True`` if TM is possible, ``False`` otherwise. If the algorithm cannot decide,</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean (or ``numpy.nan``). ``True`` if TM is possible, ``False`` otherwise. If the algorithm cannot decide,</span>
 <span class="sd">        then ``numpy.nan`` (but as of now, this value is never used for TM).</span>
 
 <span class="sd">        For ordinal voting systems, we call *trivial manipulation* for candidate ``c`` against :attr:`w_` the fact of</span>
@@ -1851,8 +1885,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_compute_tm_</span><span class="p">(</span><span class="n">with_candidates</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">pseudo_bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_is_tm</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Rule.is_tm_c_"><a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule.is_tm_c_">[docs]</a>    <span class="k">def</span> <span class="nf">is_tm_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Trivial manipulation, focus on one candidate.</span>
+<div class="viewcode-block" id="Rule.is_tm_c_">
+<a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule.is_tm_c_">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_tm_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Trivial manipulation, focus on one candidate.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1869,9 +1905,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_compute_tm_c_</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">pseudo_bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_candidates_tm</span><span class="p">[</span><span class="n">c</span><span class="p">])</span></div>
 
+
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">candidates_tm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;1d array of booleans (or ``numpy.nan``). ``candidates_tm[c]`` is ``True`` if a TM for candidate ``c`` is</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of booleans (or ``numpy.nan``). ``candidates_tm[c]`` is ``True`` if a TM for candidate ``c`` is</span>
 <span class="sd">        possible, ``False`` otherwise. If the algorithm cannot decide, then ``numpy.nan`` (but as of now, this value</span>
 <span class="sd">        is not never for TM). For the sincere winner :attr:`w_`, we have by convention ``candidates_tm[w] = False``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1882,7 +1919,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">_tm_is_initialized_general_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Initialize TM variables and perform some preliminary checks. Used only the first time TM is launched</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize TM variables and perform some preliminary checks. Used only the first time TM is launched</span>
 <span class="sd">        (whatever the mode).</span>
 <span class="sd">        _is_tm --&gt; True or False if we know, -inf otherwise.</span>
 <span class="sd">        _candidates_tm[c] --&gt; True or False if we know, -inf otherwise.</span>
@@ -1903,7 +1940,7 @@
         <span class="k">return</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="nf">_tm_preliminary_checks_general_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Do preliminary checks for TM. Only first time TM is launched.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do preliminary checks for TM. Only first time TM is launched.</span>
 
 <span class="sd">        Can update some _candidates_tm[c] to True or False (instead of -inf).</span>
 
@@ -1965,7 +2002,7 @@
         <span class="c1"># Nothing</span>
 
     <span class="k">def</span> <span class="nf">_tm_preliminary_checks_general_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Do preliminary checks for TM. Only first time TM is launched.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do preliminary checks for TM. Only first time TM is launched.</span>
 
 <span class="sd">        Can update some ``_candidates_tm[c]`` to True or False (instead of -inf).</span>
 
@@ -1983,7 +2020,7 @@
         <span class="k">pass</span>
 
     <span class="k">def</span> <span class="nf">_tm_initialize_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Initialize the TM loop for candidate ``c`` and may do preliminary checks.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the TM loop for candidate ``c`` and may do preliminary checks.</span>
 
 <span class="sd">        * If ``_candidates_tm[c]`` is decided (True/False/NaN), it means that all the work for ``c`` has been done</span>
 <span class="sd">          before. Then get out.</span>
@@ -2013,7 +2050,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;TM: Preliminary checks: TM is unknown for c =&quot;</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_tm_preliminary_checks_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;TM: preliminary checks for challenger ``c``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;TM: preliminary checks for challenger ``c``.</span>
 
 <span class="sd">        Try to decide ``_candidates_tm[c]`` to True or False (instead of -inf). Do not update ``_is_tm``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -2021,14 +2058,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_tm_preliminary_checks_c_subclass_</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_tm_preliminary_checks_c_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;TM: preliminary checks for challenger ``c``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;TM: preliminary checks for challenger ``c``.</span>
 
 <span class="sd">        Try to decide ``_candidates_tm[c]`` to True or False (instead of -inf). Do not update ``_is_tm``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
     <span class="k">def</span> <span class="nf">_tm_main_work_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Do the main work in TM loop for candidate ``c``. Must decide ``_candidates_tm[c]`` (to True, False or NaN).</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Do the main work in TM loop for candidate ``c``. Must decide ``_candidates_tm[c]`` (to True, False or NaN).</span>
 <span class="sd">        Do not update ``_is_tm``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># N.B.: in some subclasses, it is possible to try one method, then another one if the first one fails,</span>
@@ -2037,13 +2074,13 @@
         <span class="c1"># Launch a sub-method like _tm_main_work_c_lazy, etc.</span>
 
     <span class="k">def</span> <span class="nf">_tm_main_work_c_lazy_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Do the main work in TM loop for candidate ``c``, with option &#39;lazy&#39;. Must decide ``_candidates_tm[c]`` (to</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do the main work in TM loop for candidate ``c``, with option &#39;lazy&#39;. Must decide ``_candidates_tm[c]`` (to</span>
 <span class="sd">        True, False or NaN). Do not update ``_is_tm``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_tm</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">neginf_to_nan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_candidates_tm</span><span class="p">[</span><span class="n">c</span><span class="p">])</span>
 
     <span class="k">def</span> <span class="nf">_tm_main_work_c_exact_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Do the main work in TM loop for candidate ``c``, with option &#39;exact&#39;. Must decide ``_candidates_tm[c]`` (to</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do the main work in TM loop for candidate ``c``, with option &#39;exact&#39;. Must decide ``_candidates_tm[c]`` (to</span>
 <span class="sd">        True, False or NaN). Do not update ``_is_tm``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_based_on_rk</span><span class="p">:</span>
@@ -2057,7 +2094,7 @@
             <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 
     <span class="k">def</span> <span class="nf">_tm_main_work_c_exact_rankings_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Do the main work in TM loop for candidate ``c``, with option &#39;exact&#39;, for a voting system based only on</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do the main work in TM loop for candidate ``c``, with option &#39;exact&#39;, for a voting system based only on</span>
 <span class="sd">        strict rankings. Must decide ``_candidates_tm[c]`` (to True, False or NaN). Do not update ``_is_tm``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Manipulators put c on top and w at bottom.</span>
@@ -2066,7 +2103,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_tm</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">w_test</span> <span class="o">==</span> <span class="n">c</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_tm_main_work_c_exact_utilities_minus1_1_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
-        <span class="sd">&quot;&quot;&quot;Do the main work in TM loop for candidate ``c``, with option &#39;exact&#39;, for a voting system based only on</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do the main work in TM loop for candidate ``c``, with option &#39;exact&#39;, for a voting system based only on</span>
 <span class="sd">        utilities and where it is optimal for a ``c``-manipulator to pretend that ``c`` has utility 1 and other</span>
 <span class="sd">        candidates utility 0. Must decide ``_candidates_tm[c]`` (to True, False or NaN). Do not update ``_is_tm``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -2082,7 +2119,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_tm</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">w_test</span> <span class="o">==</span> <span class="n">c</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_tm_conclude_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Conclude the TM loop for candidate ``c``, according to the value of ``_candidates_tm[c]``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Conclude the TM loop for candidate ``c``, according to the value of ``_candidates_tm[c]``.</span>
 
 <span class="sd">        ``_is_tm``:</span>
 
@@ -2098,7 +2135,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;TM: Final answer: TM is unknown for c =&quot;</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_compute_tm_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">with_candidates</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Compute TM: is_tm.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute TM: is_tm.</span>
 
 <span class="sd">        Note that this method is launched by TM only if _is_tm is not decided, and by tm_with_candidates only if not</span>
 <span class="sd">        ``_tm_was_computed_with_candidates``. So, it is not necessary to do a preliminary check on these variables.</span>
@@ -2130,7 +2167,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_is_tm</span> <span class="o">=</span> <span class="n">neginf_to_zero</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_is_tm</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_compute_tm_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Compute TM for candidate c.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute TM for candidate c.</span>
 
 <span class="sd">        Note that this method checks if ``_candidates_tm[c]`` is already decided. So, it is not necessary to do this</span>
 <span class="sd">        check before calling the method.</span>
@@ -2147,7 +2184,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_tm_conclude_c_</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_compute_trivial_strategy_ordinal_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Compute trivial strategy for a voting system based on strict rankings.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute trivial strategy for a voting system based on strict rankings.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -2174,13 +2211,13 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">log_um_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;String. Parameters used to compute :meth:`is_um_` and related methods.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;String. Parameters used to compute :meth:`is_um_` and related methods.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="s2">&quot;um_option = &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">um_option</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">is_um_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean (or ``numpy.nan``). ``True`` if UM is possible, ``False`` otherwise. If the algorithm cannot decide,</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean (or ``numpy.nan``). ``True`` if UM is possible, ``False`` otherwise. If the algorithm cannot decide,</span>
 <span class="sd">        then ``numpy.nan``.</span>
 
 <span class="sd">        We say that a situation is *unison-manipulable* for a candidate ``c`` ``!=`` :attr:`w_`  iff all voters who</span>
@@ -2192,8 +2229,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_compute_um_</span><span class="p">(</span><span class="n">with_candidates</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">pseudo_bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_is_um</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Rule.is_um_c_"><a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule.is_um_c_">[docs]</a>    <span class="k">def</span> <span class="nf">is_um_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Unison manipulation, focus on one candidate.</span>
+<div class="viewcode-block" id="Rule.is_um_c_">
+<a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule.is_um_c_">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_um_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Unison manipulation, focus on one candidate.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -2210,9 +2249,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_compute_um_c_</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">pseudo_bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_candidates_um</span><span class="p">[</span><span class="n">c</span><span class="p">])</span></div>
 
+
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">candidates_um_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;1d array of booleans (or ``numpy.nan``). ``candidates_um_[c]`` is ``True`` if UM for candidate ``c`` is</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of booleans (or ``numpy.nan``). ``candidates_um_[c]`` is ``True`` if UM for candidate ``c`` is</span>
 <span class="sd">        possible, ``False`` otherwise. If the algorithm cannot decide, then ``numpy.nan``. For the sincere winner</span>
 <span class="sd">        :attr:`w_`, we have by convention ``candidates_um_[w_] = False``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -2223,7 +2263,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">_um_is_initialized_general_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Initialize UM variables and do preliminary checks. Used only the first time UM is launched (whatever the</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize UM variables and do preliminary checks. Used only the first time UM is launched (whatever the</span>
 <span class="sd">        mode).</span>
 <span class="sd">        _is_um --&gt; True or False if we know, -inf otherwise.</span>
 <span class="sd">        _candidates_um[c] --&gt; True or False if we know, -inf otherwise.</span>
@@ -2244,7 +2284,7 @@
         <span class="k">return</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="nf">_um_preliminary_checks_general_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Do preliminary checks for UM. Only first time UM is launched.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do preliminary checks for UM. Only first time UM is launched.</span>
 
 <span class="sd">        Can update some ``_candidates_um[c]`` to True or False (instead of -inf).</span>
 
@@ -2308,7 +2348,7 @@
             <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">_um_preliminary_checks_general_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Do preliminary checks for UM. Only first time UM is launched.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do preliminary checks for UM. Only first time UM is launched.</span>
 
 <span class="sd">        Can update some ``_candidates_um[c]`` to True or False (instead of -inf). True must be propagated from</span>
 <span class="sd">        specific to general, False must be propagated from general to specific.</span>
@@ -2326,7 +2366,7 @@
         <span class="k">pass</span>
 
     <span class="k">def</span> <span class="nf">_um_initialize_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Initialize the UM loop for candidate ``c`` and may do preliminary checks.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the UM loop for candidate ``c`` and may do preliminary checks.</span>
 
 <span class="sd">        * If ``_candidates_um[c]`` is decided (True/False/NaN), it means that all the work for ``c`` has been done</span>
 <span class="sd">          before. Then get out.</span>
@@ -2350,7 +2390,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;UM: Preliminary checks: UM is unknown for c =&quot;</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_um_preliminary_checks_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;UM: preliminary checks for challenger ``c``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;UM: preliminary checks for challenger ``c``.</span>
 
 <span class="sd">        Try to decide _candidates_um[c]`` to True or False (instead of -inf). Do not update ``_is_um``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -2406,14 +2446,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_um_preliminary_checks_c_subclass_</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_um_preliminary_checks_c_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;UM: preliminary checks for challenger ``c``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;UM: preliminary checks for challenger ``c``.</span>
 
 <span class="sd">        Try to decide ``_candidates_um[c]`` to True or False (instead of -inf). Do not update ``_is_um``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
     <span class="k">def</span> <span class="nf">_um_main_work_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Do the main work in UM loop for candidate ``c``. Must decide ``_candidates_um[c]`` (to True,</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Do the main work in UM loop for candidate ``c``. Must decide ``_candidates_um[c]`` (to True,</span>
 <span class="sd">        False or NaN). Do not update ``_is_um``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># N.B.: in some subclasses, it is possible to try one method, then another one if the first one fails,</span>
@@ -2422,14 +2462,14 @@
         <span class="c1"># Launch a sub-method like _um_main_work_c_lazy, etc.</span>
 
     <span class="k">def</span> <span class="nf">_um_main_work_c_lazy_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Do the main work in UM loop for candidate c, with option &#39;lazy&#39;. Must decide ``_candidates_um[c]`` (to True,</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do the main work in UM loop for candidate c, with option &#39;lazy&#39;. Must decide ``_candidates_um[c]`` (to True,</span>
 <span class="sd">        False or NaN). Do not update ``_is_um``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_um</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">neginf_to_nan</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_um</span><span class="p">[</span><span class="n">c</span><span class="p">])</span>
 
     <span class="k">def</span> <span class="nf">_um_main_work_c_exact_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Do the main work in UM loop for candidate ``c``, with option &#39;exact&#39;. Must decide ``_candidates_um[c]`` (to</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do the main work in UM loop for candidate ``c``, with option &#39;exact&#39;. Must decide ``_candidates_um[c]`` (to</span>
 <span class="sd">        True, False or NaN). Do not update ``_is_um``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;UM: Compute UM for c =&quot;</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
@@ -2444,7 +2484,7 @@
             <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 
     <span class="k">def</span> <span class="nf">_um_main_work_c_exact_rankings_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Do the main work in UM loop for candidate ``c``, with option &#39;exact&#39;, for a voting system based only on</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do the main work in UM loop for candidate ``c``, with option &#39;exact&#39;, for a voting system based only on</span>
 <span class="sd">        strict rankings. Must decide ``_candidates_um[c]`` (to True, False or NaN). Do not update ``_is_um``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">profile_s</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span>
@@ -2466,7 +2506,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_um</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">_um_main_work_c_exact_utilities_minus1_1_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
-        <span class="sd">&quot;&quot;&quot;Do the main work in UM loop for candidate ``c``, with option &#39;exact&#39;, for a voting system based only on</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do the main work in UM loop for candidate ``c``, with option &#39;exact&#39;, for a voting system based only on</span>
 <span class="sd">        utilities and where it is optimal for a c-manipulator to pretend that ``c`` has utility 1 and other</span>
 <span class="sd">        candidates utility 0. Must decide ``_candidates_um[c]`` (to True, False or NaN). Do not update ``_is_um``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -2476,7 +2516,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_um</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_tm_c_</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_um_conclude_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Conclude the UM loop for candidate ``c``, according to the value of ``_candidates_um[c]``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Conclude the UM loop for candidate ``c``, according to the value of ``_candidates_um[c]``.</span>
 <span class="sd">        ``_is_um`` --&gt;</span>
 <span class="sd">            * If ``_candidates_um[c]`` is True, then ``_is_um = True``.</span>
 <span class="sd">            * Otherwise, do not update ``_is_um``.</span>
@@ -2490,7 +2530,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;UM: Final answer: UM is unknown for c =&quot;</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_compute_um_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">with_candidates</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Compute UM: ``is_um``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute UM: ``is_um``.</span>
 
 <span class="sd">        Note that this method is launched by ``is_um_`` only if ``_is_um`` is not decided, and by ``candidates_um_``</span>
 <span class="sd">        only if not ``_um_was_computed_with_candidates``. So, it is not necessary to do a preliminary check on these</span>
@@ -2526,7 +2566,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_is_um</span> <span class="o">=</span> <span class="n">neginf_to_zero</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_is_um</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_compute_um_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Compute UM for candidate ``c``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute UM for candidate ``c``.</span>
 
 <span class="sd">        Note that this method checks if ``_candidates_um[c]`` is already decided. So, it is not necessary to do this</span>
 <span class="sd">        check before calling the method.</span>
@@ -2548,13 +2588,13 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">log_icm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;String. Parameters used to compute :meth:`is_icm_` and related methods.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;String. Parameters used to compute :meth:`is_icm_` and related methods.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="s2">&quot;icm_option = &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">icm_option</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">is_icm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean (or ``numpy.nan``). ``True`` if an ICM is possible, ``False`` otherwise. If the algorithm cannot</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean (or ``numpy.nan``). ``True`` if an ICM is possible, ``False`` otherwise. If the algorithm cannot</span>
 <span class="sd">        decide, then ``numpy.nan``.</span>
 
 <span class="sd">        We say that a situation is *Ignorant-Coalition Manipulable* (ICM) for ``c`` ``!=`` :attr:`w_` iff the voters</span>
@@ -2565,8 +2605,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_compute_icm_</span><span class="p">(</span><span class="n">with_candidates</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">pseudo_bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_is_icm</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Rule.is_icm_c_"><a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule.is_icm_c_">[docs]</a>    <span class="k">def</span> <span class="nf">is_icm_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Ignorant-Coalition Manipulation, focus on one candidate.</span>
+<div class="viewcode-block" id="Rule.is_icm_c_">
+<a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule.is_icm_c_">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_icm_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Ignorant-Coalition Manipulation, focus on one candidate.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -2583,8 +2625,11 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_compute_icm_c_</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">pseudo_bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_candidates_icm</span><span class="p">[</span><span class="n">c</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="Rule.is_icm_c_with_bounds_"><a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule.is_icm_c_with_bounds_">[docs]</a>    <span class="k">def</span> <span class="nf">is_icm_c_with_bounds_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Ignorant-Coalition Manipulation, focus on one candidate, with bounds.</span>
+
+<div class="viewcode-block" id="Rule.is_icm_c_with_bounds_">
+<a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule.is_icm_c_with_bounds_">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_icm_c_with_bounds_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Ignorant-Coalition Manipulation, focus on one candidate, with bounds.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -2602,9 +2647,10 @@
         <span class="k">return</span> <span class="p">(</span><span class="n">pseudo_bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_candidates_icm</span><span class="p">[</span><span class="n">c</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_icm</span><span class="p">[</span><span class="n">c</span><span class="p">]),</span>
                 <span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_icm</span><span class="p">[</span><span class="n">c</span><span class="p">]))</span></div>
 
+
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">candidates_icm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;1d array of booleans (or ``numpy.nan``). ``candidates_icm_[c]`` is ``True`` if ICM for candidate ``c`` is</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of booleans (or ``numpy.nan``). ``candidates_icm_[c]`` is ``True`` if ICM for candidate ``c`` is</span>
 <span class="sd">        possible, ``False`` otherwise. If the algorithm cannot decide, then ``numpy.nan``. For the sincere winner</span>
 <span class="sd">        :attr:`w_`, we have by convention ``candidates_icm[w_] = False``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -2623,7 +2669,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">necessary_coalition_size_icm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;1d array of integers. ``necessary_coalition_size_icm[c]`` is the lower bound found by the algorithm for</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of integers. ``necessary_coalition_size_icm[c]`` is the lower bound found by the algorithm for</span>
 <span class="sd">        :math:`x_c` (see below). For the sincere winner :attr:`w_`, we have by convention</span>
 <span class="sd">        ``necessary_coalition_size_icm_[w_] = 0``.</span>
 
@@ -2645,7 +2691,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">sufficient_coalition_size_icm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;1d of integers or ``numpy.inf``. ``sufficient_coalition_size_icm[c]`` is the upper bound found by the</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d of integers or ``numpy.inf``. ``sufficient_coalition_size_icm[c]`` is the upper bound found by the</span>
 <span class="sd">        algorithm for :math:`x_c` (see :meth:`necessary_coalition_size_icm_`). For the sincere winner :attr:`w_`,</span>
 <span class="sd">        we have by convention ``sufficient_coalition_size_icm_[w_] = 0``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -2653,7 +2699,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">_icm_is_initialized_general_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Initialize ICM variables an do preliminary checks. Used each time ICM is launched (whatever the mode).</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize ICM variables an do preliminary checks. Used each time ICM is launched (whatever the mode).</span>
 <span class="sd">        ``_is_icm`` --&gt; False or True if we know, -inf otherwise.</span>
 <span class="sd">        ``_candidates_icm[c]`` --&gt; True or False if we know, -inf otherwise.</span>
 
@@ -2683,7 +2729,7 @@
         <span class="k">return</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="nf">_icm_preliminary_checks_general_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Do preliminary checks for ICM. Only first time ICM is launched.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do preliminary checks for ICM. Only first time ICM is launched.</span>
 
 <span class="sd">        Can update some ``_candidates_icm[c]`` to True or False (instead of -inf).</span>
 
@@ -2714,7 +2760,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_icm_preliminary_checks_general_subclass_</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_icm_preliminary_checks_general_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Do preliminary checks for ICM. Only first time ICM is launched.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do preliminary checks for ICM. Only first time ICM is launched.</span>
 
 <span class="sd">        Can update ``_is_icm`` to True or False (instead of -inf).</span>
 
@@ -2728,7 +2774,7 @@
         <span class="k">pass</span>
 
     <span class="k">def</span> <span class="nf">_icm_initialize_c</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Initialize the ICM loop for candidate ``c`` and do preliminary checks.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the ICM loop for candidate ``c`` and do preliminary checks.</span>
 
 <span class="sd">        * If ``_bounds_optimized_icm[c]`` is True, it means that all the work for ``c`` has been done before. Then get</span>
 <span class="sd">          out.</span>
@@ -2780,7 +2826,7 @@
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">_icm_preliminary_checks_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;ICM: preliminary checks for challenger ``c``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;ICM: preliminary checks for challenger ``c``.</span>
 
 <span class="sd">        Try to improve bounds ``_sufficient_coalition_size_icm[c]`` and ``_necessary_coalition_size_icm[c]``. Do not</span>
 <span class="sd">        update the other variables.</span>
@@ -2814,7 +2860,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_icm_preliminary_checks_c_subclass_</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_icm_preliminary_checks_c_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;ICM: preliminary checks for challenger ``c``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;ICM: preliminary checks for challenger ``c``.</span>
 
 <span class="sd">        Try to improve bounds ``_sufficient_coalition_size_icm[c]`` and ``_necessary_coalition_size_icm[c]``. Do not</span>
 <span class="sd">        update the other variables.</span>
@@ -2828,7 +2874,7 @@
         <span class="k">pass</span>
 
     <span class="k">def</span> <span class="nf">_icm_main_work_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Do the main work in ICM loop for candidate ``c``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do the main work in ICM loop for candidate ``c``.</span>
 
 <span class="sd">        * Try to improve bounds ``_sufficient_coalition_size_icm[c]`` and ``_necessary_coalition_size_icm[c]``.</span>
 <span class="sd">        * Do not update other variables (``_is_icm``, ``_candidates_icm``, etc.).</span>
@@ -2846,7 +2892,7 @@
 
     <span class="c1"># noinspection PyMethodMayBeStatic,PyUnusedLocal</span>
     <span class="k">def</span> <span class="nf">_icm_main_work_c_lazy_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Do the main work in ICM loop for candidate ``c``, with option &#39;lazy&#39;. Same specifications as</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do the main work in ICM loop for candidate ``c``, with option &#39;lazy&#39;. Same specifications as</span>
 <span class="sd">        ``_icm_main_work_c_``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># With option &#39;lazy&#39;, there is nothing to do! And this is not a &#39;quick escape&#39;: we did the best we could</span>
@@ -2856,7 +2902,7 @@
 
     <span class="c1"># noinspection PyUnusedLocal</span>
     <span class="k">def</span> <span class="nf">_icm_main_work_c_exact_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Do the main work in ICM loop for candidate ``c``, with option &#39;exact&#39;. Same specifications as</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do the main work in ICM loop for candidate ``c``, with option &#39;exact&#39;. Same specifications as</span>
 <span class="sd">        ``_icm_main_work_c``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">meets_ignmc_c_ctb</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
@@ -2867,7 +2913,7 @@
             <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 
     <span class="k">def</span> <span class="nf">_icm_conclude_c</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">is_quick_escape</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Conclude the ICM loop for candidate ``c``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Conclude the ICM loop for candidate ``c``.</span>
 <span class="sd">        ``_bounds_optimized_icm[c]`` --&gt; if not ``quick_escape``, becomes True.</span>
 <span class="sd">        ``_candidates_icm[c]`` --&gt; True, False or NaN according to the bounds ``_sufficient_coalition_size_icm[c]`` and</span>
 <span class="sd">            ``_necessary_coalition_size_icm[c]``.</span>
@@ -2890,7 +2936,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_icm</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
 
     <span class="k">def</span> <span class="nf">_compute_icm_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">with_candidates</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Compute ICM.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute ICM.</span>
 
 <span class="sd">        Note that this method is launched by ``is_icm_`` only if ICM was not initialized, and by ``candidates_icm_``</span>
 <span class="sd">        only if not ``_icm_was_computed_with_candidates``. So, it is not necessary to do a preliminary check on these</span>
@@ -2928,7 +2974,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">log_cm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;String. Parameters used to compute :meth:`is_cm_` and related methods.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;String. Parameters used to compute :meth:`is_cm_` and related methods.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span> <span class="o">==</span> <span class="s1">&#39;exact&#39;</span><span class="p">:</span>
             <span class="k">return</span> <span class="s2">&quot;cm_option = exact&quot;</span>
@@ -2940,7 +2986,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">is_cm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Boolean (or ``numpy.nan``). ``True`` if a CM is possible, ``False`` otherwise. If the algorithm cannot</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean (or ``numpy.nan``). ``True`` if a CM is possible, ``False`` otherwise. If the algorithm cannot</span>
 <span class="sd">        decide, then ``numpy.nan``.</span>
 
 <span class="sd">        We say that a situation is *Coalitionally Manipulable* (CM) for ``c`` ``!=`` :attr:`w_` iff voters who prefer</span>
@@ -2951,8 +2997,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_compute_cm_</span><span class="p">(</span><span class="n">with_candidates</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">pseudo_bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_is_cm</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Rule.is_cm_c_"><a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule.is_cm_c_">[docs]</a>    <span class="k">def</span> <span class="nf">is_cm_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Coalition Manipulation, focus on one candidate.</span>
+<div class="viewcode-block" id="Rule.is_cm_c_">
+<a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule.is_cm_c_">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_cm_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Coalition Manipulation, focus on one candidate.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -2969,8 +3017,11 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_compute_cm_c_</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">pseudo_bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_candidates_cm</span><span class="p">[</span><span class="n">c</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="Rule.is_cm_c_with_bounds_"><a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule.is_cm_c_with_bounds_">[docs]</a>    <span class="k">def</span> <span class="nf">is_cm_c_with_bounds_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Coalition Manipulation, focus on one candidate, with bounds.</span>
+
+<div class="viewcode-block" id="Rule.is_cm_c_with_bounds_">
+<a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule.is_cm_c_with_bounds_">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_cm_c_with_bounds_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Coalition Manipulation, focus on one candidate, with bounds.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -2988,9 +3039,10 @@
         <span class="k">return</span> <span class="p">(</span><span class="n">pseudo_bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_candidates_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]),</span>
                 <span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]))</span></div>
 
+
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">candidates_cm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;1d array of booleans (or ``numpy.nan``). ``candidates_cm_[c]`` is ``True`` if CM for candidate ``c`` is</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of booleans (or ``numpy.nan``). ``candidates_cm_[c]`` is ``True`` if CM for candidate ``c`` is</span>
 <span class="sd">        possible, ``False`` otherwise. If the algorithm cannot decide, then ``numpy.nan``. For the sincere winner</span>
 <span class="sd">        :attr:`w_`, we have by convention ``candidates_cm_[w_] = False``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -3009,7 +3061,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">necessary_coalition_size_cm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;1d array of integers. ``necessary_coalition_size_cm_[c]`` is the lower bound found by the algorithm for</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of integers. ``necessary_coalition_size_cm_[c]`` is the lower bound found by the algorithm for</span>
 <span class="sd">        :math:`x_c` (cf. below). For the sincere winner :attr:`w_`, we have by convention</span>
 <span class="sd">        ``necessary_coalition_size_cm_[w_] = 0``.</span>
 
@@ -3033,7 +3085,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">sufficient_coalition_size_cm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;1d array of integers or ``numpy.inf``. ``sufficient_coalition_size_cm_[c]`` is the upper bound found by the</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of integers or ``numpy.inf``. ``sufficient_coalition_size_cm_[c]`` is the upper bound found by the</span>
 <span class="sd">        algorithm for :math:`x_c` (cf. :attr:`necessary_coalition_size_cm_`). For the sincere winner :attr:`w_`, we</span>
 <span class="sd">        have by convention ``sufficient_coalition_size_cm_[w_] = 0``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -3041,7 +3093,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">_cm_is_initialized_general_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Initialize CM variables and do preliminary checks. Used only the first time CM is launched (whatever the</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize CM variables and do preliminary checks. Used only the first time CM is launched (whatever the</span>
 <span class="sd">        mode).</span>
 <span class="sd">        ``_is_cm`` --&gt; False or True if we know, -inf otherwise.</span>
 <span class="sd">        ``_candidates_cm[c]`` --&gt; True or False if we know, -inf otherwise.</span>
@@ -3072,7 +3124,7 @@
         <span class="k">return</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="nf">_cm_preliminary_checks_general_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Do preliminary checks for CM. Only first time CM is launched.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do preliminary checks for CM. Only first time CM is launched.</span>
 
 <span class="sd">        Can update some ``_candidates_cm[c]`` to True or False (instead of -inf).</span>
 
@@ -3153,7 +3205,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_cm_preliminary_checks_general_subclass_</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_cm_preliminary_checks_general_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Do preliminary checks for CM. Only first time CM is launched.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do preliminary checks for CM. Only first time CM is launched.</span>
 
 <span class="sd">        Can update ``_is_cm`` to True or False (instead of -inf).</span>
 
@@ -3167,7 +3219,7 @@
         <span class="k">pass</span>
 
     <span class="k">def</span> <span class="nf">_cm_initialize_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Initialize the CM loop for candidate ``c`` and do preliminary checks.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the CM loop for candidate ``c`` and do preliminary checks.</span>
 
 <span class="sd">        * If ``_bounds_optimized_cm[c]`` is True, it means that all the work for ``c`` has been done before. Then get</span>
 <span class="sd">          out.</span>
@@ -3219,7 +3271,7 @@
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">_cm_preliminary_checks_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;CM: preliminary checks for challenger ``c``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;CM: preliminary checks for challenger ``c``.</span>
 
 <span class="sd">        Try to improve bounds ``_sufficient_coalition_size_cm[c]`` and ``_necessary_coalition_size_cm[c]``. Do not</span>
 <span class="sd">        update the other variables.</span>
@@ -3327,7 +3379,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_cm_preliminary_optimize_bound_heuristic_</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_cm_preliminary_optimize_bound_heuristic_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;CM: Try to improve bounds with heuristic.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;CM: Try to improve bounds with heuristic.</span>
 
 <span class="sd">        Try to improve bound ``_sufficient_coalition_size_cm[c]``.</span>
 
@@ -3367,7 +3419,7 @@
                                 <span class="s1">&#39;CM: Heuristic Dichotomy =&gt; sufficient_coalition_size_cm[c] = &#39;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_cm_preliminary_checks_c_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;CM: preliminary checks for challenger ``c``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;CM: preliminary checks for challenger ``c``.</span>
 
 <span class="sd">        Try to improve bounds ``_sufficient_coalition_size_cm[c]`` and ``_necessary_coalition_size_cm[c]``. Do not</span>
 <span class="sd">        update the other variables.</span>
@@ -3381,7 +3433,7 @@
         <span class="k">pass</span>
 
     <span class="k">def</span> <span class="nf">_cm_main_work_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Do the main work in CM loop for candidate ``c``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do the main work in CM loop for candidate ``c``.</span>
 
 <span class="sd">        * Try to improve bounds ``_sufficient_coalition_size_cm[c]`` and ``_necessary_coalition_size_cm[c]``.</span>
 <span class="sd">        * Do not update other variables (``_is_cm``, ``_candidates_cm``, etc.).</span>
@@ -3399,7 +3451,7 @@
 
     <span class="c1"># noinspection PyUnusedLocal,PyMethodMayBeStatic</span>
     <span class="k">def</span> <span class="nf">_cm_main_work_c_lazy_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Do the main work in CM loop for candidate ``c``, with option &#39;lazy&#39;. Same specifications as</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do the main work in CM loop for candidate ``c``, with option &#39;lazy&#39;. Same specifications as</span>
 <span class="sd">        :meth:`_cm_main_work_c_`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># With option &#39;lazy&#39;, there is nothing to do! And this is not a &#39;quick escape&#39;: we did the best we could</span>
@@ -3408,7 +3460,7 @@
 
     <span class="c1"># noinspection PyUnusedLocal</span>
     <span class="k">def</span> <span class="nf">_cm_main_work_c_exact_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Do the main work in CM loop for candidate ``c``, with option &#39;exact&#39;. Same specifications as</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do the main work in CM loop for candidate ``c``, with option &#39;exact&#39;. Same specifications as</span>
 <span class="sd">        ``_cm_main_work_c``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_based_on_ut_minus1_1</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
@@ -3457,7 +3509,7 @@
                                    <span class="s1">&#39;    necessary_coalition_size_cm[c] = n_m + 1 =&#39;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_cm_conclude_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">is_quick_escape</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Conclude the CM loop for candidate ``c``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Conclude the CM loop for candidate ``c``.</span>
 
 <span class="sd">        ``_bounds_optimized_cm[c]`` --&gt; if not ``quick_escape``, becomes True.</span>
 <span class="sd">        ``_candidates_cm[c]`` --&gt; True, False or NaN according to the bounds ``_sufficient_coalition_size_cm[c]`` and</span>
@@ -3481,7 +3533,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
 
     <span class="k">def</span> <span class="nf">_compute_cm_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">with_candidates</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Compute CM.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute CM.</span>
 
 <span class="sd">        Note that this method is launched by ``is_cm_`` only if CM was not initialized, and by ``candidates_cm_``</span>
 <span class="sd">        only if not ``_cm_was_computed_with_candidates``. So, it is not necessary to do a preliminary check on these</span>
@@ -3518,7 +3570,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">elects_condorcet_winner_rk_even_with_cm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;bool : True iff there is a Condorcet winner, she is elected by sincere voting and it is not CM.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;bool : True iff there is a Condorcet winner, she is elected by sincere voting and it is not CM.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">exists_condorcet_winner_rk</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_is_condorcet_winner_rk_</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">pseudo_bool_not</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">is_cm_</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -3526,14 +3578,14 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">nb_candidates_cm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Number of candidates who can benefit from CM.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Number of candidates who can benefit from CM.&quot;&quot;&quot;</span>
         <span class="n">inf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates_cm_</span> <span class="o">==</span> <span class="kc">True</span><span class="p">)</span>
         <span class="n">sup</span> <span class="o">=</span> <span class="n">inf</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates_cm_</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">inf</span><span class="p">,</span> <span class="n">sup</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">worst_relative_welfare_with_cm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Worst relative social welfare (sincere winner or candidate who can benefit from CM).&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Worst relative social welfare (sincere winner or candidate who can benefit from CM).&quot;&quot;&quot;</span>
         <span class="n">possible_winners</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates_cm_</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">possible_winners</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="n">inf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span>
@@ -3546,7 +3598,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">cm_power_index_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;CM power index. For each candidate c != w, it is n_s / x_c (where n_s is the number of sincere voters</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;CM power index. For each candidate c != w, it is n_s / x_c (where n_s is the number of sincere voters</span>
 <span class="sd">        and `x_c` the minimal number of manipulators that can make `c` win (cf :attr:`necessary_coalition_size_cm_`).</span>
 <span class="sd">        Globally, it is the max over the candidates c != w.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -3579,8 +3631,10 @@
 
     <span class="c1"># %% Demo</span>
 
-<div class="viewcode-block" id="Rule.demo_manipulation_"><a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule.demo_manipulation_">[docs]</a>    <span class="k">def</span> <span class="nf">demo_manipulation_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log_depth</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Demonstrate the manipulation methods of :class:`Rule` class.</span>
+<div class="viewcode-block" id="Rule.demo_manipulation_">
+<a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule.demo_manipulation_">[docs]</a>
+    <span class="k">def</span> <span class="nf">demo_manipulation_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log_depth</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Demonstrate the manipulation methods of :class:`Rule` class.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -3691,8 +3745,9 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">log_depth</span> <span class="o">=</span> <span class="n">old_log_depth</span></div>
 
+
     <span class="k">def</span> <span class="nf">_reached_uncovered_code</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Print a log message when some uncovered code is reached.</span>
 
 <span class="sd">        We should call this method each time a portion of code is not covered by the tests.</span>
@@ -3721,13 +3776,13 @@
             <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s1">&#39;Uncovered portion of code.&#39;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_example_reached_uncovered_code</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Demonstrate :meth:`_reached_uncovered_code` (cf. the unit test in `test_rule.py`).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_reached_uncovered_code</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_set_random_options</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Set random options.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set random options.</span>
 
 <span class="sd">        For each option where a set of values is allowed, select a random value.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -3738,7 +3793,7 @@
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_random_instruction</span><span class="p">():</span>
-        <span class="sd">&quot;&quot;&quot;Random instruction (used for testing purposes, especially identify uncovered code).</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Random instruction (used for testing purposes, especially identify uncovered code).</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -3784,6 +3839,7 @@
             <span class="s1">&#39;sufficient_coalition_size_cm_&#39;</span><span class="p">,</span>
         <span class="p">]</span>
         <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">instructions</span><span class="p">)</span></div>
+
 </pre></div>
 
            </div>

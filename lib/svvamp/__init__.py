@@ -20,10 +20,13 @@ from svvamp.preferences.generator_profile_cubic_uniform import GeneratorProfileC
 from svvamp.preferences.generator_profile_euclidean_box import GeneratorProfileEuclideanBox
 from svvamp.preferences.generator_profile_gaussian_well import GeneratorProfileGaussianWell
 from svvamp.preferences.generator_profile_ianc import GeneratorProfileIanc
+from svvamp.preferences.generator_profile_ic import GeneratorProfileIc
 from svvamp.preferences.generator_profile_ladder import GeneratorProfileLadder
 from svvamp.preferences.generator_profile_noise import GeneratorProfileNoise
 from svvamp.preferences.generator_profile_noised_file import GeneratorProfileNoisedFile
+from svvamp.preferences.generator_profile_perturbed_culture import GeneratorProfilePerturbedCulture
 from svvamp.preferences.generator_profile_spheroid import GeneratorProfileSpheroid
+from svvamp.preferences.generator_profile_unanimous import GeneratorProfileUnanimous
 from svvamp.preferences.generator_profile_vmf_hypercircle import GeneratorProfileVMFHypercircle
 from svvamp.preferences.generator_profile_vmf_hypersphere import GeneratorProfileVMFHypersphere
 
@@ -39,6 +42,7 @@ from svvamp.rules.rule_coombs import RuleCoombs
 from svvamp.rules.rule_copeland import RuleCopeland
 from svvamp.rules.rule_irv_duels import RuleIRVDuels
 from svvamp.rules.rule_iterated_bucklin import RuleIteratedBucklin
+from svvamp.rules.rule_k_approval import RuleKApproval
 from svvamp.rules.rule_kemeny import RuleKemeny
 from svvamp.rules.rule_kim_roush import RuleKimRoush
 from svvamp.rules.rule_majority_judgment import RuleMajorityJudgment
@@ -48,6 +52,7 @@ from svvamp.rules.rule_plurality import RulePlurality
 from svvamp.rules.rule_range_voting import RuleRangeVoting
 from svvamp.rules.rule_ranked_pairs import RuleRankedPairs
 from svvamp.rules.rule_schulze import RuleSchulze
+from svvamp.rules.rule_slater import RuleSlater
 from svvamp.rules.rule_split_cycle import RuleSplitCycle
 from svvamp.rules.rule_star import RuleSTAR
 from svvamp.rules.rule_two_round import RuleTwoRound

@@ -10,10 +10,11 @@
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
-        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=9dc39874"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -25,14 +26,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../index.html" class="icon icon-home"> SVVAMP
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            SVVAMP
           </a>
               <div class="version">
                 0.9.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -63,9 +68,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-      <li>svvamp.rules.rule_irv_duels</li>
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">svvamp.rules.rule_irv_duels</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -99,11 +104,14 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">svvamp.rules.rule</span> <span class="kn">import</span> <span class="n">Rule</span>
 <span class="kn">from</span> <span class="nn">svvamp.utils.util_cache</span> <span class="kn">import</span> <span class="n">cached_property</span>
+<span class="kn">from</span> <span class="nn">svvamp.utils.misc</span> <span class="kn">import</span> <span class="n">preferences_ut_to_matrix_duels_ut</span>
 <span class="kn">from</span> <span class="nn">svvamp.preferences.profile</span> <span class="kn">import</span> <span class="n">Profile</span>
 
 
-<div class="viewcode-block" id="RuleIRVDuels"><a class="viewcode-back" href="../../../reference/rules/rule_irv_duels.html#svvamp.RuleIRVDuels">[docs]</a><span class="k">class</span> <span class="nc">RuleIRVDuels</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;IRV with elimination duels.</span>
+<div class="viewcode-block" id="RuleIRVDuels">
+<a class="viewcode-back" href="../../../reference/rules/rule_irv_duels.html#svvamp.RuleIRVDuels">[docs]</a>
+<span class="k">class</span> <span class="nc">RuleIRVDuels</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;IRV with elimination duels.</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
@@ -372,6 +380,7 @@
 
     <span class="n">options_parameters</span> <span class="o">=</span> <span class="n">Rule</span><span class="o">.</span><span class="n">options_parameters</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">options_parameters</span><span class="p">[</span><span class="s1">&#39;icm_option&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">}</span>
+    <span class="n">options_parameters</span><span class="p">[</span><span class="s1">&#39;cm_option&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;lazy&#39;</span><span class="p">,</span> <span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;lazy&#39;</span><span class="p">}</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
@@ -433,7 +442,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">scores_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;2d array.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;2d array.</span>
 
 <span class="sd">        * For even rounds ``r`` (including round 0), ``scores[r, c]`` is the number of voters who rank ``c`` first</span>
 <span class="sd">          (among non-eliminated candidates).</span>
@@ -444,7 +453,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">candidates_by_scores_best_to_worst_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;1d array of integers. Candidates are sorted in the reverse order of their elimination.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of integers. Candidates are sorted in the reverse order of their elimination.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s1">&#39;candidates_by_scores_best_to_worst&#39;</span><span class="p">]</span>
 
@@ -452,7 +461,244 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">meets_condorcet_c_rk_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="kc">True</span></div>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="c1"># %% Coalition Manipulation (CM)</span>
+
+    <span class="k">def</span> <span class="nf">_cm_aux_exact</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_max</span><span class="p">,</span> <span class="n">n_min</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">,</span> <span class="n">preferences_borda_s</span><span class="p">,</span> <span class="n">matrix_duels_s</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Exact algorithm used for CM.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        c : int</span>
+<span class="sd">            Candidate for which we want to manipulate.</span>
+<span class="sd">        n_max : int</span>
+<span class="sd">            Maximum number of manipulators allowed.</span>
+
+<span class="sd">            * CM, optimize_bounds and exact --&gt; put the current value of ``sufficient_coalition_size[c] - 1`` (we want</span>
+<span class="sd">              to find the best value for ``sufficient_coalition_size[c]``, even if it exceeds the number of</span>
+<span class="sd">              manipulators)</span>
+<span class="sd">            * CM, otherwise --&gt; put the number of manipulators.</span>
+
+<span class="sd">        n_min : int</span>
+<span class="sd">            When we know that ``n_min`` manipulators are needed (necessary coalition size).</span>
+<span class="sd">        optimize_bounds : bool</span>
+<span class="sd">            True iff we need to continue, even after a manipulation is found.</span>
+<span class="sd">        preferences_borda_s : ndarray</span>
+<span class="sd">            Preferences of the sincere voters (in Borda format).</span>
+<span class="sd">        matrix_duels_s : ndarray</span>
+<span class="sd">            Matrix of duels of the sincere voters.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple</span>
+<span class="sd">            ``(n_manip_final, example_path_losers, example_path_winners, quick_escape)``.</span>
+
+<span class="sd">            * ``n_manip_final``: Integer or +inf. If manipulation is impossible with ``&lt;= n_max`` manipulators, it is</span>
+<span class="sd">              +inf. If manipulation is possible (with ``&lt;= n_max``):</span>
+
+<span class="sd">                * If ``optimize_bounds`` is True, it is the minimal number of manipulators.</span>
+<span class="sd">                * Otherwise, it is a number of manipulators that allow this manipulation (not necessarily minimal).</span>
+
+<span class="sd">            * ``example_path_losers``: An example of elimination path that realizes the manipulation with</span>
+<span class="sd">              ``n_manip_final`` manipulators. ``example_path[k]`` is the ``k``-th candidate eliminated. If the</span>
+<span class="sd">              manipulation is impossible, ``example_path_losers`` is NaN.</span>
+<span class="sd">            * ``example_path_winners``: An example of elimination path that realizes the manipulation with</span>
+<span class="sd">              ``n_manip_final`` manipulators. ``example_path[k]`` is the candidate selected for the ``k``-th duel</span>
+<span class="sd">              and winning. If the manipulation is impossible, ``example_path_winners`` is NaN.</span>
+<span class="sd">            * ``quick_escape``: Boolean. True if we get out without optimizing ``n_manip_final``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">candidates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">)</span>
+        <span class="n">n_s</span> <span class="o">=</span> <span class="n">preferences_borda_s</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">n_max_updated</span> <span class="o">=</span> <span class="n">n_max</span>  <span class="c1"># Maximal number of manipulators allowed</span>
+        <span class="n">n_manip_final</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>  <span class="c1"># Result: number of manipulators finally used</span>
+        <span class="n">example_path_losers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>  <span class="c1"># Result: example of elimination path (duel losers)</span>
+        <span class="n">example_path_winners</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>  <span class="c1"># Result: example of elimination path (duel winners)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">is_candidate_alive_begin_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">bool</span><span class="p">)</span>
+        <span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">)</span>
+        <span class="n">n_manip_used_before_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+        <span class="n">scores_m_begin_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">))</span>
+        <span class="n">scores_tot_begin_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">))</span>
+        <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span>
+            <span class="n">preferences_borda_s</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">preferences_borda_s</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+        <span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s1">&#39;cm_aux_exact: c =&#39;</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: r =&quot;</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="n">suggested_loser_r</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">cand</span> <span class="k">for</span> <span class="n">cand</span> <span class="ow">in</span> <span class="n">candidates</span> <span class="k">if</span> <span class="n">cand</span> <span class="o">!=</span> <span class="n">c</span><span class="p">])}</span>  <span class="c1"># Possible losers of the duel</span>
+        <span class="n">suggested_winner_r</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">candidates</span><span class="p">)}</span>                                 <span class="c1"># Possible winners of the duel</span>
+        <span class="n">index_loser_in_suggested_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+        <span class="c1"># Index of the loser of the duel in ``suggested_loser_r``.</span>
+        <span class="n">index_winner_in_suggested_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+        <span class="c1"># Index of the winner of the duel in ``suggested_winner_r``.</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">r</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: End of exploration&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">n_manip_final</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">example_path_losers</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">example_path_winners</span><span class="p">),</span> <span class="kc">False</span>
+            <span class="k">if</span> <span class="n">index_winner_in_suggested_r</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">suggested_winner_r</span><span class="p">[</span><span class="n">r</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+                <span class="c1"># We have tried all the possible winners for a given loser, change the loser.</span>
+                <span class="n">index_loser_in_suggested_r</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">index_winner_in_suggested_r</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">index_loser_in_suggested_r</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">suggested_loser_r</span><span class="p">[</span><span class="n">r</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="ow">or</span> <span class="n">n_manip_used_before_r</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">n_max_updated</span>
+            <span class="p">):</span>
+                <span class="c1"># First condition: we have tried all possible losers for this round, go back to previous round.</span>
+                <span class="c1"># Second condition: may happen in ``optimize_bounds`` exact mode, if we have found a</span>
+                <span class="c1"># solution and updated ``n_max_updated``.</span>
+                <span class="n">r</span> <span class="o">-=</span> <span class="mi">1</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: Tried everything for round r, go back to r =&quot;</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: r =&quot;</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">r</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">index_winner_in_suggested_r</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">continue</span>
+            <span class="n">loser</span> <span class="o">=</span> <span class="n">suggested_loser_r</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">index_loser_in_suggested_r</span><span class="p">[</span><span class="n">r</span><span class="p">]]</span>
+            <span class="n">winner</span> <span class="o">=</span> <span class="n">suggested_winner_r</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">index_winner_in_suggested_r</span><span class="p">[</span><span class="n">r</span><span class="p">]]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: suggested_loser_r[r] =&quot;</span><span class="p">,</span> <span class="n">suggested_loser_r</span><span class="p">[</span><span class="n">r</span><span class="p">],</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: index_loser_in_suggested_r[r] =&quot;</span><span class="p">,</span> <span class="n">index_loser_in_suggested_r</span><span class="p">[</span><span class="n">r</span><span class="p">],</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: loser =&quot;</span><span class="p">,</span> <span class="n">loser</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: suggested_winner_r[r] =&quot;</span><span class="p">,</span> <span class="n">suggested_winner_r</span><span class="p">[</span><span class="n">r</span><span class="p">],</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: index_winner_in_suggested_r[r] =&quot;</span><span class="p">,</span> <span class="n">index_winner_in_suggested_r</span><span class="p">[</span><span class="n">r</span><span class="p">],</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: winner =&quot;</span><span class="p">,</span> <span class="n">winner</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">winner</span> <span class="o">==</span> <span class="n">loser</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: winner == loser, skip this pair&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+                <span class="n">index_winner_in_suggested_r</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># How many manipulators are needed to make ``winner`` win the duel against ``loser``?</span>
+            <span class="n">n_m_needed_duel</span> <span class="o">=</span> <span class="n">matrix_duels_s</span><span class="p">[</span><span class="n">loser</span><span class="p">,</span> <span class="n">winner</span><span class="p">]</span> <span class="o">-</span> <span class="n">matrix_duels_s</span><span class="p">[</span><span class="n">winner</span><span class="p">,</span> <span class="n">loser</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">loser</span> <span class="o">&lt;</span> <span class="n">winner</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">n_m_needed_duel</span> <span class="o">&gt;</span> <span class="n">n_max_updated</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: `winner` cannot eliminate `loser`, try another pair.&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+                <span class="n">index_winner_in_suggested_r</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># What manipulators are needed to select `winner` and `loser` for the duel?</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: scores_tot_begin_r[r, :] =&quot;</span><span class="p">,</span> <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="p">:],</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="n">winner</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="n">loser</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">loser</span> <span class="o">&lt;</span> <span class="n">winner</span><span class="p">):</span>
+                <span class="n">score_to_beat</span> <span class="o">=</span> <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="n">winner</span><span class="p">]</span>
+                <span class="n">cand_to_beat</span> <span class="o">=</span> <span class="n">winner</span>  <span class="c1"># Candidate whose score we must beat</span>
+                <span class="n">other_selected</span> <span class="o">=</span> <span class="n">loser</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">score_to_beat</span> <span class="o">=</span> <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="n">loser</span><span class="p">]</span>
+                <span class="n">cand_to_beat</span> <span class="o">=</span> <span class="n">loser</span>  <span class="c1"># Candidate whose score we must beat</span>
+                <span class="n">other_selected</span> <span class="o">=</span> <span class="n">winner</span>
+            <span class="n">scores_m_new_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">)</span>
+            <span class="n">scores_m_new_r</span><span class="p">[</span><span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="p">:]]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">((</span>
+                <span class="n">score_to_beat</span> <span class="o">-</span> <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="p">:]]</span>
+                <span class="o">+</span> <span class="p">(</span><span class="n">candidates</span><span class="p">[</span><span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="p">:]]</span> <span class="o">&gt;</span> <span class="n">cand_to_beat</span><span class="p">)</span>
+            <span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">scores_m_new_r</span><span class="p">[</span><span class="n">other_selected</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># No need to give points to the other selected</span>
+            <span class="n">scores_m_end_r</span> <span class="o">=</span> <span class="n">scores_m_begin_r</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="p">:]</span> <span class="o">+</span> <span class="n">scores_m_new_r</span>
+            <span class="n">n_manip_r_and_before</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">n_manip_used_before_r</span><span class="p">[</span><span class="n">r</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">scores_m_end_r</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: scores_m_new_r =&quot;</span><span class="p">,</span> <span class="n">scores_m_new_r</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: scores_m_end_r =&quot;</span><span class="p">,</span> <span class="n">scores_m_end_r</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: n_manip_r_and_before =&quot;</span><span class="p">,</span> <span class="n">n_manip_r_and_before</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">n_manip_r_and_before</span> <span class="o">&gt;</span> <span class="n">n_max_updated</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: Cannot select `winner` and `loser` for the duel, try another pair.&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+                <span class="n">index_winner_in_suggested_r</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">continue</span>
+
+            <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">n_manip_final</span> <span class="o">=</span> <span class="n">n_manip_r_and_before</span>
+                <span class="n">example_path_losers</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">example_path_winners</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">example_path_losers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">suggested_loser_r</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">index_loser_in_suggested_r</span><span class="p">[</span><span class="n">r</span><span class="p">]])</span>
+                        <span class="n">example_path_winners</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">suggested_winner_r</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">index_winner_in_suggested_r</span><span class="p">[</span><span class="n">r</span><span class="p">]])</span>
+                    <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">r</span><span class="si">=}</span><span class="s1">&#39;</span><span class="p">)</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">index_loser_in_suggested_r</span><span class="si">=}</span><span class="s1">&#39;</span><span class="p">)</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">suggested_loser_r</span><span class="si">=}</span><span class="s1">&#39;</span><span class="p">)</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">index_winner_in_suggested_r</span><span class="si">=}</span><span class="s1">&#39;</span><span class="p">)</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">suggested_winner_r</span><span class="si">=}</span><span class="s1">&#39;</span><span class="p">)</span>
+                        <span class="k">raise</span> <span class="ne">IndexError</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: CM found&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: n_manip_final =&quot;</span><span class="p">,</span> <span class="n">n_manip_final</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: example_path_losers =&quot;</span><span class="p">,</span> <span class="n">example_path_losers</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: example_path_winners =&quot;</span><span class="p">,</span> <span class="n">example_path_winners</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">n_manip_final</span> <span class="o">==</span> <span class="n">n_min</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: End of exploration: it is not possible to do better than n_min =&quot;</span><span class="p">,</span>
+                                <span class="n">n_min</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="n">n_manip_final</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">example_path_losers</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">example_path_winners</span><span class="p">),</span> <span class="kc">False</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">optimize_bounds</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">n_manip_final</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">example_path_losers</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">example_path_winners</span><span class="p">),</span> <span class="kc">True</span>
+                <span class="n">n_max_updated</span> <span class="o">=</span> <span class="n">n_manip_r_and_before</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: n_max_updated =&quot;</span><span class="p">,</span> <span class="n">n_max_updated</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+                <span class="n">index_winner_in_suggested_r</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># Calculate scores for next round</span>
+            <span class="n">n_manip_used_before_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">n_manip_r_and_before</span>
+            <span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="p">:]</span>
+            <span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">loser</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: is_candidate_alive_begin_r[r+1, :] =&quot;</span><span class="p">,</span> <span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:],</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+            <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]]</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span>
+                    <span class="n">preferences_borda_s</span><span class="p">[:,</span> <span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]],</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">preferences_borda_s</span><span class="p">[:,</span> <span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]],</span> <span class="mi">1</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+                <span class="p">),</span> <span class="mi">0</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: scores_s_begin_r[r+1, :] =&quot;</span><span class="p">,</span> <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:],</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="n">scores_m_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">scores_m_end_r</span>
+            <span class="n">scores_m_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">loser</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: scores_m_begin_r[r+1, :] =&quot;</span><span class="p">,</span> <span class="n">scores_m_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:],</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">+=</span> <span class="n">scores_m_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: scores_tot_begin_r[r+1, :] =&quot;</span><span class="p">,</span> <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:],</span> <span class="mi">3</span><span class="p">)</span>
+
+            <span class="c1"># If an opponent has too many votes, then manipulation is not possible.</span>
+            <span class="n">max_score</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">candidates</span> <span class="o">!=</span> <span class="n">c</span><span class="p">])</span>
+            <span class="n">most_serious_opponent</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">==</span> <span class="n">max_score</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">max_score</span> <span class="o">+</span> <span class="p">(</span><span class="n">most_serious_opponent</span> <span class="o">&lt;</span> <span class="n">c</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">n_s</span> <span class="o">+</span> <span class="n">n_max_updated</span> <span class="o">-</span> <span class="n">max_score</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: most_serious_opponent =&quot;</span><span class="p">,</span> <span class="n">most_serious_opponent</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span>
+                    <span class="s2">&quot;cm_aux_exact: Manipulation impossible by this path (an opponent will have too many votes)&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+                <span class="n">index_winner_in_suggested_r</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># Update other variables for next round</span>
+            <span class="n">suggested_loser_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">suggested_loser_r</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">suggested_loser_r</span><span class="p">[</span><span class="n">r</span><span class="p">][:]</span> <span class="o">!=</span> <span class="n">loser</span><span class="p">]</span>
+            <span class="n">index_loser_in_suggested_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">suggested_winner_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">suggested_winner_r</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">suggested_winner_r</span><span class="p">[</span><span class="n">r</span><span class="p">][:]</span> <span class="o">!=</span> <span class="n">loser</span><span class="p">]</span>
+            <span class="n">index_winner_in_suggested_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">r</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: r =&quot;</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_cm_main_work_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span> <span class="o">==</span> <span class="s2">&quot;exact&quot;</span><span class="p">:</span>
+            <span class="c1"># With &#39;lazy&#39; option, we stop here anyway.</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="c1"># From this point, we have necessarily the &#39;exact&#39; option.</span>
+        <span class="n">n_m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_ut</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span>
+        <span class="n">n_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">optimize_bounds</span> <span class="k">else</span> <span class="n">n_m</span>
+        <span class="n">n_min</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
+        <span class="n">preferences_borda_s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_wants_to_help_c_</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]),</span> <span class="p">:]</span>
+        <span class="n">matrix_duels_s</span> <span class="o">=</span> <span class="n">preferences_ut_to_matrix_duels_ut</span><span class="p">(</span><span class="n">preferences_borda_s</span><span class="p">)</span>
+        <span class="n">n_manip_exact</span><span class="p">,</span> <span class="n">example_path_losers</span><span class="p">,</span> <span class="n">example_path_winners</span><span class="p">,</span> <span class="n">quick_escape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cm_aux_exact</span><span class="p">(</span>
+            <span class="n">c</span><span class="o">=</span><span class="n">c</span><span class="p">,</span>
+            <span class="n">n_max</span><span class="o">=</span><span class="n">n_max</span><span class="p">,</span>
+            <span class="n">n_min</span><span class="o">=</span><span class="n">n_min</span><span class="p">,</span>
+            <span class="n">optimize_bounds</span><span class="o">=</span><span class="n">optimize_bounds</span><span class="p">,</span>
+            <span class="n">preferences_borda_s</span><span class="o">=</span><span class="n">preferences_borda_s</span><span class="p">,</span>
+            <span class="n">matrix_duels_s</span><span class="o">=</span><span class="n">matrix_duels_s</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s1">&#39;CM: Exact algorithm: n_manip_exact =&#39;</span><span class="p">,</span> <span class="n">n_manip_exact</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_sufficient</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_manip_exact</span><span class="p">,</span>
+                                <span class="s1">&#39;CM: Fast algorithm: sufficient_coalition_size_cm =&#39;</span><span class="p">)</span>
+        <span class="c1"># Update necessary coalition and return</span>
+        <span class="k">if</span> <span class="n">optimize_bounds</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_necessary</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">],</span>
+                                   <span class="s1">&#39;CM: Update necessary_coalition_size_cm[c] = sufficient_coalition_size_cm[c] =&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">n_m</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]:</span>
+                <span class="c1"># We have explored everything with ``n_max = n_m`` but manipulation failed.</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_update_necessary</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="s1">&#39;CM: Update necessary_coalition_size_cm[c] = n_m + 1 =&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">quick_escape</span></div>
+
 </pre></div>
 
            </div>

@@ -10,10 +10,11 @@
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
-        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=9dc39874"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -25,14 +26,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../index.html" class="icon icon-home"> SVVAMP
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            SVVAMP
           </a>
               <div class="version">
                 0.9.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -63,9 +68,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-      <li>svvamp.rules.rule_split_cycle</li>
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">svvamp.rules.rule_split_cycle</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -102,8 +107,10 @@
 <span class="kn">from</span> <span class="nn">svvamp.preferences.profile</span> <span class="kn">import</span> <span class="n">Profile</span>
 
 
-<div class="viewcode-block" id="RuleSplitCycle"><a class="viewcode-back" href="../../../reference/rules/rule_split_cycle.html#svvamp.RuleSplitCycle">[docs]</a><span class="k">class</span> <span class="nc">RuleSplitCycle</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Split Cycle.</span>
+<div class="viewcode-block" id="RuleSplitCycle">
+<a class="viewcode-back" href="../../../reference/rules/rule_split_cycle.html#svvamp.RuleSplitCycle">[docs]</a>
+<span class="k">class</span> <span class="nc">RuleSplitCycle</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Split Cycle.</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
@@ -140,7 +147,7 @@
     <span class="c1"># noinspection PyProtectedMember</span>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_count_ballot_aux</span><span class="p">(</span><span class="n">matrix_duels</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -329,7 +336,28 @@
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">meets_condorcet_c_rk_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># TO DO : to check</span>
-        <span class="k">return</span> <span class="kc">True</span></div>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="c1"># %% Coalition Manipulation (CM)</span>
+
+    <span class="k">def</span> <span class="nf">_cm_preliminary_checks_c_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
+        <span class="c1"># For each candidate `k != c`, we must have `S(c, k) &gt;= W(k, c)`, where `S` denotes the strength (width of</span>
+        <span class="c1"># the widest path) and `W` denotes the result of the direct duel. Note that the widest path necessarily</span>
+        <span class="c1"># goes through the edge `W(j, k)` for some `j != k`. So, there must exist `j` such that `W(j, k) &gt;= W(k, c)`.</span>
+        <span class="c1"># In other words, `max_j W(j, k) &gt;= W(k, c)`. Since we may add manipulators, the condition is</span>
+        <span class="c1"># `n_m + max_j W(j, k) &gt;= W(k, c)`, and finally `n_m &gt;= max_k ( W(k, c) - max_j W(j, k) )`.</span>
+        <span class="n">n_c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span>
+        <span class="n">profile_sincere</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span>
+            <span class="n">preferences_borda_rk</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_wants_to_help_c_</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]),</span> <span class="p">:]</span>
+        <span class="p">)</span>
+        <span class="n">matrix_duels_sincere</span> <span class="o">=</span> <span class="n">profile_sincere</span><span class="o">.</span><span class="n">matrix_duels_rk</span>
+        <span class="n">is_not_c</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_c</span><span class="p">)</span> <span class="o">!=</span> <span class="n">c</span><span class="p">)</span>
+        <span class="n">worst_defeat_k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">matrix_duels_sincere</span><span class="p">[:,</span> <span class="n">is_not_c</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">score_k_against_c</span> <span class="o">=</span> <span class="n">matrix_duels_sincere</span><span class="p">[</span><span class="n">is_not_c</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span>
+        <span class="n">n_m_necessary</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">score_k_against_c</span> <span class="o">-</span> <span class="n">worst_defeat_k</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_necessary</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_m_necessary</span><span class="p">,</span>
+                               <span class="s1">&#39;CM: Preliminary check: necessary_coalition_size_cm =&#39;</span><span class="p">)</span></div>
+
 </pre></div>
 
            </div>

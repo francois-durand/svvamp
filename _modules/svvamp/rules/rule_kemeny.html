@@ -10,10 +10,11 @@
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
-        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=9dc39874"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -25,14 +26,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../index.html" class="icon icon-home"> SVVAMP
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            SVVAMP
           </a>
               <div class="version">
                 0.9.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -63,9 +68,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-      <li>svvamp.rules.rule_kemeny</li>
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">svvamp.rules.rule_kemeny</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -103,8 +108,10 @@
 <span class="kn">from</span> <span class="nn">svvamp.preferences.profile</span> <span class="kn">import</span> <span class="n">Profile</span>
 
 
-<div class="viewcode-block" id="RuleKemeny"><a class="viewcode-back" href="../../../reference/rules/rule_kemeny.html#svvamp.RuleKemeny">[docs]</a><span class="k">class</span> <span class="nc">RuleKemeny</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Kemeny method.</span>
+<div class="viewcode-block" id="RuleKemeny">
+<a class="viewcode-back" href="../../../reference/rules/rule_kemeny.html#svvamp.RuleKemeny">[docs]</a>
+<span class="k">class</span> <span class="nc">RuleKemeny</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Kemeny method.</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
@@ -380,14 +387,14 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">score_w_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Integer. With our convention, ``scores_w_`` = :attr:`n_c` - 1.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Integer. With our convention, ``scores_w_`` = :attr:`n_c` - 1.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Compute winner&#39;s score&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">scores_best_to_worst_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;1d array of integers. With our convention, ``scores_best_to_worst`` is the vector [:attr:`n_c` - 1,</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of integers. With our convention, ``scores_best_to_worst`` is the vector [:attr:`n_c` - 1,</span>
 <span class="sd">        :attr:`n_c` - 2, ..., 0].</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Compute scores_best_to_worst&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
@@ -395,7 +402,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">_count_first_component_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Compute the optimal order for the first strongly connected component of the victory matrix (ties count as</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the optimal order for the first strongly connected component of the victory matrix (ties count as</span>
 <span class="sd">        a connection).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Count first strongly connected component&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
@@ -428,7 +435,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">_count_ballots_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Compute the optimal order for all the candidates.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the optimal order for all the candidates.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Count other strongly connected components&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">candidates_by_scores_best_to_worst</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_by_scores_best_to_worst_first_component_</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">component_members</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_strong_connected_components_</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
@@ -451,14 +458,14 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">scores_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;1d array of integers. By convention, scores are integers from 1 to :attr:`n_c`, with :attr:`n_c` for the</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of integers. By convention, scores are integers from 1 to :attr:`n_c`, with :attr:`n_c` for the</span>
 <span class="sd">        winner and 1 for the last candidate in Kemeny optimal order.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s1">&#39;scores&#39;</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">candidates_by_scores_best_to_worst_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;1d array of integers. This is an optimal Kemeny order.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of integers. This is an optimal Kemeny order.</span>
 
 <span class="sd">        In case several orders are optimal, the first one by lexicographic order is given. This implies that if</span>
 <span class="sd">        several winners are possible, the one with lowest index is declared the winner.</span>
@@ -467,7 +474,34 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">meets_condorcet_c_rk_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="kc">True</span></div>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="c1"># %% Coalition Manipulation (CM)</span>
+
+    <span class="k">def</span> <span class="nf">_cm_preliminary_checks_c_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
+        <span class="c1"># We want a Kemeny order like r = c &gt; j_1 &gt; ... &gt; j_k &gt; w &gt; j_{k+1} &gt; ... j_{n_c - 2}.</span>
+        <span class="c1"># In particular, this order must be at least as good as putting w on top with:</span>
+        <span class="c1"># r&#39; = w &gt; c &gt; j_1 &gt; ... &gt; j_k &gt; j_{k+1} &gt; ... j_{n_c - 2}. So we must have:</span>
+        <span class="c1">#   * score(r) - score(r&#39;) &gt;= 0</span>
+        <span class="c1">#   * [W(c, w) + W(j_1, w) + ... + W(j_k, w)] - [W(w, c) + W(w, j_1) + ... + W(w, j_k)] &gt;= 0</span>
+        <span class="c1">#   * A(c, w) + A(j_1, w) + ... + A(j_k, w) &gt;= 0  (where A is the antisymmetric matrix of duels)</span>
+        <span class="c1">#   * A_s(c, w) + n_m + (A(j_1, w) + n_m) + ... + (A(j_k, w) + n_m) &gt;= 0</span>
+        <span class="c1"># It must only be true for a well-chosen subset {j_1, \ldots, j_k}, which is true iff it holds for the most</span>
+        <span class="c1"># favorable subset where each (A(j, w) + n_m) is positive. So:</span>
+        <span class="c1">#   * A_s(c, w) + n_m + \sum_{j != c, w} max(0, A(j, w) + n_m)) &gt;= 0.</span>
+        <span class="c1">#   * M(c, w) + \sum_{j != c, w} max(O, M(j, w)) &gt;= 0, where M = A + n_m.</span>
+        <span class="n">n_c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span>
+        <span class="n">n_m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_ut</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span>
+        <span class="n">profile_sincere</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span>
+            <span class="n">preferences_borda_rk</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_wants_to_help_c_</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]),</span> <span class="p">:]</span>
+        <span class="p">)</span>
+        <span class="n">matrix_duels_sincere</span> <span class="o">=</span> <span class="n">profile_sincere</span><span class="o">.</span><span class="n">matrix_duels_rk</span>
+        <span class="n">m_column_w</span> <span class="o">=</span> <span class="n">matrix_duels_sincere</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span> <span class="o">-</span> <span class="n">matrix_duels_sincere</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">,</span> <span class="p">:]</span> <span class="o">+</span> <span class="n">n_m</span>
+        <span class="n">neither_c_nor_w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">j</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">}</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_c</span><span class="p">)])</span>
+        <span class="k">if</span> <span class="n">m_column_w</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">m_column_w</span><span class="p">[</span><span class="n">neither_c_nor_w</span><span class="p">]))</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_necessary</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                                   <span class="s1">&#39;CM: Preliminary check: necessary_coalition_size_cm =&#39;</span><span class="p">)</span></div>
+
 </pre></div>
 
            </div>

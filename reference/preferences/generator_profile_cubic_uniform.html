@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GeneratorProfileCubicUniform &mdash; SVVAMP 0.9.1 documentation</title>
@@ -11,10 +11,11 @@
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=9dc39874"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -28,14 +29,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> SVVAMP
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            SVVAMP
           </a>
               <div class="version">
                 0.9.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -51,11 +56,16 @@
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html#preferences">Preferences</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="profile.html">Profile</a></li>
 <li class="toctree-l3"><a class="reference internal" href="profile_from_file.html">ProfileFromFile</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">GeneratorProfileCubicUniform</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">GeneratorProfileCubicUniform</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.GeneratorProfileCubicUniform"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileCubicUniform</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="generator_profile_euclidean_box.html">GeneratorProfileEuclideanBox</a></li>
 <li class="toctree-l3"><a class="reference internal" href="generator_profile_gaussian_well.html">GeneratorProfileGaussianWell</a></li>
 <li class="toctree-l3"><a class="reference internal" href="generator_profile_ianc.html">GeneratorProfileIanc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generator_profile_ic.html">GeneratorProfileIc</a></li>
 <li class="toctree-l3"><a class="reference internal" href="generator_profile_ladder.html">GeneratorProfileLadder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generator_profile_perturbed_culture.html">GeneratorProfilePerturbedCulture</a></li>
 <li class="toctree-l3"><a class="reference internal" href="generator_profile_spheroid.html">GeneratorProfileSpheroid</a></li>
 <li class="toctree-l3"><a class="reference internal" href="generator_profile_vmf_hypercircle.html">GeneratorProfileVMFHypercircle</a></li>
 <li class="toctree-l3"><a class="reference internal" href="generator_profile_vmf_hypersphere.html">GeneratorProfileVMFHypersphere</a></li>
@@ -82,9 +92,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../index.html">Reference</a> &raquo;</li>
-      <li>GeneratorProfileCubicUniform</li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Reference</a></li>
+      <li class="breadcrumb-item active">GeneratorProfileCubicUniform</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../_sources/reference/preferences/generator_profile_cubic_uniform.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -94,40 +104,16 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="generatorprofilecubicuniform">
-<h1>GeneratorProfileCubicUniform<a class="headerlink" href="#generatorprofilecubicuniform" title="Permalink to this headline"></a></h1>
+  <section id="generatorprofilecubicuniform">
+<h1>GeneratorProfileCubicUniform<a class="headerlink" href="#generatorprofilecubicuniform" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="svvamp.GeneratorProfileCubicUniform">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">svvamp.</span></span><span class="sig-name descname"><span class="pre">GeneratorProfileCubicUniform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_voters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/preferences/generator_profile_cubic_uniform.html#GeneratorProfileCubicUniform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.GeneratorProfileCubicUniform" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">svvamp.</span></span><span class="sig-name descname"><span class="pre">GeneratorProfileCubicUniform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_voters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/preferences/generator_profile_cubic_uniform.html#GeneratorProfileCubicUniform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.GeneratorProfileCubicUniform" title="Link to this definition"></a></dt>
 <dd><p>Profile generator using the ‘Cubic uniform’ model.</p>
 <p>Each coefficient <code class="docutils literal notranslate"><span class="pre">preferences_ut[v,</span> <span class="pre">c]</span></code> is drawn independently and uniformly in the interval [-1, 1]. The
 ordinal part of this distribution is the Impartial Culture.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>n_v</strong> (<em>int</em>) – Number of voters.</p></li>
 <li><p><strong>n_c</strong> (<em>int</em>) – Number of candidates.</p></li>

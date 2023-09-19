@@ -10,10 +10,11 @@
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
-        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=9dc39874"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -25,14 +26,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../index.html" class="icon icon-home"> SVVAMP
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            SVVAMP
           </a>
               <div class="version">
                 0.9.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -63,9 +68,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-      <li>svvamp.rules.rule_range_voting</li>
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">svvamp.rules.rule_range_voting</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -104,8 +109,10 @@
 <span class="kn">from</span> <span class="nn">svvamp.preferences.profile</span> <span class="kn">import</span> <span class="n">Profile</span>
 
 
-<div class="viewcode-block" id="RuleRangeVoting"><a class="viewcode-back" href="../../../reference/rules/rule_range_voting.html#svvamp.RuleRangeVoting">[docs]</a><span class="k">class</span> <span class="nc">RuleRangeVoting</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Range Voting with Average.</span>
+<div class="viewcode-block" id="RuleRangeVoting">
+<a class="viewcode-back" href="../../../reference/rules/rule_range_voting.html#svvamp.RuleRangeVoting">[docs]</a>
+<span class="k">class</span> <span class="nc">RuleRangeVoting</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Range Voting with Average.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -480,7 +487,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">allowed_grades</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;List or None. If ``step_grade`` is positive, the list of authorized grades. If ``step_grade`` is zero</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;List or None. If ``step_grade`` is positive, the list of authorized grades. If ``step_grade`` is zero</span>
 <span class="sd">        (continuous set of grades), then None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_grade</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -498,7 +505,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">ballots_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;2d array of integers. ``ballots[v, c]`` is the grade attributed by voter ``v`` to candidate ``c`` (when</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;2d array of integers. ``ballots[v, c]`` is the grade attributed by voter ``v`` to candidate ``c`` (when</span>
 <span class="sd">        voting sincerely). The following process is used.</span>
 
 <span class="sd">        1. Convert utilities into grades in the interval [:attr:`min_grade`, :attr:`max_grade`].</span>
@@ -545,7 +552,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">scores_sum_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;1d array of floats. ``scores_sum_[c]`` is the total grade of candidate ``c``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of floats. ``scores_sum_[c]`` is the total grade of candidate ``c``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Note for developers: this is used internally for manipulation computations. Compared to the average grade,</span>
         <span class="c1"># this limits problems of float approximation, especially for IM method.</span>
@@ -554,7 +561,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">scores_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;1d array of floats. ``scores_[c]`` is the average grade of candidate ``c``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of floats. ``scores_[c]`` is the average grade of candidate ``c``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">around</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scores_sum_</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
 
@@ -585,7 +592,7 @@
     <span class="c1"># %% Individual manipulation (IM)</span>
 
     <span class="k">def</span> <span class="nf">_im_main_work_v_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">c_is_wanted</span><span class="p">,</span> <span class="n">nb_wanted_undecided</span><span class="p">,</span> <span class="n">stop_if_true</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            &gt;&gt;&gt; profile = Profile([</span>
 <span class="sd">            ...     [ 1. , -0.5,  0. ],</span>
 <span class="sd">            ...     [ 0.5,  1. , -1. ],</span>
@@ -670,6 +677,7 @@
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">candidates_um_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates_cm_</span></div>
+
 
     <span class="c1"># %% Ignorant-Coalition Manipulation (ICM)</span>
 

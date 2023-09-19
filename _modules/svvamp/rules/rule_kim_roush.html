@@ -10,10 +10,11 @@
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
-        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=9dc39874"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -25,14 +26,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../index.html" class="icon icon-home"> SVVAMP
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            SVVAMP
           </a>
               <div class="version">
                 0.9.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -63,9 +68,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-      <li>svvamp.rules.rule_kim_roush</li>
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">svvamp.rules.rule_kim_roush</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -102,8 +107,10 @@
 <span class="kn">from</span> <span class="nn">svvamp.preferences.profile</span> <span class="kn">import</span> <span class="n">Profile</span>
 
 
-<div class="viewcode-block" id="RuleKimRoush"><a class="viewcode-back" href="../../../reference/rules/rule_kim_roush.html#svvamp.RuleKimRoush">[docs]</a><span class="k">class</span> <span class="nc">RuleKimRoush</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Kim-Roush method.</span>
+<div class="viewcode-block" id="RuleKimRoush">
+<a class="viewcode-back" href="../../../reference/rules/rule_kim_roush.html#svvamp.RuleKimRoush">[docs]</a>
+<span class="k">class</span> <span class="nc">RuleKimRoush</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Kim-Roush method.</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
@@ -326,12 +333,12 @@
 <span class="sd">        ***********************************</span>
 <span class="sd">        *   Coalition Manipulation (CM)   *</span>
 <span class="sd">        ***********************************</span>
-<span class="sd">        is_cm = nan</span>
+<span class="sd">        is_cm = False</span>
 <span class="sd">        log_cm: cm_option = lazy, um_option = lazy, icm_option = lazy, tm_option = exact</span>
 <span class="sd">        candidates_cm =</span>
-<span class="sd">        [ 0.  0. nan]</span>
-<span class="sd">        necessary_coalition_size_cm =</span>
 <span class="sd">        [0. 0. 0.]</span>
+<span class="sd">        necessary_coalition_size_cm =</span>
+<span class="sd">        [0. 1. 3.]</span>
 <span class="sd">        sufficient_coalition_size_cm =</span>
 <span class="sd">        [0. 2. 3.]</span>
 
@@ -367,7 +374,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">_count_ballots_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Case where all the candidates have the same score:</span>
 
 <span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 1], [1, 0]])</span>
@@ -432,7 +439,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">scores_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;2d array of integers. ``scores[r, c]`` is minus the Veto score of candidate ``c`` at elimination round ``r``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;2d array of integers. ``scores[r, c]`` is minus the Veto score of candidate ``c`` at elimination round ``r``.</span>
 
 <span class="sd">        By convention, if candidate ``c`` does not participate to round ``r``, then ``scores[r, c] = numpy.inf``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -444,7 +451,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">candidates_by_scores_best_to_worst_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;1d array of integers. Candidates are sorted according to their order of elimination. When several</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of integers. Candidates are sorted according to their order of elimination. When several</span>
 <span class="sd">        candidates are eliminated during the same round, they are sorted by Veto score at that round (more vetos are</span>
 <span class="sd">        eliminated first) and, in case of a tie, by their index ( highest indexes are eliminated first).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -457,10 +464,39 @@
     <span class="c1"># %% CM</span>
 
     <span class="k">def</span> <span class="nf">_cm_preliminary_checks_c_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
+        <span class="n">n_c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span>
         <span class="n">n_m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_ut</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span>
         <span class="n">n_s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span> <span class="o">-</span> <span class="n">n_m</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_update_sufficient</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="p">(</span><span class="n">n_s</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span>
-                                <span class="s1">&#39;CM: Obvious bound =&gt; sufficient_coalition_size_cm[c] = &#39;</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_sufficient</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="p">(</span><span class="n">n_s</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span>
+                                <span class="s1">&#39;CM: Obvious bound =&gt; sufficient_coalition_size_cm[c] = &#39;</span><span class="p">)</span>
+        <span class="c1"># c must not be eliminated during the first round</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_necessary</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">scores_</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="o">*</span> <span class="n">n_c</span> <span class="o">-</span> <span class="n">n_s</span><span class="p">,</span>
+                               <span class="s1">&#39;CM: Obvious bound =&gt; necessary_coalition_size_cm[c] = &#39;</span><span class="p">)</span>
+        <span class="c1"># We need to make `w` lose. Two options:</span>
+        <span class="c1"># * Have more than `n_v / k` vetos. But as long as `c` is here, the only sincere voters who can cast a</span>
+        <span class="c1">#   veto against `w` are those who rank `c` before `w` (which is possible only if they have the same</span>
+        <span class="c1">#   utility for `w` and `c`). So there must exist a `k` such that</span>
+        <span class="c1">#   `(n_s + n_m) / k &lt; can_veto_w + n_m`. In particular it must hold that</span>
+        <span class="c1">#   `(n_s + n_m) / n_c &lt; can_veto_w + n_m`, which leads to</span>
+        <span class="c1">#   `n_m &gt; (n_s - n_c * can_veto_w) / (n_c - 1)`.</span>
+        <span class="n">preferences_borda_rk_s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_wants_to_help_c_</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]),</span> <span class="p">:]</span>
+        <span class="n">can_veto_w</span> <span class="o">=</span> <span class="n">preferences_borda_rk_s</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">preferences_borda_rk_s</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]</span>
+        <span class="n">n_m_necessary</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">((</span><span class="n">n_s</span> <span class="o">-</span> <span class="n">n_c</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">can_veto_w</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="c1"># * Have exactly `n_v / k` vetos, and that any other candidate has the same number of vetos. Similarly</span>
+        <span class="c1">#   to the previous case, it implies that `n_m &gt;= (n_s - n_c * can_veto_w) / (n_c - 1)`. Since the `&gt;` case</span>
+        <span class="c1">#   is already covered by the previous bullet point, focus on the `==` case. Then</span>
+        <span class="c1">#   `(n_s + n_m) / n_c == can_veto_w + n_m`, i.e. if `w` is eliminated, it must be at first round and with</span>
+        <span class="c1">#   all manipulators voting against her. But it needs that all candidates have the same score, and that</span>
+        <span class="c1">#   `c == 0` to benefit from the tie-breaking rule.</span>
+        <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">n_vetos_s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">preferences_borda_rk_s</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">min_vetos_except_w</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">n_vetos_s</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_c</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">])</span>
+            <span class="n">max_vetos_except_w</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">n_vetos_s</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_c</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">min_vetos_except_w</span> <span class="o">==</span> <span class="n">max_vetos_except_w</span><span class="p">:</span>
+                <span class="n">n_m_necessary</span> <span class="o">=</span> <span class="n">n_vetos_s</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">-</span> <span class="n">n_vetos_s</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_necessary</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_m_necessary</span><span class="p">,</span>
+                               <span class="s1">&#39;CM: w must lose =&gt; necessary_coalition_size_cm[c] = &#39;</span><span class="p">)</span></div>
+
 </pre></div>
 
            </div>

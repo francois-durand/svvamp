@@ -253,3 +253,23 @@ class RuleSplitCycle(Rule):
     def meets_condorcet_c_rk_ctb(self):
         # TO DO : to check
         return True
+
+    # %% Coalition Manipulation (CM)
+
+    def _cm_preliminary_checks_c_subclass_(self, c, optimize_bounds):
+        # For each candidate `k != c`, we must have `S(c, k) >= W(k, c)`, where `S` denotes the strength (width of
+        # the widest path) and `W` denotes the result of the direct duel. Note that the widest path necessarily
+        # goes through the edge `W(j, k)` for some `j != k`. So, there must exist `j` such that `W(j, k) >= W(k, c)`.
+        # In other words, `max_j W(j, k) >= W(k, c)`. Since we may add manipulators, the condition is
+        # `n_m + max_j W(j, k) >= W(k, c)`, and finally `n_m >= max_k ( W(k, c) - max_j W(j, k) )`.
+        n_c = self.profile_.n_c
+        profile_sincere = Profile(
+            preferences_borda_rk=self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :]
+        )
+        matrix_duels_sincere = profile_sincere.matrix_duels_rk
+        is_not_c = (np.arange(n_c) != c)
+        worst_defeat_k = np.max(matrix_duels_sincere[:, is_not_c], axis=0)
+        score_k_against_c = matrix_duels_sincere[is_not_c, c]
+        n_m_necessary = np.max(score_k_against_c - worst_defeat_k)
+        self._update_necessary(self._necessary_coalition_size_cm, c, n_m_necessary,
+                               'CM: Preliminary check: necessary_coalition_size_cm =')

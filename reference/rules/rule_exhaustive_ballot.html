@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RuleExhaustiveBallot &mdash; SVVAMP 0.9.1 documentation</title>
@@ -11,10 +11,11 @@
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=9dc39874"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -30,14 +31,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> SVVAMP
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            SVVAMP
           </a>
               <div class="version">
                 0.9.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -63,12 +68,16 @@
 <li class="toctree-l3"><a class="reference internal" href="rule_condorcet_vtb_irv.html">RuleCondorcetVtbIRV</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_coombs.html">RuleCoombs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_copeland.html">RuleCopeland</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">RuleExhaustiveBallot</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">RuleExhaustiveBallot</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.RuleExhaustiveBallot"><code class="docutils literal notranslate"><span class="pre">RuleExhaustiveBallot</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="rule_icrv.html">RuleICRV</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_irv.html">RuleIRV</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_irv_average.html">RuleIRVAverage</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_irv_duels.html">RuleIRVDuels</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_iterated_bucklin.html">RuleIteratedBucklin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rule_k_approval.html">RuleKApproval</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_kemeny.html">RuleKemeny</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_kim_roush.html">RuleKimRoush</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_majority_judgment.html">RuleMajorityJudgment</a></li>
@@ -78,6 +87,7 @@
 <li class="toctree-l3"><a class="reference internal" href="rule_range_voting.html">RuleRangeVoting</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_ranked_pairs.html">RuleRankedPairs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_schulze.html">RuleSchulze</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rule_slater.html">RuleSlater</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_smith_irv.html">RuleSmithIRV</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_split_cycle.html">RuleSplitCycle</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_star.html">RuleSTAR</a></li>
@@ -107,9 +117,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../index.html">Reference</a> &raquo;</li>
-      <li>RuleExhaustiveBallot</li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Reference</a></li>
+      <li class="breadcrumb-item active">RuleExhaustiveBallot</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../_sources/reference/rules/rule_exhaustive_ballot.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -119,35 +129,11 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="ruleexhaustiveballot">
-<h1>RuleExhaustiveBallot<a class="headerlink" href="#ruleexhaustiveballot" title="Permalink to this headline"></a></h1>
+  <section id="ruleexhaustiveballot">
+<h1>RuleExhaustiveBallot<a class="headerlink" href="#ruleexhaustiveballot" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="svvamp.RuleExhaustiveBallot">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">svvamp.</span></span><span class="sig-name descname"><span class="pre">RuleExhaustiveBallot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/rules/rule_exhaustive_ballot.html#RuleExhaustiveBallot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.RuleExhaustiveBallot" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">svvamp.</span></span><span class="sig-name descname"><span class="pre">RuleExhaustiveBallot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/rules/rule_exhaustive_ballot.html#RuleExhaustiveBallot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.RuleExhaustiveBallot" title="Link to this definition"></a></dt>
 <dd><p>Exhaustive Ballot.</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[</span>
@@ -421,20 +407,20 @@ rare obvious cases).</p></li>
 <p>‘Manipulability of Single Transferable Vote’, Toby Walsh, 2010.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="svvamp.RuleExhaustiveBallot.ballots_">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ballots_</span></span><a class="headerlink" href="#svvamp.RuleExhaustiveBallot.ballots_" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ballots_</span></span><a class="headerlink" href="#svvamp.RuleExhaustiveBallot.ballots_" title="Link to this definition"></a></dt>
 <dd><p>2d array of integers. <code class="docutils literal notranslate"><span class="pre">ballots[v,</span> <span class="pre">r]</span></code> is the candidate for which voter <code class="docutils literal notranslate"><span class="pre">v</span></code> votes at round <code class="docutils literal notranslate"><span class="pre">r</span></code>.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="svvamp.RuleExhaustiveBallot.candidates_by_scores_best_to_worst_">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">candidates_by_scores_best_to_worst_</span></span><a class="headerlink" href="#svvamp.RuleExhaustiveBallot.candidates_by_scores_best_to_worst_" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">candidates_by_scores_best_to_worst_</span></span><a class="headerlink" href="#svvamp.RuleExhaustiveBallot.candidates_by_scores_best_to_worst_" title="Link to this definition"></a></dt>
 <dd><p>1d array of integers. <code class="docutils literal notranslate"><span class="pre">candidates_by_scores_best_to_worst</span></code> is the list of all candidates in the reverse
 order of their elimination.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="svvamp.RuleExhaustiveBallot.elimination_path_">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">elimination_path_</span></span><a class="headerlink" href="#svvamp.RuleExhaustiveBallot.elimination_path_" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">elimination_path_</span></span><a class="headerlink" href="#svvamp.RuleExhaustiveBallot.elimination_path_" title="Link to this definition"></a></dt>
 <dd><p>1d array of integers. Same as <code class="xref py py-attr docutils literal notranslate"><span class="pre">candidates_by_scores_best_to_worst</span></code>,
 but in the reverse order.</p>
 <p class="rubric">Examples</p>
@@ -454,7 +440,7 @@ but in the reverse order.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="svvamp.RuleExhaustiveBallot.margins_">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">margins_</span></span><a class="headerlink" href="#svvamp.RuleExhaustiveBallot.margins_" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">margins_</span></span><a class="headerlink" href="#svvamp.RuleExhaustiveBallot.margins_" title="Link to this definition"></a></dt>
 <dd><p>2d array. <code class="docutils literal notranslate"><span class="pre">margins_[r,</span> <span class="pre">c]</span></code> is the number of votes that <code class="docutils literal notranslate"><span class="pre">c</span></code> must lose to be eliminated at round <code class="docutils literal notranslate"><span class="pre">r</span></code>
 (all other things being equal). The candidate who is eliminated at round <code class="docutils literal notranslate"><span class="pre">r</span></code> is the only one for which
 <code class="docutils literal notranslate"><span class="pre">margins_[r,</span> <span class="pre">c]</span> <span class="pre">=</span> <span class="pre">0</span></code>.</p>
@@ -477,7 +463,7 @@ but in the reverse order.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="svvamp.RuleExhaustiveBallot.scores_">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">scores_</span></span><a class="headerlink" href="#svvamp.RuleExhaustiveBallot.scores_" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">scores_</span></span><a class="headerlink" href="#svvamp.RuleExhaustiveBallot.scores_" title="Link to this definition"></a></dt>
 <dd><p>2d array. <code class="docutils literal notranslate"><span class="pre">scores[r,</span> <span class="pre">c]</span></code> is the number of voters who vote for candidate <code class="docutils literal notranslate"><span class="pre">c</span></code> at round <code class="docutils literal notranslate"><span class="pre">r</span></code>.</p>
 <p>For eliminated candidates, <code class="docutils literal notranslate"><span class="pre">scores[r,</span> <span class="pre">c]</span> <span class="pre">=</span> <span class="pre">numpy.nan</span></code>. In contrast, <code class="docutils literal notranslate"><span class="pre">scores[r,</span> <span class="pre">c]</span> <span class="pre">=</span> <span class="pre">0</span></code> means that
 <code class="docutils literal notranslate"><span class="pre">c</span></code> is present at round <code class="docutils literal notranslate"><span class="pre">r</span></code> but no voter votes for <code class="docutils literal notranslate"><span class="pre">c</span></code>.</p>
@@ -485,7 +471,7 @@ but in the reverse order.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="svvamp.RuleExhaustiveBallot.w_">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">w_</span></span><a class="headerlink" href="#svvamp.RuleExhaustiveBallot.w_" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">w_</span></span><a class="headerlink" href="#svvamp.RuleExhaustiveBallot.w_" title="Link to this definition"></a></dt>
 <dd><p>Integer (winning candidate).</p>
 <p>Default behavior: the candidate with highest value in vector <a class="reference internal" href="#svvamp.RuleExhaustiveBallot.scores_" title="svvamp.RuleExhaustiveBallot.scores_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">scores_</span></code></a> is declared the winner. In case
 of a tie, the tied candidate with lowest index wins.</p>

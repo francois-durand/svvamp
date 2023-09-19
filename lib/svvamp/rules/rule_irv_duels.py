@@ -22,6 +22,7 @@ This file is part of SVVAMP.
 import numpy as np
 from svvamp.rules.rule import Rule
 from svvamp.utils.util_cache import cached_property
+from svvamp.utils.misc import preferences_ut_to_matrix_duels_ut
 from svvamp.preferences.profile import Profile
 
 
@@ -295,6 +296,7 @@ class RuleIRVDuels(Rule):
 
     options_parameters = Rule.options_parameters.copy()
     options_parameters['icm_option'] = {'allowed': ['exact'], 'default': 'exact'}
+    options_parameters['cm_option'] = {'allowed': ['lazy', 'exact'], 'default': 'lazy'}
 
     def __init__(self, **kwargs):
         super().__init__(
@@ -376,3 +378,239 @@ class RuleIRVDuels(Rule):
     @cached_property
     def meets_condorcet_c_rk_ctb(self):
         return True
+
+    # %% Coalition Manipulation (CM)
+
+    def _cm_aux_exact(self, c, n_max, n_min, optimize_bounds, preferences_borda_s, matrix_duels_s):
+        """Exact algorithm used for CM.
+
+        Parameters
+        ----------
+        c : int
+            Candidate for which we want to manipulate.
+        n_max : int
+            Maximum number of manipulators allowed.
+
+            * CM, optimize_bounds and exact --> put the current value of ``sufficient_coalition_size[c] - 1`` (we want
+              to find the best value for ``sufficient_coalition_size[c]``, even if it exceeds the number of
+              manipulators)
+            * CM, otherwise --> put the number of manipulators.
+
+        n_min : int
+            When we know that ``n_min`` manipulators are needed (necessary coalition size).
+        optimize_bounds : bool
+            True iff we need to continue, even after a manipulation is found.
+        preferences_borda_s : ndarray
+            Preferences of the sincere voters (in Borda format).
+        matrix_duels_s : ndarray
+            Matrix of duels of the sincere voters.
+
+        Returns
+        -------
+        tuple
+            ``(n_manip_final, example_path_losers, example_path_winners, quick_escape)``.
+
+            * ``n_manip_final``: Integer or +inf. If manipulation is impossible with ``<= n_max`` manipulators, it is
+              +inf. If manipulation is possible (with ``<= n_max``):
+
+                * If ``optimize_bounds`` is True, it is the minimal number of manipulators.
+                * Otherwise, it is a number of manipulators that allow this manipulation (not necessarily minimal).
+
+            * ``example_path_losers``: An example of elimination path that realizes the manipulation with
+              ``n_manip_final`` manipulators. ``example_path[k]`` is the ``k``-th candidate eliminated. If the
+              manipulation is impossible, ``example_path_losers`` is NaN.
+            * ``example_path_winners``: An example of elimination path that realizes the manipulation with
+              ``n_manip_final`` manipulators. ``example_path[k]`` is the candidate selected for the ``k``-th duel
+              and winning. If the manipulation is impossible, ``example_path_winners`` is NaN.
+            * ``quick_escape``: Boolean. True if we get out without optimizing ``n_manip_final``.
+        """
+        candidates = np.arange(self.profile_.n_c)
+        n_s = preferences_borda_s.shape[0]
+        n_max_updated = n_max  # Maximal number of manipulators allowed
+        n_manip_final = np.inf  # Result: number of manipulators finally used
+        example_path_losers = np.nan  # Result: example of elimination path (duel losers)
+        example_path_winners = np.nan  # Result: example of elimination path (duel winners)
+        r = 0
+        is_candidate_alive_begin_r = np.zeros((self.profile_.n_c - 1, self.profile_.n_c), dtype=np.bool)
+        is_candidate_alive_begin_r[0, :] = np.ones(self.profile_.n_c)
+        n_manip_used_before_r = np.zeros(self.profile_.n_c - 1, dtype=np.int)
+        scores_m_begin_r = np.zeros((self.profile_.n_c - 1, self.profile_.n_c))
+        scores_tot_begin_r = np.zeros((self.profile_.n_c - 1, self.profile_.n_c))
+        scores_tot_begin_r[0, :] = np.sum(np.equal(
+            preferences_borda_s, np.max(preferences_borda_s, 1)[:, np.newaxis]
+        ), 0)
+        self.mylogv('cm_aux_exact: c =', c, 3)
+        self.mylogv("cm_aux_exact: r =", r, 3)
+        suggested_loser_r = {0: np.array([cand for cand in candidates if cand != c])}  # Possible losers of the duel
+        suggested_winner_r = {0: np.array(candidates)}                                 # Possible winners of the duel
+        index_loser_in_suggested_r = np.zeros(self.profile_.n_c - 1, dtype=np.int)
+        # Index of the loser of the duel in ``suggested_loser_r``.
+        index_winner_in_suggested_r = np.zeros(self.profile_.n_c - 1, dtype=np.int)
+        # Index of the winner of the duel in ``suggested_winner_r``.
+        while True:
+            if r < 0:
+                self.mylog("cm_aux_exact: End of exploration", 3)
+                return n_manip_final, np.array(example_path_losers), np.array(example_path_winners), False
+            if index_winner_in_suggested_r[r] >= suggested_winner_r[r].shape[0]:
+                # We have tried all the possible winners for a given loser, change the loser.
+                index_loser_in_suggested_r[r] += 1
+                index_winner_in_suggested_r[r] = 0
+            if (
+                index_loser_in_suggested_r[r] >= suggested_loser_r[r].shape[0]
+                or n_manip_used_before_r[r] > n_max_updated
+            ):
+                # First condition: we have tried all possible losers for this round, go back to previous round.
+                # Second condition: may happen in ``optimize_bounds`` exact mode, if we have found a
+                # solution and updated ``n_max_updated``.
+                r -= 1
+                self.mylogv("cm_aux_exact: Tried everything for round r, go back to r =", r, 3)
+                self.mylogv("cm_aux_exact: r =", r, 3)
+                if r >= 0:
+                    index_winner_in_suggested_r[r] += 1
+                continue
+            loser = suggested_loser_r[r][index_loser_in_suggested_r[r]]
+            winner = suggested_winner_r[r][index_winner_in_suggested_r[r]]
+            self.mylogv("cm_aux_exact: suggested_loser_r[r] =", suggested_loser_r[r], 3)
+            self.mylogv("cm_aux_exact: index_loser_in_suggested_r[r] =", index_loser_in_suggested_r[r], 3)
+            self.mylogv("cm_aux_exact: loser =", loser, 3)
+            self.mylogv("cm_aux_exact: suggested_winner_r[r] =", suggested_winner_r[r], 3)
+            self.mylogv("cm_aux_exact: index_winner_in_suggested_r[r] =", index_winner_in_suggested_r[r], 3)
+            self.mylogv("cm_aux_exact: winner =", winner, 3)
+
+            if winner == loser:
+                self.mylog("cm_aux_exact: winner == loser, skip this pair", 3)
+                index_winner_in_suggested_r[r] += 1
+                continue
+
+            # How many manipulators are needed to make ``winner`` win the duel against ``loser``?
+            n_m_needed_duel = matrix_duels_s[loser, winner] - matrix_duels_s[winner, loser] + (loser < winner)
+            if n_m_needed_duel > n_max_updated:
+                self.mylog("cm_aux_exact: `winner` cannot eliminate `loser`, try another pair.", 3)
+                index_winner_in_suggested_r[r] += 1
+                continue
+
+            # What manipulators are needed to select `winner` and `loser` for the duel?
+            self.mylogv("cm_aux_exact: scores_tot_begin_r[r, :] =", scores_tot_begin_r[r, :], 3)
+            if scores_tot_begin_r[r, winner] >= scores_tot_begin_r[r, loser] + (loser < winner):
+                score_to_beat = scores_tot_begin_r[r, winner]
+                cand_to_beat = winner  # Candidate whose score we must beat
+                other_selected = loser
+            else:
+                score_to_beat = scores_tot_begin_r[r, loser]
+                cand_to_beat = loser  # Candidate whose score we must beat
+                other_selected = winner
+            scores_m_new_r = np.zeros(self.profile_.n_c)
+            scores_m_new_r[is_candidate_alive_begin_r[r, :]] = np.maximum((
+                score_to_beat - scores_tot_begin_r[r, is_candidate_alive_begin_r[r, :]]
+                + (candidates[is_candidate_alive_begin_r[r, :]] > cand_to_beat)
+            ), 0)
+            scores_m_new_r[other_selected] = 0  # No need to give points to the other selected
+            scores_m_end_r = scores_m_begin_r[r, :] + scores_m_new_r
+            n_manip_r_and_before = max(n_manip_used_before_r[r], np.sum(scores_m_end_r))
+            self.mylogv("cm_aux_exact: scores_m_new_r =", scores_m_new_r, 3)
+            self.mylogv("cm_aux_exact: scores_m_end_r =", scores_m_end_r, 3)
+            self.mylogv("cm_aux_exact: n_manip_r_and_before =", n_manip_r_and_before, 3)
+
+            if n_manip_r_and_before > n_max_updated:
+                self.mylog("cm_aux_exact: Cannot select `winner` and `loser` for the duel, try another pair.", 3)
+                index_winner_in_suggested_r[r] += 1
+                continue
+
+            if r == self.profile_.n_c - 2:
+                n_manip_final = n_manip_r_and_before
+                example_path_losers = []
+                example_path_winners = []
+                for r in range(self.profile_.n_c - 1):
+                    try:
+                        example_path_losers.append(suggested_loser_r[r][index_loser_in_suggested_r[r]])
+                        example_path_winners.append(suggested_winner_r[r][index_winner_in_suggested_r[r]])
+                    except IndexError:
+                        print(f'{r=}')
+                        print(f'{index_loser_in_suggested_r=}')
+                        print(f'{suggested_loser_r=}')
+                        print(f'{index_winner_in_suggested_r=}')
+                        print(f'{suggested_winner_r=}')
+                        raise IndexError
+                self.mylog("cm_aux_exact: CM found", 3)
+                self.mylogv("cm_aux_exact: n_manip_final =", n_manip_final, 3)
+                self.mylogv("cm_aux_exact: example_path_losers =", example_path_losers, 3)
+                self.mylogv("cm_aux_exact: example_path_winners =", example_path_winners, 3)
+                if n_manip_final == n_min:
+                    self.mylogv("cm_aux_exact: End of exploration: it is not possible to do better than n_min =",
+                                n_min, 3)
+                    return n_manip_final, np.array(example_path_losers), np.array(example_path_winners), False
+                if not optimize_bounds:
+                    return n_manip_final, np.array(example_path_losers), np.array(example_path_winners), True
+                n_max_updated = n_manip_r_and_before - 1
+                self.mylogv("cm_aux_exact: n_max_updated =", n_max_updated, 3)
+                index_winner_in_suggested_r[r] += 1
+                continue
+
+            # Calculate scores for next round
+            n_manip_used_before_r[r + 1] = n_manip_r_and_before
+            is_candidate_alive_begin_r[r + 1, :] = is_candidate_alive_begin_r[r, :]
+            is_candidate_alive_begin_r[r + 1, loser] = False
+            self.mylogv("cm_aux_exact: is_candidate_alive_begin_r[r+1, :] =", is_candidate_alive_begin_r[r + 1, :], 3)
+            scores_tot_begin_r[r + 1, :] = np.full(self.profile_.n_c, np.nan)
+            scores_tot_begin_r[r + 1, is_candidate_alive_begin_r[r + 1, :]] = (
+                np.sum(np.equal(
+                    preferences_borda_s[:, is_candidate_alive_begin_r[r + 1, :]],
+                    np.max(preferences_borda_s[:, is_candidate_alive_begin_r[r + 1, :]], 1)[:, np.newaxis]
+                ), 0))
+            self.mylogv("cm_aux_exact: scores_s_begin_r[r+1, :] =", scores_tot_begin_r[r + 1, :], 3)
+            scores_m_begin_r[r + 1, :] = scores_m_end_r
+            scores_m_begin_r[r + 1, loser] = 0
+            self.mylogv("cm_aux_exact: scores_m_begin_r[r+1, :] =", scores_m_begin_r[r + 1, :], 3)
+            scores_tot_begin_r[r + 1, :] += scores_m_begin_r[r + 1, :]
+            self.mylogv("cm_aux_exact: scores_tot_begin_r[r+1, :] =", scores_tot_begin_r[r + 1, :], 3)
+
+            # If an opponent has too many votes, then manipulation is not possible.
+            max_score = np.nanmax(scores_tot_begin_r[r + 1, candidates != c])
+            most_serious_opponent = np.where(scores_tot_begin_r[r + 1, :] == max_score)[0][0]
+            if max_score + (most_serious_opponent < c) > n_s + n_max_updated - max_score:
+                self.mylogv("cm_aux_exact: most_serious_opponent =", most_serious_opponent, 3)
+                self.mylog(
+                    "cm_aux_exact: Manipulation impossible by this path (an opponent will have too many votes)", 3)
+                index_winner_in_suggested_r[r] += 1
+                continue
+
+            # Update other variables for next round
+            suggested_loser_r[r + 1] = suggested_loser_r[r][suggested_loser_r[r][:] != loser]
+            index_loser_in_suggested_r[r + 1] = 0
+            suggested_winner_r[r + 1] = suggested_winner_r[r][suggested_winner_r[r][:] != loser]
+            index_winner_in_suggested_r[r + 1] = 0
+            r += 1
+            self.mylogv("cm_aux_exact: r =", r, 3)
+
+    def _cm_main_work_c_(self, c, optimize_bounds):
+        if not self.cm_option == "exact":
+            # With 'lazy' option, we stop here anyway.
+            return False
+        # From this point, we have necessarily the 'exact' option.
+        n_m = self.profile_.matrix_duels_ut[c, self.w_]
+        n_max = self._sufficient_coalition_size_cm[c] - 1 if optimize_bounds else n_m
+        n_min = self._necessary_coalition_size_cm[c]
+        preferences_borda_s = self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :]
+        matrix_duels_s = preferences_ut_to_matrix_duels_ut(preferences_borda_s)
+        n_manip_exact, example_path_losers, example_path_winners, quick_escape = self._cm_aux_exact(
+            c=c,
+            n_max=n_max,
+            n_min=n_min,
+            optimize_bounds=optimize_bounds,
+            preferences_borda_s=preferences_borda_s,
+            matrix_duels_s=matrix_duels_s
+        )
+        self.mylogv('CM: Exact algorithm: n_manip_exact =', n_manip_exact)
+        self._update_sufficient(self._sufficient_coalition_size_cm, c, n_manip_exact,
+                                'CM: Fast algorithm: sufficient_coalition_size_cm =')
+        # Update necessary coalition and return
+        if optimize_bounds:
+            self._update_necessary(self._necessary_coalition_size_cm, c, self._sufficient_coalition_size_cm[c],
+                                   'CM: Update necessary_coalition_size_cm[c] = sufficient_coalition_size_cm[c] =')
+        else:
+            if n_m < self._sufficient_coalition_size_cm[c]:
+                # We have explored everything with ``n_max = n_m`` but manipulation failed.
+                self._update_necessary(
+                    self._necessary_coalition_size_cm, c, n_m + 1,
+                    'CM: Update necessary_coalition_size_cm[c] = n_m + 1 =')
+        return quick_escape

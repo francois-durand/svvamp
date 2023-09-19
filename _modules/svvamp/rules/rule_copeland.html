@@ -10,10 +10,11 @@
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
-        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=9dc39874"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -25,14 +26,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../index.html" class="icon icon-home"> SVVAMP
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            SVVAMP
           </a>
               <div class="version">
                 0.9.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -63,9 +68,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-      <li>svvamp.rules.rule_copeland</li>
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">svvamp.rules.rule_copeland</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -96,13 +101,16 @@
 <span class="sd">    You should have received a copy of the GNU General Public License</span>
 <span class="sd">    along with SVVAMP.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">svvamp.rules.rule</span> <span class="kn">import</span> <span class="n">Rule</span>
 <span class="kn">from</span> <span class="nn">svvamp.utils.util_cache</span> <span class="kn">import</span> <span class="n">cached_property</span>
 <span class="kn">from</span> <span class="nn">svvamp.preferences.profile</span> <span class="kn">import</span> <span class="n">Profile</span>
 
 
-<div class="viewcode-block" id="RuleCopeland"><a class="viewcode-back" href="../../../reference/rules/rule_copeland.html#svvamp.RuleCopeland">[docs]</a><span class="k">class</span> <span class="nc">RuleCopeland</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="RuleCopeland">
+<a class="viewcode-back" href="../../../reference/rules/rule_copeland.html#svvamp.RuleCopeland">[docs]</a>
+<span class="k">class</span> <span class="nc">RuleCopeland</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Copeland rule</span>
 
 <span class="sd">    Notes</span>
@@ -141,6 +149,7 @@
 
     <span class="n">options_parameters</span> <span class="o">=</span> <span class="n">Rule</span><span class="o">.</span><span class="n">options_parameters</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">options_parameters</span><span class="p">[</span><span class="s1">&#39;icm_option&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">}</span>
+    <span class="n">options_parameters</span><span class="p">[</span><span class="s1">&#39;cm_option&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;fast&#39;</span><span class="p">,</span> <span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;fast&#39;</span><span class="p">}</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
@@ -161,7 +170,83 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">meets_ignmc_c_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="kc">True</span></div>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="c1"># %% Coalition Manipulation (CM)</span>
+
+    <span class="c1"># noinspection PyUnusedLocal</span>
+    <span class="k">def</span> <span class="nf">_cm_main_work_c_fast_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do the main work in CM loop for candidate ``c``.</span>
+
+<span class="sd">        * Try to improve bounds ``_sufficient_coalition_size_cm[c]`` and ``_necessary_coalition_size_cm[c]``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">pref_borda_rk_s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_wants_to_help_c_</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]),</span> <span class="p">:]</span>
+            <span class="n">matrix_duels_s</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="n">pref_borda_rk_s</span><span class="p">)</span><span class="o">.</span><span class="n">matrix_duels_ut</span>
+            <span class="n">matrix_duels_s_antisym</span> <span class="o">=</span> <span class="n">matrix_duels_s</span> <span class="o">-</span> <span class="n">matrix_duels_s</span><span class="o">.</span><span class="n">T</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">matrix_duels_s_antisym</span><span class="p">[:,</span> <span class="n">c</span><span class="p">])</span>  <span class="c1"># Opponent in the most difficult duel for `c`</span>
+            <span class="n">e</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">-</span> <span class="n">c</span> <span class="o">-</span> <span class="n">d</span>  <span class="c1"># Opponent in the easiest duel for `c`</span>
+            <span class="c1"># 2 victories =&gt; `c` is CW =&gt; `c` wins</span>
+            <span class="n">sufficient_2_victories</span> <span class="o">=</span> <span class="n">matrix_duels_s_antisym</span><span class="p">[</span><span class="n">d</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="c1"># 1.5 victories (with a tie against `d`). Then the only dangerous opponent is `d`, who might also have</span>
+            <span class="c1"># 1.5 victories.</span>
+            <span class="c1">#   * If `c &lt; d`, then `c` will win anyway (possibly by tie-breaking rule).</span>
+            <span class="c1">#   * If `c &gt; d`, then `d` must not win against `e`, i.e. `e` must at least tie with `d`.</span>
+            <span class="k">if</span> <span class="n">c</span> <span class="o">&lt;</span> <span class="n">d</span><span class="p">:</span>
+                <span class="n">sufficient_1_dot_5_victories</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
+                    <span class="n">matrix_duels_s_antisym</span><span class="p">[</span><span class="n">d</span><span class="p">,</span> <span class="n">c</span><span class="p">],</span>
+                    <span class="n">matrix_duels_s_antisym</span><span class="p">[</span><span class="n">e</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">sufficient_1_dot_5_victories</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
+                    <span class="n">matrix_duels_s_antisym</span><span class="p">[</span><span class="n">d</span><span class="p">,</span> <span class="n">c</span><span class="p">],</span>
+                    <span class="n">matrix_duels_s_antisym</span><span class="p">[</span><span class="n">e</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="n">matrix_duels_s_antisym</span><span class="p">[</span><span class="n">d</span><span class="p">,</span> <span class="n">e</span><span class="p">]</span>
+                <span class="p">)</span>
+            <span class="c1"># 1 victory (i.e. against `e`).</span>
+            <span class="c1">#   * If `c == 0`, then `e` must win against `d` and the tie-breaking rule makes `c` win.</span>
+            <span class="c1">#   * If `c != 0`, then she cannot win with only 1 victory.</span>
+            <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">sufficient_1_victory</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
+                    <span class="n">matrix_duels_s_antisym</span><span class="p">[</span><span class="n">e</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="n">matrix_duels_s_antisym</span><span class="p">[</span><span class="n">d</span><span class="p">,</span> <span class="n">e</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">sufficient_1_victory</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+            <span class="c1"># 2 ties.</span>
+            <span class="c1">#   * If `c == 0`, then `e` must tie with `d` and the tie-breaking rule makes `c` win.</span>
+            <span class="c1">#   * If `c != 0`, then she cannot win with only 2 ties.</span>
+            <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">sufficient_2_ties</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
+                    <span class="n">matrix_duels_s_antisym</span><span class="p">[</span><span class="n">e</span><span class="p">,</span> <span class="n">c</span><span class="p">],</span>
+                    <span class="n">matrix_duels_s_antisym</span><span class="p">[</span><span class="n">d</span><span class="p">,</span> <span class="n">c</span><span class="p">],</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">matrix_duels_s_antisym</span><span class="p">[</span><span class="n">d</span><span class="p">,</span> <span class="n">e</span><span class="p">])</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">sufficient_2_ties</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+            <span class="n">sufficient</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span>
+                <span class="n">sufficient_2_victories</span><span class="p">,</span>
+                <span class="n">sufficient_1_dot_5_victories</span><span class="p">,</span>
+                <span class="n">sufficient_1_victory</span><span class="p">,</span>
+                <span class="n">sufficient_2_ties</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s1">&#39;CM: Fast algorithm: sufficient =&#39;</span><span class="p">,</span> <span class="n">sufficient</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_sufficient</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">sufficient</span><span class="p">,</span>
+                                    <span class="s1">&#39;CM: Fast algorithm: sufficient_coalition_size_cm =&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_necessary</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">sufficient</span><span class="p">,</span>
+                                   <span class="s1">&#39;CM: Fast algorithm: necessary_coalition_size_cm =&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">_cm_main_work_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
+        <span class="n">is_quick_escape_fast</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cm_main_work_c_fast_</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span> <span class="o">==</span> <span class="s2">&quot;exact&quot;</span><span class="p">:</span>
+            <span class="c1"># With &#39;fast&#39; option, we stop here anyway.</span>
+            <span class="k">return</span> <span class="n">is_quick_escape_fast</span>
+        <span class="c1"># From this point, we have necessarily the &#39;exact&#39; option (which is, in fact, only an exhaustive exploration</span>
+        <span class="c1"># with = ``n_m`` manipulators).</span>
+        <span class="n">is_quick_escape_exact</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cm_main_work_c_exact_</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">is_quick_escape_fast</span> <span class="ow">or</span> <span class="n">is_quick_escape_exact</span></div>
+
 </pre></div>
 
            </div>

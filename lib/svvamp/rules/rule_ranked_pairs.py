@@ -254,12 +254,12 @@ class RuleRankedPairs(Rule):
         ***********************************
         *   Coalition Manipulation (CM)   *
         ***********************************
-        is_cm = nan
+        is_cm = False
         log_cm: cm_option = lazy, um_option = lazy, tm_option = exact
         candidates_cm =
-        [ 0.  0. nan]
+        [0. 0. 0.]
         necessary_coalition_size_cm =
-        [0. 1. 2.]
+        [0. 2. 3.]
         sufficient_coalition_size_cm =
         [0. 2. 3.]
 
@@ -396,3 +396,24 @@ class RuleRankedPairs(Rule):
     @cached_property
     def meets_condorcet_c_rk_ctb(self):
         return True
+
+    # %% Coalition Manipulation (CM)
+
+    def _cm_preliminary_checks_c_subclass_(self, c, optimize_bounds):
+        # For each candidate `k != c`, `k` must record something against her before she tries to record her result
+        # against `c`.
+        n_c = self.profile_.n_c
+        profile_sincere = Profile(
+            preferences_borda_rk=self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :]
+        )
+        matrix_duels_sincere = (
+            profile_sincere.matrix_duels_rk
+            + (np.arange(n_c - 1, -1, -1) / n_c)[:, np.newaxis]
+            + (np.arange(n_c - 1, -1, -1) / n_c**2)[np.newaxis, :]
+        )  # This embeds the tie-breaking rule on pairwise comparisons
+        is_not_c = (np.arange(n_c) != c)
+        worst_defeat_k = np.max(matrix_duels_sincere[:, is_not_c], axis=0)
+        score_k_against_c = matrix_duels_sincere[is_not_c, c]
+        n_m_necessary = np.ceil(np.max(score_k_against_c - worst_defeat_k))
+        self._update_necessary(self._necessary_coalition_size_cm, c, n_m_necessary,
+                               'CM: Preliminary check: necessary_coalition_size_cm =')

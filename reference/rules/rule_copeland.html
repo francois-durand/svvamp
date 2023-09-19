@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RuleCopeland &mdash; SVVAMP 0.9.1 documentation</title>
@@ -11,10 +11,11 @@
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=9dc39874"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -28,14 +29,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> SVVAMP
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            SVVAMP
           </a>
               <div class="version">
                 0.9.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -60,13 +65,17 @@
 <li class="toctree-l3"><a class="reference internal" href="rule_condorcet_sum_defeats.html">RuleCondorcetSumDefeats</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_condorcet_vtb_irv.html">RuleCondorcetVtbIRV</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_coombs.html">RuleCoombs</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">RuleCopeland</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">RuleCopeland</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.RuleCopeland"><code class="docutils literal notranslate"><span class="pre">RuleCopeland</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="rule_exhaustive_ballot.html">RuleExhaustiveBallot</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_icrv.html">RuleICRV</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_irv.html">RuleIRV</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_irv_average.html">RuleIRVAverage</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_irv_duels.html">RuleIRVDuels</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_iterated_bucklin.html">RuleIteratedBucklin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rule_k_approval.html">RuleKApproval</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_kemeny.html">RuleKemeny</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_kim_roush.html">RuleKimRoush</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_majority_judgment.html">RuleMajorityJudgment</a></li>
@@ -76,6 +85,7 @@
 <li class="toctree-l3"><a class="reference internal" href="rule_range_voting.html">RuleRangeVoting</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_ranked_pairs.html">RuleRankedPairs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_schulze.html">RuleSchulze</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rule_slater.html">RuleSlater</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_smith_irv.html">RuleSmithIRV</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_split_cycle.html">RuleSplitCycle</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_star.html">RuleSTAR</a></li>
@@ -105,9 +115,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../index.html">Reference</a> &raquo;</li>
-      <li>RuleCopeland</li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Reference</a></li>
+      <li class="breadcrumb-item active">RuleCopeland</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../_sources/reference/rules/rule_copeland.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -117,35 +127,11 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="rulecopeland">
-<h1>RuleCopeland<a class="headerlink" href="#rulecopeland" title="Permalink to this headline"></a></h1>
+  <section id="rulecopeland">
+<h1>RuleCopeland<a class="headerlink" href="#rulecopeland" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="svvamp.RuleCopeland">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">svvamp.</span></span><span class="sig-name descname"><span class="pre">RuleCopeland</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/rules/rule_copeland.html#RuleCopeland"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.RuleCopeland" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">svvamp.</span></span><span class="sig-name descname"><span class="pre">RuleCopeland</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/rules/rule_copeland.html#RuleCopeland"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.RuleCopeland" title="Link to this definition"></a></dt>
 <dd><p>Copeland rule</p>
 <p class="rubric">Notes</p>
 <p>Copeland does not <code class="xref py py-attr docutils literal notranslate"><span class="pre">meets_condorcet_c_ut_rel</span></code>:</p>
@@ -178,7 +164,7 @@
 </div>
 <dl class="py property">
 <dt class="sig sig-object py" id="svvamp.RuleCopeland.scores_">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">scores_</span></span><a class="headerlink" href="#svvamp.RuleCopeland.scores_" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">scores_</span></span><a class="headerlink" href="#svvamp.RuleCopeland.scores_" title="Link to this definition"></a></dt>
 <dd><p>Scores of the candidates in the election.</p>
 <p>See specific documentation for each voting rule. Typical type in most subclasses: 1d or 2d array. Typical
 behavior in most subclasses:</p>

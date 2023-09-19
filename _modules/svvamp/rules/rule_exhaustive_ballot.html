@@ -10,10 +10,11 @@
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
-        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=9dc39874"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -25,14 +26,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../index.html" class="icon icon-home"> SVVAMP
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            SVVAMP
           </a>
               <div class="version">
                 0.9.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -63,9 +68,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-      <li>svvamp.rules.rule_exhaustive_ballot</li>
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">svvamp.rules.rule_exhaustive_ballot</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -103,8 +108,10 @@
 <span class="kn">from</span> <span class="nn">svvamp.preferences.profile</span> <span class="kn">import</span> <span class="n">Profile</span>
 
 
-<div class="viewcode-block" id="RuleExhaustiveBallot"><a class="viewcode-back" href="../../../reference/rules/rule_exhaustive_ballot.html#svvamp.RuleExhaustiveBallot">[docs]</a><span class="k">class</span> <span class="nc">RuleExhaustiveBallot</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Exhaustive Ballot.</span>
+<div class="viewcode-block" id="RuleExhaustiveBallot">
+<a class="viewcode-back" href="../../../reference/rules/rule_exhaustive_ballot.html#svvamp.RuleExhaustiveBallot">[docs]</a>
+<span class="k">class</span> <span class="nc">RuleExhaustiveBallot</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Exhaustive Ballot.</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
@@ -395,7 +402,7 @@
         <span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">profile</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        profile : Profile</span>
@@ -479,7 +486,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">fast_algo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;String. Algorithm used for CM (resp. UM) when cm_option (resp. um_option) is &#39;fast&#39;. Mostly for developers.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;String. Algorithm used for CM (resp. UM) when cm_option (resp. um_option) is &#39;fast&#39;. Mostly for developers.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fast_algo</span>
 
@@ -567,7 +574,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">ballots_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;2d array of integers. ``ballots[v, r]`` is the candidate for which voter ``v`` votes at round ``r``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;2d array of integers. ``ballots[v, r]`` is the candidate for which voter ``v`` votes at round ``r``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s1">&#39;ballots&#39;</span><span class="p">]</span>
 
@@ -595,7 +602,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">scores_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;2d array. ``scores[r, c]`` is the number of voters who vote for candidate ``c`` at round ``r``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;2d array. ``scores[r, c]`` is the number of voters who vote for candidate ``c`` at round ``r``.</span>
 
 <span class="sd">        For eliminated candidates, ``scores[r, c] = numpy.nan``. In contrast, ``scores[r, c] = 0`` means that</span>
 <span class="sd">        ``c`` is present at round ``r`` but no voter votes for ``c``.</span>
@@ -604,7 +611,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">margins_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;2d array. ``margins_[r, c]`` is the number of votes that ``c`` must lose to be eliminated at round ``r``</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;2d array. ``margins_[r, c]`` is the number of votes that ``c`` must lose to be eliminated at round ``r``</span>
 <span class="sd">        (all other things being equal). The candidate who is eliminated at round ``r`` is the only one for which</span>
 <span class="sd">        ``margins_[r, c] = 0``.</span>
 
@@ -628,14 +635,14 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">candidates_by_scores_best_to_worst_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;1d array of integers. ``candidates_by_scores_best_to_worst`` is the list of all candidates in the reverse</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of integers. ``candidates_by_scores_best_to_worst`` is the list of all candidates in the reverse</span>
 <span class="sd">        order of their elimination.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s1">&#39;candidates_by_scores_best_to_worst&#39;</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">elimination_path_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;1d array of integers. Same as :attr:`~svvamp.ExhaustiveBallot.candidates_by_scores_best_to_worst`,</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of integers. Same as :attr:`~svvamp.ExhaustiveBallot.candidates_by_scores_best_to_worst`,</span>
 <span class="sd">        but in the reverse order.</span>
 
 <span class="sd">        Examples</span>
@@ -675,7 +682,7 @@
     <span class="c1"># %% Individual manipulation (IM)</span>
 
     <span class="k">def</span> <span class="nf">_im_aux</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">anti_voter_allowed</span><span class="p">,</span> <span class="n">preferences_borda_s</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        anti_voter_allowed : bool</span>
@@ -781,7 +788,7 @@
         <span class="k">return</span> <span class="n">candidates_im_aux</span>
 
     <span class="k">def</span> <span class="nf">_im_preliminary_checks_general_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
 <span class="sd">            ...     [0, 2, 1],</span>
 <span class="sd">            ...     [0, 2, 1],</span>
@@ -820,7 +827,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_v_im_for_c</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">_im_main_work_v_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">c_is_wanted</span><span class="p">,</span> <span class="n">nb_wanted_undecided</span><span class="p">,</span> <span class="n">stop_if_true</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
 <span class="sd">            ...     [0, 2, 1],</span>
 <span class="sd">            ...     [0, 2, 1],</span>
@@ -854,7 +861,7 @@
     <span class="c1"># %% Collective manipulations (CM / UM): general routine</span>
 
     <span class="k">def</span> <span class="nf">_cm_aux_fast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_max</span><span class="p">,</span> <span class="n">unison</span><span class="p">,</span> <span class="n">preferences_borda_s</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Fast algorithm used for CM and UM.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fast algorithm used for CM and UM.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1022,7 +1029,7 @@
             <span class="k">return</span> <span class="n">n_manip_fast</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
 
     <span class="k">def</span> <span class="nf">_cm_aux_exact</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_max</span><span class="p">,</span> <span class="n">unison</span><span class="p">,</span> <span class="n">preferences_borda_s</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Exact algorithm used for CM and UM.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Exact algorithm used for CM and UM.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1202,7 +1209,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">example_path_tm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Examples</span>
 <span class="sd">        --------</span>
 <span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
@@ -1221,7 +1228,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">sufficient_coalition_size_tm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Examples</span>
 <span class="sd">        --------</span>
 <span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
@@ -1304,7 +1311,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">example_path_um_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
 <span class="sd">            ...     [1, 0, 2],</span>
 <span class="sd">            ...     [1, 2, 0],</span>
@@ -1320,7 +1327,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_example_path_um</span>
 
     <span class="k">def</span> <span class="nf">example_path_um_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
 <span class="sd">            ...     [1, 0, 2],</span>
 <span class="sd">            ...     [1, 2, 0],</span>
@@ -1350,7 +1357,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_um</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">_um_main_work_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
 <span class="sd">            ...     [0, 3, 1, 2],</span>
 <span class="sd">            ...     [1, 3, 0, 2],</span>
@@ -1415,7 +1422,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">example_path_cm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
 <span class="sd">            ...     [0, 1, 2],</span>
 <span class="sd">            ...     [0, 2, 1],</span>
@@ -1465,7 +1472,7 @@
                 <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_cm_main_work_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
 <span class="sd">            ...     [0, 1, 2, 3],</span>
 <span class="sd">            ...     [0, 3, 2, 1],</span>
@@ -1551,6 +1558,7 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_ut</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
                     <span class="s1">&#39;CM: Update necessary_coalition_size_cm[c] = n_m + 1 =&#39;</span><span class="p">)</span>
                 <span class="k">return</span> <span class="kc">True</span></div>
+
 </pre></div>
 
            </div>
