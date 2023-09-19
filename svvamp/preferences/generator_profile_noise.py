@@ -55,7 +55,7 @@ class GeneratorProfileNoise(GeneratorProfile):
 
     def __init__(self, base_profile, relative_noise=0., absolute_noise=0., sort_voters=False):
         self.base_profile = base_profile
-        self.base_ut = self.base_profile.preferences_ut.astype(np.float)
+        self.base_ut = self.base_profile.preferences_ut.astype(float)
         self.n_v, self.n_c = self.base_profile.n_v, self.base_profile.n_c
         self.relative_noise = relative_noise
         self.absolute_noise = absolute_noise

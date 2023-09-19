@@ -2082,7 +2082,7 @@ class Profile(my_log.MyLog):
             zs = np.cos(theta) * pole[2] + np.sin(theta) * ortho[2]
             ax.scatter(xs, ys, zs, s=7, c='b')
         # Voters
-        mat_temp = np.copy(self.preferences_ut[:, _indexes]).astype(np.float)
+        mat_temp = np.copy(self.preferences_ut[:, _indexes]).astype(float)
         self.mylogm('mat_temp =', mat_temp, 3)
         if normalize:
             for v in range(mat_temp.shape[0]):
@@ -2178,7 +2178,7 @@ class Profile(my_log.MyLog):
         # Voters
         # We transform the population matrix to send it to R^3
         # 0. Keep only the specified candidates
-        mat_temp = np.copy(self.preferences_ut[:, _indexes]).astype(np.float)
+        mat_temp = np.copy(self.preferences_ut[:, _indexes]).astype(float)
         # 1. Send each voter to the hyperplane orthogonal to (1, 1, 1, 1)
         mat_temp -= np.mean(mat_temp, 1)[:, np.newaxis]
         # 2. Use symmetry by a hyperplane to exchange (1, 1, 1, 1) and (0, 0, 0, 1)
