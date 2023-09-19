@@ -521,9 +521,9 @@ class RuleSchulze(Rule):
                 self.mylog("Cowinner manipulation failed")
                 return False, False
         # Algorithm : construction of ordering Lambda (when manipulation is possible)
-        array_f = np.zeros(self.profile_.n_c, dtype=np.bool)
+        array_f = np.zeros(self.profile_.n_c, dtype=bool)
         array_f[c] = 1
-        array_x = np.ones(self.profile_.n_c, dtype=np.bool)
+        array_x = np.ones(self.profile_.n_c, dtype=bool)
         array_x[c] = 0
         order_lambda = [c]
         for i in range(self.profile_.n_c - 1):
@@ -858,7 +858,7 @@ class RuleSchulze(Rule):
         self._candidates_um[self.w_] = False
         # ``_um_fast_tested[c]`` will be True iff if we have already launched ``_vote_strategically`` with ``n_m``
         # manipulators (for ``c``).
-        self._um_fast_tested = np.zeros(self.profile_.n_c, dtype=np.bool)
+        self._um_fast_tested = np.zeros(self.profile_.n_c, dtype=bool)
         return True
 
     @cached_property

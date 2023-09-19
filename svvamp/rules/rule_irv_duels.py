@@ -311,7 +311,7 @@ class RuleIRVDuels(Rule):
     def _count_ballots_(self):
         self.mylog("Count ballots", 1)
         scores = np.full((2 * self.profile_.n_c - 2, self.profile_.n_c), np.nan)
-        is_candidate_alive = np.ones(self.profile_.n_c, dtype=np.bool)
+        is_candidate_alive = np.ones(self.profile_.n_c, dtype=bool)
         worst_to_best = []
         for r in range(self.profile_.n_c - 1):
             # Select the two worst scores
@@ -431,7 +431,7 @@ class RuleIRVDuels(Rule):
         example_path_losers = np.nan  # Result: example of elimination path (duel losers)
         example_path_winners = np.nan  # Result: example of elimination path (duel winners)
         r = 0
-        is_candidate_alive_begin_r = np.zeros((self.profile_.n_c - 1, self.profile_.n_c), dtype=np.bool)
+        is_candidate_alive_begin_r = np.zeros((self.profile_.n_c - 1, self.profile_.n_c), dtype=bool)
         is_candidate_alive_begin_r[0, :] = np.ones(self.profile_.n_c)
         n_manip_used_before_r = np.zeros(self.profile_.n_c - 1, dtype=np.int)
         scores_m_begin_r = np.zeros((self.profile_.n_c - 1, self.profile_.n_c))

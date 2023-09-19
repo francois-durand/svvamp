@@ -720,7 +720,7 @@ class RuleIRV(Rule):
         other_voters = (np.array(range(self.profile_.n_v)) != v)
         n_s = self.profile_.n_v - 1
         r = 0
-        is_candidate_alive_begin_r = np.zeros((self.profile_.n_c - 1, self.profile_.n_c), dtype=np.bool)
+        is_candidate_alive_begin_r = np.zeros((self.profile_.n_c - 1, self.profile_.n_c), dtype=bool)
         is_candidate_alive_begin_r[0, :] = np.ones(self.profile_.n_c)
         ballot_m_begin_r = np.array(- np.ones(self.profile_.n_c - 1, dtype=np.int))
         scores_tot_begin_r = np.zeros((self.profile_.n_c - 1, self.profile_.n_c))
@@ -1064,7 +1064,7 @@ class RuleIRV(Rule):
         candidates = np.array(range(self.profile_.n_c))
         n_s = preferences_borda_s.shape[0]
         example_path_fast = []
-        is_candidate_alive = np.ones(self.profile_.n_c, dtype=np.bool)
+        is_candidate_alive = np.ones(self.profile_.n_c, dtype=bool)
         # Sincere scores (eliminated candidates will have nan)
         scores_s = np.sum(np.equal(preferences_borda_s, np.max(preferences_borda_s, 1)[:, np.newaxis]), 0)
         # Manipulators' ballot: if blocked, index of the candidate. Else, -1
@@ -1269,7 +1269,7 @@ class RuleIRV(Rule):
         candidates = np.array(range(self.profile_.n_c))
         n_s = preferences_borda_s.shape[0]
         r = 0
-        is_candidate_alive_begin_r = np.zeros((self.profile_.n_c - 1, self.profile_.n_c), dtype=np.bool)
+        is_candidate_alive_begin_r = np.zeros((self.profile_.n_c - 1, self.profile_.n_c), dtype=bool)
         is_candidate_alive_begin_r[0, :] = np.ones(self.profile_.n_c)
         ballot_m_begin_r = np.array(- np.ones(self.profile_.n_c - 1, dtype=np.int))
         scores_tot_begin_r = np.zeros((self.profile_.n_c - 1, self.profile_.n_c))
@@ -1543,9 +1543,9 @@ class RuleIRV(Rule):
         # Step 1: ensure the elimination path
         # And consequences on the majority matrix
         scores_m_begin_r = np.zeros(self.profile_.n_c)  # Score due to manipulators at the beginning of the round
-        is_candidate_alive_begin_r = np.ones(self.profile_.n_c, dtype=np.bool)
+        is_candidate_alive_begin_r = np.ones(self.profile_.n_c, dtype=bool)
         current_top_v = np.array(- np.ones(n_m))  # -1 means that manipulator v is available
-        candidates_to_put_in_ballot = np.ones((n_m, self.profile_.n_c), dtype=np.bool)
+        candidates_to_put_in_ballot = np.ones((n_m, self.profile_.n_c), dtype=bool)
         for r in range(self.profile_.n_c - 1):
             self.mylogv("cm_aux: r =", r, 3)
             scores_tot_begin_r = np.full(self.profile_.n_c, np.nan)
@@ -1598,7 +1598,7 @@ class RuleIRV(Rule):
         self.mylogm("cm_aux: matrix_duels_temp =", matrix_duels_temp, 3)
         # If some candidates already have some non-victories in the matrix of duels, they can safely be put in the
         # ballots. Maybe this will generate non-victories for other candidates, etc.
-        candidates_ok = np.zeros(self.profile_.n_c, dtype=np.bool)
+        candidates_ok = np.zeros(self.profile_.n_c, dtype=bool)
         candidates_ok[c] = True
         i_found_a_new_ok = True
         while i_found_a_new_ok:
@@ -1704,7 +1704,7 @@ class RuleIRV(Rule):
         n_s = preferences_borda_s.shape[0]
         n_manip_fast = 0
         example_path_fast = []
-        is_candidate_alive = np.ones(self.profile_.n_c, dtype=np.bool)
+        is_candidate_alive = np.ones(self.profile_.n_c, dtype=bool)
         # Sincere scores (eliminated candidates will have nan)
         scores_s = np.sum(np.equal(preferences_borda_s, np.max(preferences_borda_s, 1)[:, np.newaxis]), 0)
         # Manipulators' scores (eliminated candidates will have 0)
@@ -1830,7 +1830,7 @@ class RuleIRV(Rule):
             nan
         """
         candidates = np.array(range(self.profile_.n_c))
-        is_candidate_alive = np.ones(self.profile_.n_c, dtype=np.bool)
+        is_candidate_alive = np.ones(self.profile_.n_c, dtype=bool)
         # Manipulators' scores (eliminated candidates will have 0)
         scores_m = np.zeros(self.profile_.n_c)
         n_manip_slow = 0
@@ -1956,7 +1956,7 @@ class RuleIRV(Rule):
         n_manip_final = np.inf  # Result: number of manipulators finally used
         example_path = np.nan  # Result: example of elimination path
         r = 0
-        is_candidate_alive_begin_r = np.zeros((self.profile_.n_c - 1, self.profile_.n_c), dtype=np.bool)
+        is_candidate_alive_begin_r = np.zeros((self.profile_.n_c - 1, self.profile_.n_c), dtype=bool)
         is_candidate_alive_begin_r[0, :] = np.ones(self.profile_.n_c)
         n_manip_used_before_r = np.zeros(self.profile_.n_c - 1, dtype=np.int)
         scores_m_begin_r = np.zeros((self.profile_.n_c - 1, self.profile_.n_c))

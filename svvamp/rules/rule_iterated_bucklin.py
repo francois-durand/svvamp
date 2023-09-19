@@ -305,7 +305,7 @@ class RuleIteratedBucklin(Rule):
         self.mylog("Count ballots", 1)
         scores = np.zeros((self.profile_.n_c - 1, self.profile_.n_c))
         worst_to_best = []
-        is_eliminated = np.zeros(self.profile_.n_c, dtype=np.bool)
+        is_eliminated = np.zeros(self.profile_.n_c, dtype=bool)
         preferences_borda_temp = np.copy(self.profile_.preferences_borda_rk)
         for r in range(self.profile_.n_c - 1):
             for c in range(self.profile_.n_c):
@@ -359,7 +359,7 @@ class RuleIteratedBucklin(Rule):
             False
         """
         scores_r = np.zeros(self.profile_.n_c)
-        is_eliminated = np.zeros(self.profile_.n_c, dtype=np.bool)
+        is_eliminated = np.zeros(self.profile_.n_c, dtype=bool)
         preferences_borda_temp = np.copy(self.profile_.preferences_borda_rk)
         for r in range(self.profile_.n_c - 1):
             self.mylogv("Pre-testing pivotality: round r =", r, 3)

@@ -309,7 +309,7 @@ class RuleCoombs(Rule):
     def _count_ballots_(self):
         self.mylog("Count ballots", 1)
         scores = np.zeros((self.profile_.n_c - 1, self.profile_.n_c))
-        is_eliminated = np.zeros(self.profile_.n_c, dtype=np.bool)
+        is_eliminated = np.zeros(self.profile_.n_c, dtype=bool)
         worst_to_best = []
         one_v_might_be_pivotal = False
         # preferences_borda_temp : we will put ``n_c + 1`` for eliminated candidates
@@ -451,7 +451,7 @@ class RuleCoombs(Rule):
         # ^^^^^^^^^^^^^^
         # End of last round: only ``c`` is alive.
         nb_manipulators_used = 0
-        is_candidate_alive_end_r = np.zeros(self.profile_.n_c, dtype=np.bool)
+        is_candidate_alive_end_r = np.zeros(self.profile_.n_c, dtype=bool)
         is_candidate_alive_end_r[c] = True
         for r in range(self.profile_.n_c - 2, -1, -1):
             self.mylogv("cm_aux_fast: Round r =", r, 3)

@@ -558,7 +558,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         A non-trivial redefinition of this function is useful for voting systems where computing IM is costly. For
         voting systems where it is cheap, it it not worth the effort.
         """
-        return np.ones((self.profile_.n_v, self.profile_.n_c), dtype=np.bool)
+        return np.ones((self.profile_.n_v, self.profile_.n_c), dtype=bool)
 
     # %% Counting ballots
     #    Attributes that are almost always computed here in the superclass.
@@ -1385,7 +1385,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         """
         _ = self._im_is_initialized_general_
         if np.isneginf(self._voters_im[v]):
-            self._compute_im_v_(v, c_is_wanted=np.ones(self.profile_.n_c, dtype=np.bool), stop_if_true=True)
+            self._compute_im_v_(v, c_is_wanted=np.ones(self.profile_.n_c, dtype=bool), stop_if_true=True)
         return pseudo_bool(self._voters_im[v])
 
     def is_im_v_with_candidates_(self, v):
@@ -1403,7 +1403,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         """
         _ = self._im_is_initialized_general_
         if np.any(np.isneginf(self._v_im_for_c[v, :])):
-            self._compute_im_v_(v, c_is_wanted=np.ones(self.profile_.n_c, dtype=np.bool), stop_if_true=False)
+            self._compute_im_v_(v, c_is_wanted=np.ones(self.profile_.n_c, dtype=bool), stop_if_true=False)
         return pseudo_bool(self._voters_im[v]), self._v_im_for_c[v, :].astype(float)
 
     @cached_property
@@ -1656,20 +1656,20 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         for v in range(self.profile_.n_v):
             # Prepare work
             if mode == 'is_im_':
-                c_is_wanted = np.ones(self.profile_.n_c, dtype=np.bool)
+                c_is_wanted = np.ones(self.profile_.n_c, dtype=bool)
                 stop_if_true = True
             elif mode in {'is_im_c_', 'is_im_c_with_voters_'}:
-                c_is_wanted = np.zeros(self.profile_.n_c, dtype=np.bool)
+                c_is_wanted = np.zeros(self.profile_.n_c, dtype=bool)
                 c_is_wanted[c] = True
                 stop_if_true = True
             elif mode == 'im_with_voters_':
-                c_is_wanted = np.ones(self.profile_.n_c, dtype=np.bool)
+                c_is_wanted = np.ones(self.profile_.n_c, dtype=bool)
                 stop_if_true = True
             elif mode == 'im_with_candidates_':
                 c_is_wanted = np.isneginf(self._candidates_im)
                 stop_if_true = False
             elif mode == 'v_im_for_c_':
-                c_is_wanted = np.ones(self.profile_.n_c, dtype=np.bool)
+                c_is_wanted = np.ones(self.profile_.n_c, dtype=bool)
                 stop_if_true = False
             else:  # This should not happen.
                 raise NotImplementedError

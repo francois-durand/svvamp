@@ -443,7 +443,7 @@ class RuleExhaustiveBallot(Rule):
         v_might_be_pivotal = None
         if compute_v_might_be_pivotal:
             v_might_be_pivotal = np.zeros(self.profile_.n_v)
-        is_alive = np.ones(self.profile_.n_c, dtype=np.bool)
+        is_alive = np.ones(self.profile_.n_c, dtype=bool)
         worst_to_best = []
         preferences_borda_rk_temp = self.profile_.preferences_borda_rk.copy()  # We will put -1 when a candidate loses
         for r in range(self.profile_.n_c - 1):
@@ -633,7 +633,7 @@ class RuleExhaustiveBallot(Rule):
         #     it will be here.
         candidates = np.array(range(self.profile_.n_c))
         n_s = preferences_borda_s.shape[0]
-        situations_begin_r = {tuple(np.ones(self.profile_.n_c, dtype=np.bool)): (0, [])}
+        situations_begin_r = {tuple(np.ones(self.profile_.n_c, dtype=bool)): (0, [])}
         situations_end_r = {}
         for r in range(self.profile_.n_c - 1):
             self.mylogv("im_aux: Round r =", r, 3)
@@ -845,7 +845,7 @@ class RuleExhaustiveBallot(Rule):
         n_s = preferences_borda_s.shape[0]
         n_manip_fast = 0  # Number of manipulators
         example_path_fast = []
-        is_candidate_alive = np.ones(self.profile_.n_c, dtype=np.bool)
+        is_candidate_alive = np.ones(self.profile_.n_c, dtype=bool)
         # Sincere scores (eliminated candidates will have nan)
         scores_s = np.sum(np.equal(preferences_borda_s, np.max(preferences_borda_s, 1)[:, np.newaxis]), 0)
         for r in range(self.profile_.n_c - 1):
@@ -1036,7 +1036,7 @@ class RuleExhaustiveBallot(Rule):
         #       * ``example_path_before_r``: as it sounds.
         candidates = np.array(range(self.profile_.n_c))
         n_s = preferences_borda_s.shape[0]
-        situations_begin_r = {tuple(np.ones(self.profile_.n_c, dtype=np.bool)): (0, [])}
+        situations_begin_r = {tuple(np.ones(self.profile_.n_c, dtype=bool)): (0, [])}
         situations_end_r = {}
         for r in range(self.profile_.n_c - 1):
             self.mylogv("cm_aux_exact: Round r =", r, 3)
@@ -1194,7 +1194,7 @@ class RuleExhaustiveBallot(Rule):
         # ``n_s + 1``).
         candidates_not_c = np.concatenate((range(c), range(c + 1, self.profile_.n_c))).astype(int)
         example_path = []
-        is_alive = np.ones(self.profile_.n_c, dtype=np.bool)
+        is_alive = np.ones(self.profile_.n_c, dtype=bool)
         n_manip_used = 0
         for r in range(self.profile_.n_c - 1):
             scores_tot = np.full(self.profile_.n_c, np.nan)

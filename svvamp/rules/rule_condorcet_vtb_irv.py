@@ -515,9 +515,9 @@ class RuleCondorcetVtbIRV(Rule):
         # Step 1: elimination path
         # And consequences on the majority matrix
         scores_m_begin_r = np.zeros(self.profile_.n_c)
-        is_candidate_alive_begin_r = np.ones(self.profile_.n_c, dtype=np.bool)
+        is_candidate_alive_begin_r = np.ones(self.profile_.n_c, dtype=bool)
         current_top_v = np.array(- np.ones(n_m))  # -1 means that v is available
-        candidates_to_put_in_ballot = np.ones((n_m, self.profile_.n_c), dtype=np.bool)
+        candidates_to_put_in_ballot = np.ones((n_m, self.profile_.n_c), dtype=bool)
         for r in range(self.profile_.n_c - 1):
             self.mylogv("cm_aux: r =", r, 3)
             scores_tot_begin_r = np.full(self.profile_.n_c, np.nan)
@@ -569,7 +569,7 @@ class RuleCondorcetVtbIRV(Rule):
         self.mylogm("cm_aux: matrix_duels_temp =", matrix_duels_temp, 3)
         # If some candidates already have some non-victories in the matrix of duels, they can safely be put in the
         # ballots. Maybe this will generate non-victories for other candidates, etc.
-        candidates_ok = np.zeros(self.profile_.n_c, dtype=np.bool)
+        candidates_ok = np.zeros(self.profile_.n_c, dtype=bool)
         candidates_ok[c] = True
         i_found_a_new_ok = True
         while i_found_a_new_ok:
