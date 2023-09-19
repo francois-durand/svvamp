@@ -472,7 +472,7 @@ class RuleCondorcetVtbIRV(Rule):
         else:
             # Put irv_.w_ first.
             losing_candidates = np.array(
-                [c for c in range(self.profile_.n_c) if c != self.w_ and c != self.irv_.w_]).astype(np.int)
+                [c for c in range(self.profile_.n_c) if c != self.w_ and c != self.irv_.w_]).astype(int)
             losing_candidates = losing_candidates[np.argsort(
                 - self.profile_.matrix_duels_ut[losing_candidates, self.w_], kind='mergesort')]
             losing_candidates = np.concatenate(([self.irv_.w_], losing_candidates))
@@ -531,7 +531,7 @@ class RuleCondorcetVtbIRV(Rule):
             self.mylogv("cm_aux: scores_tot_begin_r =", scores_tot_begin_r, 3)
             d = suggested_path[r]
             self.mylogv("cm_aux: d =", d, 3)
-            scores_m_new_r = np.zeros(self.profile_.n_c, dtype=np.int)
+            scores_m_new_r = np.zeros(self.profile_.n_c, dtype=int)
             scores_m_new_r[is_candidate_alive_begin_r] = np.maximum(
                 0,
                 scores_tot_begin_r[d] - scores_tot_begin_r[is_candidate_alive_begin_r]

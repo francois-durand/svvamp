@@ -722,7 +722,7 @@ class RuleIRV(Rule):
         r = 0
         is_candidate_alive_begin_r = np.zeros((self.profile_.n_c - 1, self.profile_.n_c), dtype=bool)
         is_candidate_alive_begin_r[0, :] = np.ones(self.profile_.n_c)
-        ballot_m_begin_r = np.array(- np.ones(self.profile_.n_c - 1, dtype=np.int))
+        ballot_m_begin_r = np.array(- np.ones(self.profile_.n_c - 1, dtype=int))
         scores_tot_begin_r = np.zeros((self.profile_.n_c - 1, self.profile_.n_c))
         scores_tot_begin_r[0, :] = np.sum(np.equal(
             self.profile_.preferences_borda_rk[other_voters, :],
@@ -732,8 +732,8 @@ class RuleIRV(Rule):
         self.mylogv("im_aux_exact: scores_tot_begin_r[r] =", scores_tot_begin_r[0, :], 3)
         # ``strategy_r[r]`` is False (0) if we keep our ballot, True (1) if we change it to vote for the natural
         # loser. If ``strategy_r == 2``, we have tried everything.
-        strategy_r = np.zeros(self.profile_.n_c - 1, dtype=np.int)
-        natural_loser_r = np.zeros(self.profile_.n_c - 1, dtype=np.int)
+        strategy_r = np.zeros(self.profile_.n_c - 1, dtype=int)
+        natural_loser_r = np.zeros(self.profile_.n_c - 1, dtype=int)
         natural_loser_r[0] = np.where(scores_tot_begin_r[0, :] == np.nanmin(scores_tot_begin_r[0, :]))[0][-1]
         eliminated_d_r = np.zeros(self.profile_.n_c - 1)
         self.mylogv("im_aux_exact: natural_loser_r[r] =", natural_loser_r[r], 3)
@@ -1271,7 +1271,7 @@ class RuleIRV(Rule):
         r = 0
         is_candidate_alive_begin_r = np.zeros((self.profile_.n_c - 1, self.profile_.n_c), dtype=bool)
         is_candidate_alive_begin_r[0, :] = np.ones(self.profile_.n_c)
-        ballot_m_begin_r = np.array(- np.ones(self.profile_.n_c - 1, dtype=np.int))
+        ballot_m_begin_r = np.array(- np.ones(self.profile_.n_c - 1, dtype=int))
         scores_tot_begin_r = np.zeros((self.profile_.n_c - 1, self.profile_.n_c))
         scores_tot_begin_r[0, :] = np.sum(np.equal(
             preferences_borda_s, np.max(preferences_borda_s, 1)[:, np.newaxis]
@@ -1289,8 +1289,8 @@ class RuleIRV(Rule):
             r = -1
         # ``strategy_r[r]`` is False if we keep our ballot, True if we change it to vote for the natural loser. If
         # ``strategy_r == 2``, we have tried everything.
-        strategy_r = np.zeros(self.profile_.n_c - 1, dtype=np.int)
-        natural_loser_r = np.zeros(self.profile_.n_c - 1, dtype=np.int)
+        strategy_r = np.zeros(self.profile_.n_c - 1, dtype=int)
+        natural_loser_r = np.zeros(self.profile_.n_c - 1, dtype=int)
         natural_loser_r[0] = np.where(scores_tot_begin_r[0, :] == np.nanmin(scores_tot_begin_r[0, :]))[0][-1]
         eliminated_d_r = np.zeros(self.profile_.n_c - 1)
         self.mylogv("um_aux_exact: natural_loser_r[r] =", natural_loser_r[r], 3)
@@ -1559,7 +1559,7 @@ class RuleIRV(Rule):
             self.mylogv("cm_aux: scores_tot_begin_r =", scores_tot_begin_r, 3)
             d = suggested_path[r]
             self.mylogv("cm_aux: d =", d, 3)
-            scores_m_new_r = np.zeros(self.profile_.n_c, dtype=np.int)
+            scores_m_new_r = np.zeros(self.profile_.n_c, dtype=int)
             scores_m_new_r[is_candidate_alive_begin_r] = np.maximum(
                 0,
                 scores_tot_begin_r[d] - scores_tot_begin_r[is_candidate_alive_begin_r]
@@ -1958,7 +1958,7 @@ class RuleIRV(Rule):
         r = 0
         is_candidate_alive_begin_r = np.zeros((self.profile_.n_c - 1, self.profile_.n_c), dtype=bool)
         is_candidate_alive_begin_r[0, :] = np.ones(self.profile_.n_c)
-        n_manip_used_before_r = np.zeros(self.profile_.n_c - 1, dtype=np.int)
+        n_manip_used_before_r = np.zeros(self.profile_.n_c - 1, dtype=int)
         scores_m_begin_r = np.zeros((self.profile_.n_c - 1, self.profile_.n_c))
         scores_tot_begin_r = np.zeros((self.profile_.n_c - 1, self.profile_.n_c))
         scores_tot_begin_r[0, :] = np.sum(np.equal(
@@ -1971,7 +1971,7 @@ class RuleIRV(Rule):
         suggested_path_r = {0: suggested_path[suggested_path != c]}
         # ``index_in_path_r[r]`` is the index of the candidate we eliminate at round ``r`` in the list
         # ``suggested_path_r[r]``.
-        index_in_path_r = np.zeros(self.profile_.n_c - 1, dtype=np.int)
+        index_in_path_r = np.zeros(self.profile_.n_c - 1, dtype=int)
         self.mylogv("cm_aux_exact: r =", r, 3)
         # If an opponent has too many votes, then manipulation is not possible.
         max_score = np.nanmax(scores_tot_begin_r[0, candidates != c])

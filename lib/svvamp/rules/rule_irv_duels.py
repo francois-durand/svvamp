@@ -433,7 +433,7 @@ class RuleIRVDuels(Rule):
         r = 0
         is_candidate_alive_begin_r = np.zeros((self.profile_.n_c - 1, self.profile_.n_c), dtype=bool)
         is_candidate_alive_begin_r[0, :] = np.ones(self.profile_.n_c)
-        n_manip_used_before_r = np.zeros(self.profile_.n_c - 1, dtype=np.int)
+        n_manip_used_before_r = np.zeros(self.profile_.n_c - 1, dtype=int)
         scores_m_begin_r = np.zeros((self.profile_.n_c - 1, self.profile_.n_c))
         scores_tot_begin_r = np.zeros((self.profile_.n_c - 1, self.profile_.n_c))
         scores_tot_begin_r[0, :] = np.sum(np.equal(
@@ -443,9 +443,9 @@ class RuleIRVDuels(Rule):
         self.mylogv("cm_aux_exact: r =", r, 3)
         suggested_loser_r = {0: np.array([cand for cand in candidates if cand != c])}  # Possible losers of the duel
         suggested_winner_r = {0: np.array(candidates)}                                 # Possible winners of the duel
-        index_loser_in_suggested_r = np.zeros(self.profile_.n_c - 1, dtype=np.int)
+        index_loser_in_suggested_r = np.zeros(self.profile_.n_c - 1, dtype=int)
         # Index of the loser of the duel in ``suggested_loser_r``.
-        index_winner_in_suggested_r = np.zeros(self.profile_.n_c - 1, dtype=np.int)
+        index_winner_in_suggested_r = np.zeros(self.profile_.n_c - 1, dtype=int)
         # Index of the winner of the duel in ``suggested_winner_r``.
         while True:
             if r < 0:

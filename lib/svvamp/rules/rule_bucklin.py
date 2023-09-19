@@ -305,7 +305,7 @@ class RuleBucklin(Rule):
     def _count_ballots_(self):
         self.mylog("Count ballots", 1)
         scores = np.zeros((self.profile_.n_c, self.profile_.n_c))
-        scores_r = np.zeros(self.profile_.n_c, dtype=np.int)
+        scores_r = np.zeros(self.profile_.n_c, dtype=int)
         w = None
         candidates_by_scores_best_to_worst = None
         for r in range(self.profile_.n_c):
