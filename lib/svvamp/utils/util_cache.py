@@ -146,9 +146,9 @@ def property_deleting_cache(hidden_variable_name, doc=''):
         Computing my_cached_property...
         'Hello everybody!'
         >>> del my_object.some_parameter
-        >>> my_object.my_cached_property
+        >>> my_object.my_cached_property  # doctest: +ELLIPSIS
         Traceback (most recent call last):
-        AttributeError: 'MyClass' object has no attribute '_some_parameter'
+        AttributeError: 'MyClass' object has no attribute '_some_parameter'...
     """
 
     def getter(self):
