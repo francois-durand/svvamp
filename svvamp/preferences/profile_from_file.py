@@ -65,10 +65,10 @@ class ProfileFromFile(Profile):
                 df = pd.read_csv(filepath_or_buffer=file_name, sep=';', index_col=0)
                 if file_name[-6:-4] == '.t':
                     preferences_ut = df.transpose().values
-                    labels_candidates = df.index.values.astype(np.str)
+                    labels_candidates = df.index.values.astype(str)
                 else:
                     preferences_ut = df.values
-                    labels_candidates = df.columns.values.astype(np.str)
+                    labels_candidates = df.columns.values.astype(str)
         else:
             preferences_ut, labels_candidates = preflib_to_preferences_ut(file_name)
         if sort_candidates:
