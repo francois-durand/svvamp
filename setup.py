@@ -10,7 +10,7 @@ with open('README.rst') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = ['matplotlib', 'networkx', 'numpy', 'pandas', 'scipy', 'tikzplotlib']
+requirements = ['matplotlib<=3.7', 'networkx', 'numpy', 'pandas', 'scipy', 'tikzplotlib']
 
 setup_requirements = ['pytest-runner', ]
 
