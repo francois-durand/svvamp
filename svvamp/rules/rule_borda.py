@@ -550,6 +550,16 @@ class RuleBorda(Rule):
             >>> rule = RuleBorda()(profile)
             >>> rule.candidates_cm_
             array([0., 0., 0.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [2, 0, 1],
+            ...     [1, 0, 2],
+            ...     [0, 2, 1],
+            ...     [1, 0, 2],
+            ... ])
+            >>> rule = RuleBorda()(profile)
+            >>> rule.candidates_cm_
+            array([ 0., nan,  0.])
         """
         scores_test = np.sum(self.ballots_[np.logical_not(self.v_wants_to_help_c_[:, c]), :], 0)
         # We add a tie-breaking term [(C-1)/C, (C-2)/C, ..., 0] to ease the computations.

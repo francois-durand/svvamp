@@ -232,9 +232,28 @@ class StudyProfileCriteria():
 
         Examples
         --------
+        Confirm that a configuration is sound:
+
+            >>> study_profile_criteria = StudyProfileCriteria(
+            ...     boolean_criteria=['exists_condorcet_winner_rk'],
+            ...     numerical_criteria=[('mean_utility_min', np.min, 'mean_u_min_min')],
+            ...     special_candidates_criteria=['condorcet_winner_rk'],
+            ...     array_criteria=['total_utility_c'],
+            ...     matrix_criteria=['matrix_duels_rk']
+            ... )
+            >>> study_profile_criteria.check_sanity()
+            StudyProfileCriteria: Sanity check was successful.
+
         Detect an illegal criterion:
 
             >>> study_profile_criteria = StudyProfileCriteria(boolean_criteria=['unexpected_criterion'])
+            >>> study_profile_criteria.check_sanity()
+            Traceback (most recent call last):
+            ValueError: Attribute 'unexpected_criterion' is unknown for Profile.
+
+            >>> study_profile_criteria = StudyProfileCriteria(numerical_criteria=[
+            ...     ('unexpected_criterion', np.sum, 'unexpected_criterion_sum')
+            ... ])
             >>> study_profile_criteria.check_sanity()
             Traceback (most recent call last):
             ValueError: Attribute 'unexpected_criterion' is unknown for Profile.

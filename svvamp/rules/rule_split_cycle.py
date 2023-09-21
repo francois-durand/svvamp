@@ -30,6 +30,233 @@ class RuleSplitCycle(Rule):
 
     Examples
     --------
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 0. , -0.5, -1. ],
+        ...     [ 1. , -1. ,  0.5],
+        ...     [ 0.5,  0.5, -0.5],
+        ...     [ 0.5,  0. ,  1. ],
+        ...     [-1. , -1. ,  1. ],
+        ... ], preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [0, 2, 1],
+        ...     [1, 0, 2],
+        ...     [2, 0, 1],
+        ...     [2, 1, 0],
+        ... ])
+        >>> rule = RuleSplitCycle()(profile)
+        >>> rule.demo_results_(log_depth=0)  # doctest: +NORMALIZE_WHITESPACE
+        ************************
+        *                      *
+        *   Election Results   *
+        *                      *
+        ************************
+        <BLANKLINE>
+        ***************
+        *   Results   *
+        ***************
+        profile_.preferences_ut (reminder) =
+        [[ 0.  -0.5 -1. ]
+         [ 1.  -1.   0.5]
+         [ 0.5  0.5 -0.5]
+         [ 0.5  0.   1. ]
+         [-1.  -1.   1. ]]
+        profile_.preferences_rk (reminder) =
+        [[0 1 2]
+         [0 2 1]
+         [1 0 2]
+         [2 0 1]
+         [2 1 0]]
+        ballots =
+        [[0 1 2]
+         [0 2 1]
+         [1 0 2]
+         [2 0 1]
+         [2 1 0]]
+        scores =
+        [3 1 2]
+        candidates_by_scores_best_to_worst
+        [0 2 1]
+        scores_best_to_worst
+        [3 2 1]
+        w = 0
+        score_w = 3
+        total_utility_w = 1.0
+        <BLANKLINE>
+        *********************************
+        *   Condorcet efficiency (rk)   *
+        *********************************
+        w (reminder) = 0
+        <BLANKLINE>
+        condorcet_winner_rk_ctb = 0
+        w_is_condorcet_winner_rk_ctb = True
+        w_is_not_condorcet_winner_rk_ctb = False
+        w_missed_condorcet_winner_rk_ctb = False
+        <BLANKLINE>
+        condorcet_winner_rk = 0
+        w_is_condorcet_winner_rk = True
+        w_is_not_condorcet_winner_rk = False
+        w_missed_condorcet_winner_rk = False
+        <BLANKLINE>
+        ***************************************
+        *   Condorcet efficiency (relative)   *
+        ***************************************
+        w (reminder) = 0
+        <BLANKLINE>
+        condorcet_winner_ut_rel_ctb = 0
+        w_is_condorcet_winner_ut_rel_ctb = True
+        w_is_not_condorcet_winner_ut_rel_ctb = False
+        w_missed_condorcet_winner_ut_rel_ctb = False
+        <BLANKLINE>
+        condorcet_winner_ut_rel = 0
+        w_is_condorcet_winner_ut_rel = True
+        w_is_not_condorcet_winner_ut_rel = False
+        w_missed_condorcet_winner_ut_rel = False
+        <BLANKLINE>
+        ***************************************
+        *   Condorcet efficiency (absolute)   *
+        ***************************************
+        w (reminder) = 0
+        <BLANKLINE>
+        condorcet_admissible_candidates =
+        [ True False False]
+        w_is_condorcet_admissible = True
+        w_is_not_condorcet_admissible = False
+        w_missed_condorcet_admissible = False
+        <BLANKLINE>
+        weak_condorcet_winners =
+        [ True False False]
+        w_is_weak_condorcet_winner = True
+        w_is_not_weak_condorcet_winner = False
+        w_missed_weak_condorcet_winner = False
+        <BLANKLINE>
+        condorcet_winner_ut_abs_ctb = 0
+        w_is_condorcet_winner_ut_abs_ctb = True
+        w_is_not_condorcet_winner_ut_abs_ctb = False
+        w_missed_condorcet_winner_ut_abs_ctb = False
+        <BLANKLINE>
+        condorcet_winner_ut_abs = 0
+        w_is_condorcet_winner_ut_abs = True
+        w_is_not_condorcet_winner_ut_abs = False
+        w_missed_condorcet_winner_ut_abs = False
+        <BLANKLINE>
+        resistant_condorcet_winner = nan
+        w_is_resistant_condorcet_winner = False
+        w_is_not_resistant_condorcet_winner = True
+        w_missed_resistant_condorcet_winner = False
+        >>> rule.demo_manipulation_(log_depth=0)  # doctest: +NORMALIZE_WHITESPACE
+        <BLANKLINE>
+        *****************************
+        *                           *
+        *   Election Manipulation   *
+        *                           *
+        *****************************
+        <BLANKLINE>
+        *********************************************
+        *   Basic properties of the voting system   *
+        *********************************************
+        with_two_candidates_reduces_to_plurality =  True
+        is_based_on_rk =  True
+        is_based_on_ut_minus1_1 =  False
+        meets_iia =  False
+        <BLANKLINE>
+        ****************************************************
+        *   Manipulation properties of the voting system   *
+        ****************************************************
+        Condorcet_c_ut_rel_ctb (False)     ==>     Condorcet_c_ut_rel (False)
+         ||                                                               ||
+         ||     Condorcet_c_rk_ctb (True)  ==> Condorcet_c_rk (True)      ||
+         ||           ||               ||       ||             ||         ||
+         V            V                ||       ||             V          V
+        Condorcet_c_ut_abs_ctb (True)      ==>     Condorcet_ut_abs_c (True)
+         ||                            ||       ||                        ||
+         ||                            V        V                         ||
+         ||       maj_fav_c_rk_ctb (True)  ==> maj_fav_c_rk (True)        ||
+         ||           ||                                       ||         ||
+         V            V                                        V          V
+        majority_favorite_c_ut_ctb (True)  ==> majority_favorite_c_ut (True)
+         ||                                                               ||
+         V                                                                V
+        IgnMC_c_ctb (True)                 ==>                IgnMC_c (True)
+         ||                                                               ||
+         V                                                                V
+        InfMC_c_ctb (True)                 ==>                InfMC_c (True)
+        <BLANKLINE>
+        *****************************************************
+        *   Independence of Irrelevant Alternatives (IIA)   *
+        *****************************************************
+        w (reminder) = 0
+        is_iia = True
+        log_iia: iia_subset_maximum_size = 2.0
+        example_winner_iia = nan
+        example_subset_iia = nan
+        <BLANKLINE>
+        **********************
+        *   c-Manipulators   *
+        **********************
+        w (reminder) = 0
+        preferences_ut (reminder) =
+        [[ 0.  -0.5 -1. ]
+         [ 1.  -1.   0.5]
+         [ 0.5  0.5 -0.5]
+         [ 0.5  0.   1. ]
+         [-1.  -1.   1. ]]
+        v_wants_to_help_c =
+        [[False False False]
+         [False False False]
+         [False False False]
+         [False False  True]
+         [False False  True]]
+        <BLANKLINE>
+        ************************************
+        *   Individual Manipulation (IM)   *
+        ************************************
+        is_im = nan
+        log_im: im_option = lazy
+        candidates_im =
+        [ 0.  0. nan]
+        <BLANKLINE>
+        *********************************
+        *   Trivial Manipulation (TM)   *
+        *********************************
+        is_tm = False
+        log_tm: tm_option = exact
+        candidates_tm =
+        [0. 0. 0.]
+        <BLANKLINE>
+        ********************************
+        *   Unison Manipulation (UM)   *
+        ********************************
+        is_um = nan
+        log_um: um_option = lazy
+        candidates_um =
+        [ 0.  0. nan]
+        <BLANKLINE>
+        *********************************************
+        *   Ignorant-Coalition Manipulation (ICM)   *
+        *********************************************
+        is_icm = False
+        log_icm: icm_option = exact
+        candidates_icm =
+        [0. 0. 0.]
+        necessary_coalition_size_icm =
+        [0. 6. 4.]
+        sufficient_coalition_size_icm =
+        [0. 6. 4.]
+        <BLANKLINE>
+        ***********************************
+        *   Coalition Manipulation (CM)   *
+        ***********************************
+        is_cm = nan
+        log_cm: cm_option = lazy, um_option = lazy, tm_option = exact
+        candidates_cm =
+        [ 0.  0. nan]
+        necessary_coalition_size_cm =
+        [0. 1. 2.]
+        sufficient_coalition_size_cm =
+        [0. 2. 3.]
+
+    Notes
+    -----
     Split Cycle does not :attr:`meets_condorcet_c_ut_rel`:
 
         >>> profile = Profile(preferences_ut=[
@@ -43,6 +270,11 @@ class RuleSplitCycle(Rule):
         0
         >>> profile.condorcet_winner_ut_rel
         1
+
+    References
+    ----------
+    'Split cycle: A new Condorcet consistent voting method independent of clones and immune to spoilers.' Holliday
+    & Pacuit, 2020.
     """
 
     full_name = 'Split Cycle'
@@ -228,7 +460,8 @@ class RuleSplitCycle(Rule):
         winners = np.where(better_or_tie_c == np.max(better_or_tie_c))[0]
         w = candidates_by_scores_best_to_worst[0]
         return {'w': w, 'winners': winners, 'margin_graph': margin_graph, 'strength': strength,
-                'better_or_tie_c': better_or_tie_c}
+                'better_or_tie_c': better_or_tie_c,
+                'candidates_by_scores_best_to_worst': candidates_by_scores_best_to_worst}
 
     @cached_property
     def _count_ballots_(self):

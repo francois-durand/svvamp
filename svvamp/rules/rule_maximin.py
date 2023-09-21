@@ -595,6 +595,19 @@ class RuleMaximin(Rule):
             >>> rule = RuleMaximin()(profile)
             >>> rule.candidates_um_
             array([0., 1., 1.])
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [-0.5,  0. , -1. ,  0.5],
+            ...     [ 1. , -1. ,  1. ,  0. ],
+            ...     [ 1. ,  1. ,  1. , -1. ],
+            ... ], preferences_rk=[
+            ...     [3, 1, 0, 2],
+            ...     [2, 0, 3, 1],
+            ...     [1, 2, 0, 3],
+            ... ])
+            >>> rule = RuleMaximin()(profile)
+            >>> rule.is_um_c_(1)
+            True
         """
         matrix_duels_temp = preferences_ut_to_matrix_duels_ut(
             self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :]
@@ -606,8 +619,6 @@ class RuleMaximin(Rule):
 
         w_temp = np.argmax(scores_temp)
         if w_temp == c:  # pragma: no cover
-            # TO DO: Investigate whether this case can really happen or not.
-            self._reached_uncovered_code()
             self.mylogv("UM: scores_temp =", scores_temp, 3)
             self.mylog("UM: Manipulation easy (c wins without manipulators' votes)", 3)
             self._candidates_um[c] = True
@@ -635,7 +646,9 @@ class RuleMaximin(Rule):
         scores_s = np.min(matrix_duels_s, 1)
         w_s = np.argmax(scores_s)
         # If w_s == c, we win without any manipulator
-        if w_s == c:
+        if w_s == c:  # pragma: no cover
+            # TO DO: Investigate whether this case can actually happen.
+            self._reached_uncovered_code()
             self.mylogv("UM: scores_s =", scores_s, 3)
             self.mylog("UM: Manipulation easy (c wins without manipulators' votes)", 3)
             return 0
@@ -671,6 +684,47 @@ class RuleMaximin(Rule):
             >>> rule = RuleMaximin()(profile)
             >>> rule.candidates_cm_
             array([nan,  0.,  0.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [2, 1, 0],
+            ...     [0, 2, 1],
+            ...     [1, 2, 0],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleMaximin(cm_option='faster')(profile)
+            >>> rule.is_cm_c_with_bounds_(1)
+            (False, 2.0, 3.0)
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [1, 2, 0],
+            ...     [0, 2, 1],
+            ...     [2, 0, 1],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleMaximin(cm_option='fast')(profile)
+            >>> rule.necessary_coalition_size_cm_
+            array([2., 2., 0.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [2, 0, 1],
+            ...     [1, 2, 0],
+            ...     [2, 1, 0],
+            ...     [0, 1, 2],
+            ... ])
+            >>> rule = RuleMaximin(cm_option='faster')(profile)
+            >>> rule.necessary_coalition_size_cm_
+            array([1., 0., 2.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [1, 2, 0, 3],
+            ...     [3, 2, 0, 1],
+            ...     [2, 3, 1, 0],
+            ...     [3, 1, 2, 0],
+            ...     [0, 1, 2, 3],
+            ... ])
+            >>> rule = RuleMaximin(cm_option='faster')(profile)
+            >>> rule.is_cm_c_(0)
+            True
         """
         matrix_duels_temp = preferences_ut_to_matrix_duels_ut(
             self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :]

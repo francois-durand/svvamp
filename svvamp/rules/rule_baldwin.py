@@ -382,6 +382,35 @@ class RuleBaldwin(Rule):
             >>> rule = RuleBaldwin()(profile)
             >>> rule.candidates_cm_
             array([0., 0., 0.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [2, 0, 1],
+            ...     [2, 0, 1],
+            ...     [1, 2, 0],
+            ... ])
+            >>> rule = RuleBaldwin()(profile)
+            >>> rule.candidates_cm_
+            array([0., 1., 0.])
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [-0.5, -0.5,  0. , -0.5],
+            ...     [ 1. , -0.5,  0.5,  0.5],
+            ...     [ 0. ,  0. , -0.5, -0.5],
+            ...     [-1. , -1. , -0.5,  0. ],
+            ...     [ 1. , -1. ,  0.5, -1. ],
+            ...     [-0.5,  0. ,  1. ,  1. ],
+            ... ], preferences_rk=[
+            ...     [2, 1, 3, 0],
+            ...     [0, 3, 2, 1],
+            ...     [1, 0, 3, 2],
+            ...     [3, 2, 1, 0],
+            ...     [0, 2, 3, 1],
+            ...     [2, 3, 1, 0],
+            ... ])
+            >>> rule = RuleBaldwin()(profile)
+            >>> rule.sufficient_coalition_size_cm_
+            array([0., 1., 3., 2.])
         """
         # First part: is there a subset (including c) such that w has less than the average?
         n_v = self.profile_.n_v
@@ -469,6 +498,16 @@ class RuleBaldwin(Rule):
             >>> rule = RuleBaldwin(cm_option='exact')(profile)
             >>> rule.candidates_cm_
             array([0., 0., 0.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [1, 2, 0],
+            ...     [2, 1, 0],
+            ...     [1, 2, 0],
+            ... ])
+            >>> rule = RuleBaldwin(cm_option='exact')(profile)
+            >>> rule.sufficient_coalition_size_cm_
+            array([3., 0., 3.])
         """
         is_quick_escape_fast = self._cm_main_work_c_fast_(c, optimize_bounds)
         if not self.cm_option == "exact":

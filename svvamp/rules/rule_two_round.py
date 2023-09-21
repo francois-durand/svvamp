@@ -654,6 +654,48 @@ class RuleTwoRound(Rule):
             >>> rule = RuleTwoRound()(profile)
             >>> rule.is_cm_c_with_bounds_(0)
             (False, 3.0, 3.0)
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [-0.3675872 , -0.92998906],
+            ...     [-0.14930046,  0.98879188],
+            ...     [-0.07017986, -0.99753435],
+            ...     [-0.9806586 , -0.19572611],
+            ...     [-0.40994875, -0.91210856],
+            ... ], preferences_rk=[
+            ...     [0, 1],
+            ...     [1, 0],
+            ...     [0, 1],
+            ...     [1, 0],
+            ...     [0, 1],
+            ... ])
+            >>> rule = RuleTwoRound()(profile)
+            >>> _ = rule._cm_is_initialized_general_
+            >>> rule._cm_main_work_c_(c=1, optimize_bounds=True)
+            >>> rule._sufficient_coalition_size_cm[1]
+            4.0
+
+        In the following counter-intuitive case, the sufficient manipulator is indeed 0: only the last voter wants
+        to make candidate 0 win. But if this voter abstains, then candidate 0 wins. In other words, this is a case
+        of no-show paradox.
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 1. ,  1. ,  0.5],
+            ...     [-1. , -1. ,  1. ],
+            ...     [-1. , -0.5, -1. ],
+            ...     [-0.5,  1. ,  0.5],
+            ...     [ 0. , -1. ,  0.5],
+            ... ], preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [2, 0, 1],
+            ...     [1, 2, 0],
+            ...     [1, 2, 0],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleTwoRound()(profile)
+            >>> _ = rule._cm_is_initialized_general_
+            >>> rule._cm_main_work_c_(c=0, optimize_bounds=True)
+            >>> rule._sufficient_coalition_size_cm[0]
+            0.0
         """
         n_s = self.profile_.n_v - self.profile_.matrix_duels_ut.astype(int)[c, self.w_]
         ballots_first_round_s = self.ballots_[np.logical_not(self.v_wants_to_help_c_[:, c]), 0]

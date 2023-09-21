@@ -376,6 +376,19 @@ class RuleSlater(Rule):
         return False
 
     def _cm_main_work_c_(self, c, optimize_bounds):
+        """
+        Examples
+        --------
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [2, 1, 0],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleSlater(cm_option='exact')(profile)
+            >>> rule.sufficient_coalition_size_cm_[1]
+            3.0
+        """
         is_quick_escape_fast = self._cm_main_work_c_fast_(c, optimize_bounds)
         if not self.cm_option == "exact":
             # With 'fast' option, we stop here anyway.

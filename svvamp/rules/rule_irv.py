@@ -305,11 +305,11 @@ class RuleIRV(Rule):
 
     options_parameters = Rule.options_parameters.copy()
     options_parameters.update({
-        'um_option': {'allowed': {'fast', 'exact'}, 'default': 'fast'},
-        'cm_option': {'allowed': {'fast', 'slow', 'exact'}, 'default': 'fast'},
+        'um_option': {'allowed': ['fast', 'exact'], 'default': 'fast'},
+        'cm_option': {'allowed': ['fast', 'slow', 'exact'], 'default': 'fast'},
         'tm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'icm_option': {'allowed': {'exact'}, 'default': 'exact'},
-        'fast_algo': {'allowed': {'c_minus_max', 'minus_max', 'hardest_first'}, 'default': 'c_minus_max'}
+        'icm_option': {'allowed': ['exact'], 'default': 'exact'},
+        'fast_algo': {'allowed': ['c_minus_max', 'minus_max', 'hardest_first'], 'default': 'c_minus_max'}
     })
 
     def __init__(self, **kwargs):
@@ -741,7 +741,7 @@ class RuleIRV(Rule):
         if (scores_tot_begin_r[0, self.w_] + (self.w_ == 0)
                 > n_s + 1 - scores_tot_begin_r[0, self.w_]):  # pragma: no cover
             # TO DO: Investigate whether this case can actually happen.
-            self._reached_uncovered_code()
+            self._reached_uncovered_code('IRV: _im_main_work_v_exact_')
             self.mylog("im_aux_exact: Manipulation impossible by this path (w has too many votes)", 3)
             r = -1
         while True:
@@ -955,6 +955,17 @@ class RuleIRV(Rule):
         return True
 
     def _um_preliminary_checks_c_(self, c):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [2, 0, 1],
+            ...     [2, 1, 0],
+            ...     [0, 2, 1],
+            ...     [1, 2, 0],
+            ... ])
+            >>> rule = RuleIRV(um_option='fast', fast_algo='minus_max', cm_option='slow')(profile)
+            >>> rule.is_um_c_(1)
+            False
+        """
         if self.um_option not in {'fast', 'lazy'} or self.cm_option not in {'fast', 'lazy'}:
             if (
                 self.w_ == self.profile_.condorcet_winner_rk_ctb
@@ -1283,7 +1294,7 @@ class RuleIRV(Rule):
         most_serious_opponent = np.where(scores_tot_begin_r[0, :] == max_score)[0][0]
         if max_score + (most_serious_opponent < c) > n_s + n_m - max_score:  # pragma: no cover
             # TO DO: Investigate whether this case can actually happen.
-            self._reached_uncovered_code()
+            self._reached_uncovered_code('IRV: _um_aux_exact')
             self.mylogv("um_aux_exact: most_serious_opponent =", most_serious_opponent, 3)
             self.mylog("um_aux_exact: Manipulation impossible by this path (an opponent has too many votes)", 3)
             r = -1
@@ -1489,6 +1500,28 @@ class RuleIRV(Rule):
     def example_ballots_cm_c_(self, c):
         """
         To manipulate for c against w.
+
+        Examples
+        --------
+            >>> profile = Profile(preferences_rk=[
+            ...     [1, 0, 2],
+            ...     [0, 1, 2],
+            ...     [1, 0, 2],
+            ...     [1, 2, 0],
+            ... ])
+            >>> rule = RuleIRV()(profile)
+            >>> print(rule.example_ballots_cm_c_(0))
+            None
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [2, 1, 0],
+            ...     [0, 2, 1],
+            ...     [0, 1, 2],
+            ...     [0, 2, 1],
+            ... ])
+            >>> rule = RuleIRV()(profile)
+            >>> print(rule.example_ballots_cm_c_(0))
+            None
         """
         if c == self.w_:
             return None
@@ -1506,6 +1539,18 @@ class RuleIRV(Rule):
     def example_ballots_cm_w_against_(self, w_other_rule):
         """
         To manipulate for w when in a sibling rule, the winner is different (w_other_rule).
+
+        Examples
+        --------
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1],
+            ...     [1, 2, 0],
+            ...     [1, 0, 2],
+            ...     [0, 1, 2],
+            ... ])
+            >>> rule = RuleIRV()(profile)
+            >>> print(rule.example_ballots_cm_w_against_(0))
+            None
         """
         if w_other_rule == self.w_:
             return None
@@ -1538,6 +1583,8 @@ class RuleIRV(Rule):
         # print(preferences_borda_s)
         # print(matrix_duels_temp)
         candidates = np.array(range(self.profile_.n_c))
+        if n_m == 0:
+            return np.zeros((0, self.profile_.n_c), dtype=int)
         ballots_m = [[] for _ in range(n_m)]
 
         # Step 1: ensure the elimination path
@@ -1978,7 +2025,7 @@ class RuleIRV(Rule):
         most_serious_opponent = np.where(scores_tot_begin_r[0, :] == max_score)[0][0]
         if max_score + (most_serious_opponent < c) > n_s + n_max_updated - max_score:  # pragma: no cover
             # TO DO: Investigate whether this case can actually happen.
-            self._reached_uncovered_code()
+            self._reached_uncovered_code('IRV: _cm_aux_exact')
             self.mylogv("cm_aux_exact: scores_tot_begin_r =", scores_tot_begin_r[0, :], 3)
             self.mylogv("cm_aux_exact: most_serious_opponent =", most_serious_opponent, 3)
             self.mylog("cm_aux_exact: Manipulation impossible by this path (an opponent has too many votes)", 3)
@@ -2104,7 +2151,7 @@ class RuleIRV(Rule):
             return
         if not optimize_bounds and self._necessary_coalition_size_cm[c] > n_m:  # pragma: no cover
             # TO DO: Investigate whether this case can actually happen.
-            self._reached_uncovered_code()
+            self._reached_uncovered_code('IRV: _cm_preliminary_checks_c_')
             return
         # Another pretest, based on Exhaustive Ballot
         if self.cm_option == "slow" or self.cm_option == "exact":
@@ -2205,7 +2252,7 @@ class RuleIRV(Rule):
         # EB should always suggest an elimination path. But just as precaution, we use the fact that we know that
         # ``self._example_path_cm[c]`` provides a path (thanks to 'improved' TM).
         if self.eb_.example_path_cm_c_(c) is None:  # pragma: no cover - This should never happen.
-            self._reached_uncovered_code()
+            self._reached_uncovered_code('IRV: _cm_main_work_c_')
             suggested_path = self._example_path_cm[c]
             self.mylog('***************************************************', 0)
             self.mylog('CM: WARNING: EB did not provide an elimination path', 0)

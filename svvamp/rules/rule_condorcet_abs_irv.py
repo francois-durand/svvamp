@@ -308,9 +308,9 @@ class RuleCondorcetAbsIRV(Rule):
 
     options_parameters = Rule.options_parameters.copy()
     options_parameters.update({
-        'cm_option': {'allowed': {'fast', 'slow', 'very_slow', 'exact'}, 'default': 'fast'},
+        'cm_option': {'allowed': ['fast', 'slow', 'very_slow', 'exact'], 'default': 'fast'},
         'tm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'icm_option': {'allowed': {'exact'}, 'default': 'exact'}
+        'icm_option': {'allowed': ['exact'], 'default': 'exact'}
     })
 
     def __init__(self, **kwargs):
@@ -322,6 +322,15 @@ class RuleCondorcetAbsIRV(Rule):
         )
 
     def __call__(self, profile):
+        """
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> rule = RuleCondorcetAbsIRV(cm_option='slow')(profile)
+            >>> rule.irv_.cm_option
+            'slow'
+            >>> rule = RuleCondorcetAbsIRV(cm_option='exact')(profile)
+            >>> rule.irv_.cm_option
+            'exact'
+        """
         self.delete_cache(suffix='_')
         self.profile_ = profile
         # Grab the IRV ballot of the profile (or create it)
@@ -353,6 +362,14 @@ class RuleCondorcetAbsIRV(Rule):
             * Otherwise, ``scores[r, c]`` is defined like in :class:`RuleIRV`: it is the number of voters who vote for
               candidate ``c`` at round ``r``. For eliminated candidates, ``scores[r, c] = numpy.nan``. In contrast,
               ``scores[r, c] = 0`` means that ``c`` is present at round ``r`` but no voter votes for ``c``.
+
+        Examples
+        --------
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2], [1, 2, 0], [1, 2, 0], [2, 0, 1]])
+            >>> rule = RuleCondorcetAbsIRV()(profile)
+            >>> rule.scores_
+            array([[ 2.,  2.,  1.],
+                   [ 3.,  2., nan]])
         """
         if not np.isnan(self.profile_.condorcet_winner_ut_abs):
             return np.sum(self.profile_.matrix_victories_ut_abs, 1)
@@ -366,6 +383,13 @@ class RuleCondorcetAbsIRV(Rule):
             * If there is a Condorcet winner, candidates are sorted according to their (scalar) score.
             * Otherwise, ``candidates_by_scores_best_to_worst`` is the list of all candidates in the reverse order of
               their IRV elimination.
+
+        Examples
+        --------
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2], [1, 2, 0], [1, 2, 0], [2, 0, 1]])
+            >>> rule = RuleCondorcetAbsIRV()(profile)
+            >>> list(rule.candidates_by_scores_best_to_worst_)
+            [0, 1, 2]
         """
         if not np.isnan(self.profile_.condorcet_winner_ut_abs):
             return np.argsort(- self.scores_, kind='mergesort')
@@ -374,6 +398,17 @@ class RuleCondorcetAbsIRV(Rule):
 
     @cached_property
     def _v_might_be_pivotal_(self):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [1, 0, 2],
+            ...     [2, 1, 0],
+            ...     [0, 2, 1],
+            ...     [1, 2, 0],
+            ... ])
+            >>> rule = RuleCondorcetAbsIRV()(profile)
+            >>> rule.is_im_v_(0)
+            False
+        """
         self.mylog("Count ballots", 1)
         if not np.isnan(self.profile_.condorcet_winner_ut_abs):
             w = self.w_
@@ -431,12 +466,35 @@ class RuleCondorcetAbsIRV(Rule):
     # TODO: should be implemented .
 
     def _um_preliminary_checks_general_subclass_(self):
+        """
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 0. , -0.5,  1. ,  0.5],
+            ...     [-1. ,  0.5,  1. ,  1. ],
+            ... ], preferences_rk=[
+            ...     [2, 3, 0, 1],
+            ...     [3, 2, 1, 0],
+            ... ])
+            >>> rule = RuleCondorcetAbsIRV(um_option='exact')(profile)
+            >>> rule.candidates_um_
+            array([0., 0., 0., 0.])
+        """
         if equal_false(self.irv_.is_cm_):
             self._is_um = False
             self._candidates_um[:] = False
             self._um_was_computed_with_candidates = True
 
     def _um_preliminary_checks_c_(self, c):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [1, 0, 2],
+            ...     [1, 0, 2],
+            ...     [0, 2, 1],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleCondorcetAbsIRV(um_option='exact')(profile)
+            >>> rule.is_um_c_(0)
+            False
+        """
         if self.um_option not in {'fast', 'lazy'} or self.cm_option not in {'fast', 'lazy'}:
             if (
                 self.w_ == self.profile_.condorcet_winner_rk_ctb
@@ -643,9 +701,7 @@ class RuleCondorcetAbsIRV(Rule):
         self.mylogv("CM: n_manip_prevent_cond =", n_manip_prevent_cond, 3)
         self._update_necessary(self._necessary_coalition_size_cm, c, n_manip_prevent_cond,
                                'CM: Update necessary_coalition_size_cm[c] = n_manip_prevent_cond =')
-        if not optimize_bounds and self._necessary_coalition_size_cm[c] > n_m:  # pragma: no cover
-            # TO DO: Investigate whether this case can actually happen.
-            self._reached_uncovered_code()
+        if not optimize_bounds and self._necessary_coalition_size_cm[c] > n_m:
             return True
 
         is_quick_escape_one = False
@@ -673,9 +729,7 @@ class RuleCondorcetAbsIRV(Rule):
                 min(n_manip_becomes_cond, max(self.irv_.necessary_coalition_size_cm_[c], n_manip_prevent_cond)),
                 'CM: Update necessary_coalition_size[c] =')
         else:
-            if c == self.irv_.w_:  # pragma: no cover
-                # TO DO: Investigate whether this case can actually happen.
-                # self._reached_uncovered_code()
+            if c == self.irv_.w_:
                 self.mylog('CM: c == self.irv_.w_ != self.w_', 3)
                 self.mylogv("CM: sufficient size for IRV (sincere IRV) =", n_m, 3)
                 self._update_sufficient(self._sufficient_coalition_size_cm, c, max(n_m, n_manip_prevent_cond),

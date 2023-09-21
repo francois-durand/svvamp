@@ -420,6 +420,12 @@ class RuleMajorityJudgment(Rule):
     def allowed_grades(self):
         """List or None. If ``step_grade`` is positive, the list of authorized grades. If ``step_grade`` is zero
         (continuous set of grades), then None.
+
+        Examples
+        --------
+            >>> rule = RuleMajorityJudgment()
+            >>> print(rule.allowed_grades)
+            None
         """
         if self.step_grade == 0:
             return None
@@ -451,6 +457,21 @@ class RuleMajorityJudgment(Rule):
               :attr:`min_grade`) becomes :attr:`max_grade` (resp. :attr:`min_grade`).
 
         2. If :attr:`step_grades` > 0 (discrete set of grades), round each grade to the closest authorized grade.
+
+        Examples
+        --------
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 1. ,  0.8, -0.6],
+            ...     [ 0.2, -0.4,  1. ],
+            ...     [ 1. ,  0. ,  0.2],
+            ...     [ 0.2,  0.8, -0.2],
+            ... ])
+            >>> rule = RuleMajorityJudgment(min_grade=0, max_grade=5, step_grade=1)(profile)
+            >>> rule.ballots_
+            array([[5, 4, 0],
+                   [2, 0, 5],
+                   [5, 0, 1],
+                   [2, 5, 0]])
         """
         self.mylog("Compute ballots", 1)
         # Rescale (or not)

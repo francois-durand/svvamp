@@ -31,11 +31,11 @@ class GeneratorProfilePerturbedCulture(GeneratorProfile):
     ----------
     n_v : int
         Number of voters.
-    n_c : int
-        Number of candidates.
     theta : float
         Weight of the unanimous part.
-    ranking : list, optional
+    n_c : int, optional
+        Number of candidates.
+    ranking : List, optional
         This will be the ranking of all the voters of the unanimous part. If not specified, it is drawn at
         random each time a profile is generated.
     sort_voters : bool
@@ -52,13 +52,27 @@ class GeneratorProfilePerturbedCulture(GeneratorProfile):
 
     Examples
     --------
-        >>> generator = GeneratorProfilePerturbedCulture(n_v=10, n_c=3, theta=.1)
+        >>> generator = GeneratorProfilePerturbedCulture(n_v=10, theta=.1, n_c=3)
         >>> profile = generator()
         >>> profile.preferences_rk.shape
         (10, 3)
+
+        >>> generator = GeneratorProfilePerturbedCulture(n_v=10, theta=.1, ranking=[0, 1, 2])
+        >>> profile = generator()
+        >>> profile.preferences_rk.shape
+        (10, 3)
+
+        >>> generator = GeneratorProfilePerturbedCulture(n_v=10, theta=.1)
+        Traceback (most recent call last):
+        ValueError: GeneratorProfilePerturbedCulture: You should specify `n_c` or `ranking`.
     """
 
-    def __init__(self, n_v, n_c, theta, ranking=None, sort_voters=False):
+    def __init__(self, n_v, theta, n_c=None, ranking=None, sort_voters=False):
+        if n_c is None:
+            if ranking is None:
+                raise ValueError("GeneratorProfilePerturbedCulture: You should specify `n_c` or `ranking`.")
+            else:
+                n_c = len(ranking)
         self.n_v = n_v
         self.n_c = n_c
         self.theta = theta
