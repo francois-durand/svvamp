@@ -2,6 +2,7 @@ matplotlib
 networkx
 numpy
 pandas
+tikzplotlib
 scipy
 sphinx>=1.4
 nbsphinx
