@@ -147,8 +147,8 @@ class ExperimentAnalyzer:
             'Culture parameter 3', 'Culture parameter 3 value',
             'Culture parameter 4', 'Culture parameter 4 value'
         ]).T
-        headers_m.to_csv(path_or_buf=self.file_m_en, index=False, header=False, line_terminator='\n')
-        headers_m.to_csv(path_or_buf=self.file_m_fr, index=False, header=False, sep=';', line_terminator='\n')
+        headers_m.to_csv(path_or_buf=self.file_m_en, index=False, header=False, lineterminator='\n')
+        headers_m.to_csv(path_or_buf=self.file_m_fr, index=False, header=False, sep=';', lineterminator='\n')
 
     def _df_to_csv_m(self, df):
         return _df_to_csv(df, file_en=self.file_m_en, file_fr=self.file_m_fr)
@@ -488,5 +488,5 @@ def _df_to_csv(df, file_en, file_fr):
     df = pd.DataFrame(df)
     if df.shape[1] == 1:
         df = df.T
-    df.to_csv(path_or_buf=file_en, index=False, header=False, line_terminator='\n')
-    df.apply(my_float).to_csv(path_or_buf=file_fr, index=False, header=False, sep=';', line_terminator='\n')
+    df.to_csv(path_or_buf=file_en, index=False, header=False, lineterminator='\n')
+    df.apply(my_float).to_csv(path_or_buf=file_fr, index=False, header=False, sep=';', lineterminator='\n')
