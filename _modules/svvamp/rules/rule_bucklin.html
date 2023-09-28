@@ -347,7 +347,7 @@
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
-<span class="sd">    At counting round ``r``, all voters who rank candidate ``c`` in ``r``\ :sup:`th` position gives her an additional</span>
+<span class="sd">    At counting round ``r``, all voters who rank candidate ``c`` in ``r``-`th` position gives her an additional</span>
 <span class="sd">    vote. As soon as at least one candidate has more than :attr:`n_v`/2 votes (accrued with previous rounds),</span>
 <span class="sd">    the candidate with most votes is declared the winner. In case of a tie, the candidate with lowest index wins.</span>
 
@@ -405,7 +405,7 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">scores_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;2d array of integers. ``scores[r, c]`` is the accrued score of candidate ``c`` at elimination round ``r``.</span>
-<span class="sd">        It is the number of voters who rank ``c`` between 0\ :sup:`th` and ``r``\ :sup:`th` rank on their ballot.</span>
+<span class="sd">        It is the number of voters who rank ``c`` between 0-`th` and ``r``-`th` rank on their ballot.</span>
 
 <span class="sd">        For information, ballot are still counted after the round where the decision is made (it is used for</span>
 <span class="sd">        manipulation algorithms).</span>

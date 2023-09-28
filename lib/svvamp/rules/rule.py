@@ -553,7 +553,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     def candidates_by_scores_best_to_worst_(self):
         """1d array of integers. All candidates, sorted from the winner to the last candidate in the election's result.
 
-        Default behavior: ``candidates_by_scores_best_to_worst[k]`` is the candidate with ``k``\ :sup:`th` highest
+        Default behavior: ``candidates_by_scores_best_to_worst[k]`` is the candidate with ``k``-th highest
         value in :attr:`scores_`. By definition, ``candidates_by_scores_best_to_worst[0]`` = :attr:`w_`.
         """
         # This can be overridden by specific voting systems. This general method works only if scores are scalar and

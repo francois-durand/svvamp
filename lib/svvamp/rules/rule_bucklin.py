@@ -263,7 +263,7 @@ class RuleBucklin(Rule):
 
     Notes
     -----
-    At counting round ``r``, all voters who rank candidate ``c`` in ``r``\ :sup:`th` position gives her an additional
+    At counting round ``r``, all voters who rank candidate ``c`` in ``r``-`th` position gives her an additional
     vote. As soon as at least one candidate has more than :attr:`n_v`/2 votes (accrued with previous rounds),
     the candidate with most votes is declared the winner. In case of a tie, the candidate with lowest index wins.
 
@@ -321,7 +321,7 @@ class RuleBucklin(Rule):
     @property
     def scores_(self):
         """2d array of integers. ``scores[r, c]`` is the accrued score of candidate ``c`` at elimination round ``r``.
-        It is the number of voters who rank ``c`` between 0\ :sup:`th` and ``r``\ :sup:`th` rank on their ballot.
+        It is the number of voters who rank ``c`` between 0-`th` and ``r``-`th` rank on their ballot.
 
         For information, ballot are still counted after the round where the decision is made (it is used for
         manipulation algorithms).

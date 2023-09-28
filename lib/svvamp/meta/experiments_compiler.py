@@ -26,6 +26,7 @@ import pandas as pd
 from matplotlib import pyplot as plt
 from pathlib import Path
 import tikzplotlib
+from svvamp.utils.tikzplotlib_fix_ncols import tikzplotlib_fix_ncols
 
 
 class ExperimentsCompiler:
@@ -208,6 +209,7 @@ class ExperimentsCompiler:
         plt.yticks(np.arange(0, 1.1, step=0.1))
         plt.ylabel('Rate')
         ax.legend(loc='upper left')
+        tikzplotlib_fix_ncols(ax)
         self.my_tikzplotlib_save(tikz_file, x_ticks_labels=df_plot.index)
         return df_plot
 
@@ -270,6 +272,7 @@ class ExperimentsCompiler:
         plt.yticks(np.arange(0, 1.1, step=0.1))
         plt.ylabel('Condorcet violation rate')
         ax.legend(loc='upper left')
+        tikzplotlib_fix_ncols(ax)
         self.my_tikzplotlib_save(tikz_file, x_ticks_labels=df_violation.index)
         return df_violation
 
@@ -315,6 +318,7 @@ class ExperimentsCompiler:
         plt.yticks(np.arange(0, 1.1, step=0.1))
         plt.ylabel('Loss of normalized social welfare')
         ax.legend(loc='upper left')
+        tikzplotlib_fix_ncols(ax)
         self.my_tikzplotlib_save(tikz_file, x_ticks_labels=df_loss_sw.index)
         return df_loss_sw
 
@@ -349,6 +353,7 @@ class ExperimentsCompiler:
         plt.ylabel('Average number of CM winners')
         plt.ylim(0, df_nb_candidates_cm.columns[-1] - .5)
         plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+        tikzplotlib_fix_ncols(ax)
         self.my_tikzplotlib_save(tikz_file, axis_width=r'\axisSmallerWidth', axis_height=r'\axisHeight')
         return df_nb_candidates_cm
 

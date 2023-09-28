@@ -343,7 +343,7 @@ class RuleTwoRound(Rule):
 
     @cached_property
     def candidates_by_scores_best_to_worst_(self):
-        """1d array of integers. ``candidates_by_scores_best_to_worst[k]`` is the candidate with ``k``\ :sup:`th`
+        """1d array of integers. ``candidates_by_scores_best_to_worst[k]`` is the candidate with ``k``-th
         best score. Finalists are sorted by their score at second round. Other candidates are sorted by their score
         at first round.
         """

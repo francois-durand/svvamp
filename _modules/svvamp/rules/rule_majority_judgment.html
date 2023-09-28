@@ -606,7 +606,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">candidates_by_scores_best_to_worst_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of integers. ``candidates_by_scores_best_to_worst[k] is the candidate ranked ``k``\ :sup:`th`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of integers. ``candidates_by_scores_best_to_worst[k] is the candidate ranked ``k``-th.</span>
 
 <span class="sd">        Candidates are sorted lexicographically by their median (:attr:`scores`\ ``[0, c]``) then their ``p`` or ``-q``</span>
 <span class="sd">        (:attr:`scores`\ ``[1, c]``). If there is still a  tie, the tied candidate with lower index is favored.</span>
