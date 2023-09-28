@@ -6,13 +6,14 @@ __version__ = '0.9.1'
 
 
 # Utils
-from svvamp.utils.misc import initialize_random_seeds
 from svvamp.utils.constants import OPTIONS
+from svvamp.utils.misc import initialize_random_seeds
 
 # Profile
 from svvamp.preferences.profile import Profile
 from svvamp.preferences.profile_from_file import ProfileFromFile
 from svvamp.preferences.profile_subset_candidates import ProfileSubsetCandidates
+from svvamp.preferences.profile_um import ProfileUM
 
 # Profile Generator
 from svvamp.preferences.generator_profile import GeneratorProfile
@@ -29,6 +30,11 @@ from svvamp.preferences.generator_profile_spheroid import GeneratorProfileSphero
 from svvamp.preferences.generator_profile_unanimous import GeneratorProfileUnanimous
 from svvamp.preferences.generator_profile_vmf_hypercircle import GeneratorProfileVMFHypercircle
 from svvamp.preferences.generator_profile_vmf_hypersphere import GeneratorProfileVMFHypersphere
+
+# Plurality elimination engines
+from svvamp.preferences.plurality_elimination_engine import PluralityEliminationEngine
+from svvamp.preferences.plurality_elimination_engine_profile import PluralityEliminationEngineProfile
+from svvamp.preferences.plurality_elimination_engine_profile_um import PluralityEliminationEngineProfileUM
 
 # Voting Rule
 from svvamp.rules.rule import Rule
