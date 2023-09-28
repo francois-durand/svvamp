@@ -522,7 +522,7 @@ class RuleMajorityJudgment(Rule):
 
     @cached_property
     def candidates_by_scores_best_to_worst_(self):
-        """1d array of integers. ``candidates_by_scores_best_to_worst[k] is the candidate ranked ``k``\ :sup:`th`.
+        """1d array of integers. ``candidates_by_scores_best_to_worst[k] is the candidate ranked ``k``-th.
 
         Candidates are sorted lexicographically by their median (:attr:`scores`\ ``[0, c]``) then their ``p`` or ``-q``
         (:attr:`scores`\ ``[1, c]``). If there is still a  tie, the tied candidate with lower index is favored.

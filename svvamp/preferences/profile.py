@@ -1969,7 +1969,7 @@ class Profile(my_log.MyLog):
 
     @cached_property
     def decreasing_borda_scores_rk(self):
-        """1d array of integers. ``decreasing_borda_scores_rk[k]`` is the ``k``\ :sup:`th` Borda score (using
+        """1d array of integers. ``decreasing_borda_scores_rk[k]`` is the ``k``-th Borda score (using
         :attr:`~svvamp.Population.borda_score_c_rk`, i.e. strict preferences) by decreasing order.
 
         For example, ``decreasing_borda_scores_rk[0]`` is the highest Borda score for a candidate (rk).
@@ -2010,7 +2010,7 @@ class Profile(my_log.MyLog):
 
     @cached_property
     def decreasing_borda_scores_ut(self):
-        """1d array of integers. ``decreasing_borda_scores_ut[k]`` is the ``k``\ :sup:`th` Borda score (using
+        """1d array of integers. ``decreasing_borda_scores_ut[k]`` is the ``k``-th Borda score (using
         :attr:`~svvamp.Population.borda_score_c_ut`, i.e. weak preferences) by decreasing order.
 
         For example, ``decreasing_borda_scores_ut[0]`` is the highest Borda score for a candidate (rk).

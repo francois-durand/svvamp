@@ -373,7 +373,7 @@ class RuleSchulze(Rule):
 
     @cached_property
     def candidates_by_scores_best_to_worst_(self):
-        """1d array of integers. ``candidates_by_scores_best_to_worst_[k]`` is the ``k``\ :sup:`th` candidate by
+        """1d array of integers. ``candidates_by_scores_best_to_worst_[k]`` is the ``k``-th candidate by
         number of Schulze-victories, i.e. the number of candidates ``d`` such that ``c`` is *better* than ``d``.
         """
         return self._count_ballots_['candidates_by_scores_best_to_worst']
@@ -402,8 +402,8 @@ class RuleSchulze(Rule):
         """2d array. ``scores_best_to_worst`` is the scores of the candidates, from the winner to the last candidate
         of the election.
 
-        ``scores_best_to_worst[k, j]`` is the width of the widest path from the ``k``\ :sup:`th` best candidate of
-        the election to the ``j``\ :sup:`th`.
+        ``scores_best_to_worst[k, j]`` is the width of the widest path from the ``k``-th best candidate of
+        the election to the ``j``-`th`.
         """
         self.mylog("Compute scores_best_to_worst", 1)
         return self.scores_[self.candidates_by_scores_best_to_worst_, :][:, self.candidates_by_scores_best_to_worst_]
