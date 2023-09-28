@@ -302,11 +302,11 @@ class RuleExhaustiveBallot(Rule):
 
     options_parameters = Rule.options_parameters.copy()
     options_parameters.update({
-        'um_option': {'allowed': {'fast', 'exact'}, 'default': 'fast'},
-        'cm_option': {'allowed': {'fast', 'exact'}, 'default': 'fast'},
-        'tm_option': {'allowed': {'exact'}, 'default': 'exact'},
-        'icm_option': {'allowed': {'exact'}, 'default': 'exact'},
-        'fast_algo': {'allowed': {'c_minus_max', 'minus_max', 'hardest_first'}, 'default': 'c_minus_max'}
+        'um_option': {'allowed': ['fast', 'exact'], 'default': 'fast'},
+        'cm_option': {'allowed': ['fast', 'exact'], 'default': 'fast'},
+        'tm_option': {'allowed': ['exact'], 'default': 'exact'},
+        'icm_option': {'allowed': ['exact'], 'default': 'exact'},
+        'fast_algo': {'allowed': ['c_minus_max', 'minus_max', 'hardest_first'], 'default': 'c_minus_max'}
     })
 
     def __init__(self, **kwargs):

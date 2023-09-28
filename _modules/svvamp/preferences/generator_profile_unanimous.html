@@ -115,9 +115,9 @@
 <span class="sd">    ----------</span>
 <span class="sd">    n_v : int</span>
 <span class="sd">        Number of voters.</span>
-<span class="sd">    n_c : int</span>
+<span class="sd">    n_c : int, optional</span>
 <span class="sd">        Number of candidates.</span>
-<span class="sd">    ranking : list, optional</span>
+<span class="sd">    ranking : List, optional</span>
 <span class="sd">        This will be the ranking of all the voters. If not specified, it is drawn at random each time</span>
 <span class="sd">        a profile is generated.</span>
 <span class="sd">    sort_voters : bool</span>
@@ -134,9 +134,25 @@
 <span class="sd">        &gt;&gt;&gt; profile = generator()</span>
 <span class="sd">        &gt;&gt;&gt; profile.preferences_rk.shape</span>
 <span class="sd">        (10, 3)</span>
+
+<span class="sd">        &gt;&gt;&gt; generator = GeneratorProfileUnanimous(n_v=3, ranking=[0, 1, 2])</span>
+<span class="sd">        &gt;&gt;&gt; profile = generator()</span>
+<span class="sd">        &gt;&gt;&gt; profile.preferences_rk</span>
+<span class="sd">        array([[0, 1, 2],</span>
+<span class="sd">               [0, 1, 2],</span>
+<span class="sd">               [0, 1, 2]])</span>
+
+<span class="sd">        &gt;&gt;&gt; generator = GeneratorProfileUnanimous(n_v=3)</span>
+<span class="sd">        Traceback (most recent call last):</span>
+<span class="sd">        ValueError: GeneratorProfileUnanimous: You should specify `n_c` or `ranking`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_v</span><span class="p">,</span> <span class="n">n_c</span><span class="p">,</span> <span class="n">ranking</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sort_voters</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_v</span><span class="p">,</span> <span class="n">n_c</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ranking</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sort_voters</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">n_c</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ranking</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;GeneratorProfileUnanimous: You should specify `n_c` or `ranking`.&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">n_c</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ranking</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_v</span> <span class="o">=</span> <span class="n">n_v</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_c</span> <span class="o">=</span> <span class="n">n_c</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ranking</span> <span class="o">=</span> <span class="n">ranking</span>

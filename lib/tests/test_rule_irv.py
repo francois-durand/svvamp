@@ -99,3 +99,18 @@ def test_is_icm_c():
         (False, 5.0, 5.0)
     """
     pass
+
+
+def test_is_tm_or_um():
+    """
+        >>> profile = Profile(preferences_rk=[
+        ...     [1, 2, 0],
+        ...     [1, 0, 2],
+        ...     [2, 0, 1],
+        ...     [0, 2, 1],
+        ... ])
+        >>> profile = RuleIRV()(profile)
+        >>> profile.is_tm_or_um_
+        nan
+    """
+    pass

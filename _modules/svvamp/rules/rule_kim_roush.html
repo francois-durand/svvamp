@@ -464,6 +464,27 @@
     <span class="c1"># %% CM</span>
 
     <span class="k">def</span> <span class="nf">_cm_preliminary_checks_c_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
+<span class="sd">            ...     [1, 2, 0],</span>
+<span class="sd">            ...     [1, 0, 2],</span>
+<span class="sd">            ...     [2, 1, 0],</span>
+<span class="sd">            ...     [2, 0, 1],</span>
+<span class="sd">            ... ])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleKimRoush()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.sufficient_coalition_size_cm_</span>
+<span class="sd">            array([3., 0., 2.])</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
+<span class="sd">            ...     [2, 1, 0],</span>
+<span class="sd">            ...     [2, 0, 1],</span>
+<span class="sd">            ...     [2, 0, 1],</span>
+<span class="sd">            ...     [1, 2, 0],</span>
+<span class="sd">            ... ])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleKimRoush()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.necessary_coalition_size_cm_</span>
+<span class="sd">            array([2., 3., 0.])</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">n_c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span>
         <span class="n">n_m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_ut</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span>
         <span class="n">n_s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span> <span class="o">-</span> <span class="n">n_m</span>

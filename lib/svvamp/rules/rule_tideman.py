@@ -147,6 +147,117 @@ class RuleTideman(Rule):
         w_is_resistant_condorcet_winner = False
         w_is_not_resistant_condorcet_winner = True
         w_missed_resistant_condorcet_winner = False
+        >>> rule.demo_manipulation_(log_depth=0)  # doctest: +NORMALIZE_WHITESPACE
+        <BLANKLINE>
+        *****************************
+        *                           *
+        *   Election Manipulation   *
+        *                           *
+        *****************************
+        <BLANKLINE>
+        *********************************************
+        *   Basic properties of the voting system   *
+        *********************************************
+        with_two_candidates_reduces_to_plurality =  True
+        is_based_on_rk =  True
+        is_based_on_ut_minus1_1 =  False
+        meets_iia =  False
+        <BLANKLINE>
+        ****************************************************
+        *   Manipulation properties of the voting system   *
+        ****************************************************
+        Condorcet_c_ut_rel_ctb (False)     ==>     Condorcet_c_ut_rel (False)
+         ||                                                               ||
+         ||     Condorcet_c_rk_ctb (False) ==> Condorcet_c_rk (True)      ||
+         ||           ||               ||       ||             ||         ||
+         V            V                ||       ||             V          V
+        Condorcet_c_ut_abs_ctb (False)     ==>     Condorcet_ut_abs_c (True)
+         ||                            ||       ||                        ||
+         ||                            V        V                         ||
+         ||       maj_fav_c_rk_ctb (True)  ==> maj_fav_c_rk (True)        ||
+         ||           ||                                       ||         ||
+         V            V                                        V          V
+        majority_favorite_c_ut_ctb (True)  ==> majority_favorite_c_ut (True)
+         ||                                                               ||
+         V                                                                V
+        IgnMC_c_ctb (True)                 ==>                IgnMC_c (True)
+         ||                                                               ||
+         V                                                                V
+        InfMC_c_ctb (True)                 ==>                InfMC_c (True)
+        <BLANKLINE>
+        *****************************************************
+        *   Independence of Irrelevant Alternatives (IIA)   *
+        *****************************************************
+        w (reminder) = 0
+        is_iia = True
+        log_iia: iia_subset_maximum_size = 2.0
+        example_winner_iia = nan
+        example_subset_iia = nan
+        <BLANKLINE>
+        **********************
+        *   c-Manipulators   *
+        **********************
+        w (reminder) = 0
+        preferences_ut (reminder) =
+        [[ 0.  -0.5 -1. ]
+         [ 1.  -1.   0.5]
+         [ 0.5  0.5 -0.5]
+         [ 0.5  0.   1. ]
+         [-1.  -1.   1. ]]
+        v_wants_to_help_c =
+        [[False False False]
+         [False False False]
+         [False False False]
+         [False False  True]
+         [False False  True]]
+        <BLANKLINE>
+        ************************************
+        *   Individual Manipulation (IM)   *
+        ************************************
+        is_im = nan
+        log_im: im_option = lazy
+        candidates_im =
+        [ 0.  0. nan]
+        <BLANKLINE>
+        *********************************
+        *   Trivial Manipulation (TM)   *
+        *********************************
+        is_tm = False
+        log_tm: tm_option = exact
+        candidates_tm =
+        [0. 0. 0.]
+        <BLANKLINE>
+        ********************************
+        *   Unison Manipulation (UM)   *
+        ********************************
+        is_um = nan
+        log_um: um_option = lazy
+        candidates_um =
+        [ 0.  0. nan]
+        <BLANKLINE>
+        *********************************************
+        *   Ignorant-Coalition Manipulation (ICM)   *
+        *********************************************
+        is_icm = False
+        log_icm: icm_option = exact
+        candidates_icm =
+        [0. 0. 0.]
+        necessary_coalition_size_icm =
+        [0. 6. 4.]
+        sufficient_coalition_size_icm =
+        [0. 6. 4.]
+        <BLANKLINE>
+        ***********************************
+        *   Coalition Manipulation (CM)   *
+        ***********************************
+        is_cm = nan
+        log_cm: cm_option = fast, um_option = lazy, tm_option = exact
+        candidates_cm =
+        [ 0.  0. nan]
+        necessary_coalition_size_cm =
+        [0. 1. 2.]
+        sufficient_coalition_size_cm =
+        [0. 2. 4.]
 
     Tideman does not :attr:`meets_condorcet_c_ut_abs_ctb`:
 
@@ -205,7 +316,7 @@ class RuleTideman(Rule):
 
     options_parameters = Rule.options_parameters.copy()
     options_parameters.update({
-        'cm_option': {'allowed': {'fast', 'slow', 'very_slow', 'exact'}, 'default': 'fast'},
+        'cm_option': {'allowed': ['fast', 'slow', 'very_slow', 'exact'], 'default': 'fast'},
         'tm_option': {'allowed': ['exact'], 'default': 'exact'},
         'icm_option': {'allowed': ['exact'], 'default': 'exact'}
     })
@@ -218,6 +329,15 @@ class RuleTideman(Rule):
         )
 
     def __call__(self, profile):
+        """
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> rule = RuleTideman(cm_option='slow')(profile)
+            >>> rule.irv_.cm_option
+            'slow'
+            >>> rule = RuleTideman(cm_option='exact')(profile)
+            >>> rule.irv_.cm_option
+            'exact'
+        """
         self.delete_cache(suffix='_')
         self.profile_ = profile
         # Grab the IRV ballot of the profile (or create it)
@@ -235,6 +355,27 @@ class RuleTideman(Rule):
 
     @cached_property
     def _count_ballots_(self):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2, 3],
+            ...     [1, 2, 0, 3],
+            ...     [2, 0, 1, 3],
+            ... ])
+            >>> rule = RuleTideman()(profile)
+            >>> rule.scores_
+            array([[ 1.,  1.,  1.,  0.],
+                   [ 1.,  1.,  1., nan],
+                   [ 1.,  0.,  0.,  0.]])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1],
+            ...     [1, 0],
+            ... ])
+            >>> rule = RuleTideman()(profile)
+            >>> rule.scores_
+            array([[1., 1.],
+                   [1., 1.]])
+        """
         self.mylog("Count ballots", 1)
         scores = []
         candidates_alive = np.array(range(self.profile_.n_c))
@@ -331,6 +472,17 @@ class RuleTideman(Rule):
     # %% Unison manipulation (UM)
 
     def _um_preliminary_checks_c_(self, c):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [2, 1, 0],
+            ...     [1, 0, 2],
+            ...     [1, 0, 2],
+            ...     [0, 2, 1],
+            ... ])
+            >>> rule = RuleTideman(um_option='exact')(profile)
+            >>> rule.is_um_
+            False
+        """
         if self.um_option not in {'fast', 'lazy'} or self.cm_option not in {'fast', 'lazy'}:
             if (
                 self.w_ == self.profile_.condorcet_winner_rk_ctb
@@ -351,6 +503,18 @@ class RuleTideman(Rule):
         Let us consider the case where `w` is the Condorcet winner (rk ctb). Then even after manipulation, `w` beats
         `c`. At any step, we must always have `c` in the (manipulated) Smith Set, hence we must have `w` too.
         As at some point, `w` must be eliminated, IRV-style, at a moment where `c` is still present in the election.
+
+        Examples
+        --------
+            >>> profile = Profile(preferences_rk=[
+            ...     [2, 0, 1],
+            ...     [0, 1, 2],
+            ...     [1, 0, 2],
+            ...     [1, 0, 2],
+            ... ])
+            >>> rule = RuleTideman(cm_option='very_slow')(profile)
+            >>> rule.sufficient_coalition_size_cm_
+            array([0., 3., 4.])
         """
         if self.cm_option not in {'fast', 'lazy'}:
             if self.w_ == self.profile_.condorcet_winner_rk_ctb:
@@ -364,6 +528,18 @@ class RuleTideman(Rule):
     def losing_candidates_(self):
         """If ``irv_.w_ does not win, then we put her first. Other losers are sorted as usual. (scores in
         ``matrix_duels_ut``).
+
+        Examples
+        --------
+            >>> profile = Profile(preferences_rk=[
+            ...     [2, 1, 0],
+            ...     [1, 2, 0],
+            ...     [2, 1, 0],
+            ...     [0, 1, 2],
+            ... ])
+            >>> rule = RuleTideman()(profile)
+            >>> list(rule.losing_candidates_)
+            [2, 0]
         """
         self.mylog("Compute ordered list of losing candidates", 1)
         if self.w_ == self.irv_.w_:
@@ -383,12 +559,108 @@ class RuleTideman(Rule):
 
     def _cm_aux_(self, c, ballots_m, preferences_rk_s):
         profile_test = Profile(preferences_rk=np.concatenate((preferences_rk_s, ballots_m)), sort_voters=False)
-        if profile_test.n_v != self.profile_.n_v:
+        if profile_test.n_v != self.profile_.n_v:  # pragma: no cover
             raise AssertionError('Uh-oh!')
         winner_test = self.__class__()(profile_test).w_
         return winner_test == c
 
     def _cm_main_work_c_(self, c, optimize_bounds):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [1, 0, 2],
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ...     [1, 2, 0],
+            ... ])
+            >>> rule = RuleTideman(cm_option='slow')(profile)
+            >>> rule.sufficient_coalition_size_cm_
+            array([3., 0., 4.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1],
+            ...     [1, 2, 0],
+            ...     [1, 0, 2],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleTideman(cm_option='exact')(profile)
+            >>> rule.candidates_cm_
+            array([0., 0., 0.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [2, 1, 0],
+            ...     [0, 1, 2],
+            ...     [1, 2, 0],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleTideman()(profile)
+            >>> rule.is_cm_c_(0)
+            nan
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [1, 2, 0],
+            ...     [2, 1, 0],
+            ...     [2, 1, 0],
+            ...     [0, 1, 2],
+            ... ])
+            >>> rule = RuleTideman()(profile)
+            >>> rule.sufficient_coalition_size_cm_
+            array([3., 0., 2.])
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 0.5, -0.5, -0.5],
+            ...     [ 0. ,  0.5,  0.5],
+            ...     [-0.5,  1. ,  1. ],
+            ...     [ 0.5, -0.5,  1. ],
+            ...     [-1. , -0.5,  0.5],
+            ...     [ 0. ,  0. ,  0. ],
+            ... ], preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [1, 2, 0],
+            ...     [1, 2, 0],
+            ...     [2, 0, 1],
+            ...     [2, 1, 0],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleTideman()(profile)
+            >>> rule.necessary_coalition_size_cm_
+            array([0., 0., 0.])
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 1. ,  0. ,  0.5],
+            ...     [-0.5, -0.5, -0.5],
+            ...     [ 1. , -1. ,  1. ],
+            ...     [ 0. ,  0.5,  1. ],
+            ...     [-0.5,  0.5,  0.5],
+            ... ], preferences_rk=[
+            ...     [0, 2, 1],
+            ...     [1, 2, 0],
+            ...     [0, 2, 1],
+            ...     [2, 1, 0],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleTideman()(profile)
+            >>> rule.is_cm_c_(0)
+            False
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 0. , -0.5, -1. ,  0. ],
+            ...     [ 1. ,  1. ,  0.5,  0.5],
+            ...     [-1. ,  0. , -0.5,  0. ],
+            ...     [ 1. ,  1. , -0.5, -0.5],
+            ...     [-0.5, -0.5,  1. , -1. ],
+            ...     [-0.5,  0. ,  0.5,  0. ],
+            ... ], preferences_rk=[
+            ...     [0, 3, 1, 2],
+            ...     [0, 1, 2, 3],
+            ...     [3, 1, 2, 0],
+            ...     [1, 0, 2, 3],
+            ...     [2, 1, 0, 3],
+            ...     [2, 1, 3, 0],
+            ... ])
+            >>> rule = RuleTideman()(profile)
+            >>> rule.is_cm_c_with_bounds_(0)
+            (nan, 1.0, 3.0)
+        """
         n_m = self.profile_.matrix_duels_ut[c, self.w_]
         n_s = self.profile_.n_v - n_m
         candidates = np.array(range(self.profile_.n_c))
@@ -444,7 +716,9 @@ class RuleTideman(Rule):
                 self.mylogv("CM: suggested_path =", suggested_path_two, 3)
                 if np.array_equal(suggested_path_one, suggested_path_two):
                     self.mylog('CM: Same suggested path as before, skip computation')
-                else:
+                else:  # pragma: no cover
+                    # TO DO: Investigate whether this case can actually happen.
+                    self._reached_uncovered_code()
                     ballots_m = self.irv_.example_ballots_cm_c_(c)
                     manipulation_found = self._cm_aux_(c, ballots_m, preferences_rk_s)
                     self.mylogv("CM: manipulation_found =", manipulation_found, 3)

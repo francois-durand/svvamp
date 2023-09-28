@@ -28,9 +28,56 @@ from svvamp.meta.study_profile_criteria import StudyProfileCriteria
 from svvamp.meta.voting_rule_tasks import VotingRuleTasks
 from svvamp.preferences.generator_profile_noise import GeneratorProfileNoise
 from svvamp.utils.pseudo_bool import equal_true
+from svvamp.rules.rule_irv import RuleIRV
 
 
 class ExperimentAnalyzer:
+    """Analyze a voting experiment.
+
+    The results are stored in several csv files.
+
+    Parameters
+    ----------
+        base_profile: Profile, optional
+            Profile of the experiment, without added noise.
+        n_samples: int, optional
+            Number of samples for the Monte-Carlo treatment.
+        relative_noise: float, optional
+            Relative noise used by `GeneratorProfileNoise`.
+        absolute_noise: float, optional
+            Absolute noise used by `GeneratorProfileNoise`.
+        study_profile_criteria: StudyProfileCriteria, optional
+            Profile criteria to be studied.
+        voting_rule_tasks: VotingRuleTasks, optional
+            Voting rule tasks to be performed.
+        output_dir: str, optional
+            Directory where the outputs will be recorded.
+        output_file_suffix: str, optional
+            Suffix for the output file names.
+        log_csv: List of str, optional
+            Additional information at the end of lines in the csv file.
+        ping_period: int, optional
+            Frequency at which the program prints the number of profiles already analyzed.
+
+    Examples
+    --------
+    Define an `ExperimentAnalyzer` with the default options:
+
+        >>> experiment_analyzer = ExperimentAnalyzer()
+
+    If you specify the profile criteria and/or the voting rule tasks, then the relevant sanity checks are performed:
+
+        >>> experiment_analyzer = ExperimentAnalyzer(
+        ...     study_profile_criteria=StudyProfileCriteria(boolean_criteria=['exists_condorcet_winner_rk']),
+        ...     voting_rule_tasks=VotingRuleTasks(voting_systems=[RuleIRV])
+        ... )
+        StudyProfileCriteria: Sanity check was successful.
+        VotingRuleTasks: Sanity check was successful.
+
+    Anyway, you can then call the object with `experiment_analyzer()`. You can override the parameters (like
+    `base_profile`, `n_samples`, etc) when making the call. For example:
+    `experiment_analyzer(base_profile) = another_base_profile`.
+    """
 
     def __init__(self,
                  base_profile=None,
@@ -77,10 +124,6 @@ class ExperimentAnalyzer:
         self.output_file_suffix = None
         self.log_csv = None
         self.ping_period = None
-
-    def check_sanity(self):
-        self.study_profile_criteria.check_sanity()
-        self.voting_rule_tasks.check_sanity()
 
     def _prepare_csv(self):
         prefix = self.output_dir + '/Results_' + time.strftime('%Y-%m-%d_%H-%M-%S')
@@ -208,7 +251,8 @@ class ExperimentAnalyzer:
                 if equal_true(answer):
                     results_p_boolean_criteria[i_criterion]['inf'] += 1
                     results_p_boolean_criteria[i_criterion]['sup'] += 1
-                elif np.isnan(answer):
+                elif np.isnan(answer):  # pragma: no cover
+                    # As of now, no Boolean criterion can return `nan`.
                     results_p_boolean_criteria[i_criterion]['sup'] += 1
             for i_criterion, (criterion, func, name) in enumerate(self.study_profile_criteria.numerical_criteria):
                 answer = getattr(profile, criterion)
@@ -236,7 +280,8 @@ class ExperimentAnalyzer:
                     if equal_true(answer):
                         results_vs_result_criteria[i_task][i_criterion]['inf'] += 1
                         results_vs_result_criteria[i_task][i_criterion]['sup'] += 1
-                    elif np.isnan(answer):
+                    elif np.isnan(answer):  # pragma: no cover
+                        # As of now, no result criterion can return `nan`.
                         results_vs_result_criteria[i_task][i_criterion]['sup'] += 1
                 # Utility criteria
                 for i_criterion, (criterion, func, name) in enumerate(study_rule_criteria.utility_criteria):
@@ -395,7 +440,8 @@ class ExperimentAnalyzer:
                         ]
                         + self.log_csv
                     )
-                except ValueError:
+                except ValueError:  # pragma: no cover
+                    # This should not happen
                     print(criterion)
                     print(lower)
                     print(upper)
@@ -408,6 +454,30 @@ class ExperimentAnalyzer:
 
 
 def my_float(x):
+    """
+    Convert floats in French format.
+
+    Parameters
+    ----------
+    x: object
+
+    Returns
+    -------
+    object
+        Same as the input, except for floats, which are converted to French format.
+
+    Examples
+    --------
+    If the input is a float, it is converted to French format (and with 6 digits):
+
+        >>> my_float(3.14)
+        '3,140000'
+
+    Otherwise, return the input as it is:
+
+        >>> my_float('3.14')
+        '3.14'
+    """
     if isinstance(x, float):
         return ('%.6f' % x).replace('.', ',')
     else:

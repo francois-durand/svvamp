@@ -31,9 +31,9 @@ class GeneratorProfileUnanimous(GeneratorProfile):
     ----------
     n_v : int
         Number of voters.
-    n_c : int
+    n_c : int, optional
         Number of candidates.
-    ranking : list, optional
+    ranking : List, optional
         This will be the ranking of all the voters. If not specified, it is drawn at random each time
         a profile is generated.
     sort_voters : bool
@@ -50,9 +50,25 @@ class GeneratorProfileUnanimous(GeneratorProfile):
         >>> profile = generator()
         >>> profile.preferences_rk.shape
         (10, 3)
+
+        >>> generator = GeneratorProfileUnanimous(n_v=3, ranking=[0, 1, 2])
+        >>> profile = generator()
+        >>> profile.preferences_rk
+        array([[0, 1, 2],
+               [0, 1, 2],
+               [0, 1, 2]])
+
+        >>> generator = GeneratorProfileUnanimous(n_v=3)
+        Traceback (most recent call last):
+        ValueError: GeneratorProfileUnanimous: You should specify `n_c` or `ranking`.
     """
 
-    def __init__(self, n_v, n_c, ranking=None, sort_voters=False):
+    def __init__(self, n_v, n_c=None, ranking=None, sort_voters=False):
+        if n_c is None:
+            if ranking is None:
+                raise ValueError("GeneratorProfileUnanimous: You should specify `n_c` or `ranking`.")
+            else:
+                n_c = len(ranking)
         self.n_v = n_v
         self.n_c = n_c
         self.ranking = ranking

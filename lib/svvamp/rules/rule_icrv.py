@@ -306,7 +306,7 @@ class RuleICRV(Rule):
 
     options_parameters = Rule.options_parameters.copy()
     options_parameters.update({
-        'cm_option': {'allowed': {'fast', 'slow', 'very_slow', 'exact'}, 'default': 'fast'},
+        'cm_option': {'allowed': ['fast', 'slow', 'very_slow', 'exact'], 'default': 'fast'},
         'icm_option': {'allowed': ['exact'], 'default': 'exact'},
     })
 
@@ -318,6 +318,15 @@ class RuleICRV(Rule):
         )
 
     def __call__(self, profile):
+        """
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> rule = RuleICRV(cm_option='slow')(profile)
+            >>> rule.irv_.cm_option
+            'slow'
+            >>> rule = RuleICRV(cm_option='exact')(profile)
+            >>> rule.irv_.cm_option
+            'exact'
+        """
         self.delete_cache(suffix='_')
         self.profile_ = profile
         # Grab the IRV ballot of the profile (or create it)
@@ -411,6 +420,21 @@ class RuleICRV(Rule):
 
         For odd rounds ``r``, ``scores[r, c]`` is the number of voters who rank ``c`` first (among non-eliminated
         candidates).
+
+        Examples
+        --------
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2, 3],
+            ...     [1, 2, 0, 3],
+            ...     [2, 0, 1, 3],
+            ... ])
+            >>> rule = RuleICRV()(profile)
+            >>> rule.scores_
+            array([[ 2.,  2.,  2.,  0.],
+                   [ 1.,  1.,  1.,  0.],
+                   [ 1.,  1.,  1., nan],
+                   [ 1.,  1.,  1., nan],
+                   [ 1.,  0., nan, nan]])
         """
         return self._count_ballots_['scores']
 
@@ -438,6 +462,17 @@ class RuleICRV(Rule):
     # %% Unison manipulation (UM)
 
     def _um_preliminary_checks_c_(self, c):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [2, 1, 0],
+            ...     [0, 2, 1],
+            ...     [1, 2, 0],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleICRV(um_option='exact')(profile)
+            >>> rule.is_um_c_(0)
+            False
+        """
         if self.um_option not in {'fast', 'lazy'} or self.cm_option not in {'fast', 'lazy'}:
             if (
                 self.w_ == self.profile_.condorcet_winner_rk_ctb
@@ -452,6 +487,17 @@ class RuleICRV(Rule):
     def losing_candidates_(self):
         """If ``irv_.w_ does not win, then we put her first. Other losers are sorted as usual. (scores in
         ``matrix_duels_ut``).
+
+        Examples
+        --------
+            >>> profile = Profile(preferences_rk=[
+            ...     [2, 3, 0, 1],
+            ...     [1, 3, 0, 2],
+            ...     [3, 2, 0, 1],
+            ... ])
+            >>> rule = RuleICRV()(profile)
+            >>> list(rule.losing_candidates_)
+            [2, 1, 0]
         """
         self.mylog("Compute ordered list of losing candidates", 1)
         if self.w_ == self.irv_.w_:
@@ -475,6 +521,18 @@ class RuleICRV(Rule):
         Let us consider the case where `w` is the Condorcet winner (rk ctb). Then even after manipulation, `c` cannot
         be the Condorcet winner on a subset that contains `w`. Hence at some point, `w` must be eliminated, IRV-style,
         at a moment where `c` is still present in the election.
+
+        Examples
+        --------
+            >>> profile = Profile(preferences_rk=[
+            ...     [1, 0, 2],
+            ...     [2, 1, 0],
+            ...     [1, 0, 2],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleICRV(cm_option='slow')(profile)
+            >>> rule.sufficient_coalition_size_cm_
+            array([4., 0., 3.])
         """
         if self.cm_option not in {'fast', 'lazy'}:
             if self.w_ == self.profile_.condorcet_winner_rk_ctb:
@@ -485,13 +543,131 @@ class RuleICRV(Rule):
                 )
 
     def _cm_aux_(self, c, ballots_m, preferences_rk_s):
+        """
+            >>> profile = Profile(preferences_ut=[
+            ...     [-0.5, -1. ,  0. , -0.5],
+            ...     [ 0. , -1. ,  0. , -0.5],
+            ...     [-0.5,  1. ,  0. ,  0. ],
+            ...     [ 0. ,  0.5,  0. ,  0.5],
+            ...     [ 1. ,  1. ,  0.5, -1. ],
+            ... ], preferences_rk=[
+            ...     [2, 0, 3, 1],
+            ...     [2, 0, 3, 1],
+            ...     [1, 2, 3, 0],
+            ...     [3, 1, 0, 2],
+            ...     [1, 0, 2, 3],
+            ... ])
+            >>> rule = RuleICRV()(profile)
+            >>> rule.necessary_coalition_size_cm_
+            array([1., 0., 1., 1.])
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 0.5,  0. , -1. ,  1. ],
+            ...     [-1. , -1. ,  0. ,  0. ],
+            ...     [ 1. ,  1. , -1. ,  1. ],
+            ...     [ 0.5, -1. , -0.5,  0.5],
+            ...     [-1. ,  1. ,  0. ,  0. ],
+            ...     [-0.5,  1. ,  0. ,  0.5],
+            ... ], preferences_rk=[
+            ...     [3, 0, 1, 2],
+            ...     [3, 2, 0, 1],
+            ...     [0, 3, 1, 2],
+            ...     [0, 3, 2, 1],
+            ...     [1, 2, 3, 0],
+            ...     [1, 3, 2, 0],
+            ... ])
+            >>> rule = RuleICRV()(profile)
+            >>> rule.is_cm_c_with_bounds_(0)
+            (False, 2.0, 2.0)
+        """
         profile_test = Profile(preferences_rk=np.concatenate((preferences_rk_s, ballots_m)), sort_voters=False)
-        if profile_test.n_v != self.profile_.n_v:
+        if profile_test.n_v != self.profile_.n_v:  # pragma: no cover
             raise AssertionError('Uh-oh!')
         winner_test = self.__class__()(profile_test).w_
         return winner_test == c
 
     def _cm_main_work_c_(self, c, optimize_bounds):
+        """
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 0. ,  0.5,  0. ,  1. ],
+            ...     [-0.5,  1. ,  0.5,  0.5],
+            ...     [ 0. , -0.5,  0. ,  0. ],
+            ...     [ 1. ,  0. , -0.5,  0. ],
+            ...     [-0.5, -1. ,  1. ,  0. ],
+            ... ], preferences_rk=[
+            ...     [3, 1, 2, 0],
+            ...     [1, 2, 3, 0],
+            ...     [3, 0, 2, 1],
+            ...     [0, 3, 1, 2],
+            ...     [2, 3, 0, 1],
+            ... ])
+            >>> rule = RuleICRV(cm_option='fast')(profile)
+            >>> rule.is_cm_
+            nan
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 0.5,  0.5,  0. , -0.5],
+            ...     [ 0. , -1. ,  0.5,  0. ],
+            ...     [ 0.5, -1. , -1. ,  0.5],
+            ... ], preferences_rk=[
+            ...     [1, 0, 2, 3],
+            ...     [2, 0, 3, 1],
+            ...     [3, 0, 2, 1],
+            ... ])
+            >>> rule = RuleICRV(cm_option='fast')(profile)
+            >>> rule.is_cm_c_with_bounds_(1)
+            (False, 1.0, 1.0)
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 1. ,  0.5, -1. , -1. ],
+            ...     [ 0.5,  0.5,  0.5,  1. ],
+            ...     [-1. , -0.5,  0.5,  0. ],
+            ... ], preferences_rk=[
+            ...     [0, 1, 3, 2],
+            ...     [3, 0, 1, 2],
+            ...     [2, 3, 1, 0],
+            ... ])
+            >>> rule = RuleICRV(cm_option='fast')(profile)
+            >>> rule.sufficient_coalition_size_cm_
+            array([1., 1., 3., 0.])
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 1. ,  0. , -0.5,  0. ],
+            ...     [ 0.5, -0.5,  1. ,  1. ],
+            ...     [ 1. , -0.5,  0.5, -1. ],
+            ...     [-1. ,  0. ,  0. ,  0. ],
+            ...     [ 0. , -0.5,  0.5,  0.5],
+            ... ], preferences_rk=[
+            ...     [0, 3, 1, 2],
+            ...     [2, 3, 0, 1],
+            ...     [0, 2, 1, 3],
+            ...     [1, 2, 3, 0],
+            ...     [3, 2, 0, 1],
+            ... ])
+            >>> rule = RuleICRV(cm_option='fast')(profile)
+            >>> rule.necessary_coalition_size_cm_
+            array([1., 2., 0., 2.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [1, 0, 2],
+            ...     [0, 1, 2],
+            ...     [0, 2, 1],
+            ...     [1, 2, 0],
+            ... ])
+            >>> rule = RuleICRV(cm_option='very_slow')(profile)
+            >>> rule.necessary_coalition_size_cm_
+            array([0., 3., 3.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [1, 0, 2],
+            ...     [2, 1, 0],
+            ...     [0, 1, 2],
+            ... ])
+            >>> rule = RuleICRV(cm_option='exact')(profile)
+            >>> rule.sufficient_coalition_size_cm_
+            array([0., 3., 4.])
+        """
         n_m = self.profile_.matrix_duels_ut[c, self.w_]
         n_s = self.profile_.n_v - n_m
         candidates = np.array(range(self.profile_.n_c))
@@ -547,7 +723,9 @@ class RuleICRV(Rule):
                 self.mylogv("CM: suggested_path =", suggested_path_two, 3)
                 if np.array_equal(suggested_path_one, suggested_path_two):
                     self.mylog('CM: Same suggested path as before, skip computation')
-                else:
+                else:  # pragma: no cover
+                    # TO DO: Investigate whether this case can actually happen.
+                    self._reached_uncovered_code()
                     ballots_m = self.irv_.example_ballots_cm_c_(c)
                     manipulation_found = self._cm_aux_(c, ballots_m, preferences_rk_s)
                     self.mylogv("CM: manipulation_found =", manipulation_found, 3)

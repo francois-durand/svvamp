@@ -368,6 +368,24 @@ class RuleKApproval(Rule):
     # %% Ignorant-Coalition Manipulation (ICM)
 
     def _icm_main_work_c_(self, c, optimize_bounds):
+        """
+            >>> profile = Profile(preferences_ut=[
+            ...     [-1. ,  0. ,  0.5,  0.5,  0.5],
+            ...     [ 0. , -0.5, -1. , -1. ,  0.5],
+            ...     [ 0.5,  0.5, -1. ,  0. , -0.5],
+            ...     [-1. , -0.5,  0.5,  1. ,  0.5],
+            ...     [-1. ,  1. ,  0.5,  1. ,  0.5],
+            ... ], preferences_rk=[
+            ...     [2, 4, 3, 1, 0],
+            ...     [4, 0, 1, 2, 3],
+            ...     [1, 0, 3, 4, 2],
+            ...     [3, 2, 4, 1, 0],
+            ...     [1, 3, 2, 4, 0],
+            ... ])
+            >>> rule = RuleKApproval(k=1)(profile)
+            >>> rule.candidates_icm_
+            array([0., 0., 0., 0., 1.])
+        """
         # Manipulators must distribute `(k - 1) n_m` approvals among the other `n_c - 1` candidates. In the best case,
         # these approvals are distributed equally (no remainder), so each other candidate has
         # `((k - 1) n_m) / (n_c - 1)` approvals from the manipulators. Then counter-manipulators will give `n_s`

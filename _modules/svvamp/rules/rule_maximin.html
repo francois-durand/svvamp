@@ -679,6 +679,19 @@
 <span class="sd">            &gt;&gt;&gt; rule = RuleMaximin()(profile)</span>
 <span class="sd">            &gt;&gt;&gt; rule.candidates_um_</span>
 <span class="sd">            array([0., 1., 1.])</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
+<span class="sd">            ...     [-0.5,  0. , -1. ,  0.5],</span>
+<span class="sd">            ...     [ 1. , -1. ,  1. ,  0. ],</span>
+<span class="sd">            ...     [ 1. ,  1. ,  1. , -1. ],</span>
+<span class="sd">            ... ], preferences_rk=[</span>
+<span class="sd">            ...     [3, 1, 0, 2],</span>
+<span class="sd">            ...     [2, 0, 3, 1],</span>
+<span class="sd">            ...     [1, 2, 0, 3],</span>
+<span class="sd">            ... ])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleMaximin()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.is_um_c_(1)</span>
+<span class="sd">            True</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">matrix_duels_temp</span> <span class="o">=</span> <span class="n">preferences_ut_to_matrix_duels_ut</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_wants_to_help_c_</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]),</span> <span class="p">:]</span>
@@ -690,8 +703,6 @@
 
         <span class="n">w_temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">scores_temp</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">w_temp</span> <span class="o">==</span> <span class="n">c</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
-            <span class="c1"># TO DO: Investigate whether this case can really happen or not.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_reached_uncovered_code</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;UM: scores_temp =&quot;</span><span class="p">,</span> <span class="n">scores_temp</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;UM: Manipulation easy (c wins without manipulators&#39; votes)&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_um</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
@@ -719,7 +730,9 @@
         <span class="n">scores_s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">matrix_duels_s</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">w_s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">scores_s</span><span class="p">)</span>
         <span class="c1"># If w_s == c, we win without any manipulator</span>
-        <span class="k">if</span> <span class="n">w_s</span> <span class="o">==</span> <span class="n">c</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">w_s</span> <span class="o">==</span> <span class="n">c</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
+            <span class="c1"># TO DO: Investigate whether this case can actually happen.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_reached_uncovered_code</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;UM: scores_s =&quot;</span><span class="p">,</span> <span class="n">scores_s</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;UM: Manipulation easy (c wins without manipulators&#39; votes)&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="k">return</span> <span class="mi">0</span>
@@ -755,6 +768,47 @@
 <span class="sd">            &gt;&gt;&gt; rule = RuleMaximin()(profile)</span>
 <span class="sd">            &gt;&gt;&gt; rule.candidates_cm_</span>
 <span class="sd">            array([nan,  0.,  0.])</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
+<span class="sd">            ...     [2, 1, 0],</span>
+<span class="sd">            ...     [0, 2, 1],</span>
+<span class="sd">            ...     [1, 2, 0],</span>
+<span class="sd">            ...     [2, 0, 1],</span>
+<span class="sd">            ... ])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleMaximin(cm_option=&#39;faster&#39;)(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.is_cm_c_with_bounds_(1)</span>
+<span class="sd">            (False, 2.0, 3.0)</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
+<span class="sd">            ...     [1, 2, 0],</span>
+<span class="sd">            ...     [0, 2, 1],</span>
+<span class="sd">            ...     [2, 0, 1],</span>
+<span class="sd">            ...     [2, 0, 1],</span>
+<span class="sd">            ... ])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleMaximin(cm_option=&#39;fast&#39;)(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.necessary_coalition_size_cm_</span>
+<span class="sd">            array([2., 2., 0.])</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
+<span class="sd">            ...     [2, 0, 1],</span>
+<span class="sd">            ...     [1, 2, 0],</span>
+<span class="sd">            ...     [2, 1, 0],</span>
+<span class="sd">            ...     [0, 1, 2],</span>
+<span class="sd">            ... ])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleMaximin(cm_option=&#39;faster&#39;)(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.necessary_coalition_size_cm_</span>
+<span class="sd">            array([1., 0., 2.])</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
+<span class="sd">            ...     [1, 2, 0, 3],</span>
+<span class="sd">            ...     [3, 2, 0, 1],</span>
+<span class="sd">            ...     [2, 3, 1, 0],</span>
+<span class="sd">            ...     [3, 1, 2, 0],</span>
+<span class="sd">            ...     [0, 1, 2, 3],</span>
+<span class="sd">            ... ])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleMaximin(cm_option=&#39;faster&#39;)(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.is_cm_c_(0)</span>
+<span class="sd">            True</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">matrix_duels_temp</span> <span class="o">=</span> <span class="n">preferences_ut_to_matrix_duels_ut</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_wants_to_help_c_</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]),</span> <span class="p">:]</span>

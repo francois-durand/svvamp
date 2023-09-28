@@ -380,6 +380,27 @@ class RuleKimRoush(Rule):
     # %% CM
 
     def _cm_preliminary_checks_c_subclass_(self, c, optimize_bounds):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [1, 2, 0],
+            ...     [1, 0, 2],
+            ...     [2, 1, 0],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleKimRoush()(profile)
+            >>> rule.sufficient_coalition_size_cm_
+            array([3., 0., 2.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [2, 1, 0],
+            ...     [2, 0, 1],
+            ...     [2, 0, 1],
+            ...     [1, 2, 0],
+            ... ])
+            >>> rule = RuleKimRoush()(profile)
+            >>> rule.necessary_coalition_size_cm_
+            array([2., 3., 0.])
+        """
         n_c = self.profile_.n_c
         n_m = self.profile_.matrix_duels_ut[c, self.w_]
         n_s = self.profile_.n_v - n_m

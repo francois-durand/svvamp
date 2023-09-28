@@ -51,6 +51,19 @@ class ProfileSubsetCandidates(Profile):
         >>> preferences_ut_test = np.random.randint(-5, 5, (10, 5))
         >>> parent_profile = Profile(preferences_ut=preferences_ut_test)
         >>> profile = ProfileSubsetCandidates(parent_profile=parent_profile, candidates_subset=[0, 1, 2])
+        >>> profile.labels_candidates
+        ['0', '1', '2']
+        >>> profile.preferences_borda_ut
+        array([[2. , 0. , 1. ],
+               [2. , 0. , 1. ],
+               [1. , 0. , 2. ],
+               [0. , 1.5, 1.5],
+               [0. , 2. , 1. ],
+               [1.5, 0. , 1.5],
+               [0. , 1. , 2. ],
+               [0.5, 0.5, 2. ],
+               [1.5, 1.5, 0. ],
+               [1. , 0. , 2. ]])
         >>> profile.matrix_duels_ut
         array([[0, 5, 3],
                [3, 0, 2],
@@ -85,6 +98,15 @@ class ProfileSubsetCandidates(Profile):
                [1., 1., 0.]])
         >>> profile.total_utility_c
         array([ 2, -8,  6])
+
+    Instead, the subset of candidates can be given by a list of Booleans:
+
+        >>> profile = ProfileSubsetCandidates(
+        ...     parent_profile=parent_profile,
+        ...     candidates_subset=[True, True, True, False, False]
+        ... )
+        >>> profile.n_c
+        3
     """
 
     def __init__(self, parent_profile, candidates_subset):
@@ -109,7 +131,7 @@ class ProfileSubsetCandidates(Profile):
 
     @cached_property
     def labels_candidates(self):
-        return self.parent_profile.labels_candidates[self.candidates_subset]
+        return list(np.array(self.parent_profile.labels_candidates)[self.candidates_subset])
 
     @cached_property
     def preferences_ut(self):

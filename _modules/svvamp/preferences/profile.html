@@ -213,6 +213,23 @@
 <span class="sd">            *  ``Condorcet_ut_abs``, ``Condorcet_ut_abs_ctb``, ``Condorcet_rk``, ``Condorcet_rk_ctb``,</span>
 <span class="sd">               ``Condorcet_ut_rel``, ``Condorcet_ut_rel_ctb``, ``Weak Condorcet`` and ``Condorcet-admissible`` are</span>
 <span class="sd">               equivalent.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_borda_rk=[[2, 1, 0], [1, 0, 2]])</span>
+<span class="sd">            &gt;&gt;&gt; profile.preferences_rk</span>
+<span class="sd">            array([[0, 1, 2],</span>
+<span class="sd">                   [2, 0, 1]])</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_ut=[[1, .3, 0], [.7, 0, 1]])</span>
+<span class="sd">            &gt;&gt;&gt; profile.preferences_rk</span>
+<span class="sd">            array([[0, 1, 2],</span>
+<span class="sd">                   [2, 0, 1]])</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile()</span>
+<span class="sd">            &gt;&gt;&gt; profile.preferences_rk</span>
+<span class="sd">            Traceback (most recent call last):</span>
+<span class="sd">            ValueError: Please provide at least preferences_rk, preferences_borda_rk or preferences_ut.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">log_identity</span><span class="o">=</span><span class="s2">&quot;PROFILE&quot;</span><span class="p">)</span>
 
@@ -2878,6 +2895,16 @@
 <span class="sd">            including `c` and `w` such that, in a Plurality election over this subset of candidates, `w` has at most</span>
 <span class="sd">            `n_v / card(subset)` votes. What is interesting is the negation: if it is False, then it is impossible</span>
 <span class="sd">            for `c` to manipulate in several IRV-related rules, because `c` cannot be there when `w` is eliminated.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        When there is no Condorcet winner (rk ctb), then the output is None:</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 1, 2], [1, 2, 0], [2, 0, 1]])</span>
+<span class="sd">            &gt;&gt;&gt; profile.condorcet_winner_rk_ctb</span>
+<span class="sd">            nan</span>
+<span class="sd">            &gt;&gt;&gt; print(profile.c_might_be_there_when_cw_is_eliminated_irv_style)</span>
+<span class="sd">            None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">exists_condorcet_winner_rk_ctb</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
@@ -2905,6 +2932,14 @@
 <span class="sd">        A candidate `w` is IRV-immune iff she is Condorcet winner (rk ctb) and for any other candidate `c`,</span>
 <span class="sd">        we have that `c_might_be_there_when_cw_is_eliminated_irv_style[c] ` is False. In other words, there is no</span>
 <span class="sd">        subset of candidates containing `w` such that `w` has at most `n_v / card(subset)` plurality votes.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [1, 2, 0], [1, 2, 0], [2, 0, 1]])</span>
+<span class="sd">            &gt;&gt;&gt; profile.condorcet_winner_rk_ctb</span>
+<span class="sd">            2</span>
+<span class="sd">            &gt;&gt;&gt; profile.exists_irv_immune_candidate</span>
+<span class="sd">            False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">exists_condorcet_order_rk_ctb</span> <span class="ow">and</span> <span class="ow">not</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">c_might_be_there_when_cw_is_eliminated_irv_style</span><span class="p">))</span>
 
@@ -2925,6 +2960,16 @@
 <span class="sd">            number over all possible subsets, this gives `necessary_coalition_size_to_break_irv_immunity[c]`. In an</span>
 <span class="sd">            IRV-style election, it is necessary to have at least this number of manipulators to manipulate in favor</span>
 <span class="sd">            of `c`.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        When there is no Condorcet winner (rk ctb), then the output is None:</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 1, 2], [1, 2, 0], [2, 0, 1]])</span>
+<span class="sd">            &gt;&gt;&gt; profile.condorcet_winner_rk_ctb</span>
+<span class="sd">            nan</span>
+<span class="sd">            &gt;&gt;&gt; print(profile.necessary_coalition_size_to_break_irv_immunity)</span>
+<span class="sd">            None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">exists_condorcet_winner_rk_ctb</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>

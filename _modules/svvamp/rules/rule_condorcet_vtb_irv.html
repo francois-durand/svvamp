@@ -386,9 +386,9 @@
 
     <span class="n">options_parameters</span> <span class="o">=</span> <span class="n">Rule</span><span class="o">.</span><span class="n">options_parameters</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">options_parameters</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
-        <span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;fast&#39;</span><span class="p">,</span> <span class="s1">&#39;slow&#39;</span><span class="p">,</span> <span class="s1">&#39;very_slow&#39;</span><span class="p">,</span> <span class="s1">&#39;exact&#39;</span><span class="p">},</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;fast&#39;</span><span class="p">},</span>
+        <span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;fast&#39;</span><span class="p">,</span> <span class="s1">&#39;slow&#39;</span><span class="p">,</span> <span class="s1">&#39;very_slow&#39;</span><span class="p">,</span> <span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;fast&#39;</span><span class="p">},</span>
         <span class="s1">&#39;tm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">},</span>
-        <span class="s1">&#39;icm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;exact&#39;</span><span class="p">},</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">}</span>
+        <span class="s1">&#39;icm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">}</span>
     <span class="p">})</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -400,6 +400,15 @@
         <span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">profile</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleCondorcetVtbIRV(cm_option=&#39;slow&#39;)(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.irv_.cm_option</span>
+<span class="sd">            &#39;slow&#39;</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleCondorcetVtbIRV(cm_option=&#39;exact&#39;)(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.irv_.cm_option</span>
+<span class="sd">            &#39;exact&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">delete_cache</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;_&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span> <span class="o">=</span> <span class="n">profile</span>
         <span class="c1"># Grab the IRV ballot of the profile (or create it)</span>
@@ -431,6 +440,14 @@
 <span class="sd">            * Otherwise, ``scores[r, c]`` is defined like in :class:`RuleIRV`: it is the number of voters who vote</span>
 <span class="sd">              for candidate ``c`` at round ``r``. For eliminated candidates, ``scores[r, c] = numpy.nan``. In contrast,</span>
 <span class="sd">              ``scores[r, c] = 0`` means that ``c`` is present at round ``r`` but no voter votes for ``c``.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2], [1, 2, 0], [1, 2, 0], [2, 0, 1]])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleCondorcetVtbIRV()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.scores_</span>
+<span class="sd">            array([[ 2.,  2.,  1.],</span>
+<span class="sd">                   [ 3.,  2., nan]])</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">condorcet_winner_rk</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_victories_rk</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
@@ -444,6 +461,13 @@
 <span class="sd">            * If there is a Condorcet winner, candidates are sorted according to  their (scalar) score.</span>
 <span class="sd">            * Otherwise, ``candidates_by_scores_best_to_worst`` is the list of all candidates in the reverse order of</span>
 <span class="sd">              their IRV elimination.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2], [1, 2, 0], [1, 2, 0], [2, 0, 1]])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleCondorcetVtbIRV()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; list(rule.candidates_by_scores_best_to_worst_)</span>
+<span class="sd">            [0, 1, 2]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">condorcet_winner_rk</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">scores_</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;mergesort&#39;</span><span class="p">)</span>
@@ -452,6 +476,17 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">_v_might_be_pivotal_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
+<span class="sd">            ...     [2, 1, 0],</span>
+<span class="sd">            ...     [0, 2, 1],</span>
+<span class="sd">            ...     [0, 2, 1],</span>
+<span class="sd">            ...     [1, 2, 0],</span>
+<span class="sd">            ... ])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleCondorcetVtbIRV()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.is_im_v_(0)</span>
+<span class="sd">            False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Compute _v_might_be_pivotal_&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">condorcet_winner_rk</span><span class="p">):</span>
             <span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span>
@@ -510,12 +545,39 @@
     <span class="c1"># TODO: should be implemented .</span>
 
     <span class="k">def</span> <span class="nf">_um_preliminary_checks_general_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
+<span class="sd">            ...     [-0.5,  1. ,  1. ,  0. ],</span>
+<span class="sd">            ...     [ 0. ,  1. , -0.5,  0. ],</span>
+<span class="sd">            ...     [ 1. ,  1. ,  0. ,  0.5],</span>
+<span class="sd">            ...     [ 0.5,  1. ,  1. ,  0.5],</span>
+<span class="sd">            ... ], preferences_rk=[</span>
+<span class="sd">            ...     [1, 2, 3, 0],</span>
+<span class="sd">            ...     [1, 3, 0, 2],</span>
+<span class="sd">            ...     [0, 1, 3, 2],</span>
+<span class="sd">            ...     [2, 1, 0, 3],</span>
+<span class="sd">            ... ])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleCondorcetVtbIRV()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.is_um_c_(0)</span>
+<span class="sd">            False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">equal_false</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">irv_</span><span class="o">.</span><span class="n">is_cm_</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_is_um</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_um</span><span class="p">[:]</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_um_was_computed_with_candidates</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="nf">_um_preliminary_checks_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
+<span class="sd">            ...     [1, 0, 2],</span>
+<span class="sd">            ...     [1, 2, 0],</span>
+<span class="sd">            ...     [0, 1, 2],</span>
+<span class="sd">            ...     [2, 1, 0],</span>
+<span class="sd">            ... ])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleCondorcetVtbIRV(um_option=&#39;exact&#39;)(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.is_um_</span>
+<span class="sd">            False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">um_option</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;fast&#39;</span><span class="p">,</span> <span class="s1">&#39;lazy&#39;</span><span class="p">}</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;fast&#39;</span><span class="p">,</span> <span class="s1">&#39;lazy&#39;</span><span class="p">}:</span>
             <span class="k">if</span> <span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">w_</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">condorcet_winner_rk_ctb</span>
@@ -593,6 +655,36 @@
 <span class="sd">            &gt;&gt;&gt; rule = RuleCondorcetVtbIRV(cm_option=&#39;very_slow&#39;)(profile)</span>
 <span class="sd">            &gt;&gt;&gt; rule.candidates_cm_</span>
 <span class="sd">            array([1., 1., 1., 0.])</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
+<span class="sd">            ...     [ 0. ,  0. , -1. ,  0.5],</span>
+<span class="sd">            ...     [ 0.5,  0.5, -1. , -0.5],</span>
+<span class="sd">            ...     [-1. ,  0.5,  1. ,  0.5],</span>
+<span class="sd">            ... ], preferences_rk=[</span>
+<span class="sd">            ...     [3, 1, 0, 2],</span>
+<span class="sd">            ...     [0, 1, 3, 2],</span>
+<span class="sd">            ...     [2, 1, 3, 0],</span>
+<span class="sd">            ... ])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleCondorcetVtbIRV(cm_option=&#39;fast&#39;, tm_option=&#39;exact&#39;)(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.sufficient_coalition_size_cm_</span>
+<span class="sd">            array([1., 0., 3., 2.])</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
+<span class="sd">            ...     [ 0. ,  0. , -0.5,  0. ],</span>
+<span class="sd">            ...     [ 1. ,  1. ,  0. ,  1. ],</span>
+<span class="sd">            ...     [-0.5,  0. ,  0.5,  0.5],</span>
+<span class="sd">            ...     [-1. ,  0. ,  0. ,  0.5],</span>
+<span class="sd">            ...     [ 0.5, -1. ,  0.5,  0. ],</span>
+<span class="sd">            ... ], preferences_rk=[</span>
+<span class="sd">            ...     [1, 3, 0, 2],</span>
+<span class="sd">            ...     [0, 3, 1, 2],</span>
+<span class="sd">            ...     [2, 3, 1, 0],</span>
+<span class="sd">            ...     [3, 2, 1, 0],</span>
+<span class="sd">            ...     [0, 2, 3, 1],</span>
+<span class="sd">            ... ])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleCondorcetVtbIRV(cm_option=&#39;fast&#39;, tm_option=&#39;exact&#39;)(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.is_cm_c_with_bounds_(0)</span>
+<span class="sd">            (False, 2.0, 2.0)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">candidates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">))</span>
 
@@ -833,6 +925,19 @@
 <span class="sd">            &gt;&gt;&gt; rule = RuleCondorcetVtbIRV(cm_option=&#39;very_slow&#39;)(profile)</span>
 <span class="sd">            &gt;&gt;&gt; rule.necessary_coalition_size_cm_</span>
 <span class="sd">            array([3., 3., 2., 0., 4.])</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
+<span class="sd">            ...     [ 0.5,  1. ,  0. ,  1. ],</span>
+<span class="sd">            ...     [-1. ,  0. ,  0.5,  0.5],</span>
+<span class="sd">            ...     [-0.5, -1. ,  1. ,  0. ],</span>
+<span class="sd">            ... ], preferences_rk=[</span>
+<span class="sd">            ...     [1, 3, 0, 2],</span>
+<span class="sd">            ...     [3, 2, 1, 0],</span>
+<span class="sd">            ...     [2, 3, 0, 1],</span>
+<span class="sd">            ... ])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleCondorcetVtbIRV(cm_option=&#39;fast&#39;, tm_option=&#39;exact&#39;)(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.sufficient_coalition_size_cm_</span>
+<span class="sd">            array([1., 1., 1., 0.])</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;CM: Compute CM for c =&quot;</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">n_m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_ut</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span>

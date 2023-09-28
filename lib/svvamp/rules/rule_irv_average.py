@@ -185,7 +185,7 @@ class RuleIRVAverage(Rule):
     abbreviation = 'IRVA'
 
     options_parameters = Rule.options_parameters.copy()
-    options_parameters['cm_option'] = {'allowed': {'fast', 'slow', 'very_slow', 'exact'}, 'default': 'fast'}
+    options_parameters['cm_option'] = {'allowed': ['fast', 'slow', 'very_slow', 'exact'], 'default': 'fast'}
 
     def __init__(self, **kwargs):
         super().__init__(
@@ -197,6 +197,15 @@ class RuleIRVAverage(Rule):
         # much anyway, but we could think about it.
 
     def __call__(self, profile):
+        """
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> rule = RuleIRVAverage(cm_option='slow')(profile)
+            >>> rule.irv_.cm_option
+            'slow'
+            >>> rule = RuleIRVAverage(cm_option='exact')(profile)
+            >>> rule.irv_.cm_option
+            'exact'
+        """
         self.delete_cache(suffix='_')
         self.profile_ = profile
         # Grab the IRV ballot of the profile (or create it)
@@ -219,6 +228,19 @@ class RuleIRVAverage(Rule):
             >>> rule = RuleIRVAverage()(profile)
             >>> rule.w_
             0
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [2, 1, 0],
+            ...     [2, 1, 0],
+            ...     [1, 0, 2],
+            ...     [1, 0, 2],
+            ... ])
+            >>> rule = RuleIRVAverage()(profile)
+            >>> rule.v_im_for_c_
+            array([[ 0.,  0., nan],
+                   [ 0.,  0., nan],
+                   [ 0.,  0.,  0.],
+                   [ 0.,  0.,  0.]])
         """
         self.mylog("Count ballots", 1)
         scores = []
@@ -331,6 +353,17 @@ class RuleIRVAverage(Rule):
     # %% Unison manipulation (UM)
 
     def _um_preliminary_checks_c_(self, c):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [1, 0, 2],
+            ...     [2, 1, 0],
+            ...     [1, 2, 0],
+            ...     [0, 1, 2],
+            ... ])
+            >>> rule = RuleIRVAverage(um_option='exact')(profile)
+            >>> rule.is_cm_
+            nan
+        """
         if self.um_option not in {'fast', 'lazy'} or self.cm_option not in {'fast', 'lazy'}:
             if (
                 self.w_ == self.profile_.condorcet_winner_rk_ctb
@@ -347,6 +380,18 @@ class RuleIRVAverage(Rule):
         Let us consider the case where `w` is the Condorcet winner (rk ctb) (otherwise it is easy to manipulate, at
         least if utility preferences are strict). Then at some point, `w` must have a plurality score under average, at
         a moment where `c` is still present in the election.
+
+        Examples
+        --------
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [2, 1, 0],
+            ...     [2, 0, 1],
+            ...     [0, 2, 1],
+            ... ])
+            >>> rule = RuleIRVAverage(cm_option='exact')(profile)
+            >>> rule.sufficient_coalition_size_cm_
+            array([0., 4., 3.])
         """
         if self.cm_option not in {'fast', 'lazy'}:
             if self.w_ == self.profile_.condorcet_winner_rk_ctb:
@@ -357,13 +402,133 @@ class RuleIRVAverage(Rule):
                 )
 
     def _cm_aux_(self, c, ballots_m, preferences_rk_s):
+        """
+            >>> profile = Profile(preferences_ut=[
+            ...     [-0.5,  0. , -1. ,  0. ],
+            ...     [-1. ,  0.5, -0.5,  0.5],
+            ...     [-0.5, -0.5,  0.5,  0. ],
+            ...     [-0.5, -1. ,  0.5,  0.5],
+            ...     [ 0. ,  1. , -0.5, -0.5],
+            ... ], preferences_rk=[
+            ...     [3, 1, 0, 2],
+            ...     [1, 3, 2, 0],
+            ...     [2, 3, 1, 0],
+            ...     [2, 3, 0, 1],
+            ...     [1, 0, 2, 3],
+            ... ])
+            >>> rule = RuleIRVAverage()(profile)
+            >>> rule.sufficient_coalition_size_cm_
+            array([4., 0., 4., 2.])
+        """
         profile_test = Profile(preferences_rk=np.concatenate((preferences_rk_s, ballots_m)), sort_voters=False)
-        if profile_test.n_v != self.profile_.n_v:
+        if profile_test.n_v != self.profile_.n_v:  # pragma: no cover
             raise AssertionError('Uh-oh!')
         winner_test = self.__class__()(profile_test).w_
         return winner_test == c
 
     def _cm_main_work_c_(self, c, optimize_bounds):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1],
+            ...     [2, 0, 1],
+            ...     [1, 2, 0],
+            ...     [1, 2, 0],
+            ... ])
+            >>> rule = RuleIRVAverage()(profile)
+            >>> rule.necessary_coalition_size_cm_
+            array([2., 0., 2.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [1, 0, 2],
+            ...     [1, 0, 2],
+            ...     [2, 1, 0],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleIRVAverage(cm_option='slow')(profile)
+            >>> rule.necessary_coalition_size_cm_
+            array([3., 0., 2.])
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 0. , -1. ,  1. ],
+            ...     [-1. ,  0.5, -1. ],
+            ...     [-0.5,  1. , -0.5],
+            ...     [ 0.5,  0. ,  0. ],
+            ...     [-1. , -1. ,  0.5],
+            ... ], preferences_rk=[
+            ...     [2, 0, 1],
+            ...     [1, 0, 2],
+            ...     [1, 2, 0],
+            ...     [0, 1, 2],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleIRVAverage()(profile)
+            >>> rule.necessary_coalition_size_cm_
+            array([1., 0., 1.])
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 0. , -0.5,  0.5],
+            ...     [-1. , -0.5,  0.5],
+            ...     [ 0. ,  0.5,  0. ],
+            ...     [ 1. , -1. ,  0.5],
+            ... ], preferences_rk=[
+            ...     [2, 0, 1],
+            ...     [2, 1, 0],
+            ...     [1, 0, 2],
+            ...     [0, 2, 1],
+            ... ])
+            >>> rule = RuleIRVAverage()(profile)
+            >>> rule.necessary_coalition_size_cm_
+            array([1., 1., 0.])
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 0.5, -1. , -1. ,  0. ],
+            ...     [-1. ,  0.5, -1. ,  0. ],
+            ...     [-0.5,  1. ,  1. , -0.5],
+            ...     [-0.5,  0.5,  1. , -1. ],
+            ...     [-0.5,  0.5,  1. ,  0. ],
+            ... ], preferences_rk=[
+            ...     [0, 3, 2, 1],
+            ...     [1, 3, 0, 2],
+            ...     [1, 2, 3, 0],
+            ...     [2, 1, 0, 3],
+            ...     [2, 1, 3, 0],
+            ... ])
+            >>> rule = RuleIRVAverage()(profile)
+            >>> rule.is_cm_
+            nan
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 0. ,  0. , -1. ,  0.5],
+            ...     [ 0.5,  0. , -1. ,  1. ],
+            ...     [ 0.5, -0.5, -1. , -0.5],
+            ...     [-1. ,  1. , -1. , -1. ],
+            ...     [ 1. ,  0. ,  1. ,  0. ],
+            ... ], preferences_rk=[
+            ...     [3, 1, 0, 2],
+            ...     [3, 0, 1, 2],
+            ...     [0, 3, 1, 2],
+            ...     [1, 0, 3, 2],
+            ...     [2, 0, 3, 1],
+            ... ])
+            >>> rule = RuleIRVAverage()(profile)
+            >>> rule.necessary_coalition_size_cm_
+            array([1., 0., 0., 0.])
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [-0.5,  0.5,  0.5],
+            ...     [-0.5, -0.5,  0.5],
+            ...     [-0.5,  0.5, -1. ],
+            ...     [-0.5, -1. ,  0. ],
+            ... ], preferences_rk=[
+            ...     [1, 2, 0],
+            ...     [2, 0, 1],
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleIRVAverage()(profile)
+            >>> rule.candidates_cm_
+            array([nan,  0., nan])
+        """
         n_m = self.profile_.matrix_duels_ut[c, self.w_]
         n_s = self.profile_.n_v - n_m
         candidates = np.array(range(self.profile_.n_c))
@@ -419,7 +584,9 @@ class RuleIRVAverage(Rule):
                 self.mylogv("CM: suggested_path =", suggested_path_two, 3)
                 if np.array_equal(suggested_path_one, suggested_path_two):
                     self.mylog('CM: Same suggested path as before, skip computation')
-                else:
+                else:  # pragma: no cover
+                    # TO DO: Investigate whether this case can actually happen.
+                    self._reached_uncovered_code()
                     ballots_m = self.irv_.example_ballots_cm_c_(c)
                     manipulation_found = self._cm_aux_(c, ballots_m, preferences_rk_s)
                     self.mylogv("CM: manipulation_found =", manipulation_found, 3)

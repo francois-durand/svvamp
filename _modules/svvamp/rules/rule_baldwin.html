@@ -466,6 +466,35 @@
 <span class="sd">            &gt;&gt;&gt; rule = RuleBaldwin()(profile)</span>
 <span class="sd">            &gt;&gt;&gt; rule.candidates_cm_</span>
 <span class="sd">            array([0., 0., 0.])</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
+<span class="sd">            ...     [0, 1, 2],</span>
+<span class="sd">            ...     [2, 0, 1],</span>
+<span class="sd">            ...     [2, 0, 1],</span>
+<span class="sd">            ...     [1, 2, 0],</span>
+<span class="sd">            ... ])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleBaldwin()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.candidates_cm_</span>
+<span class="sd">            array([0., 1., 0.])</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
+<span class="sd">            ...     [-0.5, -0.5,  0. , -0.5],</span>
+<span class="sd">            ...     [ 1. , -0.5,  0.5,  0.5],</span>
+<span class="sd">            ...     [ 0. ,  0. , -0.5, -0.5],</span>
+<span class="sd">            ...     [-1. , -1. , -0.5,  0. ],</span>
+<span class="sd">            ...     [ 1. , -1. ,  0.5, -1. ],</span>
+<span class="sd">            ...     [-0.5,  0. ,  1. ,  1. ],</span>
+<span class="sd">            ... ], preferences_rk=[</span>
+<span class="sd">            ...     [2, 1, 3, 0],</span>
+<span class="sd">            ...     [0, 3, 2, 1],</span>
+<span class="sd">            ...     [1, 0, 3, 2],</span>
+<span class="sd">            ...     [3, 2, 1, 0],</span>
+<span class="sd">            ...     [0, 2, 3, 1],</span>
+<span class="sd">            ...     [2, 3, 1, 0],</span>
+<span class="sd">            ... ])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleBaldwin()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.sufficient_coalition_size_cm_</span>
+<span class="sd">            array([0., 1., 3., 2.])</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># First part: is there a subset (including c) such that w has less than the average?</span>
         <span class="n">n_v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span>
@@ -553,6 +582,16 @@
 <span class="sd">            &gt;&gt;&gt; rule = RuleBaldwin(cm_option=&#39;exact&#39;)(profile)</span>
 <span class="sd">            &gt;&gt;&gt; rule.candidates_cm_</span>
 <span class="sd">            array([0., 0., 0.])</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
+<span class="sd">            ...     [0, 1, 2],</span>
+<span class="sd">            ...     [1, 2, 0],</span>
+<span class="sd">            ...     [2, 1, 0],</span>
+<span class="sd">            ...     [1, 2, 0],</span>
+<span class="sd">            ... ])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleBaldwin(cm_option=&#39;exact&#39;)(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.sufficient_coalition_size_cm_</span>
+<span class="sd">            array([3., 0., 3.])</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">is_quick_escape_fast</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cm_main_work_c_fast_</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span> <span class="o">==</span> <span class="s2">&quot;exact&quot;</span><span class="p">:</span>

@@ -3,7 +3,7 @@ import numpy as np
 
 def equal_true(x):
     """
-    Test whether x is equal to True.
+    Test whether `x` is equal to True.
 
     Parameters
     ----------
@@ -185,10 +185,34 @@ def neginf_to_zero(variable):
     return variable
 
 
-def pseudo_bool_not(variable):
-    if equal_true(variable):
+def pseudo_bool_not(x):
+    """
+    Negation of `x`.
+
+    Parameters
+    ----------
+    x: object
+
+    Returns
+    -------
+    bool or float
+        True, False, nan or -np.inf. Let us recall that in SVVAMP, `-np.inf` means "I have not started to compute
+        this value", and `np.nan` means "I tried to compute this value, and I decided that I don't know".
+
+    Examples
+    --------
+        >>> pseudo_bool_not(1.)
+        False
+        >>> pseudo_bool_not(0)
+        True
+        >>> pseudo_bool_not(np.nan)
+        nan
+        >>> pseudo_bool_not(-np.inf)
+        -inf
+    """
+    if equal_true(x):
         return False
-    elif equal_false(variable):
+    elif equal_false(x):
         return True
     else:  # variable = nan or -np.inf
-        return variable
+        return x

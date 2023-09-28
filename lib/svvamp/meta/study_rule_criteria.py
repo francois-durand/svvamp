@@ -127,6 +127,7 @@ class StudyRuleCriteria:
             self.numerical_criteria = [
                 'nb_candidates_cm_',
                 'worst_relative_welfare_with_cm_',
+                'cm_power_index_',
             ]
         else:
             self.numerical_criteria = numerical_criteria

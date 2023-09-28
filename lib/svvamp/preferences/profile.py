@@ -129,6 +129,23 @@ class Profile(my_log.MyLog):
             *  ``Condorcet_ut_abs``, ``Condorcet_ut_abs_ctb``, ``Condorcet_rk``, ``Condorcet_rk_ctb``,
                ``Condorcet_ut_rel``, ``Condorcet_ut_rel_ctb``, ``Weak Condorcet`` and ``Condorcet-admissible`` are
                equivalent.
+
+        Examples
+        --------
+            >>> profile = Profile(preferences_borda_rk=[[2, 1, 0], [1, 0, 2]])
+            >>> profile.preferences_rk
+            array([[0, 1, 2],
+                   [2, 0, 1]])
+
+            >>> profile = Profile(preferences_ut=[[1, .3, 0], [.7, 0, 1]])
+            >>> profile.preferences_rk
+            array([[0, 1, 2],
+                   [2, 0, 1]])
+
+            >>> profile = Profile()
+            >>> profile.preferences_rk
+            Traceback (most recent call last):
+            ValueError: Please provide at least preferences_rk, preferences_borda_rk or preferences_ut.
         """
         super().__init__(log_identity="PROFILE")
 
@@ -2782,6 +2799,16 @@ class Profile(my_log.MyLog):
             including `c` and `w` such that, in a Plurality election over this subset of candidates, `w` has at most
             `n_v / card(subset)` votes. What is interesting is the negation: if it is False, then it is impossible
             for `c` to manipulate in several IRV-related rules, because `c` cannot be there when `w` is eliminated.
+
+        Examples
+        --------
+        When there is no Condorcet winner (rk ctb), then the output is None:
+
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [1, 2, 0], [2, 0, 1]])
+            >>> profile.condorcet_winner_rk_ctb
+            nan
+            >>> print(profile.c_might_be_there_when_cw_is_eliminated_irv_style)
+            None
         """
         if not self.exists_condorcet_winner_rk_ctb:
             return None
@@ -2809,6 +2836,14 @@ class Profile(my_log.MyLog):
         A candidate `w` is IRV-immune iff she is Condorcet winner (rk ctb) and for any other candidate `c`,
         we have that `c_might_be_there_when_cw_is_eliminated_irv_style[c] ` is False. In other words, there is no
         subset of candidates containing `w` such that `w` has at most `n_v / card(subset)` plurality votes.
+
+        Examples
+        --------
+            >>> profile = Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [1, 2, 0], [1, 2, 0], [2, 0, 1]])
+            >>> profile.condorcet_winner_rk_ctb
+            2
+            >>> profile.exists_irv_immune_candidate
+            False
         """
         return self.exists_condorcet_order_rk_ctb and not(np.any(self.c_might_be_there_when_cw_is_eliminated_irv_style))
 
@@ -2829,6 +2864,16 @@ class Profile(my_log.MyLog):
             number over all possible subsets, this gives `necessary_coalition_size_to_break_irv_immunity[c]`. In an
             IRV-style election, it is necessary to have at least this number of manipulators to manipulate in favor
             of `c`.
+
+        Examples
+        --------
+        When there is no Condorcet winner (rk ctb), then the output is None:
+
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [1, 2, 0], [2, 0, 1]])
+            >>> profile.condorcet_winner_rk_ctb
+            nan
+            >>> print(profile.necessary_coalition_size_to_break_irv_immunity)
+            None
         """
         if not self.exists_condorcet_winner_rk_ctb:
             return None

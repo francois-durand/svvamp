@@ -309,6 +309,19 @@ class RuleIRVDuels(Rule):
 
     @cached_property
     def _count_ballots_(self):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [1, 2, 0],
+            ... ])
+            >>> rule = RuleIRVDuels()(profile)
+            >>> rule.scores_
+            array([[ 2.,  1.,  0.],
+                   [nan,  1.,  2.],
+                   [ 2., nan,  1.],
+                   [ 2., nan,  1.]])
+        """
         self.mylog("Count ballots", 1)
         scores = np.full((2 * self.profile_.n_c - 2, self.profile_.n_c), np.nan)
         is_candidate_alive = np.ones(self.profile_.n_c, dtype=bool)
@@ -423,6 +436,57 @@ class RuleIRVDuels(Rule):
               ``n_manip_final`` manipulators. ``example_path[k]`` is the candidate selected for the ``k``-th duel
               and winning. If the manipulation is impossible, ``example_path_winners`` is NaN.
             * ``quick_escape``: Boolean. True if we get out without optimizing ``n_manip_final``.
+
+        Examples
+        --------
+            >>> profile = Profile(preferences_rk=[
+            ...     [1, 0, 2],
+            ...     [2, 0, 1],
+            ...     [2, 1, 0],
+            ...     [1, 0, 2],
+            ... ])
+            >>> rule = RuleIRVDuels(cm_option='exact')(profile)
+            >>> rule.sufficient_coalition_size_cm_
+            array([2., 0., 3.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [2, 0, 1],
+            ...     [2, 0, 1],
+            ...     [0, 1, 2],
+            ...     [1, 2, 0],
+            ... ])
+            >>> rule = RuleIRVDuels(cm_option='exact')(profile)
+            >>> rule.sufficient_coalition_size_cm_
+            array([2., 2., 0.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [1, 2, 0],
+            ...     [0, 2, 1],
+            ...     [2, 0, 1],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleIRVDuels(cm_option='exact')(profile)
+            >>> rule.is_cm_c_with_bounds_(1)
+            (False, 2.0, 2.0)
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [-1. ,  0. ,  0. ,  0. ],
+            ...     [-1. ,  0.5, -1. , -0.5],
+            ...     [ 1. ,  0.5, -1. , -1. ],
+            ...     [ 0.5, -1. ,  0. ,  1. ],
+            ...     [-1. ,  0.5,  0.5,  0. ],
+            ...     [ 1. , -1. , -1. , -1. ],
+            ... ], preferences_rk=[
+            ...     [2, 3, 1, 0],
+            ...     [1, 3, 0, 2],
+            ...     [0, 1, 2, 3],
+            ...     [3, 0, 2, 1],
+            ...     [2, 1, 3, 0],
+            ...     [0, 2, 1, 3],
+            ... ])
+            >>> rule = RuleIRVDuels(cm_option='exact')(profile)
+            >>> rule.is_cm_c_(1)
+            True
         """
         candidates = np.arange(self.profile_.n_c)
         n_s = preferences_borda_s.shape[0]
@@ -524,7 +588,9 @@ class RuleIRVDuels(Rule):
                     try:
                         example_path_losers.append(suggested_loser_r[r][index_loser_in_suggested_r[r]])
                         example_path_winners.append(suggested_winner_r[r][index_winner_in_suggested_r[r]])
-                    except IndexError:
+                    except IndexError:  # pragma: no cover
+                        # TO DO: Investigate whether this case can actually happen.
+                        self._reached_uncovered_code()
                         print(f'{r=}')
                         print(f'{index_loser_in_suggested_r=}')
                         print(f'{suggested_loser_r=}')
@@ -583,6 +649,27 @@ class RuleIRVDuels(Rule):
             self.mylogv("cm_aux_exact: r =", r, 3)
 
     def _cm_main_work_c_(self, c, optimize_bounds):
+        """
+            >>> profile = Profile(preferences_rk=[
+            ...     [2, 1, 0],
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleIRVDuels(cm_option='exact')(profile)
+            >>> rule.necessary_coalition_size_cm_
+            array([0., 3., 3.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [1, 0, 2],
+            ...     [1, 2, 0],
+            ...     [0, 2, 1],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleIRVDuels(cm_option='exact')(profile)
+            >>> rule.is_cm_c_(0)
+            False
+        """
         if not self.cm_option == "exact":
             # With 'lazy' option, we stop here anyway.
             return False

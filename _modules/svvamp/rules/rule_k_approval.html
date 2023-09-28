@@ -452,6 +452,24 @@
     <span class="c1"># %% Ignorant-Coalition Manipulation (ICM)</span>
 
     <span class="k">def</span> <span class="nf">_icm_main_work_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
+<span class="sd">            ...     [-1. ,  0. ,  0.5,  0.5,  0.5],</span>
+<span class="sd">            ...     [ 0. , -0.5, -1. , -1. ,  0.5],</span>
+<span class="sd">            ...     [ 0.5,  0.5, -1. ,  0. , -0.5],</span>
+<span class="sd">            ...     [-1. , -0.5,  0.5,  1. ,  0.5],</span>
+<span class="sd">            ...     [-1. ,  1. ,  0.5,  1. ,  0.5],</span>
+<span class="sd">            ... ], preferences_rk=[</span>
+<span class="sd">            ...     [2, 4, 3, 1, 0],</span>
+<span class="sd">            ...     [4, 0, 1, 2, 3],</span>
+<span class="sd">            ...     [1, 0, 3, 4, 2],</span>
+<span class="sd">            ...     [3, 2, 4, 1, 0],</span>
+<span class="sd">            ...     [1, 3, 2, 4, 0],</span>
+<span class="sd">            ... ])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleKApproval(k=1)(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.candidates_icm_</span>
+<span class="sd">            array([0., 0., 0., 0., 1.])</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Manipulators must distribute `(k - 1) n_m` approvals among the other `n_c - 1` candidates. In the best case,</span>
         <span class="c1"># these approvals are distributed equally (no remainder), so each other candidate has</span>
         <span class="c1"># `((k - 1) n_m) / (n_c - 1)` approvals from the manipulators. Then counter-manipulators will give `n_s`</span>

@@ -260,10 +260,10 @@ class VotingRuleTasks(list):
         ----------
         rule_class : class
             Subclass of :class:`Rule`.
-        options : dict
+        options : dict, optional
             A dictionary of options. If None (default), then options will be an empty dictionary, which amounts to
             using the default options for this voting rule.
-        study_rule_criteria : StudyRuleCriteria
+        study_rule_criteria : StudyRuleCriteria, optional
             If None (default), then use the default StudyRuleCriteria() (with a quite extensive list of criteria).
 
         Examples
@@ -302,6 +302,41 @@ class VotingRuleTasks(list):
                     result_criteria: None
                     utility_criteria: None
                     numerical_criteria: None
+
+        If `options` is not specified, then it is considered empty:
+
+            >>> voting_rule_tasks = VotingRuleTasks(voting_systems=[], study_rule_criteria=[], detailed_tasks=[])
+            >>> voting_rule_tasks.append_task(
+            ...     rule_class=RuleIRV,
+            ...     study_rule_criteria=StudyRuleCriteria(
+            ...         manipulation_criteria=['is_cm_'], manipulation_only=True, numerical_criteria=[]
+            ...     )
+            ... )
+            >>> print(voting_rule_tasks)
+            VotingRuleTasks with:
+                voting_system: RuleIRV
+                options: {}
+                StudyRuleCriteria with:
+                    manipulation_criteria:
+                        is_cm_
+                    manipulation_criteria_c: None
+                    result_criteria: None
+                    utility_criteria: None
+                    numerical_criteria: None
+
+        If `study_rule_criteria` is not specified, then it is the default instance `StudyRuleCriteria()`:
+
+            >>> voting_rule_tasks = VotingRuleTasks(voting_systems=[], study_rule_criteria=[], detailed_tasks=[])
+            >>> voting_rule_tasks.append_task(rule_class=RuleIRV, options={'cm_option': 'exact'})
+            >>> print(voting_rule_tasks)  # doctest: +ELLIPSIS
+            VotingRuleTasks with:
+                voting_system: RuleIRV
+                options: {'cm_option': 'exact'}
+                StudyRuleCriteria with:
+                    manipulation_criteria:
+                        is_tm_
+                        is_um_
+                        ...
         """
         if options is None:
             options = {}
@@ -1061,6 +1096,12 @@ class VotingRuleTasks(list):
 
         Examples
         --------
+        Confirm that a configuration is sound:
+
+            >>> voting_rule_tasks = VotingRuleTasks()
+            >>> voting_rule_tasks.check_sanity()
+            VotingRuleTasks: Sanity check was successful.
+
         Detect an illegal option:
 
             >>> voting_rule_tasks = VotingRuleTasks(

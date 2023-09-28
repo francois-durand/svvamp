@@ -84,14 +84,14 @@
 <h1>GeneratorProfileUnanimous<a class="headerlink" href="#generatorprofileunanimous" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="svvamp.GeneratorProfileUnanimous">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">svvamp.</span></span><span class="sig-name descname"><span class="pre">GeneratorProfileUnanimous</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ranking</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_voters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/preferences/generator_profile_unanimous.html#GeneratorProfileUnanimous"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.GeneratorProfileUnanimous" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">svvamp.</span></span><span class="sig-name descname"><span class="pre">GeneratorProfileUnanimous</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_c</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ranking</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_voters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/preferences/generator_profile_unanimous.html#GeneratorProfileUnanimous"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.GeneratorProfileUnanimous" title="Link to this definition"></a></dt>
 <dd><p>Profile generator with identical voters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>n_v</strong> (<em>int</em>) – Number of voters.</p></li>
-<li><p><strong>n_c</strong> (<em>int</em>) – Number of candidates.</p></li>
-<li><p><strong>ranking</strong> (<em>list</em><em>, </em><em>optional</em>) – This will be the ranking of all the voters. If not specified, it is drawn at random each time
+<li><p><strong>n_c</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of candidates.</p></li>
+<li><p><strong>ranking</strong> (<em>List</em><em>, </em><em>optional</em>) – This will be the ranking of all the voters. If not specified, it is drawn at random each time
 a profile is generated.</p></li>
 <li><p><strong>sort_voters</strong> (<em>bool</em>) – This argument is passed to <a class="reference internal" href="profile.html#svvamp.Profile" title="svvamp.Profile"><code class="xref py py-class docutils literal notranslate"><span class="pre">Profile</span></code></a> (but since voters are identical, there is no
 advantage in using True).</p></li>
@@ -105,6 +105,19 @@ advantage in using True).</p></li>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">generator</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">preferences_rk</span><span class="o">.</span><span class="n">shape</span>
 <span class="go">(10, 3)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">generator</span> <span class="o">=</span> <span class="n">GeneratorProfileUnanimous</span><span class="p">(</span><span class="n">n_v</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">ranking</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">generator</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">preferences_rk</span>
+<span class="go">array([[0, 1, 2],</span>
+<span class="go">       [0, 1, 2],</span>
+<span class="go">       [0, 1, 2]])</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">generator</span> <span class="o">=</span> <span class="n">GeneratorProfileUnanimous</span><span class="p">(</span><span class="n">n_v</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="gr">ValueError</span>: <span class="n">GeneratorProfileUnanimous: You should specify `n_c` or `ranking`.</span>
 </pre></div>
 </div>
 </dd></dl>

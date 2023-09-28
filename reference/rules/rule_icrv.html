@@ -419,6 +419,21 @@ victories in <code class="xref py py-attr docutils literal notranslate"><span cl
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">matrix_victories_rk</span></code> (restricted to non-eliminated candidates). Ties count for 0.5.</p>
 <p>For odd rounds <code class="docutils literal notranslate"><span class="pre">r</span></code>, <code class="docutils literal notranslate"><span class="pre">scores[r,</span> <span class="pre">c]</span></code> is the number of voters who rank <code class="docutils literal notranslate"><span class="pre">c</span></code> first (among non-eliminated
 candidates).</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_rk</span><span class="o">=</span><span class="p">[</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+<span class="gp">... </span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span> <span class="o">=</span> <span class="n">RuleICRV</span><span class="p">()(</span><span class="n">profile</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span><span class="o">.</span><span class="n">scores_</span>
+<span class="go">array([[ 2.,  2.,  2.,  0.],</span>
+<span class="go">       [ 1.,  1.,  1.,  0.],</span>
+<span class="go">       [ 1.,  1.,  1., nan],</span>
+<span class="go">       [ 1.,  1.,  1., nan],</span>
+<span class="go">       [ 1.,  0., nan, nan]])</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py property">

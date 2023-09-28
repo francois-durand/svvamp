@@ -233,6 +233,117 @@
 <span class="sd">        w_is_resistant_condorcet_winner = False</span>
 <span class="sd">        w_is_not_resistant_condorcet_winner = True</span>
 <span class="sd">        w_missed_resistant_condorcet_winner = False</span>
+<span class="sd">        &gt;&gt;&gt; rule.demo_manipulation_(log_depth=0)  # doctest: +NORMALIZE_WHITESPACE</span>
+<span class="sd">        &lt;BLANKLINE&gt;</span>
+<span class="sd">        *****************************</span>
+<span class="sd">        *                           *</span>
+<span class="sd">        *   Election Manipulation   *</span>
+<span class="sd">        *                           *</span>
+<span class="sd">        *****************************</span>
+<span class="sd">        &lt;BLANKLINE&gt;</span>
+<span class="sd">        *********************************************</span>
+<span class="sd">        *   Basic properties of the voting system   *</span>
+<span class="sd">        *********************************************</span>
+<span class="sd">        with_two_candidates_reduces_to_plurality =  True</span>
+<span class="sd">        is_based_on_rk =  True</span>
+<span class="sd">        is_based_on_ut_minus1_1 =  False</span>
+<span class="sd">        meets_iia =  False</span>
+<span class="sd">        &lt;BLANKLINE&gt;</span>
+<span class="sd">        ****************************************************</span>
+<span class="sd">        *   Manipulation properties of the voting system   *</span>
+<span class="sd">        ****************************************************</span>
+<span class="sd">        Condorcet_c_ut_rel_ctb (False)     ==&gt;     Condorcet_c_ut_rel (False)</span>
+<span class="sd">         ||                                                               ||</span>
+<span class="sd">         ||     Condorcet_c_rk_ctb (False) ==&gt; Condorcet_c_rk (True)      ||</span>
+<span class="sd">         ||           ||               ||       ||             ||         ||</span>
+<span class="sd">         V            V                ||       ||             V          V</span>
+<span class="sd">        Condorcet_c_ut_abs_ctb (False)     ==&gt;     Condorcet_ut_abs_c (True)</span>
+<span class="sd">         ||                            ||       ||                        ||</span>
+<span class="sd">         ||                            V        V                         ||</span>
+<span class="sd">         ||       maj_fav_c_rk_ctb (True)  ==&gt; maj_fav_c_rk (True)        ||</span>
+<span class="sd">         ||           ||                                       ||         ||</span>
+<span class="sd">         V            V                                        V          V</span>
+<span class="sd">        majority_favorite_c_ut_ctb (True)  ==&gt; majority_favorite_c_ut (True)</span>
+<span class="sd">         ||                                                               ||</span>
+<span class="sd">         V                                                                V</span>
+<span class="sd">        IgnMC_c_ctb (True)                 ==&gt;                IgnMC_c (True)</span>
+<span class="sd">         ||                                                               ||</span>
+<span class="sd">         V                                                                V</span>
+<span class="sd">        InfMC_c_ctb (True)                 ==&gt;                InfMC_c (True)</span>
+<span class="sd">        &lt;BLANKLINE&gt;</span>
+<span class="sd">        *****************************************************</span>
+<span class="sd">        *   Independence of Irrelevant Alternatives (IIA)   *</span>
+<span class="sd">        *****************************************************</span>
+<span class="sd">        w (reminder) = 0</span>
+<span class="sd">        is_iia = True</span>
+<span class="sd">        log_iia: iia_subset_maximum_size = 2.0</span>
+<span class="sd">        example_winner_iia = nan</span>
+<span class="sd">        example_subset_iia = nan</span>
+<span class="sd">        &lt;BLANKLINE&gt;</span>
+<span class="sd">        **********************</span>
+<span class="sd">        *   c-Manipulators   *</span>
+<span class="sd">        **********************</span>
+<span class="sd">        w (reminder) = 0</span>
+<span class="sd">        preferences_ut (reminder) =</span>
+<span class="sd">        [[ 0.  -0.5 -1. ]</span>
+<span class="sd">         [ 1.  -1.   0.5]</span>
+<span class="sd">         [ 0.5  0.5 -0.5]</span>
+<span class="sd">         [ 0.5  0.   1. ]</span>
+<span class="sd">         [-1.  -1.   1. ]]</span>
+<span class="sd">        v_wants_to_help_c =</span>
+<span class="sd">        [[False False False]</span>
+<span class="sd">         [False False False]</span>
+<span class="sd">         [False False False]</span>
+<span class="sd">         [False False  True]</span>
+<span class="sd">         [False False  True]]</span>
+<span class="sd">        &lt;BLANKLINE&gt;</span>
+<span class="sd">        ************************************</span>
+<span class="sd">        *   Individual Manipulation (IM)   *</span>
+<span class="sd">        ************************************</span>
+<span class="sd">        is_im = nan</span>
+<span class="sd">        log_im: im_option = lazy</span>
+<span class="sd">        candidates_im =</span>
+<span class="sd">        [ 0.  0. nan]</span>
+<span class="sd">        &lt;BLANKLINE&gt;</span>
+<span class="sd">        *********************************</span>
+<span class="sd">        *   Trivial Manipulation (TM)   *</span>
+<span class="sd">        *********************************</span>
+<span class="sd">        is_tm = False</span>
+<span class="sd">        log_tm: tm_option = exact</span>
+<span class="sd">        candidates_tm =</span>
+<span class="sd">        [0. 0. 0.]</span>
+<span class="sd">        &lt;BLANKLINE&gt;</span>
+<span class="sd">        ********************************</span>
+<span class="sd">        *   Unison Manipulation (UM)   *</span>
+<span class="sd">        ********************************</span>
+<span class="sd">        is_um = nan</span>
+<span class="sd">        log_um: um_option = lazy</span>
+<span class="sd">        candidates_um =</span>
+<span class="sd">        [ 0.  0. nan]</span>
+<span class="sd">        &lt;BLANKLINE&gt;</span>
+<span class="sd">        *********************************************</span>
+<span class="sd">        *   Ignorant-Coalition Manipulation (ICM)   *</span>
+<span class="sd">        *********************************************</span>
+<span class="sd">        is_icm = False</span>
+<span class="sd">        log_icm: icm_option = exact</span>
+<span class="sd">        candidates_icm =</span>
+<span class="sd">        [0. 0. 0.]</span>
+<span class="sd">        necessary_coalition_size_icm =</span>
+<span class="sd">        [0. 6. 4.]</span>
+<span class="sd">        sufficient_coalition_size_icm =</span>
+<span class="sd">        [0. 6. 4.]</span>
+<span class="sd">        &lt;BLANKLINE&gt;</span>
+<span class="sd">        ***********************************</span>
+<span class="sd">        *   Coalition Manipulation (CM)   *</span>
+<span class="sd">        ***********************************</span>
+<span class="sd">        is_cm = nan</span>
+<span class="sd">        log_cm: cm_option = fast, um_option = lazy, tm_option = exact</span>
+<span class="sd">        candidates_cm =</span>
+<span class="sd">        [ 0.  0. nan]</span>
+<span class="sd">        necessary_coalition_size_cm =</span>
+<span class="sd">        [0. 1. 2.]</span>
+<span class="sd">        sufficient_coalition_size_cm =</span>
+<span class="sd">        [0. 2. 4.]</span>
 
 <span class="sd">    Woodall does not :attr:`meets_condorcet_c_ut_abs_ctb`:</span>
 
@@ -291,7 +402,7 @@
 
     <span class="n">options_parameters</span> <span class="o">=</span> <span class="n">Rule</span><span class="o">.</span><span class="n">options_parameters</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">options_parameters</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
-        <span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;fast&#39;</span><span class="p">,</span> <span class="s1">&#39;slow&#39;</span><span class="p">,</span> <span class="s1">&#39;very_slow&#39;</span><span class="p">,</span> <span class="s1">&#39;exact&#39;</span><span class="p">},</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;fast&#39;</span><span class="p">},</span>
+        <span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;fast&#39;</span><span class="p">,</span> <span class="s1">&#39;slow&#39;</span><span class="p">,</span> <span class="s1">&#39;very_slow&#39;</span><span class="p">,</span> <span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;fast&#39;</span><span class="p">},</span>
         <span class="s1">&#39;tm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">},</span>
         <span class="s1">&#39;icm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">}</span>
     <span class="p">})</span>
@@ -304,6 +415,15 @@
         <span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">profile</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleWoodall(cm_option=&#39;slow&#39;)(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.irv_.cm_option</span>
+<span class="sd">            &#39;slow&#39;</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleWoodall(cm_option=&#39;exact&#39;)(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.irv_.cm_option</span>
+<span class="sd">            &#39;exact&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">delete_cache</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;_&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span> <span class="o">=</span> <span class="n">profile</span>
         <span class="c1"># Grab the IRV ballot of the profile (or create it)</span>
@@ -321,6 +441,26 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">w_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
+<span class="sd">            ...     [3, 0, 1, 2],</span>
+<span class="sd">            ...     [0, 1, 2, 3],</span>
+<span class="sd">            ...     [0, 3, 2, 1],</span>
+<span class="sd">            ...     [0, 3, 2, 1],</span>
+<span class="sd">            ...     [3, 0, 2, 1],</span>
+<span class="sd">            ...     [1, 0, 2, 3],</span>
+<span class="sd">            ... ], preferences_rk=[</span>
+<span class="sd">            ...     [0, 3, 2, 1],</span>
+<span class="sd">            ...     [3, 2, 1, 0],</span>
+<span class="sd">            ...     [1, 2, 3, 0],</span>
+<span class="sd">            ...     [1, 2, 3, 0],</span>
+<span class="sd">            ...     [0, 2, 3, 1],</span>
+<span class="sd">            ...     [3, 2, 0, 1],</span>
+<span class="sd">            ... ])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleWoodall()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.w_</span>
+<span class="sd">            3</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Count ballots&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">exists_condorcet_winner_rk</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">condorcet_winner_rk</span>
@@ -371,6 +511,17 @@
     <span class="c1"># %% Unison manipulation (UM)</span>
 
     <span class="k">def</span> <span class="nf">_um_preliminary_checks_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
+<span class="sd">            ...     [1, 0, 2],</span>
+<span class="sd">            ...     [1, 0, 2],</span>
+<span class="sd">            ...     [2, 1, 0],</span>
+<span class="sd">            ...     [2, 1, 0],</span>
+<span class="sd">            ... ])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleWoodall(um_option=&#39;lazy&#39;, cm_option=&quot;exact&quot;)(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.is_um_</span>
+<span class="sd">            False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">um_option</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;fast&#39;</span><span class="p">,</span> <span class="s1">&#39;lazy&#39;</span><span class="p">}</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;fast&#39;</span><span class="p">,</span> <span class="s1">&#39;lazy&#39;</span><span class="p">}:</span>
             <span class="k">if</span> <span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">w_</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">condorcet_winner_rk_ctb</span>
@@ -392,6 +543,18 @@
 <span class="sd">        least if utility preferences are strict). We must have `c` in the (manipulated) Smith Set, hence we must have</span>
 <span class="sd">        `w` too. Hence we must manipulate IRV so that `w` is eliminated before `c`. In other words, at some point,</span>
 <span class="sd">        `w` must be eliminated, IRV-style, at a moment where `c` is still present in the election.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
+<span class="sd">            ...     [2, 1, 0],</span>
+<span class="sd">            ...     [2, 1, 0],</span>
+<span class="sd">            ...     [0, 1, 2],</span>
+<span class="sd">            ...     [2, 0, 1],</span>
+<span class="sd">            ... ])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleWoodall(cm_option=&#39;exact&#39;)(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.is_cm_c_with_bounds_(1)</span>
+<span class="sd">            (False, 3.0, 3.0)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;fast&#39;</span><span class="p">,</span> <span class="s1">&#39;lazy&#39;</span><span class="p">}:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">condorcet_winner_rk_ctb</span><span class="p">:</span>
@@ -405,6 +568,17 @@
     <span class="k">def</span> <span class="nf">losing_candidates_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;If ``irv_.w_ does not win, then we put her first. Other losers are sorted as usual. (scores in</span>
 <span class="sd">        ``matrix_duels_ut``).</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
+<span class="sd">            ...     [3, 2, 0, 1],</span>
+<span class="sd">            ...     [0, 2, 3, 1],</span>
+<span class="sd">            ...     [1, 3, 2, 0],</span>
+<span class="sd">            ... ])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleWoodall()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; list(rule.losing_candidates_)</span>
+<span class="sd">            [0, 1, 2]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Compute ordered list of losing candidates&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">irv_</span><span class="o">.</span><span class="n">w_</span><span class="p">:</span>
@@ -424,12 +598,118 @@
 
     <span class="k">def</span> <span class="nf">_cm_aux_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">ballots_m</span><span class="p">,</span> <span class="n">preferences_rk_s</span><span class="p">):</span>
         <span class="n">profile_test</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_rk</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">preferences_rk_s</span><span class="p">,</span> <span class="n">ballots_m</span><span class="p">)),</span> <span class="n">sort_voters</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">profile_test</span><span class="o">.</span><span class="n">n_v</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">profile_test</span><span class="o">.</span><span class="n">n_v</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
             <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s1">&#39;Uh-oh!&#39;</span><span class="p">)</span>
         <span class="n">winner_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">()(</span><span class="n">profile_test</span><span class="p">)</span><span class="o">.</span><span class="n">w_</span>
         <span class="k">return</span> <span class="n">winner_test</span> <span class="o">==</span> <span class="n">c</span>
 
     <span class="k">def</span> <span class="nf">_cm_main_work_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
+<span class="sd">            ...     [1, 0, 2],</span>
+<span class="sd">            ...     [1, 0, 2],</span>
+<span class="sd">            ...     [2, 0, 1],</span>
+<span class="sd">            ...     [0, 1, 2],</span>
+<span class="sd">            ... ])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleWoodall(cm_option=&#39;exact&#39;)(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.candidates_cm_</span>
+<span class="sd">            array([0., 0., 0.])</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
+<span class="sd">            ...     [1, 2, 0],</span>
+<span class="sd">            ...     [0, 2, 1],</span>
+<span class="sd">            ...     [1, 2, 0],</span>
+<span class="sd">            ...     [1, 0, 2],</span>
+<span class="sd">            ... ])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleWoodall(cm_option=&#39;slow&#39;, um_option = &#39;lazy&#39;)(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.necessary_coalition_size_cm_</span>
+<span class="sd">            array([3., 0., 3.])</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
+<span class="sd">            ...     [-0.5,  0. , -0.5, -0.5],</span>
+<span class="sd">            ...     [-1. ,  1. ,  1. ,  0.5],</span>
+<span class="sd">            ...     [ 0. ,  1. , -1. ,  1. ],</span>
+<span class="sd">            ...     [ 0. ,  0.5,  0.5,  1. ],</span>
+<span class="sd">            ...     [-1. ,  0. ,  0.5,  0. ],</span>
+<span class="sd">            ... ], preferences_rk=[</span>
+<span class="sd">            ...     [1, 2, 3, 0],</span>
+<span class="sd">            ...     [1, 2, 3, 0],</span>
+<span class="sd">            ...     [3, 1, 0, 2],</span>
+<span class="sd">            ...     [3, 2, 1, 0],</span>
+<span class="sd">            ...     [2, 1, 3, 0],</span>
+<span class="sd">            ... ])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleWoodall()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.candidates_cm_</span>
+<span class="sd">            array([ 0.,  0., nan,  0.])</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
+<span class="sd">            ...     [-0.5,  0. ,  0.5,  1. ],</span>
+<span class="sd">            ...     [-0.5, -0.5,  0. , -1. ],</span>
+<span class="sd">            ...     [ 0. ,  0. ,  1. , -1. ],</span>
+<span class="sd">            ...     [ 1. ,  1. , -1. , -1. ],</span>
+<span class="sd">            ...     [ 1. , -0.5,  1. ,  1. ],</span>
+<span class="sd">            ...     [ 0.5,  0. ,  0.5,  0.5],</span>
+<span class="sd">            ... ], preferences_rk=[</span>
+<span class="sd">            ...     [3, 2, 1, 0],</span>
+<span class="sd">            ...     [2, 1, 0, 3],</span>
+<span class="sd">            ...     [2, 1, 0, 3],</span>
+<span class="sd">            ...     [1, 0, 3, 2],</span>
+<span class="sd">            ...     [3, 0, 2, 1],</span>
+<span class="sd">            ...     [0, 2, 3, 1],</span>
+<span class="sd">            ... ])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleWoodall()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.is_cm_c_with_bounds_(1)</span>
+<span class="sd">            (True, 0.0, 1.0)</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
+<span class="sd">            ...     [ 0.5,  0. ,  0. ],</span>
+<span class="sd">            ...     [ 0.5,  1. ,  1. ],</span>
+<span class="sd">            ...     [-1. , -1. , -0.5],</span>
+<span class="sd">            ... ], preferences_rk=[</span>
+<span class="sd">            ...     [0, 2, 1],</span>
+<span class="sd">            ...     [1, 2, 0],</span>
+<span class="sd">            ...     [2, 0, 1],</span>
+<span class="sd">            ... ])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleWoodall()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.is_cm_c_with_bounds_(0)</span>
+<span class="sd">            (True, 0.0, 1.0)</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
+<span class="sd">            ...     [ 0. ,  0.5, -0.5,  0. ],</span>
+<span class="sd">            ...     [-0.5, -0.5, -0.5,  1. ],</span>
+<span class="sd">            ...     [ 1. , -1. ,  0. , -0.5],</span>
+<span class="sd">            ...     [ 0. ,  0. , -0.5,  0. ],</span>
+<span class="sd">            ...     [-0.5, -0.5,  1. ,  0. ],</span>
+<span class="sd">            ... ], preferences_rk=[</span>
+<span class="sd">            ...     [1, 3, 0, 2],</span>
+<span class="sd">            ...     [3, 2, 0, 1],</span>
+<span class="sd">            ...     [0, 2, 3, 1],</span>
+<span class="sd">            ...     [0, 1, 3, 2],</span>
+<span class="sd">            ...     [2, 3, 1, 0],</span>
+<span class="sd">            ... ])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleWoodall()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.is_cm_c_(1)</span>
+<span class="sd">            nan</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
+<span class="sd">            ...     [ 1. ,  0. ,  0.5, -0.5],</span>
+<span class="sd">            ...     [-1. ,  1. ,  1. ,  0.5],</span>
+<span class="sd">            ...     [ 0. ,  1. , -1. , -0.5],</span>
+<span class="sd">            ...     [ 0.5,  1. ,  0. ,  1. ],</span>
+<span class="sd">            ...     [ 1. , -1. , -0.5,  1. ],</span>
+<span class="sd">            ...     [ 0. ,  0.5,  0.5,  0.5],</span>
+<span class="sd">            ... ], preferences_rk=[</span>
+<span class="sd">            ...     [0, 2, 1, 3],</span>
+<span class="sd">            ...     [2, 1, 3, 0],</span>
+<span class="sd">            ...     [1, 0, 3, 2],</span>
+<span class="sd">            ...     [3, 1, 0, 2],</span>
+<span class="sd">            ...     [3, 0, 2, 1],</span>
+<span class="sd">            ...     [3, 1, 2, 0],</span>
+<span class="sd">            ... ])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleWoodall()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.necessary_coalition_size_cm_</span>
+<span class="sd">            array([0., 0., 0., 1.])</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">n_m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_ut</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span>
         <span class="n">n_s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span> <span class="o">-</span> <span class="n">n_m</span>
         <span class="n">candidates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">))</span>
@@ -485,7 +765,9 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;CM: suggested_path =&quot;</span><span class="p">,</span> <span class="n">suggested_path_two</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">suggested_path_one</span><span class="p">,</span> <span class="n">suggested_path_two</span><span class="p">):</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s1">&#39;CM: Same suggested path as before, skip computation&#39;</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
+                <span class="k">else</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
+                    <span class="c1"># TO DO: Investigate whether this case can actually happen.</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_reached_uncovered_code</span><span class="p">()</span>
                     <span class="n">ballots_m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">irv_</span><span class="o">.</span><span class="n">example_ballots_cm_c_</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
                     <span class="n">manipulation_found</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cm_aux_</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">ballots_m</span><span class="p">,</span> <span class="n">preferences_rk_s</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;CM: manipulation_found =&quot;</span><span class="p">,</span> <span class="n">manipulation_found</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>

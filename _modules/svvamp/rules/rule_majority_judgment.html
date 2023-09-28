@@ -504,6 +504,12 @@
     <span class="k">def</span> <span class="nf">allowed_grades</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;List or None. If ``step_grade`` is positive, the list of authorized grades. If ``step_grade`` is zero</span>
 <span class="sd">        (continuous set of grades), then None.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleMajorityJudgment()</span>
+<span class="sd">            &gt;&gt;&gt; print(rule.allowed_grades)</span>
+<span class="sd">            None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_grade</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
@@ -535,6 +541,21 @@
 <span class="sd">              :attr:`min_grade`) becomes :attr:`max_grade` (resp. :attr:`min_grade`).</span>
 
 <span class="sd">        2. If :attr:`step_grades` &gt; 0 (discrete set of grades), round each grade to the closest authorized grade.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
+<span class="sd">            ...     [ 1. ,  0.8, -0.6],</span>
+<span class="sd">            ...     [ 0.2, -0.4,  1. ],</span>
+<span class="sd">            ...     [ 1. ,  0. ,  0.2],</span>
+<span class="sd">            ...     [ 0.2,  0.8, -0.2],</span>
+<span class="sd">            ... ])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleMajorityJudgment(min_grade=0, max_grade=5, step_grade=1)(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.ballots_</span>
+<span class="sd">            array([[5, 4, 0],</span>
+<span class="sd">                   [2, 0, 5],</span>
+<span class="sd">                   [5, 0, 1],</span>
+<span class="sd">                   [2, 5, 0]])</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Compute ballots&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="c1"># Rescale (or not)</span>

@@ -402,6 +402,16 @@ class RuleNanson(Rule):
             >>> rule = RuleNanson()(profile)
             >>> rule.candidates_cm_
             array([0., 0., 0.])
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 1, 2],
+            ...     [1, 0, 2],
+            ...     [2, 1, 0],
+            ...     [2, 0, 1],
+            ... ])
+            >>> rule = RuleNanson()(profile)
+            >>> rule.necessary_coalition_size_cm_
+            array([0., 1., 1.])
         """
         # First part: is there a subset (including c) such that w has less than the average?
         n_v = self.profile_.n_v

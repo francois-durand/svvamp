@@ -18,3 +18,11 @@ def test_set_labels_candidates():
         ['Alice', 'Bob']
     """
     pass
+
+
+def test_to_csv():
+    """
+        >>> profile = Profile(preferences_ut=[[1, 0], [1, 0]])
+        >>> profile.to_csv(file_name='file_test_profile_to_csv.csv')
+    """
+    pass

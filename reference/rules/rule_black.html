@@ -133,6 +133,236 @@
 <dt class="sig sig-object py" id="svvamp.RuleBlack">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">svvamp.</span></span><span class="sig-name descname"><span class="pre">RuleBlack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/rules/rule_black.html#RuleBlack"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.RuleBlack" title="Link to this definition"></a></dt>
 <dd><p>Black rule</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[</span>
+<span class="gp">... </span>    <span class="p">[</span> <span class="mf">0.</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.</span> <span class="p">],</span>
+<span class="gp">... </span>    <span class="p">[</span> <span class="mf">1.</span> <span class="p">,</span> <span class="o">-</span><span class="mf">1.</span> <span class="p">,</span>  <span class="mf">0.5</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="p">[</span> <span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="p">[</span> <span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.</span> <span class="p">,</span>  <span class="mf">1.</span> <span class="p">],</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="o">-</span><span class="mf">1.</span> <span class="p">,</span> <span class="o">-</span><span class="mf">1.</span> <span class="p">,</span>  <span class="mf">1.</span> <span class="p">],</span>
+<span class="gp">... </span><span class="p">],</span> <span class="n">preferences_rk</span><span class="o">=</span><span class="p">[</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+<span class="gp">... </span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span> <span class="o">=</span> <span class="n">RuleBlack</span><span class="p">()(</span><span class="n">profile</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span><span class="o">.</span><span class="n">demo_results_</span><span class="p">(</span><span class="n">log_depth</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  
+
+<span class="go">************************</span>
+<span class="go">*                      *</span>
+<span class="go">*   Election Results   *</span>
+<span class="go">*                      *</span>
+<span class="go">************************</span>
+
+<span class="go">***************</span>
+<span class="go">*   Results   *</span>
+<span class="go">***************</span>
+<span class="go">profile_.preferences_ut (reminder) =</span>
+<span class="go">[[ 0.  -0.5 -1. ]</span>
+<span class="go"> [ 1.  -1.   0.5]</span>
+<span class="go"> [ 0.5  0.5 -0.5]</span>
+<span class="go"> [ 0.5  0.   1. ]</span>
+<span class="go"> [-1.  -1.   1. ]]</span>
+<span class="go">profile_.preferences_rk (reminder) =</span>
+<span class="go">[[0 1 2]</span>
+<span class="go"> [0 2 1]</span>
+<span class="go"> [1 0 2]</span>
+<span class="go"> [2 0 1]</span>
+<span class="go"> [2 1 0]]</span>
+<span class="go">ballots =</span>
+<span class="go">[[0 1 2]</span>
+<span class="go"> [0 2 1]</span>
+<span class="go"> [1 0 2]</span>
+<span class="go"> [2 0 1]</span>
+<span class="go"> [2 1 0]]</span>
+<span class="go">scores =</span>
+<span class="go">[[1. 0. 0.]</span>
+<span class="go"> [6. 4. 5.]]</span>
+<span class="go">candidates_by_scores_best_to_worst</span>
+<span class="go">[0, 2, 1]</span>
+<span class="go">scores_best_to_worst</span>
+<span class="go">[[1. 0. 0.]</span>
+<span class="go"> [6. 5. 4.]]</span>
+<span class="go">w = 0</span>
+<span class="go">score_w = [1. 6.]</span>
+<span class="go">total_utility_w = 1.0</span>
+
+<span class="go">*********************************</span>
+<span class="go">*   Condorcet efficiency (rk)   *</span>
+<span class="go">*********************************</span>
+<span class="go">w (reminder) = 0</span>
+
+<span class="go">condorcet_winner_rk_ctb = 0</span>
+<span class="go">w_is_condorcet_winner_rk_ctb = True</span>
+<span class="go">w_is_not_condorcet_winner_rk_ctb = False</span>
+<span class="go">w_missed_condorcet_winner_rk_ctb = False</span>
+
+<span class="go">condorcet_winner_rk = 0</span>
+<span class="go">w_is_condorcet_winner_rk = True</span>
+<span class="go">w_is_not_condorcet_winner_rk = False</span>
+<span class="go">w_missed_condorcet_winner_rk = False</span>
+
+<span class="go">***************************************</span>
+<span class="go">*   Condorcet efficiency (relative)   *</span>
+<span class="go">***************************************</span>
+<span class="go">w (reminder) = 0</span>
+
+<span class="go">condorcet_winner_ut_rel_ctb = 0</span>
+<span class="go">w_is_condorcet_winner_ut_rel_ctb = True</span>
+<span class="go">w_is_not_condorcet_winner_ut_rel_ctb = False</span>
+<span class="go">w_missed_condorcet_winner_ut_rel_ctb = False</span>
+
+<span class="go">condorcet_winner_ut_rel = 0</span>
+<span class="go">w_is_condorcet_winner_ut_rel = True</span>
+<span class="go">w_is_not_condorcet_winner_ut_rel = False</span>
+<span class="go">w_missed_condorcet_winner_ut_rel = False</span>
+
+<span class="go">***************************************</span>
+<span class="go">*   Condorcet efficiency (absolute)   *</span>
+<span class="go">***************************************</span>
+<span class="go">w (reminder) = 0</span>
+
+<span class="go">condorcet_admissible_candidates =</span>
+<span class="go">[ True False False]</span>
+<span class="go">w_is_condorcet_admissible = True</span>
+<span class="go">w_is_not_condorcet_admissible = False</span>
+<span class="go">w_missed_condorcet_admissible = False</span>
+
+<span class="go">weak_condorcet_winners =</span>
+<span class="go">[ True False False]</span>
+<span class="go">w_is_weak_condorcet_winner = True</span>
+<span class="go">w_is_not_weak_condorcet_winner = False</span>
+<span class="go">w_missed_weak_condorcet_winner = False</span>
+
+<span class="go">condorcet_winner_ut_abs_ctb = 0</span>
+<span class="go">w_is_condorcet_winner_ut_abs_ctb = True</span>
+<span class="go">w_is_not_condorcet_winner_ut_abs_ctb = False</span>
+<span class="go">w_missed_condorcet_winner_ut_abs_ctb = False</span>
+
+<span class="go">condorcet_winner_ut_abs = 0</span>
+<span class="go">w_is_condorcet_winner_ut_abs = True</span>
+<span class="go">w_is_not_condorcet_winner_ut_abs = False</span>
+<span class="go">w_missed_condorcet_winner_ut_abs = False</span>
+
+<span class="go">resistant_condorcet_winner = nan</span>
+<span class="go">w_is_resistant_condorcet_winner = False</span>
+<span class="go">w_is_not_resistant_condorcet_winner = True</span>
+<span class="go">w_missed_resistant_condorcet_winner = False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span><span class="o">.</span><span class="n">demo_manipulation_</span><span class="p">(</span><span class="n">log_depth</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  
+
+<span class="go">*****************************</span>
+<span class="go">*                           *</span>
+<span class="go">*   Election Manipulation   *</span>
+<span class="go">*                           *</span>
+<span class="go">*****************************</span>
+
+<span class="go">*********************************************</span>
+<span class="go">*   Basic properties of the voting system   *</span>
+<span class="go">*********************************************</span>
+<span class="go">with_two_candidates_reduces_to_plurality =  True</span>
+<span class="go">is_based_on_rk =  True</span>
+<span class="go">is_based_on_ut_minus1_1 =  False</span>
+<span class="go">meets_iia =  False</span>
+
+<span class="go">****************************************************</span>
+<span class="go">*   Manipulation properties of the voting system   *</span>
+<span class="go">****************************************************</span>
+<span class="go">Condorcet_c_ut_rel_ctb (False)     ==&gt;     Condorcet_c_ut_rel (False)</span>
+<span class="go"> ||                                                               ||</span>
+<span class="go"> ||     Condorcet_c_rk_ctb (False) ==&gt; Condorcet_c_rk (True)      ||</span>
+<span class="go"> ||           ||               ||       ||             ||         ||</span>
+<span class="go"> V            V                ||       ||             V          V</span>
+<span class="go">Condorcet_c_ut_abs_ctb (False)     ==&gt;     Condorcet_ut_abs_c (True)</span>
+<span class="go"> ||                            ||       ||                        ||</span>
+<span class="go"> ||                            V        V                         ||</span>
+<span class="go"> ||       maj_fav_c_rk_ctb (False) ==&gt; maj_fav_c_rk (True)        ||</span>
+<span class="go"> ||           ||                                       ||         ||</span>
+<span class="go"> V            V                                        V          V</span>
+<span class="go">majority_favorite_c_ut_ctb (False) ==&gt; majority_favorite_c_ut (True)</span>
+<span class="go"> ||                                                               ||</span>
+<span class="go"> V                                                                V</span>
+<span class="go">IgnMC_c_ctb (True)                 ==&gt;                IgnMC_c (True)</span>
+<span class="go"> ||                                                               ||</span>
+<span class="go"> V                                                                V</span>
+<span class="go">InfMC_c_ctb (True)                 ==&gt;                InfMC_c (True)</span>
+
+<span class="go">*****************************************************</span>
+<span class="go">*   Independence of Irrelevant Alternatives (IIA)   *</span>
+<span class="go">*****************************************************</span>
+<span class="go">w (reminder) = 0</span>
+<span class="go">is_iia = True</span>
+<span class="go">log_iia: iia_subset_maximum_size = 2.0</span>
+<span class="go">example_winner_iia = nan</span>
+<span class="go">example_subset_iia = nan</span>
+
+<span class="go">**********************</span>
+<span class="go">*   c-Manipulators   *</span>
+<span class="go">**********************</span>
+<span class="go">w (reminder) = 0</span>
+<span class="go">preferences_ut (reminder) =</span>
+<span class="go">[[ 0.  -0.5 -1. ]</span>
+<span class="go"> [ 1.  -1.   0.5]</span>
+<span class="go"> [ 0.5  0.5 -0.5]</span>
+<span class="go"> [ 0.5  0.   1. ]</span>
+<span class="go"> [-1.  -1.   1. ]]</span>
+<span class="go">v_wants_to_help_c =</span>
+<span class="go">[[False False False]</span>
+<span class="go"> [False False False]</span>
+<span class="go"> [False False False]</span>
+<span class="go"> [False False  True]</span>
+<span class="go"> [False False  True]]</span>
+
+<span class="go">************************************</span>
+<span class="go">*   Individual Manipulation (IM)   *</span>
+<span class="go">************************************</span>
+<span class="go">is_im = nan</span>
+<span class="go">log_im: im_option = lazy</span>
+<span class="go">candidates_im =</span>
+<span class="go">[ 0.  0. nan]</span>
+
+<span class="go">*********************************</span>
+<span class="go">*   Trivial Manipulation (TM)   *</span>
+<span class="go">*********************************</span>
+<span class="go">is_tm = False</span>
+<span class="go">log_tm: tm_option = exact</span>
+<span class="go">candidates_tm =</span>
+<span class="go">[0. 0. 0.]</span>
+
+<span class="go">********************************</span>
+<span class="go">*   Unison Manipulation (UM)   *</span>
+<span class="go">********************************</span>
+<span class="go">is_um = nan</span>
+<span class="go">log_um: um_option = lazy</span>
+<span class="go">candidates_um =</span>
+<span class="go">[ 0.  0. nan]</span>
+
+<span class="go">*********************************************</span>
+<span class="go">*   Ignorant-Coalition Manipulation (ICM)   *</span>
+<span class="go">*********************************************</span>
+<span class="go">is_icm = False</span>
+<span class="go">log_icm: icm_option = exact</span>
+<span class="go">candidates_icm =</span>
+<span class="go">[0. 0. 0.]</span>
+<span class="go">necessary_coalition_size_icm =</span>
+<span class="go">[0. 6. 4.]</span>
+<span class="go">sufficient_coalition_size_icm =</span>
+<span class="go">[0. 6. 4.]</span>
+
+<span class="go">***********************************</span>
+<span class="go">*   Coalition Manipulation (CM)   *</span>
+<span class="go">***********************************</span>
+<span class="go">is_cm = nan</span>
+<span class="go">log_cm: cm_option = lazy, um_option = lazy, tm_option = exact</span>
+<span class="go">candidates_cm =</span>
+<span class="go">[ 0.  0. nan]</span>
+<span class="go">necessary_coalition_size_cm =</span>
+<span class="go">[0. 1. 1.]</span>
+<span class="go">sufficient_coalition_size_cm =</span>
+<span class="go">[0. 2. 3.]</span>
+</pre></div>
+</div>
 <p class="rubric">Notes</p>
 <p>Black does not <code class="xref py py-attr docutils literal notranslate"><span class="pre">meets_condorcet_c_ut_rel</span></code>:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[</span>

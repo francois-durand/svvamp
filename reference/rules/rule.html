@@ -672,6 +672,22 @@ other voters still vote sincerely).</p>
 <dt class="sig sig-object py" id="svvamp.Rule.log_">
 <span class="sig-name descname"><span class="pre">log_</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/rules/rule.html#Rule.log_"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.Rule.log_" title="Link to this definition"></a></dt>
 <dd><p>Log corresponding to a particular manipulation method.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span> <span class="o">=</span> <span class="n">Rule</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span><span class="o">.</span><span class="n">log_</span><span class="p">(</span><span class="s1">&#39;whatever_iia_whatever&#39;</span><span class="p">)</span>
+<span class="go">&#39;iia_subset_maximum_size = 2.0&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span><span class="o">.</span><span class="n">log_</span><span class="p">(</span><span class="s1">&#39;whatever_im_whatever&#39;</span><span class="p">)</span>
+<span class="go">&#39;im_option = lazy&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span><span class="o">.</span><span class="n">log_</span><span class="p">(</span><span class="s1">&#39;whatever_icm_whatever&#39;</span><span class="p">)</span>
+<span class="go">&#39;icm_option = lazy&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span><span class="o">.</span><span class="n">log_</span><span class="p">(</span><span class="s1">&#39;whatever_tm_whatever&#39;</span><span class="p">)</span>
+<span class="go">&#39;tm_option = exact&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span><span class="o">.</span><span class="n">log_</span><span class="p">(</span><span class="s1">&#39;whatever_um_whatever&#39;</span><span class="p">)</span>
+<span class="go">&#39;um_option = lazy&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span><span class="o">.</span><span class="n">log_</span><span class="p">(</span><span class="s1">&#39;whatever_cm_whatever&#39;</span><span class="p">)</span>
+<span class="go">&#39;cm_option = lazy, um_option = lazy, icm_option = lazy, tm_option = exact&#39;</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py property">

@@ -429,6 +429,21 @@ candidates, then she attributes (<code class="xref py py-attr docutils literal n
 </li>
 <li><p>If <code class="xref py py-attr docutils literal notranslate"><span class="pre">step_grades</span></code> &gt; 0 (discrete set of grades), round each grade to the closest authorized grade.</p></li>
 </ol>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[</span>
+<span class="gp">... </span>    <span class="p">[</span> <span class="mf">1.</span> <span class="p">,</span>  <span class="mf">0.8</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.6</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="p">[</span> <span class="mf">0.2</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.4</span><span class="p">,</span>  <span class="mf">1.</span> <span class="p">],</span>
+<span class="gp">... </span>    <span class="p">[</span> <span class="mf">1.</span> <span class="p">,</span>  <span class="mf">0.</span> <span class="p">,</span>  <span class="mf">0.2</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="p">[</span> <span class="mf">0.2</span><span class="p">,</span>  <span class="mf">0.8</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2</span><span class="p">],</span>
+<span class="gp">... </span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span> <span class="o">=</span> <span class="n">RuleRangeVoting</span><span class="p">(</span><span class="n">min_grade</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_grade</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">step_grade</span><span class="o">=</span><span class="mi">1</span><span class="p">)(</span><span class="n">profile</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span><span class="o">.</span><span class="n">ballots_</span>
+<span class="go">array([[5, 4, 0],</span>
+<span class="go">       [2, 0, 5],</span>
+<span class="go">       [5, 0, 1],</span>
+<span class="go">       [2, 5, 0]])</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py property">

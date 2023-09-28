@@ -738,6 +738,48 @@
 <span class="sd">            &gt;&gt;&gt; rule = RuleTwoRound()(profile)</span>
 <span class="sd">            &gt;&gt;&gt; rule.is_cm_c_with_bounds_(0)</span>
 <span class="sd">            (False, 3.0, 3.0)</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
+<span class="sd">            ...     [-0.3675872 , -0.92998906],</span>
+<span class="sd">            ...     [-0.14930046,  0.98879188],</span>
+<span class="sd">            ...     [-0.07017986, -0.99753435],</span>
+<span class="sd">            ...     [-0.9806586 , -0.19572611],</span>
+<span class="sd">            ...     [-0.40994875, -0.91210856],</span>
+<span class="sd">            ... ], preferences_rk=[</span>
+<span class="sd">            ...     [0, 1],</span>
+<span class="sd">            ...     [1, 0],</span>
+<span class="sd">            ...     [0, 1],</span>
+<span class="sd">            ...     [1, 0],</span>
+<span class="sd">            ...     [0, 1],</span>
+<span class="sd">            ... ])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleTwoRound()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; _ = rule._cm_is_initialized_general_</span>
+<span class="sd">            &gt;&gt;&gt; rule._cm_main_work_c_(c=1, optimize_bounds=True)</span>
+<span class="sd">            &gt;&gt;&gt; rule._sufficient_coalition_size_cm[1]</span>
+<span class="sd">            4.0</span>
+
+<span class="sd">        In the following counter-intuitive case, the sufficient manipulator is indeed 0: only the last voter wants</span>
+<span class="sd">        to make candidate 0 win. But if this voter abstains, then candidate 0 wins. In other words, this is a case</span>
+<span class="sd">        of no-show paradox.</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
+<span class="sd">            ...     [ 1. ,  1. ,  0.5],</span>
+<span class="sd">            ...     [-1. , -1. ,  1. ],</span>
+<span class="sd">            ...     [-1. , -0.5, -1. ],</span>
+<span class="sd">            ...     [-0.5,  1. ,  0.5],</span>
+<span class="sd">            ...     [ 0. , -1. ,  0.5],</span>
+<span class="sd">            ... ], preferences_rk=[</span>
+<span class="sd">            ...     [0, 1, 2],</span>
+<span class="sd">            ...     [2, 0, 1],</span>
+<span class="sd">            ...     [1, 2, 0],</span>
+<span class="sd">            ...     [1, 2, 0],</span>
+<span class="sd">            ...     [2, 0, 1],</span>
+<span class="sd">            ... ])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleTwoRound()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; _ = rule._cm_is_initialized_general_</span>
+<span class="sd">            &gt;&gt;&gt; rule._cm_main_work_c_(c=0, optimize_bounds=True)</span>
+<span class="sd">            &gt;&gt;&gt; rule._sufficient_coalition_size_cm[0]</span>
+<span class="sd">            0.0</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">n_s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_ut</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)[</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span>
         <span class="n">ballots_first_round_s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ballots_</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_wants_to_help_c_</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]),</span> <span class="mi">0</span><span class="p">]</span>

@@ -759,6 +759,59 @@ class RuleCoombs(Rule):
             False
             >>> rule.sufficient_coalition_size_cm_
             array([0., 3.])
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [-0.5,  0.5,  0. ],
+            ...     [ 0. , -1. , -0.5],
+            ...     [-0.5, -0.5, -1. ],
+            ...     [-0.5, -0.5,  0.5],
+            ... ], preferences_rk=[
+            ...     [1, 2, 0],
+            ...     [0, 2, 1],
+            ...     [0, 1, 2],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleCoombs(cm_option='exact')(profile)
+            >>> rule.candidates_cm_
+            array([1., 0., 1.])
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 0. , -0.5, -0.5,  0. ],
+            ...     [ 1. ,  0. ,  0. ,  0. ],
+            ...     [-1. ,  1. , -0.5,  0. ],
+            ...     [-0.5,  0. , -1. , -0.5],
+            ...     [ 1. , -1. ,  0.5,  0.5],
+            ...     [-1. , -0.5,  1. ,  0. ],
+            ... ], preferences_rk=[
+            ...     [3, 0, 2, 1],
+            ...     [0, 2, 3, 1],
+            ...     [1, 3, 2, 0],
+            ...     [1, 3, 0, 2],
+            ...     [0, 2, 3, 1],
+            ...     [2, 3, 1, 0],
+            ... ])
+            >>> rule = RuleCoombs(cm_option='exact')(profile)
+            >>> rule.candidates_cm_
+            array([0., 0., 0., 1.])
+
+            >>> profile = Profile(preferences_ut=[
+            ...     [ 1. , -0.5,  0.5,  1. ],
+            ...     [ 0.5,  0.5,  0. ,  0.5],
+            ...     [ 0. ,  0.5,  1. , -1. ],
+            ...     [-0.5, -0.5,  0. , -0.5],
+            ...     [ 0.5,  1. ,  1. ,  0. ],
+            ... ], preferences_rk=[
+            ...     [3, 0, 2, 1],
+            ...     [3, 1, 0, 2],
+            ...     [2, 1, 0, 3],
+            ...     [2, 0, 3, 1],
+            ...     [2, 1, 0, 3],
+            ... ])
+            >>> rule = RuleCoombs(um_option='exact', cm_option='exact')(profile)
+            >>> rule.candidates_um_
+            array([1., 0., 0., 0.])
+            >>> rule.necessary_coalition_size_cm_
+            array([2., 2., 0., 3.])
         """
         n_m = self.profile_.matrix_duels_ut[c, self.w_]
         exact = (self.cm_option == "exact")

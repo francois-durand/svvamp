@@ -42,12 +42,13 @@ class ExperimentsCompiler:
         # Create the mother of all dataframes
         dataframes = []
         for f in self.results_directory.iterdir():
-            if '_m_en_' not in f.name:
+            if '_m_en' not in f.name:
                 continue
             with f.open() as buffer:
                 try:
                     new_df = pd.read_csv(buffer)
-                except UnicodeDecodeError:
+                except UnicodeDecodeError:  # pragma: no cover
+                    # This should not happen.
                     print(f)
                     raise UnicodeDecodeError
             new_df['file_name'] = f.name

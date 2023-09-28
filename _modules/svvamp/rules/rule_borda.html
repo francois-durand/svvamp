@@ -634,6 +634,16 @@
 <span class="sd">            &gt;&gt;&gt; rule = RuleBorda()(profile)</span>
 <span class="sd">            &gt;&gt;&gt; rule.candidates_cm_</span>
 <span class="sd">            array([0., 0., 0.])</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
+<span class="sd">            ...     [2, 0, 1],</span>
+<span class="sd">            ...     [1, 0, 2],</span>
+<span class="sd">            ...     [0, 2, 1],</span>
+<span class="sd">            ...     [1, 0, 2],</span>
+<span class="sd">            ... ])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleBorda()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.candidates_cm_</span>
+<span class="sd">            array([ 0., nan,  0.])</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">scores_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ballots_</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_wants_to_help_c_</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]),</span> <span class="p">:],</span> <span class="mi">0</span><span class="p">)</span>
         <span class="c1"># We add a tie-breaking term [(C-1)/C, (C-2)/C, ..., 0] to ease the computations.</span>

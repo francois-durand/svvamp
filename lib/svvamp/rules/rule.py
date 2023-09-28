@@ -292,6 +292,22 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
 
     def log_(self, method_name):
         """Log corresponding to a particular manipulation method.
+
+        Examples
+        --------
+            >>> rule = Rule()
+            >>> rule.log_('whatever_iia_whatever')
+            'iia_subset_maximum_size = 2.0'
+            >>> rule.log_('whatever_im_whatever')
+            'im_option = lazy'
+            >>> rule.log_('whatever_icm_whatever')
+            'icm_option = lazy'
+            >>> rule.log_('whatever_tm_whatever')
+            'tm_option = exact'
+            >>> rule.log_('whatever_um_whatever')
+            'um_option = lazy'
+            >>> rule.log_('whatever_cm_whatever')
+            'cm_option = lazy, um_option = lazy, icm_option = lazy, tm_option = exact'
         """
         if '_iia_' in method_name:
             return self.log_iia_
@@ -3485,7 +3501,8 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
                 n_sincere_c[necessary_coalition_size_cm != 0]
                 / necessary_coalition_size_cm[necessary_coalition_size_cm != 0]
             )
-        except ValueError:
+        except ValueError:  # pragma: no cover
+            # This should not happen.
             print(n_sincere_c)
             print(self.necessary_coalition_size_cm_)
             raise ValueError
@@ -3614,11 +3631,16 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
 
         self.log_depth = old_log_depth
 
-    def _reached_uncovered_code(self):
+    def _reached_uncovered_code(self, additional_message=''):
         """
         Print a log message when some uncovered code is reached.
 
         We should call this method each time a portion of code is not covered by the tests.
+
+        Parameters
+        ----------
+        additional_message: str
+            This additional message will be printed.
         """
         import inspect
         current_frame = inspect.currentframe()
@@ -3629,6 +3651,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
               "copy-paste the following log message.\n")
         print(self.__class__.__name__)
         print(caller_name)
+        print(additional_message)
         if self.profile_ is not None:
             print('n_v =', self.profile_.n_v)
             print('n_c =', self.profile_.n_c)
@@ -3653,9 +3676,17 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         """Set random options.
 
         For each option where a set of values is allowed, select a random value.
+
+        Examples
+        --------
+            >>> random.seed(42)
+            >>> rule = Rule()
+            >>> rule._set_random_options()
+            >>> rule.cm_option
+            'lazy'
         """
         for option, d in self.options_parameters.items():
-            if isinstance(d['allowed'], list):
+            if isinstance(d['allowed'], list) or isinstance(d['allowed'], set):
                 value = random.choice(d['allowed'])
                 setattr(self, option, value)
 
@@ -3667,6 +3698,13 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         -------
         str
             A random instruction.
+
+        Examples
+        --------
+            >>> random.seed(42)
+            >>> rule = Rule()
+            >>> rule._random_instruction()
+            'v_im_for_c_'
         """
         instructions = [
             'is_im_',
