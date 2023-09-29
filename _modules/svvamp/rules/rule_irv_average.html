@@ -115,6 +115,44 @@
 <span class="k">class</span> <span class="nc">RuleIRVAverage</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Instant Runoff Voting based on Average Score (Nanson-like).</span>
 
+<span class="sd">    Options</span>
+<span class="sd">    -------</span>
+<span class="sd">        &gt;&gt;&gt; RuleIRVAverage.print_options_parameters()</span>
+<span class="sd">        cm_option: [&#39;fast&#39;, &#39;slow&#39;, &#39;very_slow&#39;, &#39;exact&#39;]. Default: &#39;fast&#39;.</span>
+<span class="sd">        icm_option: [&#39;lazy&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="sd">        iia_subset_maximum_size: is_number. Default: 2.</span>
+<span class="sd">        im_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="sd">        tm_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        um_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    At each round, all candidates with a Plurality score strictly lower than average are simultaneously eliminated.</span>
+<span class="sd">    When all remaining candidates have the same Plurality score, the candidate with lowest index is declared the</span>
+<span class="sd">    winner.</span>
+
+<span class="sd">    This method meets MajFav criterion.</span>
+
+<span class="sd">    * :meth:`is_cm_`:</span>
+
+<span class="sd">        * :attr:`cm_option` = ``&#39;fast&#39;``: Rely on :class:`RuleIRV`&#39;s fast algorithm. Polynomial heuristic. Can prove</span>
+<span class="sd">          CM but unable to decide non-CM (except in rare obvious cases).</span>
+<span class="sd">        * :attr:`cm_option` = ``&#39;slow&#39;``: Rely on :class:`RuleExhaustiveBallot`&#39;s exact algorithm. Non-polynomial</span>
+<span class="sd">          heuristic (:math:`2^{n_c}`). Quite efficient to prove CM or non-CM.</span>
+<span class="sd">        * :attr:`cm_option` = ``&#39;very_slow&#39;``: Rely on :class:`RuleIRV`&#39;s exact algorithm. Non-polynomial</span>
+<span class="sd">          heuristic (:math:`n_c!`). Very efficient to prove CM or non-CM.</span>
+<span class="sd">        * :attr:`cm_option` = ``&#39;exact&#39;``: Non-polynomial algorithm from superclass :class:`Rule`.</span>
+
+<span class="sd">        Each algorithm above exploits the faster ones. For example, if :attr:`cm_option` = ``&#39;very_slow&#39;``,</span>
+<span class="sd">        SVVAMP tries the fast algorithm first, then the slow one, then the &#39;very slow&#39; one. As soon as it reaches</span>
+<span class="sd">        a decision, computation stops.</span>
+
+<span class="sd">    * :meth:`is_icm_`: Exact in polynomial time.</span>
+<span class="sd">    * :meth:`is_im_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
+<span class="sd">    * :meth:`is_iia`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
+<span class="sd">    * :meth:`is_tm_`: Exact in polynomial time.</span>
+<span class="sd">    * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
+
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
@@ -235,34 +273,6 @@
 <span class="sd">        w_is_resistant_condorcet_winner = False</span>
 <span class="sd">        w_is_not_resistant_condorcet_winner = True</span>
 <span class="sd">        w_missed_resistant_condorcet_winner = False</span>
-
-<span class="sd">    Notes</span>
-<span class="sd">    -----</span>
-<span class="sd">    At each round, all candidates with a Plurality score strictly lower than average are simultaneously eliminated.</span>
-<span class="sd">    When all remaining candidates have the same Plurality score, the candidate with lowest index is declared the</span>
-<span class="sd">    winner.</span>
-
-<span class="sd">    This method meets MajFav criterion.</span>
-
-<span class="sd">    * :meth:`is_cm_`:</span>
-
-<span class="sd">        * :attr:`cm_option` = ``&#39;fast&#39;``: Rely on :class:`RuleIRV`&#39;s fast algorithm. Polynomial heuristic. Can prove</span>
-<span class="sd">          CM but unable to decide non-CM (except in rare obvious cases).</span>
-<span class="sd">        * :attr:`cm_option` = ``&#39;slow&#39;``: Rely on :class:`RuleExhaustiveBallot`&#39;s exact algorithm. Non-polynomial</span>
-<span class="sd">          heuristic (:math:`2^{n_c}`). Quite efficient to prove CM or non-CM.</span>
-<span class="sd">        * :attr:`cm_option` = ``&#39;very_slow&#39;``: Rely on :class:`RuleIRV`&#39;s exact algorithm. Non-polynomial</span>
-<span class="sd">          heuristic (:math:`n_c!`). Very efficient to prove CM or non-CM.</span>
-<span class="sd">        * :attr:`cm_option` = ``&#39;exact&#39;``: Non-polynomial algorithm from superclass :class:`Rule`.</span>
-
-<span class="sd">        Each algorithm above exploits the faster ones. For example, if :attr:`cm_option` = ``&#39;very_slow&#39;``,</span>
-<span class="sd">        SVVAMP tries the fast algorithm first, then the slow one, then the &#39;very slow&#39; one. As soon as it reaches</span>
-<span class="sd">        a decision, computation stops.</span>
-
-<span class="sd">    * :meth:`is_icm_`: Exact in polynomial time.</span>
-<span class="sd">    * :meth:`is_im_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
-<span class="sd">    * :meth:`is_iia`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
-<span class="sd">    * :meth:`is_tm_`: Exact in polynomial time.</span>
-<span class="sd">    * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">full_name</span> <span class="o">=</span> <span class="s1">&#39;IRV-Average&#39;</span>

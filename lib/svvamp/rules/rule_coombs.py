@@ -28,6 +28,43 @@ from svvamp.preferences.profile import Profile
 class RuleCoombs(Rule):
     """Coombs method.
 
+    Options
+    -------
+        >>> RuleCoombs.print_options_parameters()
+        cm_option: ['fast', 'exact']. Default: 'fast'.
+        icm_option: ['exact']. Default: 'exact'.
+        iia_subset_maximum_size: is_number. Default: 2.
+        im_option: ['fast', 'exact']. Default: 'fast'.
+        tm_option: ['exact']. Default: 'exact'.
+        um_option: ['fast', 'exact']. Default: 'fast'.
+
+    Notes
+    -----
+    The candidate who is ranked last by most voters is eliminated. Then we iterate. Ties are broken in favor of
+    lower-index candidates: in case of a tie, the tied candidate with highest index is eliminated.
+
+    * :meth:`is_cm_`:
+
+        * :attr:`cm_option` = ``'fast'``: Polynomial heuristic. Can prove CM but unable to decide non-CM (except in
+          rare obvious cases).
+        * :attr:`cm_option` = ``'exact'``: Non-polynomial (:math:`n_c !`).
+
+    * :meth:`is_icm_`: Exact in polynomial time.
+    * :meth:`is_im_`:
+
+        * :attr:`im_option` = ``'fast'``: Polynomial heuristic. Can prove IM but unable to decide non-IM (except in
+          rare obvious cases).
+        * :attr:`im_option` = ``'exact'``: Non-polynomial (:math:`n_c !`).
+
+    * :meth:`is_iia`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
+    * :meth:`is_tm_`: Exact in polynomial time.
+    * :meth:`is_um_`: For this voting system, UM and CM are equivalent. For this reason, :attr:`um_option` and
+      :attr:`cm_option` are linked to each other: modifying one modifies the other accordingly.
+
+    References
+    ----------
+    'On The Complexity of Manipulating Elections', Tom Coleman and Vanessa Teague, 2007.
+
     Examples
     --------
         >>> profile = Profile(preferences_ut=[
@@ -257,33 +294,6 @@ class RuleCoombs(Rule):
         [0. 0. 0.]
         sufficient_coalition_size_cm =
         [0. 2. 3.]
-
-    Notes
-    -----
-    The candidate who is ranked last by most voters is eliminated. Then we iterate. Ties are broken in favor of
-    lower-index candidates: in case of a tie, the tied candidate with highest index is eliminated.
-
-    * :meth:`is_cm_`:
-
-        * :attr:`cm_option` = ``'fast'``: Polynomial heuristic. Can prove CM but unable to decide non-CM (except in
-          rare obvious cases).
-        * :attr:`cm_option` = ``'exact'``: Non-polynomial (:math:`n_c !`).
-
-    * :meth:`is_icm_`: Exact in polynomial time.
-    * :meth:`is_im_`:
-
-        * :attr:`im_option` = ``'fast'``: Polynomial heuristic. Can prove IM but unable to decide non-IM (except in
-          rare obvious cases).
-        * :attr:`im_option` = ``'exact'``: Non-polynomial (:math:`n_c !`).
-
-    * :meth:`is_iia`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
-    * :meth:`is_tm_`: Exact in polynomial time.
-    * :meth:`is_um_`: For this voting system, UM and CM are equivalent. For this reason, :attr:`um_option` and
-      :attr:`cm_option` are linked to each other: modifying one modifies the other accordingly.
-
-    References
-    ----------
-    'On The Complexity of Manipulating Elections', Tom Coleman and Vanessa Teague, 2007.
     """
 
     full_name = 'Coombs'

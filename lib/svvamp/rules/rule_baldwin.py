@@ -28,6 +28,37 @@ from svvamp.preferences.profile import Profile
 class RuleBaldwin(Rule):
     """Baldwin method.
 
+    Options
+    -------
+        >>> RuleBaldwin.print_options_parameters()
+        cm_option: ['fast', 'exact']. Default: 'fast'.
+        icm_option: ['exact']. Default: 'exact'.
+        iia_subset_maximum_size: is_number. Default: 2.
+        im_option: ['lazy', 'exact']. Default: 'lazy'.
+        tm_option: ['lazy', 'exact']. Default: 'exact'.
+        um_option: ['lazy', 'exact']. Default: 'lazy'.
+
+    Notes
+    -----
+    Each voter provides a strict order of preference. The candidate with lowest Borda score is eliminated. Then the
+    new Borda scores are computed. Etc. Ties are broken in favor of lower-index candidates: in case of a tie,
+    the candidate with highest index is eliminated.
+
+    Since a Condorcet winner has always a Borda score higher than average, Baldwin method meets the Condorcet
+    criterion.
+
+    * :meth:`is_cm_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
+    * :meth:`is_icm_`: Exact in polynomial time.
+    * :meth:`is_im_`: Deciding IM is NP-complete. Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
+    * :meth:`is_iia_`: Exact in polynomial time.
+    * :meth:`is_tm_`: Exact in polynomial time.
+    * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
+
+    References
+    ----------
+    'Complexity of and algorithms for the manipulation of Borda, Nanson's and Baldwin's voting rules',
+    Jessica Davies, George Katsirelos, Nina Narodytska, Toby Walsh and Lirong Xia, 2014.
+
     Examples
     --------
         >>> profile = Profile(preferences_ut=[
@@ -257,27 +288,6 @@ class RuleBaldwin(Rule):
         [0. 1. 3.]
         sufficient_coalition_size_cm =
         [0. 2. 3.]
-
-    Notes
-    -----
-    Each voter provides a strict order of preference. The candidate with lowest Borda score is eliminated. Then the
-    new Borda scores are computed. Etc. Ties are broken in favor of lower-index candidates: in case of a tie,
-    the candidate with highest index is eliminated.
-
-    Since a Condorcet winner has always a Borda score higher than average, Baldwin method meets the Condorcet
-    criterion.
-
-    * :meth:`is_cm_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
-    * :meth:`is_icm_`: Exact in polynomial time.
-    * :meth:`is_im_`: Deciding IM is NP-complete. Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
-    * :meth:`is_iia_`: Exact in polynomial time.
-    * :meth:`is_tm_`: Exact in polynomial time.
-    * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
-
-    References
-    ----------
-    'Complexity of and algorithms for the manipulation of Borda, Nanson's and Baldwin's voting rules',
-    Jessica Davies, George Katsirelos, Nina Narodytska, Toby Walsh and Lirong Xia, 2014.
     """
 
     full_name = 'Baldwin'

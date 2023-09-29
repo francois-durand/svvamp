@@ -20,9 +20,9 @@ This file is part of SVVAMP.
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
 import numpy as np
-from scipy.spatial import distance
 from svvamp.preferences.generator_profile import GeneratorProfile
 from svvamp.preferences.profile import Profile
+from svvamp.utils.misc import euclidean_distances
 
 
 class GeneratorProfileEuclideanBox(GeneratorProfile):
@@ -74,7 +74,7 @@ class GeneratorProfileEuclideanBox(GeneratorProfile):
     def __call__(self):
         voters_positions = np.random.rand(self.n_v, self.n_dim) * self.box_dimensions
         candidates_positions = self.shift + np.random.rand(self.n_c, self.n_dim) * self.box_dimensions
-        preferences_utilities = - distance.cdist(voters_positions, candidates_positions, 'euclidean')
+        preferences_utilities = - euclidean_distances(voters_positions, candidates_positions)
         preferences_utilities -= np.average(preferences_utilities)
         return Profile(preferences_ut=preferences_utilities, log_creation=self.log_creation,
                        sort_voters=self.sort_voters)

@@ -22,7 +22,7 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Contributing" href="../../contributing.html" />
+    <link rel="next" title="StudyProfileCriteria" href="../meta/study_profile_criteria.html" />
     <link rel="prev" title="RuleVeto" href="rule_veto.html" /> 
 </head>
 
@@ -55,8 +55,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../index.html#preferences">Preferences</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../index.html#voting-rules">Voting rules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#profiles">Profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#generators-of-profiles">Generators of Profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#plurality-elimination-engines">Plurality Elimination Engines</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#voting-rules">Voting Rules</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="rule.html">Rule</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_approval.html">RuleApproval</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_baldwin.html">RuleBaldwin</a></li>
@@ -97,6 +99,8 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#meta">Meta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#utils">Utils</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
@@ -135,6 +139,67 @@
 <dt class="sig sig-object py" id="svvamp.RuleWoodall">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">svvamp.</span></span><span class="sig-name descname"><span class="pre">RuleWoodall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/rules/rule_woodall.html#RuleWoodall"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.RuleWoodall" title="Link to this definition"></a></dt>
 <dd><p>Woodall Rule.</p>
+<p class="rubric">Options</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">RuleWoodall</span><span class="o">.</span><span class="n">print_options_parameters</span><span class="p">()</span>
+<span class="go">cm_option: [&#39;fast&#39;, &#39;slow&#39;, &#39;very_slow&#39;, &#39;exact&#39;]. Default: &#39;fast&#39;.</span>
+<span class="go">icm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="go">iia_subset_maximum_size: is_number. Default: 2.</span>
+<span class="go">im_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="go">tm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="go">um_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+</pre></div>
+</div>
+<p class="rubric">Notes</p>
+<p>Each voter must provide a strict total order. Among the candidates of the Smith set
+(in the sense of <code class="xref py py-attr docutils literal notranslate"><span class="pre">smith_set_rk</span></code>), elect the one that is eliminated latest by <a class="reference internal" href="rule_irv.html#svvamp.RuleIRV" title="svvamp.RuleIRV"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleIRV</span></code></a>.</p>
+<ul>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_cm_()</span></code>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'fast'</span></code>: Rely on <a class="reference internal" href="rule_irv.html#svvamp.RuleIRV" title="svvamp.RuleIRV"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleIRV</span></code></a>’s fast algorithm. Polynomial heuristic. Can prove
+CM but unable to decide non-CM (except in rare obvious cases).</p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'slow'</span></code>: Rely on <a class="reference internal" href="rule_exhaustive_ballot.html#svvamp.RuleExhaustiveBallot" title="svvamp.RuleExhaustiveBallot"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleExhaustiveBallot</span></code></a>’s exact algorithm. Non-polynomial
+heuristic (<span class="math notranslate nohighlight">\(2^{n_c}\)</span>). Quite efficient to prove CM or non-CM.</p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'very_slow'</span></code>: Rely on <a class="reference internal" href="rule_irv.html#svvamp.RuleIRV" title="svvamp.RuleIRV"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleIRV</span></code></a>’s exact algorithm. Non-polynomial
+heuristic (<span class="math notranslate nohighlight">\(n_c!\)</span>). Very efficient to prove CM or non-CM.</p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'exact'</span></code>: Non-polynomial algorithm from superclass <a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
+</ul>
+<p>Each algorithm above exploits the faster ones. For example, if <code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'very_slow'</span></code>,
+SVVAMP tries the fast algorithm first, then the slow one, then the ‘very slow’ one. As soon as it reaches
+a decision, computation stops.</p>
+</div></blockquote>
+</li>
+</ul>
+<p>Woodall does not <code class="xref py py-attr docutils literal notranslate"><span class="pre">meets_condorcet_c_ut_abs_ctb</span></code>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[</span>
+<span class="gp">... </span>    <span class="p">[</span> <span class="mf">0.</span> <span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="p">[</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>  <span class="mf">1.</span> <span class="p">],</span>
+<span class="gp">... </span><span class="p">],</span> <span class="n">preferences_rk</span><span class="o">=</span><span class="p">[</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<span class="gp">... </span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">RuleWoodall</span><span class="p">()(</span><span class="n">profile</span><span class="p">)</span><span class="o">.</span><span class="n">w_</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">condorcet_winner_ut_abs_ctb</span>
+<span class="go">0</span>
+</pre></div>
+</div>
+<p>Woodall does not <code class="xref py py-attr docutils literal notranslate"><span class="pre">meets_condorcet_c_ut_rel</span></code>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[</span>
+<span class="gp">... </span>    <span class="p">[</span> <span class="mf">1.</span> <span class="p">,</span>  <span class="mf">1.</span> <span class="p">,</span>  <span class="mf">1.</span> <span class="p">],</span>
+<span class="gp">... </span>    <span class="p">[</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>  <span class="mf">1.</span> <span class="p">],</span>
+<span class="gp">... </span><span class="p">],</span> <span class="n">preferences_rk</span><span class="o">=</span><span class="p">[</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<span class="gp">... </span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">RuleWoodall</span><span class="p">()(</span><span class="n">profile</span><span class="p">)</span><span class="o">.</span><span class="n">w_</span>
+<span class="go">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">condorcet_winner_ut_rel</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<p>‘Four Condorcet-Hare Hybrid Methods for Single-Winner Elections’, James Green-Armytage, 2011.</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[</span>
 <span class="gp">... </span>    <span class="p">[</span> <span class="mf">0.</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.</span> <span class="p">],</span>
@@ -365,57 +430,6 @@
 <span class="go">[0. 2. 4.]</span>
 </pre></div>
 </div>
-<p>Woodall does not <code class="xref py py-attr docutils literal notranslate"><span class="pre">meets_condorcet_c_ut_abs_ctb</span></code>:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[</span>
-<span class="gp">... </span>    <span class="p">[</span> <span class="mf">0.</span> <span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">],</span>
-<span class="gp">... </span>    <span class="p">[</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>  <span class="mf">1.</span> <span class="p">],</span>
-<span class="gp">... </span><span class="p">],</span> <span class="n">preferences_rk</span><span class="o">=</span><span class="p">[</span>
-<span class="gp">... </span>    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
-<span class="gp">... </span>    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
-<span class="gp">... </span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">RuleWoodall</span><span class="p">()(</span><span class="n">profile</span><span class="p">)</span><span class="o">.</span><span class="n">w_</span>
-<span class="go">1</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">condorcet_winner_ut_abs_ctb</span>
-<span class="go">0</span>
-</pre></div>
-</div>
-<p>Woodall does not <code class="xref py py-attr docutils literal notranslate"><span class="pre">meets_condorcet_c_ut_rel</span></code>:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[</span>
-<span class="gp">... </span>    <span class="p">[</span> <span class="mf">1.</span> <span class="p">,</span>  <span class="mf">1.</span> <span class="p">,</span>  <span class="mf">1.</span> <span class="p">],</span>
-<span class="gp">... </span>    <span class="p">[</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>  <span class="mf">1.</span> <span class="p">],</span>
-<span class="gp">... </span><span class="p">],</span> <span class="n">preferences_rk</span><span class="o">=</span><span class="p">[</span>
-<span class="gp">... </span>    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
-<span class="gp">... </span>    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
-<span class="gp">... </span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">RuleWoodall</span><span class="p">()(</span><span class="n">profile</span><span class="p">)</span><span class="o">.</span><span class="n">w_</span>
-<span class="go">0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">condorcet_winner_ut_rel</span>
-<span class="go">2</span>
-</pre></div>
-</div>
-<p class="rubric">Notes</p>
-<p>Each voter must provide a strict total order. Among the candidates of the Smith set
-(in the sense of <code class="xref py py-attr docutils literal notranslate"><span class="pre">smith_set_rk</span></code>), elect the one that is eliminated latest by <a class="reference internal" href="rule_irv.html#svvamp.RuleIRV" title="svvamp.RuleIRV"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleIRV</span></code></a>.</p>
-<ul>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_cm_()</span></code>:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'fast'</span></code>: Rely on <a class="reference internal" href="rule_irv.html#svvamp.RuleIRV" title="svvamp.RuleIRV"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleIRV</span></code></a>’s fast algorithm. Polynomial heuristic. Can prove
-CM but unable to decide non-CM (except in rare obvious cases).</p></li>
-<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'slow'</span></code>: Rely on <a class="reference internal" href="rule_exhaustive_ballot.html#svvamp.RuleExhaustiveBallot" title="svvamp.RuleExhaustiveBallot"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleExhaustiveBallot</span></code></a>’s exact algorithm. Non-polynomial
-heuristic (<span class="math notranslate nohighlight">\(2^{n_c}\)</span>). Quite efficient to prove CM or non-CM.</p></li>
-<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'very_slow'</span></code>: Rely on <a class="reference internal" href="rule_irv.html#svvamp.RuleIRV" title="svvamp.RuleIRV"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleIRV</span></code></a>’s exact algorithm. Non-polynomial
-heuristic (<span class="math notranslate nohighlight">\(n_c!\)</span>). Very efficient to prove CM or non-CM.</p></li>
-<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'exact'</span></code>: Non-polynomial algorithm from superclass <a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
-</ul>
-<p>Each algorithm above exploits the faster ones. For example, if <code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'very_slow'</span></code>,
-SVVAMP tries the fast algorithm first, then the slow one, then the ‘very slow’ one. As soon as it reaches
-a decision, computation stops.</p>
-</div></blockquote>
-</li>
-</ul>
-<p class="rubric">References</p>
-<p>‘Four Condorcet-Hare Hybrid Methods for Single-Winner Elections’, James Green-Armytage, 2011.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="svvamp.RuleWoodall.candidates_by_scores_best_to_worst_">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">candidates_by_scores_best_to_worst_</span></span><a class="headerlink" href="#svvamp.RuleWoodall.candidates_by_scores_best_to_worst_" title="Link to this definition"></a></dt>
@@ -471,7 +485,7 @@ behavior in most subclasses:</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="rule_veto.html" class="btn btn-neutral float-left" title="RuleVeto" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../../contributing.html" class="btn btn-neutral float-right" title="Contributing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../meta/study_profile_criteria.html" class="btn btn-neutral float-right" title="StudyProfileCriteria" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

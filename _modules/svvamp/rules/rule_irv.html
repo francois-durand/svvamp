@@ -116,6 +116,52 @@
 <span class="k">class</span> <span class="nc">RuleIRV</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Instant-Runoff Voting (IRV). Also known as Single Transferable Voting, Alternative Vote, Hare method.</span>
 
+<span class="sd">    Options</span>
+<span class="sd">    -------</span>
+<span class="sd">        &gt;&gt;&gt; RuleIRV.print_options_parameters()</span>
+<span class="sd">        cm_option: [&#39;fast&#39;, &#39;slow&#39;, &#39;exact&#39;]. Default: &#39;fast&#39;.</span>
+<span class="sd">        fast_algo: [&#39;c_minus_max&#39;, &#39;minus_max&#39;, &#39;hardest_first&#39;]. Default: &#39;c_minus_max&#39;.</span>
+<span class="sd">        icm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        iia_subset_maximum_size: is_number. Default: 2.</span>
+<span class="sd">        im_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="sd">        tm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        um_option: [&#39;fast&#39;, &#39;exact&#39;]. Default: &#39;fast&#39;.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The candidate who is ranked first by least voters is eliminated. Then we iterate. Ties are broken in favor of</span>
+<span class="sd">    lower-index candidates: in case of a tie, the tied candidate with highest index is eliminated.</span>
+
+<span class="sd">    * :meth:`is_cm_`: Deciding CM is NP-complete.</span>
+
+<span class="sd">        * :attr:`cm_option` = ``&#39;fast&#39;``: Polynomial heuristic. Can prove CM but unable to decide non-CM (except in</span>
+<span class="sd">          rare obvious cases).</span>
+<span class="sd">        * :attr:`cm_option` = ``&#39;slow&#39;``: Rely on :class:`~svvamp.ExhaustiveBallot`&#39;s exact algorithm. Non-polynomial</span>
+<span class="sd">          heuristic (:math:`2^{n_c}`). Quite efficient to prove CM or non-CM.</span>
+<span class="sd">        * :attr:`cm_option` = ``&#39;exact&#39;``: Non-polynomial algorithm (:math:`n_c!`) adapted from Walsh, 2010.</span>
+
+<span class="sd">    * :meth:`is_icm_`: Exact in polynomial time.</span>
+<span class="sd">    * :meth:`is_im_`: Deciding IM is NP-complete.</span>
+
+<span class="sd">        * :attr:`im_option` = ``&#39;lazy&#39;``: Lazy algorithm from superclass :class:`Rule`.</span>
+<span class="sd">        * :attr:`im_option` = ``&#39;exact&#39;``: Non-polynomial algorithm (:math:`n_c!`) adapted from Walsh, 2010.</span>
+
+<span class="sd">    * :meth:`is_iia_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
+<span class="sd">    * :meth:`is_tm_`: Exact in polynomial time.</span>
+<span class="sd">    * :meth:`is_um_`: Deciding UM is NP-complete.</span>
+
+<span class="sd">        * :attr:`um_option` = ``&#39;fast&#39;``: Polynomial heuristic. Can prove UM but unable to decide non-UM (except in</span>
+<span class="sd">          rare obvious cases).</span>
+<span class="sd">        * :attr:`um_option` = ``&#39;exact&#39;``: Non-polynomial algorithm (:math:`n_c!`) adapted from Walsh, 2010.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    &#39;Single transferable vote resists strategic voting&#39;, John J. Bartholdi and James B. Orlin, 1991.</span>
+
+<span class="sd">    &#39;On The Complexity of Manipulating Elections&#39;, Tom Coleman and Vanessa Teague, 2007.</span>
+
+<span class="sd">    &#39;Manipulability of Single Transferable Vote&#39;, Toby Walsh, 2010.</span>
+
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
@@ -345,41 +391,6 @@
 <span class="sd">        [0. 0. 2.]</span>
 <span class="sd">        sufficient_coalition_size_cm =</span>
 <span class="sd">        [0. 2. 4.]</span>
-
-<span class="sd">    Notes</span>
-<span class="sd">    -----</span>
-<span class="sd">    The candidate who is ranked first by least voters is eliminated. Then we iterate. Ties are broken in favor of</span>
-<span class="sd">    lower-index candidates: in case of a tie, the tied candidate with highest index is eliminated.</span>
-
-<span class="sd">    * :meth:`is_cm_`: Deciding CM is NP-complete.</span>
-
-<span class="sd">        * :attr:`cm_option` = ``&#39;fast&#39;``: Polynomial heuristic. Can prove CM but unable to decide non-CM (except in</span>
-<span class="sd">          rare obvious cases).</span>
-<span class="sd">        * :attr:`cm_option` = ``&#39;slow&#39;``: Rely on :class:`~svvamp.ExhaustiveBallot`&#39;s exact algorithm. Non-polynomial</span>
-<span class="sd">          heuristic (:math:`2^{n_c}`). Quite efficient to prove CM or non-CM.</span>
-<span class="sd">        * :attr:`cm_option` = ``&#39;exact&#39;``: Non-polynomial algorithm (:math:`n_c!`) adapted from Walsh, 2010.</span>
-
-<span class="sd">    * :meth:`is_icm_`: Exact in polynomial time.</span>
-<span class="sd">    * :meth:`is_im_`: Deciding IM is NP-complete.</span>
-
-<span class="sd">        * :attr:`im_option` = ``&#39;lazy&#39;``: Lazy algorithm from superclass :class:`Rule`.</span>
-<span class="sd">        * :attr:`im_option` = ``&#39;exact&#39;``: Non-polynomial algorithm (:math:`n_c!`) adapted from Walsh, 2010.</span>
-
-<span class="sd">    * :meth:`is_iia_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
-<span class="sd">    * :meth:`is_tm_`: Exact in polynomial time.</span>
-<span class="sd">    * :meth:`is_um_`: Deciding UM is NP-complete.</span>
-
-<span class="sd">        * :attr:`um_option` = ``&#39;fast&#39;``: Polynomial heuristic. Can prove UM but unable to decide non-UM (except in</span>
-<span class="sd">          rare obvious cases).</span>
-<span class="sd">        * :attr:`um_option` = ``&#39;exact&#39;``: Non-polynomial algorithm (:math:`n_c!`) adapted from Walsh, 2010.</span>
-
-<span class="sd">    References</span>
-<span class="sd">    ----------</span>
-<span class="sd">    &#39;Single transferable vote resists strategic voting&#39;, John J. Bartholdi and James B. Orlin, 1991.</span>
-
-<span class="sd">    &#39;On The Complexity of Manipulating Elections&#39;, Tom Coleman and Vanessa Teague, 2007.</span>
-
-<span class="sd">    &#39;Manipulability of Single Transferable Vote&#39;, Toby Walsh, 2010.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Exceptionally, for this voting system, we establish a pointer from the Profile object, so that the</span>
     <span class="c1"># manipulation results can be used by Condorcet-IRV.</span>

@@ -112,6 +112,35 @@
 <span class="k">class</span> <span class="nc">RuleNanson</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Nanson method.</span>
 
+<span class="sd">    Options</span>
+<span class="sd">    -------</span>
+<span class="sd">        &gt;&gt;&gt; RuleNanson.print_options_parameters()</span>
+<span class="sd">        cm_option: [&#39;fast&#39;, &#39;exact&#39;]. Default: &#39;fast&#39;.</span>
+<span class="sd">        icm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        iia_subset_maximum_size: is_number. Default: 2.</span>
+<span class="sd">        im_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="sd">        tm_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        um_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    At each round, all candidates with a Borda score strictly lower than average are simultaneously eliminated. When</span>
+<span class="sd">    all remaining candidates have the same Borda score, it means that the matrix of duels (for this subset of</span>
+<span class="sd">    candidates) has only ties. Then the candidate with lowest index is declared the winner. Since a Condorcet winner</span>
+<span class="sd">    has always a Borda score higher than average, Nanson method meets the Condorcet criterion.</span>
+
+<span class="sd">    * :meth:`is_cm_`: Deciding CM is NP-complete. Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
+<span class="sd">    * :meth:`is_icm_`: Exact in polynomial time.</span>
+<span class="sd">    * :meth:`is_im_`: Deciding IM is NP-complete. Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
+<span class="sd">    * :meth:`is_iia_`: Exact in polynomial time.</span>
+<span class="sd">    * :meth:`is_tm_`: Exact in polynomial time.</span>
+<span class="sd">    * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    &#39;Complexity of and algorithms for the manipulation of Borda, Nanson&#39;s and Baldwin&#39;s voting rules&#39;,</span>
+<span class="sd">    Jessica Davies, George Katsirelos, Nina Narodytska, Toby Walsh and Lirong Xia, 2014.</span>
+
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
@@ -345,25 +374,6 @@
 <span class="sd">        [0. 1. 3.]</span>
 <span class="sd">        sufficient_coalition_size_cm =</span>
 <span class="sd">        [0. 2. 3.]</span>
-
-<span class="sd">    Notes</span>
-<span class="sd">    -----</span>
-<span class="sd">    At each round, all candidates with a Borda score strictly lower than average are simultaneously eliminated. When</span>
-<span class="sd">    all remaining candidates have the same Borda score, it means that the matrix of duels (for this subset of</span>
-<span class="sd">    candidates) has only ties. Then the candidate with lowest index is declared the winner. Since a Condorcet winner</span>
-<span class="sd">    has always a Borda score higher than average, Nanson method meets the Condorcet criterion.</span>
-
-<span class="sd">    * :meth:`is_cm_`: Deciding CM is NP-complete. Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
-<span class="sd">    * :meth:`is_icm_`: Exact in polynomial time.</span>
-<span class="sd">    * :meth:`is_im_`: Deciding IM is NP-complete. Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
-<span class="sd">    * :meth:`is_iia_`: Exact in polynomial time.</span>
-<span class="sd">    * :meth:`is_tm_`: Exact in polynomial time.</span>
-<span class="sd">    * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
-
-<span class="sd">    References</span>
-<span class="sd">    ----------</span>
-<span class="sd">    &#39;Complexity of and algorithms for the manipulation of Borda, Nanson&#39;s and Baldwin&#39;s voting rules&#39;,</span>
-<span class="sd">    Jessica Davies, George Katsirelos, Nina Narodytska, Toby Walsh and Lirong Xia, 2014.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">full_name</span> <span class="o">=</span> <span class="s1">&#39;Nanson&#39;</span>

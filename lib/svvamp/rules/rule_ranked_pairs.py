@@ -29,6 +29,50 @@ from svvamp.preferences.profile import Profile
 class RuleRankedPairs(Rule):
     """Tideman's Ranked Pairs.
 
+    Options
+    -------
+        >>> RuleRankedPairs.print_options_parameters()
+        cm_option: ['lazy', 'exact']. Default: 'lazy'.
+        icm_option: ['exact']. Default: 'exact'.
+        iia_subset_maximum_size: is_number. Default: 2.
+        im_option: ['lazy', 'exact']. Default: 'lazy'.
+        tm_option: ['lazy', 'exact']. Default: 'exact'.
+        um_option: ['lazy', 'exact']. Default: 'lazy'.
+
+    Notes
+    -----
+    In the matrix of duels :attr:`matrix_duels_rk`, victories (and ties) are sorted by decreasing amplitude. If two
+    duels have the same score, we take first the one where the winner has the smallest index; if there is still a
+    choice to make, we take first the duel where the loser has the highest index.
+
+    Starting with the largest victory, we build a directed graph whose nodes are the candidates and edges are
+    victories. But if a victory creates a cycle in the graph, it is not validated and the edge is not added.
+
+    At the end, we have a transitive connected directed graph, whose adjacency relation is included in the relation
+    of victories (with ties broken), :attr:`matrix_victories_rk_ctb`. The maximal node of this graph (by topological
+    order) is declared the winner.
+
+    This method meets the Condorcet criterion.
+
+    * :meth:`is_cm_`: Deciding CM is NP-complete. Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
+    * :meth:`is_icm_`: Exact in polynomial time.
+    * :meth:`is_im_`: Deciding IM is NP-complete. Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
+    * :meth:`is_iia_`: Exact in polynomial time.
+    * :meth:`is_tm_`: Exact in polynomial time.
+    * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
+
+    References
+    ----------
+    'Independence of clones as a criterion for voting rules', Nicolaus Tideman, 1987.
+
+    'Complexity of Unweighted Coalitional Manipulation under Some Common Voting Rules', Lirong Xia et al., 2009.
+
+    'Schulze and Ranked-Pairs Voting are Fixed-Parameter Tractable to Bribe, Manipulate, and Control',
+    Lane A. Hemaspaandra, Rahman Lavaee and Curtis Menton, 2012.
+
+    'A Complexity-of-Strategic-Behavior Comparison between Schulze’s Rule and Ranked Pairs', David Parkes and
+    Lirong Xia, 2012.
+
     Examples
     --------
         >>> profile = Profile(preferences_ut=[
@@ -262,40 +306,6 @@ class RuleRankedPairs(Rule):
         [0. 2. 3.]
         sufficient_coalition_size_cm =
         [0. 2. 3.]
-
-    Notes
-    -----
-    In the matrix of duels :attr:`matrix_duels_rk`, victories (and ties) are sorted by decreasing amplitude. If two
-    duels have the same score, we take first the one where the winner has the smallest index; if there is still a
-    choice to make, we take first the duel where the loser has the highest index.
-
-    Starting with the largest victory, we build a directed graph whose nodes are the candidates and edges are
-    victories. But if a victory creates a cycle in the graph, it is not validated and the edge is not added.
-
-    At the end, we have a transitive connected directed graph, whose adjacency relation is included in the relation
-    of victories (with ties broken), :attr:`matrix_victories_rk_ctb`. The maximal node of this graph (by topological
-    order) is declared the winner.
-
-    This method meets the Condorcet criterion.
-
-    * :meth:`is_cm_`: Deciding CM is NP-complete. Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
-    * :meth:`is_icm_`: Exact in polynomial time.
-    * :meth:`is_im_`: Deciding IM is NP-complete. Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
-    * :meth:`is_iia_`: Exact in polynomial time.
-    * :meth:`is_tm_`: Exact in polynomial time.
-    * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
-
-    References
-    ----------
-    'Independence of clones as a criterion for voting rules', Nicolaus Tideman, 1987.
-
-    'Complexity of Unweighted Coalitional Manipulation under Some Common Voting Rules', Lirong Xia et al., 2009.
-
-    'Schulze and Ranked-Pairs Voting are Fixed-Parameter Tractable to Bribe, Manipulate, and Control',
-    Lane A. Hemaspaandra, Rahman Lavaee and Curtis Menton, 2012.
-
-    'A Complexity-of-Strategic-Behavior Comparison between Schulze’s Rule and Ranked Pairs', David Parkes and
-    Lirong Xia, 2012.
     """
 
     full_name = 'Ranked Pairs'

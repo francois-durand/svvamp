@@ -55,8 +55,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../index.html#preferences">Preferences</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../index.html#voting-rules">Voting rules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#profiles">Profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#generators-of-profiles">Generators of Profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#plurality-elimination-engines">Plurality Elimination Engines</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#voting-rules">Voting Rules</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="rule.html">Rule</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_approval.html">RuleApproval</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_baldwin.html">RuleBaldwin</a></li>
@@ -97,6 +99,8 @@
 <li class="toctree-l3"><a class="reference internal" href="rule_woodall.html">RuleWoodall</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#meta">Meta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#utils">Utils</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
@@ -135,6 +139,56 @@
 <dt class="sig sig-object py" id="svvamp.RuleCondorcetAbsIRV">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">svvamp.</span></span><span class="sig-name descname"><span class="pre">RuleCondorcetAbsIRV</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/rules/rule_condorcet_abs_irv.html#RuleCondorcetAbsIRV"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.RuleCondorcetAbsIRV" title="Link to this definition"></a></dt>
 <dd><p>Absolute-Condorcet Instant Runoff Voting.</p>
+<p class="rubric">Options</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">RuleCondorcetAbsIRV</span><span class="o">.</span><span class="n">print_options_parameters</span><span class="p">()</span>
+<span class="go">cm_option: [&#39;fast&#39;, &#39;slow&#39;, &#39;very_slow&#39;, &#39;exact&#39;]. Default: &#39;fast&#39;.</span>
+<span class="go">icm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="go">iia_subset_maximum_size: is_number. Default: 2.</span>
+<span class="go">im_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="go">tm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="go">um_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+</pre></div>
+</div>
+<p class="rubric">Notes</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When in doubt between <code class="docutils literal notranslate"><span class="pre">CondorcetAbsIRV</span></code> and <code class="xref py py-class docutils literal notranslate"><span class="pre">CondorcetVtbIRV</span></code>, we suggest to use
+<code class="xref py py-class docutils literal notranslate"><span class="pre">CondorcetVtbIRV</span></code>.</p>
+</div>
+<p>Each voter must provide a weak order, and a strict total order that is coherent with this weak order (i.e.,
+is a tie-breaking of this weak order).</p>
+<p>If there is a Condorcet winner (computed with the weak orders, i.e. in the sense of
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">matrix_victories_ut_abs</span></code>), then she is elected. Otherwise, <a class="reference internal" href="rule_irv.html#svvamp.RuleIRV" title="svvamp.RuleIRV"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleIRV</span></code></a> is used (with the strict total
+orders).</p>
+<p>If sincere preferences are strict total orders, then this voting system is equivalent to <code class="xref py py-class docutils literal notranslate"><span class="pre">CondorcetVtbIRV</span></code>
+for sincere voting, but manipulators have more possibilities (they can pretend to have ties in their
+preferences). In that case especially, it is a more ‘natural’ framework to use <code class="xref py py-class docutils literal notranslate"><span class="pre">CondorcetVtbIRV</span></code>.</p>
+<ul>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_cm_()</span></code>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'fast'</span></code>: Rely on <a class="reference internal" href="rule_irv.html#svvamp.RuleIRV" title="svvamp.RuleIRV"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleIRV</span></code></a>’s fast algorithm. Polynomial heuristic. Can prove CM
+but unable to decide non-CM (except in rare obvious cases).</p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'slow'</span></code>: Rely on <a class="reference internal" href="rule_exhaustive_ballot.html#svvamp.RuleExhaustiveBallot" title="svvamp.RuleExhaustiveBallot"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleExhaustiveBallot</span></code></a>’s exact algorithm. Non-polynomial
+heuristic (<span class="math notranslate nohighlight">\(2^{n_c}\)</span>). Quite efficient to prove CM or non-CM.</p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'very_slow'</span></code>: Rely on <a class="reference internal" href="rule_irv.html#svvamp.RuleIRV" title="svvamp.RuleIRV"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleIRV</span></code></a>’s exact algorithm. Non-polynomial
+heuristic (<span class="math notranslate nohighlight">\(n_c!\)</span>). Very efficient to prove CM or non-CM.</p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'exact'</span></code>: Non-polynomial algorithm from superclass <a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
+</ul>
+<p>Each algorithm above exploits the faster ones. For example, if <code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'very_slow'</span></code>, SVVAMP
+tries the fast algorithm first, then the slow one, then the ‘very slow’ one. As soon as it reaches a
+decision, computation stops.</p>
+</div></blockquote>
+</li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_icm_()</span></code>: Exact in polynomial time.</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_im_()</span></code>: Non-polynomial or non-exact algorithms from superclass <a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_iia_()</span></code>: Non-polynomial or non-exact algorithms from superclass <a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_tm_()</span></code>: Exact in polynomial time.</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_um_()</span></code>: Non-polynomial or non-exact algorithms from superclass <a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
+</ul>
+<p class="rubric">References</p>
+<p>‘Condorcet criterion, ordinality and reduction of coalitional manipulability’, François Durand,
+Fabien Mathieu and Ludovic Noirie, 2014.</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[</span>
 <span class="gp">... </span>    <span class="p">[</span> <span class="mf">0.</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.</span> <span class="p">],</span>
@@ -363,46 +417,6 @@
 <span class="go">[0. 2. 4.]</span>
 </pre></div>
 </div>
-<p class="rubric">Notes</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>When in doubt between <code class="docutils literal notranslate"><span class="pre">CondorcetAbsIRV</span></code> and <code class="xref py py-class docutils literal notranslate"><span class="pre">CondorcetVtbIRV</span></code>, we suggest to use
-<code class="xref py py-class docutils literal notranslate"><span class="pre">CondorcetVtbIRV</span></code>.</p>
-</div>
-<p>Each voter must provide a weak order, and a strict total order that is coherent with this weak order (i.e.,
-is a tie-breaking of this weak order).</p>
-<p>If there is a Condorcet winner (computed with the weak orders, i.e. in the sense of
-<code class="xref py py-attr docutils literal notranslate"><span class="pre">matrix_victories_ut_abs</span></code>), then she is elected. Otherwise, <a class="reference internal" href="rule_irv.html#svvamp.RuleIRV" title="svvamp.RuleIRV"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleIRV</span></code></a> is used (with the strict total
-orders).</p>
-<p>If sincere preferences are strict total orders, then this voting system is equivalent to <code class="xref py py-class docutils literal notranslate"><span class="pre">CondorcetVtbIRV</span></code>
-for sincere voting, but manipulators have more possibilities (they can pretend to have ties in their
-preferences). In that case especially, it is a more ‘natural’ framework to use <code class="xref py py-class docutils literal notranslate"><span class="pre">CondorcetVtbIRV</span></code>.</p>
-<ul>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_cm_()</span></code>:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'fast'</span></code>: Rely on <a class="reference internal" href="rule_irv.html#svvamp.RuleIRV" title="svvamp.RuleIRV"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleIRV</span></code></a>’s fast algorithm. Polynomial heuristic. Can prove CM
-but unable to decide non-CM (except in rare obvious cases).</p></li>
-<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'slow'</span></code>: Rely on <a class="reference internal" href="rule_exhaustive_ballot.html#svvamp.RuleExhaustiveBallot" title="svvamp.RuleExhaustiveBallot"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleExhaustiveBallot</span></code></a>’s exact algorithm. Non-polynomial
-heuristic (<span class="math notranslate nohighlight">\(2^{n_c}\)</span>). Quite efficient to prove CM or non-CM.</p></li>
-<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'very_slow'</span></code>: Rely on <a class="reference internal" href="rule_irv.html#svvamp.RuleIRV" title="svvamp.RuleIRV"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleIRV</span></code></a>’s exact algorithm. Non-polynomial
-heuristic (<span class="math notranslate nohighlight">\(n_c!\)</span>). Very efficient to prove CM or non-CM.</p></li>
-<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'exact'</span></code>: Non-polynomial algorithm from superclass <a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
-</ul>
-<p>Each algorithm above exploits the faster ones. For example, if <code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'very_slow'</span></code>, SVVAMP
-tries the fast algorithm first, then the slow one, then the ‘very slow’ one. As soon as it reaches a
-decision, computation stops.</p>
-</div></blockquote>
-</li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_icm_()</span></code>: Exact in polynomial time.</p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_im_()</span></code>: Non-polynomial or non-exact algorithms from superclass <a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_iia_()</span></code>: Non-polynomial or non-exact algorithms from superclass <a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_tm_()</span></code>: Exact in polynomial time.</p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_um_()</span></code>: Non-polynomial or non-exact algorithms from superclass <a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
-</ul>
-<p class="rubric">References</p>
-<p>‘Condorcet criterion, ordinality and reduction of coalitional manipulability’, François Durand,
-Fabien Mathieu and Ludovic Noirie, 2014.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="svvamp.RuleCondorcetAbsIRV.candidates_by_scores_best_to_worst_">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">candidates_by_scores_best_to_worst_</span></span><a class="headerlink" href="#svvamp.RuleCondorcetAbsIRV.candidates_by_scores_best_to_worst_" title="Link to this definition"></a></dt>

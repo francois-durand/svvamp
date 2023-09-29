@@ -55,8 +55,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../index.html#preferences">Preferences</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../index.html#voting-rules">Voting rules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#profiles">Profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#generators-of-profiles">Generators of Profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#plurality-elimination-engines">Plurality Elimination Engines</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#voting-rules">Voting Rules</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="rule.html">Rule</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_approval.html">RuleApproval</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_baldwin.html">RuleBaldwin</a></li>
@@ -97,6 +99,8 @@
 <li class="toctree-l3"><a class="reference internal" href="rule_woodall.html">RuleWoodall</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#meta">Meta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#utils">Utils</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
@@ -135,6 +139,57 @@
 <dt class="sig sig-object py" id="svvamp.RuleExhaustiveBallot">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">svvamp.</span></span><span class="sig-name descname"><span class="pre">RuleExhaustiveBallot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/rules/rule_exhaustive_ballot.html#RuleExhaustiveBallot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.RuleExhaustiveBallot" title="Link to this definition"></a></dt>
 <dd><p>Exhaustive Ballot.</p>
+<p class="rubric">Options</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">RuleExhaustiveBallot</span><span class="o">.</span><span class="n">print_options_parameters</span><span class="p">()</span>
+<span class="go">cm_option: [&#39;fast&#39;, &#39;exact&#39;]. Default: &#39;fast&#39;.</span>
+<span class="go">fast_algo: [&#39;c_minus_max&#39;, &#39;minus_max&#39;, &#39;hardest_first&#39;]. Default: &#39;c_minus_max&#39;.</span>
+<span class="go">icm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="go">iia_subset_maximum_size: is_number. Default: 2.</span>
+<span class="go">im_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="go">tm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="go">um_option: [&#39;fast&#39;, &#39;exact&#39;]. Default: &#39;fast&#39;.</span>
+</pre></div>
+</div>
+<p class="rubric">Notes</p>
+<p>At each round, voters vote for one non-eliminated candidate. The candidate with least votes is eliminated. Then
+the next round is held. Unlike <a class="reference internal" href="rule_irv.html#svvamp.RuleIRV" title="svvamp.RuleIRV"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleIRV</span></code></a>, voters actually vote at each round. This does not change
+anything for sincere voting, but offers a bit more possibilities for the manipulators. In case of a tie,
+the candidate with highest index is eliminated.</p>
+<ul>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_cm_()</span></code>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'fast'</span></code>: Polynomial heuristic. Can prove CM but unable to decide non-CM (except in
+rare obvious cases).</p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'exact'</span></code>: Non-polynomial algorithm (<span class="math notranslate nohighlight">\(2^{n_c}\)</span>) adapted from Walsh, 2010.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_icm_()</span></code>: Exact in polynomial time.</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_im_()</span></code>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">im_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'lazy'</span></code>: Lazy algorithm from superclass <a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">im_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'exact'</span></code>: Non-polynomial algorithm (<span class="math notranslate nohighlight">\(2^{n_c}\)</span>) adapted from Walsh, 2010.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_iia()</span></code>: Non-polynomial or non-exact algorithms from superclass <a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_tm_()</span></code>: Exact in polynomial time.</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_um_()</span></code>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">um_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'fast'</span></code>: Polynomial heuristic. Can prove UM but unable to decide non-UM (except in
+rare obvious cases).</p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">um_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'exact'</span></code>: Non-polynomial algorithm (<span class="math notranslate nohighlight">\(2^{n_c}\)</span>) adapted from Walsh, 2010.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p class="rubric">References</p>
+<p>‘Single transferable vote resists strategic voting’, John J. Bartholdi and James B. Orlin, 1991.</p>
+<p>‘On The Complexity of Manipulating Elections’, Tom Coleman and Vanessa Teague, 2007.</p>
+<p>‘Manipulability of Single Transferable Vote’, Toby Walsh, 2010.</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[</span>
 <span class="gp">... </span>    <span class="p">[</span> <span class="mf">0.</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.</span> <span class="p">],</span>
@@ -365,46 +420,6 @@
 <span class="go">[0. 2. 4.]</span>
 </pre></div>
 </div>
-<p class="rubric">Notes</p>
-<p>At each round, voters vote for one non-eliminated candidate. The candidate with least votes is eliminated. Then
-the next round is held. Unlike <a class="reference internal" href="rule_irv.html#svvamp.RuleIRV" title="svvamp.RuleIRV"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleIRV</span></code></a>, voters actually vote at each round. This does not change
-anything for sincere voting, but offers a bit more possibilities for the manipulators. In case of a tie,
-the candidate with highest index is eliminated.</p>
-<ul>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_cm_()</span></code>:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'fast'</span></code>: Polynomial heuristic. Can prove CM but unable to decide non-CM (except in
-rare obvious cases).</p></li>
-<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'exact'</span></code>: Non-polynomial algorithm (<span class="math notranslate nohighlight">\(2^{n_c}\)</span>) adapted from Walsh, 2010.</p></li>
-</ul>
-</div></blockquote>
-</li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_icm_()</span></code>: Exact in polynomial time.</p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_im_()</span></code>:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">im_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'lazy'</span></code>: Lazy algorithm from superclass <a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
-<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">im_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'exact'</span></code>: Non-polynomial algorithm (<span class="math notranslate nohighlight">\(2^{n_c}\)</span>) adapted from Walsh, 2010.</p></li>
-</ul>
-</div></blockquote>
-</li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_iia()</span></code>: Non-polynomial or non-exact algorithms from superclass <a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_tm_()</span></code>: Exact in polynomial time.</p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_um_()</span></code>:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">um_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'fast'</span></code>: Polynomial heuristic. Can prove UM but unable to decide non-UM (except in
-rare obvious cases).</p></li>
-<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">um_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'exact'</span></code>: Non-polynomial algorithm (<span class="math notranslate nohighlight">\(2^{n_c}\)</span>) adapted from Walsh, 2010.</p></li>
-</ul>
-</div></blockquote>
-</li>
-</ul>
-<p class="rubric">References</p>
-<p>‘Single transferable vote resists strategic voting’, John J. Bartholdi and James B. Orlin, 1991.</p>
-<p>‘On The Complexity of Manipulating Elections’, Tom Coleman and Vanessa Teague, 2007.</p>
-<p>‘Manipulability of Single Transferable Vote’, Toby Walsh, 2010.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="svvamp.RuleExhaustiveBallot.ballots_">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ballots_</span></span><a class="headerlink" href="#svvamp.RuleExhaustiveBallot.ballots_" title="Link to this definition"></a></dt>

@@ -29,6 +29,42 @@ from svvamp.preferences.profile import Profile
 class RuleKemeny(Rule):
     """Kemeny method.
 
+    Options
+    -------
+        >>> RuleKemeny.print_options_parameters()
+        cm_option: ['lazy', 'exact']. Default: 'lazy'.
+        icm_option: ['exact']. Default: 'exact'.
+        iia_subset_maximum_size: is_number. Default: 2.
+        im_option: ['lazy', 'exact']. Default: 'lazy'.
+        tm_option: ['lazy', 'exact']. Default: 'exact'.
+        um_option: ['lazy', 'exact']. Default: 'lazy'.
+
+    Notes
+    -----
+    We find the order on candidates whose total Kendall tau distance to the voters is minimal. The top element of
+    this order is declared the winner. In case several orders are optimal, the first one by lexicographic order is
+    given. This implies that if several winners are possible, the one with lowest index is declared the winner.
+
+    For this voting system, even deciding the sincere winner is NP-hard.
+
+    * :meth:`is_cm_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
+    * :meth:`is_icm_`: Exact in polynomial time (once the sincere winner is computed).
+    * :meth:`is_im_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
+    * :meth:`is_iia_`: Exact in polynomial time (once the sincere winner is computed).
+    * :meth:`is_tm_`: Exact in the time needed to decide the winner of one election, multiplied by :attr:`n_c`.
+    * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
+
+    References
+    ----------
+    'Mathematics without numbers', J. G. Kemeny, 1959.
+
+    'A Consistent Extension of Condorcet’s Election Principle', H. P. Young and A. Levenglick, 1978.
+
+    'On the approximability of Dodgson and Young elections', Ioannis Caragiannis et al., 2009.
+
+    'Comparing and aggregating partial orders with Kendall tau distances', Franz J. Brandenburg, Andreas Gleißner
+    and Andreas Hofmeier, 2013.
+
     Examples
     --------
         >>> profile = Profile(preferences_ut=[
@@ -256,32 +292,6 @@ class RuleKemeny(Rule):
         [0. 1. 2.]
         sufficient_coalition_size_cm =
         [0. 2. 3.]
-
-    Notes
-    -----
-    We find the order on candidates whose total Kendall tau distance to the voters is minimal. The top element of
-    this order is declared the winner. In case several orders are optimal, the first one by lexicographic order is
-    given. This implies that if several winners are possible, the one with lowest index is declared the winner.
-
-    For this voting system, even deciding the sincere winner is NP-hard.
-
-    * :meth:`is_cm_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
-    * :meth:`is_icm_`: Exact in polynomial time (once the sincere winner is computed).
-    * :meth:`is_im_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
-    * :meth:`is_iia_`: Exact in polynomial time (once the sincere winner is computed).
-    * :meth:`is_tm_`: Exact in the time needed to decide the winner of one election, multiplied by :attr:`n_c`.
-    * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
-
-    References
-    ----------
-    'Mathematics without numbers', J. G. Kemeny, 1959.
-
-    'A Consistent Extension of Condorcet’s Election Principle', H. P. Young and A. Levenglick, 1978.
-
-    'On the approximability of Dodgson and Young elections', Ioannis Caragiannis et al., 2009.
-
-    'Comparing and aggregating partial orders with Kendall tau distances', Franz J. Brandenburg, Andreas Gleißner
-    and Andreas Hofmeier, 2013.
     """
 
     full_name = 'Kemeny'

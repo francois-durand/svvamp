@@ -29,7 +29,58 @@ from svvamp.utils.misc import preferences_ut_to_matrix_duels_ut
 
 
 class RuleICRV(Rule):
-    """Instant-Condorcet Runoff Voting (ICRV).
+    """Instant-Condorcet Runoff Voting (ICRV), also known as Benham rule.
+
+    Options
+    -------
+        >>> RuleICRV.print_options_parameters()
+        cm_option: ['fast', 'slow', 'very_slow', 'exact']. Default: 'fast'.
+        icm_option: ['exact']. Default: 'exact'.
+        iia_subset_maximum_size: is_number. Default: 2.
+        im_option: ['lazy', 'exact']. Default: 'lazy'.
+        tm_option: ['lazy', 'exact']. Default: 'exact'.
+        um_option: ['lazy', 'exact']. Default: 'lazy'.
+
+    Notes
+    -----
+    Principle: eliminate candidates as in IRV; stop as soon as there is a Condorcet winner.
+
+    * Even round ``r`` (including round 0): if a candidate ``w`` has only victories against all other non-eliminated
+      candidates (i.e. is a Condorcet winner in this subset, in the sense of :attr:`matrix_victories_rk`), then ``w``
+      is declared the winner.
+    * Odd round ``r``: the candidate who is ranked first (among non-eliminated candidates) by least voters is
+      eliminated, like in :class:`RuleIRV`.
+
+    This method meets the Condorcet criterion.
+
+    * :meth:`is_cm_`:
+
+        * :attr:`cm_option` = ``'fast'``: Rely on :class:`RuleIRV`'s fast algorithm. Polynomial heuristic. Can prove
+          CM but unable to decide non-CM (except in rare obvious cases).
+        * :attr:`cm_option` = ``'slow'``: Rely on :class:`RuleExhaustiveBallot`'s exact algorithm. Non-polynomial
+          heuristic (:math:`2^{n_c}`). Quite efficient to prove CM or non-CM.
+        * :attr:`cm_option` = ``'very_slow'``: Rely on :class:`RuleIRV`'s exact algorithm. Non-polynomial
+          heuristic (:math:`n_c!`). Very efficient to prove CM or non-CM.
+        * :attr:`cm_option` = ``'exact'``: Non-polynomial algorithm from superclass :class:`Rule`.
+
+        Each algorithm above exploits the faster ones. For example, if :attr:`cm_option` = ``'very_slow'``,
+        SVVAMP tries the fast algorithm first, then the slow one, then the 'very slow' one. As soon as it reaches
+        a decision, computation stops.
+
+    * :meth:`is_icm_`: Exact in polynomial time.
+    * :meth:`is_im_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
+    * :meth:`~svvamp.Election.not_iia`: Exact in polynomial time.
+    * :meth:`is_tm_`: Exact in polynomial time.
+    * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
+
+    References
+    ----------
+    'Four Condorcet-Hare Hybrid Methods for Single-Winner Elections', James Green-Armytage, 2011.
+
+    See Also
+    --------
+    :class:`RuleExhaustiveBallot`, :class:`RuleIRV`, :class:`RuleIRVDuels`, :class:`RuleCondorcetAbsIRV`,
+    :class:`RuleCondorcetVtbIRV`.
 
     Examples
     --------
@@ -258,47 +309,6 @@ class RuleICRV(Rule):
         [0. 1. 2.]
         sufficient_coalition_size_cm =
         [0. 2. 4.]
-
-    Notes
-    -----
-    Principle: eliminate candidates as in IRV; stop as soon as there is a Condorcet winner.
-
-    * Even round ``r`` (including round 0): if a candidate ``w`` has only victories against all other non-eliminated
-      candidates (i.e. is a Condorcet winner in this subset, in the sense of :attr:`matrix_victories_rk`), then ``w``
-      is declared the winner.
-    * Odd round ``r``: the candidate who is ranked first (among non-eliminated candidates) by least voters is
-      eliminated, like in :class:`RuleIRV`.
-
-    This method meets the Condorcet criterion.
-
-    * :meth:`is_cm_`:
-
-        * :attr:`cm_option` = ``'fast'``: Rely on :class:`RuleIRV`'s fast algorithm. Polynomial heuristic. Can prove
-          CM but unable to decide non-CM (except in rare obvious cases).
-        * :attr:`cm_option` = ``'slow'``: Rely on :class:`RuleExhaustiveBallot`'s exact algorithm. Non-polynomial
-          heuristic (:math:`2^{n_c}`). Quite efficient to prove CM or non-CM.
-        * :attr:`cm_option` = ``'very_slow'``: Rely on :class:`RuleIRV`'s exact algorithm. Non-polynomial
-          heuristic (:math:`n_c!`). Very efficient to prove CM or non-CM.
-        * :attr:`cm_option` = ``'exact'``: Non-polynomial algorithm from superclass :class:`Rule`.
-
-        Each algorithm above exploits the faster ones. For example, if :attr:`cm_option` = ``'very_slow'``,
-        SVVAMP tries the fast algorithm first, then the slow one, then the 'very slow' one. As soon as it reaches
-        a decision, computation stops.
-
-    * :meth:`is_icm_`: Exact in polynomial time.
-    * :meth:`is_im_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
-    * :meth:`~svvamp.Election.not_iia`: Exact in polynomial time.
-    * :meth:`is_tm_`: Exact in polynomial time.
-    * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
-
-    References
-    ----------
-    'Four Condorcet-Hare Hybrid Methods for Single-Winner Elections', James Green-Armytage, 2011.
-
-    See Also
-    --------
-    :class:`RuleExhaustiveBallot`, :class:`RuleIRV`, :class:`RuleIRVDuels`, :class:`RuleCondorcetAbsIRV`,
-    :class:`RuleCondorcetVtbIRV`.
     """
 
     full_name = 'Benham'

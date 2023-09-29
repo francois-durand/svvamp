@@ -112,6 +112,37 @@
 <span class="k">class</span> <span class="nc">RuleBaldwin</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Baldwin method.</span>
 
+<span class="sd">    Options</span>
+<span class="sd">    -------</span>
+<span class="sd">        &gt;&gt;&gt; RuleBaldwin.print_options_parameters()</span>
+<span class="sd">        cm_option: [&#39;fast&#39;, &#39;exact&#39;]. Default: &#39;fast&#39;.</span>
+<span class="sd">        icm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        iia_subset_maximum_size: is_number. Default: 2.</span>
+<span class="sd">        im_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="sd">        tm_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        um_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    Each voter provides a strict order of preference. The candidate with lowest Borda score is eliminated. Then the</span>
+<span class="sd">    new Borda scores are computed. Etc. Ties are broken in favor of lower-index candidates: in case of a tie,</span>
+<span class="sd">    the candidate with highest index is eliminated.</span>
+
+<span class="sd">    Since a Condorcet winner has always a Borda score higher than average, Baldwin method meets the Condorcet</span>
+<span class="sd">    criterion.</span>
+
+<span class="sd">    * :meth:`is_cm_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
+<span class="sd">    * :meth:`is_icm_`: Exact in polynomial time.</span>
+<span class="sd">    * :meth:`is_im_`: Deciding IM is NP-complete. Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
+<span class="sd">    * :meth:`is_iia_`: Exact in polynomial time.</span>
+<span class="sd">    * :meth:`is_tm_`: Exact in polynomial time.</span>
+<span class="sd">    * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    &#39;Complexity of and algorithms for the manipulation of Borda, Nanson&#39;s and Baldwin&#39;s voting rules&#39;,</span>
+<span class="sd">    Jessica Davies, George Katsirelos, Nina Narodytska, Toby Walsh and Lirong Xia, 2014.</span>
+
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
@@ -341,27 +372,6 @@
 <span class="sd">        [0. 1. 3.]</span>
 <span class="sd">        sufficient_coalition_size_cm =</span>
 <span class="sd">        [0. 2. 3.]</span>
-
-<span class="sd">    Notes</span>
-<span class="sd">    -----</span>
-<span class="sd">    Each voter provides a strict order of preference. The candidate with lowest Borda score is eliminated. Then the</span>
-<span class="sd">    new Borda scores are computed. Etc. Ties are broken in favor of lower-index candidates: in case of a tie,</span>
-<span class="sd">    the candidate with highest index is eliminated.</span>
-
-<span class="sd">    Since a Condorcet winner has always a Borda score higher than average, Baldwin method meets the Condorcet</span>
-<span class="sd">    criterion.</span>
-
-<span class="sd">    * :meth:`is_cm_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
-<span class="sd">    * :meth:`is_icm_`: Exact in polynomial time.</span>
-<span class="sd">    * :meth:`is_im_`: Deciding IM is NP-complete. Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
-<span class="sd">    * :meth:`is_iia_`: Exact in polynomial time.</span>
-<span class="sd">    * :meth:`is_tm_`: Exact in polynomial time.</span>
-<span class="sd">    * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
-
-<span class="sd">    References</span>
-<span class="sd">    ----------</span>
-<span class="sd">    &#39;Complexity of and algorithms for the manipulation of Borda, Nanson&#39;s and Baldwin&#39;s voting rules&#39;,</span>
-<span class="sd">    Jessica Davies, George Katsirelos, Nina Narodytska, Toby Walsh and Lirong Xia, 2014.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">full_name</span> <span class="o">=</span> <span class="s1">&#39;Baldwin&#39;</span>

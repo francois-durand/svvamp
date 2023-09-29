@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ExperimentsCompiler &mdash; SVVAMP 0.9.1 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=9dc39874"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="MyLog" href="../utils/my_log.html" />
+    <link rel="prev" title="ExperimentAnalyzer" href="experiment_analyzer.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            SVVAMP
+          </a>
+              <div class="version">
+                0.9.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">SVVAMP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#profiles">Profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#generators-of-profiles">Generators of Profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#plurality-elimination-engines">Plurality Elimination Engines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#voting-rules">Voting Rules</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#meta">Meta</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="study_profile_criteria.html">StudyProfileCriteria</a></li>
+<li class="toctree-l3"><a class="reference internal" href="study_rule_criteria.html">StudyRuleCriteria</a></li>
+<li class="toctree-l3"><a class="reference internal" href="voting_rule_tasks.html">VotingRuleTasks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="experiment_analyzer.html">ExperimentAnalyzer</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">ExperimentsCompiler</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.ExperimentsCompiler"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#utils">Utils</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../history.html">History</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">SVVAMP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Reference</a></li>
+      <li class="breadcrumb-item active">ExperimentsCompiler</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/reference/meta/experiments_compiler.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="experimentscompiler">
+<h1>ExperimentsCompiler<a class="headerlink" href="#experimentscompiler" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="svvamp.ExperimentsCompiler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">svvamp.</span></span><span class="sig-name descname"><span class="pre">ExperimentsCompiler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prefix_tikz_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tikz_directory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tikz'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results_directory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'out'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(16,</span> <span class="pre">8)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/experiments_compiler.html#ExperimentsCompiler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.ExperimentsCompiler" title="Link to this definition"></a></dt>
+<dd><p>Compile the results of several experiments.</p>
+<p>Each experiment should be analyzed with <cite>ExperimentAnalyzer</cite>. Then <cite>ExperimentsCompiler</cite> compiles the
+analyses.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prefix_tikz_file</strong> (<em>str</em>) – Prefix for the names of the tikz files.</p></li>
+<li><p><strong>tikz_directory</strong> (<em>str</em>) – Directory where to save the tikz files.</p></li>
+<li><p><strong>results_directory</strong> (<em>str</em>) – Directory where to fetch the results obtained with <cite>ExperimentAnalyzer</cite>.</p></li>
+<li><p><strong>figsize</strong> (<em>tuple</em>) – Size of the figures.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.ExperimentsCompiler.cm_complexity_index_bar_plot">
+<span class="sig-name descname"><span class="pre">cm_complexity_index_bar_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tikz_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cm_complexity_index_bar_plot.tex'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/experiments_compiler.html#ExperimentsCompiler.cm_complexity_index_bar_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.ExperimentsCompiler.cm_complexity_index_bar_plot" title="Link to this definition"></a></dt>
+<dd><p>Bar plot: CM complexity index.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.ExperimentsCompiler.cm_power_index_bar_plot">
+<span class="sig-name descname"><span class="pre">cm_power_index_bar_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tikz_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cm_power_index_bar_plot.tex'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/experiments_compiler.html#ExperimentsCompiler.cm_power_index_bar_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.ExperimentsCompiler.cm_power_index_bar_plot" title="Link to this definition"></a></dt>
+<dd><p>Bar plot: CM power index.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.ExperimentsCompiler.cm_rate_bar_plot">
+<span class="sig-name descname"><span class="pre">cm_rate_bar_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tikz_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cm_rate_bar_plot.tex'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/experiments_compiler.html#ExperimentsCompiler.cm_rate_bar_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.ExperimentsCompiler.cm_rate_bar_plot" title="Link to this definition"></a></dt>
+<dd><p>Bar plot: CM rate.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.ExperimentsCompiler.cm_tm_um_rate_bar_plot">
+<span class="sig-name descname"><span class="pre">cm_tm_um_rate_bar_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tikz_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cm_tm_um_rate_bar_plot.tex'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/experiments_compiler.html#ExperimentsCompiler.cm_tm_um_rate_bar_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.ExperimentsCompiler.cm_tm_um_rate_bar_plot" title="Link to this definition"></a></dt>
+<dd><p>Bar plot: CM, TM and UM rates.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.ExperimentsCompiler.condorcet_consistency_bar_plot">
+<span class="sig-name descname"><span class="pre">condorcet_consistency_bar_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tikz_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'condorcet_consistency_bar_plot.tex'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/experiments_compiler.html#ExperimentsCompiler.condorcet_consistency_bar_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.ExperimentsCompiler.condorcet_consistency_bar_plot" title="Link to this definition"></a></dt>
+<dd><p>Bar plot: Condorcet consistency.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.ExperimentsCompiler.df_computation_time">
+<span class="sig-name descname"><span class="pre">df_computation_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/experiments_compiler.html#ExperimentsCompiler.df_computation_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.ExperimentsCompiler.df_computation_time" title="Link to this definition"></a></dt>
+<dd><p>Dataframe: Computation time.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.ExperimentsCompiler.df_computation_time_cumulative">
+<span class="sig-name descname"><span class="pre">df_computation_time_cumulative</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/experiments_compiler.html#ExperimentsCompiler.df_computation_time_cumulative"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.ExperimentsCompiler.df_computation_time_cumulative" title="Link to this definition"></a></dt>
+<dd><p>Dataframe: Cumulative computation time.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.ExperimentsCompiler.loss_social_welfare_bar_plot">
+<span class="sig-name descname"><span class="pre">loss_social_welfare_bar_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tikz_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'loss_social_welfare_bar_plot.tex'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/experiments_compiler.html#ExperimentsCompiler.loss_social_welfare_bar_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.ExperimentsCompiler.loss_social_welfare_bar_plot" title="Link to this definition"></a></dt>
+<dd><p>Bar plot: loss of social welfare.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.ExperimentsCompiler.my_tikzplotlib_save">
+<span class="sig-name descname"><span class="pre">my_tikzplotlib_save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tikz_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_ticks_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'\\axisWidth'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis_height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'\\axisHeight'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/experiments_compiler.html#ExperimentsCompiler.my_tikzplotlib_save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.ExperimentsCompiler.my_tikzplotlib_save" title="Link to this definition"></a></dt>
+<dd><p>Save a figure in tikz.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.ExperimentsCompiler.nb_candidates_cm_bar_plot">
+<span class="sig-name descname"><span class="pre">nb_candidates_cm_bar_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tikz_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'nb_candidates_cm_bar_plot.tex'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/experiments_compiler.html#ExperimentsCompiler.nb_candidates_cm_bar_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.ExperimentsCompiler.nb_candidates_cm_bar_plot" title="Link to this definition"></a></dt>
+<dd><p>Bar plot: Number of CM winners.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.ExperimentsCompiler.nb_candidates_cm_line_plot">
+<span class="sig-name descname"><span class="pre">nb_candidates_cm_line_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rules</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tikz_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'nb_candidates_cm_line_plot.tex'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/experiments_compiler.html#ExperimentsCompiler.nb_candidates_cm_line_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.ExperimentsCompiler.nb_candidates_cm_line_plot" title="Link to this definition"></a></dt>
+<dd><p>Line plot: Number of CM winners.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.ExperimentsCompiler.profile_features_bar_plot">
+<span class="sig-name descname"><span class="pre">profile_features_bar_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tikz_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'profile_features_bar_plot.tex'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/experiments_compiler.html#ExperimentsCompiler.profile_features_bar_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.ExperimentsCompiler.profile_features_bar_plot" title="Link to this definition"></a></dt>
+<dd><p>Bar plot: Features of the profiles (existence of Condorcet winner, etc).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.ExperimentsCompiler.profiles_scatter_plot">
+<span class="sig-name descname"><span class="pre">profiles_scatter_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tikz_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'profiles_scatter_plot.tex'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/experiments_compiler.html#ExperimentsCompiler.profiles_scatter_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.ExperimentsCompiler.profiles_scatter_plot" title="Link to this definition"></a></dt>
+<dd><p>Scatter plot: Number of voters and candidates of the profiles.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.ExperimentsCompiler.rate_bar_plot">
+<span class="sig-name descname"><span class="pre">rate_bar_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">criterion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylabel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tikz_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">draw_rcw_line</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/experiments_compiler.html#ExperimentsCompiler.rate_bar_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.ExperimentsCompiler.rate_bar_plot" title="Link to this definition"></a></dt>
+<dd><p>Bar plot: Rate of some criterion (auxiliary function).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.ExperimentsCompiler.replace_rule_names">
+<span class="sig-name descname"><span class="pre">replace_rule_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_ticks_labels</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/experiments_compiler.html#ExperimentsCompiler.replace_rule_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.ExperimentsCompiler.replace_rule_names" title="Link to this definition"></a></dt>
+<dd><p>Replace the x-labels with relevant abbreviations (auxiliary function).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.ExperimentsCompiler.resistant_condorcet_line">
+<span class="sig-name descname"><span class="pre">resistant_condorcet_line</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/experiments_compiler.html#ExperimentsCompiler.resistant_condorcet_line"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.ExperimentsCompiler.resistant_condorcet_line" title="Link to this definition"></a></dt>
+<dd><p>Draw the ‘Resistant Condorcet’ line (upper bound of CM rate for Condorcet rules).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.ExperimentsCompiler.tm_rate_bar_plot">
+<span class="sig-name descname"><span class="pre">tm_rate_bar_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tikz_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tm_rate_bar_plot.tex'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/experiments_compiler.html#ExperimentsCompiler.tm_rate_bar_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.ExperimentsCompiler.tm_rate_bar_plot" title="Link to this definition"></a></dt>
+<dd><p>Bar plot: TM rate.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.ExperimentsCompiler.um_rate_bar_plot">
+<span class="sig-name descname"><span class="pre">um_rate_bar_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tikz_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'um_rate_bar_plot.tex'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/experiments_compiler.html#ExperimentsCompiler.um_rate_bar_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.ExperimentsCompiler.um_rate_bar_plot" title="Link to this definition"></a></dt>
+<dd><p>Bar plot: UM rate.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="experiment_analyzer.html" class="btn btn-neutral float-left" title="ExperimentAnalyzer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../utils/my_log.html" class="btn btn-neutral float-right" title="MyLog" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, François Durand.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

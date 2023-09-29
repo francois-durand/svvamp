@@ -28,6 +28,26 @@ from svvamp.preferences.profile import Profile
 class RulePlurality(Rule):
     """Plurality.
 
+    Options
+    -------
+        >>> RulePlurality.print_options_parameters()
+        cm_option: ['exact']. Default: 'exact'.
+        icm_option: ['exact']. Default: 'exact'.
+        iia_subset_maximum_size: is_number. Default: 2.
+        im_option: ['exact']. Default: 'exact'.
+        tm_option: ['exact']. Default: 'exact'.
+        um_option: ['exact']. Default: 'exact'.
+
+    Notes
+    -----
+    Each voter votes for one candidate. The candidate with most votes is declared the winner. In case of a tie,
+    the tied candidate with lowest index wins.
+
+    Sincere voters vote for their top-ranked candidate.
+
+    * :meth:`is_iia`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
+    * :meth:`is_cm_`, :meth:`is_icm_`, :meth:`is_im_`, :meth:`is_tm_`, :meth:`is_um_`: Exact in polynomial time.
+
     Examples
     --------
         >>> profile = Profile(preferences_ut=[
@@ -251,16 +271,6 @@ class RulePlurality(Rule):
         [0. 2. 3.]
         sufficient_coalition_size_cm =
         [0. 2. 3.]
-
-    Notes
-    -----
-    Each voter votes for one candidate. The candidate with most votes is declared the winner. In case of a tie,
-    the tied candidate with lowest index wins.
-
-    Sincere voters vote for their top-ranked candidate.
-
-    * :meth:`is_iia`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
-    * :meth:`is_cm_`, :meth:`is_icm_`, :meth:`is_im_`, :meth:`is_tm_`, :meth:`is_um_`: Exact in polynomial time.
     """
 
     full_name = 'Plurality'

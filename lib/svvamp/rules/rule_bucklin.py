@@ -29,6 +29,36 @@ from svvamp.preferences.profile import Profile
 class RuleBucklin(Rule):
     """Bucklin method.
 
+    Options
+    -------
+        >>> RuleBucklin.print_options_parameters()
+        cm_option: ['exact']. Default: 'exact'.
+        icm_option: ['exact']. Default: 'exact'.
+        iia_subset_maximum_size: is_number. Default: 2.
+        im_option: ['exact']. Default: 'exact'.
+        tm_option: ['exact']. Default: 'exact'.
+        um_option: ['exact']. Default: 'exact'.
+
+    Notes
+    -----
+    At counting round ``r``, all voters who rank candidate ``c`` in ``r``-`th` position gives her an additional
+    vote. As soon as at least one candidate has more than :attr:`n_v`/2 votes (accrued with previous rounds),
+    the candidate with most votes is declared the winner. In case of a tie, the candidate with lowest index wins.
+
+    * :meth:`is_cm_`: Exact in polynomial time.
+    * :meth:`is_icm_`: Exact in polynomial time.
+    * :meth:`is_im_`: Exact in polynomial time.
+    * :meth:`is_iia_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
+    * :meth:`is_tm_`: Exact in polynomial time.
+    * :meth:`is_um_`: Exact in polynomial time.
+
+    References
+    ----------
+    'The Majoritarian Compromise in large societies', Arkadii Slinko, 2002.
+
+    'Complexity of Unweighted Coalitional Manipulation under Some Common Voting Rules', Lirong Xia,
+    Michael Zuckerman, Ariel D. Procaccia, Vincent Conitzer and Jeffrey S. Rosenschein, 2009.
+
     Examples
     --------
         >>> profile = Profile(preferences_ut=[
@@ -260,26 +290,6 @@ class RuleBucklin(Rule):
         [0. 1. 3.]
         sufficient_coalition_size_cm =
         [0. 2. 4.]
-
-    Notes
-    -----
-    At counting round ``r``, all voters who rank candidate ``c`` in ``r``-`th` position gives her an additional
-    vote. As soon as at least one candidate has more than :attr:`n_v`/2 votes (accrued with previous rounds),
-    the candidate with most votes is declared the winner. In case of a tie, the candidate with lowest index wins.
-
-    * :meth:`is_cm_`: Exact in polynomial time.
-    * :meth:`is_icm_`: Exact in polynomial time.
-    * :meth:`is_im_`: Exact in polynomial time.
-    * :meth:`is_iia_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
-    * :meth:`is_tm_`: Exact in polynomial time.
-    * :meth:`is_um_`: Exact in polynomial time.
-
-    References
-    ----------
-    'The Majoritarian Compromise in large societies', Arkadii Slinko, 2002.
-
-    'Complexity of Unweighted Coalitional Manipulation under Some Common Voting Rules', Lirong Xia,
-    Michael Zuckerman, Ariel D. Procaccia, Vincent Conitzer and Jeffrey S. Rosenschein, 2009.
     """
 
     full_name = 'Bucklin'

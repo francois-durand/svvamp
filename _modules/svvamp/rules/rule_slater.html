@@ -113,6 +113,21 @@
 <span class="k">class</span> <span class="nc">RuleSlater</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Slater method.</span>
 
+<span class="sd">    Options</span>
+<span class="sd">    -------</span>
+<span class="sd">        &gt;&gt;&gt; RuleSlater.print_options_parameters()</span>
+<span class="sd">        cm_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="sd">        icm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        iia_subset_maximum_size: is_number. Default: 2.</span>
+<span class="sd">        im_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="sd">        tm_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        um_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The Slater method is defined similarly to the Kemeny method, but relying on the matrix of victories instead</span>
+<span class="sd">    of the matrix of duels.</span>
+
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>

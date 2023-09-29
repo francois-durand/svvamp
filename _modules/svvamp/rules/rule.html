@@ -123,14 +123,6 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    options_parameters : dict</span>
-<span class="sd">        It is a dictionary of allowed and default options. Allowed is a minimal check that will</span>
-<span class="sd">        be performed before launching big simulations, but other checks might be performed when setting the option.</span>
-<span class="sd">        Allowed is either a list of values, like [&#39;lazy&#39;, &#39;fast&#39;, &#39;exact&#39;], or a function checking if the parameter</span>
-<span class="sd">        is correct. Example: ``{&#39;max_grade&#39;: dict(allowed=np.isfinite, default=1), &#39;option_example&#39;: dict(allowed=[42,</span>
-<span class="sd">        51], default=42)}``.</span>
-<span class="sd">    kwargs</span>
-<span class="sd">        Additional keyword parameters. See :attr:`options_parameters` for allowed and default options.</span>
 <span class="sd">    with_two_candidates_reduces_to_plurality : bool</span>
 <span class="sd">        ``True`` iff, when using this voting system with only two candidates, it amounts to Plurality (with voter and</span>
 <span class="sd">        candidate tie-breaking).</span>
@@ -155,11 +147,13 @@
 <span class="sd">        InfMC_c_ctb, then precheck on ICM will not do better than other basic prechecks.</span>
 <span class="sd">    log_identity : str</span>
 <span class="sd">        Cf. :class:`MyLog`.</span>
+<span class="sd">    kwargs</span>
+<span class="sd">        Additional keyword parameters. See :attr:`options_parameters` for allowed and default options.</span>
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
-<span class="sd">    This is an &#39;abstract&#39; class. As an end-user, you should always use its subclasses :attr:`~svvamp.Approval`,</span>
-<span class="sd">    :attr:`~svvamp.Plurality`, etc.</span>
+<span class="sd">    This is an &#39;abstract&#39; class. As an end-user, you should always use its subclasses :attr:`~svvamp.RuleApproval`,</span>
+<span class="sd">    :attr:`~svvamp.RulePlurality`, etc.</span>
 
 <span class="sd">    This class and its subclasses are suitable for voting rules that are deterministic and anonymous (treating all</span>
 <span class="sd">    voters equally). As a consequence, they are not neutral (because they need to break ties in totally symmetric</span>
@@ -269,6 +263,12 @@
         <span class="s1">&#39;icm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;lazy&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;lazy&#39;</span><span class="p">},</span>
         <span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;lazy&#39;</span><span class="p">,</span> <span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;lazy&#39;</span><span class="p">}</span>
     <span class="p">}</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;dict: Options parameters. It is a dictionary of allowed and default options. Allowed is a minimal check that will</span>
+<span class="sd">    be performed before launching big simulations, but other checks might be performed when setting the option.</span>
+<span class="sd">    Allowed is either a list of values, like [&#39;lazy&#39;, &#39;fast&#39;, &#39;exact&#39;], or a function checking if the parameter</span>
+<span class="sd">    is correct. Example: ``{&#39;max_grade&#39;: dict(allowed=np.isfinite, default=1), &#39;option_example&#39;: dict(allowed=[42,</span>
+<span class="sd">    51], default=42)}``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">with_two_candidates_reduces_to_plurality</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">is_based_on_rk</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -379,6 +379,15 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">this_value_is_allowed</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">option</span><span class="si">}</span><span class="s2">&#39; = </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="si">}</span><span class="s2"> is not allowed in </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span></div>
 
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">print_options_parameters</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">options_parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+            <span class="n">allowed</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">options_parameters</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="s1">&#39;allowed&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">callable</span><span class="p">(</span><span class="n">allowed</span><span class="p">):</span>
+                <span class="n">allowed</span> <span class="o">=</span> <span class="n">allowed</span><span class="o">.</span><span class="vm">__name__</span>
+            <span class="n">default</span> <span class="o">=</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">options_parameters</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="s1">&#39;default&#39;</span><span class="p">])</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">allowed</span><span class="si">}</span><span class="s2">. Default: </span><span class="si">{</span><span class="n">default</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Rule.log_">
 <a class="viewcode-back" href="../../../reference/rules/rule.html#svvamp.Rule.log_">[docs]</a>

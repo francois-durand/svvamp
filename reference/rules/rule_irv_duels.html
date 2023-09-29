@@ -53,8 +53,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../index.html#preferences">Preferences</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../index.html#voting-rules">Voting rules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#profiles">Profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#generators-of-profiles">Generators of Profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#plurality-elimination-engines">Plurality Elimination Engines</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#voting-rules">Voting Rules</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="rule.html">Rule</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_approval.html">RuleApproval</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_baldwin.html">RuleBaldwin</a></li>
@@ -95,6 +97,8 @@
 <li class="toctree-l3"><a class="reference internal" href="rule_woodall.html">RuleWoodall</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#meta">Meta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#utils">Utils</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
@@ -132,7 +136,41 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="svvamp.RuleIRVDuels">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">svvamp.</span></span><span class="sig-name descname"><span class="pre">RuleIRVDuels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/rules/rule_irv_duels.html#RuleIRVDuels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.RuleIRVDuels" title="Link to this definition"></a></dt>
-<dd><p>IRV with elimination duels.</p>
+<dd><p>IRV with elimination duels. Also known as Viennot rule.</p>
+<p class="rubric">Options</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">RuleIRVDuels</span><span class="o">.</span><span class="n">print_options_parameters</span><span class="p">()</span>
+<span class="go">cm_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="go">icm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="go">iia_subset_maximum_size: is_number. Default: 2.</span>
+<span class="go">im_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="go">tm_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="go">um_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+</pre></div>
+</div>
+<p class="rubric">Notes</p>
+<p>Principle: each round, perform a duel between the two least-favorite candidates and eliminate the loser of this
+duel.</p>
+<ul class="simple">
+<li><p>Even round <code class="docutils literal notranslate"><span class="pre">r</span></code> (including round 0): the two non-eliminated candidates who are ranked first (among the
+non-eliminated candidates) by least voters are selected for the elimination duels that is held in round
+<code class="docutils literal notranslate"><span class="pre">r</span> <span class="pre">+</span> <span class="pre">1</span></code>.</p></li>
+<li><p>Odd round <code class="docutils literal notranslate"><span class="pre">r</span></code>: voters vote for the selected candidate they like most in the duel. The candidate with least
+votes is eliminated.</p></li>
+</ul>
+<p>This method meets the Condorcet criterion.</p>
+<p>We thank Laurent Viennot for the idea of this voting system.</p>
+<ul class="simple">
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_cm_()</span></code>: Non-polynomial or non-exact algorithms from superclass <a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_icm_()</span></code>: Exact in polynomial time.</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_im_()</span></code>: Non-polynomial or non-exact algorithms from superclass <a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">not_iia()</span></code>: Exact in polynomial time.</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_tm_()</span></code>: Exact in polynomial time.</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_um_()</span></code>: Non-polynomial or non-exact algorithms from superclass <a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
+</ul>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="rule_exhaustive_ballot.html#svvamp.RuleExhaustiveBallot" title="svvamp.RuleExhaustiveBallot"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleExhaustiveBallot</span></code></a>, <a class="reference internal" href="rule_irv.html#svvamp.RuleIRV" title="svvamp.RuleIRV"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleIRV</span></code></a>, <a class="reference internal" href="rule_icrv.html#svvamp.RuleICRV" title="svvamp.RuleICRV"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleICRV</span></code></a>, <a class="reference internal" href="rule_condorcet_abs_irv.html#svvamp.RuleCondorcetAbsIRV" title="svvamp.RuleCondorcetAbsIRV"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleCondorcetAbsIRV</span></code></a>, <a class="reference internal" href="rule_condorcet_vtb_irv.html#svvamp.RuleCondorcetVtbIRV" title="svvamp.RuleCondorcetVtbIRV"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleCondorcetVtbIRV</span></code></a></p>
+</div>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[</span>
 <span class="gp">... </span>    <span class="p">[</span> <span class="mf">0.</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.</span> <span class="p">],</span>
@@ -366,30 +404,6 @@
 <span class="go">sufficient_coalition_size_cm =</span>
 <span class="go">[0. 2. 3.]</span>
 </pre></div>
-</div>
-<p class="rubric">Notes</p>
-<p>Principle: each round, perform a duel between the two least-favorite candidates and eliminate the loser of this
-duel.</p>
-<ul class="simple">
-<li><p>Even round <code class="docutils literal notranslate"><span class="pre">r</span></code> (including round 0): the two non-eliminated candidates who are ranked first (among the
-non-eliminated candidates) by least voters are selected for the elimination duels that is held in round
-<code class="docutils literal notranslate"><span class="pre">r</span> <span class="pre">+</span> <span class="pre">1</span></code>.</p></li>
-<li><p>Odd round <code class="docutils literal notranslate"><span class="pre">r</span></code>: voters vote for the selected candidate they like most in the duel. The candidate with least
-votes is eliminated.</p></li>
-</ul>
-<p>This method meets the Condorcet criterion.</p>
-<p>We thank Laurent Viennot for the idea of this voting system.</p>
-<ul class="simple">
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_cm_()</span></code>: Non-polynomial or non-exact algorithms from superclass <a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_icm_()</span></code>: Exact in polynomial time.</p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_im_()</span></code>: Non-polynomial or non-exact algorithms from superclass <a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">not_iia()</span></code>: Exact in polynomial time.</p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_tm_()</span></code>: Exact in polynomial time.</p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_um_()</span></code>: Non-polynomial or non-exact algorithms from superclass <a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
-</ul>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<p><a class="reference internal" href="rule_exhaustive_ballot.html#svvamp.RuleExhaustiveBallot" title="svvamp.RuleExhaustiveBallot"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleExhaustiveBallot</span></code></a>, <a class="reference internal" href="rule_irv.html#svvamp.RuleIRV" title="svvamp.RuleIRV"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleIRV</span></code></a>, <a class="reference internal" href="rule_icrv.html#svvamp.RuleICRV" title="svvamp.RuleICRV"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleICRV</span></code></a>, <a class="reference internal" href="rule_condorcet_abs_irv.html#svvamp.RuleCondorcetAbsIRV" title="svvamp.RuleCondorcetAbsIRV"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleCondorcetAbsIRV</span></code></a>, <a class="reference internal" href="rule_condorcet_vtb_irv.html#svvamp.RuleCondorcetVtbIRV" title="svvamp.RuleCondorcetVtbIRV"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleCondorcetVtbIRV</span></code></a></p>
 </div>
 <dl class="py property">
 <dt class="sig sig-object py" id="svvamp.RuleIRVDuels.candidates_by_scores_best_to_worst_">

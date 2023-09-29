@@ -112,6 +112,37 @@
 <span class="k">class</span> <span class="nc">RuleSplitCycle</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Split Cycle.</span>
 
+<span class="sd">    Options</span>
+<span class="sd">    -------</span>
+<span class="sd">        &gt;&gt;&gt; RuleSplitCycle.print_options_parameters()</span>
+<span class="sd">        cm_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="sd">        icm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        iia_subset_maximum_size: is_number. Default: 2.</span>
+<span class="sd">        im_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="sd">        tm_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        um_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    Split Cycle does not :attr:`meets_condorcet_c_ut_rel`:</span>
+
+<span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
+<span class="sd">        ...     [ 0. ,  0. ,  0. ],</span>
+<span class="sd">        ...     [ 0.5,  1. , -0.5],</span>
+<span class="sd">        ... ], preferences_rk=[</span>
+<span class="sd">        ...     [0, 2, 1],</span>
+<span class="sd">        ...     [1, 0, 2],</span>
+<span class="sd">        ... ])</span>
+<span class="sd">        &gt;&gt;&gt; RuleSplitCycle()(profile).w_</span>
+<span class="sd">        0</span>
+<span class="sd">        &gt;&gt;&gt; profile.condorcet_winner_ut_rel</span>
+<span class="sd">        1</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    &#39;Split cycle: A new Condorcet consistent voting method independent of clones and immune to spoilers.&#39; Holliday</span>
+<span class="sd">    &amp; Pacuit, 2020.</span>
+
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
@@ -338,27 +369,6 @@
 <span class="sd">        [0. 1. 2.]</span>
 <span class="sd">        sufficient_coalition_size_cm =</span>
 <span class="sd">        [0. 2. 3.]</span>
-
-<span class="sd">    Notes</span>
-<span class="sd">    -----</span>
-<span class="sd">    Split Cycle does not :attr:`meets_condorcet_c_ut_rel`:</span>
-
-<span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
-<span class="sd">        ...     [ 0. ,  0. ,  0. ],</span>
-<span class="sd">        ...     [ 0.5,  1. , -0.5],</span>
-<span class="sd">        ... ], preferences_rk=[</span>
-<span class="sd">        ...     [0, 2, 1],</span>
-<span class="sd">        ...     [1, 0, 2],</span>
-<span class="sd">        ... ])</span>
-<span class="sd">        &gt;&gt;&gt; RuleSplitCycle()(profile).w_</span>
-<span class="sd">        0</span>
-<span class="sd">        &gt;&gt;&gt; profile.condorcet_winner_ut_rel</span>
-<span class="sd">        1</span>
-
-<span class="sd">    References</span>
-<span class="sd">    ----------</span>
-<span class="sd">    &#39;Split cycle: A new Condorcet consistent voting method independent of clones and immune to spoilers.&#39; Holliday</span>
-<span class="sd">    &amp; Pacuit, 2020.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">full_name</span> <span class="o">=</span> <span class="s1">&#39;Split Cycle&#39;</span>

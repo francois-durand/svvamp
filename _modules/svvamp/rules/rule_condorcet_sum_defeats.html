@@ -112,6 +112,49 @@
 <span class="k">class</span> <span class="nc">RuleCondorcetSumDefeats</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Condorcet with sum of defeats.</span>
 
+<span class="sd">    Options</span>
+<span class="sd">    -------</span>
+<span class="sd">        &gt;&gt;&gt; RuleCondorcetSumDefeats.print_options_parameters()</span>
+<span class="sd">        cm_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="sd">        icm_option: [&#39;lazy&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="sd">        iia_subset_maximum_size: is_number. Default: 2.</span>
+<span class="sd">        im_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="sd">        tm_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        um_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    An *elementary move* consists of reversing a voter&#39;s preference about a pair of candidate ``(c, d)`` (without</span>
+<span class="sd">    demanding that her whole relation of preference stays transitive). The score for candidate ``c`` is minus the</span>
+<span class="sd">    number of *elementary moves* needed so that ``c`` becomes a Condorcet winner. It is the same principle as</span>
+<span class="sd">    Dodgson&#39;s method, but without looking for a transitive profile.</span>
+
+<span class="sd">    In practice:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \\texttt{scores}[c] = - \\sum_{c \\text{ does not beat } d}\\left(</span>
+<span class="sd">        \\left\\lfloor\\frac{V}{2}\\right\\rfloor + 1 - \\texttt{matrix_duels_rk}[c, d]</span>
+<span class="sd">        \\right)</span>
+
+<span class="sd">    In particular, for :attr:`n_v` odd:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \\texttt{scores}[c] = - \\sum_{c \\text{ does not beat } d}\\left(</span>
+<span class="sd">        \\left\\lceil\\frac{V}{2}\\right\\rceil - \\texttt{matrix_duels_rk}[c, d]</span>
+<span class="sd">        \\right)</span>
+
+<span class="sd">    * :meth:`is_cm_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
+<span class="sd">    * :meth:`is_icm_`: Algorithm from superclass :class:`Rule`. It is polynomial and has a window of error of 1</span>
+<span class="sd">      manipulator.</span>
+<span class="sd">    * :meth:`is_im_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
+<span class="sd">    * :meth:`is_iia_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`. If</span>
+<span class="sd">      :attr:`iia_subset_maximum_size` = 2, it runs in polynomial time and is exact up to ties (which can occur only if</span>
+<span class="sd">      :attr:`n_v` is even).</span>
+<span class="sd">    * :meth:`is_tm_`: Exact in polynomial time.</span>
+<span class="sd">    * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
+
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
@@ -339,39 +382,6 @@
 <span class="sd">        [0. 1. 1.]</span>
 <span class="sd">        sufficient_coalition_size_cm =</span>
 <span class="sd">        [0. 2. 3.]</span>
-
-<span class="sd">    Notes</span>
-<span class="sd">    -----</span>
-<span class="sd">    An *elementary move* consists of reversing a voter&#39;s preference about a pair of candidate ``(c, d)`` (without</span>
-<span class="sd">    demanding that her whole relation of preference stays transitive). The score for candidate ``c`` is minus the</span>
-<span class="sd">    number of *elementary moves* needed so that ``c`` becomes a Condorcet winner. It is the same principle as</span>
-<span class="sd">    Dodgson&#39;s method, but without looking for a transitive profile.</span>
-
-<span class="sd">    In practice:</span>
-
-<span class="sd">    .. math::</span>
-
-<span class="sd">        \\texttt{scores}[c] = - \\sum_{c \\text{ does not beat } d}\\left(</span>
-<span class="sd">        \\left\\lfloor\\frac{V}{2}\\right\\rfloor + 1 - \\texttt{matrix_duels_rk}[c, d]</span>
-<span class="sd">        \\right)</span>
-
-<span class="sd">    In particular, for :attr:`n_v` odd:</span>
-
-<span class="sd">    .. math::</span>
-
-<span class="sd">        \\texttt{scores}[c] = - \\sum_{c \\text{ does not beat } d}\\left(</span>
-<span class="sd">        \\left\\lceil\\frac{V}{2}\\right\\rceil - \\texttt{matrix_duels_rk}[c, d]</span>
-<span class="sd">        \\right)</span>
-
-<span class="sd">    * :meth:`is_cm_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
-<span class="sd">    * :meth:`is_icm_`: Algorithm from superclass :class:`Rule`. It is polynomial and has a window of error of 1</span>
-<span class="sd">      manipulator.</span>
-<span class="sd">    * :meth:`is_im_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
-<span class="sd">    * :meth:`is_iia_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`. If</span>
-<span class="sd">      :attr:`iia_subset_maximum_size` = 2, it runs in polynomial time and is exact up to ties (which can occur only if</span>
-<span class="sd">      :attr:`n_v` is even).</span>
-<span class="sd">    * :meth:`is_tm_`: Exact in polynomial time.</span>
-<span class="sd">    * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">full_name</span> <span class="o">=</span> <span class="s1">&#39;Condorcet Sum Defeats&#39;</span>

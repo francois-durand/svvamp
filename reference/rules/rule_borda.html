@@ -53,8 +53,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../index.html#preferences">Preferences</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../index.html#voting-rules">Voting rules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#profiles">Profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#generators-of-profiles">Generators of Profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#plurality-elimination-engines">Plurality Elimination Engines</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#voting-rules">Voting Rules</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="rule.html">Rule</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_approval.html">RuleApproval</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_baldwin.html">RuleBaldwin</a></li>
@@ -95,6 +97,8 @@
 <li class="toctree-l3"><a class="reference internal" href="rule_woodall.html">RuleWoodall</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#meta">Meta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#utils">Utils</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
@@ -133,6 +137,41 @@
 <dt class="sig sig-object py" id="svvamp.RuleBorda">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">svvamp.</span></span><span class="sig-name descname"><span class="pre">RuleBorda</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/rules/rule_borda.html#RuleBorda"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.RuleBorda" title="Link to this definition"></a></dt>
 <dd><p>Borda rule.</p>
+<p class="rubric">Options</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">RuleBorda</span><span class="o">.</span><span class="n">print_options_parameters</span><span class="p">()</span>
+<span class="go">cm_option: [&#39;fast&#39;, &#39;exact&#39;]. Default: &#39;fast&#39;.</span>
+<span class="go">icm_option: [&#39;fast&#39;]. Default: &#39;fast&#39;.</span>
+<span class="go">iia_subset_maximum_size: is_number. Default: 2.</span>
+<span class="go">im_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="go">tm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="go">um_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+</pre></div>
+</div>
+<p class="rubric">Notes</p>
+<p>Voter <code class="docutils literal notranslate"><span class="pre">v</span></code> gives (<code class="xref py py-attr docutils literal notranslate"><span class="pre">n_c</span></code> - 1) points to her top-ranked candidate, (<code class="xref py py-attr docutils literal notranslate"><span class="pre">n_c</span></code> - 2) to the second, …, 0 to
+the last. Ties are broken by natural order on the candidates (lower index wins).</p>
+<ul>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_cm_()</span></code>: Deciding CM is NP-complete.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'fast'</span></code>: Zuckerman et al. (2009). This approximation algorithm is polynomial and has
+a window of error of 1 manipulator.</p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'exact'</span></code>: Non-polynomial algorithm from superclass <a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_icm_()</span></code>: Algorithm is polynomial and has a window of error of 1 manipulator.</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_im_()</span></code>: Exact in polynomial time.</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_iia_()</span></code>: Exact in polynomial time.</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_tm_()</span></code>: Exact in polynomial time.</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_um_()</span></code>: Exact in polynomial time.</p></li>
+</ul>
+<p class="rubric">References</p>
+<p>‘Algorithms for the coalitional manipulation problem’, M. Zuckerman, A. Procaccia and J. Rosenschein, 2009.</p>
+<p>‘Unweighted Coalitional Manipulation Under the Borda Rule is NP-Hard’, Nadja Betzler, Rolf Niedermeier and
+Gerhard Woeginger, 2011.</p>
+<p>‘Complexity of and algorithms for the manipulation of Borda, Nanson’s and Baldwin’s voting rules’,
+Jessica Davies, George Katsirelos, Nina Narodytska, Toby Walsh and Lirong Xia, 2014.</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[</span>
 <span class="gp">... </span>    <span class="p">[</span> <span class="mf">0.</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.</span> <span class="p">],</span>
@@ -361,31 +400,6 @@
 <span class="go">[0. 2. 3.]</span>
 </pre></div>
 </div>
-<p class="rubric">Notes</p>
-<p>Voter <code class="docutils literal notranslate"><span class="pre">v</span></code> gives (<code class="xref py py-attr docutils literal notranslate"><span class="pre">n_c</span></code> - 1) points to her top-ranked candidate, (<code class="xref py py-attr docutils literal notranslate"><span class="pre">n_c</span></code> - 2) to the second, …, 0 to
-the last. Ties are broken by natural order on the candidates (lower index wins).</p>
-<ul>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_cm_()</span></code>: Deciding CM is NP-complete.</p>
-<blockquote>
-<div><ul class="simple">
-<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'fast'</span></code>: Zuckerman et al. (2009). This approximation algorithm is polynomial and has
-a window of error of 1 manipulator.</p></li>
-<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'exact'</span></code>: Non-polynomial algorithm from superclass <a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
-</ul>
-</div></blockquote>
-</li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_icm_()</span></code>: Algorithm is polynomial and has a window of error of 1 manipulator.</p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_im_()</span></code>: Exact in polynomial time.</p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_iia_()</span></code>: Exact in polynomial time.</p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_tm_()</span></code>: Exact in polynomial time.</p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_um_()</span></code>: Exact in polynomial time.</p></li>
-</ul>
-<p class="rubric">References</p>
-<p>‘Algorithms for the coalitional manipulation problem’, M. Zuckerman, A. Procaccia and J. Rosenschein, 2009.</p>
-<p>‘Unweighted Coalitional Manipulation Under the Borda Rule is NP-Hard’, Nadja Betzler, Rolf Niedermeier and
-Gerhard Woeginger, 2011.</p>
-<p>‘Complexity of and algorithms for the manipulation of Borda, Nanson’s and Baldwin’s voting rules’,
-Jessica Davies, George Katsirelos, Nina Narodytska, Toby Walsh and Lirong Xia, 2014.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="svvamp.RuleBorda.scores_">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">scores_</span></span><a class="headerlink" href="#svvamp.RuleBorda.scores_" title="Link to this definition"></a></dt>

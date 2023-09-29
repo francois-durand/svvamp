@@ -53,22 +53,37 @@
 <li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#preferences">Preferences</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#profiles">Profiles</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="preferences/profile.html">Profile</a></li>
 <li class="toctree-l3"><a class="reference internal" href="preferences/profile_from_file.html">ProfileFromFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile_subset_candidates.html">ProfileSubsetCandidates</a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile_um.html">ProfileUM</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#generators-of-profiles">Generators of Profiles</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="preferences/generator_profile.html">GeneratorProfile</a></li>
 <li class="toctree-l3"><a class="reference internal" href="preferences/generator_profile_cubic_uniform.html">GeneratorProfileCubicUniform</a></li>
 <li class="toctree-l3"><a class="reference internal" href="preferences/generator_profile_euclidean_box.html">GeneratorProfileEuclideanBox</a></li>
 <li class="toctree-l3"><a class="reference internal" href="preferences/generator_profile_gaussian_well.html">GeneratorProfileGaussianWell</a></li>
 <li class="toctree-l3"><a class="reference internal" href="preferences/generator_profile_ianc.html">GeneratorProfileIanc</a></li>
 <li class="toctree-l3"><a class="reference internal" href="preferences/generator_profile_ic.html">GeneratorProfileIc</a></li>
 <li class="toctree-l3"><a class="reference internal" href="preferences/generator_profile_ladder.html">GeneratorProfileLadder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/generator_profile_noise.html">GeneratorProfileNoise</a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/generator_profile_noised_file.html">GeneratorProfileNoisedFile</a></li>
 <li class="toctree-l3"><a class="reference internal" href="preferences/generator_profile_perturbed_culture.html">GeneratorProfilePerturbedCulture</a></li>
 <li class="toctree-l3"><a class="reference internal" href="preferences/generator_profile_spheroid.html">GeneratorProfileSpheroid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/generator_profile_unanimous.html">GeneratorProfileUnanimous</a></li>
 <li class="toctree-l3"><a class="reference internal" href="preferences/generator_profile_vmf_hypercircle.html">GeneratorProfileVMFHypercircle</a></li>
 <li class="toctree-l3"><a class="reference internal" href="preferences/generator_profile_vmf_hypersphere.html">GeneratorProfileVMFHypersphere</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#voting-rules">Voting rules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#plurality-elimination-engines">Plurality Elimination Engines</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="preferences/plurality_elimination_engine.html">PluralityEliminationEngine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/plurality_elimination_engine_profile.html">PluralityEliminationEngineProfile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/plurality_elimination_engine_profile_um.html">PluralityEliminationEngineProfileUM</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#voting-rules">Voting Rules</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="rules/rule.html">Rule</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rules/rule_approval.html">RuleApproval</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rules/rule_baldwin.html">RuleBaldwin</a></li>
@@ -106,6 +121,19 @@
 <li class="toctree-l3"><a class="reference internal" href="rules/rule_woodall.html">RuleWoodall</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#meta">Meta</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="meta/study_profile_criteria.html">StudyProfileCriteria</a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/study_rule_criteria.html">StudyRuleCriteria</a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/voting_rule_tasks.html">VotingRuleTasks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/experiment_analyzer.html">ExperimentAnalyzer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/experiments_compiler.html">ExperimentsCompiler</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#utils">Utils</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="utils/my_log.html">MyLog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils/initialize_random_seeds.html">initialize_random_seeds</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
@@ -139,8 +167,8 @@
              
   <section id="reference">
 <h1>Reference<a class="headerlink" href="#reference" title="Link to this heading"></a></h1>
-<section id="preferences">
-<h2>Preferences<a class="headerlink" href="#preferences" title="Link to this heading"></a></h2>
+<section id="profiles">
+<h2>Profiles<a class="headerlink" href="#profiles" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="preferences/profile.html">Profile</a><ul>
@@ -255,6 +283,58 @@
 <li class="toctree-l2"><a class="reference internal" href="preferences/profile_from_file.html#svvamp.ProfileFromFile"><code class="docutils literal notranslate"><span class="pre">ProfileFromFile</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="preferences/profile_subset_candidates.html">ProfileSubsetCandidates</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="preferences/profile_subset_candidates.html#svvamp.ProfileSubsetCandidates"><code class="docutils literal notranslate"><span class="pre">ProfileSubsetCandidates</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile_subset_candidates.html#svvamp.ProfileSubsetCandidates.labels_candidates"><code class="docutils literal notranslate"><span class="pre">ProfileSubsetCandidates.labels_candidates</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile_subset_candidates.html#svvamp.ProfileSubsetCandidates.matrix_duels_rk"><code class="docutils literal notranslate"><span class="pre">ProfileSubsetCandidates.matrix_duels_rk</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile_subset_candidates.html#svvamp.ProfileSubsetCandidates.matrix_duels_ut"><code class="docutils literal notranslate"><span class="pre">ProfileSubsetCandidates.matrix_duels_ut</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile_subset_candidates.html#svvamp.ProfileSubsetCandidates.matrix_victories_rk"><code class="docutils literal notranslate"><span class="pre">ProfileSubsetCandidates.matrix_victories_rk</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile_subset_candidates.html#svvamp.ProfileSubsetCandidates.matrix_victories_rk_ctb"><code class="docutils literal notranslate"><span class="pre">ProfileSubsetCandidates.matrix_victories_rk_ctb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile_subset_candidates.html#svvamp.ProfileSubsetCandidates.matrix_victories_ut_abs"><code class="docutils literal notranslate"><span class="pre">ProfileSubsetCandidates.matrix_victories_ut_abs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile_subset_candidates.html#svvamp.ProfileSubsetCandidates.matrix_victories_ut_abs_ctb"><code class="docutils literal notranslate"><span class="pre">ProfileSubsetCandidates.matrix_victories_ut_abs_ctb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile_subset_candidates.html#svvamp.ProfileSubsetCandidates.matrix_victories_ut_rel"><code class="docutils literal notranslate"><span class="pre">ProfileSubsetCandidates.matrix_victories_ut_rel</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile_subset_candidates.html#svvamp.ProfileSubsetCandidates.matrix_victories_ut_rel_ctb"><code class="docutils literal notranslate"><span class="pre">ProfileSubsetCandidates.matrix_victories_ut_rel_ctb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile_subset_candidates.html#svvamp.ProfileSubsetCandidates.n_c"><code class="docutils literal notranslate"><span class="pre">ProfileSubsetCandidates.n_c</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile_subset_candidates.html#svvamp.ProfileSubsetCandidates.n_v"><code class="docutils literal notranslate"><span class="pre">ProfileSubsetCandidates.n_v</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile_subset_candidates.html#svvamp.ProfileSubsetCandidates.preferences_borda_rk"><code class="docutils literal notranslate"><span class="pre">ProfileSubsetCandidates.preferences_borda_rk</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile_subset_candidates.html#svvamp.ProfileSubsetCandidates.preferences_borda_ut"><code class="docutils literal notranslate"><span class="pre">ProfileSubsetCandidates.preferences_borda_ut</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile_subset_candidates.html#svvamp.ProfileSubsetCandidates.preferences_rk"><code class="docutils literal notranslate"><span class="pre">ProfileSubsetCandidates.preferences_rk</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile_subset_candidates.html#svvamp.ProfileSubsetCandidates.preferences_ut"><code class="docutils literal notranslate"><span class="pre">ProfileSubsetCandidates.preferences_ut</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile_subset_candidates.html#svvamp.ProfileSubsetCandidates.total_utility_c"><code class="docutils literal notranslate"><span class="pre">ProfileSubsetCandidates.total_utility_c</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="preferences/profile_um.html">ProfileUM</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="preferences/profile_um.html#svvamp.ProfileUM"><code class="docutils literal notranslate"><span class="pre">ProfileUM</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile_um.html#svvamp.ProfileUM.ballot_borda_ut"><code class="docutils literal notranslate"><span class="pre">ProfileUM.ballot_borda_ut</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile_um.html#svvamp.ProfileUM.ballot_rk"><code class="docutils literal notranslate"><span class="pre">ProfileUM.ballot_rk</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile_um.html#svvamp.ProfileUM.labels_candidates"><code class="docutils literal notranslate"><span class="pre">ProfileUM.labels_candidates</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile_um.html#svvamp.ProfileUM.matrix_duels_rk"><code class="docutils literal notranslate"><span class="pre">ProfileUM.matrix_duels_rk</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile_um.html#svvamp.ProfileUM.matrix_duels_ut"><code class="docutils literal notranslate"><span class="pre">ProfileUM.matrix_duels_ut</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile_um.html#svvamp.ProfileUM.n_c"><code class="docutils literal notranslate"><span class="pre">ProfileUM.n_c</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile_um.html#svvamp.ProfileUM.n_v"><code class="docutils literal notranslate"><span class="pre">ProfileUM.n_v</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile_um.html#svvamp.ProfileUM.plurality_scores_rk"><code class="docutils literal notranslate"><span class="pre">ProfileUM.plurality_scores_rk</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile_um.html#svvamp.ProfileUM.plurality_scores_ut"><code class="docutils literal notranslate"><span class="pre">ProfileUM.plurality_scores_ut</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile_um.html#svvamp.ProfileUM.preferences_borda_rk"><code class="docutils literal notranslate"><span class="pre">ProfileUM.preferences_borda_rk</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile_um.html#svvamp.ProfileUM.preferences_borda_ut"><code class="docutils literal notranslate"><span class="pre">ProfileUM.preferences_borda_ut</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile_um.html#svvamp.ProfileUM.preferences_rk"><code class="docutils literal notranslate"><span class="pre">ProfileUM.preferences_rk</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/profile_um.html#svvamp.ProfileUM.preferences_ut"><code class="docutils literal notranslate"><span class="pre">ProfileUM.preferences_ut</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="generators-of-profiles">
+<h2>Generators of Profiles<a class="headerlink" href="#generators-of-profiles" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="preferences/generator_profile.html">GeneratorProfile</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="preferences/generator_profile.html#svvamp.GeneratorProfile"><code class="docutils literal notranslate"><span class="pre">GeneratorProfile</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="preferences/generator_profile_cubic_uniform.html">GeneratorProfileCubicUniform</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="preferences/generator_profile_cubic_uniform.html#svvamp.GeneratorProfileCubicUniform"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileCubicUniform</span></code></a></li>
 </ul>
@@ -279,12 +359,24 @@
 <li class="toctree-l2"><a class="reference internal" href="preferences/generator_profile_ladder.html#svvamp.GeneratorProfileLadder"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileLadder</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="preferences/generator_profile_noise.html">GeneratorProfileNoise</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="preferences/generator_profile_noise.html#svvamp.GeneratorProfileNoise"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileNoise</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="preferences/generator_profile_noised_file.html">GeneratorProfileNoisedFile</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="preferences/generator_profile_noised_file.html#svvamp.GeneratorProfileNoisedFile"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileNoisedFile</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="preferences/generator_profile_perturbed_culture.html">GeneratorProfilePerturbedCulture</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="preferences/generator_profile_perturbed_culture.html#svvamp.GeneratorProfilePerturbedCulture"><code class="docutils literal notranslate"><span class="pre">GeneratorProfilePerturbedCulture</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="preferences/generator_profile_spheroid.html">GeneratorProfileSpheroid</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="preferences/generator_profile_spheroid.html#svvamp.GeneratorProfileSpheroid"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileSpheroid</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="preferences/generator_profile_unanimous.html">GeneratorProfileUnanimous</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="preferences/generator_profile_unanimous.html#svvamp.GeneratorProfileUnanimous"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileUnanimous</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="preferences/generator_profile_vmf_hypercircle.html">GeneratorProfileVMFHypercircle</a><ul>
@@ -298,8 +390,45 @@
 </ul>
 </div>
 </section>
+<section id="plurality-elimination-engines">
+<h2>Plurality Elimination Engines<a class="headerlink" href="#plurality-elimination-engines" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="preferences/plurality_elimination_engine.html">PluralityEliminationEngine</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="preferences/plurality_elimination_engine.html#svvamp.PluralityEliminationEngine"><code class="docutils literal notranslate"><span class="pre">PluralityEliminationEngine</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="preferences/plurality_elimination_engine.html#svvamp.PluralityEliminationEngine.candidates_alive"><code class="docutils literal notranslate"><span class="pre">PluralityEliminationEngine.candidates_alive</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/plurality_elimination_engine.html#svvamp.PluralityEliminationEngine.eliminate_candidate"><code class="docutils literal notranslate"><span class="pre">PluralityEliminationEngine.eliminate_candidate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/plurality_elimination_engine.html#svvamp.PluralityEliminationEngine.eliminate_candidate_and_update_scores"><code class="docutils literal notranslate"><span class="pre">PluralityEliminationEngine.eliminate_candidate_and_update_scores()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/plurality_elimination_engine.html#svvamp.PluralityEliminationEngine.is_alive"><code class="docutils literal notranslate"><span class="pre">PluralityEliminationEngine.is_alive</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/plurality_elimination_engine.html#svvamp.PluralityEliminationEngine.loser"><code class="docutils literal notranslate"><span class="pre">PluralityEliminationEngine.loser</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/plurality_elimination_engine.html#svvamp.PluralityEliminationEngine.nb_candidates_alive"><code class="docutils literal notranslate"><span class="pre">PluralityEliminationEngine.nb_candidates_alive</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/plurality_elimination_engine.html#svvamp.PluralityEliminationEngine.scores"><code class="docutils literal notranslate"><span class="pre">PluralityEliminationEngine.scores</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/plurality_elimination_engine.html#svvamp.PluralityEliminationEngine.update_scores"><code class="docutils literal notranslate"><span class="pre">PluralityEliminationEngine.update_scores()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="preferences/plurality_elimination_engine_profile.html">PluralityEliminationEngineProfile</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="preferences/plurality_elimination_engine_profile.html#svvamp.PluralityEliminationEngineProfile"><code class="docutils literal notranslate"><span class="pre">PluralityEliminationEngineProfile</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="preferences/plurality_elimination_engine_profile.html#svvamp.PluralityEliminationEngineProfile.scores"><code class="docutils literal notranslate"><span class="pre">PluralityEliminationEngineProfile.scores</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/plurality_elimination_engine_profile.html#svvamp.PluralityEliminationEngineProfile.update_scores"><code class="docutils literal notranslate"><span class="pre">PluralityEliminationEngineProfile.update_scores()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="preferences/plurality_elimination_engine_profile_um.html">PluralityEliminationEngineProfileUM</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="preferences/plurality_elimination_engine_profile_um.html#svvamp.PluralityEliminationEngineProfileUM"><code class="docutils literal notranslate"><span class="pre">PluralityEliminationEngineProfileUM</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="preferences/plurality_elimination_engine_profile_um.html#svvamp.PluralityEliminationEngineProfileUM.scores"><code class="docutils literal notranslate"><span class="pre">PluralityEliminationEngineProfileUM.scores</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preferences/plurality_elimination_engine_profile_um.html#svvamp.PluralityEliminationEngineProfileUM.update_scores"><code class="docutils literal notranslate"><span class="pre">PluralityEliminationEngineProfileUM.update_scores()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
 <section id="voting-rules">
-<h2>Voting rules<a class="headerlink" href="#voting-rules" title="Link to this heading"></a></h2>
+<h2>Voting Rules<a class="headerlink" href="#voting-rules" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="rules/rule.html">Rule</a><ul>
@@ -368,6 +497,7 @@
 <li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.necessary_coalition_size_cm_"><code class="docutils literal notranslate"><span class="pre">Rule.necessary_coalition_size_cm_</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.necessary_coalition_size_icm_"><code class="docutils literal notranslate"><span class="pre">Rule.necessary_coalition_size_icm_</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.options"><code class="docutils literal notranslate"><span class="pre">Rule.options</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.options_parameters"><code class="docutils literal notranslate"><span class="pre">Rule.options_parameters</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.relative_social_welfare_w_"><code class="docutils literal notranslate"><span class="pre">Rule.relative_social_welfare_w_</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.score_w_"><code class="docutils literal notranslate"><span class="pre">Rule.score_w_</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="rules/rule.html#svvamp.Rule.scores_"><code class="docutils literal notranslate"><span class="pre">Rule.scores_</span></code></a></li>
@@ -727,6 +857,108 @@
 <li class="toctree-l3"><a class="reference internal" href="rules/rule_woodall.html#svvamp.RuleWoodall.w_"><code class="docutils literal notranslate"><span class="pre">RuleWoodall.w_</span></code></a></li>
 </ul>
 </li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="meta">
+<h2>Meta<a class="headerlink" href="#meta" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="meta/study_profile_criteria.html">StudyProfileCriteria</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="meta/study_profile_criteria.html#svvamp.StudyProfileCriteria"><code class="docutils literal notranslate"><span class="pre">StudyProfileCriteria</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="meta/study_profile_criteria.html#svvamp.StudyProfileCriteria.append_array_criterion"><code class="docutils literal notranslate"><span class="pre">StudyProfileCriteria.append_array_criterion()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/study_profile_criteria.html#svvamp.StudyProfileCriteria.append_boolean_criterion"><code class="docutils literal notranslate"><span class="pre">StudyProfileCriteria.append_boolean_criterion()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/study_profile_criteria.html#svvamp.StudyProfileCriteria.append_matrix_criterion"><code class="docutils literal notranslate"><span class="pre">StudyProfileCriteria.append_matrix_criterion()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/study_profile_criteria.html#svvamp.StudyProfileCriteria.append_numerical_criterion"><code class="docutils literal notranslate"><span class="pre">StudyProfileCriteria.append_numerical_criterion()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/study_profile_criteria.html#svvamp.StudyProfileCriteria.append_special_candidates_criterion"><code class="docutils literal notranslate"><span class="pre">StudyProfileCriteria.append_special_candidates_criterion()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/study_profile_criteria.html#svvamp.StudyProfileCriteria.check_sanity"><code class="docutils literal notranslate"><span class="pre">StudyProfileCriteria.check_sanity()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/study_profile_criteria.html#svvamp.StudyProfileCriteria.remove"><code class="docutils literal notranslate"><span class="pre">StudyProfileCriteria.remove()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/study_profile_criteria.html#svvamp.StudyProfileCriteria.rename_numerical_criterion"><code class="docutils literal notranslate"><span class="pre">StudyProfileCriteria.rename_numerical_criterion()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="meta/study_rule_criteria.html">StudyRuleCriteria</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="meta/study_rule_criteria.html#svvamp.StudyRuleCriteria"><code class="docutils literal notranslate"><span class="pre">StudyRuleCriteria</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="meta/study_rule_criteria.html#svvamp.StudyRuleCriteria.append_manipulation_criterion"><code class="docutils literal notranslate"><span class="pre">StudyRuleCriteria.append_manipulation_criterion()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/study_rule_criteria.html#svvamp.StudyRuleCriteria.append_manipulation_criterion_c"><code class="docutils literal notranslate"><span class="pre">StudyRuleCriteria.append_manipulation_criterion_c()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/study_rule_criteria.html#svvamp.StudyRuleCriteria.append_numerical_criterion"><code class="docutils literal notranslate"><span class="pre">StudyRuleCriteria.append_numerical_criterion()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/study_rule_criteria.html#svvamp.StudyRuleCriteria.append_result_criterion"><code class="docutils literal notranslate"><span class="pre">StudyRuleCriteria.append_result_criterion()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/study_rule_criteria.html#svvamp.StudyRuleCriteria.append_utility_criterion"><code class="docutils literal notranslate"><span class="pre">StudyRuleCriteria.append_utility_criterion()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/study_rule_criteria.html#svvamp.StudyRuleCriteria.check_sanity"><code class="docutils literal notranslate"><span class="pre">StudyRuleCriteria.check_sanity()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/study_rule_criteria.html#svvamp.StudyRuleCriteria.remove"><code class="docutils literal notranslate"><span class="pre">StudyRuleCriteria.remove()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="meta/voting_rule_tasks.html">VotingRuleTasks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="meta/voting_rule_tasks.html#svvamp.VotingRuleTasks"><code class="docutils literal notranslate"><span class="pre">VotingRuleTasks</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="meta/voting_rule_tasks.html#svvamp.VotingRuleTasks.append_manipulation_criterion"><code class="docutils literal notranslate"><span class="pre">VotingRuleTasks.append_manipulation_criterion()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/voting_rule_tasks.html#svvamp.VotingRuleTasks.append_manipulation_criterion_c"><code class="docutils literal notranslate"><span class="pre">VotingRuleTasks.append_manipulation_criterion_c()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/voting_rule_tasks.html#svvamp.VotingRuleTasks.append_numerical_criterion"><code class="docutils literal notranslate"><span class="pre">VotingRuleTasks.append_numerical_criterion()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/voting_rule_tasks.html#svvamp.VotingRuleTasks.append_result_criterion"><code class="docutils literal notranslate"><span class="pre">VotingRuleTasks.append_result_criterion()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/voting_rule_tasks.html#svvamp.VotingRuleTasks.append_task"><code class="docutils literal notranslate"><span class="pre">VotingRuleTasks.append_task()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/voting_rule_tasks.html#svvamp.VotingRuleTasks.append_utility_criterion"><code class="docutils literal notranslate"><span class="pre">VotingRuleTasks.append_utility_criterion()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/voting_rule_tasks.html#svvamp.VotingRuleTasks.check_sanity"><code class="docutils literal notranslate"><span class="pre">VotingRuleTasks.check_sanity()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/voting_rule_tasks.html#svvamp.VotingRuleTasks.extend"><code class="docutils literal notranslate"><span class="pre">VotingRuleTasks.extend()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/voting_rule_tasks.html#svvamp.VotingRuleTasks.remove_criterion"><code class="docutils literal notranslate"><span class="pre">VotingRuleTasks.remove_criterion()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/voting_rule_tasks.html#svvamp.VotingRuleTasks.remove_option"><code class="docutils literal notranslate"><span class="pre">VotingRuleTasks.remove_option()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/voting_rule_tasks.html#svvamp.VotingRuleTasks.remove_rule"><code class="docutils literal notranslate"><span class="pre">VotingRuleTasks.remove_rule()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/voting_rule_tasks.html#svvamp.VotingRuleTasks.set_option"><code class="docutils literal notranslate"><span class="pre">VotingRuleTasks.set_option()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="meta/experiment_analyzer.html">ExperimentAnalyzer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="meta/experiment_analyzer.html#svvamp.ExperimentAnalyzer"><code class="docutils literal notranslate"><span class="pre">ExperimentAnalyzer</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="meta/experiments_compiler.html">ExperimentsCompiler</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="meta/experiments_compiler.html#svvamp.ExperimentsCompiler"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="meta/experiments_compiler.html#svvamp.ExperimentsCompiler.cm_complexity_index_bar_plot"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler.cm_complexity_index_bar_plot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/experiments_compiler.html#svvamp.ExperimentsCompiler.cm_power_index_bar_plot"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler.cm_power_index_bar_plot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/experiments_compiler.html#svvamp.ExperimentsCompiler.cm_rate_bar_plot"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler.cm_rate_bar_plot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/experiments_compiler.html#svvamp.ExperimentsCompiler.cm_tm_um_rate_bar_plot"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler.cm_tm_um_rate_bar_plot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/experiments_compiler.html#svvamp.ExperimentsCompiler.condorcet_consistency_bar_plot"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler.condorcet_consistency_bar_plot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/experiments_compiler.html#svvamp.ExperimentsCompiler.df_computation_time"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler.df_computation_time()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/experiments_compiler.html#svvamp.ExperimentsCompiler.df_computation_time_cumulative"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler.df_computation_time_cumulative()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/experiments_compiler.html#svvamp.ExperimentsCompiler.loss_social_welfare_bar_plot"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler.loss_social_welfare_bar_plot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/experiments_compiler.html#svvamp.ExperimentsCompiler.my_tikzplotlib_save"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler.my_tikzplotlib_save()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/experiments_compiler.html#svvamp.ExperimentsCompiler.nb_candidates_cm_bar_plot"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler.nb_candidates_cm_bar_plot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/experiments_compiler.html#svvamp.ExperimentsCompiler.nb_candidates_cm_line_plot"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler.nb_candidates_cm_line_plot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/experiments_compiler.html#svvamp.ExperimentsCompiler.profile_features_bar_plot"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler.profile_features_bar_plot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/experiments_compiler.html#svvamp.ExperimentsCompiler.profiles_scatter_plot"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler.profiles_scatter_plot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/experiments_compiler.html#svvamp.ExperimentsCompiler.rate_bar_plot"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler.rate_bar_plot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/experiments_compiler.html#svvamp.ExperimentsCompiler.replace_rule_names"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler.replace_rule_names()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/experiments_compiler.html#svvamp.ExperimentsCompiler.resistant_condorcet_line"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler.resistant_condorcet_line()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/experiments_compiler.html#svvamp.ExperimentsCompiler.tm_rate_bar_plot"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler.tm_rate_bar_plot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta/experiments_compiler.html#svvamp.ExperimentsCompiler.um_rate_bar_plot"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler.um_rate_bar_plot()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="utils">
+<h2>Utils<a class="headerlink" href="#utils" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="utils/my_log.html">MyLog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="utils/my_log.html#svvamp.MyLog"><code class="docutils literal notranslate"><span class="pre">MyLog</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="utils/my_log.html#svvamp.MyLog.log_depth"><code class="docutils literal notranslate"><span class="pre">MyLog.log_depth</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils/my_log.html#svvamp.MyLog.log_identity"><code class="docutils literal notranslate"><span class="pre">MyLog.log_identity</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils/my_log.html#svvamp.MyLog.mylog"><code class="docutils literal notranslate"><span class="pre">MyLog.mylog()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils/my_log.html#svvamp.MyLog.mylogm"><code class="docutils literal notranslate"><span class="pre">MyLog.mylogm()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils/my_log.html#svvamp.MyLog.mylogv"><code class="docutils literal notranslate"><span class="pre">MyLog.mylogv()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="utils/initialize_random_seeds.html">initialize_random_seeds</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="utils/initialize_random_seeds.html#svvamp.initialize_random_seeds"><code class="docutils literal notranslate"><span class="pre">initialize_random_seeds()</span></code></a></li>
 </ul>
 </li>
 </ul>

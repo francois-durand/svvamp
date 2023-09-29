@@ -39,114 +39,114 @@ from svvamp.preferences.plurality_elimination_engine_profile import PluralityEli
 
 
 class Profile(my_log.MyLog):
+    """Create a profile of voters with preferences over some candidates.
+
+    Parameters
+    ----------
+    preferences_ut : list of list (or 2d ndarray)
+        2d array of floats. ``preferences_ut[v, c]`` is the utility of candidate ``c`` as seen by voter ``v``.
+    preferences_rk : list of list (or 2d ndarray)
+        2d array of integers. ``preferences_rk[v, k]`` is the candidate at rank ``k`` for voter ``v``.
+    preferences_borda_rk : list of list (or 2d ndarray)
+        2d array of integers. ``preferences_borda_rk[v, c]`` gains 1 point for each candidate ``d`` such that
+        voter ``v`` ranks ``c`` before ``d``. So, these Borda scores are between ``0`` and ``C - 1``.
+    log_creation : object
+        Any type (string, list...). Some comments.
+    labels_candidates : list of str
+        Names of the candidates.
+    sort_voters : bool
+        If True, then when the profile is created, voters are immediately sorted, first by their
+        strict order of preference (their row in :attr:`~svvamp.Population.preferences_rk`), then by their weak
+        order of preference (their row in :attr:`~svvamp.Population.preferences_borda_ut`). Note that two voters
+        having the same strict order may have different weak orders, and vice versa. The objective of this
+        sorting is to accelerate some algorithms (typically Individual Manipulation). It can also be convenient
+        to visualize the profile.
+
+    Notes
+    -----
+    You may enter ``preferences_ut``, ``preferences_rk`` or both to define the preferences of the population.
+    In all cases, instead of ``preferences_rk``, you may enter ``preferences_borda_rk``.
+
+    If you provide ``preferences_rk`` only, then ``preferences_ut`` is set to the corresponding Borda scores
+    (:attr:`~svvamp.Population.preferences_borda_rk`).
+
+    If you provide ``preferences_ut`` only, then ``preferences_rk`` is naturally derived from utilities. If voter
+    ``v`` has a greater utility for candidate ``c`` than for candidate ``d``, then she ranks ``c`` before ``d``.
+    If voter ``v`` attributes the same utility to several candidates, then the first time the attribute
+    ``preferences_rk`` is called, a random ranking will be decided for these tied candidates (once and for all).
+
+    If you provide both, then SVVAMP DOES NOT CHECK that they are consistent. You should ensure that they are,
+    in the sense that if ``v`` ranks ``c`` before ``d``, then she her utility for ``c`` must be at least equal to
+    her utility for ``d``. Similarly, you can provide both ``preferences_rk`` and ``preferences_borda_rk``, but
+    SVVAMP DOES NOT CHECK that they are consistent.
+
+    ``preferences_rk`` will be used for sincere voting when a voting system accepts only strict orders.
+
+    In contrast, for manipulation purposes, ``preferences_ut`` is always used , which means that indifference is
+    taken into account as such to determine the interest in manipulation. If voter ``v`` attributes the same
+    utility to candidates ``w`` and ``c``, and if ``w`` is the sincere winner in an election, then ``v`` is not
+    interested in a manipulation for ``c``.
+
+    If all voters have a strict order of preference (in the sense of ut), then for functions below having
+    variants with suffix ``_ut`` or ``_rk``, the two variants are equivalent.
+
+    In some voting systems and in some of the attributes below, we use a process referred as **candidate
+    tie-breaking** or **CTB** in SVVAMP. It means that lowest-index candidates are favored. When using CTB,
+    if candidates ``c`` and ``d`` are tied (for example, in an election using Plurality), then ``c`` is favored
+    over ``d`` iff ``c < d``.
+
+    Implications between majority favorite and Condorcet criteria (cf. corresponding attributes below).
+
+    ::
+
+        majority_favorite_ut          ==>         majority_favorite_ut_ctb
+        ||              ||                                ||            ||
+        V               ||                                ||            ||
+        Resistant Cond. V                                 V             ||
+        ||       majority_favorite_rk ==> majority_favorite_rk_ctb      ||
+        ||                     ||                ||                     ||
+        V                      ||                ||                     V
+        Condorcet_ut_abs              ==>             Condorcet_ut_abs_ctb
+        ||      ||             ||                ||            ||       ||
+        ||      V              V                 V             V        ||
+        V         Condorcet_rk        ==>        Condorcet_rk_ctb       V
+        Condorcet_ut_rel              ==>             Condorcet_ut_rel_ctb
+        ||
+        V
+        Weak Condorcet
+        ||
+        V
+        Condorcet-admissible
+
+    If all voters have strict orders of preference (in the sense of ut) and if there is an odd number of voters,
+    then:
+
+        * ``majority_favorite_ut``, ``majority_favorite_rk``, ``majority_favorite_ut_ctb`` and
+          ``majority_favorite_rk_ctb`` are equivalent,
+        *  ``Condorcet_ut_abs``, ``Condorcet_ut_abs_ctb``, ``Condorcet_rk``, ``Condorcet_rk_ctb``,
+           ``Condorcet_ut_rel``, ``Condorcet_ut_rel_ctb``, ``Weak Condorcet`` and ``Condorcet-admissible`` are
+           equivalent.
+
+    Examples
+    --------
+        >>> profile = Profile(preferences_borda_rk=[[2, 1, 0], [1, 0, 2]])
+        >>> profile.preferences_rk
+        array([[0, 1, 2],
+               [2, 0, 1]])
+
+        >>> profile = Profile(preferences_ut=[[1, .3, 0], [.7, 0, 1]])
+        >>> profile.preferences_rk
+        array([[0, 1, 2],
+               [2, 0, 1]])
+
+        >>> profile = Profile()
+        >>> profile.preferences_rk
+        Traceback (most recent call last):
+        ValueError: Please provide at least preferences_rk, preferences_borda_rk or preferences_ut.
+    """
 
     def __init__(self, preferences_ut=None, preferences_rk=None, preferences_borda_rk=None,
                  log_creation=None, labels_candidates=None, sort_voters=False):
-        """Create a profile of voters with preferences over some candidates.
-
-        Parameters
-        ----------
-        preferences_ut : list of list (or 2d ndarray)
-            2d array of floats. ``preferences_ut[v, c]`` is the utility of candidate ``c`` as seen by voter ``v``.
-        preferences_rk : list of list (or 2d ndarray)
-            2d array of integers. ``preferences_rk[v, k]`` is the candidate at rank ``k`` for voter ``v``.
-        preferences_borda_rk : list of list (or 2d ndarray)
-            2d array of integers. ``preferences_borda_rk[v, c]`` gains 1 point for each candidate ``d`` such that
-            voter ``v`` ranks ``c`` before ``d``. So, these Borda scores are between ``0`` and ``C - 1``.
-        log_creation : object
-            Any type (string, list...). Some comments.
-        labels_candidates : list of str
-            Names of the candidates.
-        sort_voters : bool
-            If True, then when the profile is created, voters are immediately sorted, first by their
-            strict order of preference (their row in :attr:`~svvamp.Population.preferences_rk`), then by their weak
-            order of preference (their row in :attr:`~svvamp.Population.preferences_borda_ut`). Note that two voters
-            having the same strict order may have different weak orders, and vice versa. The objective of this
-            sorting is to accelerate some algorithms (typically Individual Manipulation). It can also be convenient
-            to visualize the profile.
-
-        Notes
-        -----
-        You may enter ``preferences_ut``, ``preferences_rk`` or both to define the preferences of the population.
-        In all cases, instead of ``preferences_rk``, you may enter ``preferences_borda_rk``.
-
-        If you provide ``preferences_rk`` only, then ``preferences_ut`` is set to the corresponding Borda scores
-        (:attr:`~svvamp.Population.preferences_borda_rk`).
-
-        If you provide ``preferences_ut`` only, then ``preferences_rk`` is naturally derived from utilities. If voter
-        ``v`` has a greater utility for candidate ``c`` than for candidate ``d``, then she ranks ``c`` before ``d``.
-        If voter ``v`` attributes the same utility to several candidates, then the first time the attribute
-        ``preferences_rk`` is called, a random ranking will be decided for these tied candidates (once and for all).
-
-        If you provide both, then SVVAMP DOES NOT CHECK that they are consistent. You should ensure that they are,
-        in the sense that if ``v`` ranks ``c`` before ``d``, then she her utility for ``c`` must be at least equal to
-        her utility for ``d``. Similarly, you can provide both ``preferences_rk`` and ``preferences_borda_rk``, but
-        SVVAMP DOES NOT CHECK that they are consistent.
-
-        ``preferences_rk`` will be used for sincere voting when a voting system accepts only strict orders.
-
-        In contrast, for manipulation purposes, ``preferences_ut`` is always used , which means that indifference is
-        taken into account as such to determine the interest in manipulation. If voter ``v`` attributes the same
-        utility to candidates ``w`` and ``c``, and if ``w`` is the sincere winner in an election, then ``v`` is not
-        interested in a manipulation for ``c``.
-
-        If all voters have a strict order of preference (in the sense of ut), then for functions below having
-        variants with suffix ``_ut`` or ``_rk``, the two variants are equivalent.
-
-        In some voting systems and in some of the attributes below, we use a process referred as **candidate
-        tie-breaking** or **CTB** in SVVAMP. It means that lowest-index candidates are favored. When using CTB,
-        if candidates ``c`` and ``d`` are tied (for example, in an election using Plurality), then ``c`` is favored
-        over ``d`` iff ``c < d``.
-
-        Implications between majority favorite and Condorcet criteria (cf. corresponding attributes below).
-
-        ::
-
-            majority_favorite_ut          ==>         majority_favorite_ut_ctb
-            ||              ||                                ||            ||
-            V               ||                                ||            ||
-            Resistant Cond. V                                 V             ||
-            ||       majority_favorite_rk ==> majority_favorite_rk_ctb      ||
-            ||                     ||                ||                     ||
-            V                      ||                ||                     V
-            Condorcet_ut_abs              ==>             Condorcet_ut_abs_ctb
-            ||      ||             ||                ||            ||       ||
-            ||      V              V                 V             V        ||
-            V         Condorcet_rk        ==>        Condorcet_rk_ctb       V
-            Condorcet_ut_rel              ==>             Condorcet_ut_rel_ctb
-            ||
-            V
-            Weak Condorcet
-            ||
-            V
-            Condorcet-admissible
-
-        If all voters have strict orders of preference (in the sense of ut) and if there is an odd number of voters,
-        then:
-
-            * ``majority_favorite_ut``, ``majority_favorite_rk``, ``majority_favorite_ut_ctb`` and
-              ``majority_favorite_rk_ctb`` are equivalent,
-            *  ``Condorcet_ut_abs``, ``Condorcet_ut_abs_ctb``, ``Condorcet_rk``, ``Condorcet_rk_ctb``,
-               ``Condorcet_ut_rel``, ``Condorcet_ut_rel_ctb``, ``Weak Condorcet`` and ``Condorcet-admissible`` are
-               equivalent.
-
-        Examples
-        --------
-            >>> profile = Profile(preferences_borda_rk=[[2, 1, 0], [1, 0, 2]])
-            >>> profile.preferences_rk
-            array([[0, 1, 2],
-                   [2, 0, 1]])
-
-            >>> profile = Profile(preferences_ut=[[1, .3, 0], [.7, 0, 1]])
-            >>> profile.preferences_rk
-            array([[0, 1, 2],
-                   [2, 0, 1]])
-
-            >>> profile = Profile()
-            >>> profile.preferences_rk
-            Traceback (most recent call last):
-            ValueError: Please provide at least preferences_rk, preferences_borda_rk or preferences_ut.
-        """
         super().__init__(log_identity="PROFILE")
 
         if preferences_ut is None:

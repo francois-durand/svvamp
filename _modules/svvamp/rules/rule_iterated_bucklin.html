@@ -112,6 +112,46 @@
 <span class="k">class</span> <span class="nc">RuleIteratedBucklin</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Iterated Bucklin method.</span>
 
+<span class="sd">    Options</span>
+<span class="sd">    -------</span>
+<span class="sd">        &gt;&gt;&gt; RuleIteratedBucklin.print_options_parameters()</span>
+<span class="sd">        cm_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="sd">        icm_option: [&#39;lazy&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="sd">        iia_subset_maximum_size: is_number. Default: 2.</span>
+<span class="sd">        im_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="sd">        tm_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        um_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The candidate with least *adjusted median Borda score* (cf. below) is eliminated. Then the new Borda scores are</span>
+<span class="sd">    computed. Etc. Ties are broken in favor of lower-index candidates: in case of a tie, the candidate with highest</span>
+<span class="sd">    index is eliminated.</span>
+
+<span class="sd">    Adjusted median Borda score:</span>
+
+<span class="sd">        Let ``med_c`` be the median Borda score for candidate ``c``. Let ``x_c`` the number of voters who put a lower</span>
+<span class="sd">        Borda score to ``c``. Then ``c``&#39;s adjusted median is ``med_c - x_c / (n_v + 1)``.</span>
+
+<span class="sd">        If ``med_c &gt; med_d``, then it is also true for the adjusted median. If ``med_c = med_d``, then ``c`` has a</span>
+<span class="sd">        better adjusted median iff ``x_c &lt; x_d``, i.e. if more voters give to ``c`` the Borda score ``med_c`` or</span>
+<span class="sd">        higher.</span>
+
+<span class="sd">        So, the best candidate by adjusted median is the :class:`~Bucklin` winner. Here, at each round,</span>
+<span class="sd">        we eliminate the candidate with lowest adjusted median Borda score, which justifies the name of &quot;Iterated</span>
+<span class="sd">        Bucklin method&quot;.</span>
+
+<span class="sd">    Unlike Baldwin method (= Iterated Borda), Iterated Bucklin does not meet the Condorcet criterion. Indeed,</span>
+<span class="sd">    a Condorcet winner may have the (strictly) worst median ranking.</span>
+
+<span class="sd">    * :meth:`is_cm_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
+<span class="sd">    * :meth:`is_icm_`: The algorithm from superclass :class:`Rule` is polynomial and has a window of error of 1</span>
+<span class="sd">      manipulator.</span>
+<span class="sd">    * :meth:`is_im_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
+<span class="sd">    * :meth:`is_iia`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
+<span class="sd">    * :meth:`is_tm_`: Exact in polynomial time.</span>
+<span class="sd">    * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
+
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
@@ -341,36 +381,6 @@
 <span class="sd">        [0. 0. 1.]</span>
 <span class="sd">        sufficient_coalition_size_cm =</span>
 <span class="sd">        [0. 2. 3.]</span>
-
-<span class="sd">    Notes</span>
-<span class="sd">    -----</span>
-<span class="sd">    The candidate with least *adjusted median Borda score* (cf. below) is eliminated. Then the new Borda scores are</span>
-<span class="sd">    computed. Etc. Ties are broken in favor of lower-index candidates: in case of a tie, the candidate with highest</span>
-<span class="sd">    index is eliminated.</span>
-
-<span class="sd">    Adjusted median Borda score:</span>
-
-<span class="sd">        Let ``med_c`` be the median Borda score for candidate ``c``. Let ``x_c`` the number of voters who put a lower</span>
-<span class="sd">        Borda score to ``c``. Then ``c``&#39;s adjusted median is ``med_c - x_c / (n_v + 1)``.</span>
-
-<span class="sd">        If ``med_c &gt; med_d``, then it is also true for the adjusted median. If ``med_c = med_d``, then ``c`` has a</span>
-<span class="sd">        better adjusted median iff ``x_c &lt; x_d``, i.e. if more voters give to ``c`` the Borda score ``med_c`` or</span>
-<span class="sd">        higher.</span>
-
-<span class="sd">        So, the best candidate by adjusted median is the :class:`~Bucklin` winner. Here, at each round,</span>
-<span class="sd">        we eliminate the candidate with lowest adjusted median Borda score, which justifies the name of &quot;Iterated</span>
-<span class="sd">        Bucklin method&quot;.</span>
-
-<span class="sd">    Unlike Baldwin method (= Iterated Borda), Iterated Bucklin does not meet the Condorcet criterion. Indeed,</span>
-<span class="sd">    a Condorcet winner may have the (strictly) worst median ranking.</span>
-
-<span class="sd">    * :meth:`is_cm_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
-<span class="sd">    * :meth:`is_icm_`: The algorithm from superclass :class:`Rule` is polynomial and has a window of error of 1</span>
-<span class="sd">      manipulator.</span>
-<span class="sd">    * :meth:`is_im_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
-<span class="sd">    * :meth:`is_iia`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
-<span class="sd">    * :meth:`is_tm_`: Exact in polynomial time.</span>
-<span class="sd">    * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">full_name</span> <span class="o">=</span> <span class="s1">&#39;Iterated Bucklin&#39;</span>

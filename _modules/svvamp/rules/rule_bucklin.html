@@ -113,6 +113,36 @@
 <span class="k">class</span> <span class="nc">RuleBucklin</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Bucklin method.</span>
 
+<span class="sd">    Options</span>
+<span class="sd">    -------</span>
+<span class="sd">        &gt;&gt;&gt; RuleBucklin.print_options_parameters()</span>
+<span class="sd">        cm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        icm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        iia_subset_maximum_size: is_number. Default: 2.</span>
+<span class="sd">        im_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        tm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        um_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    At counting round ``r``, all voters who rank candidate ``c`` in ``r``-`th` position gives her an additional</span>
+<span class="sd">    vote. As soon as at least one candidate has more than :attr:`n_v`/2 votes (accrued with previous rounds),</span>
+<span class="sd">    the candidate with most votes is declared the winner. In case of a tie, the candidate with lowest index wins.</span>
+
+<span class="sd">    * :meth:`is_cm_`: Exact in polynomial time.</span>
+<span class="sd">    * :meth:`is_icm_`: Exact in polynomial time.</span>
+<span class="sd">    * :meth:`is_im_`: Exact in polynomial time.</span>
+<span class="sd">    * :meth:`is_iia_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
+<span class="sd">    * :meth:`is_tm_`: Exact in polynomial time.</span>
+<span class="sd">    * :meth:`is_um_`: Exact in polynomial time.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    &#39;The Majoritarian Compromise in large societies&#39;, Arkadii Slinko, 2002.</span>
+
+<span class="sd">    &#39;Complexity of Unweighted Coalitional Manipulation under Some Common Voting Rules&#39;, Lirong Xia,</span>
+<span class="sd">    Michael Zuckerman, Ariel D. Procaccia, Vincent Conitzer and Jeffrey S. Rosenschein, 2009.</span>
+
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
@@ -344,26 +374,6 @@
 <span class="sd">        [0. 1. 3.]</span>
 <span class="sd">        sufficient_coalition_size_cm =</span>
 <span class="sd">        [0. 2. 4.]</span>
-
-<span class="sd">    Notes</span>
-<span class="sd">    -----</span>
-<span class="sd">    At counting round ``r``, all voters who rank candidate ``c`` in ``r``-`th` position gives her an additional</span>
-<span class="sd">    vote. As soon as at least one candidate has more than :attr:`n_v`/2 votes (accrued with previous rounds),</span>
-<span class="sd">    the candidate with most votes is declared the winner. In case of a tie, the candidate with lowest index wins.</span>
-
-<span class="sd">    * :meth:`is_cm_`: Exact in polynomial time.</span>
-<span class="sd">    * :meth:`is_icm_`: Exact in polynomial time.</span>
-<span class="sd">    * :meth:`is_im_`: Exact in polynomial time.</span>
-<span class="sd">    * :meth:`is_iia_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
-<span class="sd">    * :meth:`is_tm_`: Exact in polynomial time.</span>
-<span class="sd">    * :meth:`is_um_`: Exact in polynomial time.</span>
-
-<span class="sd">    References</span>
-<span class="sd">    ----------</span>
-<span class="sd">    &#39;The Majoritarian Compromise in large societies&#39;, Arkadii Slinko, 2002.</span>
-
-<span class="sd">    &#39;Complexity of Unweighted Coalitional Manipulation under Some Common Voting Rules&#39;, Lirong Xia,</span>
-<span class="sd">    Michael Zuckerman, Ariel D. Procaccia, Vincent Conitzer and Jeffrey S. Rosenschein, 2009.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">full_name</span> <span class="o">=</span> <span class="s1">&#39;Bucklin&#39;</span>

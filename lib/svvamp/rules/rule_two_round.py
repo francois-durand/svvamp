@@ -28,6 +28,25 @@ from svvamp.preferences.profile import Profile
 class RuleTwoRound(Rule):
     """Two Round System.
 
+    Options
+    -------
+        >>> RuleTwoRound.print_options_parameters()
+        cm_option: ['exact']. Default: 'exact'.
+        icm_option: ['exact']. Default: 'exact'.
+        iia_subset_maximum_size: is_number. Default: 2.
+        im_option: ['exact']. Default: 'exact'.
+        tm_option: ['exact']. Default: 'exact'.
+        um_option: ['exact']. Default: 'exact'.
+
+    Notes
+    -----
+    Two rounds are actually held, which means that manipulators can change their vote between the first and second
+    round. Hence for :attr:`n_c` = 3, this voting system is equivalent to :class:`RuleExhaustiveBallot` (not
+    :class:`RuleIRV`). In case of a tie, candidates with lowest index are privileged.
+
+    * :meth:`is_iia_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
+    * :meth:`is_cm_`, :meth:`is_icm_`, :meth:`is_im_`, :meth:`is_tm_`, :meth:`is_um_`: Exact in polynomial time.
+
     Examples
     --------
         >>> profile = Profile(preferences_ut=[
@@ -257,15 +276,6 @@ class RuleTwoRound(Rule):
         [0. 2. 4.]
         sufficient_coalition_size_cm =
         [0. 2. 4.]
-
-    Notes
-    -----
-    Two rounds are actually held, which means that manipulators can change their vote between the first and second
-    round. Hence for :attr:`n_c` = 3, this voting system is equivalent to :class:`RuleExhaustiveBallot` (not
-    :class:`RuleIRV`). In case of a tie, candidates with lowest index are privileged.
-
-    * :meth:`is_iia_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
-    * :meth:`is_cm_`, :meth:`is_icm_`, :meth:`is_im_`, :meth:`is_tm_`, :meth:`is_um_`: Exact in polynomial time.
     """
 
     full_name = 'Two Round System'

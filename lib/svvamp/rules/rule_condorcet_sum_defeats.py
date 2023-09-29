@@ -28,6 +28,49 @@ from svvamp.preferences.profile import Profile
 class RuleCondorcetSumDefeats(Rule):
     """Condorcet with sum of defeats.
 
+    Options
+    -------
+        >>> RuleCondorcetSumDefeats.print_options_parameters()
+        cm_option: ['lazy', 'exact']. Default: 'lazy'.
+        icm_option: ['lazy']. Default: 'lazy'.
+        iia_subset_maximum_size: is_number. Default: 2.
+        im_option: ['lazy', 'exact']. Default: 'lazy'.
+        tm_option: ['lazy', 'exact']. Default: 'exact'.
+        um_option: ['lazy', 'exact']. Default: 'lazy'.
+
+    Notes
+    -----
+    An *elementary move* consists of reversing a voter's preference about a pair of candidate ``(c, d)`` (without
+    demanding that her whole relation of preference stays transitive). The score for candidate ``c`` is minus the
+    number of *elementary moves* needed so that ``c`` becomes a Condorcet winner. It is the same principle as
+    Dodgson's method, but without looking for a transitive profile.
+
+    In practice:
+
+    .. math::
+
+        \\texttt{scores}[c] = - \\sum_{c \\text{ does not beat } d}\\left(
+        \\left\\lfloor\\frac{V}{2}\\right\\rfloor + 1 - \\texttt{matrix_duels_rk}[c, d]
+        \\right)
+
+    In particular, for :attr:`n_v` odd:
+
+    .. math::
+
+        \\texttt{scores}[c] = - \\sum_{c \\text{ does not beat } d}\\left(
+        \\left\\lceil\\frac{V}{2}\\right\\rceil - \\texttt{matrix_duels_rk}[c, d]
+        \\right)
+
+    * :meth:`is_cm_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
+    * :meth:`is_icm_`: Algorithm from superclass :class:`Rule`. It is polynomial and has a window of error of 1
+      manipulator.
+    * :meth:`is_im_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
+    * :meth:`is_iia_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`. If
+      :attr:`iia_subset_maximum_size` = 2, it runs in polynomial time and is exact up to ties (which can occur only if
+      :attr:`n_v` is even).
+    * :meth:`is_tm_`: Exact in polynomial time.
+    * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
+
     Examples
     --------
         >>> profile = Profile(preferences_ut=[
@@ -255,39 +298,6 @@ class RuleCondorcetSumDefeats(Rule):
         [0. 1. 1.]
         sufficient_coalition_size_cm =
         [0. 2. 3.]
-
-    Notes
-    -----
-    An *elementary move* consists of reversing a voter's preference about a pair of candidate ``(c, d)`` (without
-    demanding that her whole relation of preference stays transitive). The score for candidate ``c`` is minus the
-    number of *elementary moves* needed so that ``c`` becomes a Condorcet winner. It is the same principle as
-    Dodgson's method, but without looking for a transitive profile.
-
-    In practice:
-
-    .. math::
-
-        \\texttt{scores}[c] = - \\sum_{c \\text{ does not beat } d}\\left(
-        \\left\\lfloor\\frac{V}{2}\\right\\rfloor + 1 - \\texttt{matrix_duels_rk}[c, d]
-        \\right)
-
-    In particular, for :attr:`n_v` odd:
-
-    .. math::
-
-        \\texttt{scores}[c] = - \\sum_{c \\text{ does not beat } d}\\left(
-        \\left\\lceil\\frac{V}{2}\\right\\rceil - \\texttt{matrix_duels_rk}[c, d]
-        \\right)
-
-    * :meth:`is_cm_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
-    * :meth:`is_icm_`: Algorithm from superclass :class:`Rule`. It is polynomial and has a window of error of 1
-      manipulator.
-    * :meth:`is_im_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
-    * :meth:`is_iia_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`. If
-      :attr:`iia_subset_maximum_size` = 2, it runs in polynomial time and is exact up to ties (which can occur only if
-      :attr:`n_v` is even).
-    * :meth:`is_tm_`: Exact in polynomial time.
-    * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
     """
 
     full_name = 'Condorcet Sum Defeats'

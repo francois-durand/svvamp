@@ -28,6 +28,24 @@ from svvamp.preferences.profile import Profile
 class RuleVeto(Rule):
     """Veto. Also called Antiplurality.
 
+    Options
+    -------
+        >>> RuleVeto.print_options_parameters()
+        cm_option: ['exact']. Default: 'exact'.
+        icm_option: ['exact']. Default: 'exact'.
+        iia_subset_maximum_size: is_number. Default: 2.
+        im_option: ['exact']. Default: 'exact'.
+        tm_option: ['exact']. Default: 'exact'.
+        um_option: ['exact']. Default: 'exact'.
+
+    Notes
+    -----
+    Each voter votes against one candidate (veto). The candidate with least vetos is declared the winner. In case of
+    a tie, the tied candidate with lowest index wins. Sincere voters vote against their least-liked candidate.
+
+    * :meth:`is_iia`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
+    * :meth:`is_cm_`, :meth:`is_icm_`, :meth:`is_im_`, :meth:`is_tm_`, :meth:`is_um_`: Exact in polynomial time.
+
     Examples
     --------
         >>> profile = Profile(preferences_ut=[
@@ -251,14 +269,6 @@ class RuleVeto(Rule):
         [0. 2. 5.]
         sufficient_coalition_size_cm =
         [0. 2. 5.]
-
-    Notes
-    -----
-    Each voter votes against one candidate (veto). The candidate with least vetos is declared the winner. In case of
-    a tie, the tied candidate with lowest index wins. Sincere voters vote against their least-liked candidate.
-
-    * :meth:`is_iia`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
-    * :meth:`is_cm_`, :meth:`is_icm_`, :meth:`is_im_`, :meth:`is_tm_`, :meth:`is_um_`: Exact in polynomial time.
     """
 
     full_name = 'Veto'

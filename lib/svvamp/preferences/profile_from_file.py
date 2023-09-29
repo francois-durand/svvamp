@@ -29,35 +29,35 @@ from svvamp.preferences.profile import Profile
 
 
 class ProfileFromFile(Profile):
+    """Profile from a file.
+
+    Parameters
+    ----------
+    file_name : str
+        The name of the file.
+    sort_candidates : bool
+        If True, then candidates are sorted, first by number of victories (in the matrix of victories), then
+        by Borda score.
+    sort_voters : bool
+        Whether the voters should be sorted. Cf. :class:`Profile`.
+
+    Notes
+    -----
+    * If the file name ends with '.cvr.csv' (cvr = Cast Vote Records): first row gives the column headers. The
+      last headers are 'rank1', 'rank2', etc. Each row represents a voter. In the column 'rank1', the name of
+      her most-liked candidate, etc.
+    * If the file name ends with '.t.csv' (t = transposed format): simple table of utilities with candidates
+      declared in the first column and voters declared in the first row.
+    * If the file name ends with '.csv' (but not '.t.csv'), candidates must be declared in the first row and voters
+      in the first column.
+    * Otherwise, the file is considered as a PrefLib file.
+
+    For CVR and Preflib files, since the information is ordinal only, ``preferences_ut[v, c]`` is set to the Borda
+    score (with no vtb) minus ``(C - 1) / 2``. This way, utilities are between ``- (C - 1) / 2`` and
+    ``(C - 1) / 2``.
+    """
 
     def __init__(self, file_name, sort_candidates=False, sort_voters=False):
-        """Profile from a file.
-
-        Parameters
-        ----------
-        file_name : str
-            The name of the file.
-        sort_candidates : bool
-            If True, then candidates are sorted, first by number of victories (in the matrix of victories), then
-            by Borda score.
-        sort_voters : bool
-            Whether the voters should be sorted. Cf. :class:`Profile`.
-
-        Notes
-        -----
-        * If the file name ends with '.cvr.csv' (cvr = Cast Vote Records): first row gives the column headers. The
-          last headers are 'rank1', 'rank2', etc. Each row represents a voter. In the column 'rank1', the name of
-          her most-liked candidate, etc.
-        * If the file name ends with '.t.csv' (t = transposed format): simple table of utilities with candidates
-          declared in the first column and voters declared in the first row.
-        * If the file name ends with '.csv' (but not '.t.csv'), candidates must be declared in the first row and voters
-          in the first column.
-        * Otherwise, the file is considered as a PrefLib file.
-
-        For CVR and Preflib files, since the information is ordinal only, ``preferences_ut[v, c]`` is set to the Borda
-        score (with no vtb) minus ``(C - 1) / 2``. This way, utilities are between ``- (C - 1) / 2`` and
-        ``(C - 1) / 2``.
-        """
         if file_name[-4:] == '.csv':
             if len(file_name) >= 8 and file_name[-8:] == '.cvr.csv':
                 preferences_ut, labels_candidates = cvr_to_preferences_ut(file_name)

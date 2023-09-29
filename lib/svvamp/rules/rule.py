@@ -39,14 +39,6 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
 
     Parameters
     ----------
-    options_parameters : dict
-        It is a dictionary of allowed and default options. Allowed is a minimal check that will
-        be performed before launching big simulations, but other checks might be performed when setting the option.
-        Allowed is either a list of values, like ['lazy', 'fast', 'exact'], or a function checking if the parameter
-        is correct. Example: ``{'max_grade': dict(allowed=np.isfinite, default=1), 'option_example': dict(allowed=[42,
-        51], default=42)}``.
-    kwargs
-        Additional keyword parameters. See :attr:`options_parameters` for allowed and default options.
     with_two_candidates_reduces_to_plurality : bool
         ``True`` iff, when using this voting system with only two candidates, it amounts to Plurality (with voter and
         candidate tie-breaking).
@@ -71,11 +63,13 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         InfMC_c_ctb, then precheck on ICM will not do better than other basic prechecks.
     log_identity : str
         Cf. :class:`MyLog`.
+    kwargs
+        Additional keyword parameters. See :attr:`options_parameters` for allowed and default options.
 
     Notes
     -----
-    This is an 'abstract' class. As an end-user, you should always use its subclasses :attr:`~svvamp.Approval`,
-    :attr:`~svvamp.Plurality`, etc.
+    This is an 'abstract' class. As an end-user, you should always use its subclasses :attr:`~svvamp.RuleApproval`,
+    :attr:`~svvamp.RulePlurality`, etc.
 
     This class and its subclasses are suitable for voting rules that are deterministic and anonymous (treating all
     voters equally). As a consequence, they are not neutral (because they need to break ties in totally symmetric
@@ -185,6 +179,12 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         'icm_option': {'allowed': ['lazy'], 'default': 'lazy'},
         'cm_option': {'allowed': ['lazy', 'exact'], 'default': 'lazy'}
     }
+    """dict: Options parameters. It is a dictionary of allowed and default options. Allowed is a minimal check that will
+    be performed before launching big simulations, but other checks might be performed when setting the option.
+    Allowed is either a list of values, like ['lazy', 'fast', 'exact'], or a function checking if the parameter
+    is correct. Example: ``{'max_grade': dict(allowed=np.isfinite, default=1), 'option_example': dict(allowed=[42,
+    51], default=42)}``.
+    """
 
     def __init__(self,
                  with_two_candidates_reduces_to_plurality=False, is_based_on_rk=False,
@@ -289,6 +289,15 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         this_value_is_allowed = (callable(allowed) and allowed(value)) or (not callable(allowed) and value in allowed)
         if not this_value_is_allowed:
             raise ValueError(f"'{option}' = {repr(value)} is not allowed in {cls.__name__}.")
+
+    @classmethod
+    def print_options_parameters(cls):
+        for k in sorted(cls.options_parameters.keys()):
+            allowed = cls.options_parameters[k]['allowed']
+            if callable(allowed):
+                allowed = allowed.__name__
+            default = repr(cls.options_parameters[k]['default'])
+            print(f"{k}: {allowed}. Default: {default}.")
 
     def log_(self, method_name):
         """Log corresponding to a particular manipulation method.

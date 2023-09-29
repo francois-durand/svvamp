@@ -20,7 +20,7 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="GeneratorProfileCubicUniform" href="generator_profile_cubic_uniform.html" />
+    <link rel="next" title="ProfileSubsetCandidates" href="profile_subset_candidates.html" />
     <link rel="prev" title="Profile" href="profile.html" /> 
 </head>
 
@@ -53,25 +53,21 @@
 <li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="../index.html#preferences">Preferences</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#profiles">Profiles</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="profile.html">Profile</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">ProfileFromFile</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#svvamp.ProfileFromFile"><code class="docutils literal notranslate"><span class="pre">ProfileFromFile</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="generator_profile_cubic_uniform.html">GeneratorProfileCubicUniform</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generator_profile_euclidean_box.html">GeneratorProfileEuclideanBox</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generator_profile_gaussian_well.html">GeneratorProfileGaussianWell</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generator_profile_ianc.html">GeneratorProfileIanc</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generator_profile_ic.html">GeneratorProfileIc</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generator_profile_ladder.html">GeneratorProfileLadder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generator_profile_perturbed_culture.html">GeneratorProfilePerturbedCulture</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generator_profile_spheroid.html">GeneratorProfileSpheroid</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generator_profile_vmf_hypercircle.html">GeneratorProfileVMFHypercircle</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generator_profile_vmf_hypersphere.html">GeneratorProfileVMFHypersphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="profile_subset_candidates.html">ProfileSubsetCandidates</a></li>
+<li class="toctree-l3"><a class="reference internal" href="profile_um.html">ProfileUM</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../index.html#voting-rules">Voting rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#generators-of-profiles">Generators of Profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#plurality-elimination-engines">Plurality Elimination Engines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#voting-rules">Voting Rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#meta">Meta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#utils">Utils</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
@@ -109,7 +105,32 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="svvamp.ProfileFromFile">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">svvamp.</span></span><span class="sig-name descname"><span class="pre">ProfileFromFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_candidates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_voters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/preferences/profile_from_file.html#ProfileFromFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.ProfileFromFile" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Profile from a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_name</strong> (<em>str</em>) – The name of the file.</p></li>
+<li><p><strong>sort_candidates</strong> (<em>bool</em>) – If True, then candidates are sorted, first by number of victories (in the matrix of victories), then
+by Borda score.</p></li>
+<li><p><strong>sort_voters</strong> (<em>bool</em>) – Whether the voters should be sorted. Cf. <a class="reference internal" href="profile.html#svvamp.Profile" title="svvamp.Profile"><code class="xref py py-class docutils literal notranslate"><span class="pre">Profile</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>If the file name ends with ‘.cvr.csv’ (cvr = Cast Vote Records): first row gives the column headers. The
+last headers are ‘rank1’, ‘rank2’, etc. Each row represents a voter. In the column ‘rank1’, the name of
+her most-liked candidate, etc.</p></li>
+<li><p>If the file name ends with ‘.t.csv’ (t = transposed format): simple table of utilities with candidates
+declared in the first column and voters declared in the first row.</p></li>
+<li><p>If the file name ends with ‘.csv’ (but not ‘.t.csv’), candidates must be declared in the first row and voters
+in the first column.</p></li>
+<li><p>Otherwise, the file is considered as a PrefLib file.</p></li>
+</ul>
+<p>For CVR and Preflib files, since the information is ordinal only, <code class="docutils literal notranslate"><span class="pre">preferences_ut[v,</span> <span class="pre">c]</span></code> is set to the Borda
+score (with no vtb) minus <code class="docutils literal notranslate"><span class="pre">(C</span> <span class="pre">-</span> <span class="pre">1)</span> <span class="pre">/</span> <span class="pre">2</span></code>. This way, utilities are between <code class="docutils literal notranslate"><span class="pre">-</span> <span class="pre">(C</span> <span class="pre">-</span> <span class="pre">1)</span> <span class="pre">/</span> <span class="pre">2</span></code> and
+<code class="docutils literal notranslate"><span class="pre">(C</span> <span class="pre">-</span> <span class="pre">1)</span> <span class="pre">/</span> <span class="pre">2</span></code>.</p>
+</dd></dl>
 
 </section>
 
@@ -118,7 +139,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="profile.html" class="btn btn-neutral float-left" title="Profile" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="generator_profile_cubic_uniform.html" class="btn btn-neutral float-right" title="GeneratorProfileCubicUniform" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="profile_subset_candidates.html" class="btn btn-neutral float-right" title="ProfileSubsetCandidates" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

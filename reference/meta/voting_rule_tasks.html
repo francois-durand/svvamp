@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VotingRuleTasks &mdash; SVVAMP 0.9.1 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=9dc39874"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="ExperimentAnalyzer" href="experiment_analyzer.html" />
+    <link rel="prev" title="StudyRuleCriteria" href="study_rule_criteria.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            SVVAMP
+          </a>
+              <div class="version">
+                0.9.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">SVVAMP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#profiles">Profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#generators-of-profiles">Generators of Profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#plurality-elimination-engines">Plurality Elimination Engines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#voting-rules">Voting Rules</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#meta">Meta</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="study_profile_criteria.html">StudyProfileCriteria</a></li>
+<li class="toctree-l3"><a class="reference internal" href="study_rule_criteria.html">StudyRuleCriteria</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">VotingRuleTasks</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.VotingRuleTasks"><code class="docutils literal notranslate"><span class="pre">VotingRuleTasks</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="experiment_analyzer.html">ExperimentAnalyzer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="experiments_compiler.html">ExperimentsCompiler</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#utils">Utils</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../history.html">History</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">SVVAMP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Reference</a></li>
+      <li class="breadcrumb-item active">VotingRuleTasks</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/reference/meta/voting_rule_tasks.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="votingruletasks">
+<h1>VotingRuleTasks<a class="headerlink" href="#votingruletasks" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="svvamp.VotingRuleTasks">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">svvamp.</span></span><span class="sig-name descname"><span class="pre">VotingRuleTasks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">voting_systems</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">study_rule_criteria</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">detailed_tasks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/voting_rule_tasks.html#VotingRuleTasks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.VotingRuleTasks" title="Link to this definition"></a></dt>
+<dd><p>A set of tasks for the simulator, i.e. which voting rules with which options and which criteria about them.</p>
+<p>A “task” consists of: a voting rule, a dictionary of options, and a <a class="reference internal" href="study_rule_criteria.html#svvamp.StudyRuleCriteria" title="svvamp.StudyRuleCriteria"><code class="xref py py-class docutils literal notranslate"><span class="pre">StudyRuleCriteria</span></code></a> object. A
+<cite>VotingRuleTasks</cite> is essentially a list of tasks.</p>
+<p>In the following, what we call a “voting system” consists of a voting rule and a dictionary of options (i.e.
+like a task, but with no <a class="reference internal" href="study_rule_criteria.html#svvamp.StudyRuleCriteria" title="svvamp.StudyRuleCriteria"><code class="xref py py-class docutils literal notranslate"><span class="pre">StudyRuleCriteria</span></code></a> object specified).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>voting_systems</strong> (<em>List</em>) – A list of pairs (rule_class, options), where <cite>rule_class</cite> is a subclass of <a class="reference internal" href="../rules/rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a> and <cite>options</cite> is a
+dictionary of options. Instead of (rule_class, options), one may provide a singleton <cite>rule_class</cite>
+(without parentheses), which is equivalent to (rule_class, {}).</p></li>
+<li><p><strong>study_rule_criteria</strong> (<a class="reference internal" href="study_rule_criteria.html#svvamp.StudyRuleCriteria" title="svvamp.StudyRuleCriteria"><em>StudyRuleCriteria</em></a>) – A <a class="reference internal" href="study_rule_criteria.html#svvamp.StudyRuleCriteria" title="svvamp.StudyRuleCriteria"><code class="xref py py-class docutils literal notranslate"><span class="pre">StudyRuleCriteria</span></code></a> object.</p></li>
+<li><p><strong>detailed_tasks</strong> (<em>object</em>) – Either a list of triples (rule_class, options, study_rule_criteria), or a VotingRuleTasks object.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Basically, there are two non-exclusive ways to define a VotingRuleTasks object:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Exhaustively with detailed_tasks.</p></li>
+<li><p>As a Cartesian product by voting_systems and study_rule_criteria.</p></li>
+</ul>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks1</span> <span class="o">=</span> <span class="n">VotingRuleTasks</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">voting_systems</span><span class="o">=</span><span class="p">[</span>
+<span class="gp">... </span>        <span class="n">RulePlurality</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">RuleExhaustiveBallot</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="p">(</span><span class="n">RuleIRV</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="s1">&#39;fast&#39;</span><span class="p">}),</span>
+<span class="gp">... </span>        <span class="p">(</span><span class="n">RuleApproval</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;approval_threshold&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}),</span>
+<span class="gp">... </span>    <span class="p">],</span>
+<span class="gp">... </span>    <span class="n">study_rule_criteria</span><span class="o">=</span><span class="n">StudyRuleCriteria</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">manipulation_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;is_cm_&#39;</span><span class="p">,</span> <span class="s1">&#39;is_tm_&#39;</span><span class="p">,</span> <span class="s1">&#39;is_um_&#39;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="p">),</span>
+<span class="gp">... </span>    <span class="n">detailed_tasks</span><span class="o">=</span><span class="p">[</span>
+<span class="gp">... </span>        <span class="p">(</span>
+<span class="gp">... </span>            <span class="n">RuleIRV</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="p">{</span><span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">},</span>
+<span class="gp">... </span>            <span class="n">StudyRuleCriteria</span><span class="p">(</span>
+<span class="gp">... </span>                <span class="n">manipulation_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;is_cm_&#39;</span><span class="p">],</span>
+<span class="gp">... </span>                <span class="n">manipulation_only</span><span class="o">=</span><span class="kc">True</span>
+<span class="gp">... </span>            <span class="p">)</span>
+<span class="gp">... </span>        <span class="p">),</span>
+<span class="gp">... </span>        <span class="p">(</span>
+<span class="gp">... </span>            <span class="n">RuleApproval</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="p">{</span><span class="s1">&#39;approval_threshold&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">},</span>
+<span class="gp">... </span>            <span class="n">StudyRuleCriteria</span><span class="p">(</span>
+<span class="gp">... </span>                <span class="n">manipulation_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;is_cm_&#39;</span><span class="p">,</span> <span class="s1">&#39;is_tm_&#39;</span><span class="p">,</span> <span class="s1">&#39;is_um_&#39;</span><span class="p">]</span>
+<span class="gp">... </span>            <span class="p">)</span>
+<span class="gp">... </span>        <span class="p">),</span>
+<span class="gp">... </span>    <span class="p">]</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks2</span> <span class="o">=</span> <span class="n">VotingRuleTasks</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">voting_systems</span><span class="o">=</span><span class="p">[</span><span class="n">RuleIRV</span><span class="p">,</span> <span class="n">RuleExhaustiveBallot</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">study_rule_criteria</span><span class="o">=</span><span class="n">StudyRuleCriteria</span><span class="p">(),</span>
+<span class="gp">... </span>    <span class="n">detailed_tasks</span><span class="o">=</span><span class="n">VotingRuleTasks</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">voting_systems</span><span class="o">=</span><span class="p">[</span>
+<span class="gp">... </span>            <span class="p">(</span><span class="n">RuleIRV</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">}),</span>
+<span class="gp">... </span>            <span class="p">(</span><span class="n">RuleExhaustiveBallot</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">})</span>
+<span class="gp">... </span>        <span class="p">],</span>
+<span class="gp">... </span>        <span class="n">study_rule_criteria</span><span class="o">=</span><span class="n">StudyRuleCriteria</span><span class="p">(</span>
+<span class="gp">... </span>            <span class="n">manipulation_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;is_cm_&#39;</span><span class="p">],</span>
+<span class="gp">... </span>            <span class="n">manipulation_only</span><span class="o">=</span><span class="kc">True</span>
+<span class="gp">... </span>        <span class="p">)</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>In examples 1 and 2 above, all elements of <cite>voting_systems</cite> will be
+assigned the same set of criteria, the argument <cite>study_rule_criteria</cite>. The
+argument <cite>detailed_tasks</cite> allows to give different criteria for voting
+systems needing a specific treatment.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>When voting_systems is None (default), it is normally set to [].
+But if detailed_tasks is empty, or study_rule_criteria is not empty,
+then voting_systems is set to a quite extensive list of
+voting systems.</p></li>
+<li><p>When study_rule_criteria is None (default), it is normally set to [].
+But if detailed_tasks is empty, or voting_systems is not empty,
+then study_rule_criteria is set to StudyRuleCriteria(), which leads to study
+an quite extensive list of criteria.</p></li>
+</ul>
+</div></blockquote>
+<p>Study <a class="reference internal" href="../rules/rule_schulze.html#svvamp.RuleSchulze" title="svvamp.RuleSchulze"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleSchulze</span></code></a> and <code class="xref py py-class docutils literal notranslate"><span class="pre">Ranked</span> <span class="pre">Pairs</span></code> with a quite extensive list of criteria:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span> <span class="o">=</span> <span class="n">VotingRuleTasks</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">voting_systems</span><span class="o">=</span><span class="p">[</span><span class="n">RuleSchulze</span><span class="p">,</span> <span class="n">RuleRankedPairs</span><span class="p">]</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Study a quite extensive list of voting systems, with CM being the only manipulation criterion:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span> <span class="o">=</span> <span class="n">VotingRuleTasks</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">study_rule_criteria</span><span class="o">=</span><span class="n">StudyRuleCriteria</span><span class="p">(</span><span class="n">manipulation_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;is_cm_&#39;</span><span class="p">])</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Study a quite extensive list of voting systems with a quite extensive list of criteria:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span> <span class="o">=</span> <span class="n">VotingRuleTasks</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.VotingRuleTasks.append_manipulation_criterion">
+<span class="sig-name descname"><span class="pre">append_manipulation_criterion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">criterion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rule_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/voting_rule_tasks.html#VotingRuleTasks.append_manipulation_criterion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.VotingRuleTasks.append_manipulation_criterion" title="Link to this definition"></a></dt>
+<dd><p>Add a manipulation criterion for one or all voting rules.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>criterion</strong> (<em>str</em>) – </p></li>
+<li><p><strong>rule_class</strong> (<em>class</em>) – Subclass of <a class="reference internal" href="../rules/rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Add <cite>criterion</cite> for all occurrences of <cite>rule_class</cite>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span> <span class="o">=</span> <span class="n">VotingRuleTasks</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">voting_systems</span><span class="o">=</span><span class="p">[</span><span class="n">RuleExhaustiveBallot</span><span class="p">,</span> <span class="n">RuleIRV</span><span class="p">,</span> <span class="p">(</span><span class="n">RuleIRV</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">})],</span>
+<span class="gp">... </span>    <span class="n">study_rule_criteria</span><span class="o">=</span><span class="n">StudyRuleCriteria</span><span class="p">(</span><span class="n">manipulation_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;is_cm_&#39;</span><span class="p">],</span> <span class="n">manipulation_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>                                          <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[])</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span><span class="o">.</span><span class="n">append_manipulation_criterion</span><span class="p">(</span><span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;is_um_&#39;</span><span class="p">,</span> <span class="n">rule_class</span><span class="o">=</span><span class="n">RuleIRV</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">voting_rule_tasks</span><span class="p">)</span>
+<span class="go">VotingRuleTasks with:</span>
+<span class="go">    voting_system: RuleExhaustiveBallot</span>
+<span class="go">    options: {}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria: None</span>
+<span class="go">    voting_system: RuleIRV</span>
+<span class="go">    options: {}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">            is_um_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria: None</span>
+<span class="go">    voting_system: RuleIRV</span>
+<span class="go">    options: {&#39;cm_option&#39;: &#39;exact&#39;}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">            is_um_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria: None</span>
+</pre></div>
+</div>
+<p>If <cite>rule_class</cite> is None (default), then add <cite>criterion</cite> for all voting rules:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span> <span class="o">=</span> <span class="n">VotingRuleTasks</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">voting_systems</span><span class="o">=</span><span class="p">[</span><span class="n">RuleExhaustiveBallot</span><span class="p">,</span> <span class="n">RuleIRV</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">study_rule_criteria</span><span class="o">=</span><span class="n">StudyRuleCriteria</span><span class="p">(</span><span class="n">manipulation_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;is_cm_&#39;</span><span class="p">],</span> <span class="n">manipulation_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>                                          <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[])</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span><span class="o">.</span><span class="n">append_manipulation_criterion</span><span class="p">(</span><span class="s1">&#39;is_um_&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">voting_rule_tasks</span><span class="p">)</span>
+<span class="go">VotingRuleTasks with:</span>
+<span class="go">    voting_system: RuleExhaustiveBallot</span>
+<span class="go">    options: {}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">            is_um_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria: None</span>
+<span class="go">    voting_system: RuleIRV</span>
+<span class="go">    options: {}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">            is_um_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria: None</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.VotingRuleTasks.append_manipulation_criterion_c">
+<span class="sig-name descname"><span class="pre">append_manipulation_criterion_c</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">criterion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rule_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/voting_rule_tasks.html#VotingRuleTasks.append_manipulation_criterion_c"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.VotingRuleTasks.append_manipulation_criterion_c" title="Link to this definition"></a></dt>
+<dd><p>Add a manipulation criterion (candidates) for one or all voting rules.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>criterion</strong> (<em>str</em>) – </p></li>
+<li><p><strong>rule_class</strong> (<em>class</em>) – Subclass of <a class="reference internal" href="../rules/rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Add <cite>criterion</cite> for all occurrences of <cite>rule_class</cite>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span> <span class="o">=</span> <span class="n">VotingRuleTasks</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">voting_systems</span><span class="o">=</span><span class="p">[</span><span class="n">RuleExhaustiveBallot</span><span class="p">,</span> <span class="n">RuleIRV</span><span class="p">,</span> <span class="p">(</span><span class="n">RuleIRV</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">})],</span>
+<span class="gp">... </span>    <span class="n">study_rule_criteria</span><span class="o">=</span><span class="n">StudyRuleCriteria</span><span class="p">(</span><span class="n">manipulation_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;is_cm_&#39;</span><span class="p">],</span> <span class="n">manipulation_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>                                          <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[])</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span><span class="o">.</span><span class="n">append_manipulation_criterion_c</span><span class="p">(</span><span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;candidates_cm_&#39;</span><span class="p">,</span> <span class="n">rule_class</span><span class="o">=</span><span class="n">RuleIRV</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">voting_rule_tasks</span><span class="p">)</span>
+<span class="go">VotingRuleTasks with:</span>
+<span class="go">    voting_system: RuleExhaustiveBallot</span>
+<span class="go">    options: {}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria: None</span>
+<span class="go">    voting_system: RuleIRV</span>
+<span class="go">    options: {}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c:</span>
+<span class="go">            candidates_cm_</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria: None</span>
+<span class="go">    voting_system: RuleIRV</span>
+<span class="go">    options: {&#39;cm_option&#39;: &#39;exact&#39;}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c:</span>
+<span class="go">            candidates_cm_</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria: None</span>
+</pre></div>
+</div>
+<p>If <cite>rule_class</cite> is None (default), then add <cite>criterion</cite> for all voting rules:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span> <span class="o">=</span> <span class="n">VotingRuleTasks</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">voting_systems</span><span class="o">=</span><span class="p">[</span><span class="n">RuleExhaustiveBallot</span><span class="p">,</span> <span class="n">RuleIRV</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">study_rule_criteria</span><span class="o">=</span><span class="n">StudyRuleCriteria</span><span class="p">(</span><span class="n">manipulation_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;is_cm_&#39;</span><span class="p">],</span> <span class="n">manipulation_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>                                          <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[])</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span><span class="o">.</span><span class="n">append_manipulation_criterion_c</span><span class="p">(</span><span class="s1">&#39;candidates_cm_&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">voting_rule_tasks</span><span class="p">)</span>
+<span class="go">VotingRuleTasks with:</span>
+<span class="go">    voting_system: RuleExhaustiveBallot</span>
+<span class="go">    options: {}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c:</span>
+<span class="go">            candidates_cm_</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria: None</span>
+<span class="go">    voting_system: RuleIRV</span>
+<span class="go">    options: {}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c:</span>
+<span class="go">            candidates_cm_</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria: None</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.VotingRuleTasks.append_numerical_criterion">
+<span class="sig-name descname"><span class="pre">append_numerical_criterion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">criterion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rule_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/voting_rule_tasks.html#VotingRuleTasks.append_numerical_criterion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.VotingRuleTasks.append_numerical_criterion" title="Link to this definition"></a></dt>
+<dd><p>Add a numerical criterion for one or all voting rules</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>criterion</strong> (<em>str</em>) – </p></li>
+<li><p><strong>rule_class</strong> (<em>class</em>) – Subclass of <a class="reference internal" href="../rules/rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Add <cite>criterion</cite> for all occurrences of <cite>rule_class</cite>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span> <span class="o">=</span> <span class="n">VotingRuleTasks</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">voting_systems</span><span class="o">=</span><span class="p">[</span><span class="n">RuleExhaustiveBallot</span><span class="p">,</span> <span class="n">RuleIRV</span><span class="p">,</span> <span class="p">(</span><span class="n">RuleIRV</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">})],</span>
+<span class="gp">... </span>    <span class="n">study_rule_criteria</span><span class="o">=</span><span class="n">StudyRuleCriteria</span><span class="p">(</span><span class="n">manipulation_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;is_cm_&#39;</span><span class="p">],</span> <span class="n">manipulation_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>                                          <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[])</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span><span class="o">.</span><span class="n">append_numerical_criterion</span><span class="p">(</span><span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;nb_candidates_cm_&#39;</span><span class="p">,</span> <span class="n">rule_class</span><span class="o">=</span><span class="n">RuleIRV</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">voting_rule_tasks</span><span class="p">)</span>
+<span class="go">VotingRuleTasks with:</span>
+<span class="go">    voting_system: RuleExhaustiveBallot</span>
+<span class="go">    options: {}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria: None</span>
+<span class="go">    voting_system: RuleIRV</span>
+<span class="go">    options: {}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria:</span>
+<span class="go">            nb_candidates_cm_</span>
+<span class="go">    voting_system: RuleIRV</span>
+<span class="go">    options: {&#39;cm_option&#39;: &#39;exact&#39;}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria:</span>
+<span class="go">            nb_candidates_cm_</span>
+</pre></div>
+</div>
+<p>If <cite>rule_class</cite> is None (default), then add <cite>criterion</cite> for all voting rules:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span> <span class="o">=</span> <span class="n">VotingRuleTasks</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">voting_systems</span><span class="o">=</span><span class="p">[</span><span class="n">RuleExhaustiveBallot</span><span class="p">,</span> <span class="n">RuleIRV</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">study_rule_criteria</span><span class="o">=</span><span class="n">StudyRuleCriteria</span><span class="p">(</span><span class="n">manipulation_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;is_cm_&#39;</span><span class="p">],</span> <span class="n">manipulation_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>                                          <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[])</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span><span class="o">.</span><span class="n">append_numerical_criterion</span><span class="p">(</span><span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;nb_candidates_cm_&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">voting_rule_tasks</span><span class="p">)</span>
+<span class="go">VotingRuleTasks with:</span>
+<span class="go">    voting_system: RuleExhaustiveBallot</span>
+<span class="go">    options: {}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria:</span>
+<span class="go">            nb_candidates_cm_</span>
+<span class="go">    voting_system: RuleIRV</span>
+<span class="go">    options: {}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria:</span>
+<span class="go">            nb_candidates_cm_</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.VotingRuleTasks.append_result_criterion">
+<span class="sig-name descname"><span class="pre">append_result_criterion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">criterion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rule_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/voting_rule_tasks.html#VotingRuleTasks.append_result_criterion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.VotingRuleTasks.append_result_criterion" title="Link to this definition"></a></dt>
+<dd><p>Add a result criterion for one or all voting rules</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>criterion</strong> (<em>str</em>) – </p></li>
+<li><p><strong>rule_class</strong> (<em>class</em>) – Subclass of <a class="reference internal" href="../rules/rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Add <cite>criterion</cite> for all occurrences of <cite>rule_class</cite>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span> <span class="o">=</span> <span class="n">VotingRuleTasks</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">voting_systems</span><span class="o">=</span><span class="p">[</span><span class="n">RuleExhaustiveBallot</span><span class="p">,</span> <span class="n">RuleIRV</span><span class="p">,</span> <span class="p">(</span><span class="n">RuleIRV</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">})],</span>
+<span class="gp">... </span>    <span class="n">study_rule_criteria</span><span class="o">=</span><span class="n">StudyRuleCriteria</span><span class="p">(</span><span class="n">manipulation_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;is_cm_&#39;</span><span class="p">],</span> <span class="n">manipulation_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>                                          <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[])</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span><span class="o">.</span><span class="n">append_result_criterion</span><span class="p">(</span><span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;w_is_condorcet_admissible_&#39;</span><span class="p">,</span> <span class="n">rule_class</span><span class="o">=</span><span class="n">RuleIRV</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">voting_rule_tasks</span><span class="p">)</span>
+<span class="go">VotingRuleTasks with:</span>
+<span class="go">    voting_system: RuleExhaustiveBallot</span>
+<span class="go">    options: {}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria: None</span>
+<span class="go">    voting_system: RuleIRV</span>
+<span class="go">    options: {}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria:</span>
+<span class="go">            w_is_condorcet_admissible_</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria: None</span>
+<span class="go">    voting_system: RuleIRV</span>
+<span class="go">    options: {&#39;cm_option&#39;: &#39;exact&#39;}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria:</span>
+<span class="go">            w_is_condorcet_admissible_</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria: None</span>
+</pre></div>
+</div>
+<p>If <cite>rule_class</cite> is None (default), then add <cite>criterion</cite> for all voting rules:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span> <span class="o">=</span> <span class="n">VotingRuleTasks</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">voting_systems</span><span class="o">=</span><span class="p">[</span><span class="n">RuleExhaustiveBallot</span><span class="p">,</span> <span class="n">RuleIRV</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">study_rule_criteria</span><span class="o">=</span><span class="n">StudyRuleCriteria</span><span class="p">(</span><span class="n">manipulation_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;is_cm_&#39;</span><span class="p">],</span> <span class="n">manipulation_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>                                          <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[])</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span><span class="o">.</span><span class="n">append_result_criterion</span><span class="p">(</span><span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;w_is_condorcet_admissible_&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">voting_rule_tasks</span><span class="p">)</span>
+<span class="go">VotingRuleTasks with:</span>
+<span class="go">    voting_system: RuleExhaustiveBallot</span>
+<span class="go">    options: {}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria:</span>
+<span class="go">            w_is_condorcet_admissible_</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria: None</span>
+<span class="go">    voting_system: RuleIRV</span>
+<span class="go">    options: {}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria:</span>
+<span class="go">            w_is_condorcet_admissible_</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria: None</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.VotingRuleTasks.append_task">
+<span class="sig-name descname"><span class="pre">append_task</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rule_class</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">study_rule_criteria</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/voting_rule_tasks.html#VotingRuleTasks.append_task"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.VotingRuleTasks.append_task" title="Link to this definition"></a></dt>
+<dd><p>Append a task to the list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rule_class</strong> (<em>class</em>) – Subclass of <a class="reference internal" href="../rules/rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
+<li><p><strong>options</strong> (<em>dict</em><em>, </em><em>optional</em>) – A dictionary of options. If None (default), then options will be an empty dictionary, which amounts to
+using the default options for this voting rule.</p></li>
+<li><p><strong>study_rule_criteria</strong> (<a class="reference internal" href="study_rule_criteria.html#svvamp.StudyRuleCriteria" title="svvamp.StudyRuleCriteria"><em>StudyRuleCriteria</em></a><em>, </em><em>optional</em>) – If None (default), then use the default StudyRuleCriteria() (with a quite extensive list of criteria).</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span> <span class="o">=</span> <span class="n">VotingRuleTasks</span><span class="p">(</span><span class="n">detailed_tasks</span><span class="o">=</span><span class="p">[</span>
+<span class="gp">... </span>    <span class="p">(</span>
+<span class="gp">... </span>        <span class="n">RuleIRV</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="p">{</span><span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="s1">&#39;fast&#39;</span><span class="p">},</span>
+<span class="gp">... </span>        <span class="n">StudyRuleCriteria</span><span class="p">(</span><span class="n">manipulation_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;is_cm_&#39;</span><span class="p">],</span> <span class="n">manipulation_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>                          <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[])</span>
+<span class="gp">... </span>    <span class="p">),</span>
+<span class="gp">... </span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span><span class="o">.</span><span class="n">append_task</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">RuleIRV</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="p">{</span><span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">},</span>
+<span class="gp">... </span>    <span class="n">StudyRuleCriteria</span><span class="p">(</span><span class="n">manipulation_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;is_cm_&#39;</span><span class="p">],</span> <span class="n">manipulation_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>                      <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[])</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">voting_rule_tasks</span><span class="p">)</span>
+<span class="go">VotingRuleTasks with:</span>
+<span class="go">    voting_system: RuleIRV</span>
+<span class="go">    options: {&#39;cm_option&#39;: &#39;fast&#39;}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria: None</span>
+<span class="go">    voting_system: RuleIRV</span>
+<span class="go">    options: {&#39;cm_option&#39;: &#39;exact&#39;}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria: None</span>
+</pre></div>
+</div>
+<p>If <cite>options</cite> is not specified, then it is considered empty:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span> <span class="o">=</span> <span class="n">VotingRuleTasks</span><span class="p">(</span><span class="n">voting_systems</span><span class="o">=</span><span class="p">[],</span> <span class="n">study_rule_criteria</span><span class="o">=</span><span class="p">[],</span> <span class="n">detailed_tasks</span><span class="o">=</span><span class="p">[])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span><span class="o">.</span><span class="n">append_task</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">rule_class</span><span class="o">=</span><span class="n">RuleIRV</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">study_rule_criteria</span><span class="o">=</span><span class="n">StudyRuleCriteria</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">manipulation_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;is_cm_&#39;</span><span class="p">],</span> <span class="n">manipulation_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[]</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">voting_rule_tasks</span><span class="p">)</span>
+<span class="go">VotingRuleTasks with:</span>
+<span class="go">    voting_system: RuleIRV</span>
+<span class="go">    options: {}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria: None</span>
+</pre></div>
+</div>
+<p>If <cite>study_rule_criteria</cite> is not specified, then it is the default instance <cite>StudyRuleCriteria()</cite>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span> <span class="o">=</span> <span class="n">VotingRuleTasks</span><span class="p">(</span><span class="n">voting_systems</span><span class="o">=</span><span class="p">[],</span> <span class="n">study_rule_criteria</span><span class="o">=</span><span class="p">[],</span> <span class="n">detailed_tasks</span><span class="o">=</span><span class="p">[])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span><span class="o">.</span><span class="n">append_task</span><span class="p">(</span><span class="n">rule_class</span><span class="o">=</span><span class="n">RuleIRV</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">voting_rule_tasks</span><span class="p">)</span>  
+<span class="go">VotingRuleTasks with:</span>
+<span class="go">    voting_system: RuleIRV</span>
+<span class="go">    options: {&#39;cm_option&#39;: &#39;exact&#39;}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_tm_</span>
+<span class="go">            is_um_</span>
+<span class="go">            ...</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.VotingRuleTasks.append_utility_criterion">
+<span class="sig-name descname"><span class="pre">append_utility_criterion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">criterion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rule_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/voting_rule_tasks.html#VotingRuleTasks.append_utility_criterion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.VotingRuleTasks.append_utility_criterion" title="Link to this definition"></a></dt>
+<dd><p>Add a utility criterion for one or all voting rules</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>criterion</strong> (<em>str</em>) – The numerical data to be processed.</p></li>
+<li><p><strong>func</strong> (<em>callable</em>) – An aggregating function.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The name chosen for this pair criterion / aggregation function. Cf.
+<a class="reference internal" href="study_rule_criteria.html#svvamp.StudyRuleCriteria.append_utility_criterion" title="svvamp.StudyRuleCriteria.append_utility_criterion"><code class="xref py py-meth docutils literal notranslate"><span class="pre">StudyRuleCriteria.append_utility_criterion()</span></code></a>.</p></li>
+<li><p><strong>rule_class</strong> (<em>class</em>) – Subclass of <a class="reference internal" href="../rules/rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Add <cite>criterion</cite> for all occurrences of <cite>rule_class</cite>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span> <span class="o">=</span> <span class="n">VotingRuleTasks</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">voting_systems</span><span class="o">=</span><span class="p">[</span><span class="n">RuleExhaustiveBallot</span><span class="p">,</span> <span class="n">RuleIRV</span><span class="p">,</span> <span class="p">(</span><span class="n">RuleIRV</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">})],</span>
+<span class="gp">... </span>    <span class="n">study_rule_criteria</span><span class="o">=</span><span class="n">StudyRuleCriteria</span><span class="p">(</span><span class="n">manipulation_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;is_cm_&#39;</span><span class="p">],</span> <span class="n">manipulation_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>                                          <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[])</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span><span class="o">.</span><span class="n">append_utility_criterion</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;total_utility_w_&#39;</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;total_u_sum&#39;</span><span class="p">,</span> <span class="n">rule_class</span><span class="o">=</span><span class="n">RuleIRV</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">voting_rule_tasks</span><span class="p">)</span>  
+<span class="go">VotingRuleTasks with:</span>
+<span class="go">    voting_system: RuleExhaustiveBallot</span>
+<span class="go">    options: {}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria: None</span>
+<span class="go">    voting_system: RuleIRV</span>
+<span class="go">    options: {}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria:</span>
+<span class="go">            (&#39;total_utility_w_&#39;, &lt;function sum at ...&gt;, &#39;total_u_sum&#39;)</span>
+<span class="go">        numerical_criteria: None</span>
+<span class="go">    voting_system: RuleIRV</span>
+<span class="go">    options: {&#39;cm_option&#39;: &#39;exact&#39;}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria:</span>
+<span class="go">            (&#39;total_utility_w_&#39;, &lt;function sum at ...&gt;, &#39;total_u_sum&#39;)</span>
+<span class="go">        numerical_criteria: None</span>
+</pre></div>
+</div>
+<p>If <cite>rule_class</cite> is None (default), then add <cite>criterion</cite> for all voting rules:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span> <span class="o">=</span> <span class="n">VotingRuleTasks</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">voting_systems</span><span class="o">=</span><span class="p">[</span><span class="n">RuleExhaustiveBallot</span><span class="p">,</span> <span class="n">RuleIRV</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">study_rule_criteria</span><span class="o">=</span><span class="n">StudyRuleCriteria</span><span class="p">(</span><span class="n">manipulation_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;is_cm_&#39;</span><span class="p">],</span> <span class="n">manipulation_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>                                          <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[])</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span><span class="o">.</span><span class="n">append_utility_criterion</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;total_utility_w_&#39;</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;total_u_sum&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">voting_rule_tasks</span><span class="p">)</span>  
+<span class="go">VotingRuleTasks with:</span>
+<span class="go">    voting_system: RuleExhaustiveBallot</span>
+<span class="go">    options: {}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria:</span>
+<span class="go">            (&#39;total_utility_w_&#39;, &lt;function sum at ...&gt;, &#39;total_u_sum&#39;)</span>
+<span class="go">        numerical_criteria: None</span>
+<span class="go">    voting_system: RuleIRV</span>
+<span class="go">    options: {}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria:</span>
+<span class="go">            (&#39;total_utility_w_&#39;, &lt;function sum at ...&gt;, &#39;total_u_sum&#39;)</span>
+<span class="go">        numerical_criteria: None</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.VotingRuleTasks.check_sanity">
+<span class="sig-name descname"><span class="pre">check_sanity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/voting_rule_tasks.html#VotingRuleTasks.check_sanity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.VotingRuleTasks.check_sanity" title="Link to this definition"></a></dt>
+<dd><p>Check sanity of the object</p>
+<p>Preform some basic checks. It is recommended to use this method before launching big simulations.</p>
+<p class="rubric">Examples</p>
+<p>Confirm that a configuration is sound:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span> <span class="o">=</span> <span class="n">VotingRuleTasks</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span><span class="o">.</span><span class="n">check_sanity</span><span class="p">()</span>
+<span class="go">VotingRuleTasks: Sanity check was successful.</span>
+</pre></div>
+</div>
+<p>Detect an illegal option:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span> <span class="o">=</span> <span class="n">VotingRuleTasks</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">voting_systems</span><span class="o">=</span><span class="p">[(</span><span class="n">RuleIRV</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="s1">&#39;unexpected_option&#39;</span><span class="p">})],</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span><span class="o">.</span><span class="n">check_sanity</span><span class="p">()</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="gr">ValueError</span>: <span class="n">&#39;cm_option&#39; = &#39;unexpected_option&#39; is not allowed in RuleIRV.</span>
+</pre></div>
+</div>
+<p>Detect an illegal <a class="reference internal" href="study_rule_criteria.html#svvamp.StudyRuleCriteria" title="svvamp.StudyRuleCriteria"><code class="xref py py-class docutils literal notranslate"><span class="pre">StudyRuleCriteria</span></code></a>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span> <span class="o">=</span> <span class="n">VotingRuleTasks</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">voting_systems</span><span class="o">=</span><span class="p">[</span><span class="n">RuleIRV</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">study_rule_criteria</span><span class="o">=</span><span class="n">StudyRuleCriteria</span><span class="p">(</span><span class="n">manipulation_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;unexpected_criterion&#39;</span><span class="p">])</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span><span class="o">.</span><span class="n">check_sanity</span><span class="p">()</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="gr">ValueError</span>: <span class="n">Criterion &#39;unexpected_criterion&#39; is unknown for RuleIRV.</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.VotingRuleTasks.extend">
+<span class="sig-name descname"><span class="pre">extend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/voting_rule_tasks.html#VotingRuleTasks.extend"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.VotingRuleTasks.extend" title="Link to this definition"></a></dt>
+<dd><p>Extend a <cite>VotingRuleTasks</cite> object.</p>
+<p>Note that the usual command <cite>extend</cite> can be used to concatenate two <cite>VotingRuleTasks</cite> objects.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span> <span class="o">=</span> <span class="n">VotingRuleTasks</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">voting_systems</span><span class="o">=</span><span class="p">[</span><span class="n">RuleExhaustiveBallot</span><span class="p">,</span> <span class="n">RuleIRV</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">study_rule_criteria</span><span class="o">=</span><span class="n">StudyRuleCriteria</span><span class="p">(</span><span class="n">manipulation_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;is_cm_&#39;</span><span class="p">],</span> <span class="n">manipulation_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>                                          <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[])</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks_2</span> <span class="o">=</span> <span class="n">VotingRuleTasks</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">voting_systems</span><span class="o">=</span><span class="p">[</span><span class="n">RuleICRV</span><span class="p">,</span> <span class="n">RuleCondorcetVtbIRV</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">study_rule_criteria</span><span class="o">=</span><span class="n">StudyRuleCriteria</span><span class="p">(</span><span class="n">manipulation_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;is_um_&#39;</span><span class="p">],</span> <span class="n">manipulation_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>                                          <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[])</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">voting_rule_tasks_2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">voting_rule_tasks</span><span class="p">)</span>
+<span class="go">VotingRuleTasks with:</span>
+<span class="go">    voting_system: RuleExhaustiveBallot</span>
+<span class="go">    options: {}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria: None</span>
+<span class="go">    voting_system: RuleIRV</span>
+<span class="go">    options: {}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria: None</span>
+<span class="go">    voting_system: RuleICRV</span>
+<span class="go">    options: {}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_um_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria: None</span>
+<span class="go">    voting_system: RuleCondorcetVtbIRV</span>
+<span class="go">    options: {}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_um_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria: None</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.VotingRuleTasks.remove_criterion">
+<span class="sig-name descname"><span class="pre">remove_criterion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">criterion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rule_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/voting_rule_tasks.html#VotingRuleTasks.remove_criterion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.VotingRuleTasks.remove_criterion" title="Link to this definition"></a></dt>
+<dd><p>Remove a criterion for one or all voting rules.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>criterion</strong> (<em>str</em>) – </p></li>
+<li><p><strong>rule_class</strong> (<em>class</em>) – Subclass of <a class="reference internal" href="../rules/rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Removes all occurrences of <cite>criterion</cite> for all occurrences of <cite>rule_class</cite>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span> <span class="o">=</span> <span class="n">VotingRuleTasks</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">voting_systems</span><span class="o">=</span><span class="p">[</span><span class="n">RuleExhaustiveBallot</span><span class="p">,</span> <span class="n">RuleIRV</span><span class="p">,</span> <span class="p">(</span><span class="n">RuleIRV</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">})],</span>
+<span class="gp">... </span>    <span class="n">study_rule_criteria</span><span class="o">=</span><span class="n">StudyRuleCriteria</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">manipulation_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;is_cm_&#39;</span><span class="p">,</span> <span class="s1">&#39;is_um_&#39;</span><span class="p">],</span>
+<span class="gp">... </span>        <span class="n">manipulation_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[]</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span><span class="o">.</span><span class="n">remove_criterion</span><span class="p">(</span><span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;is_um_&#39;</span><span class="p">,</span> <span class="n">rule_class</span><span class="o">=</span><span class="n">RuleIRV</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">voting_rule_tasks</span><span class="p">)</span>
+<span class="go">VotingRuleTasks with:</span>
+<span class="go">    voting_system: RuleExhaustiveBallot</span>
+<span class="go">    options: {}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">            is_um_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria: None</span>
+<span class="go">    voting_system: RuleIRV</span>
+<span class="go">    options: {}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria: None</span>
+<span class="go">    voting_system: RuleIRV</span>
+<span class="go">    options: {&#39;cm_option&#39;: &#39;exact&#39;}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria: None</span>
+</pre></div>
+</div>
+<p>If <cite>rule_class</cite> is None (default), then <cite>criterion</cite> is removed for all voting rules:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span> <span class="o">=</span> <span class="n">VotingRuleTasks</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">voting_systems</span><span class="o">=</span><span class="p">[</span><span class="n">RuleExhaustiveBallot</span><span class="p">,</span> <span class="n">RuleIRV</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">study_rule_criteria</span><span class="o">=</span><span class="n">StudyRuleCriteria</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">manipulation_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;is_cm_&#39;</span><span class="p">,</span> <span class="s1">&#39;is_um_&#39;</span><span class="p">],</span>
+<span class="gp">... </span>        <span class="n">manipulation_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[]</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span><span class="o">.</span><span class="n">remove_criterion</span><span class="p">(</span><span class="s1">&#39;is_um_&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">voting_rule_tasks</span><span class="p">)</span>
+<span class="go">VotingRuleTasks with:</span>
+<span class="go">    voting_system: RuleExhaustiveBallot</span>
+<span class="go">    options: {}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria: None</span>
+<span class="go">    voting_system: RuleIRV</span>
+<span class="go">    options: {}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria: None</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.VotingRuleTasks.remove_option">
+<span class="sig-name descname"><span class="pre">remove_option</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">option</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rule_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/voting_rule_tasks.html#VotingRuleTasks.remove_option"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.VotingRuleTasks.remove_option" title="Link to this definition"></a></dt>
+<dd><p>Remove an option and its value for one or all voting rules</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>option</strong> (<em>str</em>) – </p></li>
+<li><p><strong>rule_class</strong> (<em>class</em>) – Subclass of <a class="reference internal" href="../rules/rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Remove <cite>option</cite> for all occurrences of <cite>rule_class</cite>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span> <span class="o">=</span> <span class="n">VotingRuleTasks</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">voting_systems</span><span class="o">=</span><span class="p">[</span>
+<span class="gp">... </span>        <span class="p">(</span><span class="n">RuleExhaustiveBallot</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">}),</span>
+<span class="gp">... </span>        <span class="p">(</span><span class="n">RuleIRV</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">})</span>
+<span class="gp">... </span>    <span class="p">],</span>
+<span class="gp">... </span>    <span class="n">study_rule_criteria</span><span class="o">=</span><span class="n">StudyRuleCriteria</span><span class="p">(</span><span class="n">manipulation_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;is_cm_&#39;</span><span class="p">],</span> <span class="n">manipulation_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>                                          <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[])</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span><span class="o">.</span><span class="n">remove_option</span><span class="p">(</span><span class="n">option</span><span class="o">=</span><span class="s1">&#39;cm_option&#39;</span><span class="p">,</span> <span class="n">rule_class</span><span class="o">=</span><span class="n">RuleIRV</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">voting_rule_tasks</span><span class="p">)</span>
+<span class="go">VotingRuleTasks with:</span>
+<span class="go">    voting_system: RuleExhaustiveBallot</span>
+<span class="go">    options: {&#39;cm_option&#39;: &#39;exact&#39;}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria: None</span>
+<span class="go">    voting_system: RuleIRV</span>
+<span class="go">    options: {}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria: None</span>
+</pre></div>
+</div>
+<p>This means that from now on, <cite>RuleIRV</cite> will use its default value for <cite>cm_option</cite>.</p>
+<p>If <cite>rule_class</cite> is None (default), then remove the option for all voting rules:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span> <span class="o">=</span> <span class="n">VotingRuleTasks</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">voting_systems</span><span class="o">=</span><span class="p">[</span>
+<span class="gp">... </span>        <span class="p">(</span><span class="n">RuleExhaustiveBallot</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">}),</span>
+<span class="gp">... </span>        <span class="p">(</span><span class="n">RuleIRV</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">})</span>
+<span class="gp">... </span>    <span class="p">],</span>
+<span class="gp">... </span>    <span class="n">study_rule_criteria</span><span class="o">=</span><span class="n">StudyRuleCriteria</span><span class="p">(</span><span class="n">manipulation_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;is_cm_&#39;</span><span class="p">],</span> <span class="n">manipulation_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>                                          <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[])</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span><span class="o">.</span><span class="n">remove_option</span><span class="p">(</span><span class="n">option</span><span class="o">=</span><span class="s1">&#39;cm_option&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">voting_rule_tasks</span><span class="p">)</span>
+<span class="go">VotingRuleTasks with:</span>
+<span class="go">    voting_system: RuleExhaustiveBallot</span>
+<span class="go">    options: {}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria: None</span>
+<span class="go">    voting_system: RuleIRV</span>
+<span class="go">    options: {}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria: None</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.VotingRuleTasks.remove_rule">
+<span class="sig-name descname"><span class="pre">remove_rule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rule_class</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/voting_rule_tasks.html#VotingRuleTasks.remove_rule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.VotingRuleTasks.remove_rule" title="Link to this definition"></a></dt>
+<dd><p>Remove a rule</p>
+<p>Removes all occurrences of <cite>rule_class</cite> from this <cite>VotingRuleTasks</cite> object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rule_class</strong> (<em>class</em>) – Subclass of <a class="reference internal" href="../rules/rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span> <span class="o">=</span> <span class="n">VotingRuleTasks</span><span class="p">(</span><span class="n">detailed_tasks</span><span class="o">=</span><span class="p">[</span>
+<span class="gp">... </span>    <span class="p">(</span>
+<span class="gp">... </span>        <span class="n">RuleIRV</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="p">{</span><span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="s1">&#39;fast&#39;</span><span class="p">,</span> <span class="s1">&#39;um_option&#39;</span><span class="p">:</span> <span class="s1">&#39;fast&#39;</span><span class="p">},</span>
+<span class="gp">... </span>        <span class="n">StudyRuleCriteria</span><span class="p">(</span><span class="n">manipulation_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;is_cm_&#39;</span><span class="p">],</span> <span class="n">manipulation_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>                          <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[])</span>
+<span class="gp">... </span>    <span class="p">),</span>
+<span class="gp">... </span>    <span class="p">(</span>
+<span class="gp">... </span>        <span class="n">RuleIRV</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="p">{</span><span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">,</span> <span class="s1">&#39;um_option&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">},</span>
+<span class="gp">... </span>        <span class="n">StudyRuleCriteria</span><span class="p">(</span><span class="n">manipulation_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;is_cm_&#39;</span><span class="p">],</span> <span class="n">manipulation_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>                          <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[])</span>
+<span class="gp">... </span>    <span class="p">),</span>
+<span class="gp">... </span>    <span class="p">(</span>
+<span class="gp">... </span>        <span class="n">RuleCondorcetVtbIRV</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="p">{</span><span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="s1">&#39;very_slow&#39;</span><span class="p">,</span> <span class="s1">&#39;um_option&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">},</span>
+<span class="gp">... </span>        <span class="n">StudyRuleCriteria</span><span class="p">(</span><span class="n">manipulation_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;is_cm_&#39;</span><span class="p">],</span> <span class="n">manipulation_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>                          <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[])</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">... </span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span><span class="o">.</span><span class="n">remove_rule</span><span class="p">(</span><span class="n">RuleIRV</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">voting_rule_tasks</span><span class="p">)</span>
+<span class="go">VotingRuleTasks with:</span>
+<span class="go">    voting_system: RuleCondorcetVtbIRV</span>
+<span class="go">    options: {&#39;cm_option&#39;: &#39;very_slow&#39;, &#39;um_option&#39;: &#39;exact&#39;}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria: None</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.VotingRuleTasks.set_option">
+<span class="sig-name descname"><span class="pre">set_option</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">option</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rule_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/voting_rule_tasks.html#VotingRuleTasks.set_option"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.VotingRuleTasks.set_option" title="Link to this definition"></a></dt>
+<dd><p>Set an option for one or all voting rules</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>option</strong> (<em>str</em>) – </p></li>
+<li><p><strong>value</strong> (<em>object</em>) – New value for the option.</p></li>
+<li><p><strong>rule_class</strong> (<em>class</em>) – Subclass of <a class="reference internal" href="../rules/rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Set <cite>option</cite> to <cite>value</cite> for all occurrences of <cite>rule_class</cite>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span> <span class="o">=</span> <span class="n">VotingRuleTasks</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">voting_systems</span><span class="o">=</span><span class="p">[</span><span class="n">RuleExhaustiveBallot</span><span class="p">,</span> <span class="n">RuleIRV</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">study_rule_criteria</span><span class="o">=</span><span class="n">StudyRuleCriteria</span><span class="p">(</span><span class="n">manipulation_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;is_cm_&#39;</span><span class="p">],</span> <span class="n">manipulation_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>                                          <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[])</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;cm_option&#39;</span><span class="p">,</span> <span class="s1">&#39;exact&#39;</span><span class="p">,</span> <span class="n">rule_class</span><span class="o">=</span><span class="n">RuleIRV</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">voting_rule_tasks</span><span class="p">)</span>
+<span class="go">VotingRuleTasks with:</span>
+<span class="go">    voting_system: RuleExhaustiveBallot</span>
+<span class="go">    options: {}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria: None</span>
+<span class="go">    voting_system: RuleIRV</span>
+<span class="go">    options: {&#39;cm_option&#39;: &#39;exact&#39;}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria: None</span>
+</pre></div>
+</div>
+<p>If <cite>rule_class</cite> is None (default), do this for all voting rules:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span> <span class="o">=</span> <span class="n">VotingRuleTasks</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">voting_systems</span><span class="o">=</span><span class="p">[</span><span class="n">RuleExhaustiveBallot</span><span class="p">,</span> <span class="n">RuleIRV</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">study_rule_criteria</span><span class="o">=</span><span class="n">StudyRuleCriteria</span><span class="p">(</span><span class="n">manipulation_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;is_cm_&#39;</span><span class="p">],</span> <span class="n">manipulation_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>                                          <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[])</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;cm_option&#39;</span><span class="p">,</span> <span class="s1">&#39;exact&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">voting_rule_tasks</span><span class="p">)</span>
+<span class="go">VotingRuleTasks with:</span>
+<span class="go">    voting_system: RuleExhaustiveBallot</span>
+<span class="go">    options: {&#39;cm_option&#39;: &#39;exact&#39;}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria: None</span>
+<span class="go">    voting_system: RuleIRV</span>
+<span class="go">    options: {&#39;cm_option&#39;: &#39;exact&#39;}</span>
+<span class="go">    StudyRuleCriteria with:</span>
+<span class="go">        manipulation_criteria:</span>
+<span class="go">            is_cm_</span>
+<span class="go">        manipulation_criteria_c: None</span>
+<span class="go">        result_criteria: None</span>
+<span class="go">        utility_criteria: None</span>
+<span class="go">        numerical_criteria: None</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="study_rule_criteria.html" class="btn btn-neutral float-left" title="StudyRuleCriteria" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="experiment_analyzer.html" class="btn btn-neutral float-right" title="ExperimentAnalyzer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, François Durand.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

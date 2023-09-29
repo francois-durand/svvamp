@@ -116,6 +116,52 @@
 <span class="k">class</span> <span class="nc">RuleCondorcetVtbIRV</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Condorcet Instant Runoff Voting</span>
 
+<span class="sd">    Options</span>
+<span class="sd">    -------</span>
+<span class="sd">        &gt;&gt;&gt; RuleCondorcetVtbIRV.print_options_parameters()</span>
+<span class="sd">        cm_option: [&#39;fast&#39;, &#39;slow&#39;, &#39;very_slow&#39;, &#39;exact&#39;]. Default: &#39;fast&#39;.</span>
+<span class="sd">        icm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        iia_subset_maximum_size: is_number. Default: 2.</span>
+<span class="sd">        im_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="sd">        tm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        um_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    Each voter must provide a strict total order. If there is a Condorcet winner (in the sense of</span>
+<span class="sd">    :attr:`matrix_victories_rk`), then she is elected. Otherwise, :class:`RuleIRV` is used.</span>
+
+<span class="sd">    If sincere preferences are strict total orders, then this voting system is equivalent to</span>
+<span class="sd">    :class:`RuleCondorcetAbsIRV` for sincere voting, but manipulators have less possibilities (they are forced to</span>
+<span class="sd">    provide strict total orders).</span>
+
+<span class="sd">    * :meth:`is_cm_`:</span>
+
+<span class="sd">        * :attr:`cm_option` = ``&#39;fast&#39;``: Rely on :class:`RuleIRV`&#39;s fast algorithm. Polynomial heuristic. Can prove</span>
+<span class="sd">          CM but unable to decide non-CM (except in rare obvious cases).</span>
+<span class="sd">        * :attr:`cm_option` = ``&#39;slow&#39;``: Rely on :class:`RuleExhaustiveBallot`&#39;s exact algorithm. Non-polynomial</span>
+<span class="sd">          heuristic (:math:`2^{n_c}`). Quite efficient to prove CM or non-CM.</span>
+<span class="sd">        * :attr:`cm_option` = ``&#39;very_slow&#39;``: Rely on :class:`RuleIRV`&#39;s exact algorithm. Non-polynomial</span>
+<span class="sd">          heuristic (:math:`n_c!`). Very efficient to prove CM or non-CM.</span>
+<span class="sd">        * :attr:`cm_option` = ``&#39;exact&#39;``: Non-polynomial algorithm from superclass :class:`Rule`.</span>
+
+<span class="sd">        Each algorithm above exploits the faster ones. For example, if :attr:`cm_option` = ``&#39;very_slow&#39;``,</span>
+<span class="sd">        SVVAMP tries the fast algorithm first, then the slow one, then the &#39;very slow&#39; one. As soon as it reaches</span>
+<span class="sd">        a decision, computation stops.</span>
+
+<span class="sd">    * :meth:`is_icm_`: Exact in polynomial time.</span>
+<span class="sd">    * :meth:`is_im_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
+<span class="sd">    * :meth:`is_iia`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`. If</span>
+<span class="sd">      :attr:`iia_subset_maximum_size` = 2, it runs in polynomial time and is exact up to ties (which can occur only if</span>
+<span class="sd">      :attr:`n_v` is even).</span>
+<span class="sd">    * :meth:`is_tm_`: Exact in polynomial time.</span>
+<span class="sd">    * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    &#39;Condorcet criterion, ordinality and reduction of coalitional manipulability&#39;, François Durand,</span>
+<span class="sd">    Fabien Mathieu and Ludovic Noirie, 2014.</span>
+
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
@@ -343,42 +389,6 @@
 <span class="sd">        [0. 1. 2.]</span>
 <span class="sd">        sufficient_coalition_size_cm =</span>
 <span class="sd">        [0. 2. 4.]</span>
-
-<span class="sd">    Notes</span>
-<span class="sd">    -----</span>
-<span class="sd">    Each voter must provide a strict total order. If there is a Condorcet winner (in the sense of</span>
-<span class="sd">    :attr:`matrix_victories_rk`), then she is elected. Otherwise, :class:`RuleIRV` is used.</span>
-
-<span class="sd">    If sincere preferences are strict total orders, then this voting system is equivalent to</span>
-<span class="sd">    :class:`RuleCondorcetAbsIRV` for sincere voting, but manipulators have less possibilities (they are forced to</span>
-<span class="sd">    provide strict total orders).</span>
-
-<span class="sd">    * :meth:`is_cm_`:</span>
-
-<span class="sd">        * :attr:`cm_option` = ``&#39;fast&#39;``: Rely on :class:`RuleIRV`&#39;s fast algorithm. Polynomial heuristic. Can prove</span>
-<span class="sd">          CM but unable to decide non-CM (except in rare obvious cases).</span>
-<span class="sd">        * :attr:`cm_option` = ``&#39;slow&#39;``: Rely on :class:`RuleExhaustiveBallot`&#39;s exact algorithm. Non-polynomial</span>
-<span class="sd">          heuristic (:math:`2^{n_c}`). Quite efficient to prove CM or non-CM.</span>
-<span class="sd">        * :attr:`cm_option` = ``&#39;very_slow&#39;``: Rely on :class:`RuleIRV`&#39;s exact algorithm. Non-polynomial</span>
-<span class="sd">          heuristic (:math:`n_c!`). Very efficient to prove CM or non-CM.</span>
-<span class="sd">        * :attr:`cm_option` = ``&#39;exact&#39;``: Non-polynomial algorithm from superclass :class:`Rule`.</span>
-
-<span class="sd">        Each algorithm above exploits the faster ones. For example, if :attr:`cm_option` = ``&#39;very_slow&#39;``,</span>
-<span class="sd">        SVVAMP tries the fast algorithm first, then the slow one, then the &#39;very slow&#39; one. As soon as it reaches</span>
-<span class="sd">        a decision, computation stops.</span>
-
-<span class="sd">    * :meth:`is_icm_`: Exact in polynomial time.</span>
-<span class="sd">    * :meth:`is_im_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
-<span class="sd">    * :meth:`is_iia`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`. If</span>
-<span class="sd">      :attr:`iia_subset_maximum_size` = 2, it runs in polynomial time and is exact up to ties (which can occur only if</span>
-<span class="sd">      :attr:`n_v` is even).</span>
-<span class="sd">    * :meth:`is_tm_`: Exact in polynomial time.</span>
-<span class="sd">    * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
-
-<span class="sd">    References</span>
-<span class="sd">    ----------</span>
-<span class="sd">    &#39;Condorcet criterion, ordinality and reduction of coalitional manipulability&#39;, François Durand,</span>
-<span class="sd">    Fabien Mathieu and Ludovic Noirie, 2014.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">full_name</span> <span class="o">=</span> <span class="s1">&#39;Condorcet IRV&#39;</span>

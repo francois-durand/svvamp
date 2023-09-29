@@ -119,7 +119,7 @@
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;svvamp.preferences.generator_profile_spheroid.GeneratorProfileSpheroid at 0x1e38031d470&gt;
+&lt;svvamp.preferences.generator_profile_spheroid.GeneratorProfileSpheroid at 0x227236d1310&gt;
 </pre></div></div>
 </div>
 <p>Use the generator to create a random profile:</p>
@@ -207,15 +207,15 @@
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-array([[0, 4, 2, 3, 1],
-       [2, 0, 1, 4, 3],
-       [2, 1, 4, 0, 3],
-       [2, 3, 0, 1, 4],
-       [2, 4, 0, 3, 1],
-       [3, 0, 4, 2, 1],
-       [3, 1, 2, 4, 0],
-       [3, 4, 1, 2, 0],
-       [4, 1, 2, 3, 0]])
+array([[0, 3, 1, 2, 4],
+       [2, 0, 1, 3, 4],
+       [3, 0, 2, 1, 4],
+       [2, 3, 0, 4, 1],
+       [0, 4, 1, 2, 3],
+       [4, 2, 1, 3, 0],
+       [2, 1, 3, 0, 4],
+       [3, 1, 4, 2, 0],
+       [3, 2, 4, 0, 1]])
 </pre></div></div>
 </div>
 <p>Voters’ utilities for the candidates:</p>
@@ -233,15 +233,15 @@ array([[0, 4, 2, 3, 1],
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-array([[ 0.5986278 , -0.52294913,  0.05743889, -0.23139784,  0.55796486],
-       [ 0.25266412, -0.09173779,  0.74487215, -0.58700637, -0.16832712],
-       [-0.13284668, -0.05277032,  0.94978469, -0.25281743, -0.11644504],
-       [ 0.39236433,  0.24198644,  0.76088356,  0.45468837,  0.04251457],
-       [-0.31162069, -0.60698807,  0.51033826, -0.52059712, -0.05469483],
-       [ 0.44912545, -0.30559165,  0.27207654,  0.74383623,  0.27853562],
-       [-0.73838063,  0.02187576, -0.31193004,  0.15373641, -0.57739091],
-       [-0.49506036, -0.09771709, -0.21359171,  0.83350654, -0.0707958 ],
-       [-0.71018957,  0.30215382,  0.24165592,  0.23595178,  0.53876063]])
+array([[ 0.56962423,  0.23147669, -0.10420753,  0.46170276, -0.63080752],
+       [-0.10565873, -0.38552417,  0.22279825, -0.55394695, -0.6954934 ],
+       [-0.26048526, -0.43251655, -0.41065507,  0.28538753, -0.70355756],
+       [ 0.26890645, -0.52263056,  0.58980142,  0.55356667,  0.01564742],
+       [ 0.04576047, -0.46090844, -0.48370682, -0.59680883, -0.44194607],
+       [-0.27629285,  0.37454992,  0.44890641,  0.25299888,  0.71961741],
+       [-0.02726965,  0.30157615,  0.75419276,  0.13546169, -0.56670239],
+       [-0.13770358,  0.62540861, -0.0909895 ,  0.73785947,  0.192837  ],
+       [-0.03753725, -0.29808471,  0.34075518,  0.88258878,  0.12107605]])
 </pre></div></div>
 </div>
 <p>Plot the restriction of the population to 3 candidates, for example [0, 2, 3] (Alice, Catherine and Dave), in the utility space:</p>
@@ -277,65 +277,119 @@ array([[ 0.5986278 , -0.52294913,  0.05743889, -0.23139784,  0.55796486],
 </div>
 </div>
 <p>Plurality score, Borda score and total utility of each candidate:</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">profile</span><span class="o">.</span><span class="n">plurality_scores_ut</span>
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([2, 0, 3, 3, 1])
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">profile</span><span class="o">.</span><span class="n">borda_score_c_ut</span>
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([18., 15., 23., 22., 12.])
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">profile</span><span class="o">.</span><span class="n">total_utility_c</span>
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([ 0.03934382, -0.56665305,  1.2668951 ,  2.15881001, -1.98932905])
+</pre></div></div>
+</div>
 <p>Matrix of duels (weighted majority graph) and matrix of victories (unweighted majority graph):</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">profile</span><span class="o">.</span><span class="n">matrix_duels_ut</span>
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([[0, 6, 3, 3, 6],
+       [3, 0, 3, 4, 5],
+       [6, 6, 0, 5, 6],
+       [6, 5, 4, 0, 7],
+       [3, 4, 3, 2, 0]])
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">profile</span><span class="o">.</span><span class="n">matrix_victories_ut_abs</span>
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([[0., 1., 0., 0., 1.],
+       [0., 0., 0., 0., 1.],
+       [1., 1., 0., 1., 1.],
+       [1., 1., 0., 0., 1.],
+       [0., 0., 0., 0., 0.]])
+</pre></div></div>
+</div>
 <p>Condorcet winner:</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">profile</span><span class="o">.</span><span class="n">condorcet_winner_ut_abs</span>
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+2
+</pre></div></div>
+</div>
 <p>By convention, if there is no Condorcet winner, then SVVAMP returns nan (not a number).</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-</div>
 </section>
 
 

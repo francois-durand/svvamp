@@ -53,8 +53,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../index.html#preferences">Preferences</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../index.html#voting-rules">Voting rules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#profiles">Profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#generators-of-profiles">Generators of Profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#plurality-elimination-engines">Plurality Elimination Engines</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#voting-rules">Voting Rules</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="rule.html">Rule</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_approval.html">RuleApproval</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_baldwin.html">RuleBaldwin</a></li>
@@ -95,6 +97,8 @@
 <li class="toctree-l3"><a class="reference internal" href="rule_woodall.html">RuleWoodall</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#meta">Meta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#utils">Utils</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
@@ -159,6 +163,41 @@ her utilities into the interval [<code class="xref py py-attr docutils literal n
 </ul>
 </dd>
 </dl>
+<p class="rubric">Options</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">RuleRangeVoting</span><span class="o">.</span><span class="n">print_options_parameters</span><span class="p">()</span>
+<span class="go">cm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="go">icm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="go">iia_subset_maximum_size: is_number. Default: 2.</span>
+<span class="go">im_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="go">max_grade: isfinite. Default: 1.</span>
+<span class="go">min_grade: isfinite. Default: 0.</span>
+<span class="go">rescale_grades: is_bool. Default: True.</span>
+<span class="go">step_grade: isfinite. Default: 0.</span>
+<span class="go">tm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="go">um_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+</pre></div>
+</div>
+<p class="rubric">Notes</p>
+<p>Each voter attributes a grade to each candidate. By default, authorized grades are all numbers in the interval
+[<code class="xref py py-attr docutils literal notranslate"><span class="pre">min_grade</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">max_grade</span></code>]. To use a discrete set of notes, modify attribute <code class="xref py py-attr docutils literal notranslate"><span class="pre">step_grade</span></code>.</p>
+<p>The candidate with highest average grade wins. In case of a tie, the tied candidate with lowest index is declared
+the winner.</p>
+<p>Default behavior of sincere voters: voter <code class="docutils literal notranslate"><span class="pre">v</span></code> applies an affine transformation to her utilities
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">preferences_ut</span></code><code class="docutils literal notranslate"><span class="pre">[v,</span> <span class="pre">:]</span></code> to get her grades, such that her least-liked candidate receives
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">min_grade</span></code> and her most-liked candidate receives <code class="xref py py-attr docutils literal notranslate"><span class="pre">max_grade</span></code>. To modify this behavior, use attribute
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">rescale_grades</span></code>. For more details about the behavior of sincere voters, see <code class="xref py py-attr docutils literal notranslate"><span class="pre">ballots</span></code>.</p>
+<ul>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">not_iia()</span></code>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>If <code class="xref py py-attr docutils literal notranslate"><span class="pre">rescale_grades</span></code> = <code class="docutils literal notranslate"><span class="pre">False</span></code>, then Range voting always meets IIA.</p></li>
+<li><p>If <code class="xref py py-attr docutils literal notranslate"><span class="pre">rescale_grades</span></code> = <code class="docutils literal notranslate"><span class="pre">True</span></code>, then non-polynomial or non-exact algorithms from superclass
+<a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a> are used.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_cm_()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">is_icm_()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">is_im_()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">is_tm_()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">is_um_()</span></code>: Exact in polynomial time.</p></li>
+</ul>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[</span>
 <span class="gp">... </span>    <span class="p">[</span> <span class="mf">0.</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.</span> <span class="p">],</span>
@@ -387,27 +426,6 @@ her utilities into the interval [<code class="xref py py-attr docutils literal n
 <span class="go">[0. 3. 3.]</span>
 </pre></div>
 </div>
-<p class="rubric">Notes</p>
-<p>Each voter attributes a grade to each candidate. By default, authorized grades are all numbers in the interval
-[<code class="xref py py-attr docutils literal notranslate"><span class="pre">min_grade</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">max_grade</span></code>]. To use a discrete set of notes, modify attribute <code class="xref py py-attr docutils literal notranslate"><span class="pre">step_grade</span></code>.</p>
-<p>The candidate with highest average grade wins. In case of a tie, the tied candidate with lowest index is declared
-the winner.</p>
-<p>Default behavior of sincere voters: voter <code class="docutils literal notranslate"><span class="pre">v</span></code> applies an affine transformation to her utilities
-<code class="xref py py-attr docutils literal notranslate"><span class="pre">preferences_ut</span></code><code class="docutils literal notranslate"><span class="pre">[v,</span> <span class="pre">:]</span></code> to get her grades, such that her least-liked candidate receives
-<code class="xref py py-attr docutils literal notranslate"><span class="pre">min_grade</span></code> and her most-liked candidate receives <code class="xref py py-attr docutils literal notranslate"><span class="pre">max_grade</span></code>. To modify this behavior, use attribute
-<code class="xref py py-attr docutils literal notranslate"><span class="pre">rescale_grades</span></code>. For more details about the behavior of sincere voters, see <code class="xref py py-attr docutils literal notranslate"><span class="pre">ballots</span></code>.</p>
-<ul>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">not_iia()</span></code>:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>If <code class="xref py py-attr docutils literal notranslate"><span class="pre">rescale_grades</span></code> = <code class="docutils literal notranslate"><span class="pre">False</span></code>, then Range voting always meets IIA.</p></li>
-<li><p>If <code class="xref py py-attr docutils literal notranslate"><span class="pre">rescale_grades</span></code> = <code class="docutils literal notranslate"><span class="pre">True</span></code>, then non-polynomial or non-exact algorithms from superclass
-<a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a> are used.</p></li>
-</ul>
-</div></blockquote>
-</li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_cm_()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">is_icm_()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">is_im_()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">is_tm_()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">is_um_()</span></code>: Exact in polynomial time.</p></li>
-</ul>
 <dl class="py property">
 <dt class="sig sig-object py" id="svvamp.RuleRangeVoting.ballots_">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ballots_</span></span><a class="headerlink" href="#svvamp.RuleRangeVoting.ballots_" title="Link to this definition"></a></dt>

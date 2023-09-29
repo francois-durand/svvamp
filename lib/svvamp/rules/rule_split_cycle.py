@@ -28,6 +28,37 @@ from svvamp.preferences.profile import Profile
 class RuleSplitCycle(Rule):
     """Split Cycle.
 
+    Options
+    -------
+        >>> RuleSplitCycle.print_options_parameters()
+        cm_option: ['lazy', 'exact']. Default: 'lazy'.
+        icm_option: ['exact']. Default: 'exact'.
+        iia_subset_maximum_size: is_number. Default: 2.
+        im_option: ['lazy', 'exact']. Default: 'lazy'.
+        tm_option: ['lazy', 'exact']. Default: 'exact'.
+        um_option: ['lazy', 'exact']. Default: 'lazy'.
+
+    Notes
+    -----
+    Split Cycle does not :attr:`meets_condorcet_c_ut_rel`:
+
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 0. ,  0. ,  0. ],
+        ...     [ 0.5,  1. , -0.5],
+        ... ], preferences_rk=[
+        ...     [0, 2, 1],
+        ...     [1, 0, 2],
+        ... ])
+        >>> RuleSplitCycle()(profile).w_
+        0
+        >>> profile.condorcet_winner_ut_rel
+        1
+
+    References
+    ----------
+    'Split cycle: A new Condorcet consistent voting method independent of clones and immune to spoilers.' Holliday
+    & Pacuit, 2020.
+
     Examples
     --------
         >>> profile = Profile(preferences_ut=[
@@ -254,27 +285,6 @@ class RuleSplitCycle(Rule):
         [0. 1. 2.]
         sufficient_coalition_size_cm =
         [0. 2. 3.]
-
-    Notes
-    -----
-    Split Cycle does not :attr:`meets_condorcet_c_ut_rel`:
-
-        >>> profile = Profile(preferences_ut=[
-        ...     [ 0. ,  0. ,  0. ],
-        ...     [ 0.5,  1. , -0.5],
-        ... ], preferences_rk=[
-        ...     [0, 2, 1],
-        ...     [1, 0, 2],
-        ... ])
-        >>> RuleSplitCycle()(profile).w_
-        0
-        >>> profile.condorcet_winner_ut_rel
-        1
-
-    References
-    ----------
-    'Split cycle: A new Condorcet consistent voting method independent of clones and immune to spoilers.' Holliday
-    & Pacuit, 2020.
     """
 
     full_name = 'Split Cycle'

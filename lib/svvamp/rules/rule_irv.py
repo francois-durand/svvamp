@@ -32,6 +32,52 @@ from svvamp.utils.misc import preferences_ut_to_matrix_duels_ut
 class RuleIRV(Rule):
     """Instant-Runoff Voting (IRV). Also known as Single Transferable Voting, Alternative Vote, Hare method.
 
+    Options
+    -------
+        >>> RuleIRV.print_options_parameters()
+        cm_option: ['fast', 'slow', 'exact']. Default: 'fast'.
+        fast_algo: ['c_minus_max', 'minus_max', 'hardest_first']. Default: 'c_minus_max'.
+        icm_option: ['exact']. Default: 'exact'.
+        iia_subset_maximum_size: is_number. Default: 2.
+        im_option: ['lazy', 'exact']. Default: 'lazy'.
+        tm_option: ['exact']. Default: 'exact'.
+        um_option: ['fast', 'exact']. Default: 'fast'.
+
+    Notes
+    -----
+    The candidate who is ranked first by least voters is eliminated. Then we iterate. Ties are broken in favor of
+    lower-index candidates: in case of a tie, the tied candidate with highest index is eliminated.
+
+    * :meth:`is_cm_`: Deciding CM is NP-complete.
+
+        * :attr:`cm_option` = ``'fast'``: Polynomial heuristic. Can prove CM but unable to decide non-CM (except in
+          rare obvious cases).
+        * :attr:`cm_option` = ``'slow'``: Rely on :class:`~svvamp.ExhaustiveBallot`'s exact algorithm. Non-polynomial
+          heuristic (:math:`2^{n_c}`). Quite efficient to prove CM or non-CM.
+        * :attr:`cm_option` = ``'exact'``: Non-polynomial algorithm (:math:`n_c!`) adapted from Walsh, 2010.
+
+    * :meth:`is_icm_`: Exact in polynomial time.
+    * :meth:`is_im_`: Deciding IM is NP-complete.
+
+        * :attr:`im_option` = ``'lazy'``: Lazy algorithm from superclass :class:`Rule`.
+        * :attr:`im_option` = ``'exact'``: Non-polynomial algorithm (:math:`n_c!`) adapted from Walsh, 2010.
+
+    * :meth:`is_iia_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
+    * :meth:`is_tm_`: Exact in polynomial time.
+    * :meth:`is_um_`: Deciding UM is NP-complete.
+
+        * :attr:`um_option` = ``'fast'``: Polynomial heuristic. Can prove UM but unable to decide non-UM (except in
+          rare obvious cases).
+        * :attr:`um_option` = ``'exact'``: Non-polynomial algorithm (:math:`n_c!`) adapted from Walsh, 2010.
+
+    References
+    ----------
+    'Single transferable vote resists strategic voting', John J. Bartholdi and James B. Orlin, 1991.
+
+    'On The Complexity of Manipulating Elections', Tom Coleman and Vanessa Teague, 2007.
+
+    'Manipulability of Single Transferable Vote', Toby Walsh, 2010.
+
     Examples
     --------
         >>> profile = Profile(preferences_ut=[
@@ -261,41 +307,6 @@ class RuleIRV(Rule):
         [0. 0. 2.]
         sufficient_coalition_size_cm =
         [0. 2. 4.]
-
-    Notes
-    -----
-    The candidate who is ranked first by least voters is eliminated. Then we iterate. Ties are broken in favor of
-    lower-index candidates: in case of a tie, the tied candidate with highest index is eliminated.
-
-    * :meth:`is_cm_`: Deciding CM is NP-complete.
-
-        * :attr:`cm_option` = ``'fast'``: Polynomial heuristic. Can prove CM but unable to decide non-CM (except in
-          rare obvious cases).
-        * :attr:`cm_option` = ``'slow'``: Rely on :class:`~svvamp.ExhaustiveBallot`'s exact algorithm. Non-polynomial
-          heuristic (:math:`2^{n_c}`). Quite efficient to prove CM or non-CM.
-        * :attr:`cm_option` = ``'exact'``: Non-polynomial algorithm (:math:`n_c!`) adapted from Walsh, 2010.
-
-    * :meth:`is_icm_`: Exact in polynomial time.
-    * :meth:`is_im_`: Deciding IM is NP-complete.
-
-        * :attr:`im_option` = ``'lazy'``: Lazy algorithm from superclass :class:`Rule`.
-        * :attr:`im_option` = ``'exact'``: Non-polynomial algorithm (:math:`n_c!`) adapted from Walsh, 2010.
-
-    * :meth:`is_iia_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
-    * :meth:`is_tm_`: Exact in polynomial time.
-    * :meth:`is_um_`: Deciding UM is NP-complete.
-
-        * :attr:`um_option` = ``'fast'``: Polynomial heuristic. Can prove UM but unable to decide non-UM (except in
-          rare obvious cases).
-        * :attr:`um_option` = ``'exact'``: Non-polynomial algorithm (:math:`n_c!`) adapted from Walsh, 2010.
-
-    References
-    ----------
-    'Single transferable vote resists strategic voting', John J. Bartholdi and James B. Orlin, 1991.
-
-    'On The Complexity of Manipulating Elections', Tom Coleman and Vanessa Teague, 2007.
-
-    'Manipulability of Single Transferable Vote', Toby Walsh, 2010.
     """
     # Exceptionally, for this voting system, we establish a pointer from the Profile object, so that the
     # manipulation results can be used by Condorcet-IRV.

@@ -115,6 +115,67 @@
 <span class="k">class</span> <span class="nc">RuleTideman</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Tideman rule (combination of Smith set and IRV-like elimination).</span>
 
+<span class="sd">    Options</span>
+<span class="sd">    -------</span>
+<span class="sd">        &gt;&gt;&gt; RuleTideman.print_options_parameters()</span>
+<span class="sd">        cm_option: [&#39;fast&#39;, &#39;slow&#39;, &#39;very_slow&#39;, &#39;exact&#39;]. Default: &#39;fast&#39;.</span>
+<span class="sd">        icm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        iia_subset_maximum_size: is_number. Default: 2.</span>
+<span class="sd">        im_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="sd">        tm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        um_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    Each voter must provide a strict total order. Restrict the election to the Smith Set (in the sense of</span>
+<span class="sd">    :attr:`smith_set_rk`), then eliminate the plurality loser, then iterate.</span>
+
+<span class="sd">    * :meth:`is_cm_`:</span>
+
+<span class="sd">        * :attr:`cm_option` = ``&#39;fast&#39;``: Rely on :class:`RuleIRV`&#39;s fast algorithm. Polynomial heuristic. Can prove</span>
+<span class="sd">          CM but unable to decide non-CM (except in rare obvious cases).</span>
+<span class="sd">        * :attr:`cm_option` = ``&#39;slow&#39;``: Rely on :class:`RuleExhaustiveBallot`&#39;s exact algorithm. Non-polynomial</span>
+<span class="sd">          heuristic (:math:`2^{n_c}`). Quite efficient to prove CM or non-CM.</span>
+<span class="sd">        * :attr:`cm_option` = ``&#39;very_slow&#39;``: Rely on :class:`RuleIRV`&#39;s exact algorithm. Non-polynomial</span>
+<span class="sd">          heuristic (:math:`n_c!`). Very efficient to prove CM or non-CM.</span>
+<span class="sd">        * :attr:`cm_option` = ``&#39;exact&#39;``: Non-polynomial algorithm from superclass :class:`Rule`.</span>
+
+<span class="sd">        Each algorithm above exploits the faster ones. For example, if :attr:`cm_option` = ``&#39;very_slow&#39;``,</span>
+<span class="sd">        SVVAMP tries the fast algorithm first, then the slow one, then the &#39;very slow&#39; one. As soon as it reaches</span>
+<span class="sd">        a decision, computation stops.</span>
+
+<span class="sd">    Tideman does not :attr:`meets_condorcet_c_ut_abs_ctb`:</span>
+
+<span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
+<span class="sd">        ...     [ 0. ,  1. , -0.5],</span>
+<span class="sd">        ...     [ 0.5,  0. ,  0.5],</span>
+<span class="sd">        ... ], preferences_rk=[</span>
+<span class="sd">        ...     [1, 0, 2],</span>
+<span class="sd">        ...     [2, 0, 1],</span>
+<span class="sd">        ... ])</span>
+<span class="sd">        &gt;&gt;&gt; RuleTideman()(profile).w_</span>
+<span class="sd">        1</span>
+<span class="sd">        &gt;&gt;&gt; profile.condorcet_winner_ut_abs_ctb</span>
+<span class="sd">        0</span>
+
+<span class="sd">    Tideman does not :attr:`meets_condorcet_c_ut_rel`:</span>
+
+<span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
+<span class="sd">        ...     [ 1. ,  1. , -1. ],</span>
+<span class="sd">        ...     [ 0.5,  1. , -0.5],</span>
+<span class="sd">        ... ], preferences_rk=[</span>
+<span class="sd">        ...     [0, 1, 2],</span>
+<span class="sd">        ...     [1, 0, 2],</span>
+<span class="sd">        ... ])</span>
+<span class="sd">        &gt;&gt;&gt; RuleTideman()(profile).w_</span>
+<span class="sd">        0</span>
+<span class="sd">        &gt;&gt;&gt; profile.condorcet_winner_ut_rel</span>
+<span class="sd">        1</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    &#39;Four Condorcet-Hare Hybrid Methods for Single-Winner Elections&#39;, James Green-Armytage, 2011.</span>
+
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
@@ -342,57 +403,6 @@
 <span class="sd">        [0. 1. 2.]</span>
 <span class="sd">        sufficient_coalition_size_cm =</span>
 <span class="sd">        [0. 2. 4.]</span>
-
-<span class="sd">    Tideman does not :attr:`meets_condorcet_c_ut_abs_ctb`:</span>
-
-<span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
-<span class="sd">        ...     [ 0. ,  1. , -0.5],</span>
-<span class="sd">        ...     [ 0.5,  0. ,  0.5],</span>
-<span class="sd">        ... ], preferences_rk=[</span>
-<span class="sd">        ...     [1, 0, 2],</span>
-<span class="sd">        ...     [2, 0, 1],</span>
-<span class="sd">        ... ])</span>
-<span class="sd">        &gt;&gt;&gt; RuleTideman()(profile).w_</span>
-<span class="sd">        1</span>
-<span class="sd">        &gt;&gt;&gt; profile.condorcet_winner_ut_abs_ctb</span>
-<span class="sd">        0</span>
-
-<span class="sd">    Tideman does not :attr:`meets_condorcet_c_ut_rel`:</span>
-
-<span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
-<span class="sd">        ...     [ 1. ,  1. , -1. ],</span>
-<span class="sd">        ...     [ 0.5,  1. , -0.5],</span>
-<span class="sd">        ... ], preferences_rk=[</span>
-<span class="sd">        ...     [0, 1, 2],</span>
-<span class="sd">        ...     [1, 0, 2],</span>
-<span class="sd">        ... ])</span>
-<span class="sd">        &gt;&gt;&gt; RuleTideman()(profile).w_</span>
-<span class="sd">        0</span>
-<span class="sd">        &gt;&gt;&gt; profile.condorcet_winner_ut_rel</span>
-<span class="sd">        1</span>
-
-<span class="sd">    Notes</span>
-<span class="sd">    -----</span>
-<span class="sd">    Each voter must provide a strict total order. Restrict the election to the Smith Set (in the sense of</span>
-<span class="sd">    :attr:`smith_set_rk`), then eliminate the plurality loser, then iterate.</span>
-
-<span class="sd">    * :meth:`is_cm_`:</span>
-
-<span class="sd">        * :attr:`cm_option` = ``&#39;fast&#39;``: Rely on :class:`RuleIRV`&#39;s fast algorithm. Polynomial heuristic. Can prove</span>
-<span class="sd">          CM but unable to decide non-CM (except in rare obvious cases).</span>
-<span class="sd">        * :attr:`cm_option` = ``&#39;slow&#39;``: Rely on :class:`RuleExhaustiveBallot`&#39;s exact algorithm. Non-polynomial</span>
-<span class="sd">          heuristic (:math:`2^{n_c}`). Quite efficient to prove CM or non-CM.</span>
-<span class="sd">        * :attr:`cm_option` = ``&#39;very_slow&#39;``: Rely on :class:`RuleIRV`&#39;s exact algorithm. Non-polynomial</span>
-<span class="sd">          heuristic (:math:`n_c!`). Very efficient to prove CM or non-CM.</span>
-<span class="sd">        * :attr:`cm_option` = ``&#39;exact&#39;``: Non-polynomial algorithm from superclass :class:`Rule`.</span>
-
-<span class="sd">        Each algorithm above exploits the faster ones. For example, if :attr:`cm_option` = ``&#39;very_slow&#39;``,</span>
-<span class="sd">        SVVAMP tries the fast algorithm first, then the slow one, then the &#39;very slow&#39; one. As soon as it reaches</span>
-<span class="sd">        a decision, computation stops.</span>
-
-<span class="sd">    References</span>
-<span class="sd">    ----------</span>
-<span class="sd">    &#39;Four Condorcet-Hare Hybrid Methods for Single-Winner Elections&#39;, James Green-Armytage, 2011.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">full_name</span> <span class="o">=</span> <span class="s1">&#39;Tideman&#39;</span>

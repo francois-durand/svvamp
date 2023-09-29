@@ -111,7 +111,53 @@
 <a class="viewcode-back" href="../../../reference/rules/rule_black.html#svvamp.RuleBlack">[docs]</a>
 <span class="k">class</span> <span class="nc">RuleBlack</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Black rule</span>
+<span class="sd">    Black rule.</span>
+
+<span class="sd">    Options</span>
+<span class="sd">    -------</span>
+<span class="sd">        &gt;&gt;&gt; RuleBlack.print_options_parameters()</span>
+<span class="sd">        cm_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="sd">        icm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        iia_subset_maximum_size: is_number. Default: 2.</span>
+<span class="sd">        im_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="sd">        tm_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        um_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    Select the Condorcet winner if any, otherwise select the Borda winner.</span>
+
+<span class="sd">    Black does not :attr:`meets_condorcet_c_ut_rel`:</span>
+
+<span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
+<span class="sd">        ...     [-1. , -0.5, -0.5],</span>
+<span class="sd">        ...     [-1. , -0.5,  0. ],</span>
+<span class="sd">        ... ], preferences_rk=[</span>
+<span class="sd">        ...     [1, 2, 0],</span>
+<span class="sd">        ...     [2, 1, 0],</span>
+<span class="sd">        ... ])</span>
+<span class="sd">        &gt;&gt;&gt; RuleBlack()(profile).w_</span>
+<span class="sd">        1</span>
+<span class="sd">        &gt;&gt;&gt; profile.condorcet_winner_ut_rel</span>
+<span class="sd">        2</span>
+
+<span class="sd">    Black does not :attr:`meets_majority_favorite_c_ut_ctb`:</span>
+
+<span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
+<span class="sd">        ...     [ 0.5, -1. ,  0. ],</span>
+<span class="sd">        ...     [-1. ,  0. ,  0.5],</span>
+<span class="sd">        ... ], preferences_rk=[</span>
+<span class="sd">        ...     [0, 2, 1],</span>
+<span class="sd">        ...     [2, 1, 0],</span>
+<span class="sd">        ... ])</span>
+<span class="sd">        &gt;&gt;&gt; RuleBlack()(profile).w_</span>
+<span class="sd">        2</span>
+<span class="sd">        &gt;&gt;&gt; profile.majority_favorite_ut_ctb</span>
+<span class="sd">        0</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    &#39;The theory of committees and elections&#39;. Duncan Black, 1958.</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
@@ -342,36 +388,6 @@
 <span class="sd">        [0. 1. 1.]</span>
 <span class="sd">        sufficient_coalition_size_cm =</span>
 <span class="sd">        [0. 2. 3.]</span>
-
-<span class="sd">    Notes</span>
-<span class="sd">    -----</span>
-<span class="sd">    Black does not :attr:`meets_condorcet_c_ut_rel`:</span>
-
-<span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
-<span class="sd">        ...     [-1. , -0.5, -0.5],</span>
-<span class="sd">        ...     [-1. , -0.5,  0. ],</span>
-<span class="sd">        ... ], preferences_rk=[</span>
-<span class="sd">        ...     [1, 2, 0],</span>
-<span class="sd">        ...     [2, 1, 0],</span>
-<span class="sd">        ... ])</span>
-<span class="sd">        &gt;&gt;&gt; RuleBlack()(profile).w_</span>
-<span class="sd">        1</span>
-<span class="sd">        &gt;&gt;&gt; profile.condorcet_winner_ut_rel</span>
-<span class="sd">        2</span>
-
-<span class="sd">    Black does not :attr:`meets_majority_favorite_c_ut_ctb`:</span>
-
-<span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
-<span class="sd">        ...     [ 0.5, -1. ,  0. ],</span>
-<span class="sd">        ...     [-1. ,  0. ,  0.5],</span>
-<span class="sd">        ... ], preferences_rk=[</span>
-<span class="sd">        ...     [0, 2, 1],</span>
-<span class="sd">        ...     [2, 1, 0],</span>
-<span class="sd">        ... ])</span>
-<span class="sd">        &gt;&gt;&gt; RuleBlack()(profile).w_</span>
-<span class="sd">        2</span>
-<span class="sd">        &gt;&gt;&gt; profile.majority_favorite_ut_ctb</span>
-<span class="sd">        0</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">full_name</span> <span class="o">=</span> <span class="s1">&#39;Black&#39;</span>

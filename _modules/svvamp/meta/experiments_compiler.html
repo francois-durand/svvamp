@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>svvamp.meta.experiments_compiler &mdash; SVVAMP 0.9.1 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=9dc39874"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            SVVAMP
+          </a>
+              <div class="version">
+                0.9.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">SVVAMP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../history.html">History</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">SVVAMP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">svvamp.meta.experiments_compiler</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for svvamp.meta.experiments_compiler</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on jul. 26, 2021, 08:43</span>
+<span class="sd">Copyright François Durand 2014-2021</span>
+<span class="sd">fradurand@gmail.com</span>
+
+<span class="sd">This file is part of SVVAMP.</span>
+
+<span class="sd">    SVVAMP is free software: you can redistribute it and/or modify</span>
+<span class="sd">    it under the terms of the GNU General Public License as published by</span>
+<span class="sd">    the Free Software Foundation, either version 3 of the License, or</span>
+<span class="sd">    (at your option) any later version.</span>
+
+<span class="sd">    SVVAMP is distributed in the hope that it will be useful,</span>
+<span class="sd">    but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="sd">    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="sd">    GNU General Public License for more details.</span>
+
+<span class="sd">    You should have received a copy of the GNU General Public License</span>
+<span class="sd">    along with SVVAMP.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span> <span class="nn">tikzplotlib</span>
+<span class="kn">from</span> <span class="nn">svvamp.utils.tikzplotlib_fix_ncols</span> <span class="kn">import</span> <span class="n">tikzplotlib_fix_ncols</span>
+
+
+<div class="viewcode-block" id="ExperimentsCompiler">
+<a class="viewcode-back" href="../../../reference/meta/experiments_compiler.html#svvamp.ExperimentsCompiler">[docs]</a>
+<span class="k">class</span> <span class="nc">ExperimentsCompiler</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compile the results of several experiments.</span>
+
+<span class="sd">    Each experiment should be analyzed with `ExperimentAnalyzer`. Then `ExperimentsCompiler` compiles the</span>
+<span class="sd">    analyses.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        prefix_tikz_file: str</span>
+<span class="sd">            Prefix for the names of the tikz files.</span>
+<span class="sd">        tikz_directory: str</span>
+<span class="sd">            Directory where to save the tikz files.</span>
+<span class="sd">        results_directory: str</span>
+<span class="sd">            Directory where to fetch the results obtained with `ExperimentAnalyzer`.</span>
+<span class="sd">        figsize: tuple</span>
+<span class="sd">            Size of the figures.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix_tikz_file</span><span class="p">,</span> <span class="n">tikz_directory</span><span class="o">=</span><span class="s1">&#39;tikz&#39;</span><span class="p">,</span> <span class="n">results_directory</span><span class="o">=</span><span class="s1">&#39;out&#39;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">8</span><span class="p">)):</span>
+        <span class="c1"># Record parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prefix_tikz_file</span> <span class="o">=</span> <span class="n">prefix_tikz_file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">results_directory</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">results_directory</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tikz_directory</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">tikz_directory</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">figsize</span> <span class="o">=</span> <span class="n">figsize</span>
+        <span class="c1"># Create tikz folder if it does not exist</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">tikz_directory</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">tikz_directory</span><span class="p">)</span>
+        <span class="c1"># Create the mother of all dataframes</span>
+        <span class="n">dataframes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">results_directory</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>
+            <span class="k">if</span> <span class="s1">&#39;_m_en&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">with</span> <span class="n">f</span><span class="o">.</span><span class="n">open</span><span class="p">()</span> <span class="k">as</span> <span class="n">buffer</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">new_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">buffer</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">UnicodeDecodeError</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
+                    <span class="c1"># This should not happen.</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">UnicodeDecodeError</span>
+            <span class="n">new_df</span><span class="p">[</span><span class="s1">&#39;file_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span>
+            <span class="n">dataframes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_df</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dataframes</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># Default order of the rules</span>
+        <span class="n">df_temp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Criterion&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Winner&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+            <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">],</span>
+            <span class="n">index</span><span class="o">=</span><span class="s1">&#39;Rule (abbr)&#39;</span>
+        <span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">order_rules</span><span class="p">(</span><span class="n">rule_abbreviation</span><span class="p">):</span>
+            <span class="n">rules</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="s1">&#39;Ben&#39;</span><span class="p">,</span> <span class="s1">&#39;SIRV&#39;</span><span class="p">,</span> <span class="s1">&#39;Tid&#39;</span><span class="p">,</span> <span class="s1">&#39;Woo&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;CIRV&#39;</span><span class="p">,</span> <span class="s1">&#39;IRV&#39;</span><span class="p">,</span> <span class="s1">&#39;EB&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;STAR&#39;</span><span class="p">,</span> <span class="s1">&#39;AV&#39;</span><span class="p">,</span> <span class="s1">&#39;RV&#39;</span>
+            <span class="p">]</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># noinspection PyUnresolvedReferences</span>
+                <span class="k">return</span> <span class="n">rules</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">rule_abbreviation</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">rules</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">rules_order</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">df_temp</span><span class="o">.</span><span class="n">index</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="n">order_rules</span><span class="p">)</span>
+        <span class="c1"># Number of rules</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_rules</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rules_order</span><span class="p">)</span>
+        <span class="c1"># Corrected abbreviations of the rules</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">d_abbr_new</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;CIRV&#39;</span><span class="p">:</span> <span class="s1">&#39;CI&#39;</span><span class="p">,</span> <span class="s1">&#39;SIRV&#39;</span><span class="p">:</span> <span class="s1">&#39;SI&#39;</span><span class="p">,</span> <span class="s1">&#39;STAR&#39;</span><span class="p">:</span> <span class="s1">&#39;Sta&#39;</span><span class="p">,</span> <span class="s1">&#39;IRVD&#39;</span><span class="p">:</span> <span class="s1">&#39;Vie&#39;</span><span class="p">}</span>
+
+<div class="viewcode-block" id="ExperimentsCompiler.profiles_scatter_plot">
+<a class="viewcode-back" href="../../../reference/meta/experiments_compiler.html#svvamp.ExperimentsCompiler.profiles_scatter_plot">[docs]</a>
+    <span class="k">def</span> <span class="nf">profiles_scatter_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tikz_file</span><span class="o">=</span><span class="s1">&#39;profiles_scatter_plot.tex&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Scatter plot: Number of voters and candidates of the profiles.&quot;&quot;&quot;</span>
+        <span class="n">df_scatter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Criterion&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;exists_condorcet_admissible&#39;</span>  <span class="c1"># No matter the criterion</span>
+            <span class="p">]</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">figsize</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df_scatter</span><span class="p">[</span><span class="s1">&#39;V&#39;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">df_scatter</span><span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">])</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_axisbelow</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Number of voters $V$&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="n">xmin</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Number of candidates $C$&#39;</span><span class="p">)</span>
+        <span class="n">y_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">df_scatter</span><span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">])</span>
+        <span class="n">y_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">df_scatter</span><span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">])</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">y_min</span><span class="p">,</span> <span class="n">y_max</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">my_tikzplotlib_save</span><span class="p">(</span><span class="n">tikz_file</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">df_scatter</span></div>
+
+
+<div class="viewcode-block" id="ExperimentsCompiler.profile_features_bar_plot">
+<a class="viewcode-back" href="../../../reference/meta/experiments_compiler.html#svvamp.ExperimentsCompiler.profile_features_bar_plot">[docs]</a>
+    <span class="k">def</span> <span class="nf">profile_features_bar_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tikz_file</span><span class="o">=</span><span class="s1">&#39;profile_features_bar_plot.tex&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Bar plot: Features of the profiles (existence of Condorcet winner, etc).&quot;&quot;&quot;</span>
+        <span class="n">d_criterion_legend</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;exists_condorcet_winner_rk&#39;</span><span class="p">:</span> <span class="s1">&#39;CW&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;exists_condorcet_order_rk&#39;</span><span class="p">:</span> <span class="s1">&#39;CO&#39;</span><span class="p">,</span>
+            <span class="c1"># &#39;exists_irv_immune_candidate&#39;: &#39;IRV-immune candidate&#39;,</span>
+            <span class="s1">&#39;exists_resistant_condorcet_winner&#39;</span><span class="p">:</span> <span class="s1">&#39;RCW&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;exists_majority_favorite_rk&#39;</span><span class="p">:</span> <span class="s1">&#39;MF&#39;</span>
+        <span class="p">}</span>
+        <span class="n">d_criterion_rate</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">criterion</span> <span class="ow">in</span> <span class="n">d_criterion_legend</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">d_criterion_rate</span><span class="p">[</span><span class="n">criterion</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Criterion&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">criterion</span>
+                <span class="p">]</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+                <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">],</span>
+                <span class="n">index</span><span class="o">=</span><span class="s1">&#39;Rule&#39;</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">d_criterion_legend</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="n">d_criterion_rate</span><span class="p">[</span><span class="n">criterion</span><span class="p">]</span> <span class="k">for</span> <span class="n">criterion</span> <span class="ow">in</span> <span class="n">d_criterion_legend</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
+        <span class="n">df_plot</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Rate&#39;</span><span class="p">])</span>
+        <span class="c1"># Plot</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">figsize</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_axisbelow</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.1</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Proportion of profiles&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">my_tikzplotlib_save</span><span class="p">(</span><span class="n">tikz_file</span><span class="p">,</span> <span class="n">x_ticks_labels</span><span class="o">=</span><span class="n">d_criterion_legend</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">df_plot</span></div>
+
+
+<div class="viewcode-block" id="ExperimentsCompiler.rate_bar_plot">
+<a class="viewcode-back" href="../../../reference/meta/experiments_compiler.html#svvamp.ExperimentsCompiler.rate_bar_plot">[docs]</a>
+    <span class="k">def</span> <span class="nf">rate_bar_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">ylabel</span><span class="p">,</span> <span class="n">tikz_file</span><span class="p">,</span> <span class="n">draw_rcw_line</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Bar plot: Rate of some criterion (auxiliary function).&quot;&quot;&quot;</span>
+        <span class="c1"># Create the pivot table</span>
+        <span class="n">df_plot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Criterion&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">criterion</span><span class="p">]</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+            <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (uncertainty)&#39;</span><span class="p">],</span>
+            <span class="n">index</span><span class="o">=</span><span class="s1">&#39;Rule (abbr)&#39;</span>
+        <span class="p">)</span>
+        <span class="n">df_plot</span> <span class="o">=</span> <span class="n">df_plot</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">rules_order</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (uncertainty)&#39;</span><span class="p">]]</span>
+        <span class="n">df_plot</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">,</span> <span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># Plot</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">figsize</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">draw_rcw_line</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resistant_condorcet_line</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+            <span class="n">df_plot</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+            <span class="n">df_plot</span><span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">],</span>
+            <span class="n">yerr</span><span class="o">=</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df_plot</span><span class="o">.</span><span class="n">index</span><span class="p">)),</span> <span class="n">df_plot</span><span class="p">[</span><span class="s1">&#39;Rate (uncertainty)&#39;</span><span class="p">])</span>
+        <span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_axisbelow</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_rules</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.1</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="n">ylabel</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">my_tikzplotlib_save</span><span class="p">(</span><span class="n">tikz_file</span><span class="p">,</span> <span class="n">x_ticks_labels</span><span class="o">=</span><span class="n">df_plot</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">df_plot</span></div>
+
+
+<div class="viewcode-block" id="ExperimentsCompiler.cm_rate_bar_plot">
+<a class="viewcode-back" href="../../../reference/meta/experiments_compiler.html#svvamp.ExperimentsCompiler.cm_rate_bar_plot">[docs]</a>
+    <span class="k">def</span> <span class="nf">cm_rate_bar_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tikz_file</span><span class="o">=</span><span class="s1">&#39;cm_rate_bar_plot.tex&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Bar plot: CM rate.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rate_bar_plot</span><span class="p">(</span><span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;is_cm_&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;CM rate&#39;</span><span class="p">,</span> <span class="n">tikz_file</span><span class="o">=</span><span class="n">tikz_file</span><span class="p">,</span>
+                                  <span class="n">draw_rcw_line</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ExperimentsCompiler.tm_rate_bar_plot">
+<a class="viewcode-back" href="../../../reference/meta/experiments_compiler.html#svvamp.ExperimentsCompiler.tm_rate_bar_plot">[docs]</a>
+    <span class="k">def</span> <span class="nf">tm_rate_bar_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tikz_file</span><span class="o">=</span><span class="s1">&#39;tm_rate_bar_plot.tex&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Bar plot: TM rate.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rate_bar_plot</span><span class="p">(</span><span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;is_tm_&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;TM rate&#39;</span><span class="p">,</span> <span class="n">tikz_file</span><span class="o">=</span><span class="n">tikz_file</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ExperimentsCompiler.um_rate_bar_plot">
+<a class="viewcode-back" href="../../../reference/meta/experiments_compiler.html#svvamp.ExperimentsCompiler.um_rate_bar_plot">[docs]</a>
+    <span class="k">def</span> <span class="nf">um_rate_bar_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tikz_file</span><span class="o">=</span><span class="s1">&#39;um_rate_bar_plot.tex&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Bar plot: UM rate.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rate_bar_plot</span><span class="p">(</span><span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;is_um_&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;UM rate&#39;</span><span class="p">,</span> <span class="n">tikz_file</span><span class="o">=</span><span class="n">tikz_file</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ExperimentsCompiler.cm_tm_um_rate_bar_plot">
+<a class="viewcode-back" href="../../../reference/meta/experiments_compiler.html#svvamp.ExperimentsCompiler.cm_tm_um_rate_bar_plot">[docs]</a>
+    <span class="k">def</span> <span class="nf">cm_tm_um_rate_bar_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tikz_file</span><span class="o">=</span><span class="s1">&#39;cm_tm_um_rate_bar_plot.tex&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Bar plot: CM, TM and UM rates.&quot;&quot;&quot;</span>
+        <span class="c1"># Create the pivot table</span>
+        <span class="n">df_tm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Criterion&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;is_tm_&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+            <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (uncertainty)&#39;</span><span class="p">],</span>
+            <span class="n">index</span><span class="o">=</span><span class="s1">&#39;Rule (abbr)&#39;</span>
+        <span class="p">)</span>
+        <span class="n">df_tm</span> <span class="o">=</span> <span class="n">df_tm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">rules_order</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (uncertainty)&#39;</span><span class="p">]]</span>
+
+        <span class="n">df_um</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Criterion&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;is_um_&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+            <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (uncertainty)&#39;</span><span class="p">],</span>
+            <span class="n">index</span><span class="o">=</span><span class="s1">&#39;Rule (abbr)&#39;</span>
+        <span class="p">)</span>
+        <span class="n">df_um</span> <span class="o">=</span> <span class="n">df_um</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">rules_order</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (uncertainty)&#39;</span><span class="p">]]</span>
+
+        <span class="n">df_cm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Criterion&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;is_cm_&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+            <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (uncertainty)&#39;</span><span class="p">],</span>
+            <span class="n">index</span><span class="o">=</span><span class="s1">&#39;Rule (abbr)&#39;</span>
+        <span class="p">)</span>
+        <span class="n">df_cm</span> <span class="o">=</span> <span class="n">df_cm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">rules_order</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (uncertainty)&#39;</span><span class="p">]]</span>
+
+        <span class="n">df_plot</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_tm</span><span class="p">,</span> <span class="n">df_um</span><span class="p">,</span> <span class="n">df_cm</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;TM&#39;</span><span class="p">,</span> <span class="s1">&#39;UM&#39;</span><span class="p">,</span> <span class="s1">&#39;CM&#39;</span><span class="p">])</span>
+        <span class="n">df_plot</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span>
+            <span class="p">(</span><span class="s1">&#39;CM&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;CM&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;TM&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;TM&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;UM&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;UM&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">),</span>
+        <span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># Plot</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df_plot</span><span class="o">.</span><span class="n">index</span><span class="p">))</span>
+        <span class="n">bar_width</span> <span class="o">=</span> <span class="mf">0.25</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">figsize</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">bar_width</span><span class="p">,</span> <span class="n">df_plot</span><span class="p">[(</span><span class="s1">&#39;TM&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">)],</span> <span class="n">bar_width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;TM rate&#39;</span><span class="p">,</span>
+               <span class="n">yerr</span><span class="o">=</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df_plot</span><span class="o">.</span><span class="n">index</span><span class="p">)),</span> <span class="n">df_plot</span><span class="p">[(</span><span class="s1">&#39;TM&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (uncertainty)&#39;</span><span class="p">)]))</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">df_plot</span><span class="p">[(</span><span class="s1">&#39;UM&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">)],</span> <span class="n">bar_width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;UM rate&#39;</span><span class="p">,</span>
+               <span class="n">yerr</span><span class="o">=</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df_plot</span><span class="o">.</span><span class="n">index</span><span class="p">)),</span> <span class="n">df_plot</span><span class="p">[(</span><span class="s1">&#39;UM&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (uncertainty)&#39;</span><span class="p">)]))</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">bar_width</span><span class="p">,</span> <span class="n">df_plot</span><span class="p">[(</span><span class="s1">&#39;CM&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">)],</span> <span class="n">bar_width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;CM rate&#39;</span><span class="p">,</span>
+               <span class="n">yerr</span><span class="o">=</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df_plot</span><span class="o">.</span><span class="n">index</span><span class="p">)),</span> <span class="n">df_plot</span><span class="p">[(</span><span class="s1">&#39;CM&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (uncertainty)&#39;</span><span class="p">)]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resistant_condorcet_line</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_axisbelow</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">df_plot</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_rules</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.1</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Rate&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
+        <span class="n">tikzplotlib_fix_ncols</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">my_tikzplotlib_save</span><span class="p">(</span><span class="n">tikz_file</span><span class="p">,</span> <span class="n">x_ticks_labels</span><span class="o">=</span><span class="n">df_plot</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">df_plot</span></div>
+
+
+<div class="viewcode-block" id="ExperimentsCompiler.condorcet_consistency_bar_plot">
+<a class="viewcode-back" href="../../../reference/meta/experiments_compiler.html#svvamp.ExperimentsCompiler.condorcet_consistency_bar_plot">[docs]</a>
+    <span class="k">def</span> <span class="nf">condorcet_consistency_bar_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tikz_file</span><span class="o">=</span><span class="s1">&#39;condorcet_consistency_bar_plot.tex&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Bar plot: Condorcet consistency.&quot;&quot;&quot;</span>
+        <span class="c1"># Cumulative rate of Condorcet winner existence</span>
+        <span class="n">cum_rate_condorcet_exists</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span>
+            <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Rule&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Profile&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Criterion&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;exists_condorcet_winner_rk&#39;</span><span class="p">)</span>
+            <span class="p">]</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+            <span class="n">values</span><span class="o">=</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">,</span>
+            <span class="n">index</span><span class="o">=</span><span class="s1">&#39;Rule&#39;</span><span class="p">,</span>
+            <span class="n">aggfunc</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="c1"># Sincere Condorcet consistency</span>
+        <span class="n">df_condorcet_consistency</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Criterion&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;w_is_condorcet_winner_rk_&#39;</span>
+            <span class="p">]</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+            <span class="n">values</span><span class="o">=</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">,</span>
+            <span class="n">index</span><span class="o">=</span><span class="s1">&#39;Rule (abbr)&#39;</span><span class="p">,</span>
+            <span class="n">aggfunc</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span>
+        <span class="p">)</span>
+        <span class="c1"># Condorcet consistency with CM</span>
+        <span class="n">df_condorcet_consistency_despite_cm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Criterion&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;elects_condorcet_winner_rk_even_with_cm_&#39;</span>
+            <span class="p">]</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+            <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (uncertainty)&#39;</span><span class="p">],</span>
+            <span class="n">index</span><span class="o">=</span><span class="s1">&#39;Rule (abbr)&#39;</span><span class="p">,</span>
+            <span class="n">aggfunc</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span>
+        <span class="p">)</span>
+        <span class="n">df_condorcet_consistency_despite_cm</span> <span class="o">=</span> <span class="n">df_condorcet_consistency_despite_cm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+                                              <span class="p">:,</span> <span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (uncertainty)&#39;</span><span class="p">]]</span>
+        <span class="c1"># Condorcet violation (sincere / with CM)</span>
+        <span class="n">df_violation</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+        <span class="n">df_violation</span><span class="p">[(</span><span class="s1">&#39;Sincere&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">)]</span> <span class="o">=</span> <span class="o">-</span> <span class="n">df_condorcet_consistency</span><span class="p">[</span>
+            <span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">cum_rate_condorcet_exists</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">df_violation</span><span class="p">[(</span><span class="s1">&#39;CM&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">)]</span> <span class="o">=</span> <span class="o">-</span> <span class="n">df_condorcet_consistency_despite_cm</span><span class="p">[</span>
+            <span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">cum_rate_condorcet_exists</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">df_violation</span><span class="p">[(</span><span class="s1">&#39;CM&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">)]</span> <span class="o">=</span> <span class="o">-</span> <span class="n">df_condorcet_consistency_despite_cm</span><span class="p">[</span>
+            <span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">cum_rate_condorcet_exists</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">df_violation</span><span class="p">[(</span><span class="s1">&#39;CM&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (uncertainty)&#39;</span><span class="p">)]</span> <span class="o">=</span> <span class="n">df_condorcet_consistency_despite_cm</span><span class="p">[</span>
+                                                         <span class="s1">&#39;Rate (uncertainty)&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">cum_rate_condorcet_exists</span>
+        <span class="n">df_violation</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="o">.</span><span class="n">from_tuples</span><span class="p">(</span><span class="n">df_violation</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+        <span class="n">df_violation</span> <span class="o">=</span> <span class="n">df_violation</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">rules_order</span><span class="p">,</span> <span class="p">:]</span>
+        <span class="n">df_violation</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span>
+            <span class="p">(</span><span class="s1">&#39;CM&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;CM&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;Sincere&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">)</span>
+        <span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># Plot</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df_violation</span><span class="o">.</span><span class="n">index</span><span class="p">))</span>
+        <span class="n">bar_width</span> <span class="o">=</span> <span class="mf">0.35</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">figsize</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resistant_condorcet_line</span><span class="p">()</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">bar_width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">df_violation</span><span class="p">[(</span><span class="s1">&#39;Sincere&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">)],</span> <span class="n">bar_width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Sincere&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">bar_width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">df_violation</span><span class="p">[(</span><span class="s1">&#39;CM&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">)],</span> <span class="n">bar_width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;With CM&#39;</span><span class="p">,</span>
+               <span class="n">yerr</span><span class="o">=</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df_violation</span><span class="o">.</span><span class="n">index</span><span class="p">)),</span> <span class="n">df_violation</span><span class="p">[(</span><span class="s1">&#39;CM&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (uncertainty)&#39;</span><span class="p">)]))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_axisbelow</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">df_violation</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_rules</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.1</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Condorcet violation rate&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
+        <span class="n">tikzplotlib_fix_ncols</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">my_tikzplotlib_save</span><span class="p">(</span><span class="n">tikz_file</span><span class="p">,</span> <span class="n">x_ticks_labels</span><span class="o">=</span><span class="n">df_violation</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">df_violation</span></div>
+
+
+<div class="viewcode-block" id="ExperimentsCompiler.loss_social_welfare_bar_plot">
+<a class="viewcode-back" href="../../../reference/meta/experiments_compiler.html#svvamp.ExperimentsCompiler.loss_social_welfare_bar_plot">[docs]</a>
+    <span class="k">def</span> <span class="nf">loss_social_welfare_bar_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tikz_file</span><span class="o">=</span><span class="s1">&#39;loss_social_welfare_bar_plot.tex&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Bar plot: loss of social welfare.&quot;&quot;&quot;</span>
+        <span class="c1"># Sincere social welfare</span>
+        <span class="n">df_social_welfare_sincere</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Criterion&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;relative_social_welfare_mean&#39;</span>
+        <span class="p">]</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+            <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">],</span>
+            <span class="n">index</span><span class="o">=</span><span class="s1">&#39;Rule (abbr)&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="c1"># Social welfare with CM</span>
+        <span class="n">df_social_welfare_with_cm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Criterion&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;worst_relative_welfare_with_cm_&#39;</span>
+        <span class="p">]</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+            <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (uncertainty)&#39;</span><span class="p">],</span>
+            <span class="n">index</span><span class="o">=</span><span class="s1">&#39;Rule (abbr)&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="c1"># Loss of social welfare (sincere / with CM)</span>
+        <span class="n">df_loss_sw</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+        <span class="n">df_loss_sw</span><span class="p">[(</span><span class="s1">&#39;Sincere&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">)]</span> <span class="o">=</span> <span class="o">-</span> <span class="n">df_social_welfare_sincere</span><span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">df_loss_sw</span><span class="p">[(</span><span class="s1">&#39;CM&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">)]</span> <span class="o">=</span> <span class="o">-</span> <span class="n">df_social_welfare_with_cm</span><span class="p">[</span><span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">df_loss_sw</span><span class="p">[(</span><span class="s1">&#39;CM&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">)]</span> <span class="o">=</span> <span class="o">-</span> <span class="n">df_social_welfare_with_cm</span><span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">df_loss_sw</span><span class="p">[(</span><span class="s1">&#39;CM&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (uncertainty)&#39;</span><span class="p">)]</span> <span class="o">=</span> <span class="n">df_social_welfare_with_cm</span><span class="p">[</span><span class="s1">&#39;Rate (uncertainty)&#39;</span><span class="p">]</span>
+        <span class="n">df_loss_sw</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="o">.</span><span class="n">from_tuples</span><span class="p">(</span><span class="n">df_loss_sw</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+        <span class="n">df_loss_sw</span> <span class="o">=</span> <span class="n">df_loss_sw</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">rules_order</span><span class="p">,</span> <span class="p">:]</span>
+        <span class="n">df_loss_sw</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span>
+            <span class="p">(</span><span class="s1">&#39;CM&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;CM&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;Sincere&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">)</span>
+        <span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># Plot</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df_loss_sw</span><span class="o">.</span><span class="n">index</span><span class="p">))</span>
+        <span class="n">bar_width</span> <span class="o">=</span> <span class="mf">0.35</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">figsize</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">bar_width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">df_loss_sw</span><span class="p">[(</span><span class="s1">&#39;Sincere&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">)],</span> <span class="n">bar_width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Sincere&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">bar_width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">df_loss_sw</span><span class="p">[(</span><span class="s1">&#39;CM&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">)],</span> <span class="n">bar_width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;With CM&#39;</span><span class="p">,</span>
+               <span class="n">yerr</span><span class="o">=</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df_loss_sw</span><span class="o">.</span><span class="n">index</span><span class="p">)),</span> <span class="n">df_loss_sw</span><span class="p">[(</span><span class="s1">&#39;CM&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (uncertainty)&#39;</span><span class="p">)]))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_axisbelow</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">df_loss_sw</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_rules</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.1</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Loss of normalized social welfare&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
+        <span class="n">tikzplotlib_fix_ncols</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">my_tikzplotlib_save</span><span class="p">(</span><span class="n">tikz_file</span><span class="p">,</span> <span class="n">x_ticks_labels</span><span class="o">=</span><span class="n">df_loss_sw</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">df_loss_sw</span></div>
+
+
+<div class="viewcode-block" id="ExperimentsCompiler.nb_candidates_cm_line_plot">
+<a class="viewcode-back" href="../../../reference/meta/experiments_compiler.html#svvamp.ExperimentsCompiler.nb_candidates_cm_line_plot">[docs]</a>
+    <span class="k">def</span> <span class="nf">nb_candidates_cm_line_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rules</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tikz_file</span><span class="o">=</span><span class="s1">&#39;nb_candidates_cm_line_plot.tex&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Line plot: Number of CM winners.&quot;&quot;&quot;</span>
+        <span class="c1"># Generate the df</span>
+        <span class="n">df_nb_candidates_cm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Criterion&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;nb_candidates_cm_&#39;</span>
+        <span class="p">]</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+            <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">],</span>
+            <span class="n">index</span><span class="o">=</span><span class="s1">&#39;Rule (abbr)&#39;</span><span class="p">,</span>
+            <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">df_nb_candidates_cm</span> <span class="o">=</span> <span class="n">df_nb_candidates_cm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">rules_order</span><span class="p">,</span> <span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">rules</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">df_nb_candidates_cm</span> <span class="o">=</span> <span class="n">df_nb_candidates_cm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+                <span class="p">[</span><span class="n">rule</span> <span class="k">for</span> <span class="n">rule</span> <span class="ow">in</span> <span class="n">df_nb_candidates_cm</span><span class="o">.</span><span class="n">index</span> <span class="k">if</span> <span class="n">rule</span> <span class="ow">in</span> <span class="n">rules</span><span class="p">],</span> <span class="p">:]</span>
+        <span class="c1"># Sort the df</span>
+        <span class="c1"># df_nb_candidates_cm[&#39;mean&#39;] = df_nb_candidates_cm.mean(axis=1)</span>
+        <span class="c1"># df_nb_candidates_cm.sort_values(&#39;mean&#39;, inplace=True, ascending=False)</span>
+        <span class="c1"># df_nb_candidates_cm.drop(&#39;mean&#39;, axis=1, inplace=True)</span>
+        <span class="n">df_nb_candidates_cm</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">df_nb_candidates_cm</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="c1"># Replace the names of the rules</span>
+        <span class="n">df_nb_candidates_cm</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">replace_rule_names</span><span class="p">(</span><span class="n">df_nb_candidates_cm</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+        <span class="c1"># Plot</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">figsize</span><span class="p">)</span>
+        <span class="n">df_nb_candidates_cm</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_axisbelow</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Number of candidates&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">df_nb_candidates_cm</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">df_nb_candidates_cm</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Average number of CM winners&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">df_nb_candidates_cm</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mf">.5</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
+        <span class="n">tikzplotlib_fix_ncols</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">my_tikzplotlib_save</span><span class="p">(</span><span class="n">tikz_file</span><span class="p">,</span> <span class="n">axis_width</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;\axisSmallerWidth&#39;</span><span class="p">,</span> <span class="n">axis_height</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;\axisHeight&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">df_nb_candidates_cm</span></div>
+
+
+<div class="viewcode-block" id="ExperimentsCompiler.nb_candidates_cm_bar_plot">
+<a class="viewcode-back" href="../../../reference/meta/experiments_compiler.html#svvamp.ExperimentsCompiler.nb_candidates_cm_bar_plot">[docs]</a>
+    <span class="k">def</span> <span class="nf">nb_candidates_cm_bar_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tikz_file</span><span class="o">=</span><span class="s1">&#39;nb_candidates_cm_bar_plot.tex&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Bar plot: Number of CM winners.&quot;&quot;&quot;</span>
+        <span class="c1"># Raw data</span>
+        <span class="n">df_nb_candidates_cm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Criterion&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;nb_candidates_cm_&#39;</span>
+        <span class="p">]</span>
+        <span class="c1"># Raw data: proportion of candidates</span>
+        <span class="n">df_proportion_candidates_cm</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+        <span class="n">df_proportion_candidates_cm</span><span class="p">[</span><span class="s1">&#39;Rule (abbr)&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_nb_candidates_cm</span><span class="p">[</span><span class="s1">&#39;Rule (abbr)&#39;</span><span class="p">]</span>
+        <span class="n">df_proportion_candidates_cm</span><span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_nb_candidates_cm</span><span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span>
+                <span class="n">df_nb_candidates_cm</span><span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">df_proportion_candidates_cm</span><span class="p">[</span><span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_nb_candidates_cm</span><span class="p">[</span><span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span>
+                <span class="n">df_nb_candidates_cm</span><span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">df_proportion_candidates_cm</span><span class="p">[</span><span class="s1">&#39;Rate (uncertainty)&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_nb_candidates_cm</span><span class="p">[</span><span class="s1">&#39;Rate (uncertainty)&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span>
+                <span class="n">df_nb_candidates_cm</span><span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># Pivot table</span>
+        <span class="n">df_plot</span> <span class="o">=</span> <span class="n">df_proportion_candidates_cm</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+            <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (uncertainty)&#39;</span><span class="p">],</span>
+            <span class="n">index</span><span class="o">=</span><span class="s1">&#39;Rule (abbr)&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">df_plot</span> <span class="o">=</span> <span class="n">df_plot</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">rules_order</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (uncertainty)&#39;</span><span class="p">]]</span>
+        <span class="n">df_plot</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># Plot</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">figsize</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resistant_condorcet_line</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+            <span class="n">df_plot</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+            <span class="n">df_plot</span><span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">],</span>
+            <span class="n">yerr</span><span class="o">=</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df_plot</span><span class="o">.</span><span class="n">index</span><span class="p">)),</span> <span class="n">df_plot</span><span class="p">[</span><span class="s1">&#39;Rate (uncertainty)&#39;</span><span class="p">])</span>
+        <span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_axisbelow</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_rules</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.1</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Average ratio of CM winners&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">my_tikzplotlib_save</span><span class="p">(</span><span class="n">tikz_file</span><span class="p">,</span> <span class="n">x_ticks_labels</span><span class="o">=</span><span class="n">df_plot</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">df_plot</span></div>
+
+
+<div class="viewcode-block" id="ExperimentsCompiler.cm_power_index_bar_plot">
+<a class="viewcode-back" href="../../../reference/meta/experiments_compiler.html#svvamp.ExperimentsCompiler.cm_power_index_bar_plot">[docs]</a>
+    <span class="k">def</span> <span class="nf">cm_power_index_bar_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tikz_file</span><span class="o">=</span><span class="s1">&#39;cm_power_index_bar_plot.tex&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Bar plot: CM power index.&quot;&quot;&quot;</span>
+        <span class="c1"># Create the pivot table</span>
+        <span class="n">df_plot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Criterion&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;cm_power_index_&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+            <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (uncertainty)&#39;</span><span class="p">],</span>
+            <span class="n">index</span><span class="o">=</span><span class="s1">&#39;Rule (abbr)&#39;</span>
+        <span class="p">)</span>
+        <span class="n">df_plot</span> <span class="o">=</span> <span class="n">df_plot</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">rules_order</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (uncertainty)&#39;</span><span class="p">]]</span>
+        <span class="n">df_plot</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">,</span> <span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># Set y_max</span>
+        <span class="n">y_max</span> <span class="o">=</span> <span class="n">df_plot</span><span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="n">y_quantum</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">y_max</span> <span class="o">&gt;</span> <span class="mf">4.25</span> <span class="k">else</span> <span class="mf">0.5</span>
+        <span class="n">y_max</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">y_max</span> <span class="o">/</span> <span class="n">y_quantum</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.51</span><span class="p">)</span> <span class="o">*</span> <span class="n">y_quantum</span>
+        <span class="c1"># Plot</span>
+        <span class="n">uncertainty_to_plot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">df_plot</span><span class="p">[</span><span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">],</span> <span class="n">y_max</span><span class="p">)</span> <span class="o">-</span> <span class="n">df_plot</span><span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">]</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">figsize</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+            <span class="n">df_plot</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+            <span class="n">df_plot</span><span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">],</span>
+            <span class="n">yerr</span><span class="o">=</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df_plot</span><span class="o">.</span><span class="n">index</span><span class="p">)),</span> <span class="n">uncertainty_to_plot</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_axisbelow</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_rules</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">y_max</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;CM power index&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">my_tikzplotlib_save</span><span class="p">(</span><span class="n">tikz_file</span><span class="p">,</span> <span class="n">x_ticks_labels</span><span class="o">=</span><span class="n">df_plot</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">df_plot</span></div>
+
+
+<div class="viewcode-block" id="ExperimentsCompiler.cm_complexity_index_bar_plot">
+<a class="viewcode-back" href="../../../reference/meta/experiments_compiler.html#svvamp.ExperimentsCompiler.cm_complexity_index_bar_plot">[docs]</a>
+    <span class="k">def</span> <span class="nf">cm_complexity_index_bar_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tikz_file</span><span class="o">=</span><span class="s1">&#39;cm_complexity_index_bar_plot.tex&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Bar plot: CM complexity index.&quot;&quot;&quot;</span>
+        <span class="n">df_tm_or_um</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Criterion&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;is_tm_or_um_&#39;</span>
+        <span class="p">]</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+            <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (uncertainty)&#39;</span><span class="p">],</span>
+            <span class="n">index</span><span class="o">=</span><span class="s1">&#39;Rule (abbr)&#39;</span><span class="p">,</span>
+            <span class="n">aggfunc</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">df_cm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Criterion&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;is_cm_&#39;</span>
+        <span class="p">]</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+            <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (uncertainty)&#39;</span><span class="p">],</span>
+            <span class="n">index</span><span class="o">=</span><span class="s1">&#39;Rule (abbr)&#39;</span><span class="p">,</span>
+            <span class="n">aggfunc</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">df_complexity_index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+        <span class="n">df_complexity_index</span><span class="p">[</span><span class="s1">&#39;Simplicity (lower bound)&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_tm_or_um</span><span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df_cm</span><span class="p">[</span>
+            <span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">]</span>
+        <span class="n">df_complexity_index</span><span class="p">[</span><span class="s1">&#39;Simplicity (upper bound)&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span>
+            <span class="n">df_tm_or_um</span><span class="p">[</span><span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df_cm</span><span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">df_complexity_index</span><span class="p">[</span><span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span> <span class="n">df_complexity_index</span><span class="p">[</span><span class="s1">&#39;Simplicity (lower bound)&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">df_complexity_index</span><span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span> <span class="n">df_complexity_index</span><span class="p">[</span><span class="s1">&#39;Simplicity (upper bound)&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">df_complexity_index</span><span class="p">[</span><span class="s1">&#39;Rate (uncertainty)&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_complexity_index</span><span class="p">[</span><span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">]</span>
+                                                     <span class="o">-</span> <span class="n">df_complexity_index</span><span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">])</span>
+        <span class="n">df_complexity_index</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Simplicity (lower bound)&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">df_complexity_index</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Simplicity (upper bound)&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">df_complexity_index</span> <span class="o">=</span> <span class="n">df_complexity_index</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rules_order</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (uncertainty)&#39;</span><span class="p">]]</span>
+        <span class="n">df_complexity_index</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># Plot</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">figsize</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+            <span class="n">df_complexity_index</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+            <span class="n">df_complexity_index</span><span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">],</span>
+            <span class="n">yerr</span><span class="o">=</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df_complexity_index</span><span class="o">.</span><span class="n">index</span><span class="p">)),</span> <span class="n">df_complexity_index</span><span class="p">[</span><span class="s1">&#39;Rate (uncertainty)&#39;</span><span class="p">])</span>
+        <span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_axisbelow</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_rules</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.1</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;CM complexity index&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">my_tikzplotlib_save</span><span class="p">(</span><span class="n">tikz_file</span><span class="p">,</span> <span class="n">x_ticks_labels</span><span class="o">=</span><span class="n">df_complexity_index</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">df_complexity_index</span></div>
+
+
+<div class="viewcode-block" id="ExperimentsCompiler.df_computation_time">
+<a class="viewcode-back" href="../../../reference/meta/experiments_compiler.html#svvamp.ExperimentsCompiler.df_computation_time">[docs]</a>
+    <span class="k">def</span> <span class="nf">df_computation_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Dataframe: Computation time.&quot;&quot;&quot;</span>
+        <span class="n">df_sorted</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;Computation time&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">df_sorted</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;Rule (abbr)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rule (class)&#39;</span><span class="p">,</span> <span class="s1">&#39;Candidate name&#39;</span><span class="p">,</span> <span class="s1">&#39;Culture type&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span>
+            <span class="n">df_sorted</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;Culture parameter </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Culture parameter </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1"> value&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">df_sorted</span></div>
+
+
+<div class="viewcode-block" id="ExperimentsCompiler.df_computation_time_cumulative">
+<a class="viewcode-back" href="../../../reference/meta/experiments_compiler.html#svvamp.ExperimentsCompiler.df_computation_time_cumulative">[docs]</a>
+    <span class="k">def</span> <span class="nf">df_computation_time_cumulative</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Dataframe: Cumulative computation time.&quot;&quot;&quot;</span>
+        <span class="n">df_cum_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+            <span class="n">values</span><span class="o">=</span><span class="s1">&#39;Computation time&#39;</span><span class="p">,</span>
+            <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Rule (abbr)&#39;</span><span class="p">,</span> <span class="s1">&#39;Criterion&#39;</span><span class="p">],</span>
+            <span class="n">aggfunc</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">df_cum_time</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">df_cum_time</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;Computation time&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">df_cum_time</span></div>
+
+
+<div class="viewcode-block" id="ExperimentsCompiler.resistant_condorcet_line">
+<a class="viewcode-back" href="../../../reference/meta/experiments_compiler.html#svvamp.ExperimentsCompiler.resistant_condorcet_line">[docs]</a>
+    <span class="k">def</span> <span class="nf">resistant_condorcet_line</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Draw the &#39;Resistant Condorcet&#39; line (upper bound of CM rate for Condorcet rules).&quot;&quot;&quot;</span>
+        <span class="n">rcw_rate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Criterion&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;exists_resistant_condorcet_winner&#39;</span>
+        <span class="p">]</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+            <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">],</span>
+            <span class="n">index</span><span class="o">=</span><span class="s1">&#39;Rule&#39;</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">nb_rules</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Criterion&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;is_cm_&#39;</span>
+        <span class="p">]</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+            <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">],</span>
+            <span class="n">index</span><span class="o">=</span><span class="s1">&#39;Rule&#39;</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">size</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">rcw_rate</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">nb_rules</span><span class="p">,</span> <span class="s1">&#39;purple&#39;</span><span class="p">,</span> <span class="n">linestyles</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">6.5</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">rcw_rate</span> <span class="o">+</span> <span class="mf">0.03</span><span class="p">,</span> <span class="s1">&#39;RCW bound&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;purple&#39;</span><span class="p">,</span>
+                 <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">verticalalignment</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;medium&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ExperimentsCompiler.my_tikzplotlib_save">
+<a class="viewcode-back" href="../../../reference/meta/experiments_compiler.html#svvamp.ExperimentsCompiler.my_tikzplotlib_save">[docs]</a>
+    <span class="k">def</span> <span class="nf">my_tikzplotlib_save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tikz_file</span><span class="p">,</span> <span class="n">x_ticks_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                            <span class="n">axis_width</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;\axisWidth&#39;</span><span class="p">,</span> <span class="n">axis_height</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;\axisHeight&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Save a figure in tikz.&quot;&quot;&quot;</span>
+        <span class="n">tikzplotlib</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tikz_directory</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prefix_tikz_file</span> <span class="o">+</span> <span class="n">tikz_file</span><span class="p">),</span>
+                         <span class="n">axis_width</span><span class="o">=</span><span class="n">axis_width</span><span class="p">,</span> <span class="n">axis_height</span><span class="o">=</span><span class="n">axis_height</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tikz_directory</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prefix_tikz_file</span> <span class="o">+</span> <span class="n">tikz_file</span><span class="p">),</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">file_data</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="c1"># Set &#39;fill opacity&#39; of the legend to 1</span>
+        <span class="n">file_data</span> <span class="o">=</span> <span class="n">file_data</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;fill opacity=0.8,&#39;</span><span class="p">,</span> <span class="s1">&#39;fill opacity=1,&#39;</span><span class="p">)</span>
+        <span class="c1"># Add yticks as they are in the matplotlib plot</span>
+        <span class="n">file_data</span> <span class="o">=</span> <span class="n">file_data</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+            <span class="s1">&#39;ytick style={&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ytick={&#39;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">()[</span><span class="mi">0</span><span class="p">]])</span> <span class="o">+</span> <span class="s1">&#39;},</span><span class="se">\n</span><span class="s1">&#39;</span>
+            <span class="o">+</span> <span class="s1">&#39;ytick style={&#39;</span>
+        <span class="p">)</span>
+        <span class="c1"># Prevent from scaling down the plt.text</span>
+        <span class="n">file_data</span> <span class="o">=</span> <span class="n">file_data</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;scale=0.5,&#39;</span><span class="p">,</span> <span class="s1">&#39;scale=1.0,&#39;</span><span class="p">)</span>
+        <span class="c1"># Fix the x ticks in the tikz file</span>
+        <span class="k">if</span> <span class="n">x_ticks_labels</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">file_data</span> <span class="o">=</span> <span class="n">file_data</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+                    <span class="s1">&#39;y grid style={&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;xtick={&#39;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x_ticks_labels</span><span class="p">))])</span> <span class="o">+</span> <span class="s1">&#39;},</span><span class="se">\n</span><span class="s1">&#39;</span>
+                    <span class="o">+</span> <span class="s1">&#39;xticklabels = {&#39;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">replace_rule_names</span><span class="p">(</span><span class="n">x_ticks_labels</span><span class="p">))</span> <span class="o">+</span> <span class="s1">&#39;},</span><span class="se">\n</span><span class="s1">&#39;</span>
+                    <span class="o">+</span> <span class="s1">&#39;y grid style={&#39;</span>
+                <span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tikz_directory</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prefix_tikz_file</span> <span class="o">+</span> <span class="n">tikz_file</span><span class="p">),</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">file_data</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ExperimentsCompiler.replace_rule_names">
+<a class="viewcode-back" href="../../../reference/meta/experiments_compiler.html#svvamp.ExperimentsCompiler.replace_rule_names">[docs]</a>
+    <span class="k">def</span> <span class="nf">replace_rule_names</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_ticks_labels</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Replace the x-labels with relevant abbreviations (auxiliary function).&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">d_abbr_new</span><span class="p">[</span><span class="n">abbr</span><span class="p">]</span> <span class="k">if</span> <span class="n">abbr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">d_abbr_new</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">else</span> <span class="n">abbr</span>
+                <span class="k">for</span> <span class="n">abbr</span> <span class="ow">in</span> <span class="n">x_ticks_labels</span><span class="p">]</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, François Durand.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

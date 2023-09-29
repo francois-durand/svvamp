@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StudyProfileCriteria &mdash; SVVAMP 0.9.1 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=9dc39874"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="StudyRuleCriteria" href="study_rule_criteria.html" />
+    <link rel="prev" title="RuleWoodall" href="../rules/rule_woodall.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            SVVAMP
+          </a>
+              <div class="version">
+                0.9.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">SVVAMP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#profiles">Profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#generators-of-profiles">Generators of Profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#plurality-elimination-engines">Plurality Elimination Engines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#voting-rules">Voting Rules</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#meta">Meta</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">StudyProfileCriteria</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.StudyProfileCriteria"><code class="docutils literal notranslate"><span class="pre">StudyProfileCriteria</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="study_rule_criteria.html">StudyRuleCriteria</a></li>
+<li class="toctree-l3"><a class="reference internal" href="voting_rule_tasks.html">VotingRuleTasks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="experiment_analyzer.html">ExperimentAnalyzer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="experiments_compiler.html">ExperimentsCompiler</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#utils">Utils</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../history.html">History</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">SVVAMP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Reference</a></li>
+      <li class="breadcrumb-item active">StudyProfileCriteria</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/reference/meta/study_profile_criteria.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="studyprofilecriteria">
+<h1>StudyProfileCriteria<a class="headerlink" href="#studyprofilecriteria" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="svvamp.StudyProfileCriteria">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">svvamp.</span></span><span class="sig-name descname"><span class="pre">StudyProfileCriteria</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">boolean_criteria</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numerical_criteria</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">special_candidates_criteria</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">array_criteria</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matrix_criteria</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/study_profile_criteria.html#StudyProfileCriteria"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.StudyProfileCriteria" title="Link to this definition"></a></dt>
+<dd><p>A set of criteria to study for the simulator about the profiles.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>boolean_criteria</strong> (<em>List</em><em> of </em><em>str</em>) – Each string must correspond to a boolean criterion defined in Profile.</p></li>
+<li><p><strong>numerical_criteria</strong> (<em>List</em><em> of </em><em>tuple</em>) – <dl class="simple">
+<dt>Each tuple is of the form (criterion, func, name), where:</dt><dd><p>criterion: the numerical data to be processed.
+func: an aggregating function.
+name: the name chosen for this pair criterion / aggregation function.</p>
+</dd>
+</dl>
+</p></li>
+<li><p><strong>special_candidates_criteria</strong> (<em>List</em><em> of </em><em>str</em>) – Each string must correspond to an attribute defined in Profile that returns the
+index of a candidate or NaN.</p></li>
+<li><p><strong>array_criteria</strong> (<em>List</em><em> of </em><em>str</em>) – Each string must correspond to a attribute defined in Profile that returns an 1d array of size n_c
+(the number of candidates).</p></li>
+<li><p><strong>matrix_criteria</strong> (<em>List</em><em> of </em><em>str</em>) – Each string must correspond to a attribute defined in Profile that returns an array (whatever
+its size).</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>For each argument, if None (default), then a quite extensive pre-defined list is used. Hence, the typical usage
+is simply:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span> <span class="o">=</span> <span class="n">StudyProfileCriteria</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Here is an example of manually defined <cite>numerical_criteria</cite>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span> <span class="o">=</span> <span class="n">StudyProfileCriteria</span><span class="p">(</span><span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="s1">&#39;total_utility_mean&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="s1">&#39;total_u_mean_mean&#39;</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">])</span>
+</pre></div>
+</div>
+<p>For each profile, this will compute <cite>total_utility_mean</cite> (mean over the candidates). Then it will use <cite>np.mean</cite>
+to calculate the mean over the profiles. The result will be called ‘total_u_mean_mean’.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.StudyProfileCriteria.append_array_criterion">
+<span class="sig-name descname"><span class="pre">append_array_criterion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">criterion</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/study_profile_criteria.html#StudyProfileCriteria.append_array_criterion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.StudyProfileCriteria.append_array_criterion" title="Link to this definition"></a></dt>
+<dd><p>Add an array criterion</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>criterion</strong> (<em>str</em>) – </p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span> <span class="o">=</span> <span class="n">StudyProfileCriteria</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">boolean_criteria</span><span class="o">=</span><span class="p">[],</span>
+<span class="gp">... </span>    <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[],</span>
+<span class="gp">... </span>    <span class="n">special_candidates_criteria</span><span class="o">=</span><span class="p">[],</span>
+<span class="gp">... </span>    <span class="n">array_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;plurality_scores_rk&#39;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">matrix_criteria</span><span class="o">=</span><span class="p">[]</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">append_array_criterion</span><span class="p">(</span><span class="s1">&#39;plurality_scores_ut&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">study_profile_criteria</span><span class="p">)</span>
+<span class="go">StudyProfileCriteria with:</span>
+<span class="go">    boolean_criteria: None</span>
+<span class="go">    numerical_criteria: None</span>
+<span class="go">    special_candidates_criteria: None</span>
+<span class="go">    array_criteria:</span>
+<span class="go">        plurality_scores_rk</span>
+<span class="go">        plurality_scores_ut</span>
+<span class="go">    matrix_criteria: None</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.StudyProfileCriteria.append_boolean_criterion">
+<span class="sig-name descname"><span class="pre">append_boolean_criterion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">criterion</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/study_profile_criteria.html#StudyProfileCriteria.append_boolean_criterion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.StudyProfileCriteria.append_boolean_criterion" title="Link to this definition"></a></dt>
+<dd><p>Add a boolean criterion</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>criterion</strong> (<em>str</em>) – </p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span> <span class="o">=</span> <span class="n">StudyProfileCriteria</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">boolean_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;exists_condorcet_admissible&#39;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[],</span>
+<span class="gp">... </span>    <span class="n">special_candidates_criteria</span><span class="o">=</span><span class="p">[],</span>
+<span class="gp">... </span>    <span class="n">array_criteria</span><span class="o">=</span><span class="p">[],</span>
+<span class="gp">... </span>    <span class="n">matrix_criteria</span><span class="o">=</span><span class="p">[]</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">append_boolean_criterion</span><span class="p">(</span><span class="s1">&#39;exists_weak_condorcet_winner&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">study_profile_criteria</span><span class="p">)</span>
+<span class="go">StudyProfileCriteria with:</span>
+<span class="go">    boolean_criteria:</span>
+<span class="go">        exists_condorcet_admissible</span>
+<span class="go">        exists_weak_condorcet_winner</span>
+<span class="go">    numerical_criteria: None</span>
+<span class="go">    special_candidates_criteria: None</span>
+<span class="go">    array_criteria: None</span>
+<span class="go">    matrix_criteria: None</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.StudyProfileCriteria.append_matrix_criterion">
+<span class="sig-name descname"><span class="pre">append_matrix_criterion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">criterion</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/study_profile_criteria.html#StudyProfileCriteria.append_matrix_criterion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.StudyProfileCriteria.append_matrix_criterion" title="Link to this definition"></a></dt>
+<dd><p>Add a matrix criterion</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>criterion</strong> (<em>str</em>) – </p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span> <span class="o">=</span> <span class="n">StudyProfileCriteria</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">boolean_criteria</span><span class="o">=</span><span class="p">[],</span>
+<span class="gp">... </span>    <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[],</span>
+<span class="gp">... </span>    <span class="n">special_candidates_criteria</span><span class="o">=</span><span class="p">[],</span>
+<span class="gp">... </span>    <span class="n">array_criteria</span><span class="o">=</span><span class="p">[],</span>
+<span class="gp">... </span>    <span class="n">matrix_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;preferences_ut&#39;</span><span class="p">]</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">append_matrix_criterion</span><span class="p">(</span><span class="s1">&#39;preferences_borda_rk&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">study_profile_criteria</span><span class="p">)</span>
+<span class="go">StudyProfileCriteria with:</span>
+<span class="go">    boolean_criteria: None</span>
+<span class="go">    numerical_criteria: None</span>
+<span class="go">    special_candidates_criteria: None</span>
+<span class="go">    array_criteria: None</span>
+<span class="go">    matrix_criteria:</span>
+<span class="go">        preferences_ut</span>
+<span class="go">        preferences_borda_rk</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.StudyProfileCriteria.append_numerical_criterion">
+<span class="sig-name descname"><span class="pre">append_numerical_criterion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">criterion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/study_profile_criteria.html#StudyProfileCriteria.append_numerical_criterion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.StudyProfileCriteria.append_numerical_criterion" title="Link to this definition"></a></dt>
+<dd><p>Add a numerical criterion</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>criterion</strong> (<em>str</em>) – The numerical data to be processed.</p></li>
+<li><p><strong>func</strong> (<em>callable</em>) – An aggregating function.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The name chosen for this pair criterion / aggregation function.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span> <span class="o">=</span> <span class="n">StudyProfileCriteria</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">boolean_criteria</span><span class="o">=</span><span class="p">[],</span>
+<span class="gp">... </span>    <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[],</span>
+<span class="gp">... </span>    <span class="n">special_candidates_criteria</span><span class="o">=</span><span class="p">[],</span>
+<span class="gp">... </span>    <span class="n">array_criteria</span><span class="o">=</span><span class="p">[],</span>
+<span class="gp">... </span>    <span class="n">matrix_criteria</span><span class="o">=</span><span class="p">[]</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">append_numerical_criterion</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="s1">&#39;total_utility_mean&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="s1">&#39;total_u_mean_mean&#39;</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">study_profile_criteria</span><span class="p">)</span>  
+<span class="go">StudyProfileCriteria with:</span>
+<span class="go">    boolean_criteria: None</span>
+<span class="go">    numerical_criteria:</span>
+<span class="go">        (&#39;total_utility_mean&#39;, &lt;function mean at ...&gt;, &#39;total_u_mean_mean&#39;)</span>
+<span class="go">    special_candidates_criteria: None</span>
+<span class="go">    array_criteria: None</span>
+<span class="go">    matrix_criteria: None</span>
+</pre></div>
+</div>
+<p>For each profile, this will compute <cite>total_utility_mean</cite> (mean over the candidates). Then use <cite>np.mean</cite> to
+calculate the mean over the profiles. The result will be called ‘total_u_mean_mean’.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.StudyProfileCriteria.append_special_candidates_criterion">
+<span class="sig-name descname"><span class="pre">append_special_candidates_criterion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">criterion</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/study_profile_criteria.html#StudyProfileCriteria.append_special_candidates_criterion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.StudyProfileCriteria.append_special_candidates_criterion" title="Link to this definition"></a></dt>
+<dd><p>Add a ‘special candidates’ criterion</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>criterion</strong> (<em>str</em>) – </p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span> <span class="o">=</span> <span class="n">StudyProfileCriteria</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">boolean_criteria</span><span class="o">=</span><span class="p">[],</span>
+<span class="gp">... </span>    <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[],</span>
+<span class="gp">... </span>    <span class="n">special_candidates_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;condorcet_winner_rk_ctb&#39;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">array_criteria</span><span class="o">=</span><span class="p">[],</span>
+<span class="gp">... </span>    <span class="n">matrix_criteria</span><span class="o">=</span><span class="p">[]</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">append_special_candidates_criterion</span><span class="p">(</span><span class="s1">&#39;condorcet_winner_rk&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">study_profile_criteria</span><span class="p">)</span>
+<span class="go">StudyProfileCriteria with:</span>
+<span class="go">    boolean_criteria: None</span>
+<span class="go">    numerical_criteria: None</span>
+<span class="go">    special_candidates_criteria:</span>
+<span class="go">        condorcet_winner_rk_ctb</span>
+<span class="go">        condorcet_winner_rk</span>
+<span class="go">    array_criteria: None</span>
+<span class="go">    matrix_criteria: None</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.StudyProfileCriteria.check_sanity">
+<span class="sig-name descname"><span class="pre">check_sanity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/study_profile_criteria.html#StudyProfileCriteria.check_sanity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.StudyProfileCriteria.check_sanity" title="Link to this definition"></a></dt>
+<dd><p>Check sanity of the object</p>
+<p>Preforms some basic checks. It is recommended to use this method before launching big simulations.</p>
+<p class="rubric">Examples</p>
+<p>Confirm that a configuration is sound:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span> <span class="o">=</span> <span class="n">StudyProfileCriteria</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">boolean_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;exists_condorcet_winner_rk&#39;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[(</span><span class="s1">&#39;mean_utility_min&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="s1">&#39;mean_u_min_min&#39;</span><span class="p">)],</span>
+<span class="gp">... </span>    <span class="n">special_candidates_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;condorcet_winner_rk&#39;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">array_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;total_utility_c&#39;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">matrix_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;matrix_duels_rk&#39;</span><span class="p">]</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">check_sanity</span><span class="p">()</span>
+<span class="go">StudyProfileCriteria: Sanity check was successful.</span>
+</pre></div>
+</div>
+<p>Detect an illegal criterion:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span> <span class="o">=</span> <span class="n">StudyProfileCriteria</span><span class="p">(</span><span class="n">boolean_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;unexpected_criterion&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">check_sanity</span><span class="p">()</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="gr">ValueError</span>: <span class="n">Attribute &#39;unexpected_criterion&#39; is unknown for Profile.</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span> <span class="o">=</span> <span class="n">StudyProfileCriteria</span><span class="p">(</span><span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="s1">&#39;unexpected_criterion&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">,</span> <span class="s1">&#39;unexpected_criterion_sum&#39;</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">check_sanity</span><span class="p">()</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="gr">ValueError</span>: <span class="n">Attribute &#39;unexpected_criterion&#39; is unknown for Profile.</span>
+</pre></div>
+</div>
+<p>Detect when a aggregation function is not provided:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span> <span class="o">=</span> <span class="n">StudyProfileCriteria</span><span class="p">(</span><span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="s1">&#39;mean_utility_min&#39;</span><span class="p">,</span> <span class="s1">&#39;this_is_not_callable&#39;</span><span class="p">,</span> <span class="s1">&#39;mean_u_min_min&#39;</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">check_sanity</span><span class="p">()</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="gr">TypeError</span>: <span class="n">Expected: callable. Got: &#39;this_is_not_callable&#39;.</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.StudyProfileCriteria.remove">
+<span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">criterion</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/study_profile_criteria.html#StudyProfileCriteria.remove"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.StudyProfileCriteria.remove" title="Link to this definition"></a></dt>
+<dd><p>Remove a criterion</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>criterion</strong> (<em>str</em>) – </p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Remove all occurrences of <cite>criterion</cite> (generally zero or one):</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span> <span class="o">=</span> <span class="n">StudyProfileCriteria</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">boolean_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;exists_condorcet_admissible&#39;</span><span class="p">,</span> <span class="s1">&#39;exists_weak_condorcet_winner&#39;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[],</span>
+<span class="gp">... </span>    <span class="n">special_candidates_criteria</span><span class="o">=</span><span class="p">[],</span>
+<span class="gp">... </span>    <span class="n">array_criteria</span><span class="o">=</span><span class="p">[],</span>
+<span class="gp">... </span>    <span class="n">matrix_criteria</span><span class="o">=</span><span class="p">[]</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;exists_weak_condorcet_winner&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">study_profile_criteria</span><span class="p">)</span>
+<span class="go">StudyProfileCriteria with:</span>
+<span class="go">    boolean_criteria:</span>
+<span class="go">        exists_condorcet_admissible</span>
+<span class="go">    numerical_criteria: None</span>
+<span class="go">    special_candidates_criteria: None</span>
+<span class="go">    array_criteria: None</span>
+<span class="go">    matrix_criteria: None</span>
+</pre></div>
+</div>
+<p>For numerical criteria, use the last element of the triple, i.e. the name:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span> <span class="o">=</span> <span class="n">StudyProfileCriteria</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">boolean_criteria</span><span class="o">=</span><span class="p">[],</span>
+<span class="gp">... </span>    <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[(</span><span class="s1">&#39;mean_utility_min&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="s1">&#39;mean_u_min_min&#39;</span><span class="p">),</span>
+<span class="gp">... </span>                        <span class="p">(</span><span class="s1">&#39;mean_utility_min&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="s1">&#39;mean_u_min_max&#39;</span><span class="p">)],</span>
+<span class="gp">... </span>    <span class="n">special_candidates_criteria</span><span class="o">=</span><span class="p">[],</span>
+<span class="gp">... </span>    <span class="n">array_criteria</span><span class="o">=</span><span class="p">[],</span>
+<span class="gp">... </span>    <span class="n">matrix_criteria</span><span class="o">=</span><span class="p">[]</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;mean_u_min_min&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">study_profile_criteria</span><span class="p">)</span>  
+<span class="go">StudyProfileCriteria with:</span>
+<span class="go">    boolean_criteria: None</span>
+<span class="go">    numerical_criteria:</span>
+<span class="go">        (&#39;mean_utility_min&#39;, &lt;function ...max at ...&gt;, &#39;mean_u_min_max&#39;)</span>
+<span class="go">    special_candidates_criteria: None</span>
+<span class="go">    array_criteria: None</span>
+<span class="go">    matrix_criteria: None</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="svvamp.StudyProfileCriteria.rename_numerical_criterion">
+<span class="sig-name descname"><span class="pre">rename_numerical_criterion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">old_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/study_profile_criteria.html#StudyProfileCriteria.rename_numerical_criterion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.StudyProfileCriteria.rename_numerical_criterion" title="Link to this definition"></a></dt>
+<dd><p>Rename a numerical criterion</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>old_name</strong> (<em>str</em>) – </p></li>
+<li><p><strong>new_name</strong> (<em>str</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span> <span class="o">=</span> <span class="n">StudyProfileCriteria</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">boolean_criteria</span><span class="o">=</span><span class="p">[],</span>
+<span class="gp">... </span>    <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[(</span><span class="s1">&#39;total_utility_mean&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="s1">&#39;total_u_mean_mean&#39;</span><span class="p">)],</span>
+<span class="gp">... </span>    <span class="n">special_candidates_criteria</span><span class="o">=</span><span class="p">[],</span>
+<span class="gp">... </span>    <span class="n">array_criteria</span><span class="o">=</span><span class="p">[],</span>
+<span class="gp">... </span>    <span class="n">matrix_criteria</span><span class="o">=</span><span class="p">[]</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">rename_numerical_criterion</span><span class="p">(</span><span class="s1">&#39;total_u_mean_mean&#39;</span><span class="p">,</span> <span class="s1">&#39;the_new_name&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">study_profile_criteria</span><span class="p">)</span>  
+<span class="go">StudyProfileCriteria with:</span>
+<span class="go">    boolean_criteria: None</span>
+<span class="go">    numerical_criteria:</span>
+<span class="go">        (&#39;total_utility_mean&#39;, &lt;function mean at ...&gt;, &#39;the_new_name&#39;)</span>
+<span class="go">    special_candidates_criteria: None</span>
+<span class="go">    array_criteria: None</span>
+<span class="go">    matrix_criteria: None</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../rules/rule_woodall.html" class="btn btn-neutral float-left" title="RuleWoodall" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="study_rule_criteria.html" class="btn btn-neutral float-right" title="StudyRuleCriteria" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, François Durand.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

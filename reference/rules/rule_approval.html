@@ -53,8 +53,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../index.html#preferences">Preferences</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../index.html#voting-rules">Voting rules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#profiles">Profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#generators-of-profiles">Generators of Profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#plurality-elimination-engines">Plurality Elimination Engines</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#voting-rules">Voting Rules</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="rule.html">Rule</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">RuleApproval</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#svvamp.RuleApproval"><code class="docutils literal notranslate"><span class="pre">RuleApproval</span></code></a></li>
@@ -95,6 +97,8 @@
 <li class="toctree-l3"><a class="reference internal" href="rule_woodall.html">RuleWoodall</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#meta">Meta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#utils">Utils</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
@@ -144,6 +148,18 @@ accordingly.</p></li>
 </ul>
 </dd>
 </dl>
+<p class="rubric">Options</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">RuleApproval</span><span class="o">.</span><span class="n">print_options_parameters</span><span class="p">()</span>
+<span class="go">approval_comparator: [&#39;&gt;&#39;, &#39;&gt;=&#39;]. Default: &#39;&gt;&#39;.</span>
+<span class="go">approval_threshold: is_number. Default: 0.</span>
+<span class="go">cm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="go">icm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="go">iia_subset_maximum_size: is_number. Default: 2.</span>
+<span class="go">im_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="go">tm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="go">um_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+</pre></div>
+</div>
 <p class="rubric">Notes</p>
 <p>Each voter may vote for any number of candidates. The candidate with most votes is declared the winner. In case
 of a tie, the tied candidate with lowest index wins.</p>

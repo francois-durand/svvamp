@@ -113,6 +113,50 @@
 <span class="k">class</span> <span class="nc">RuleRankedPairs</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Tideman&#39;s Ranked Pairs.</span>
 
+<span class="sd">    Options</span>
+<span class="sd">    -------</span>
+<span class="sd">        &gt;&gt;&gt; RuleRankedPairs.print_options_parameters()</span>
+<span class="sd">        cm_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="sd">        icm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        iia_subset_maximum_size: is_number. Default: 2.</span>
+<span class="sd">        im_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="sd">        tm_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        um_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    In the matrix of duels :attr:`matrix_duels_rk`, victories (and ties) are sorted by decreasing amplitude. If two</span>
+<span class="sd">    duels have the same score, we take first the one where the winner has the smallest index; if there is still a</span>
+<span class="sd">    choice to make, we take first the duel where the loser has the highest index.</span>
+
+<span class="sd">    Starting with the largest victory, we build a directed graph whose nodes are the candidates and edges are</span>
+<span class="sd">    victories. But if a victory creates a cycle in the graph, it is not validated and the edge is not added.</span>
+
+<span class="sd">    At the end, we have a transitive connected directed graph, whose adjacency relation is included in the relation</span>
+<span class="sd">    of victories (with ties broken), :attr:`matrix_victories_rk_ctb`. The maximal node of this graph (by topological</span>
+<span class="sd">    order) is declared the winner.</span>
+
+<span class="sd">    This method meets the Condorcet criterion.</span>
+
+<span class="sd">    * :meth:`is_cm_`: Deciding CM is NP-complete. Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
+<span class="sd">    * :meth:`is_icm_`: Exact in polynomial time.</span>
+<span class="sd">    * :meth:`is_im_`: Deciding IM is NP-complete. Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
+<span class="sd">    * :meth:`is_iia_`: Exact in polynomial time.</span>
+<span class="sd">    * :meth:`is_tm_`: Exact in polynomial time.</span>
+<span class="sd">    * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    &#39;Independence of clones as a criterion for voting rules&#39;, Nicolaus Tideman, 1987.</span>
+
+<span class="sd">    &#39;Complexity of Unweighted Coalitional Manipulation under Some Common Voting Rules&#39;, Lirong Xia et al., 2009.</span>
+
+<span class="sd">    &#39;Schulze and Ranked-Pairs Voting are Fixed-Parameter Tractable to Bribe, Manipulate, and Control&#39;,</span>
+<span class="sd">    Lane A. Hemaspaandra, Rahman Lavaee and Curtis Menton, 2012.</span>
+
+<span class="sd">    &#39;A Complexity-of-Strategic-Behavior Comparison between Schulze’s Rule and Ranked Pairs&#39;, David Parkes and</span>
+<span class="sd">    Lirong Xia, 2012.</span>
+
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
@@ -346,40 +390,6 @@
 <span class="sd">        [0. 2. 3.]</span>
 <span class="sd">        sufficient_coalition_size_cm =</span>
 <span class="sd">        [0. 2. 3.]</span>
-
-<span class="sd">    Notes</span>
-<span class="sd">    -----</span>
-<span class="sd">    In the matrix of duels :attr:`matrix_duels_rk`, victories (and ties) are sorted by decreasing amplitude. If two</span>
-<span class="sd">    duels have the same score, we take first the one where the winner has the smallest index; if there is still a</span>
-<span class="sd">    choice to make, we take first the duel where the loser has the highest index.</span>
-
-<span class="sd">    Starting with the largest victory, we build a directed graph whose nodes are the candidates and edges are</span>
-<span class="sd">    victories. But if a victory creates a cycle in the graph, it is not validated and the edge is not added.</span>
-
-<span class="sd">    At the end, we have a transitive connected directed graph, whose adjacency relation is included in the relation</span>
-<span class="sd">    of victories (with ties broken), :attr:`matrix_victories_rk_ctb`. The maximal node of this graph (by topological</span>
-<span class="sd">    order) is declared the winner.</span>
-
-<span class="sd">    This method meets the Condorcet criterion.</span>
-
-<span class="sd">    * :meth:`is_cm_`: Deciding CM is NP-complete. Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
-<span class="sd">    * :meth:`is_icm_`: Exact in polynomial time.</span>
-<span class="sd">    * :meth:`is_im_`: Deciding IM is NP-complete. Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
-<span class="sd">    * :meth:`is_iia_`: Exact in polynomial time.</span>
-<span class="sd">    * :meth:`is_tm_`: Exact in polynomial time.</span>
-<span class="sd">    * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
-
-<span class="sd">    References</span>
-<span class="sd">    ----------</span>
-<span class="sd">    &#39;Independence of clones as a criterion for voting rules&#39;, Nicolaus Tideman, 1987.</span>
-
-<span class="sd">    &#39;Complexity of Unweighted Coalitional Manipulation under Some Common Voting Rules&#39;, Lirong Xia et al., 2009.</span>
-
-<span class="sd">    &#39;Schulze and Ranked-Pairs Voting are Fixed-Parameter Tractable to Bribe, Manipulate, and Control&#39;,</span>
-<span class="sd">    Lane A. Hemaspaandra, Rahman Lavaee and Curtis Menton, 2012.</span>
-
-<span class="sd">    &#39;A Complexity-of-Strategic-Behavior Comparison between Schulze’s Rule and Ranked Pairs&#39;, David Parkes and</span>
-<span class="sd">    Lirong Xia, 2012.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">full_name</span> <span class="o">=</span> <span class="s1">&#39;Ranked Pairs&#39;</span>

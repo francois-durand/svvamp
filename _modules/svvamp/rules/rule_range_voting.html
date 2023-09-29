@@ -139,6 +139,41 @@
 
 <span class="sd">        See :attr:`ballots` for more details.</span>
 
+<span class="sd">    Options</span>
+<span class="sd">    -------</span>
+<span class="sd">        &gt;&gt;&gt; RuleRangeVoting.print_options_parameters()</span>
+<span class="sd">        cm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        icm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        iia_subset_maximum_size: is_number. Default: 2.</span>
+<span class="sd">        im_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        max_grade: isfinite. Default: 1.</span>
+<span class="sd">        min_grade: isfinite. Default: 0.</span>
+<span class="sd">        rescale_grades: is_bool. Default: True.</span>
+<span class="sd">        step_grade: isfinite. Default: 0.</span>
+<span class="sd">        tm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        um_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    Each voter attributes a grade to each candidate. By default, authorized grades are all numbers in the interval</span>
+<span class="sd">    [:attr:`min_grade`, :attr:`max_grade`]. To use a discrete set of notes, modify attribute :attr:`step_grade`.</span>
+
+<span class="sd">    The candidate with highest average grade wins. In case of a tie, the tied candidate with lowest index is declared</span>
+<span class="sd">    the winner.</span>
+
+<span class="sd">    Default behavior of sincere voters: voter ``v`` applies an affine transformation to her utilities</span>
+<span class="sd">    :attr:`preferences_ut`\ ``[v, :]`` to get her grades, such that her least-liked candidate receives</span>
+<span class="sd">    :attr:`min_grade` and her most-liked candidate receives :attr:`max_grade`. To modify this behavior, use attribute</span>
+<span class="sd">    :attr:`rescale_grades`. For more details about the behavior of sincere voters, see :attr:`ballots`.</span>
+
+<span class="sd">    * :meth:`~svvamp.Election.not_iia`:</span>
+
+<span class="sd">        * If :attr:`rescale_grades` = ``False``, then Range voting always meets IIA.</span>
+<span class="sd">        * If :attr:`rescale_grades` = ``True``, then non-polynomial or non-exact algorithms from superclass</span>
+<span class="sd">          :class:`Rule` are used.</span>
+
+<span class="sd">    * :meth:`is_cm_`, :meth:`is_icm_`, :meth:`is_im_`, :meth:`is_tm_`, :meth:`is_um_`: Exact in polynomial time.</span>
+
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
@@ -366,27 +401,6 @@
 <span class="sd">        [0. 3. 3.]</span>
 <span class="sd">        sufficient_coalition_size_cm =</span>
 <span class="sd">        [0. 3. 3.]</span>
-
-<span class="sd">    Notes</span>
-<span class="sd">    -----</span>
-<span class="sd">    Each voter attributes a grade to each candidate. By default, authorized grades are all numbers in the interval</span>
-<span class="sd">    [:attr:`min_grade`, :attr:`max_grade`]. To use a discrete set of notes, modify attribute :attr:`step_grade`.</span>
-
-<span class="sd">    The candidate with highest average grade wins. In case of a tie, the tied candidate with lowest index is declared</span>
-<span class="sd">    the winner.</span>
-
-<span class="sd">    Default behavior of sincere voters: voter ``v`` applies an affine transformation to her utilities</span>
-<span class="sd">    :attr:`preferences_ut`\ ``[v, :]`` to get her grades, such that her least-liked candidate receives</span>
-<span class="sd">    :attr:`min_grade` and her most-liked candidate receives :attr:`max_grade`. To modify this behavior, use attribute</span>
-<span class="sd">    :attr:`rescale_grades`. For more details about the behavior of sincere voters, see :attr:`ballots`.</span>
-
-<span class="sd">    * :meth:`~svvamp.Election.not_iia`:</span>
-
-<span class="sd">        * If :attr:`rescale_grades` = ``False``, then Range voting always meets IIA.</span>
-<span class="sd">        * If :attr:`rescale_grades` = ``True``, then non-polynomial or non-exact algorithms from superclass</span>
-<span class="sd">          :class:`Rule` are used.</span>
-
-<span class="sd">    * :meth:`is_cm_`, :meth:`is_icm_`, :meth:`is_im_`, :meth:`is_tm_`, :meth:`is_um_`: Exact in polynomial time.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">full_name</span> <span class="o">=</span> <span class="s1">&#39;Range Voting&#39;</span>

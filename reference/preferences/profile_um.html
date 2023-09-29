@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ProfileUM &mdash; SVVAMP 0.9.1 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=9dc39874"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="GeneratorProfile" href="generator_profile.html" />
+    <link rel="prev" title="ProfileSubsetCandidates" href="profile_subset_candidates.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            SVVAMP
+          </a>
+              <div class="version">
+                0.9.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">SVVAMP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#profiles">Profiles</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="profile.html">Profile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="profile_from_file.html">ProfileFromFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="profile_subset_candidates.html">ProfileSubsetCandidates</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">ProfileUM</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.ProfileUM"><code class="docutils literal notranslate"><span class="pre">ProfileUM</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#generators-of-profiles">Generators of Profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#plurality-elimination-engines">Plurality Elimination Engines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#voting-rules">Voting Rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#meta">Meta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#utils">Utils</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../history.html">History</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">SVVAMP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Reference</a></li>
+      <li class="breadcrumb-item active">ProfileUM</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/reference/preferences/profile_um.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="profileum">
+<h1>ProfileUM<a class="headerlink" href="#profileum" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="svvamp.ProfileUM">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">svvamp.</span></span><span class="sig-name descname"><span class="pre">ProfileUM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profile_s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ballot_ut</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ballot_rk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ballot_borda_rk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/preferences/profile_um.html#ProfileUM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.ProfileUM" title="Link to this definition"></a></dt>
+<dd><p>Profile used for Unison Manipulation.</p>
+<p>This class is used internally by SVVAMP. It is not intended for the end user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>profile_s</strong> (<a class="reference internal" href="profile.html#svvamp.Profile" title="svvamp.Profile"><em>Profile</em></a>) – Profile of all sincere voters (i.e. those who do not prefer <cite>c</cite> to <cite>w</cite>).</p></li>
+<li><p><strong>n_m</strong> (<em>int</em>) – Number of manipulators.</p></li>
+<li><p><strong>ballot_ut</strong> (<em>List</em><em>, </em><em>optional</em>) – Ballot, seen as utilities.</p></li>
+<li><p><strong>ballot_rk</strong> (<em>List</em><em>, </em><em>optional</em>) – Ballot, seen as rankings.</p></li>
+<li><p><strong>List</strong> (<em>ballot_borda_rk =</em>) – Ballot, seen as Borda points.</p></li>
+<li><p><strong>optional.</strong> – Ballot, seen as Borda points.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile_s</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span> <span class="p">[</span><span class="mf">.5</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">]])</span>
+</pre></div>
+</div>
+<p>Define with <cite>ballot_ut</cite>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile_s</span><span class="o">.</span><span class="n">preferences_ut</span>
+<span class="go">array([[1. , 0.5, 0. ],</span>
+<span class="go">       [0.5, 1. , 0. ]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile_um</span> <span class="o">=</span> <span class="n">ProfileUM</span><span class="p">(</span><span class="n">profile_s</span><span class="o">=</span><span class="n">profile_s</span><span class="p">,</span> <span class="n">n_m</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ballot_ut</span><span class="o">=</span><span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile_um</span><span class="o">.</span><span class="n">preferences_ut</span>
+<span class="go">array([[1. , 0.5, 0. ],</span>
+<span class="go">       [0.5, 1. , 0. ],</span>
+<span class="go">       [0. , 1. , 0. ],</span>
+<span class="go">       [0. , 1. , 0. ]])</span>
+</pre></div>
+</div>
+<p>Define with <cite>ballot_rk</cite>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile_s</span><span class="o">.</span><span class="n">preferences_rk</span>
+<span class="go">array([[0, 1, 2],</span>
+<span class="go">       [1, 0, 2]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile_um</span> <span class="o">=</span> <span class="n">ProfileUM</span><span class="p">(</span><span class="n">profile_s</span><span class="o">=</span><span class="n">profile_s</span><span class="p">,</span> <span class="n">n_m</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ballot_rk</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile_um</span><span class="o">.</span><span class="n">preferences_rk</span>
+<span class="go">array([[0, 1, 2],</span>
+<span class="go">       [1, 0, 2],</span>
+<span class="go">       [1, 2, 0],</span>
+<span class="go">       [1, 2, 0]])</span>
+</pre></div>
+</div>
+<p>Define with <cite>ballot_borda_rk</cite>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile_s</span><span class="o">.</span><span class="n">preferences_borda_rk</span>
+<span class="go">array([[2, 1, 0],</span>
+<span class="go">       [1, 2, 0]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile_um</span> <span class="o">=</span> <span class="n">ProfileUM</span><span class="p">(</span><span class="n">profile_s</span><span class="o">=</span><span class="n">profile_s</span><span class="p">,</span> <span class="n">n_m</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ballot_borda_rk</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile_um</span><span class="o">.</span><span class="n">preferences_borda_rk</span>
+<span class="go">array([[2, 1, 0],</span>
+<span class="go">       [1, 2, 0],</span>
+<span class="go">       [0, 2, 1],</span>
+<span class="go">       [0, 2, 1]])</span>
+</pre></div>
+</div>
+<dl>
+<dt>But you need at least one of them:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile_um</span> <span class="o">=</span> <span class="n">ProfileUM</span><span class="p">(</span><span class="n">profile_s</span><span class="o">=</span><span class="n">profile_s</span><span class="p">,</span> <span class="n">n_m</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="gr">ValueError</span>: <span class="n">Please provide at least ballot_ut, ballot_rk or ballot_borda_rk.</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.ProfileUM.ballot_borda_ut">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ballot_borda_ut</span></span><a class="headerlink" href="#svvamp.ProfileUM.ballot_borda_ut" title="Link to this definition"></a></dt>
+<dd><p>ballot of the manipulators, in ‘borda ut’ format.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile_s</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span> <span class="p">[</span><span class="mf">.5</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile_um</span> <span class="o">=</span> <span class="n">ProfileUM</span><span class="p">(</span><span class="n">profile_s</span><span class="o">=</span><span class="n">profile_s</span><span class="p">,</span> <span class="n">n_m</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ballot_ut</span><span class="o">=</span><span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile_um</span><span class="o">.</span><span class="n">ballot_borda_ut</span>
+<span class="go">array([0.5, 2. , 0.5])</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.ProfileUM.ballot_rk">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ballot_rk</span></span><a class="headerlink" href="#svvamp.ProfileUM.ballot_rk" title="Link to this definition"></a></dt>
+<dd><p>ballot of the manipulators, in ‘rk’ format.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile_s</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span> <span class="p">[</span><span class="mf">.5</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">]])</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile_um</span> <span class="o">=</span> <span class="n">ProfileUM</span><span class="p">(</span><span class="n">profile_s</span><span class="o">=</span><span class="n">profile_s</span><span class="p">,</span> <span class="n">n_m</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ballot_rk</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile_um</span><span class="o">.</span><span class="n">ballot_rk</span>
+<span class="go">array([1, 2, 0])</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile_um</span> <span class="o">=</span> <span class="n">ProfileUM</span><span class="p">(</span><span class="n">profile_s</span><span class="o">=</span><span class="n">profile_s</span><span class="p">,</span> <span class="n">n_m</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ballot_borda_rk</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile_um</span><span class="o">.</span><span class="n">ballot_rk</span>
+<span class="go">array([1, 2, 0])</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile_um</span> <span class="o">=</span> <span class="n">ProfileUM</span><span class="p">(</span><span class="n">profile_s</span><span class="o">=</span><span class="n">profile_s</span><span class="p">,</span> <span class="n">n_m</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ballot_ut</span><span class="o">=</span><span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile_um</span><span class="o">.</span><span class="n">ballot_rk</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="gr">ValueError</span>: <span class="n">You should not rely on the implicit conversion from utility to ranking to compute UM.</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.ProfileUM.labels_candidates">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">labels_candidates</span></span><a class="headerlink" href="#svvamp.ProfileUM.labels_candidates" title="Link to this definition"></a></dt>
+<dd><p>labels of the candidates.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile_s</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span> <span class="p">[</span><span class="mf">.5</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile_um</span> <span class="o">=</span> <span class="n">ProfileUM</span><span class="p">(</span><span class="n">profile_s</span><span class="o">=</span><span class="n">profile_s</span><span class="p">,</span> <span class="n">n_m</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ballot_ut</span><span class="o">=</span><span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile_um</span><span class="o">.</span><span class="n">labels_candidates</span>
+<span class="go">[&#39;0&#39;, &#39;1&#39;, &#39;2&#39;]</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.ProfileUM.matrix_duels_rk">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">matrix_duels_rk</span></span><a class="headerlink" href="#svvamp.ProfileUM.matrix_duels_rk" title="Link to this definition"></a></dt>
+<dd><p>2d array of integers. <code class="docutils literal notranslate"><span class="pre">matrix_duels_rk[c,</span> <span class="pre">d]</span></code> is the number of voters who rank candidate <code class="docutils literal notranslate"><span class="pre">c</span></code> before
+<code class="docutils literal notranslate"><span class="pre">d</span></code> (in the sense of <code class="xref py py-attr docutils literal notranslate"><span class="pre">preferences_rk</span></code>). By convention, diagonal coefficients are
+set to 0.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">svvamp</span> <span class="kn">import</span> <span class="n">Profile</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_rk</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">matrix_duels_rk</span>
+<span class="go">array([[0, 2, 2],</span>
+<span class="go">       [0, 0, 2],</span>
+<span class="go">       [0, 0, 0]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.ProfileUM.matrix_duels_ut">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">matrix_duels_ut</span></span><a class="headerlink" href="#svvamp.ProfileUM.matrix_duels_ut" title="Link to this definition"></a></dt>
+<dd><p>2d array of integers. <code class="docutils literal notranslate"><span class="pre">matrix_duels_ut[c,</span> <span class="pre">d]</span></code> is the number of voters who have a strictly greater
+utility for <code class="docutils literal notranslate"><span class="pre">c</span></code> than for <code class="docutils literal notranslate"><span class="pre">d</span></code>. By convention, diagonal coefficients are set to <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">svvamp</span> <span class="kn">import</span> <span class="n">Profile</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_rk</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">matrix_duels_ut</span>
+<span class="go">array([[0, 2, 2],</span>
+<span class="go">       [0, 0, 2],</span>
+<span class="go">       [0, 0, 0]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.ProfileUM.n_c">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n_c</span></span><a class="headerlink" href="#svvamp.ProfileUM.n_c" title="Link to this definition"></a></dt>
+<dd><p>Number of candidates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.ProfileUM.n_v">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n_v</span></span><a class="headerlink" href="#svvamp.ProfileUM.n_v" title="Link to this definition"></a></dt>
+<dd><p>Number of voters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.ProfileUM.plurality_scores_rk">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">plurality_scores_rk</span></span><a class="headerlink" href="#svvamp.ProfileUM.plurality_scores_rk" title="Link to this definition"></a></dt>
+<dd><p>1d array of int. <code class="docutils literal notranslate"><span class="pre">plurality_scores_rk[c]</span></code> is the number of voters for whom <code class="docutils literal notranslate"><span class="pre">c</span></code> is the top-ranked
+candidate (with voter tie-breaking).</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">svvamp</span> <span class="kn">import</span> <span class="n">Profile</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_rk</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">plurality_scores_rk</span>
+<span class="go">array([2, 0, 0])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.ProfileUM.plurality_scores_ut">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">plurality_scores_ut</span></span><a class="headerlink" href="#svvamp.ProfileUM.plurality_scores_ut" title="Link to this definition"></a></dt>
+<dd><p>plurality scores, relying on ‘ut’ preferences.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile_s</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span> <span class="p">[</span><span class="mf">.5</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile_um</span> <span class="o">=</span> <span class="n">ProfileUM</span><span class="p">(</span><span class="n">profile_s</span><span class="o">=</span><span class="n">profile_s</span><span class="p">,</span> <span class="n">n_m</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ballot_ut</span><span class="o">=</span><span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile_um</span><span class="o">.</span><span class="n">plurality_scores_ut</span>
+<span class="go">array([1., 3., 0.])</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.ProfileUM.preferences_borda_rk">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">preferences_borda_rk</span></span><a class="headerlink" href="#svvamp.ProfileUM.preferences_borda_rk" title="Link to this definition"></a></dt>
+<dd><p>2d array of integers. <code class="docutils literal notranslate"><span class="pre">preferences_borda_rk[v,</span> <span class="pre">c]</span></code> gains 1 point for each candidate <code class="docutils literal notranslate"><span class="pre">d</span></code> such that
+voter <code class="docutils literal notranslate"><span class="pre">v</span></code> ranks <code class="docutils literal notranslate"><span class="pre">c</span></code> before <code class="docutils literal notranslate"><span class="pre">d</span></code>. So, these Borda scores are between <code class="docutils literal notranslate"><span class="pre">0</span></code> and <code class="docutils literal notranslate"><span class="pre">C</span> <span class="pre">-</span> <span class="pre">1</span></code>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.ProfileUM.preferences_borda_ut">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">preferences_borda_ut</span></span><a class="headerlink" href="#svvamp.ProfileUM.preferences_borda_ut" title="Link to this definition"></a></dt>
+<dd><p>preferences, in ‘borda ut’ format.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile_s</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span> <span class="p">[</span><span class="mf">.5</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile_um</span> <span class="o">=</span> <span class="n">ProfileUM</span><span class="p">(</span><span class="n">profile_s</span><span class="o">=</span><span class="n">profile_s</span><span class="p">,</span> <span class="n">n_m</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ballot_ut</span><span class="o">=</span><span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile_um</span><span class="o">.</span><span class="n">preferences_borda_ut</span>
+<span class="go">array([[2. , 1. , 0. ],</span>
+<span class="go">       [1. , 2. , 0. ],</span>
+<span class="go">       [0.5, 2. , 0.5],</span>
+<span class="go">       [0.5, 2. , 0.5]])</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.ProfileUM.preferences_rk">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">preferences_rk</span></span><a class="headerlink" href="#svvamp.ProfileUM.preferences_rk" title="Link to this definition"></a></dt>
+<dd><p>2d array of integers. <code class="docutils literal notranslate"><span class="pre">preferences_rk[v,</span> <span class="pre">k]</span></code> is the candidate at rank <code class="docutils literal notranslate"><span class="pre">k</span></code> for voter <code class="docutils literal notranslate"><span class="pre">v</span></code>. For
+example, <code class="docutils literal notranslate"><span class="pre">preferences_rk[v,</span> <span class="pre">0]</span></code> is <code class="docutils literal notranslate"><span class="pre">v</span></code>’s preferred candidate.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.ProfileUM.preferences_ut">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">preferences_ut</span></span><a class="headerlink" href="#svvamp.ProfileUM.preferences_ut" title="Link to this definition"></a></dt>
+<dd><p>2d array of floats. <code class="docutils literal notranslate"><span class="pre">preferences_ut[v,</span> <span class="pre">c]</span></code> is the utility of  candidate <code class="docutils literal notranslate"><span class="pre">c</span></code> as seen by voter <code class="docutils literal notranslate"><span class="pre">v</span></code>.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="profile_subset_candidates.html" class="btn btn-neutral float-left" title="ProfileSubsetCandidates" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="generator_profile.html" class="btn btn-neutral float-right" title="GeneratorProfile" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, François Durand.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

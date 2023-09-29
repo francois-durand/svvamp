@@ -7,6 +7,7 @@ __version__ = '0.9.1'
 
 # Utils
 from svvamp.utils.constants import OPTIONS
+from svvamp.utils.my_log import MyLog
 from svvamp.utils.misc import initialize_random_seeds
 
 # Profile

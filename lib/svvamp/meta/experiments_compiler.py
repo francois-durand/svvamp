@@ -30,6 +30,23 @@ from svvamp.utils.tikzplotlib_fix_ncols import tikzplotlib_fix_ncols
 
 
 class ExperimentsCompiler:
+    """
+    Compile the results of several experiments.
+
+    Each experiment should be analyzed with `ExperimentAnalyzer`. Then `ExperimentsCompiler` compiles the
+    analyses.
+
+    Parameters
+    ----------
+        prefix_tikz_file: str
+            Prefix for the names of the tikz files.
+        tikz_directory: str
+            Directory where to save the tikz files.
+        results_directory: str
+            Directory where to fetch the results obtained with `ExperimentAnalyzer`.
+        figsize: tuple
+            Size of the figures.
+    """
 
     def __init__(self, prefix_tikz_file, tikz_directory='tikz', results_directory='out', figsize=(16, 8)):
         # Record parameters
@@ -80,6 +97,7 @@ class ExperimentsCompiler:
         self.d_abbr_new = {'CIRV': 'CI', 'SIRV': 'SI', 'STAR': 'Sta', 'IRVD': 'Vie'}
 
     def profiles_scatter_plot(self, tikz_file='profiles_scatter_plot.tex'):
+        """Scatter plot: Number of voters and candidates of the profiles."""
         df_scatter = self.df[
             self.df['Criterion'] == 'exists_condorcet_admissible'  # No matter the criterion
             ]
@@ -98,6 +116,7 @@ class ExperimentsCompiler:
         return df_scatter
 
     def profile_features_bar_plot(self, tikz_file='profile_features_bar_plot.tex'):
+        """Bar plot: Features of the profiles (existence of Condorcet winner, etc)."""
         d_criterion_legend = {
             'exists_condorcet_winner_rk': 'CW',
             'exists_condorcet_order_rk': 'CO',
@@ -128,6 +147,7 @@ class ExperimentsCompiler:
         return df_plot
 
     def rate_bar_plot(self, criterion, ylabel, tikz_file, draw_rcw_line=False):
+        """Bar plot: Rate of some criterion (auxiliary function)."""
         # Create the pivot table
         df_plot = self.df[self.df['Criterion'] == criterion].pivot_table(
             values=['Rate (lower bound)', 'Rate (upper bound)', 'Rate (uncertainty)'],
@@ -154,16 +174,20 @@ class ExperimentsCompiler:
         return df_plot
 
     def cm_rate_bar_plot(self, tikz_file='cm_rate_bar_plot.tex'):
+        """Bar plot: CM rate."""
         return self.rate_bar_plot(criterion='is_cm_', ylabel='CM rate', tikz_file=tikz_file,
                                   draw_rcw_line=True)
 
     def tm_rate_bar_plot(self, tikz_file='tm_rate_bar_plot.tex'):
+        """Bar plot: TM rate."""
         return self.rate_bar_plot(criterion='is_tm_', ylabel='TM rate', tikz_file=tikz_file)
 
     def um_rate_bar_plot(self, tikz_file='um_rate_bar_plot.tex'):
+        """Bar plot: UM rate."""
         return self.rate_bar_plot(criterion='is_um_', ylabel='UM rate', tikz_file=tikz_file)
 
     def cm_tm_um_rate_bar_plot(self, tikz_file='cm_tm_um_rate_bar_plot.tex'):
+        """Bar plot: CM, TM and UM rates."""
         # Create the pivot table
         df_tm = self.df[self.df['Criterion'] == 'is_tm_'].pivot_table(
             values=['Rate (lower bound)', 'Rate (upper bound)', 'Rate (uncertainty)'],
@@ -214,6 +238,7 @@ class ExperimentsCompiler:
         return df_plot
 
     def condorcet_consistency_bar_plot(self, tikz_file='condorcet_consistency_bar_plot.tex'):
+        """Bar plot: Condorcet consistency."""
         # Cumulative rate of Condorcet winner existence
         cum_rate_condorcet_exists = self.df[
             (self.df['Rule'] == 'Profile') & (self.df['Criterion'] == 'exists_condorcet_winner_rk')
@@ -277,6 +302,7 @@ class ExperimentsCompiler:
         return df_violation
 
     def loss_social_welfare_bar_plot(self, tikz_file='loss_social_welfare_bar_plot.tex'):
+        """Bar plot: loss of social welfare."""
         # Sincere social welfare
         df_social_welfare_sincere = self.df[
             self.df['Criterion'] == 'relative_social_welfare_mean'
@@ -323,6 +349,7 @@ class ExperimentsCompiler:
         return df_loss_sw
 
     def nb_candidates_cm_line_plot(self, rules=None, tikz_file='nb_candidates_cm_line_plot.tex'):
+        """Line plot: Number of CM winners."""
         # Generate the df
         df_nb_candidates_cm = self.df[
             self.df['Criterion'] == 'nb_candidates_cm_'
@@ -358,6 +385,7 @@ class ExperimentsCompiler:
         return df_nb_candidates_cm
 
     def nb_candidates_cm_bar_plot(self, tikz_file='nb_candidates_cm_bar_plot.tex'):
+        """Bar plot: Number of CM winners."""
         # Raw data
         df_nb_candidates_cm = self.df[
             self.df['Criterion'] == 'nb_candidates_cm_'
@@ -396,6 +424,7 @@ class ExperimentsCompiler:
         return df_plot
 
     def cm_power_index_bar_plot(self, tikz_file='cm_power_index_bar_plot.tex'):
+        """Bar plot: CM power index."""
         # Create the pivot table
         df_plot = self.df[self.df['Criterion'] == 'cm_power_index_'].pivot_table(
             values=['Rate (lower bound)', 'Rate (upper bound)', 'Rate (uncertainty)'],
@@ -424,6 +453,7 @@ class ExperimentsCompiler:
         return df_plot
 
     def cm_complexity_index_bar_plot(self, tikz_file='cm_complexity_index_bar_plot.tex'):
+        """Bar plot: CM complexity index."""
         df_tm_or_um = self.df[
             self.df['Criterion'] == 'is_tm_or_um_'
         ].pivot_table(
@@ -469,6 +499,7 @@ class ExperimentsCompiler:
         return df_complexity_index
 
     def df_computation_time(self):
+        """Dataframe: Computation time."""
         df_sorted = self.df.sort_values(by='Computation time', ascending=False)
         df_sorted.drop(['Rule (abbr)', 'Rule (class)', 'Candidate name', 'Culture type'], axis=1, inplace=True)
         for i in range(1, 5):
@@ -476,6 +507,7 @@ class ExperimentsCompiler:
         return df_sorted
 
     def df_computation_time_cumulative(self):
+        """Dataframe: Cumulative computation time."""
         df_cum_time = self.df.pivot_table(
             values='Computation time',
             index=['Rule (abbr)', 'Criterion'],
@@ -486,6 +518,7 @@ class ExperimentsCompiler:
         return df_cum_time
 
     def resistant_condorcet_line(self):
+        """Draw the 'Resistant Condorcet' line (upper bound of CM rate for Condorcet rules)."""
         rcw_rate = self.df[
             self.df['Criterion'] == 'exists_resistant_condorcet_winner'
         ].pivot_table(
@@ -504,6 +537,7 @@ class ExperimentsCompiler:
 
     def my_tikzplotlib_save(self, tikz_file, x_ticks_labels=None,
                             axis_width=r'\axisWidth', axis_height=r'\axisHeight'):
+        """Save a figure in tikz."""
         tikzplotlib.save(self.tikz_directory / (self.prefix_tikz_file + tikz_file),
                          axis_width=axis_width, axis_height=axis_height)
         with open(self.tikz_directory / (self.prefix_tikz_file + tikz_file), 'r') as f:
@@ -530,5 +564,6 @@ class ExperimentsCompiler:
             f.write(file_data)
 
     def replace_rule_names(self, x_ticks_labels):
+        """Replace the x-labels with relevant abbreviations (auxiliary function)."""
         return [self.d_abbr_new[abbr] if abbr in self.d_abbr_new.keys() else abbr
                 for abbr in x_ticks_labels]

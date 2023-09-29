@@ -31,6 +31,47 @@ from svvamp.preferences.profile import Profile
 class RuleMaximin(Rule):
     """Maximin method.
 
+    Options
+    -------
+        >>> RuleMaximin.print_options_parameters()
+        cm_option: ['faster', 'fast', 'exact']. Default: 'fast'.
+        icm_option: ['exact']. Default: 'exact'.
+        iia_subset_maximum_size: is_number. Default: 2.
+        im_option: ['exact']. Default: 'exact'.
+        tm_option: ['exact']. Default: 'exact'.
+        um_option: ['exact']. Default: 'exact'.
+
+    Notes
+    -----
+    Candidate ``c``'s score is the minimum of the row :attr:`matrix_duels_rk`\ ``[c, :]`` (except the diagonal term),
+    i.e. the result of candidate ``c`` for her worst duel. The candidate with highest score is declared the winner.
+    In case of a tie, the candidate with lowest index wins.
+
+    This method meets the Condorcet criterion.
+
+    * :meth:`is_cm_`: Deciding CM is NP-complete, even for 2 manipulators.
+
+        * :attr:`cm_option` = ``'faster'``: Zuckerman et al. (2011) (cf. below). The difference with option ``fast`` is
+          that, if CM is proven possible or impossible, we optimize the bounds only based on UM, and not on CM. Hence
+          this option is as precise as ``fast`` to compute ``is_cm_``, but less precise for the bounds
+          ``necessary_coalition_size_cm_`` and ``sufficient_coalition_size_cm_``.
+        * :attr:`cm_option` = ``'fast'``: Zuckerman et al. (2011). This approximation algorithm is polynomial and has
+          a multiplicative factor of error of 5/3 on the number of manipulators needed.
+        * :attr:`cm_option` = ``'exact'``: Non-polynomial algorithm from superclass :class:`Rule`.
+
+    * :meth:`is_icm_`: Exact in polynomial time.
+    * :meth:`is_im_`: Exact in polynomial time.
+    * :meth:`is_iia_`: Exact in polynomial time.
+    * :meth:`is_tm_`: Exact in polynomial time.
+    * :meth:`is_um_`: Exact in polynomial time.
+
+    References
+    ----------
+    'Complexity of Unweighted Coalitional Manipulation under Some Common Voting Rules', Lirong Xia et al., 2009.
+
+    'An algorithm for the coalitional manipulation problem under Maximin', Michael Zuckerman, Omer Lev and
+    Jeffrey S. Rosenschein, 2011.
+
     Examples
     --------
         >>> profile = Profile(preferences_ut=[
@@ -258,37 +299,6 @@ class RuleMaximin(Rule):
         [0. 2. 3.]
         sufficient_coalition_size_cm =
         [0. 2. 3.]
-
-    Notes
-    -----
-    Candidate ``c``'s score is the minimum of the row :attr:`matrix_duels_rk`\ ``[c, :]`` (except the diagonal term),
-    i.e. the result of candidate ``c`` for her worst duel. The candidate with highest score is declared the winner.
-    In case of a tie, the candidate with lowest index wins.
-
-    This method meets the Condorcet criterion.
-
-    * :meth:`is_cm_`: Deciding CM is NP-complete, even for 2 manipulators.
-
-        * :attr:`cm_option` = ``'faster'``: Zuckerman et al. (2011) (cf. below). The difference with option ``fast`` is
-          that, if CM is proven possible or impossible, we optimize the bounds only based on UM, and not on CM. Hence
-          this option is as precise as ``fast`` to compute ``is_cm_``, but less precise for the bounds
-          ``necessary_coalition_size_cm_`` and ``sufficient_coalition_size_cm_``.
-        * :attr:`cm_option` = ``'fast'``: Zuckerman et al. (2011). This approximation algorithm is polynomial and has
-          a multiplicative factor of error of 5/3 on the number of manipulators needed.
-        * :attr:`cm_option` = ``'exact'``: Non-polynomial algorithm from superclass :class:`Rule`.
-
-    * :meth:`is_icm_`: Exact in polynomial time.
-    * :meth:`is_im_`: Exact in polynomial time.
-    * :meth:`is_iia_`: Exact in polynomial time.
-    * :meth:`is_tm_`: Exact in polynomial time.
-    * :meth:`is_um_`: Exact in polynomial time.
-
-    References
-    ----------
-    'Complexity of Unweighted Coalitional Manipulation under Some Common Voting Rules', Lirong Xia et al., 2009.
-
-    'An algorithm for the coalitional manipulation problem under Maximin', Michael Zuckerman, Omer Lev and
-    Jeffrey S. Rosenschein, 2011.
     """
 
     full_name = 'Maximin'

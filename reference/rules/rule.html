@@ -23,7 +23,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="RuleApproval" href="rule_approval.html" />
-    <link rel="prev" title="GeneratorProfileVMFHypersphere" href="../preferences/generator_profile_vmf_hypersphere.html" /> 
+    <link rel="prev" title="PluralityEliminationEngineProfileUM" href="../preferences/plurality_elimination_engine_profile_um.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -55,8 +55,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../index.html#preferences">Preferences</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../index.html#voting-rules">Voting rules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#profiles">Profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#generators-of-profiles">Generators of Profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#plurality-elimination-engines">Plurality Elimination Engines</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#voting-rules">Voting Rules</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Rule</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#svvamp.Rule"><code class="docutils literal notranslate"><span class="pre">Rule</span></code></a></li>
 </ul>
@@ -97,6 +99,8 @@
 <li class="toctree-l3"><a class="reference internal" href="rule_woodall.html">RuleWoodall</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#meta">Meta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#utils">Utils</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
@@ -138,12 +142,6 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>options_parameters</strong> (<em>dict</em>) – It is a dictionary of allowed and default options. Allowed is a minimal check that will
-be performed before launching big simulations, but other checks might be performed when setting the option.
-Allowed is either a list of values, like [‘lazy’, ‘fast’, ‘exact’], or a function checking if the parameter
-is correct. Example: <code class="docutils literal notranslate"><span class="pre">{'max_grade':</span> <span class="pre">dict(allowed=np.isfinite,</span> <span class="pre">default=1),</span> <span class="pre">'option_example':</span> <span class="pre">dict(allowed=[42,</span>
-<span class="pre">51],</span> <span class="pre">default=42)}</span></code>.</p></li>
-<li><p><strong>kwargs</strong> – Additional keyword parameters. See <code class="xref py py-attr docutils literal notranslate"><span class="pre">options_parameters</span></code> for allowed and default options.</p></li>
 <li><p><strong>with_two_candidates_reduces_to_plurality</strong> (<em>bool</em>) – <code class="docutils literal notranslate"><span class="pre">True</span></code> iff, when using this voting system with only two candidates, it amounts to Plurality (with voter and
 candidate tie-breaking).</p></li>
 <li><p><strong>is_based_on_rk</strong> (<em>bool</em>) – <code class="docutils literal notranslate"><span class="pre">True</span></code> iff this voting system is based only on strict rankings (no cardinal information, indifference not
@@ -163,13 +161,14 @@ candidates have utility -1.</p></li>
 <li><p><strong>precheck_tm</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, then before computing CM, we check whether there is TM.</p></li>
 <li><p><strong>precheck_icm</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, then before computing CM, we check whether there is ICM. Remark: when the voting system meets
 InfMC_c_ctb, then precheck on ICM will not do better than other basic prechecks.</p></li>
-<li><p><strong>log_identity</strong> (<em>str</em>) – Cf. <code class="xref py py-class docutils literal notranslate"><span class="pre">MyLog</span></code>.</p></li>
+<li><p><strong>log_identity</strong> (<em>str</em>) – Cf. <a class="reference internal" href="../utils/my_log.html#svvamp.MyLog" title="svvamp.MyLog"><code class="xref py py-class docutils literal notranslate"><span class="pre">MyLog</span></code></a>.</p></li>
+<li><p><strong>kwargs</strong> – Additional keyword parameters. See <a class="reference internal" href="#svvamp.Rule.options_parameters" title="svvamp.Rule.options_parameters"><code class="xref py py-attr docutils literal notranslate"><span class="pre">options_parameters</span></code></a> for allowed and default options.</p></li>
 </ul>
 </dd>
 </dl>
 <p class="rubric">Notes</p>
-<p>This is an ‘abstract’ class. As an end-user, you should always use its subclasses <code class="xref py py-attr docutils literal notranslate"><span class="pre">Approval</span></code>,
-<code class="xref py py-attr docutils literal notranslate"><span class="pre">Plurality</span></code>, etc.</p>
+<p>This is an ‘abstract’ class. As an end-user, you should always use its subclasses <a class="reference internal" href="rule_approval.html#svvamp.RuleApproval" title="svvamp.RuleApproval"><code class="xref py py-attr docutils literal notranslate"><span class="pre">RuleApproval</span></code></a>,
+<a class="reference internal" href="rule_plurality.html#svvamp.RulePlurality" title="svvamp.RulePlurality"><code class="xref py py-attr docutils literal notranslate"><span class="pre">RulePlurality</span></code></a>, etc.</p>
 <p>This class and its subclasses are suitable for voting rules that are deterministic and anonymous (treating all
 voters equally). As a consequence, they are not neutral (because they need to break ties in totally symmetric
 situations). As of now, SVVAMP does not support other kinds of voting systems.</p>
@@ -190,7 +189,7 @@ implemented as a subclass of <code class="docutils literal notranslate"><span cl
 <p><strong>Options for manipulation</strong></p>
 <p>Attributes allow to choose the algorithm used to compute different kinds of manipulation:
 <a class="reference internal" href="#svvamp.Rule.cm_option" title="svvamp.Rule.cm_option"><code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code></a>, <a class="reference internal" href="#svvamp.Rule.icm_option" title="svvamp.Rule.icm_option"><code class="xref py py-attr docutils literal notranslate"><span class="pre">icm_option</span></code></a>, <a class="reference internal" href="#svvamp.Rule.im_option" title="svvamp.Rule.im_option"><code class="xref py py-attr docutils literal notranslate"><span class="pre">im_option</span></code></a>, <a class="reference internal" href="#svvamp.Rule.tm_option" title="svvamp.Rule.tm_option"><code class="xref py py-attr docutils literal notranslate"><span class="pre">tm_option</span></code></a> and <a class="reference internal" href="#svvamp.Rule.um_option" title="svvamp.Rule.um_option"><code class="xref py py-attr docutils literal notranslate"><span class="pre">um_option</span></code></a>.</p>
-<p>To know what options are accepted for a given voting system, use <code class="xref py py-attr docutils literal notranslate"><span class="pre">options_parameters</span></code>. Here
+<p>To know what options are accepted for a given voting system, use <a class="reference internal" href="#svvamp.Rule.options_parameters" title="svvamp.Rule.options_parameters"><code class="xref py py-attr docutils literal notranslate"><span class="pre">options_parameters</span></code></a>. Here
 is a non-exhaustive list of typical values for these options.</p>
 <blockquote>
 <div><ul class="simple">
@@ -314,7 +313,7 @@ possible, <code class="docutils literal notranslate"><span class="pre">False</sp
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<p>Raise an error if the option is not in <code class="xref py py-attr docutils literal notranslate"><span class="pre">options_parameters</span></code>:</p>
+<p>Raise an error if the option is not in <a class="reference internal" href="#svvamp.Rule.options_parameters" title="svvamp.Rule.options_parameters"><code class="xref py py-attr docutils literal notranslate"><span class="pre">options_parameters</span></code></a>:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Rule</span><span class="o">.</span><span class="n">check_option_allowed</span><span class="p">(</span><span class="s1">&#39;not_existing_option&#39;</span><span class="p">,</span> <span class="mi">42</span><span class="p">)</span>
 <span class="gt">Traceback (most recent call last):</span>
 <span class="gr">ValueError</span>: <span class="n">Option &#39;not_existing_option&#39; is unknown for Rule.</span>
@@ -332,7 +331,7 @@ possible, <code class="docutils literal notranslate"><span class="pre">False</sp
 <dt class="sig sig-object py" id="svvamp.Rule.cm_option">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cm_option</span></span><a class="headerlink" href="#svvamp.Rule.cm_option" title="Link to this definition"></a></dt>
 <dd><p>String. Option used to compute <a class="reference internal" href="#svvamp.Rule.is_cm_" title="svvamp.Rule.is_cm_"><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_cm_()</span></code></a> and related methods.</p>
-<p>To know what options are accepted for a given voting system, use <code class="xref py py-attr docutils literal notranslate"><span class="pre">options_parameters</span></code>.</p>
+<p>To know what options are accepted for a given voting system, use <a class="reference internal" href="#svvamp.Rule.options_parameters" title="svvamp.Rule.options_parameters"><code class="xref py py-attr docutils literal notranslate"><span class="pre">options_parameters</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py property">
@@ -407,7 +406,7 @@ counter-example <code class="docutils literal notranslate"><span class="pre">exa
 <dt class="sig sig-object py" id="svvamp.Rule.icm_option">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">icm_option</span></span><a class="headerlink" href="#svvamp.Rule.icm_option" title="Link to this definition"></a></dt>
 <dd><p>String. Option used to compute <a class="reference internal" href="#svvamp.Rule.is_icm_" title="svvamp.Rule.is_icm_"><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_icm_()</span></code></a> and related methods.</p>
-<p>To know what options are accepted for a given voting system, use <code class="xref py py-attr docutils literal notranslate"><span class="pre">options_parameters</span></code>.</p>
+<p>To know what options are accepted for a given voting system, use <a class="reference internal" href="#svvamp.Rule.options_parameters" title="svvamp.Rule.options_parameters"><code class="xref py py-attr docutils literal notranslate"><span class="pre">options_parameters</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py property">
@@ -422,7 +421,7 @@ effect if there is an exact algorithm running in polynomial time implemented in 
 <dt class="sig sig-object py" id="svvamp.Rule.im_option">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">im_option</span></span><a class="headerlink" href="#svvamp.Rule.im_option" title="Link to this definition"></a></dt>
 <dd><p>String. Option used to compute <a class="reference internal" href="#svvamp.Rule.is_im_" title="svvamp.Rule.is_im_"><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_im_()</span></code></a> and related methods.</p>
-<p>To know what options are accepted for a given voting system, use <code class="xref py py-attr docutils literal notranslate"><span class="pre">options_parameters</span></code>.</p>
+<p>To know what options are accepted for a given voting system, use <a class="reference internal" href="#svvamp.Rule.options_parameters" title="svvamp.Rule.options_parameters"><code class="xref py py-attr docutils literal notranslate"><span class="pre">options_parameters</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py property">
@@ -970,6 +969,21 @@ but not the numerical evaluation of <span class="math notranslate nohighlight">\
 </dl>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="svvamp.Rule.options_parameters">
+<span class="sig-name descname"><span class="pre">options_parameters</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'cm_option':</span> <span class="pre">{'allowed':</span> <span class="pre">['lazy',</span> <span class="pre">'exact'],</span> <span class="pre">'default':</span> <span class="pre">'lazy'},</span> <span class="pre">'icm_option':</span> <span class="pre">{'allowed':</span> <span class="pre">['lazy'],</span> <span class="pre">'default':</span> <span class="pre">'lazy'},</span> <span class="pre">'iia_subset_maximum_size':</span> <span class="pre">{'allowed':</span> <span class="pre">&lt;function</span> <span class="pre">is_number&gt;,</span> <span class="pre">'default':</span> <span class="pre">2},</span> <span class="pre">'im_option':</span> <span class="pre">{'allowed':</span> <span class="pre">['lazy',</span> <span class="pre">'exact'],</span> <span class="pre">'default':</span> <span class="pre">'lazy'},</span> <span class="pre">'tm_option':</span> <span class="pre">{'allowed':</span> <span class="pre">['lazy',</span> <span class="pre">'exact'],</span> <span class="pre">'default':</span> <span class="pre">'exact'},</span> <span class="pre">'um_option':</span> <span class="pre">{'allowed':</span> <span class="pre">['lazy',</span> <span class="pre">'exact'],</span> <span class="pre">'default':</span> <span class="pre">'lazy'}}</span></em><a class="headerlink" href="#svvamp.Rule.options_parameters" title="Link to this definition"></a></dt>
+<dd><p>Options parameters. It is a dictionary of allowed and default options. Allowed is a minimal check that will
+be performed before launching big simulations, but other checks might be performed when setting the option.
+Allowed is either a list of values, like [‘lazy’, ‘fast’, ‘exact’], or a function checking if the parameter
+is correct. Example: <code class="docutils literal notranslate"><span class="pre">{'max_grade':</span> <span class="pre">dict(allowed=np.isfinite,</span> <span class="pre">default=1),</span> <span class="pre">'option_example':</span> <span class="pre">dict(allowed=[42,</span>
+<span class="pre">51],</span> <span class="pre">default=42)}</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="svvamp.Rule.relative_social_welfare_w_">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">relative_social_welfare_w_</span></span><a class="headerlink" href="#svvamp.Rule.relative_social_welfare_w_" title="Link to this definition"></a></dt>
@@ -1037,7 +1051,7 @@ we have by convention <code class="docutils literal notranslate"><span class="pr
 <dt class="sig sig-object py" id="svvamp.Rule.tm_option">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tm_option</span></span><a class="headerlink" href="#svvamp.Rule.tm_option" title="Link to this definition"></a></dt>
 <dd><p>String. Option used to compute <a class="reference internal" href="#svvamp.Rule.is_tm_" title="svvamp.Rule.is_tm_"><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_tm_()</span></code></a> and related methods.</p>
-<p>To know what options are accepted for a given voting system, use <code class="xref py py-attr docutils literal notranslate"><span class="pre">options_parameters</span></code>.</p>
+<p>To know what options are accepted for a given voting system, use <a class="reference internal" href="#svvamp.Rule.options_parameters" title="svvamp.Rule.options_parameters"><code class="xref py py-attr docutils literal notranslate"><span class="pre">options_parameters</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py property">
@@ -1050,7 +1064,7 @@ we have by convention <code class="docutils literal notranslate"><span class="pr
 <dt class="sig sig-object py" id="svvamp.Rule.um_option">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">um_option</span></span><a class="headerlink" href="#svvamp.Rule.um_option" title="Link to this definition"></a></dt>
 <dd><p>String. Option used to compute <a class="reference internal" href="#svvamp.Rule.is_um_" title="svvamp.Rule.is_um_"><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_um_()</span></code></a> and related methods.</p>
-<p>To know what options are accepted for a given voting system, use <code class="xref py py-attr docutils literal notranslate"><span class="pre">options_parameters</span></code>.</p>
+<p>To know what options are accepted for a given voting system, use <a class="reference internal" href="#svvamp.Rule.options_parameters" title="svvamp.Rule.options_parameters"><code class="xref py py-attr docutils literal notranslate"><span class="pre">options_parameters</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1304,7 +1318,7 @@ least one exists. Cf. <a class="reference internal" href="../preferences/profile
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../preferences/generator_profile_vmf_hypersphere.html" class="btn btn-neutral float-left" title="GeneratorProfileVMFHypersphere" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../preferences/plurality_elimination_engine_profile_um.html" class="btn btn-neutral float-left" title="PluralityEliminationEngineProfileUM" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="rule_approval.html" class="btn btn-neutral float-right" title="RuleApproval" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

@@ -55,8 +55,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../index.html#preferences">Preferences</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../index.html#voting-rules">Voting rules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#profiles">Profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#generators-of-profiles">Generators of Profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#plurality-elimination-engines">Plurality Elimination Engines</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#voting-rules">Voting Rules</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="rule.html">Rule</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_approval.html">RuleApproval</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rule_baldwin.html">RuleBaldwin</a></li>
@@ -97,6 +99,8 @@
 <li class="toctree-l3"><a class="reference internal" href="rule_woodall.html">RuleWoodall</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#meta">Meta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#utils">Utils</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
@@ -135,6 +139,42 @@
 <dt class="sig sig-object py" id="svvamp.RuleCondorcetSumDefeats">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">svvamp.</span></span><span class="sig-name descname"><span class="pre">RuleCondorcetSumDefeats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/rules/rule_condorcet_sum_defeats.html#RuleCondorcetSumDefeats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.RuleCondorcetSumDefeats" title="Link to this definition"></a></dt>
 <dd><p>Condorcet with sum of defeats.</p>
+<p class="rubric">Options</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">RuleCondorcetSumDefeats</span><span class="o">.</span><span class="n">print_options_parameters</span><span class="p">()</span>
+<span class="go">cm_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="go">icm_option: [&#39;lazy&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="go">iia_subset_maximum_size: is_number. Default: 2.</span>
+<span class="go">im_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="go">tm_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="go">um_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+</pre></div>
+</div>
+<p class="rubric">Notes</p>
+<p>An <em>elementary move</em> consists of reversing a voter’s preference about a pair of candidate <code class="docutils literal notranslate"><span class="pre">(c,</span> <span class="pre">d)</span></code> (without
+demanding that her whole relation of preference stays transitive). The score for candidate <code class="docutils literal notranslate"><span class="pre">c</span></code> is minus the
+number of <em>elementary moves</em> needed so that <code class="docutils literal notranslate"><span class="pre">c</span></code> becomes a Condorcet winner. It is the same principle as
+Dodgson’s method, but without looking for a transitive profile.</p>
+<p>In practice:</p>
+<div class="math notranslate nohighlight">
+\[\texttt{scores}[c] = - \sum_{c \text{ does not beat } d}\left(
+\left\lfloor\frac{V}{2}\right\rfloor + 1 - \texttt{matrix_duels_rk}[c, d]
+\right)\]</div>
+<p>In particular, for <code class="xref py py-attr docutils literal notranslate"><span class="pre">n_v</span></code> odd:</p>
+<div class="math notranslate nohighlight">
+\[\texttt{scores}[c] = - \sum_{c \text{ does not beat } d}\left(
+\left\lceil\frac{V}{2}\right\rceil - \texttt{matrix_duels_rk}[c, d]
+\right)\]</div>
+<ul class="simple">
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_cm_()</span></code>: Non-polynomial or non-exact algorithms from superclass <a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_icm_()</span></code>: Algorithm from superclass <a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>. It is polynomial and has a window of error of 1
+manipulator.</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_im_()</span></code>: Non-polynomial or non-exact algorithms from superclass <a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_iia_()</span></code>: Non-polynomial or non-exact algorithms from superclass <a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>. If
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">iia_subset_maximum_size</span></code> = 2, it runs in polynomial time and is exact up to ties (which can occur only if
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">n_v</span></code> is even).</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_tm_()</span></code>: Exact in polynomial time.</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_um_()</span></code>: Non-polynomial or non-exact algorithms from superclass <a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
+</ul>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[</span>
 <span class="gp">... </span>    <span class="p">[</span> <span class="mf">0.</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.</span> <span class="p">],</span>
@@ -363,32 +403,6 @@
 <span class="go">[0. 2. 3.]</span>
 </pre></div>
 </div>
-<p class="rubric">Notes</p>
-<p>An <em>elementary move</em> consists of reversing a voter’s preference about a pair of candidate <code class="docutils literal notranslate"><span class="pre">(c,</span> <span class="pre">d)</span></code> (without
-demanding that her whole relation of preference stays transitive). The score for candidate <code class="docutils literal notranslate"><span class="pre">c</span></code> is minus the
-number of <em>elementary moves</em> needed so that <code class="docutils literal notranslate"><span class="pre">c</span></code> becomes a Condorcet winner. It is the same principle as
-Dodgson’s method, but without looking for a transitive profile.</p>
-<p>In practice:</p>
-<div class="math notranslate nohighlight">
-\[\texttt{scores}[c] = - \sum_{c \text{ does not beat } d}\left(
-\left\lfloor\frac{V}{2}\right\rfloor + 1 - \texttt{matrix_duels_rk}[c, d]
-\right)\]</div>
-<p>In particular, for <code class="xref py py-attr docutils literal notranslate"><span class="pre">n_v</span></code> odd:</p>
-<div class="math notranslate nohighlight">
-\[\texttt{scores}[c] = - \sum_{c \text{ does not beat } d}\left(
-\left\lceil\frac{V}{2}\right\rceil - \texttt{matrix_duels_rk}[c, d]
-\right)\]</div>
-<ul class="simple">
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_cm_()</span></code>: Non-polynomial or non-exact algorithms from superclass <a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_icm_()</span></code>: Algorithm from superclass <a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>. It is polynomial and has a window of error of 1
-manipulator.</p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_im_()</span></code>: Non-polynomial or non-exact algorithms from superclass <a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_iia_()</span></code>: Non-polynomial or non-exact algorithms from superclass <a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>. If
-<code class="xref py py-attr docutils literal notranslate"><span class="pre">iia_subset_maximum_size</span></code> = 2, it runs in polynomial time and is exact up to ties (which can occur only if
-<code class="xref py py-attr docutils literal notranslate"><span class="pre">n_v</span></code> is even).</p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_tm_()</span></code>: Exact in polynomial time.</p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_um_()</span></code>: Non-polynomial or non-exact algorithms from superclass <a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
-</ul>
 <dl class="py property">
 <dt class="sig sig-object py" id="svvamp.RuleCondorcetSumDefeats.scores_">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">scores_</span></span><a class="headerlink" href="#svvamp.RuleCondorcetSumDefeats.scores_" title="Link to this definition"></a></dt>

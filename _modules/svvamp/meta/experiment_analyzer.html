@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>svvamp.meta.experiment_analyzer &mdash; SVVAMP 0.9.1 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=9dc39874"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            SVVAMP
+          </a>
+              <div class="version">
+                0.9.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">SVVAMP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../history.html">History</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">SVVAMP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">svvamp.meta.experiment_analyzer</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for svvamp.meta.experiment_analyzer</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on nov. 03, 2014, 23:33</span>
+<span class="sd">Copyright François Durand 2014, 2015</span>
+<span class="sd">fradurand@gmail.com</span>
+
+<span class="sd">This file is part of SVVAMP.</span>
+
+<span class="sd">    SVVAMP is free software: you can redistribute it and/or modify</span>
+<span class="sd">    it under the terms of the GNU General Public License as published by</span>
+<span class="sd">    the Free Software Foundation, either version 3 of the License, or</span>
+<span class="sd">    (at your option) any later version.</span>
+
+<span class="sd">    SVVAMP is distributed in the hope that it will be useful,</span>
+<span class="sd">    but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="sd">    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="sd">    GNU General Public License for more details.</span>
+
+<span class="sd">    You should have received a copy of the GNU General Public License</span>
+<span class="sd">    along with SVVAMP.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">from</span> <span class="nn">svvamp.meta.study_profile_criteria</span> <span class="kn">import</span> <span class="n">StudyProfileCriteria</span>
+<span class="kn">from</span> <span class="nn">svvamp.meta.voting_rule_tasks</span> <span class="kn">import</span> <span class="n">VotingRuleTasks</span>
+<span class="kn">from</span> <span class="nn">svvamp.preferences.generator_profile_noise</span> <span class="kn">import</span> <span class="n">GeneratorProfileNoise</span>
+<span class="kn">from</span> <span class="nn">svvamp.utils.pseudo_bool</span> <span class="kn">import</span> <span class="n">equal_true</span>
+<span class="kn">from</span> <span class="nn">svvamp.rules.rule_irv</span> <span class="kn">import</span> <span class="n">RuleIRV</span>
+
+
+<div class="viewcode-block" id="ExperimentAnalyzer">
+<a class="viewcode-back" href="../../../reference/meta/experiment_analyzer.html#svvamp.ExperimentAnalyzer">[docs]</a>
+<span class="k">class</span> <span class="nc">ExperimentAnalyzer</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Analyze a voting experiment.</span>
+
+<span class="sd">    The results are stored in several csv files.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        base_profile: Profile, optional</span>
+<span class="sd">            Profile of the experiment, without added noise.</span>
+<span class="sd">        n_samples: int, optional</span>
+<span class="sd">            Number of samples for the Monte-Carlo treatment.</span>
+<span class="sd">        relative_noise: float, optional</span>
+<span class="sd">            Relative noise used by `GeneratorProfileNoise`.</span>
+<span class="sd">        absolute_noise: float, optional</span>
+<span class="sd">            Absolute noise used by `GeneratorProfileNoise`.</span>
+<span class="sd">        study_profile_criteria: StudyProfileCriteria, optional</span>
+<span class="sd">            Profile criteria to be studied.</span>
+<span class="sd">        voting_rule_tasks: VotingRuleTasks, optional</span>
+<span class="sd">            Voting rule tasks to be performed.</span>
+<span class="sd">        output_dir: str, optional</span>
+<span class="sd">            Directory where the outputs will be recorded.</span>
+<span class="sd">        output_file_suffix: str, optional</span>
+<span class="sd">            Suffix for the output file names.</span>
+<span class="sd">        log_csv: List of str, optional</span>
+<span class="sd">            Additional information at the end of lines in the csv file.</span>
+<span class="sd">        ping_period: int, optional</span>
+<span class="sd">            Frequency at which the program prints the number of profiles already analyzed.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    Define an `ExperimentAnalyzer` with the default options:</span>
+
+<span class="sd">        &gt;&gt;&gt; experiment_analyzer = ExperimentAnalyzer()</span>
+
+<span class="sd">    If you specify the profile criteria and/or the voting rule tasks, then the relevant sanity checks are performed:</span>
+
+<span class="sd">        &gt;&gt;&gt; experiment_analyzer = ExperimentAnalyzer(</span>
+<span class="sd">        ...     study_profile_criteria=StudyProfileCriteria(boolean_criteria=[&#39;exists_condorcet_winner_rk&#39;]),</span>
+<span class="sd">        ...     voting_rule_tasks=VotingRuleTasks(voting_systems=[RuleIRV])</span>
+<span class="sd">        ... )</span>
+<span class="sd">        StudyProfileCriteria: Sanity check was successful.</span>
+<span class="sd">        VotingRuleTasks: Sanity check was successful.</span>
+
+<span class="sd">    Anyway, you can then call the object with `experiment_analyzer()`. You can override the parameters (like</span>
+<span class="sd">    `base_profile`, `n_samples`, etc) when making the call. For example:</span>
+<span class="sd">    `experiment_analyzer(base_profile=another_base_profile)`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">base_profile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">n_samples</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                 <span class="n">relative_noise</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span>
+                 <span class="n">absolute_noise</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span>
+                 <span class="n">study_profile_criteria</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">voting_rule_tasks</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">output_dir</span><span class="o">=</span><span class="s1">&#39;out&#39;</span><span class="p">,</span>
+                 <span class="n">output_file_suffix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+                 <span class="n">log_csv</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">ping_period</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+        <span class="c1"># Check sanity (or not)</span>
+        <span class="k">if</span> <span class="n">study_profile_criteria</span><span class="p">:</span>
+            <span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">check_sanity</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">voting_rule_tasks</span><span class="p">:</span>
+            <span class="n">voting_rule_tasks</span><span class="o">.</span><span class="n">check_sanity</span><span class="p">()</span>
+        <span class="c1"># Default options</span>
+        <span class="k">if</span> <span class="n">study_profile_criteria</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">study_profile_criteria</span> <span class="o">=</span> <span class="n">StudyProfileCriteria</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">voting_rule_tasks</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">voting_rule_tasks</span> <span class="o">=</span> <span class="n">VotingRuleTasks</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">log_csv</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">log_csv</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># Set the default attributes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">default_base_profile</span> <span class="o">=</span> <span class="n">base_profile</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">default_n_samples</span> <span class="o">=</span> <span class="n">n_samples</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">default_relative_noise</span> <span class="o">=</span> <span class="n">relative_noise</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">default_absolute_noise</span> <span class="o">=</span> <span class="n">absolute_noise</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">default_study_profile_criteria</span> <span class="o">=</span> <span class="n">study_profile_criteria</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">default_voting_rule_tasks</span> <span class="o">=</span> <span class="n">voting_rule_tasks</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">default_output_dir</span> <span class="o">=</span> <span class="n">output_dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">default_output_file_suffix</span> <span class="o">=</span> <span class="n">output_file_suffix</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">default_log_csv</span> <span class="o">=</span> <span class="n">log_csv</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">default_ping_period</span> <span class="o">=</span> <span class="n">ping_period</span>
+        <span class="c1"># Declare the attributes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_profile</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">relative_noise</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">absolute_noise</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">study_profile_criteria</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">voting_rule_tasks</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_dir</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_file_suffix</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_csv</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ping_period</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">_prepare_csv</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">prefix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_dir</span> <span class="o">+</span> <span class="s1">&#39;/Results_&#39;</span> <span class="o">+</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">_%H-%M-%S&#39;</span><span class="p">)</span>
+        <span class="n">suffix</span> <span class="o">=</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_file_suffix</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_file_suffix</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_d_en</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">_d_en</span><span class="si">{</span><span class="n">suffix</span><span class="si">}</span><span class="s2">.csv&quot;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_d_fr</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">_d_fr</span><span class="si">{</span><span class="n">suffix</span><span class="si">}</span><span class="s2">.csv&quot;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_m_en</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">_m_en</span><span class="si">{</span><span class="n">suffix</span><span class="si">}</span><span class="s2">.csv&quot;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_m_fr</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">_m_fr</span><span class="si">{</span><span class="n">suffix</span><span class="si">}</span><span class="s2">.csv&quot;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span>
+        <span class="n">headers_m</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
+            <span class="s1">&#39;Rule&#39;</span><span class="p">,</span> <span class="s1">&#39;Rule (abbr)&#39;</span><span class="p">,</span> <span class="s1">&#39;Rule (class)&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Criterion&#39;</span><span class="p">,</span> <span class="s1">&#39;Candidate&#39;</span><span class="p">,</span> <span class="s1">&#39;Candidate name&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Algorithm parameters&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Computation time&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Rate (lower bound)&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Rate (upper bound)&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Rate (uncertainty)&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Number of profiles&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;V&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;Culture type&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Culture parameter 1&#39;</span><span class="p">,</span> <span class="s1">&#39;Culture parameter 1 value&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Culture parameter 2&#39;</span><span class="p">,</span> <span class="s1">&#39;Culture parameter 2 value&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Culture parameter 3&#39;</span><span class="p">,</span> <span class="s1">&#39;Culture parameter 3 value&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Culture parameter 4&#39;</span><span class="p">,</span> <span class="s1">&#39;Culture parameter 4 value&#39;</span>
+        <span class="p">])</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">headers_m</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">path_or_buf</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">file_m_en</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">lineterminator</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">headers_m</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">path_or_buf</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">file_m_fr</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;;&#39;</span><span class="p">,</span> <span class="n">lineterminator</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_df_to_csv_m</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_df_to_csv</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">file_en</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">file_m_en</span><span class="p">,</span> <span class="n">file_fr</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">file_m_fr</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_df_to_csv_d</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_df_to_csv</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">file_en</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">file_d_en</span><span class="p">,</span> <span class="n">file_fr</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">file_d_fr</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">base_profile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">n_samples</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">relative_noise</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">absolute_noise</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">study_profile_criteria</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">voting_rule_tasks</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">output_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">output_file_suffix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">log_csv</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">ping_period</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">):</span>
+        <span class="c1"># Set the parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_profile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_base_profile</span> <span class="k">if</span> <span class="n">base_profile</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">base_profile</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_n_samples</span> <span class="k">if</span> <span class="n">n_samples</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">n_samples</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">relative_noise</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_relative_noise</span> <span class="k">if</span> <span class="n">relative_noise</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">relative_noise</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">absolute_noise</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_absolute_noise</span> <span class="k">if</span> <span class="n">absolute_noise</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">absolute_noise</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">study_profile_criteria</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">default_study_profile_criteria</span> <span class="k">if</span> <span class="n">study_profile_criteria</span> <span class="ow">is</span> <span class="kc">None</span>
+                                       <span class="k">else</span> <span class="n">study_profile_criteria</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">voting_rule_tasks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_voting_rule_tasks</span> <span class="k">if</span> <span class="n">voting_rule_tasks</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">voting_rule_tasks</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_output_dir</span> <span class="k">if</span> <span class="n">output_dir</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">output_dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_file_suffix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_output_file_suffix</span> <span class="k">if</span> <span class="n">output_file_suffix</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">output_file_suffix</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_csv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_log_csv</span> <span class="k">if</span> <span class="n">log_csv</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">log_csv</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ping_period</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_ping_period</span> <span class="k">if</span> <span class="n">ping_period</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">ping_period</span>
+        <span class="c1"># Check sanity (or not)</span>
+        <span class="k">if</span> <span class="n">study_profile_criteria</span><span class="p">:</span>
+            <span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">check_sanity</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">voting_rule_tasks</span><span class="p">:</span>
+            <span class="n">voting_rule_tasks</span><span class="o">.</span><span class="n">check_sanity</span><span class="p">()</span>
+        <span class="c1"># Initialize</span>
+        <span class="n">n_c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_profile</span><span class="o">.</span><span class="n">n_c</span>
+        <span class="n">n_v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_profile</span><span class="o">.</span><span class="n">n_v</span>
+        <span class="n">labels_candidates</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_profile</span><span class="o">.</span><span class="n">labels_candidates</span>
+        <span class="c1"># - Initialize records for profile results</span>
+        <span class="n">results_p_boolean_criteria</span> <span class="o">=</span> <span class="p">[</span><span class="nb">dict</span><span class="p">(</span><span class="n">inf</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sup</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">boolean_criteria</span><span class="p">]</span>
+        <span class="n">results_p_numerical_criteria</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">numerical_criteria</span><span class="p">]</span>
+        <span class="n">results_p_special_candidates_criteria</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_c</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">special_candidates_criteria</span>
+        <span class="p">]</span>  <span class="c1"># The last coefficient will be used for cases np.nan</span>
+        <span class="n">results_p_array_criteria</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_c</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">array_criteria</span><span class="p">]</span>
+        <span class="n">results_p_matrix_criteria</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_profile</span><span class="p">,</span> <span class="n">criterion</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">criterion</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">matrix_criteria</span>
+        <span class="p">]</span>
+        <span class="c1"># - Initialize record for voting systems results</span>
+        <span class="n">results_vs_winner</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_c</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">voting_rule_tasks</span><span class="p">]</span>
+        <span class="n">results_vs_result_criteria</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span>
+                <span class="nb">dict</span><span class="p">(</span><span class="n">inf</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sup</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">result_criteria</span>
+            <span class="p">]</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">rule_class</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">voting_rule_tasks</span>
+        <span class="p">]</span>
+        <span class="n">results_vs_numerical_criteria</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span>
+                <span class="nb">dict</span><span class="p">(</span><span class="n">inf</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sup</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">numerical_criteria</span>
+            <span class="p">]</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">rule_class</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">voting_rule_tasks</span>
+        <span class="p">]</span>
+        <span class="n">results_vs_manipulation_criteria</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span>
+                <span class="nb">dict</span><span class="p">(</span><span class="n">inf</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sup</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">manipulation_criteria</span>
+            <span class="p">]</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">rule_class</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">voting_rule_tasks</span>
+        <span class="p">]</span>
+        <span class="n">results_vs_manipulation_criteria_c</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span>
+                <span class="nb">dict</span><span class="p">(</span><span class="n">inf</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_c</span><span class="p">),</span> <span class="n">sup</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_c</span><span class="p">),</span> <span class="n">log</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">manipulation_criteria_c</span>
+            <span class="p">]</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">rule_class</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">voting_rule_tasks</span>
+        <span class="p">]</span>
+        <span class="n">results_vs_utility_criteria</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span>
+                <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">utility_criteria</span>
+            <span class="p">]</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">rule_class</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">voting_rule_tasks</span>
+        <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_csv</span><span class="p">()</span>
+        <span class="n">generator_profile</span> <span class="o">=</span> <span class="n">GeneratorProfileNoise</span><span class="p">(</span>
+            <span class="n">base_profile</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">base_profile</span><span class="p">,</span> <span class="n">relative_noise</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">relative_noise</span><span class="p">,</span> <span class="n">absolute_noise</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">absolute_noise</span><span class="p">)</span>
+        <span class="c1"># Heavy lifting</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Compute...&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">n_iterations</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span><span class="p">):</span>
+            <span class="n">profile</span> <span class="o">=</span> <span class="n">generator_profile</span><span class="p">()</span>
+            <span class="c1"># Tests on the profile itself</span>
+            <span class="k">for</span> <span class="n">i_criterion</span><span class="p">,</span> <span class="n">criterion</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">boolean_criteria</span><span class="p">):</span>
+                <span class="n">answer</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">criterion</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">equal_true</span><span class="p">(</span><span class="n">answer</span><span class="p">):</span>
+                    <span class="n">results_p_boolean_criteria</span><span class="p">[</span><span class="n">i_criterion</span><span class="p">][</span><span class="s1">&#39;inf&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">results_p_boolean_criteria</span><span class="p">[</span><span class="n">i_criterion</span><span class="p">][</span><span class="s1">&#39;sup&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">elif</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">answer</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
+                    <span class="c1"># As of now, no Boolean criterion can return `nan`.</span>
+                    <span class="n">results_p_boolean_criteria</span><span class="p">[</span><span class="n">i_criterion</span><span class="p">][</span><span class="s1">&#39;sup&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">for</span> <span class="n">i_criterion</span><span class="p">,</span> <span class="p">(</span><span class="n">criterion</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">numerical_criteria</span><span class="p">):</span>
+                <span class="n">answer</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">criterion</span><span class="p">)</span>
+                <span class="n">results_p_numerical_criteria</span><span class="p">[</span><span class="n">i_criterion</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">answer</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i_criterion</span><span class="p">,</span> <span class="n">criterion</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">special_candidates_criteria</span><span class="p">):</span>
+                <span class="n">answer</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">criterion</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">answer</span><span class="p">):</span>
+                    <span class="n">results_p_special_candidates_criteria</span><span class="p">[</span><span class="n">i_criterion</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">results_p_special_candidates_criteria</span><span class="p">[</span><span class="n">i_criterion</span><span class="p">][</span><span class="n">answer</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">for</span> <span class="n">i_criterion</span><span class="p">,</span> <span class="n">criterion</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">array_criteria</span><span class="p">):</span>
+                <span class="n">answer</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">criterion</span><span class="p">)</span>
+                <span class="n">results_p_array_criteria</span><span class="p">[</span><span class="n">i_criterion</span><span class="p">]</span> <span class="o">+=</span> <span class="n">answer</span>
+            <span class="k">for</span> <span class="n">i_criterion</span><span class="p">,</span> <span class="n">criterion</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">matrix_criteria</span><span class="p">):</span>
+                <span class="n">answer</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">criterion</span><span class="p">)</span>
+                <span class="n">results_p_matrix_criteria</span><span class="p">[</span><span class="n">i_criterion</span><span class="p">]</span> <span class="o">+=</span> <span class="n">answer</span>
+            <span class="c1"># Tests on the voting systems</span>
+            <span class="k">for</span> <span class="n">i_task</span><span class="p">,</span> <span class="p">(</span><span class="n">rule_class</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">voting_rule_tasks</span><span class="p">):</span>
+                <span class="n">election</span> <span class="o">=</span> <span class="n">rule_class</span><span class="p">(</span><span class="o">**</span><span class="n">options</span><span class="p">)(</span><span class="n">profile</span><span class="p">)</span>
+                <span class="c1"># The winner</span>
+                <span class="n">results_vs_winner</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">election</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="c1"># Result criteria</span>
+                <span class="k">for</span> <span class="n">i_criterion</span><span class="p">,</span> <span class="n">criterion</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">result_criteria</span><span class="p">):</span>
+                    <span class="n">answer</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">election</span><span class="p">,</span> <span class="n">criterion</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">equal_true</span><span class="p">(</span><span class="n">answer</span><span class="p">):</span>
+                        <span class="n">results_vs_result_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s1">&#39;inf&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                        <span class="n">results_vs_result_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s1">&#39;sup&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="k">elif</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">answer</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
+                        <span class="c1"># As of now, no result criterion can return `nan`.</span>
+                        <span class="n">results_vs_result_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s1">&#39;sup&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="c1"># Utility criteria</span>
+                <span class="k">for</span> <span class="n">i_criterion</span><span class="p">,</span> <span class="p">(</span><span class="n">criterion</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">utility_criteria</span><span class="p">):</span>
+                    <span class="n">answer</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">election</span><span class="p">,</span> <span class="n">criterion</span><span class="p">)</span>
+                    <span class="n">results_vs_utility_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">answer</span><span class="p">)</span>
+                <span class="c1"># Numerical criteria</span>
+                <span class="k">for</span> <span class="n">i_criterion</span><span class="p">,</span> <span class="n">criterion</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">numerical_criteria</span><span class="p">):</span>
+                    <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                    <span class="n">inf</span><span class="p">,</span> <span class="n">sup</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">election</span><span class="p">,</span> <span class="n">criterion</span><span class="p">)</span>
+                    <span class="n">t2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                    <span class="n">results_vs_numerical_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s1">&#39;time&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">t2</span> <span class="o">-</span> <span class="n">t1</span>
+                    <span class="n">results_vs_numerical_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s1">&#39;inf&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">inf</span>
+                    <span class="n">results_vs_numerical_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s1">&#39;sup&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">sup</span>
+                <span class="c1"># Manipulation criteria (by candidate)</span>
+                <span class="k">for</span> <span class="n">i_criterion</span><span class="p">,</span> <span class="n">criterion</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">manipulation_criteria_c</span><span class="p">):</span>
+                    <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                    <span class="n">answer</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">election</span><span class="p">,</span> <span class="n">criterion</span><span class="p">)</span>
+                    <span class="n">t2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                    <span class="n">results_vs_manipulation_criteria_c</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s1">&#39;time&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">t2</span> <span class="o">-</span> <span class="n">t1</span>
+                    <span class="n">results_vs_manipulation_criteria_c</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s1">&#39;inf&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">answer</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+                    <span class="n">results_vs_manipulation_criteria_c</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s1">&#39;sup&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">answer</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+                    <span class="n">results_vs_manipulation_criteria_c</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s1">&#39;sup&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">answer</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">n_iterations</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">log</span> <span class="o">=</span> <span class="n">election</span><span class="o">.</span><span class="n">log_</span><span class="p">(</span><span class="n">criterion</span><span class="p">)</span>
+                        <span class="n">results_vs_manipulation_criteria_c</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s1">&#39;log&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">log</span>
+                <span class="c1"># Manipulation criteria (Boolean)</span>
+                <span class="k">for</span> <span class="n">i_criterion</span><span class="p">,</span> <span class="n">criterion</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">manipulation_criteria</span><span class="p">):</span>
+                    <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                    <span class="n">answer</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">election</span><span class="p">,</span> <span class="n">criterion</span><span class="p">)</span>
+                    <span class="n">t2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                    <span class="n">results_vs_manipulation_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s1">&#39;time&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">t2</span> <span class="o">-</span> <span class="n">t1</span>
+                    <span class="k">if</span> <span class="n">equal_true</span><span class="p">(</span><span class="n">answer</span><span class="p">):</span>
+                        <span class="n">results_vs_manipulation_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s1">&#39;inf&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                        <span class="n">results_vs_manipulation_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s1">&#39;sup&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="k">elif</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">answer</span><span class="p">):</span>
+                        <span class="n">results_vs_manipulation_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s1">&#39;sup&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="k">if</span> <span class="n">n_iterations</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">log</span> <span class="o">=</span> <span class="n">election</span><span class="o">.</span><span class="n">log_</span><span class="p">(</span><span class="n">criterion</span><span class="p">)</span>
+                        <span class="n">results_vs_manipulation_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s1">&#39;log&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">log</span>
+            <span class="c1"># Report progression (or not)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">n_iterations</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">ping_period</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">n_iterations</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s1"> profiles analyzed&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Write results in csv</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Write results in csv files...&#39;</span><span class="p">)</span>
+        <span class="c1"># Results on profiles</span>
+        <span class="k">for</span> <span class="n">i_criterion</span><span class="p">,</span> <span class="n">criterion</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">boolean_criteria</span><span class="p">):</span>
+            <span class="n">lower</span> <span class="o">=</span> <span class="n">results_p_boolean_criteria</span><span class="p">[</span><span class="n">i_criterion</span><span class="p">][</span><span class="s1">&#39;inf&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span>
+            <span class="n">upper</span> <span class="o">=</span> <span class="n">results_p_boolean_criteria</span><span class="p">[</span><span class="n">i_criterion</span><span class="p">][</span><span class="s1">&#39;sup&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_df_to_csv_m</span><span class="p">(</span>
+                <span class="p">[</span><span class="s1">&#39;Profile&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">,</span> <span class="n">upper</span> <span class="o">-</span> <span class="n">lower</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_v</span><span class="p">,</span> <span class="n">n_c</span><span class="p">]</span>
+                <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_csv</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i_criterion</span><span class="p">,</span> <span class="p">(</span><span class="n">criterion</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">numerical_criteria</span><span class="p">):</span>
+            <span class="n">answer</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">results_p_numerical_criteria</span><span class="p">[</span><span class="n">i_criterion</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_df_to_csv_m</span><span class="p">([</span><span class="s1">&#39;Profile&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">answer</span><span class="p">,</span> <span class="n">answer</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_v</span><span class="p">,</span> <span class="n">n_c</span><span class="p">]</span>
+                              <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_csv</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i_criterion</span><span class="p">,</span> <span class="n">criterion</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">special_candidates_criteria</span><span class="p">):</span>
+            <span class="n">rate</span> <span class="o">=</span> <span class="n">results_p_special_candidates_criteria</span><span class="p">[</span><span class="n">i_criterion</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span>
+            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_c</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_df_to_csv_m</span><span class="p">(</span>
+                    <span class="p">[</span><span class="s1">&#39;Profile&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">labels_candidates</span><span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">rate</span><span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="n">rate</span><span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span><span class="p">,</span>
+                     <span class="n">n_v</span><span class="p">,</span> <span class="n">n_c</span><span class="p">]</span>
+                    <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_csv</span>
+                <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_df_to_csv_m</span><span class="p">(</span>
+                <span class="p">[</span><span class="s1">&#39;Profile&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="s1">&#39;None&#39;</span><span class="p">,</span> <span class="s1">&#39;None&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">rate</span><span class="p">[</span><span class="n">n_c</span><span class="p">],</span> <span class="n">rate</span><span class="p">[</span><span class="n">n_c</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span><span class="p">,</span>
+                 <span class="n">n_v</span><span class="p">,</span> <span class="n">n_c</span><span class="p">]</span>
+                <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_csv</span>
+            <span class="p">)</span>
+        <span class="k">for</span> <span class="n">i_criterion</span><span class="p">,</span> <span class="n">criterion</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">array_criteria</span><span class="p">):</span>
+            <span class="n">aver</span> <span class="o">=</span> <span class="n">results_p_array_criteria</span><span class="p">[</span><span class="n">i_criterion</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span>
+            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_c</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_df_to_csv_m</span><span class="p">(</span>
+                    <span class="p">[</span><span class="s1">&#39;Profile&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">labels_candidates</span><span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">aver</span><span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="n">aver</span><span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span><span class="p">,</span>
+                     <span class="n">n_v</span><span class="p">,</span> <span class="n">n_c</span><span class="p">]</span>
+                    <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_csv</span>
+                <span class="p">)</span>
+        <span class="k">for</span> <span class="n">i_criterion</span><span class="p">,</span> <span class="n">criterion</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">matrix_criteria</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_df_to_csv_d</span><span class="p">([</span><span class="n">criterion</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_df_to_csv_d</span><span class="p">(</span><span class="n">results_p_matrix_criteria</span><span class="p">[</span><span class="n">i_criterion</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span><span class="p">)</span>
+        <span class="c1"># Results on voting systems</span>
+        <span class="k">for</span> <span class="n">i_task</span><span class="p">,</span> <span class="p">(</span><span class="n">rule_class</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">voting_rule_tasks</span><span class="p">):</span>
+            <span class="c1"># Winner</span>
+            <span class="n">rate_win</span> <span class="o">=</span> <span class="n">results_vs_winner</span><span class="p">[</span><span class="n">i_task</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span>
+            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_c</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_df_to_csv_m</span><span class="p">(</span>
+                    <span class="p">[</span>
+                        <span class="n">rule_class</span><span class="o">.</span><span class="n">full_name</span><span class="p">,</span> <span class="n">rule_class</span><span class="o">.</span><span class="n">abbreviation</span><span class="p">,</span> <span class="n">rule_class</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+                        <span class="s1">&#39;Winner&#39;</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">labels_candidates</span><span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+                        <span class="n">rate_win</span><span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="n">rate_win</span><span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_v</span><span class="p">,</span> <span class="n">n_c</span>
+                    <span class="p">]</span>
+                    <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_csv</span>
+                <span class="p">)</span>
+            <span class="c1"># Result criteria</span>
+            <span class="k">for</span> <span class="n">i_criterion</span><span class="p">,</span> <span class="n">criterion</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">result_criteria</span><span class="p">):</span>
+                <span class="n">lower</span> <span class="o">=</span> <span class="n">results_vs_result_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s1">&#39;inf&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span>
+                <span class="n">upper</span> <span class="o">=</span> <span class="n">results_vs_result_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s1">&#39;sup&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_df_to_csv_m</span><span class="p">(</span>
+                    <span class="p">[</span><span class="n">rule_class</span><span class="o">.</span><span class="n">full_name</span><span class="p">,</span> <span class="n">rule_class</span><span class="o">.</span><span class="n">abbreviation</span><span class="p">,</span> <span class="n">rule_class</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+                     <span class="n">criterion</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">,</span> <span class="n">upper</span> <span class="o">-</span> <span class="n">lower</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_v</span><span class="p">,</span> <span class="n">n_c</span><span class="p">]</span>
+                    <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_csv</span>
+                <span class="p">)</span>
+            <span class="c1"># Manipulation criteria</span>
+            <span class="k">for</span> <span class="n">i_criterion</span><span class="p">,</span> <span class="n">criterion</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">manipulation_criteria</span><span class="p">):</span>
+                <span class="n">lower</span> <span class="o">=</span> <span class="n">results_vs_manipulation_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s1">&#39;inf&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span>
+                <span class="n">upper</span> <span class="o">=</span> <span class="n">results_vs_manipulation_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s1">&#39;sup&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span>
+                <span class="n">the_time</span> <span class="o">=</span> <span class="n">results_vs_manipulation_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s1">&#39;time&#39;</span><span class="p">]</span>
+                <span class="n">the_log</span> <span class="o">=</span> <span class="n">results_vs_manipulation_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s1">&#39;log&#39;</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_df_to_csv_m</span><span class="p">(</span>
+                    <span class="p">[</span>
+                        <span class="n">rule_class</span><span class="o">.</span><span class="n">full_name</span><span class="p">,</span> <span class="n">rule_class</span><span class="o">.</span><span class="n">abbreviation</span><span class="p">,</span> <span class="n">rule_class</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+                        <span class="n">criterion</span><span class="p">,</span> <span class="s1">&#39;any&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">the_log</span><span class="p">,</span> <span class="n">the_time</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">,</span> <span class="n">upper</span> <span class="o">-</span> <span class="n">lower</span><span class="p">,</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_v</span><span class="p">,</span> <span class="n">n_c</span>
+                    <span class="p">]</span>
+                    <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_csv</span>
+                <span class="p">)</span>
+            <span class="k">for</span> <span class="n">i_criterion</span><span class="p">,</span> <span class="n">criterion</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">manipulation_criteria_c</span><span class="p">):</span>
+                <span class="n">lower</span> <span class="o">=</span> <span class="n">results_vs_manipulation_criteria_c</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s1">&#39;inf&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span>
+                <span class="n">upper</span> <span class="o">=</span> <span class="n">results_vs_manipulation_criteria_c</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s1">&#39;sup&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span>
+                <span class="n">the_time</span> <span class="o">=</span> <span class="n">results_vs_manipulation_criteria_c</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s1">&#39;time&#39;</span><span class="p">]</span>
+                <span class="n">the_log</span> <span class="o">=</span> <span class="n">results_vs_manipulation_criteria_c</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s1">&#39;log&#39;</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_c</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_df_to_csv_m</span><span class="p">(</span>
+                        <span class="p">[</span>
+                            <span class="n">rule_class</span><span class="o">.</span><span class="n">full_name</span><span class="p">,</span> <span class="n">rule_class</span><span class="o">.</span><span class="n">abbreviation</span><span class="p">,</span> <span class="n">rule_class</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+                            <span class="n">criterion</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">labels_candidates</span><span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="n">the_log</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">lower</span><span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="n">upper</span><span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="n">upper</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">-</span> <span class="n">lower</span><span class="p">[</span><span class="n">c</span><span class="p">],</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_v</span><span class="p">,</span> <span class="n">n_c</span>
+                        <span class="p">]</span>
+                        <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_csv</span>
+                    <span class="p">)</span>
+                <span class="c1"># Indicate the time only once</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_df_to_csv_m</span><span class="p">(</span>
+                    <span class="p">[</span><span class="n">rule_class</span><span class="o">.</span><span class="n">full_name</span><span class="p">,</span> <span class="n">rule_class</span><span class="o">.</span><span class="n">abbreviation</span><span class="p">,</span> <span class="n">rule_class</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+                     <span class="n">criterion</span><span class="p">,</span> <span class="s1">&#39;any&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">the_log</span><span class="p">,</span> <span class="n">the_time</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_v</span><span class="p">,</span> <span class="n">n_c</span><span class="p">]</span>
+                    <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_csv</span>
+                <span class="p">)</span>
+            <span class="c1"># Utility criteria</span>
+            <span class="k">for</span> <span class="n">i_criterion</span><span class="p">,</span> <span class="p">(</span><span class="n">criterion</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">utility_criteria</span><span class="p">):</span>
+                <span class="n">answer</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">results_vs_utility_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_df_to_csv_m</span><span class="p">(</span>
+                    <span class="p">[</span><span class="n">rule_class</span><span class="o">.</span><span class="n">full_name</span><span class="p">,</span> <span class="n">rule_class</span><span class="o">.</span><span class="n">abbreviation</span><span class="p">,</span> <span class="n">rule_class</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+                     <span class="n">name</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">answer</span><span class="p">,</span> <span class="n">answer</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_v</span><span class="p">,</span> <span class="n">n_c</span><span class="p">]</span>
+                    <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_csv</span>
+                <span class="p">)</span>
+            <span class="c1"># Numerical criteria</span>
+            <span class="k">for</span> <span class="n">i_criterion</span><span class="p">,</span> <span class="n">criterion</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">numerical_criteria</span><span class="p">):</span>
+                <span class="n">lower</span> <span class="o">=</span> <span class="n">results_vs_numerical_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s1">&#39;inf&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span>
+                <span class="n">upper</span> <span class="o">=</span> <span class="n">results_vs_numerical_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s1">&#39;sup&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span>
+                <span class="n">the_time</span> <span class="o">=</span> <span class="n">results_vs_numerical_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s1">&#39;time&#39;</span><span class="p">]</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_df_to_csv_m</span><span class="p">(</span>
+                        <span class="p">[</span>
+                            <span class="n">rule_class</span><span class="o">.</span><span class="n">full_name</span><span class="p">,</span> <span class="n">rule_class</span><span class="o">.</span><span class="n">abbreviation</span><span class="p">,</span> <span class="n">rule_class</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+                            <span class="n">criterion</span><span class="p">,</span> <span class="s1">&#39;any&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">the_time</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">,</span> <span class="n">upper</span> <span class="o">-</span> <span class="n">lower</span><span class="p">,</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_v</span><span class="p">,</span> <span class="n">n_c</span>
+                        <span class="p">]</span>
+                        <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_csv</span>
+                    <span class="p">)</span>
+                <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
+                    <span class="c1"># This should not happen</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">criterion</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">lower</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">upper</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_m_en</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_m_fr</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_d_en</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_d_fr</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Simulation finished&#39;</span><span class="p">)</span></div>
+
+
+
+<span class="k">def</span> <span class="nf">my_float</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert floats in French format.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x: object</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    object</span>
+<span class="sd">        Same as the input, except for floats, which are converted to French format.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    If the input is a float, it is converted to French format (and with 6 digits):</span>
+
+<span class="sd">        &gt;&gt;&gt; my_float(3.14)</span>
+<span class="sd">        &#39;3,140000&#39;</span>
+
+<span class="sd">    Otherwise, return the input as it is:</span>
+
+<span class="sd">        &gt;&gt;&gt; my_float(&#39;3.14&#39;)</span>
+<span class="sd">        &#39;3.14&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="s1">&#39;</span><span class="si">%.6f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">x</span>
+
+
+<span class="k">def</span> <span class="nf">_df_to_csv</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">file_en</span><span class="p">,</span> <span class="n">file_fr</span><span class="p">):</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">path_or_buf</span><span class="o">=</span><span class="n">file_en</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">lineterminator</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">my_float</span><span class="p">)</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">path_or_buf</span><span class="o">=</span><span class="n">file_fr</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;;&#39;</span><span class="p">,</span> <span class="n">lineterminator</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, François Durand.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

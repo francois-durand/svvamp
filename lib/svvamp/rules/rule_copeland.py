@@ -29,6 +29,48 @@ class RuleCopeland(Rule):
     """
     Copeland rule
 
+    Options
+    -------
+        >>> RuleCopeland.print_options_parameters()
+        cm_option: ['fast', 'exact']. Default: 'fast'.
+        icm_option: ['exact']. Default: 'exact'.
+        iia_subset_maximum_size: is_number. Default: 2.
+        im_option: ['lazy', 'exact']. Default: 'lazy'.
+        tm_option: ['lazy', 'exact']. Default: 'exact'.
+        um_option: ['lazy', 'exact']. Default: 'lazy'.
+
+    Notes
+    -----
+    Select the candidate with most victories in the matrix of victories.
+
+    Copeland does not :attr:`meets_condorcet_c_ut_rel`:
+
+        >>> profile = Profile(preferences_ut=[
+        ...     [-0.5, -0.5, -1. ],
+        ...     [ 0. ,  0.5, -1. ],
+        ... ], preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [1, 0, 2],
+        ... ])
+        >>> RuleCopeland()(profile).w_
+        0
+        >>> profile.condorcet_winner_ut_rel
+        1
+
+    Copeland does not :attr:`meets_majority_favorite_c_ut_ctb`:
+
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 0. , -0.5, -1. ],
+        ...     [-0.5,  1. , -0.5],
+        ... ], preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [1, 2, 0],
+        ... ])
+        >>> RuleCopeland()(profile).w_
+        1
+        >>> profile.majority_favorite_ut_ctb
+        0
+
     Examples
     --------
         >>> profile = Profile(preferences_ut=[
@@ -256,36 +298,6 @@ class RuleCopeland(Rule):
         [0. 2. 3.]
         sufficient_coalition_size_cm =
         [0. 2. 3.]
-
-    Notes
-    -----
-    Copeland does not :attr:`meets_condorcet_c_ut_rel`:
-
-        >>> profile = Profile(preferences_ut=[
-        ...     [-0.5, -0.5, -1. ],
-        ...     [ 0. ,  0.5, -1. ],
-        ... ], preferences_rk=[
-        ...     [0, 1, 2],
-        ...     [1, 0, 2],
-        ... ])
-        >>> RuleCopeland()(profile).w_
-        0
-        >>> profile.condorcet_winner_ut_rel
-        1
-
-    Copeland does not :attr:`meets_majority_favorite_c_ut_ctb`:
-
-        >>> profile = Profile(preferences_ut=[
-        ...     [ 0. , -0.5, -1. ],
-        ...     [-0.5,  1. , -0.5],
-        ... ], preferences_rk=[
-        ...     [0, 1, 2],
-        ...     [1, 2, 0],
-        ... ])
-        >>> RuleCopeland()(profile).w_
-        1
-        >>> profile.majority_favorite_ut_ctb
-        0
     """
 
     full_name = 'Copeland'

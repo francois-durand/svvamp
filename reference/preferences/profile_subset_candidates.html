@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ProfileSubsetCandidates &mdash; SVVAMP 0.9.1 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=9dc39874"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="ProfileUM" href="profile_um.html" />
+    <link rel="prev" title="ProfileFromFile" href="profile_from_file.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            SVVAMP
+          </a>
+              <div class="version">
+                0.9.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">SVVAMP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#profiles">Profiles</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="profile.html">Profile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="profile_from_file.html">ProfileFromFile</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">ProfileSubsetCandidates</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.ProfileSubsetCandidates"><code class="docutils literal notranslate"><span class="pre">ProfileSubsetCandidates</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="profile_um.html">ProfileUM</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#generators-of-profiles">Generators of Profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#plurality-elimination-engines">Plurality Elimination Engines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#voting-rules">Voting Rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#meta">Meta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#utils">Utils</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../history.html">History</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">SVVAMP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Reference</a></li>
+      <li class="breadcrumb-item active">ProfileSubsetCandidates</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/reference/preferences/profile_subset_candidates.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="profilesubsetcandidates">
+<h1>ProfileSubsetCandidates<a class="headerlink" href="#profilesubsetcandidates" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="svvamp.ProfileSubsetCandidates">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">svvamp.</span></span><span class="sig-name descname"><span class="pre">ProfileSubsetCandidates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent_profile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">candidates_subset</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/preferences/profile_subset_candidates.html#ProfileSubsetCandidates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.ProfileSubsetCandidates" title="Link to this definition"></a></dt>
+<dd><p>Sub-profile for a subset of the original candidates.</p>
+<p>This class is used internally by SVVAMP. It is not intended for the end user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent_profile</strong> (<a class="reference internal" href="profile.html#svvamp.Profile" title="svvamp.Profile"><em>Profile</em></a>) – The initial profile.</p></li>
+<li><p><strong>candidates_subset</strong> (<em>list</em>) – Normally a list of candidates indexes, like [0, 2, 3], but a list of booleans like
+[True False True True False] should work as well. Candidates belonging to the subset.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>N.B.: if candidates_subset is a list of integers, it must be sorted in ascending order.</p>
+<p>N.B.: in this object, candidates are re-numbered, for example [0, 1, 2]. So, if the winner of an election is w in
+the sub-profile, it corresponds to candidates_subset[w] in the parent profile (supposing that candidates_subset is
+given as a list of indexes, not as a list of booleans).</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">initialize_random_seeds</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">preferences_ut_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parent_profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="n">preferences_ut_test</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">ProfileSubsetCandidates</span><span class="p">(</span><span class="n">parent_profile</span><span class="o">=</span><span class="n">parent_profile</span><span class="p">,</span> <span class="n">candidates_subset</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">labels_candidates</span>
+<span class="go">[&#39;0&#39;, &#39;1&#39;, &#39;2&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">preferences_borda_ut</span>
+<span class="go">array([[2. , 0. , 1. ],</span>
+<span class="go">       [2. , 0. , 1. ],</span>
+<span class="go">       [1. , 0. , 2. ],</span>
+<span class="go">       [0. , 1.5, 1.5],</span>
+<span class="go">       [0. , 2. , 1. ],</span>
+<span class="go">       [1.5, 0. , 1.5],</span>
+<span class="go">       [0. , 1. , 2. ],</span>
+<span class="go">       [0.5, 0.5, 2. ],</span>
+<span class="go">       [1.5, 1.5, 0. ],</span>
+<span class="go">       [1. , 0. , 2. ]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">matrix_duels_ut</span>
+<span class="go">array([[0, 5, 3],</span>
+<span class="go">       [3, 0, 2],</span>
+<span class="go">       [6, 7, 0]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">matrix_duels_rk</span>
+<span class="go">array([[0, 6, 3],</span>
+<span class="go">       [4, 0, 2],</span>
+<span class="go">       [7, 8, 0]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">matrix_victories_ut_abs</span>
+<span class="go">array([[0. , 0.5, 0. ],</span>
+<span class="go">       [0. , 0. , 0. ],</span>
+<span class="go">       [1. , 1. , 0. ]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">matrix_victories_ut_abs_ctb</span>
+<span class="go">array([[0., 1., 0.],</span>
+<span class="go">       [0., 0., 0.],</span>
+<span class="go">       [1., 1., 0.]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">matrix_victories_ut_rel</span>
+<span class="go">array([[0., 1., 0.],</span>
+<span class="go">       [0., 0., 0.],</span>
+<span class="go">       [1., 1., 0.]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">matrix_victories_ut_rel_ctb</span>
+<span class="go">array([[0., 1., 0.],</span>
+<span class="go">       [0., 0., 0.],</span>
+<span class="go">       [1., 1., 0.]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">matrix_victories_rk</span>
+<span class="go">array([[0., 1., 0.],</span>
+<span class="go">       [0., 0., 0.],</span>
+<span class="go">       [1., 1., 0.]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">matrix_victories_rk_ctb</span>
+<span class="go">array([[0., 1., 0.],</span>
+<span class="go">       [0., 0., 0.],</span>
+<span class="go">       [1., 1., 0.]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">total_utility_c</span>
+<span class="go">array([ 2, -8,  6])</span>
+</pre></div>
+</div>
+<p>Instead, the subset of candidates can be given by a list of Booleans:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">ProfileSubsetCandidates</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">parent_profile</span><span class="o">=</span><span class="n">parent_profile</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">candidates_subset</span><span class="o">=</span><span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">]</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">n_c</span>
+<span class="go">3</span>
+</pre></div>
+</div>
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.ProfileSubsetCandidates.labels_candidates">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">labels_candidates</span></span><a class="headerlink" href="#svvamp.ProfileSubsetCandidates.labels_candidates" title="Link to this definition"></a></dt>
+<dd><p>List of <code class="xref py py-attr docutils literal notranslate"><span class="pre">n_c</span></code> strings (names of the candidates).</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.ProfileSubsetCandidates.matrix_duels_rk">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">matrix_duels_rk</span></span><a class="headerlink" href="#svvamp.ProfileSubsetCandidates.matrix_duels_rk" title="Link to this definition"></a></dt>
+<dd><p>2d array of integers. <code class="docutils literal notranslate"><span class="pre">matrix_duels_rk[c,</span> <span class="pre">d]</span></code> is the number of voters who rank candidate <code class="docutils literal notranslate"><span class="pre">c</span></code> before
+<code class="docutils literal notranslate"><span class="pre">d</span></code> (in the sense of <code class="xref py py-attr docutils literal notranslate"><span class="pre">preferences_rk</span></code>). By convention, diagonal coefficients are
+set to 0.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">svvamp</span> <span class="kn">import</span> <span class="n">Profile</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_rk</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">matrix_duels_rk</span>
+<span class="go">array([[0, 2, 2],</span>
+<span class="go">       [0, 0, 2],</span>
+<span class="go">       [0, 0, 0]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.ProfileSubsetCandidates.matrix_duels_ut">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">matrix_duels_ut</span></span><a class="headerlink" href="#svvamp.ProfileSubsetCandidates.matrix_duels_ut" title="Link to this definition"></a></dt>
+<dd><p>2d array of integers. <code class="docutils literal notranslate"><span class="pre">matrix_duels_ut[c,</span> <span class="pre">d]</span></code> is the number of voters who have a strictly greater
+utility for <code class="docutils literal notranslate"><span class="pre">c</span></code> than for <code class="docutils literal notranslate"><span class="pre">d</span></code>. By convention, diagonal coefficients are set to <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">svvamp</span> <span class="kn">import</span> <span class="n">Profile</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_rk</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">matrix_duels_ut</span>
+<span class="go">array([[0, 2, 2],</span>
+<span class="go">       [0, 0, 2],</span>
+<span class="go">       [0, 0, 0]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.ProfileSubsetCandidates.matrix_victories_rk">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">matrix_victories_rk</span></span><a class="headerlink" href="#svvamp.ProfileSubsetCandidates.matrix_victories_rk" title="Link to this definition"></a></dt>
+<dd><p>2d array of values in {0, 0.5, 1}. Matrix of victories based on <code class="xref py py-attr docutils literal notranslate"><span class="pre">matrix_duels_rk</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">matrix_victories_rk[c,</span> <span class="pre">d]</span></code> is:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>1   iff <code class="docutils literal notranslate"><span class="pre">matrix_duels_rk[c,</span> <span class="pre">d]</span> <span class="pre">&gt;</span> <span class="pre">matrix_duels_rk[d,</span> <span class="pre">c]</span></code>, i.e. iff <code class="docutils literal notranslate"><span class="pre">matrix_duels_rk[c,</span> <span class="pre">d]</span> <span class="pre">&gt;</span> <span class="pre">V</span> <span class="pre">/</span> <span class="pre">2</span></code>.</p></li>
+<li><p>0.5 iff <code class="docutils literal notranslate"><span class="pre">matrix_duels_rk[c,</span> <span class="pre">d]</span> <span class="pre">=</span> <span class="pre">matrix_duels_rk[d,</span> <span class="pre">c]</span></code>, i.e. iff <code class="docutils literal notranslate"><span class="pre">matrix_duels_rk[c,</span> <span class="pre">d]</span> <span class="pre">=</span> <span class="pre">V</span> <span class="pre">/</span> <span class="pre">2</span></code>.</p></li>
+<li><p>0   iff <code class="docutils literal notranslate"><span class="pre">matrix_duels_rk[c,</span> <span class="pre">d]</span> <span class="pre">&lt;</span> <span class="pre">matrix_duels_rk[d,</span> <span class="pre">c]</span></code>, i.e. iff <code class="docutils literal notranslate"><span class="pre">matrix_duels_rk[c,</span> <span class="pre">d]</span> <span class="pre">&lt;</span> <span class="pre">V</span> <span class="pre">/</span> <span class="pre">2</span></code>.</p></li>
+</ul>
+</div></blockquote>
+<p>By convention, diagonal coefficients are set to 0.</p>
+<p class="rubric">Examples</p>
+<p>A victory:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_rk</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">matrix_victories_rk</span>
+<span class="go">array([[0., 1.],</span>
+<span class="go">       [0., 0.]])</span>
+</pre></div>
+</div>
+<p>A tie:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_rk</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">matrix_victories_rk</span>
+<span class="go">array([[0. , 0.5],</span>
+<span class="go">       [0.5, 0. ]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.ProfileSubsetCandidates.matrix_victories_rk_ctb">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">matrix_victories_rk_ctb</span></span><a class="headerlink" href="#svvamp.ProfileSubsetCandidates.matrix_victories_rk_ctb" title="Link to this definition"></a></dt>
+<dd><p>2d array of values in {0, 1}. Matrix of victories based on <code class="xref py py-attr docutils literal notranslate"><span class="pre">matrix_duels_rk</span></code>,
+with tie-breaks on candidates.</p>
+<p><code class="docutils literal notranslate"><span class="pre">matrix_victories_rk_ctb[c,</span> <span class="pre">d]</span></code> is:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>1   iff <code class="docutils literal notranslate"><span class="pre">matrix_duels_rk[c,</span> <span class="pre">d]</span> <span class="pre">&gt;</span> <span class="pre">matrix_duels_rk[d,</span> <span class="pre">c]</span></code>, or
+<code class="docutils literal notranslate"><span class="pre">matrix_duels_rk[c,</span> <span class="pre">d]</span> <span class="pre">=</span> <span class="pre">matrix_duels_rk[d,</span> <span class="pre">c]</span></code> and <code class="docutils literal notranslate"><span class="pre">c</span> <span class="pre">&lt;</span> <span class="pre">d</span></code>.</p></li>
+<li><p>0   iff <code class="docutils literal notranslate"><span class="pre">matrix_duels_rk[c,</span> <span class="pre">d]</span> <span class="pre">&lt;</span> <span class="pre">matrix_duels_rk[d,</span> <span class="pre">c]</span></code>, or
+<code class="docutils literal notranslate"><span class="pre">matrix_duels_rk[c,</span> <span class="pre">d]</span> <span class="pre">=</span> <span class="pre">matrix_duels_rk[d,</span> <span class="pre">c]</span></code> and <code class="docutils literal notranslate"><span class="pre">d</span> <span class="pre">&lt;</span> <span class="pre">c</span></code>.</p></li>
+</ul>
+</div></blockquote>
+<p>By convention, diagonal coefficients are set to 0.</p>
+<p class="rubric">Examples</p>
+<p>A victory (without tie-breaking):</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_rk</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">matrix_victories_rk_ctb</span>
+<span class="go">array([[0., 1.],</span>
+<span class="go">       [0., 0.]])</span>
+</pre></div>
+</div>
+<p>A victory with tie-breaking:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_rk</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">matrix_victories_rk_ctb</span>
+<span class="go">array([[0., 1.],</span>
+<span class="go">       [0., 0.]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.ProfileSubsetCandidates.matrix_victories_ut_abs">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">matrix_victories_ut_abs</span></span><a class="headerlink" href="#svvamp.ProfileSubsetCandidates.matrix_victories_ut_abs" title="Link to this definition"></a></dt>
+<dd><p>2d array of values in {0, 0.5, 1}. Matrix of absolute victories based on
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">matrix_duels_ut</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">matrix_victories_ut_abs[c,</span> <span class="pre">d]</span></code> is:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>1   iff <code class="docutils literal notranslate"><span class="pre">matrix_duels_ut[c,</span> <span class="pre">d]</span> <span class="pre">&gt;</span> <span class="pre">V</span> <span class="pre">/</span> <span class="pre">2</span></code>.</p></li>
+<li><p>0.5 iff <code class="docutils literal notranslate"><span class="pre">matrix_duels_ut[c,</span> <span class="pre">d]</span> <span class="pre">=</span> <span class="pre">V</span> <span class="pre">/</span> <span class="pre">2</span></code>.</p></li>
+<li><p>0   iff <code class="docutils literal notranslate"><span class="pre">matrix_duels_ut[c,</span> <span class="pre">d]</span> <span class="pre">&lt;</span> <span class="pre">V</span> <span class="pre">/</span> <span class="pre">2</span></code>.</p></li>
+</ul>
+</div></blockquote>
+<p>By convention, diagonal coefficients are set to 0.</p>
+<p class="rubric">Examples</p>
+<p>A victory:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">matrix_victories_ut_abs</span>
+<span class="go">array([[0., 1.],</span>
+<span class="go">       [0., 0.]])</span>
+</pre></div>
+</div>
+<p>A half-victory, but the other candidate has lost:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">42</span><span class="p">,</span> <span class="mi">42</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">matrix_victories_ut_abs</span>
+<span class="go">array([[0. , 0.5],</span>
+<span class="go">       [0. , 0. ]])</span>
+</pre></div>
+</div>
+<p>A half-victory for each candidate:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">matrix_victories_ut_abs</span>
+<span class="go">array([[0. , 0.5],</span>
+<span class="go">       [0.5, 0. ]])</span>
+</pre></div>
+</div>
+<p>A defeat for each candidate:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">matrix_victories_ut_abs</span>
+<span class="go">array([[0., 0.],</span>
+<span class="go">       [0., 0.]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.ProfileSubsetCandidates.matrix_victories_ut_abs_ctb">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">matrix_victories_ut_abs_ctb</span></span><a class="headerlink" href="#svvamp.ProfileSubsetCandidates.matrix_victories_ut_abs_ctb" title="Link to this definition"></a></dt>
+<dd><p>2d array of values in {0, 1}. Matrix of absolute victories based on
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">matrix_duels_ut</span></code>, with tie-breaks on candidates.</p>
+<p><code class="docutils literal notranslate"><span class="pre">matrix_victories_ut_abs_ctb[c,</span> <span class="pre">d]</span></code> is:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>1   iff <code class="docutils literal notranslate"><span class="pre">matrix_duels_ut[c,</span> <span class="pre">d]</span> <span class="pre">&gt;</span> <span class="pre">V</span> <span class="pre">/</span> <span class="pre">2</span></code>, or <code class="docutils literal notranslate"><span class="pre">matrix_duels_ut[c,</span> <span class="pre">d]</span> <span class="pre">=</span> <span class="pre">V</span> <span class="pre">/</span> <span class="pre">2</span></code> and <code class="docutils literal notranslate"><span class="pre">c</span> <span class="pre">&lt;</span> <span class="pre">d</span></code>.</p></li>
+<li><p>0   iff <code class="docutils literal notranslate"><span class="pre">matrix_duels_ut[c,</span> <span class="pre">d]</span> <span class="pre">&lt;</span> <span class="pre">V</span> <span class="pre">/</span> <span class="pre">2</span></code>, or <code class="docutils literal notranslate"><span class="pre">matrix_duels_ut[c,</span> <span class="pre">d]</span> <span class="pre">=</span> <span class="pre">V</span> <span class="pre">/</span> <span class="pre">2</span></code> and <code class="docutils literal notranslate"><span class="pre">d</span> <span class="pre">&lt;</span> <span class="pre">c</span></code>.</p></li>
+</ul>
+</div></blockquote>
+<p>By convention, diagonal coefficients are set to 0.</p>
+<p class="rubric">Examples</p>
+<p>A victory (without tie-breaking):</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">matrix_victories_ut_abs_ctb</span>
+<span class="go">array([[0., 1.],</span>
+<span class="go">       [0., 0.]])</span>
+</pre></div>
+</div>
+<p>A victory with tie-breaking:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">matrix_victories_ut_abs_ctb</span>
+<span class="go">array([[0., 1.],</span>
+<span class="go">       [0., 0.]])</span>
+</pre></div>
+</div>
+<p>Another case of victory with tie-breaking:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">42</span><span class="p">,</span> <span class="mi">42</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">matrix_victories_ut_abs_ctb</span>
+<span class="go">array([[0., 1.],</span>
+<span class="go">       [0., 0.]])</span>
+</pre></div>
+</div>
+<p>A defeat for each candidate:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">matrix_victories_ut_abs_ctb</span>
+<span class="go">array([[0., 0.],</span>
+<span class="go">       [0., 0.]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.ProfileSubsetCandidates.matrix_victories_ut_rel">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">matrix_victories_ut_rel</span></span><a class="headerlink" href="#svvamp.ProfileSubsetCandidates.matrix_victories_ut_rel" title="Link to this definition"></a></dt>
+<dd><p>2d array of values in {0, 0.5, 1}. Matrix of relative victories based on
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">matrix_duels_ut</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">matrix_victories_ut_rel[c,</span> <span class="pre">d]</span></code> is:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>1   iff <code class="docutils literal notranslate"><span class="pre">matrix_duels_ut[c,</span> <span class="pre">d]</span> <span class="pre">&gt;</span> <span class="pre">matrix_duels_ut[d,</span> <span class="pre">c]</span></code>.</p></li>
+<li><p>0.5 iff <code class="docutils literal notranslate"><span class="pre">matrix_duels_ut[c,</span> <span class="pre">d]</span> <span class="pre">=</span> <span class="pre">matrix_duels_ut[d,</span> <span class="pre">c]</span></code>.</p></li>
+<li><p>0   iff <code class="docutils literal notranslate"><span class="pre">matrix_duels_ut[c,</span> <span class="pre">d]</span> <span class="pre">&lt;</span> <span class="pre">matrix_duels_ut[d,</span> <span class="pre">c]</span></code>.</p></li>
+</ul>
+</div></blockquote>
+<p>By convention, diagonal coefficients are set to 0.</p>
+<p class="rubric">Examples</p>
+<p>A relative victory (which is not an absolute victory):</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">matrix_victories_ut_rel</span>
+<span class="go">array([[0., 1.],</span>
+<span class="go">       [0., 0.]])</span>
+</pre></div>
+</div>
+<p>A tie:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">matrix_victories_ut_rel</span>
+<span class="go">array([[0. , 0.5],</span>
+<span class="go">       [0.5, 0. ]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.ProfileSubsetCandidates.matrix_victories_ut_rel_ctb">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">matrix_victories_ut_rel_ctb</span></span><a class="headerlink" href="#svvamp.ProfileSubsetCandidates.matrix_victories_ut_rel_ctb" title="Link to this definition"></a></dt>
+<dd><p>2d array of values in {0, 1}. Matrix of relative victories based on
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">matrix_duels_ut</span></code>, with tie-breaks on candidates.</p>
+<p><code class="docutils literal notranslate"><span class="pre">matrix_victories_ut_rel_ctb[c,</span> <span class="pre">d]</span></code> is:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>1   iff <code class="docutils literal notranslate"><span class="pre">matrix_duels_ut[c,</span> <span class="pre">d]</span> <span class="pre">&gt;</span> <span class="pre">matrix_duels_ut[d,</span> <span class="pre">c]</span></code>, or
+<code class="docutils literal notranslate"><span class="pre">matrix_duels_ut[c,</span> <span class="pre">d]</span> <span class="pre">=</span> <span class="pre">matrix_duels_ut[d,</span> <span class="pre">c]</span></code> and <code class="docutils literal notranslate"><span class="pre">c</span> <span class="pre">&lt;</span> <span class="pre">d</span></code>.</p></li>
+<li><p>0   iff <code class="docutils literal notranslate"><span class="pre">matrix_duels_ut[c,</span> <span class="pre">d]</span> <span class="pre">&lt;</span> <span class="pre">matrix_duels_ut[d,</span> <span class="pre">c]</span></code>, or
+<code class="docutils literal notranslate"><span class="pre">matrix_duels_ut[c,</span> <span class="pre">d]</span> <span class="pre">=</span> <span class="pre">matrix_duels_ut[d,</span> <span class="pre">c]</span></code> and <code class="docutils literal notranslate"><span class="pre">d</span> <span class="pre">&lt;</span> <span class="pre">c</span></code>.</p></li>
+</ul>
+</div></blockquote>
+<p>By convention, diagonal coefficients are set to 0.</p>
+<p class="rubric">Examples</p>
+<p>A relative victory (without tie-breaking):</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">matrix_victories_ut_rel_ctb</span>
+<span class="go">array([[0., 1.],</span>
+<span class="go">       [0., 0.]])</span>
+</pre></div>
+</div>
+<p>A relative victory with tie-breaking:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">matrix_victories_ut_rel_ctb</span>
+<span class="go">array([[0., 1.],</span>
+<span class="go">       [0., 0.]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.ProfileSubsetCandidates.n_c">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n_c</span></span><a class="headerlink" href="#svvamp.ProfileSubsetCandidates.n_c" title="Link to this definition"></a></dt>
+<dd><p>Number of candidates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.ProfileSubsetCandidates.n_v">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n_v</span></span><a class="headerlink" href="#svvamp.ProfileSubsetCandidates.n_v" title="Link to this definition"></a></dt>
+<dd><p>Number of voters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.ProfileSubsetCandidates.preferences_borda_rk">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">preferences_borda_rk</span></span><a class="headerlink" href="#svvamp.ProfileSubsetCandidates.preferences_borda_rk" title="Link to this definition"></a></dt>
+<dd><p>2d array of integers. <code class="docutils literal notranslate"><span class="pre">preferences_borda_rk[v,</span> <span class="pre">c]</span></code> gains 1 point for each candidate <code class="docutils literal notranslate"><span class="pre">d</span></code> such that
+voter <code class="docutils literal notranslate"><span class="pre">v</span></code> ranks <code class="docutils literal notranslate"><span class="pre">c</span></code> before <code class="docutils literal notranslate"><span class="pre">d</span></code>. So, these Borda scores are between <code class="docutils literal notranslate"><span class="pre">0</span></code> and <code class="docutils literal notranslate"><span class="pre">C</span> <span class="pre">-</span> <span class="pre">1</span></code>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.ProfileSubsetCandidates.preferences_borda_ut">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">preferences_borda_ut</span></span><a class="headerlink" href="#svvamp.ProfileSubsetCandidates.preferences_borda_ut" title="Link to this definition"></a></dt>
+<dd><p>2d array of floats. <code class="docutils literal notranslate"><span class="pre">preferences_borda_ut[v,</span> <span class="pre">c]</span></code> gains 1 point for each <code class="docutils literal notranslate"><span class="pre">d</span></code> such that <code class="docutils literal notranslate"><span class="pre">v</span></code> strictly
+prefers <code class="docutils literal notranslate"><span class="pre">c</span></code> to <code class="docutils literal notranslate"><span class="pre">d</span></code> (in the sense of utilities), and 0.5 point for each <code class="docutils literal notranslate"><span class="pre">d</span></code> such that <code class="docutils literal notranslate"><span class="pre">v</span></code> is
+indifferent between <code class="docutils literal notranslate"><span class="pre">c</span></code> and <code class="docutils literal notranslate"><span class="pre">d</span></code>. So, these Borda scores are between <code class="docutils literal notranslate"><span class="pre">0</span></code> and <code class="docutils literal notranslate"><span class="pre">C</span> <span class="pre">-</span> <span class="pre">1</span></code>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.ProfileSubsetCandidates.preferences_rk">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">preferences_rk</span></span><a class="headerlink" href="#svvamp.ProfileSubsetCandidates.preferences_rk" title="Link to this definition"></a></dt>
+<dd><p>2d array of integers. <code class="docutils literal notranslate"><span class="pre">preferences_rk[v,</span> <span class="pre">k]</span></code> is the candidate at rank <code class="docutils literal notranslate"><span class="pre">k</span></code> for voter <code class="docutils literal notranslate"><span class="pre">v</span></code>. For
+example, <code class="docutils literal notranslate"><span class="pre">preferences_rk[v,</span> <span class="pre">0]</span></code> is <code class="docutils literal notranslate"><span class="pre">v</span></code>’s preferred candidate.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.ProfileSubsetCandidates.preferences_ut">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">preferences_ut</span></span><a class="headerlink" href="#svvamp.ProfileSubsetCandidates.preferences_ut" title="Link to this definition"></a></dt>
+<dd><p>2d array of floats. <code class="docutils literal notranslate"><span class="pre">preferences_ut[v,</span> <span class="pre">c]</span></code> is the utility of  candidate <code class="docutils literal notranslate"><span class="pre">c</span></code> as seen by voter <code class="docutils literal notranslate"><span class="pre">v</span></code>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.ProfileSubsetCandidates.total_utility_c">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">total_utility_c</span></span><a class="headerlink" href="#svvamp.ProfileSubsetCandidates.total_utility_c" title="Link to this definition"></a></dt>
+<dd><p>1d array of numbers. <code class="docutils literal notranslate"><span class="pre">total_utility_c[c]</span></code> is the total utility for candidate <code class="docutils literal notranslate"><span class="pre">c</span></code> (i.e. the sum of
+<code class="docutils literal notranslate"><span class="pre">c</span></code>’s column in matrix <code class="xref py py-attr docutils literal notranslate"><span class="pre">preferences_ut</span></code>).</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">svvamp</span> <span class="kn">import</span> <span class="n">Profile</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">total_utility_c</span>
+<span class="go">array([ 9, 11,  3])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="profile_from_file.html" class="btn btn-neutral float-left" title="ProfileFromFile" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="profile_um.html" class="btn btn-neutral float-right" title="ProfileUM" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, François Durand.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

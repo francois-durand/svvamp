@@ -115,6 +115,47 @@
 <span class="k">class</span> <span class="nc">RuleMaximin</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Maximin method.</span>
 
+<span class="sd">    Options</span>
+<span class="sd">    -------</span>
+<span class="sd">        &gt;&gt;&gt; RuleMaximin.print_options_parameters()</span>
+<span class="sd">        cm_option: [&#39;faster&#39;, &#39;fast&#39;, &#39;exact&#39;]. Default: &#39;fast&#39;.</span>
+<span class="sd">        icm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        iia_subset_maximum_size: is_number. Default: 2.</span>
+<span class="sd">        im_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        tm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        um_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    Candidate ``c``&#39;s score is the minimum of the row :attr:`matrix_duels_rk`\ ``[c, :]`` (except the diagonal term),</span>
+<span class="sd">    i.e. the result of candidate ``c`` for her worst duel. The candidate with highest score is declared the winner.</span>
+<span class="sd">    In case of a tie, the candidate with lowest index wins.</span>
+
+<span class="sd">    This method meets the Condorcet criterion.</span>
+
+<span class="sd">    * :meth:`is_cm_`: Deciding CM is NP-complete, even for 2 manipulators.</span>
+
+<span class="sd">        * :attr:`cm_option` = ``&#39;faster&#39;``: Zuckerman et al. (2011) (cf. below). The difference with option ``fast`` is</span>
+<span class="sd">          that, if CM is proven possible or impossible, we optimize the bounds only based on UM, and not on CM. Hence</span>
+<span class="sd">          this option is as precise as ``fast`` to compute ``is_cm_``, but less precise for the bounds</span>
+<span class="sd">          ``necessary_coalition_size_cm_`` and ``sufficient_coalition_size_cm_``.</span>
+<span class="sd">        * :attr:`cm_option` = ``&#39;fast&#39;``: Zuckerman et al. (2011). This approximation algorithm is polynomial and has</span>
+<span class="sd">          a multiplicative factor of error of 5/3 on the number of manipulators needed.</span>
+<span class="sd">        * :attr:`cm_option` = ``&#39;exact&#39;``: Non-polynomial algorithm from superclass :class:`Rule`.</span>
+
+<span class="sd">    * :meth:`is_icm_`: Exact in polynomial time.</span>
+<span class="sd">    * :meth:`is_im_`: Exact in polynomial time.</span>
+<span class="sd">    * :meth:`is_iia_`: Exact in polynomial time.</span>
+<span class="sd">    * :meth:`is_tm_`: Exact in polynomial time.</span>
+<span class="sd">    * :meth:`is_um_`: Exact in polynomial time.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    &#39;Complexity of Unweighted Coalitional Manipulation under Some Common Voting Rules&#39;, Lirong Xia et al., 2009.</span>
+
+<span class="sd">    &#39;An algorithm for the coalitional manipulation problem under Maximin&#39;, Michael Zuckerman, Omer Lev and</span>
+<span class="sd">    Jeffrey S. Rosenschein, 2011.</span>
+
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
@@ -342,37 +383,6 @@
 <span class="sd">        [0. 2. 3.]</span>
 <span class="sd">        sufficient_coalition_size_cm =</span>
 <span class="sd">        [0. 2. 3.]</span>
-
-<span class="sd">    Notes</span>
-<span class="sd">    -----</span>
-<span class="sd">    Candidate ``c``&#39;s score is the minimum of the row :attr:`matrix_duels_rk`\ ``[c, :]`` (except the diagonal term),</span>
-<span class="sd">    i.e. the result of candidate ``c`` for her worst duel. The candidate with highest score is declared the winner.</span>
-<span class="sd">    In case of a tie, the candidate with lowest index wins.</span>
-
-<span class="sd">    This method meets the Condorcet criterion.</span>
-
-<span class="sd">    * :meth:`is_cm_`: Deciding CM is NP-complete, even for 2 manipulators.</span>
-
-<span class="sd">        * :attr:`cm_option` = ``&#39;faster&#39;``: Zuckerman et al. (2011) (cf. below). The difference with option ``fast`` is</span>
-<span class="sd">          that, if CM is proven possible or impossible, we optimize the bounds only based on UM, and not on CM. Hence</span>
-<span class="sd">          this option is as precise as ``fast`` to compute ``is_cm_``, but less precise for the bounds</span>
-<span class="sd">          ``necessary_coalition_size_cm_`` and ``sufficient_coalition_size_cm_``.</span>
-<span class="sd">        * :attr:`cm_option` = ``&#39;fast&#39;``: Zuckerman et al. (2011). This approximation algorithm is polynomial and has</span>
-<span class="sd">          a multiplicative factor of error of 5/3 on the number of manipulators needed.</span>
-<span class="sd">        * :attr:`cm_option` = ``&#39;exact&#39;``: Non-polynomial algorithm from superclass :class:`Rule`.</span>
-
-<span class="sd">    * :meth:`is_icm_`: Exact in polynomial time.</span>
-<span class="sd">    * :meth:`is_im_`: Exact in polynomial time.</span>
-<span class="sd">    * :meth:`is_iia_`: Exact in polynomial time.</span>
-<span class="sd">    * :meth:`is_tm_`: Exact in polynomial time.</span>
-<span class="sd">    * :meth:`is_um_`: Exact in polynomial time.</span>
-
-<span class="sd">    References</span>
-<span class="sd">    ----------</span>
-<span class="sd">    &#39;Complexity of Unweighted Coalitional Manipulation under Some Common Voting Rules&#39;, Lirong Xia et al., 2009.</span>
-
-<span class="sd">    &#39;An algorithm for the coalitional manipulation problem under Maximin&#39;, Michael Zuckerman, Omer Lev and</span>
-<span class="sd">    Jeffrey S. Rosenschein, 2011.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">full_name</span> <span class="o">=</span> <span class="s1">&#39;Maximin&#39;</span>

@@ -39,6 +39,18 @@ class RuleApproval(Rule):
     approval_threshold : number
         Number (default 0). Utility above which a sincere voter approves of a candidate.
 
+    Options
+    -------
+        >>> RuleApproval.print_options_parameters()
+        approval_comparator: ['>', '>=']. Default: '>'.
+        approval_threshold: is_number. Default: 0.
+        cm_option: ['exact']. Default: 'exact'.
+        icm_option: ['exact']. Default: 'exact'.
+        iia_subset_maximum_size: is_number. Default: 2.
+        im_option: ['exact']. Default: 'exact'.
+        tm_option: ['exact']. Default: 'exact'.
+        um_option: ['exact']. Default: 'exact'.
+
     Notes
     -----
     Each voter may vote for any number of candidates. The candidate with most votes is declared the winner. In case

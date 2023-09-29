@@ -115,6 +115,72 @@
 <span class="k">class</span> <span class="nc">RuleSchulze</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Schulze method.</span>
 
+<span class="sd">    Options</span>
+<span class="sd">    -------</span>
+<span class="sd">        &gt;&gt;&gt; RuleSchulze.print_options_parameters()</span>
+<span class="sd">        cm_option: [&#39;fast&#39;, &#39;exact&#39;]. Default: &#39;fast&#39;.</span>
+<span class="sd">        icm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        iia_subset_maximum_size: is_number. Default: 2.</span>
+<span class="sd">        im_option: [&#39;fast&#39;, &#39;exact&#39;]. Default: &#39;fast&#39;.</span>
+<span class="sd">        tm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        um_option: [&#39;fast&#39;, &#39;exact&#39;]. Default: &#39;fast&#39;.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    :attr:`scores_`\ ``[c, d]`` is equal to the width of the widest path from candidate ``c`` to candidate ``d`` in</span>
+<span class="sd">    the capacited graph defined by :attr:`matrix_duels_rk`. We say that ``c`` is *better* than ``d`` if ``scores_[c,</span>
+<span class="sd">    d]`` &gt; ``scores_[d, c]``. Candidate ``c`` is a *potential winner* if no candidate ``d`` is *better* than ``c``.</span>
+
+<span class="sd">    Among the potential winners, the candidate with lowest index is declared the winner.</span>
+
+<span class="sd">    .. note::</span>
+
+<span class="sd">        In the original Schulze method, ties are broken at random. However, this feature is not supported by SVVAMP</span>
+<span class="sd">        because it leads to difficulties for the *definition* of manipulation itself (and all the more for its</span>
+<span class="sd">        implementation).</span>
+
+<span class="sd">    * :meth:`is_cm_`:</span>
+
+<span class="sd">        * :attr:`cm_option` = ``&#39;fast&#39;``: Gaspers et al. (2013). This algorithm is polynomial and has a window of</span>
+<span class="sd">          error of 1 manipulator (due to the tie-breaking rule).</span>
+<span class="sd">        * :attr:`cm_option` = ``&#39;exact&#39;``: Non-polynomial algorithm from superclass :class:`Rule`.</span>
+
+<span class="sd">    * :meth:`is_icm_`: Exact in polynomial time.</span>
+<span class="sd">    * :meth:`is_im_`:</span>
+
+<span class="sd">        * :attr:`im_option` = ``&#39;fast&#39;``: Gaspers et al. (2013). This algorithm is polynomial and may not be able to</span>
+<span class="sd">          decide IM (due to the tie-breaking rule).</span>
+<span class="sd">        * :attr:`im_option` = ``&#39;exact&#39;``: Non-polynomial algorithm from superclass :class:`Rule`.</span>
+
+<span class="sd">    * :meth:`~svvamp.Election.not_iia`: Exact in polynomial time.</span>
+<span class="sd">    * :meth:`is_tm_`: Exact in polynomial time.</span>
+<span class="sd">    * :meth:`is_um_`:</span>
+
+<span class="sd">        * :attr:`um_option` = ``&#39;fast&#39;``: Gaspers et al. (2013). This algorithm is polynomial and has a window of</span>
+<span class="sd">          error of 1 manipulator (due to the tie-breaking rule).</span>
+<span class="sd">        * :attr:`um_option` = ``&#39;exact&#39;``: Non-polynomial algorithm from superclass :class:`Rule`.</span>
+
+<span class="sd">    .. note:</span>
+
+<span class="sd">        For this voting system, UM and CM are almost equivalent up to tie-breaking. For this reason,</span>
+<span class="sd">        :attr:`um_option` and :attr:`cm_option` are linked to each other: modifying one modifies the other accordingly.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    &#39;A new monotonic, clone-independent, reversal symmetric, and Condorcet-consistent single-winner election</span>
+<span class="sd">    method &#39;, Markus Schulze, 2011.</span>
+
+<span class="sd">    &#39;Schulze and Ranked-Pairs Voting are Fixed-Parameter Tractable to Bribe, Manipulate, and Control&#39;,</span>
+<span class="sd">    Lane A. Hemaspaandra, Rahman Lavaee and Curtis Menton, 2012.</span>
+
+<span class="sd">    &#39;Manipulation and Control Complexity of Schulze Voting&#39;, Curtis Menton and Preetjot Singh, 2012.</span>
+
+<span class="sd">    &#39;A Complexity-of-Strategic-Behavior Comparison between Schulze’s Rule and Ranked Pairs&#39;, David Parkes and</span>
+<span class="sd">    Lirong Xia, 2012.</span>
+
+<span class="sd">    &#39;Coalitional Manipulation for Schulze’s Rule&#39;, Serge Gaspers, Thomas Kalinowski, Nina Narodytska and Toby</span>
+<span class="sd">    Walsh, 2013.</span>
+
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
@@ -346,62 +412,6 @@
 <span class="sd">        [0. 1. 2.]</span>
 <span class="sd">        sufficient_coalition_size_cm =</span>
 <span class="sd">        [0. 2. 3.]</span>
-
-<span class="sd">    Notes</span>
-<span class="sd">    -----</span>
-<span class="sd">    :attr:`scores_`\ ``[c, d]`` is equal to the width of the widest path from candidate ``c`` to candidate ``d`` in</span>
-<span class="sd">    the capacited graph defined by :attr:`matrix_duels_rk`. We say that ``c`` is *better* than ``d`` if ``scores_[c,</span>
-<span class="sd">    d]`` &gt; ``scores_[d, c]``. Candidate ``c`` is a *potential winner* if no candidate ``d`` is *better* than ``c``.</span>
-
-<span class="sd">    Among the potential winners, the candidate with lowest index is declared the winner.</span>
-
-<span class="sd">    .. note::</span>
-
-<span class="sd">        In the original Schulze method, ties are broken at random. However, this feature is not supported by SVVAMP</span>
-<span class="sd">        because it leads to difficulties for the *definition* of manipulation itself (and all the more for its</span>
-<span class="sd">        implementation).</span>
-
-<span class="sd">    * :meth:`is_cm_`:</span>
-
-<span class="sd">        * :attr:`cm_option` = ``&#39;fast&#39;``: Gaspers et al. (2013). This algorithm is polynomial and has a window of</span>
-<span class="sd">          error of 1 manipulator (due to the tie-breaking rule).</span>
-<span class="sd">        * :attr:`cm_option` = ``&#39;exact&#39;``: Non-polynomial algorithm from superclass :class:`Rule`.</span>
-
-<span class="sd">    * :meth:`is_icm_`: Exact in polynomial time.</span>
-<span class="sd">    * :meth:`is_im_`:</span>
-
-<span class="sd">        * :attr:`im_option` = ``&#39;fast&#39;``: Gaspers et al. (2013). This algorithm is polynomial and may not be able to</span>
-<span class="sd">          decide IM (due to the tie-breaking rule).</span>
-<span class="sd">        * :attr:`im_option` = ``&#39;exact&#39;``: Non-polynomial algorithm from superclass :class:`Rule`.</span>
-
-<span class="sd">    * :meth:`~svvamp.Election.not_iia`: Exact in polynomial time.</span>
-<span class="sd">    * :meth:`is_tm_`: Exact in polynomial time.</span>
-<span class="sd">    * :meth:`is_um_`:</span>
-
-<span class="sd">        * :attr:`um_option` = ``&#39;fast&#39;``: Gaspers et al. (2013). This algorithm is polynomial and has a window of</span>
-<span class="sd">          error of 1 manipulator (due to the tie-breaking rule).</span>
-<span class="sd">        * :attr:`um_option` = ``&#39;exact&#39;``: Non-polynomial algorithm from superclass :class:`Rule`.</span>
-
-<span class="sd">    .. note:</span>
-
-<span class="sd">        For this voting system, UM and CM are almost equivalent up to tie-breaking. For this reason,</span>
-<span class="sd">        :attr:`um_option` and :attr:`cm_option` are linked to each other: modifying one modifies the other accordingly.</span>
-
-<span class="sd">    References</span>
-<span class="sd">    ----------</span>
-<span class="sd">    &#39;A new monotonic, clone-independent, reversal symmetric, and Condorcet-consistent single-winner election</span>
-<span class="sd">    method &#39;, Markus Schulze, 2011.</span>
-
-<span class="sd">    &#39;Schulze and Ranked-Pairs Voting are Fixed-Parameter Tractable to Bribe, Manipulate, and Control&#39;,</span>
-<span class="sd">    Lane A. Hemaspaandra, Rahman Lavaee and Curtis Menton, 2012.</span>
-
-<span class="sd">    &#39;Manipulation and Control Complexity of Schulze Voting&#39;, Curtis Menton and Preetjot Singh, 2012.</span>
-
-<span class="sd">    &#39;A Complexity-of-Strategic-Behavior Comparison between Schulze’s Rule and Ranked Pairs&#39;, David Parkes and</span>
-<span class="sd">    Lirong Xia, 2012.</span>
-
-<span class="sd">    &#39;Coalitional Manipulation for Schulze’s Rule&#39;, Serge Gaspers, Thomas Kalinowski, Nina Narodytska and Toby</span>
-<span class="sd">    Walsh, 2013.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">full_name</span> <span class="o">=</span> <span class="s1">&#39;Schulze&#39;</span>
