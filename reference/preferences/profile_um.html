@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ProfileUM &mdash; SVVAMP 0.9.1 documentation</title>
+  <title>&lt;no title&gt; &mdash; SVVAMP 0.9.1 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -21,7 +21,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="GeneratorProfile" href="generator_profile.html" />
-    <link rel="prev" title="ProfileSubsetCandidates" href="profile_subset_candidates.html" /> 
+    <link rel="prev" title="&lt;no title&gt;" href="profile_subset_candidates.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -54,11 +54,23 @@
 <li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html#profiles">Profiles</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="profile.html">Profile</a></li>
-<li class="toctree-l3"><a class="reference internal" href="profile_from_file.html">ProfileFromFile</a></li>
-<li class="toctree-l3"><a class="reference internal" href="profile_subset_candidates.html">ProfileSubsetCandidates</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">ProfileUM</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#svvamp.ProfileUM"><code class="docutils literal notranslate"><span class="pre">ProfileUM</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="profile.html"><code class="docutils literal notranslate"><span class="pre">Profile</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="profile_from_file.html"><code class="docutils literal notranslate"><span class="pre">ProfileFromFile</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="profile_subset_candidates.html"><code class="docutils literal notranslate"><span class="pre">ProfileSubsetCandidates</span></code></a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">ProfileUM</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.ProfileUM.ballot_borda_ut"><code class="docutils literal notranslate"><span class="pre">ProfileUM.ballot_borda_ut</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.ProfileUM.ballot_rk"><code class="docutils literal notranslate"><span class="pre">ProfileUM.ballot_rk</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.ProfileUM.labels_candidates"><code class="docutils literal notranslate"><span class="pre">ProfileUM.labels_candidates</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.ProfileUM.matrix_duels_rk"><code class="docutils literal notranslate"><span class="pre">ProfileUM.matrix_duels_rk</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.ProfileUM.matrix_duels_ut"><code class="docutils literal notranslate"><span class="pre">ProfileUM.matrix_duels_ut</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.ProfileUM.n_c"><code class="docutils literal notranslate"><span class="pre">ProfileUM.n_c</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.ProfileUM.n_v"><code class="docutils literal notranslate"><span class="pre">ProfileUM.n_v</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.ProfileUM.plurality_scores_rk"><code class="docutils literal notranslate"><span class="pre">ProfileUM.plurality_scores_rk</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.ProfileUM.plurality_scores_ut"><code class="docutils literal notranslate"><span class="pre">ProfileUM.plurality_scores_ut</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.ProfileUM.preferences_borda_rk"><code class="docutils literal notranslate"><span class="pre">ProfileUM.preferences_borda_rk</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.ProfileUM.preferences_borda_ut"><code class="docutils literal notranslate"><span class="pre">ProfileUM.preferences_borda_ut</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.ProfileUM.preferences_rk"><code class="docutils literal notranslate"><span class="pre">ProfileUM.preferences_rk</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.ProfileUM.preferences_ut"><code class="docutils literal notranslate"><span class="pre">ProfileUM.preferences_ut</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -90,7 +102,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../index.html">Reference</a></li>
-      <li class="breadcrumb-item active">ProfileUM</li>
+      <li class="breadcrumb-item active">&lt;no title&gt;</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../_sources/reference/preferences/profile_um.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -100,9 +112,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="profileum">
-<h1>ProfileUM<a class="headerlink" href="#profileum" title="Link to this heading"></a></h1>
-<dl class="py class">
+  <dl class="py class">
 <dt class="sig sig-object py" id="svvamp.ProfileUM">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">svvamp.</span></span><span class="sig-name descname"><span class="pre">ProfileUM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profile_s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ballot_ut</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ballot_rk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ballot_borda_rk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/preferences/profile_um.html#ProfileUM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.ProfileUM" title="Link to this definition"></a></dt>
 <dd><p>Profile used for Unison Manipulation.</p>
@@ -361,13 +371,12 @@ example, <code class="docutils literal notranslate"><span class="pre">preference
 
 </dd></dl>
 
-</section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="profile_subset_candidates.html" class="btn btn-neutral float-left" title="ProfileSubsetCandidates" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="profile_subset_candidates.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="generator_profile.html" class="btn btn-neutral float-right" title="GeneratorProfile" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
