@@ -52,7 +52,7 @@ class ProfileFromFile(Profile):
       in the first column.
     * Otherwise, the file is considered as a PrefLib file.
 
-    For CVR and Preflib files, since the information is ordinal only, ``preferences_ut[v, c]`` is set to the Borda
+    For CVR and PrefLib files, since the information is ordinal only, ``preferences_ut[v, c]`` is set to the Borda
     score (with no vtb) minus ``(C - 1) / 2``. This way, utilities are between ``- (C - 1) / 2`` and
     ``(C - 1) / 2``.
     """

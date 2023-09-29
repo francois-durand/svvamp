@@ -319,8 +319,8 @@ class RuleSplitCycle(Rule):
             >>> a, b, c, d, e, f = 1, 2, 3, 4, 5, 6
             >>> def cowinners(profile):
             ...     results = RuleSplitCycle._count_ballot_aux(profile.matrix_duels_rk)
-            ...     better_or_tie_c = results['better_or_tie_c']
-            ...     return list(np.where(better_or_tie_c == np.max(better_or_tie_c))[0])
+            ...     my_better_or_tie_c = results['better_or_tie_c']
+            ...     return list(np.where(my_better_or_tie_c == np.max(my_better_or_tie_c))[0])
 
             >>> profile = Profile(preferences_rk=
             ...     [[a, c, b]] * 5

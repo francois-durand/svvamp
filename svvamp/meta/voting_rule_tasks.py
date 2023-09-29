@@ -47,13 +47,13 @@ class VotingRuleTasks(list):
 
     Parameters
     ----------
-    voting_systems: List
+    voting_systems: List, optional
         A list of pairs (rule_class, options), where `rule_class` is a subclass of :class:`Rule` and `options` is a
         dictionary of options. Instead of (rule_class, options), one may provide a singleton `rule_class`
         (without parentheses), which is equivalent to (rule_class, {}).
-    study_rule_criteria: StudyRuleCriteria
+    study_rule_criteria: StudyRuleCriteria, optional
         A :class:`StudyRuleCriteria` object.
-    detailed_tasks: object
+    detailed_tasks: object, optional
         Either a list of triples (rule_class, options, study_rule_criteria), or a VotingRuleTasks object.
 
     Examples
@@ -305,7 +305,7 @@ class VotingRuleTasks(list):
 
         If `options` is not specified, then it is considered empty:
 
-            >>> voting_rule_tasks = VotingRuleTasks(voting_systems=[], study_rule_criteria=[], detailed_tasks=[])
+            >>> voting_rule_tasks = VotingRuleTasks(voting_systems=[], detailed_tasks=[])
             >>> voting_rule_tasks.append_task(
             ...     rule_class=RuleIRV,
             ...     study_rule_criteria=StudyRuleCriteria(
@@ -326,7 +326,7 @@ class VotingRuleTasks(list):
 
         If `study_rule_criteria` is not specified, then it is the default instance `StudyRuleCriteria()`:
 
-            >>> voting_rule_tasks = VotingRuleTasks(voting_systems=[], study_rule_criteria=[], detailed_tasks=[])
+            >>> voting_rule_tasks = VotingRuleTasks(voting_systems=[], detailed_tasks=[])
             >>> voting_rule_tasks.append_task(rule_class=RuleIRV, options={'cm_option': 'exact'})
             >>> print(voting_rule_tasks)  # doctest: +ELLIPSIS
             VotingRuleTasks with:

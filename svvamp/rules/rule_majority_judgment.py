@@ -21,7 +21,6 @@ This file is part of SVVAMP.
 """
 import numpy as np
 from math import floor, ceil
-from fractions import Fraction
 from svvamp.rules.rule import Rule
 from svvamp.utils import type_checker
 from svvamp.utils.util_cache import cached_property
@@ -87,7 +86,7 @@ class RuleMajorityJudgment(Rule):
     The candidate with highest median grade wins. For the tie-breaking rule, see :attr:`scores`.
 
     Default behavior of sincere voters: voter ``v`` applies an affine transformation to her utilities
-    :attr:`preferences_ut`\ ``[v, :]`` to get her grades, such that her least-liked candidate receives
+    :attr:`preferences_ut`\\ ``[v, :]`` to get her grades, such that her least-liked candidate receives
     :attr:`min_grade` and her most-liked candidate receives :attr:`max_grade`. To modify this behavior, use attribute
     :attr:`rescale_grades`. For more details about the behavior of sincere voters, see :attr:`ballots`.
 
@@ -462,7 +461,7 @@ class RuleMajorityJudgment(Rule):
         1. Convert utilities into grades in the interval [:attr:`min_grade`, :attr:`max_grade`].
 
             * If :attr:`rescale_grades` = ``True``, then each voter ``v`` applies an affine transformation to
-              :attr:`preferences_ut`\ ``[v, :]`` such that her least-liked candidate receives :attr:`min_grade` and
+              :attr:`preferences_ut`\\ ``[v, :]`` such that her least-liked candidate receives :attr:`min_grade` and
               her most-liked candidate receives :attr:`max_grade`. Exception: if she is indifferent between all
               candidates, then she attributes (:attr:`min_grade` + :attr:`max_grade`) / 2 to all of them.
 
@@ -538,8 +537,8 @@ class RuleMajorityJudgment(Rule):
     def candidates_by_scores_best_to_worst_(self):
         """1d array of integers. ``candidates_by_scores_best_to_worst[k] is the candidate ranked ``k``-th.
 
-        Candidates are sorted lexicographically by their median (:attr:`scores`\ ``[0, c]``) then their ``p`` or ``-q``
-        (:attr:`scores`\ ``[1, c]``). If there is still a  tie, the tied candidate with lower index is favored.
+        Candidates are sorted lexicographically by their median (:attr:`scores`\\ ``[0, c]``) then their ``p`` or ``-q``
+        (:attr:`scores`\\ ``[1, c]``). If there is still a  tie, the tied candidate with lower index is favored.
         """
         self.mylog("Compute candidates_by_scores_best_to_worst", 1)
         # N.B. : ``np.array(range(self.profile_.C))`` below is the tie-breaking term by lowest index.
@@ -549,8 +548,8 @@ class RuleMajorityJudgment(Rule):
     def w_(self):
         """Integer (winning candidate).
 
-        Candidates are sorted lexicographically by their median (:attr:`scores`\ ``[0, c]``) then their ``p`` or
-        ``-q`` (:attr:`scores`\ ``[1, c]``). If there is still a tie, the tied candidate with lower index is declared
+        Candidates are sorted lexicographically by their median (:attr:`scores`\\ ``[0, c]``) then their ``p`` or
+        ``-q`` (:attr:`scores`\\ ``[1, c]``). If there is still a tie, the tied candidate with lower index is declared
         the winner.
         """
         self.mylog("Compute winner", 1)

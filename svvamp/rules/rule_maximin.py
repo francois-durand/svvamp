@@ -43,7 +43,7 @@ class RuleMaximin(Rule):
 
     Notes
     -----
-    Candidate ``c``'s score is the minimum of the row :attr:`matrix_duels_rk`\ ``[c, :]`` (except the diagonal term),
+    Candidate ``c``'s score is the minimum of the row :attr:`matrix_duels_rk`\\ ``[c, :]`` (except the diagonal term),
     i.e. the result of candidate ``c`` for her worst duel. The candidate with highest score is declared the winner.
     In case of a tie, the candidate with lowest index wins.
 
@@ -322,7 +322,7 @@ class RuleMaximin(Rule):
 
     @cached_property
     def scores_(self):
-        """1d array of integers. ``scores[c]`` is the minimum of the row :attr:`matrix_duels_rk`\ ``[c, :]`` (except
+        """1d array of integers. ``scores[c]`` is the minimum of the row :attr:`matrix_duels_rk`\\ ``[c, :]`` (except
         the diagonal term), i.e. the result of candidate ``c`` for her worst duel.
         """
         self.mylog("Compute scores", 1)

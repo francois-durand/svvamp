@@ -80,7 +80,7 @@ class RuleSTAR(Rule):
     gave her a strictly larger grade than to the other candidate.
 
     Default behavior of sincere voters: voter ``v`` applies an affine transformation to her utilities
-    :attr:`preferences_ut`\ ``[v, :]`` to get her grades, such that her least-liked candidate receives
+    :attr:`preferences_ut`\\ ``[v, :]`` to get her grades, such that her least-liked candidate receives
     :attr:`min_grade` and her most-liked candidate receives :attr:`max_grade`. To modify this behavior, use attribute
     :attr:`rescale_grades`. For more details about the behavior of sincere voters, see :attr:`ballots`.
 
@@ -483,7 +483,7 @@ class RuleSTAR(Rule):
         1. Convert utilities into grades in the interval [:attr:`min_grade`, :attr:`max_grade`].
 
             * If :attr:`rescale_grades` = ``True``, then each voter ``v`` applies an affine transformation to
-              :attr:`preferences_ut`\ ``[v, :]`` such that her least-liked candidate receives :attr:`min_grade` and
+              :attr:`preferences_ut`\\ ``[v, :]`` such that her least-liked candidate receives :attr:`min_grade` and
               her most-liked candidate receives :attr:`max_grade`. Exception: if she is indifferent between all
               candidates, then she attributes (:attr:`min_grade` + :attr:`max_grade`) / 2 to all of them.
 

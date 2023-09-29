@@ -383,6 +383,7 @@ class RuleSlater(Rule):
 
     # %% Coalition Manipulation (CM)
 
+    # noinspection PyMethodMayBeStatic,PyUnusedLocal
     def _cm_main_work_c_fast_(self, c, optimize_bounds):
         """Do the main work in CM loop for candidate ``c``.
 

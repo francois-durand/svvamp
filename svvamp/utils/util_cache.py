@@ -102,7 +102,9 @@ class DeleteCacheMixin:
         if contains == '' and suffix == '':
             self._cached_properties = dict()
             return
+        # noinspection PyUnresolvedReferences
         cached_properties_new = self._cached_properties.copy()
+        # noinspection PyUnresolvedReferences
         for p in self._cached_properties:
             if contains in p and p.endswith(suffix):
                 del cached_properties_new[p]

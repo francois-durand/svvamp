@@ -345,44 +345,44 @@ class RuleIRV(Rule):
         Same 'rule' object, different profiles:
 
             >>> rule = RuleIRV()
-            >>> profile = Profile(preferences_rk=[
+            >>> my_profile = Profile(preferences_rk=[
             ...     [0, 1, 2],
             ...     [0, 2, 1],
             ...     [1, 0, 2],
             ...     [2, 0, 1],
             ...     [2, 1, 0],
             ... ])
-            >>> rule(profile).w_
+            >>> rule(my_profile).w_
             0
-            >>> profile = Profile(preferences_rk=[
+            >>> my_profile = Profile(preferences_rk=[
             ...     [0, 2, 1],
             ...     [2, 0, 1],
             ...     [2, 0, 1],
             ...     [2, 0, 1],
             ...     [2, 1, 0],
             ... ])
-            >>> rule(profile).w_
+            >>> rule(my_profile).w_
             2
 
         Same profile, different 'rule' objects:
 
-            >>> profile = Profile(preferences_rk=[
+            >>> my_profile = Profile(preferences_rk=[
             ...     [0, 1, 2],
             ...     [0, 2, 1],
             ...     [1, 0, 2],
             ...     [2, 0, 1],
             ...     [2, 1, 0],
             ... ])
-            >>> rule_1 = RuleIRV()(profile)
+            >>> rule_1 = RuleIRV()(my_profile)
             >>> rule_1.w_
             0
-            >>> rule_2 = RuleIRV()(profile)
+            >>> rule_2 = RuleIRV()(my_profile)
             >>> rule_2.w_
             0
 
         Check that the new rule does not change the options of the old one (which used to be a bug):
 
-            >>> profile = Profile(preferences_rk=[
+            >>> my_profile = Profile(preferences_rk=[
             ...     [0, 1, 2],
             ...     [0, 2, 1],
             ...     [1, 0, 2],
@@ -391,14 +391,14 @@ class RuleIRV(Rule):
             ... ])
             >>> rule_irv_fast = RuleIRV(cm_option='fast')
             >>> rule_irv_exact = RuleIRV(cm_option='exact')
-            >>> _ = rule_irv_fast(profile)
-            >>> _ = rule_irv_exact(profile)
+            >>> _ = rule_irv_fast(my_profile)
+            >>> _ = rule_irv_exact(my_profile)
             >>> rule_irv_fast.cm_option
             'fast'
 
         Same kind of example with EB/IRV:
 
-            >>> profile = Profile(preferences_rk=[
+            >>> my_profile = Profile(preferences_rk=[
             ...     [0, 1, 2],
             ...     [0, 2, 1],
             ...     [1, 0, 2],
@@ -407,8 +407,8 @@ class RuleIRV(Rule):
             ... ])
             >>> rule_eb_fast = RuleExhaustiveBallot(cm_option='fast')
             >>> rule_irv_exact = RuleIRV(cm_option='exact')
-            >>> _ = rule_eb_fast(profile)
-            >>> _ = rule_irv_exact(profile)
+            >>> _ = rule_eb_fast(my_profile)
+            >>> _ = rule_irv_exact(my_profile)
             >>> rule_eb_fast.cm_option
             'fast'
         """
@@ -862,7 +862,7 @@ class RuleIRV(Rule):
                 # ``self.eb_.im_option = exact``
                 candidates_im_v = self.eb_.is_im_v_with_candidates_(v)[1]
                 self.mylogv("IM: Preliminary checks: EB._v_im_for_c[v, :] =", candidates_im_v, 3)
-                self._v_im_for_c[v, candidates_im_v == False] = False
+                self._v_im_for_c[v, equal_false(candidates_im_v)] = False
 
     # %% Trivial Manipulation (TM)
 
@@ -1637,6 +1637,7 @@ class RuleIRV(Rule):
                 n_manip_new_e = scores_m_new_r[e]
                 for k in range(n_manip_new_e):
                     manipulator = free_manipulators[i_manipulator]
+                    # noinspection PyTypeChecker
                     ballots_m[manipulator].append(e)
                     current_top_v[manipulator] = e
                     candidates_to_put_in_ballot[manipulator, e] = False
@@ -1649,6 +1650,7 @@ class RuleIRV(Rule):
         # Step 2
         # Ensure that no candidate ``!= c`` is Condorcet winner. If ``c`` is not yet in all ballots, put it.
         for manipulator in np.where(candidates_to_put_in_ballot[:, c])[0]:
+            # noinspection PyTypeChecker
             ballots_m[manipulator].append(c)
             candidates_to_put_in_ballot[manipulator, c] = False
             matrix_duels_temp[c, candidates_to_put_in_ballot[manipulator, :]] += 1

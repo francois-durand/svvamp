@@ -48,7 +48,7 @@ class GeneratorProfileVMFHypercircle(GeneratorProfile):
 
     Notes
     -----
-    We work on the ``n_c - 2``-sphere: vectors of :math:`\mathbb{R}^n_c` with Euclidean norm equal to 1 and that are
+    We work on the ``n_c - 2``-sphere: vectors of :math:`\\mathbb{R}^n_c` with Euclidean norm equal to 1 and that are
     orthogonal to [1, ...,  1]. It is a representation of the classical Von Neumann-Morgenstern utility space. Cf.
     Durand et al., 'Geometry on the Utility Sphere'.
 

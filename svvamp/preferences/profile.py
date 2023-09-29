@@ -229,6 +229,7 @@ class Profile(my_log.MyLog):
             (self._preferences_rk_unsorted, self._preferences_borda_ut_unsorted),
             axis=1
         ).tolist()
+        # noinspection PyUnresolvedReferences
         indexes = sorted(range(self.n_v), key=sort_criterion.__getitem__)
         return indexes
 
@@ -1392,8 +1393,8 @@ class Profile(my_log.MyLog):
 
         One candidate ``d`` is enough, so:
 
-        ``threshold_c_prevents_w_Condorcet_ut_abs[c, w]`` :math:`= 2 \\cdot \\min_{d \\neq w} |w \geq c \\text{ and }
-        w > d| - |w \geq c|`.
+        ``threshold_c_prevents_w_Condorcet_ut_abs[c, w]`` :math:`= 2 \\cdot \\min_{d \\neq w} |w \\geq c \\text{ and }
+        w > d| - |w \\geq c|`.
 
         If this result is negative, it means that even without ``c``-manipulators, ``w`` is not a Condorcet winner.
         In that case, threshold is set to 0 instead.
@@ -1802,7 +1803,6 @@ class Profile(my_log.MyLog):
         Examples
         --------
             >>> from svvamp import Profile
-            >>> import numpy as np
             >>> profile = Profile(preferences_ut=[[5, 1, 2], [4, 10, 1]])
             >>> profile.total_utility_std == np.std([9, 11, 3])
             True
@@ -1902,7 +1902,6 @@ class Profile(my_log.MyLog):
         Examples
         --------
             >>> from svvamp import Profile
-            >>> import numpy as np
             >>> profile = Profile(preferences_ut=[[5, 1, 2], [4, 10, 1]])
             >>> profile.mean_utility_std == np.std([4.5, 5.5, 1.5])
             True
@@ -2043,7 +2042,7 @@ class Profile(my_log.MyLog):
         Notes
         -----
         Each red point of the plot represents a voter ``v``. Its position is
-        :attr:`~svvamp.Population.preferences_ut`\ ``[v, indexes]``. If ``normalize`` is ``True``, then each position
+        :attr:`~svvamp.Population.preferences_ut`\\ ``[v, indexes]``. If ``normalize`` is ``True``, then each position
         is normalized before plotting so that its Euclidean norm is equal to 1.
 
         The equator (in blue) is the set of points :math:`\\mathbf{u}` such that :math:`\\sum {u_i}^2 = 1` and
@@ -2147,7 +2146,7 @@ class Profile(my_log.MyLog):
         -----
         Each red point of the plot represents a voter ``v``.
 
-            * :attr:`~svvamp.Population.preferences_ut`\ ``[v, indexes]`` is sent to the hyperplane that is
+            * :attr:`~svvamp.Population.preferences_ut`\\ ``[v, indexes]`` is sent to the hyperplane that is
               orthogonal to [1, 1, 1, 1] (by orthogonal projection), which discards information related to approval
               limit and keeps only the relative preferences between candidates.
             * The plot is done in this 3d hyperplane. In practice, we use a mirror symmetry that exchanges [1, 1, 1,
@@ -2758,9 +2757,9 @@ class Profile(my_log.MyLog):
             argument += 'preferences_ut=[\n'
             argument += (
                 repr(self.preferences_ut)
-                    .replace('array([', '            ...     ')
-                    .replace('\n       ', '\n            ...     ')
-                    .replace('])', ',')
+                .replace('array([', '            ...     ')
+                .replace('\n       ', '\n            ...     ')
+                .replace('])', ',')
             )
             argument += '\n            ... ]'
             arguments.append(argument)
@@ -2769,9 +2768,9 @@ class Profile(my_log.MyLog):
             argument += 'preferences_rk=[\n'
             argument += (
                 repr(self.preferences_rk)
-                    .replace('array([', '            ...     ')
-                    .replace('\n       ', '\n            ...     ')
-                    .replace('])', ',')
+                .replace('array([', '            ...     ')
+                .replace('\n       ', '\n            ...     ')
+                .replace('])', ',')
             )
             argument += '\n            ... ]'
             arguments.append(argument)

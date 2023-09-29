@@ -123,12 +123,12 @@ def matrix_victories_to_smith_set(matrix_victories):
 
     Returns
     -------
-    smith_set : list
+    smith_set : List
         List of candidates in the Smith set, sorted by increasing order.
 
     Examples
     --------
-        >>> matrix_victories = np.array([
+        >>> my_matrix_victories = np.array([
         ...     [0, 1,  1, 1, 1,  1, 0],
         ...     [0, 0,  0, 0, 1,  0, 0],
         ...     [0, 1,  0, 0, 1, .5, 1],
@@ -137,15 +137,15 @@ def matrix_victories_to_smith_set(matrix_victories):
         ...     [0, 1, .5, 0, 1,  0, 0],
         ...     [1, 1,  0, 0, 1,  1, 0]
         ... ])
-        >>> matrix_victories_to_smith_set(matrix_victories)
+        >>> matrix_victories_to_smith_set(my_matrix_victories)
         [0, 2, 3, 5, 6]
 
-        >>> matrix_victories = np.array([
+        >>> my_matrix_victories = np.array([
         ...     [0, 1, 1],
         ...     [0, 0, 1],
         ...     [0, 0, 0],
         ... ])
-        >>> matrix_victories_to_smith_set(matrix_victories)
+        >>> matrix_victories_to_smith_set(my_matrix_victories)
         [0]
     """
     n_c = matrix_victories.shape[0]
@@ -287,7 +287,6 @@ def compute_next_permutation(prev_permutation, n_c):
     --------
         >>> compute_next_permutation([0, 2, 1, 4, 3], 5)
         array([0, 2, 3, 1, 4])
-        >>> import numpy as np
         >>> compute_next_permutation(np.array([0, 2, 1, 4, 3]), 5)
         array([0, 2, 3, 1, 4])
     """
@@ -435,15 +434,15 @@ def indent(s, n_spaces=4):
 
     Examples
     --------
-        >>> s = 'First line\\nSecond line'
-        >>> print(s)
+        >>> my_s = 'First line\\nSecond line'
+        >>> print(my_s)
         First line
         Second line
-        >>> print(indent(s, 4))
+        >>> print(indent(my_s, 4))
             First line
             Second line
     """
-    return '    ' + s.replace('\n', '\n    ')
+    return ' ' * n_spaces + s.replace('\n', '\n    ')
 
 
 def euclidean_distances(voters_positions, candidates_positions):
@@ -466,18 +465,18 @@ def euclidean_distances(voters_positions, candidates_positions):
 
     Examples
     --------
-        >>> voters_positions = np.array([
+        >>> my_voters_positions = np.array([
         ...     [.1, .5],
         ...     [-.3, .4],
         ...     [-.7, .6],
         ... ])
-        >>> candidates_positions = np.array([
+        >>> my_candidates_positions = np.array([
         ...     [-.3, -.2],
         ...     [0., -.6],
         ...     [.9, .9],
         ...     [-1., -.3],
         ... ])
-        >>> euclidean_distances(voters_positions, candidates_positions)
+        >>> euclidean_distances(my_voters_positions, my_candidates_positions)
         array([[0.80622577, 1.1045361 , 0.89442719, 1.36014705],
                [0.6       , 1.04403065, 1.3       , 0.98994949],
                [0.89442719, 1.3892444 , 1.62788206, 0.9486833 ]])
