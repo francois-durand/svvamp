@@ -127,7 +127,7 @@
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
-<span class="sd">    Candidate ``c``&#39;s score is the minimum of the row :attr:`matrix_duels_rk`\ ``[c, :]`` (except the diagonal term),</span>
+<span class="sd">    Candidate ``c``&#39;s score is the minimum of the row :attr:`matrix_duels_rk`\\ ``[c, :]`` (except the diagonal term),</span>
 <span class="sd">    i.e. the result of candidate ``c`` for her worst duel. The candidate with highest score is declared the winner.</span>
 <span class="sd">    In case of a tie, the candidate with lowest index wins.</span>
 
@@ -406,7 +406,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">scores_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of integers. ``scores[c]`` is the minimum of the row :attr:`matrix_duels_rk`\ ``[c, :]`` (except</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of integers. ``scores[c]`` is the minimum of the row :attr:`matrix_duels_rk`\\ ``[c, :]`` (except</span>
 <span class="sd">        the diagonal term), i.e. the result of candidate ``c`` for her worst duel.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Compute scores&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>

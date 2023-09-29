@@ -43,7 +43,7 @@ class RuleSchulze(Rule):
 
     Notes
     -----
-    :attr:`scores_`\ ``[c, d]`` is equal to the width of the widest path from candidate ``c`` to candidate ``d`` in
+    :attr:`scores_`\\ ``[c, d]`` is equal to the width of the widest path from candidate ``c`` to candidate ``d`` in
     the capacited graph defined by :attr:`matrix_duels_rk`. We say that ``c`` is *better* than ``d`` if ``scores_[c,
     d]`` > ``scores_[d, c]``. Candidate ``c`` is a *potential winner* if no candidate ``d`` is *better* than ``c``.
 
@@ -402,7 +402,7 @@ class RuleSchulze(Rule):
     @cached_property
     def score_w_(self):
         """1d array. ``score_w_`` is :attr:`w_`'s score vector: ``score_w_`` =
-        :attr:`scores_`\ ``[``:attr:`w_`\ ``, :]``.
+        :attr:`scores_`\\ ``[``:attr:`w_`\\ ``, :]``.
         """
         self.mylog("Compute winner's score", 1)
         return self.scores_[self.w_, :]

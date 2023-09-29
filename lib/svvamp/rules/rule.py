@@ -78,10 +78,10 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     **Ties in a voter's utilities**
 
     When a sincere voter ``v`` must provide a strict order in a specific voting system, she uses
-    :attr:`~svvamp.Profile.preferences_rk`\ ``[v, :]`` (which breaks possible ties in her utilities).
+    :attr:`~svvamp.Profile.preferences_rk`\\ ``[v, :]`` (which breaks possible ties in her utilities).
 
     In contrast, to know if a voter ``v`` wants to manipulate for a candidate ``c`` against ``w``, we always use her
-    utilities :attr:`~svvamp.Profile.preferences_ut`\ ``[v, :]``. If she attributes the same utility to ``w`` and
+    utilities :attr:`~svvamp.Profile.preferences_ut`\\ ``[v, :]``. If she attributes the same utility to ``w`` and
     ``c``, she is not interested in this manipulation.
 
     Some ordinal voting systems in SVVAMP may be adapted to accept weak orders of preferences as ballots. This is
@@ -537,7 +537,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         """Ballots cast by the voters.
 
         Default type: 2d array of integers. Default behavior:
-        ``ballots[v, k]`` = :attr:`~svvamp.Profile.preferences_rk`\ ``[v, k]``.
+        ``ballots[v, k]`` = :attr:`~svvamp.Profile.preferences_rk`\\ ``[v, k]``.
         """
         # This can be overridden by specific voting systems. This general behavior is ok only for ordinal voting systems
         # (and even in this case, it can be redefined in favor of something more practical).
@@ -2582,7 +2582,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
 
         For information only, the result of SVVAMP's computations about :math:`x_c` is given in outputs
         ``necessary_coalition_size_icm_`` and ``sufficient_coalition_size_icm_``. By definition, we have
-        ``necessary_coalition_size_icm_[c]`` :math:`\leq x_c \leq` ``sufficient_coalition_size_icm_[c]``.
+        ``necessary_coalition_size_icm_[c]`` :math:`\\leq x_c \\leq` ``sufficient_coalition_size_icm_[c]``.
 
         When :attr:`icm_option` = ``'exact'``, the exactness concerns the ICM decision problems (boolean results below),
         but not the numerical evaluation of :math:`x_c`. It means that for all boolean answers, SVVAMP will not answer
@@ -2970,7 +2970,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
 
         For information only, the result of SVVAMP's computations about :math:`x_c` is given in outputs
         ``necessary_coalition_size_cm_`` and ``sufficient_coalition_size_cm_``. By definition, we have
-        ``necessary_coalition_size_cm_[c]`` :math:`\leq x_c \leq` ``sufficient_coalition_size_cm_[c]``.
+        ``necessary_coalition_size_cm_[c]`` :math:`\\leq x_c \\leq` ``sufficient_coalition_size_cm_[c]``.
 
         When :attr:`cm_option` = ``'exact'``, the exactness concerns the CM decision problems (Boolean results), not
         the numerical evaluation of :math:`x_c`. It means that for all Boolean answers, SVVAMP will not answer
@@ -3475,7 +3475,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     @cached_property
     def nb_candidates_cm_(self):
         """Number of candidates who can benefit from CM."""
-        inf = np.sum(self.candidates_cm_ == True)
+        inf = np.sum(equal_true(self.candidates_cm_))
         sup = inf + np.sum(np.isnan(self.candidates_cm_))
         return inf, sup
 
@@ -3485,10 +3485,10 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         possible_winners = self.candidates_cm_.copy()
         possible_winners[self.w_] = True
         inf = np.min(
-            self.profile_.relative_social_welfare_c[(possible_winners == True) | np.isnan(possible_winners)]
+            self.profile_.relative_social_welfare_c[(equal_true(possible_winners)) | np.isnan(possible_winners)]
         )
         sup = np.min(
-            self.profile_.relative_social_welfare_c[possible_winners == True]
+            self.profile_.relative_social_welfare_c[equal_true(possible_winners)]
         )
         return inf, sup
 

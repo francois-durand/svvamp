@@ -403,8 +403,8 @@
 <span class="sd">            &gt;&gt;&gt; a, b, c, d, e, f = 1, 2, 3, 4, 5, 6</span>
 <span class="sd">            &gt;&gt;&gt; def cowinners(profile):</span>
 <span class="sd">            ...     results = RuleSplitCycle._count_ballot_aux(profile.matrix_duels_rk)</span>
-<span class="sd">            ...     better_or_tie_c = results[&#39;better_or_tie_c&#39;]</span>
-<span class="sd">            ...     return list(np.where(better_or_tie_c == np.max(better_or_tie_c))[0])</span>
+<span class="sd">            ...     my_better_or_tie_c = results[&#39;better_or_tie_c&#39;]</span>
+<span class="sd">            ...     return list(np.where(my_better_or_tie_c == np.max(my_better_or_tie_c))[0])</span>
 
 <span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=</span>
 <span class="sd">            ...     [[a, c, b]] * 5</span>

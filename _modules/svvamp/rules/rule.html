@@ -162,10 +162,10 @@
 <span class="sd">    **Ties in a voter&#39;s utilities**</span>
 
 <span class="sd">    When a sincere voter ``v`` must provide a strict order in a specific voting system, she uses</span>
-<span class="sd">    :attr:`~svvamp.Profile.preferences_rk`\ ``[v, :]`` (which breaks possible ties in her utilities).</span>
+<span class="sd">    :attr:`~svvamp.Profile.preferences_rk`\\ ``[v, :]`` (which breaks possible ties in her utilities).</span>
 
 <span class="sd">    In contrast, to know if a voter ``v`` wants to manipulate for a candidate ``c`` against ``w``, we always use her</span>
-<span class="sd">    utilities :attr:`~svvamp.Profile.preferences_ut`\ ``[v, :]``. If she attributes the same utility to ``w`` and</span>
+<span class="sd">    utilities :attr:`~svvamp.Profile.preferences_ut`\\ ``[v, :]``. If she attributes the same utility to ``w`` and</span>
 <span class="sd">    ``c``, she is not interested in this manipulation.</span>
 
 <span class="sd">    Some ordinal voting systems in SVVAMP may be adapted to accept weak orders of preferences as ballots. This is</span>
@@ -630,7 +630,7 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Ballots cast by the voters.</span>
 
 <span class="sd">        Default type: 2d array of integers. Default behavior:</span>
-<span class="sd">        ``ballots[v, k]`` = :attr:`~svvamp.Profile.preferences_rk`\ ``[v, k]``.</span>
+<span class="sd">        ``ballots[v, k]`` = :attr:`~svvamp.Profile.preferences_rk`\\ ``[v, k]``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># This can be overridden by specific voting systems. This general behavior is ok only for ordinal voting systems</span>
         <span class="c1"># (and even in this case, it can be redefined in favor of something more practical).</span>
@@ -2705,7 +2705,7 @@
 
 <span class="sd">        For information only, the result of SVVAMP&#39;s computations about :math:`x_c` is given in outputs</span>
 <span class="sd">        ``necessary_coalition_size_icm_`` and ``sufficient_coalition_size_icm_``. By definition, we have</span>
-<span class="sd">        ``necessary_coalition_size_icm_[c]`` :math:`\leq x_c \leq` ``sufficient_coalition_size_icm_[c]``.</span>
+<span class="sd">        ``necessary_coalition_size_icm_[c]`` :math:`\\leq x_c \\leq` ``sufficient_coalition_size_icm_[c]``.</span>
 
 <span class="sd">        When :attr:`icm_option` = ``&#39;exact&#39;``, the exactness concerns the ICM decision problems (boolean results below),</span>
 <span class="sd">        but not the numerical evaluation of :math:`x_c`. It means that for all boolean answers, SVVAMP will not answer</span>
@@ -3099,7 +3099,7 @@
 
 <span class="sd">        For information only, the result of SVVAMP&#39;s computations about :math:`x_c` is given in outputs</span>
 <span class="sd">        ``necessary_coalition_size_cm_`` and ``sufficient_coalition_size_cm_``. By definition, we have</span>
-<span class="sd">        ``necessary_coalition_size_cm_[c]`` :math:`\leq x_c \leq` ``sufficient_coalition_size_cm_[c]``.</span>
+<span class="sd">        ``necessary_coalition_size_cm_[c]`` :math:`\\leq x_c \\leq` ``sufficient_coalition_size_cm_[c]``.</span>
 
 <span class="sd">        When :attr:`cm_option` = ``&#39;exact&#39;``, the exactness concerns the CM decision problems (Boolean results), not</span>
 <span class="sd">        the numerical evaluation of :math:`x_c`. It means that for all Boolean answers, SVVAMP will not answer</span>
@@ -3604,7 +3604,7 @@
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">nb_candidates_cm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Number of candidates who can benefit from CM.&quot;&quot;&quot;</span>
-        <span class="n">inf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates_cm_</span> <span class="o">==</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">inf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">equal_true</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates_cm_</span><span class="p">))</span>
         <span class="n">sup</span> <span class="o">=</span> <span class="n">inf</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates_cm_</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">inf</span><span class="p">,</span> <span class="n">sup</span>
 
@@ -3614,10 +3614,10 @@
         <span class="n">possible_winners</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates_cm_</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">possible_winners</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="n">inf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">relative_social_welfare_c</span><span class="p">[(</span><span class="n">possible_winners</span> <span class="o">==</span> <span class="kc">True</span><span class="p">)</span> <span class="o">|</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">possible_winners</span><span class="p">)]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">relative_social_welfare_c</span><span class="p">[(</span><span class="n">equal_true</span><span class="p">(</span><span class="n">possible_winners</span><span class="p">))</span> <span class="o">|</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">possible_winners</span><span class="p">)]</span>
         <span class="p">)</span>
         <span class="n">sup</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">relative_social_welfare_c</span><span class="p">[</span><span class="n">possible_winners</span> <span class="o">==</span> <span class="kc">True</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">relative_social_welfare_c</span><span class="p">[</span><span class="n">equal_true</span><span class="p">(</span><span class="n">possible_winners</span><span class="p">)]</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">inf</span><span class="p">,</span> <span class="n">sup</span>
 

@@ -389,7 +389,7 @@ class RuleIteratedBucklin(Rule):
                     median = np.median(np.concatenate((preferences_borda_temp[:, c], [1, 1])))
                     x = sum(preferences_borda_temp[:, c] < median) + 1
                 scores_r[c] = median - x / (self.profile_.n_v + 1)
-            loser = np.where(scores_r == scores_r.min())[0][-1]
+            loser = np.where(scores_r == scores_r.min(initial=None))[0][-1]
             self.mylogv("Pre-testing pivotality: loser =", loser, 3)
             if loser != loser_sincere:
                 self.mylog("There might be a pivotal voter", 3)

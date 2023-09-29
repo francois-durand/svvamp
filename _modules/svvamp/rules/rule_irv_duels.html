@@ -735,8 +735,10 @@
                 <span class="k">continue</span>
 
             <span class="c1"># Update other variables for next round</span>
+            <span class="c1"># noinspection PyUnresolvedReferences</span>
             <span class="n">suggested_loser_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">suggested_loser_r</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">suggested_loser_r</span><span class="p">[</span><span class="n">r</span><span class="p">][:]</span> <span class="o">!=</span> <span class="n">loser</span><span class="p">]</span>
             <span class="n">index_loser_in_suggested_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="c1"># noinspection PyUnresolvedReferences</span>
             <span class="n">suggested_winner_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">suggested_winner_r</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">suggested_winner_r</span><span class="p">[</span><span class="n">r</span><span class="p">][:]</span> <span class="o">!=</span> <span class="n">loser</span><span class="p">]</span>
             <span class="n">index_winner_in_suggested_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="n">r</span> <span class="o">+=</span> <span class="mi">1</span>

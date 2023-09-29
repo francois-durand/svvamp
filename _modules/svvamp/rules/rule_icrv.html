@@ -413,11 +413,11 @@
 
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">profile</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleICRV(cm_option=&#39;slow&#39;)(profile)</span>
+<span class="sd">            &gt;&gt;&gt; my_profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleICRV(cm_option=&#39;slow&#39;)(my_profile)</span>
 <span class="sd">            &gt;&gt;&gt; rule.irv_.cm_option</span>
 <span class="sd">            &#39;slow&#39;</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleICRV(cm_option=&#39;exact&#39;)(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleICRV(cm_option=&#39;exact&#39;)(my_profile)</span>
 <span class="sd">            &gt;&gt;&gt; rule.irv_.cm_option</span>
 <span class="sd">            &#39;exact&#39;</span>
 <span class="sd">        &quot;&quot;&quot;</span>

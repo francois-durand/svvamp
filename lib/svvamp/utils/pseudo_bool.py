@@ -20,18 +20,18 @@ def equal_true(x):
 
     However, `equal_true(x)` is not the same as `x is True`:
 
-        >>> x = 1.
-        >>> equal_true(x)
+        >>> my_x = 1.
+        >>> equal_true(my_x)
         True
-        >>> x is True
+        >>> my_x is True
         False
 
     Similarly, `equal_true(x)` is not the same as `bool(x)`:
 
-        >>> x = -np.inf
-        >>> equal_true(x)
+        >>> my_x = -np.inf
+        >>> equal_true(my_x)
         False
-        >>> bool(x)
+        >>> bool(my_x)
         True
     """
     return x == True
@@ -56,18 +56,18 @@ def equal_false(x):
 
     However, `equal_false(x)` is not the same as `x is False`:
 
-        >>> x = 0.
-        >>> equal_false(x)
+        >>> my_x = 0.
+        >>> equal_false(my_x)
         True
-        >>> x is False
+        >>> my_x is False
         False
 
     Similarly, `equal_false(x)` is not the same as `not bool(x)`:
 
-        >>> x = None
-        >>> equal_false(x)
+        >>> my_x = None
+        >>> equal_false(my_x)
         False
-        >>> not bool(x)
+        >>> not bool(my_x)
         True
     """
     return x == False

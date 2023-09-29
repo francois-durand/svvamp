@@ -358,7 +358,7 @@ class RuleRankedPairs(Rule):
 
     @cached_property
     def scores_(self):
-        """2d array of integers. ``scores[c, d]`` is equal to :attr:`matrix_duels_rk`\ ``[c, d]`` iff this duel was
+        """2d array of integers. ``scores[c, d]`` is equal to :attr:`matrix_duels_rk`\\ ``[c, d]`` iff this duel was
         validated in Ranked Pairs, 0 otherwise.
 
         .. note::
@@ -371,7 +371,7 @@ class RuleRankedPairs(Rule):
     @cached_property
     def score_w_(self):
         """1d array. ``score_w_`` is :attr:`w_`'s score vector: ``score_w_`` =
-        :attr:`scores_`\ ``[``:attr:`w_`\ ``, :]``.
+        :attr:`scores_`\\ ``[``:attr:`w_`\\ ``, :]``.
         """
         self.mylog("Compute winner's score", 1)
         return self.scores_[self.w_, :]

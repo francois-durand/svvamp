@@ -127,7 +127,7 @@
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
-<span class="sd">    :attr:`scores_`\ ``[c, d]`` is equal to the width of the widest path from candidate ``c`` to candidate ``d`` in</span>
+<span class="sd">    :attr:`scores_`\\ ``[c, d]`` is equal to the width of the widest path from candidate ``c`` to candidate ``d`` in</span>
 <span class="sd">    the capacited graph defined by :attr:`matrix_duels_rk`. We say that ``c`` is *better* than ``d`` if ``scores_[c,</span>
 <span class="sd">    d]`` &gt; ``scores_[d, c]``. Candidate ``c`` is a *potential winner* if no candidate ``d`` is *better* than ``c``.</span>
 
@@ -486,7 +486,7 @@
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">score_w_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array. ``score_w_`` is :attr:`w_`&#39;s score vector: ``score_w_`` =</span>
-<span class="sd">        :attr:`scores_`\ ``[``:attr:`w_`\ ``, :]``.</span>
+<span class="sd">        :attr:`scores_`\\ ``[``:attr:`w_`\\ ``, :]``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Compute winner&#39;s score&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">scores_</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">,</span> <span class="p">:]</span>

@@ -333,11 +333,11 @@ class RuleCondorcetAbsIRV(Rule):
 
     def __call__(self, profile):
         """
-            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-            >>> rule = RuleCondorcetAbsIRV(cm_option='slow')(profile)
+            >>> my_profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> rule = RuleCondorcetAbsIRV(cm_option='slow')(my_profile)
             >>> rule.irv_.cm_option
             'slow'
-            >>> rule = RuleCondorcetAbsIRV(cm_option='exact')(profile)
+            >>> rule = RuleCondorcetAbsIRV(cm_option='exact')(my_profile)
             >>> rule.irv_.cm_option
             'exact'
         """

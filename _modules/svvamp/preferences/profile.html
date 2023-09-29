@@ -313,6 +313,7 @@
             <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_preferences_rk_unsorted</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_borda_ut_unsorted</span><span class="p">),</span>
             <span class="n">axis</span><span class="o">=</span><span class="mi">1</span>
         <span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="c1"># noinspection PyUnresolvedReferences</span>
         <span class="n">indexes</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_v</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="n">sort_criterion</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">indexes</span>
 
@@ -1476,8 +1477,8 @@
 
 <span class="sd">        One candidate ``d`` is enough, so:</span>
 
-<span class="sd">        ``threshold_c_prevents_w_Condorcet_ut_abs[c, w]`` :math:`= 2 \\cdot \\min_{d \\neq w} |w \geq c \\text{ and }</span>
-<span class="sd">        w &gt; d| - |w \geq c|`.</span>
+<span class="sd">        ``threshold_c_prevents_w_Condorcet_ut_abs[c, w]`` :math:`= 2 \\cdot \\min_{d \\neq w} |w \\geq c \\text{ and }</span>
+<span class="sd">        w &gt; d| - |w \\geq c|`.</span>
 
 <span class="sd">        If this result is negative, it means that even without ``c``-manipulators, ``w`` is not a Condorcet winner.</span>
 <span class="sd">        In that case, threshold is set to 0 instead.</span>
@@ -1886,7 +1887,6 @@
 <span class="sd">        Examples</span>
 <span class="sd">        --------</span>
 <span class="sd">            &gt;&gt;&gt; from svvamp import Profile</span>
-<span class="sd">            &gt;&gt;&gt; import numpy as np</span>
 <span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_ut=[[5, 1, 2], [4, 10, 1]])</span>
 <span class="sd">            &gt;&gt;&gt; profile.total_utility_std == np.std([9, 11, 3])</span>
 <span class="sd">            True</span>
@@ -1986,7 +1986,6 @@
 <span class="sd">        Examples</span>
 <span class="sd">        --------</span>
 <span class="sd">            &gt;&gt;&gt; from svvamp import Profile</span>
-<span class="sd">            &gt;&gt;&gt; import numpy as np</span>
 <span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_ut=[[5, 1, 2], [4, 10, 1]])</span>
 <span class="sd">            &gt;&gt;&gt; profile.mean_utility_std == np.std([4.5, 5.5, 1.5])</span>
 <span class="sd">            True</span>
@@ -2129,7 +2128,7 @@
 <span class="sd">        Notes</span>
 <span class="sd">        -----</span>
 <span class="sd">        Each red point of the plot represents a voter ``v``. Its position is</span>
-<span class="sd">        :attr:`~svvamp.Population.preferences_ut`\ ``[v, indexes]``. If ``normalize`` is ``True``, then each position</span>
+<span class="sd">        :attr:`~svvamp.Population.preferences_ut`\\ ``[v, indexes]``. If ``normalize`` is ``True``, then each position</span>
 <span class="sd">        is normalized before plotting so that its Euclidean norm is equal to 1.</span>
 
 <span class="sd">        The equator (in blue) is the set of points :math:`\\mathbf{u}` such that :math:`\\sum {u_i}^2 = 1` and</span>
@@ -2236,7 +2235,7 @@
 <span class="sd">        -----</span>
 <span class="sd">        Each red point of the plot represents a voter ``v``.</span>
 
-<span class="sd">            * :attr:`~svvamp.Population.preferences_ut`\ ``[v, indexes]`` is sent to the hyperplane that is</span>
+<span class="sd">            * :attr:`~svvamp.Population.preferences_ut`\\ ``[v, indexes]`` is sent to the hyperplane that is</span>
 <span class="sd">              orthogonal to [1, 1, 1, 1] (by orthogonal projection), which discards information related to approval</span>
 <span class="sd">              limit and keeps only the relative preferences between candidates.</span>
 <span class="sd">            * The plot is done in this 3d hyperplane. In practice, we use a mirror symmetry that exchanges [1, 1, 1,</span>
@@ -2853,9 +2852,9 @@
             <span class="n">argument</span> <span class="o">+=</span> <span class="s1">&#39;preferences_ut=[</span><span class="se">\n</span><span class="s1">&#39;</span>
             <span class="n">argument</span> <span class="o">+=</span> <span class="p">(</span>
                 <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preferences_ut</span><span class="p">)</span>
-                    <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;array([&#39;</span><span class="p">,</span> <span class="s1">&#39;            ...     &#39;</span><span class="p">)</span>
-                    <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">       &#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">            ...     &#39;</span><span class="p">)</span>
-                    <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;])&#39;</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;array([&#39;</span><span class="p">,</span> <span class="s1">&#39;            ...     &#39;</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">       &#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">            ...     &#39;</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;])&#39;</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">)</span>
             <span class="p">)</span>
             <span class="n">argument</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">            ... ]&#39;</span>
             <span class="n">arguments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
@@ -2864,9 +2863,9 @@
             <span class="n">argument</span> <span class="o">+=</span> <span class="s1">&#39;preferences_rk=[</span><span class="se">\n</span><span class="s1">&#39;</span>
             <span class="n">argument</span> <span class="o">+=</span> <span class="p">(</span>
                 <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preferences_rk</span><span class="p">)</span>
-                    <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;array([&#39;</span><span class="p">,</span> <span class="s1">&#39;            ...     &#39;</span><span class="p">)</span>
-                    <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">       &#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">            ...     &#39;</span><span class="p">)</span>
-                    <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;])&#39;</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;array([&#39;</span><span class="p">,</span> <span class="s1">&#39;            ...     &#39;</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">       &#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">            ...     &#39;</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;])&#39;</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">)</span>
             <span class="p">)</span>
             <span class="n">argument</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">            ... ]&#39;</span>
             <span class="n">arguments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>

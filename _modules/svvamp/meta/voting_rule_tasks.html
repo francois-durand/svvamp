@@ -131,13 +131,13 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    voting_systems: List</span>
+<span class="sd">    voting_systems: List, optional</span>
 <span class="sd">        A list of pairs (rule_class, options), where `rule_class` is a subclass of :class:`Rule` and `options` is a</span>
 <span class="sd">        dictionary of options. Instead of (rule_class, options), one may provide a singleton `rule_class`</span>
 <span class="sd">        (without parentheses), which is equivalent to (rule_class, {}).</span>
-<span class="sd">    study_rule_criteria: StudyRuleCriteria</span>
+<span class="sd">    study_rule_criteria: StudyRuleCriteria, optional</span>
 <span class="sd">        A :class:`StudyRuleCriteria` object.</span>
-<span class="sd">    detailed_tasks: object</span>
+<span class="sd">    detailed_tasks: object, optional</span>
 <span class="sd">        Either a list of triples (rule_class, options, study_rule_criteria), or a VotingRuleTasks object.</span>
 
 <span class="sd">    Examples</span>
@@ -394,7 +394,7 @@
 
 <span class="sd">        If `options` is not specified, then it is considered empty:</span>
 
-<span class="sd">            &gt;&gt;&gt; voting_rule_tasks = VotingRuleTasks(voting_systems=[], study_rule_criteria=[], detailed_tasks=[])</span>
+<span class="sd">            &gt;&gt;&gt; voting_rule_tasks = VotingRuleTasks(voting_systems=[], detailed_tasks=[])</span>
 <span class="sd">            &gt;&gt;&gt; voting_rule_tasks.append_task(</span>
 <span class="sd">            ...     rule_class=RuleIRV,</span>
 <span class="sd">            ...     study_rule_criteria=StudyRuleCriteria(</span>
@@ -415,7 +415,7 @@
 
 <span class="sd">        If `study_rule_criteria` is not specified, then it is the default instance `StudyRuleCriteria()`:</span>
 
-<span class="sd">            &gt;&gt;&gt; voting_rule_tasks = VotingRuleTasks(voting_systems=[], study_rule_criteria=[], detailed_tasks=[])</span>
+<span class="sd">            &gt;&gt;&gt; voting_rule_tasks = VotingRuleTasks(voting_systems=[], detailed_tasks=[])</span>
 <span class="sd">            &gt;&gt;&gt; voting_rule_tasks.append_task(rule_class=RuleIRV, options={&#39;cm_option&#39;: &#39;exact&#39;})</span>
 <span class="sd">            &gt;&gt;&gt; print(voting_rule_tasks)  # doctest: +ELLIPSIS</span>
 <span class="sd">            VotingRuleTasks with:</span>

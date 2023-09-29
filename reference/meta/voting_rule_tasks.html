@@ -123,11 +123,11 @@ like a task, but with no <a class="reference internal" href="study_rule_criteria
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>voting_systems</strong> (<em>List</em>) – A list of pairs (rule_class, options), where <cite>rule_class</cite> is a subclass of <a class="reference internal" href="../rules/rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a> and <cite>options</cite> is a
+<li><p><strong>voting_systems</strong> (<em>List</em><em>, </em><em>optional</em>) – A list of pairs (rule_class, options), where <cite>rule_class</cite> is a subclass of <a class="reference internal" href="../rules/rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a> and <cite>options</cite> is a
 dictionary of options. Instead of (rule_class, options), one may provide a singleton <cite>rule_class</cite>
 (without parentheses), which is equivalent to (rule_class, {}).</p></li>
-<li><p><strong>study_rule_criteria</strong> (<a class="reference internal" href="study_rule_criteria.html#svvamp.StudyRuleCriteria" title="svvamp.StudyRuleCriteria"><em>StudyRuleCriteria</em></a>) – A <a class="reference internal" href="study_rule_criteria.html#svvamp.StudyRuleCriteria" title="svvamp.StudyRuleCriteria"><code class="xref py py-class docutils literal notranslate"><span class="pre">StudyRuleCriteria</span></code></a> object.</p></li>
-<li><p><strong>detailed_tasks</strong> (<em>object</em>) – Either a list of triples (rule_class, options, study_rule_criteria), or a VotingRuleTasks object.</p></li>
+<li><p><strong>study_rule_criteria</strong> (<a class="reference internal" href="study_rule_criteria.html#svvamp.StudyRuleCriteria" title="svvamp.StudyRuleCriteria"><em>StudyRuleCriteria</em></a><em>, </em><em>optional</em>) – A <a class="reference internal" href="study_rule_criteria.html#svvamp.StudyRuleCriteria" title="svvamp.StudyRuleCriteria"><code class="xref py py-class docutils literal notranslate"><span class="pre">StudyRuleCriteria</span></code></a> object.</p></li>
+<li><p><strong>detailed_tasks</strong> (<em>object</em><em>, </em><em>optional</em>) – Either a list of triples (rule_class, options, study_rule_criteria), or a VotingRuleTasks object.</p></li>
 </ul>
 </dd>
 </dl>
@@ -613,7 +613,7 @@ using the default options for this voting rule.</p></li>
 </pre></div>
 </div>
 <p>If <cite>options</cite> is not specified, then it is considered empty:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span> <span class="o">=</span> <span class="n">VotingRuleTasks</span><span class="p">(</span><span class="n">voting_systems</span><span class="o">=</span><span class="p">[],</span> <span class="n">study_rule_criteria</span><span class="o">=</span><span class="p">[],</span> <span class="n">detailed_tasks</span><span class="o">=</span><span class="p">[])</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span> <span class="o">=</span> <span class="n">VotingRuleTasks</span><span class="p">(</span><span class="n">voting_systems</span><span class="o">=</span><span class="p">[],</span> <span class="n">detailed_tasks</span><span class="o">=</span><span class="p">[])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span><span class="o">.</span><span class="n">append_task</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">rule_class</span><span class="o">=</span><span class="n">RuleIRV</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="n">study_rule_criteria</span><span class="o">=</span><span class="n">StudyRuleCriteria</span><span class="p">(</span>
@@ -634,7 +634,7 @@ using the default options for this voting rule.</p></li>
 </pre></div>
 </div>
 <p>If <cite>study_rule_criteria</cite> is not specified, then it is the default instance <cite>StudyRuleCriteria()</cite>:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span> <span class="o">=</span> <span class="n">VotingRuleTasks</span><span class="p">(</span><span class="n">voting_systems</span><span class="o">=</span><span class="p">[],</span> <span class="n">study_rule_criteria</span><span class="o">=</span><span class="p">[],</span> <span class="n">detailed_tasks</span><span class="o">=</span><span class="p">[])</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span> <span class="o">=</span> <span class="n">VotingRuleTasks</span><span class="p">(</span><span class="n">voting_systems</span><span class="o">=</span><span class="p">[],</span> <span class="n">detailed_tasks</span><span class="o">=</span><span class="p">[])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">voting_rule_tasks</span><span class="o">.</span><span class="n">append_task</span><span class="p">(</span><span class="n">rule_class</span><span class="o">=</span><span class="n">RuleIRV</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">})</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">voting_rule_tasks</span><span class="p">)</span>  
 <span class="go">VotingRuleTasks with:</span>

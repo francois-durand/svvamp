@@ -103,7 +103,6 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">floor</span><span class="p">,</span> <span class="n">ceil</span>
-<span class="kn">from</span> <span class="nn">fractions</span> <span class="kn">import</span> <span class="n">Fraction</span>
 <span class="kn">from</span> <span class="nn">svvamp.rules.rule</span> <span class="kn">import</span> <span class="n">Rule</span>
 <span class="kn">from</span> <span class="nn">svvamp.utils</span> <span class="kn">import</span> <span class="n">type_checker</span>
 <span class="kn">from</span> <span class="nn">svvamp.utils.util_cache</span> <span class="kn">import</span> <span class="n">cached_property</span>
@@ -171,7 +170,7 @@
 <span class="sd">    The candidate with highest median grade wins. For the tie-breaking rule, see :attr:`scores`.</span>
 
 <span class="sd">    Default behavior of sincere voters: voter ``v`` applies an affine transformation to her utilities</span>
-<span class="sd">    :attr:`preferences_ut`\ ``[v, :]`` to get her grades, such that her least-liked candidate receives</span>
+<span class="sd">    :attr:`preferences_ut`\\ ``[v, :]`` to get her grades, such that her least-liked candidate receives</span>
 <span class="sd">    :attr:`min_grade` and her most-liked candidate receives :attr:`max_grade`. To modify this behavior, use attribute</span>
 <span class="sd">    :attr:`rescale_grades`. For more details about the behavior of sincere voters, see :attr:`ballots`.</span>
 
@@ -546,7 +545,7 @@
 <span class="sd">        1. Convert utilities into grades in the interval [:attr:`min_grade`, :attr:`max_grade`].</span>
 
 <span class="sd">            * If :attr:`rescale_grades` = ``True``, then each voter ``v`` applies an affine transformation to</span>
-<span class="sd">              :attr:`preferences_ut`\ ``[v, :]`` such that her least-liked candidate receives :attr:`min_grade` and</span>
+<span class="sd">              :attr:`preferences_ut`\\ ``[v, :]`` such that her least-liked candidate receives :attr:`min_grade` and</span>
 <span class="sd">              her most-liked candidate receives :attr:`max_grade`. Exception: if she is indifferent between all</span>
 <span class="sd">              candidates, then she attributes (:attr:`min_grade` + :attr:`max_grade`) / 2 to all of them.</span>
 
@@ -622,8 +621,8 @@
     <span class="k">def</span> <span class="nf">candidates_by_scores_best_to_worst_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of integers. ``candidates_by_scores_best_to_worst[k] is the candidate ranked ``k``-th.</span>
 
-<span class="sd">        Candidates are sorted lexicographically by their median (:attr:`scores`\ ``[0, c]``) then their ``p`` or ``-q``</span>
-<span class="sd">        (:attr:`scores`\ ``[1, c]``). If there is still a  tie, the tied candidate with lower index is favored.</span>
+<span class="sd">        Candidates are sorted lexicographically by their median (:attr:`scores`\\ ``[0, c]``) then their ``p`` or ``-q``</span>
+<span class="sd">        (:attr:`scores`\\ ``[1, c]``). If there is still a  tie, the tied candidate with lower index is favored.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Compute candidates_by_scores_best_to_worst&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="c1"># N.B. : ``np.array(range(self.profile_.C))`` below is the tie-breaking term by lowest index.</span>
@@ -633,8 +632,8 @@
     <span class="k">def</span> <span class="nf">w_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Integer (winning candidate).</span>
 
-<span class="sd">        Candidates are sorted lexicographically by their median (:attr:`scores`\ ``[0, c]``) then their ``p`` or</span>
-<span class="sd">        ``-q`` (:attr:`scores`\ ``[1, c]``). If there is still a tie, the tied candidate with lower index is declared</span>
+<span class="sd">        Candidates are sorted lexicographically by their median (:attr:`scores`\\ ``[0, c]``) then their ``p`` or</span>
+<span class="sd">        ``-q`` (:attr:`scores`\\ ``[1, c]``). If there is still a tie, the tied candidate with lower index is declared</span>
 <span class="sd">        the winner.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Compute winner&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>

@@ -40,9 +40,9 @@ class ExperimentsCompiler:
     ----------
         prefix_tikz_file: str
             Prefix for the names of the tikz files.
-        tikz_directory: str
+        tikz_directory: str or Path
             Directory where to save the tikz files.
-        results_directory: str
+        results_directory: str or Path
             Directory where to fetch the results obtained with `ExperimentAnalyzer`.
         figsize: tuple
             Size of the figures.

@@ -208,11 +208,11 @@ class RuleIRVAverage(Rule):
 
     def __call__(self, profile):
         """
-            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-            >>> rule = RuleIRVAverage(cm_option='slow')(profile)
+            >>> my_profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> rule = RuleIRVAverage(cm_option='slow')(my_profile)
             >>> rule.irv_.cm_option
             'slow'
-            >>> rule = RuleIRVAverage(cm_option='exact')(profile)
+            >>> rule = RuleIRVAverage(cm_option='exact')(my_profile)
             >>> rule.irv_.cm_option
             'exact'
         """

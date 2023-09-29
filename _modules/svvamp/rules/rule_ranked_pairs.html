@@ -442,7 +442,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">scores_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;2d array of integers. ``scores[c, d]`` is equal to :attr:`matrix_duels_rk`\ ``[c, d]`` iff this duel was</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;2d array of integers. ``scores[c, d]`` is equal to :attr:`matrix_duels_rk`\\ ``[c, d]`` iff this duel was</span>
 <span class="sd">        validated in Ranked Pairs, 0 otherwise.</span>
 
 <span class="sd">        .. note::</span>
@@ -455,7 +455,7 @@
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">score_w_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array. ``score_w_`` is :attr:`w_`&#39;s score vector: ``score_w_`` =</span>
-<span class="sd">        :attr:`scores_`\ ``[``:attr:`w_`\ ``, :]``.</span>
+<span class="sd">        :attr:`scores_`\\ ``[``:attr:`w_`\\ ``, :]``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Compute winner&#39;s score&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">scores_</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">,</span> <span class="p">:]</span>

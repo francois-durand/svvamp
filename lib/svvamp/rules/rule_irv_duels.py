@@ -651,8 +651,10 @@ class RuleIRVDuels(Rule):
                 continue
 
             # Update other variables for next round
+            # noinspection PyUnresolvedReferences
             suggested_loser_r[r + 1] = suggested_loser_r[r][suggested_loser_r[r][:] != loser]
             index_loser_in_suggested_r[r + 1] = 0
+            # noinspection PyUnresolvedReferences
             suggested_winner_r[r + 1] = suggested_winner_r[r][suggested_winner_r[r][:] != loser]
             index_winner_in_suggested_r[r + 1] = 0
             r += 1

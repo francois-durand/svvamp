@@ -33,7 +33,7 @@ class RuleApproval(Rule):
     ----------
     approval_comparator : str
         Can be ``'>'`` (default) or ``'>='``. When ``approval_comparator`` is
-        ``'>'``, sincere voter ``v`` approves of candidates ``c`` iff :attr:`~svvamp.Profile.preferences_ut`\ ``[
+        ``'>'``, sincere voter ``v`` approves of candidates ``c`` iff :attr:`~svvamp.Profile.preferences_ut`\\ ``[
         v, c]`` > :attr:`approval_threshold`. When ``approval_comparator`` is ``'>='``, previous relation is modified
         accordingly.
     approval_threshold : number

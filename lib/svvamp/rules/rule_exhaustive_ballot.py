@@ -339,44 +339,44 @@ class RuleExhaustiveBallot(Rule):
         Same 'rule' object, different profiles:
 
             >>> rule = RuleExhaustiveBallot()
-            >>> profile = Profile(preferences_rk=[
+            >>> my_profile = Profile(preferences_rk=[
             ...     [0, 1, 2],
             ...     [0, 2, 1],
             ...     [1, 0, 2],
             ...     [2, 0, 1],
             ...     [2, 1, 0],
             ... ])
-            >>> rule(profile).w_
+            >>> rule(my_profile).w_
             0
-            >>> profile = Profile(preferences_rk=[
+            >>> my_profile = Profile(preferences_rk=[
             ...     [0, 2, 1],
             ...     [2, 0, 1],
             ...     [2, 0, 1],
             ...     [2, 0, 1],
             ...     [2, 1, 0],
             ... ])
-            >>> rule(profile).w_
+            >>> rule(my_profile).w_
             2
 
         Same profile, different 'rule' objects:
 
-            >>> profile = Profile(preferences_rk=[
+            >>> my_profile = Profile(preferences_rk=[
             ...     [0, 1, 2],
             ...     [0, 2, 1],
             ...     [1, 0, 2],
             ...     [2, 0, 1],
             ...     [2, 1, 0],
             ... ])
-            >>> rule_1 = RuleExhaustiveBallot()(profile)
+            >>> rule_1 = RuleExhaustiveBallot()(my_profile)
             >>> rule_1.w_
             0
-            >>> rule_2 = RuleExhaustiveBallot()(profile)
+            >>> rule_2 = RuleExhaustiveBallot()(my_profile)
             >>> rule_2.w_
             0
 
         Check that the new rule does not change the options of the old one (which used to be a bug):
 
-            >>> profile = Profile(preferences_rk=[
+            >>> my_profile = Profile(preferences_rk=[
             ...     [0, 1, 2],
             ...     [0, 2, 1],
             ...     [1, 0, 2],
@@ -385,8 +385,8 @@ class RuleExhaustiveBallot(Rule):
             ... ])
             >>> rule_eb_fast = RuleExhaustiveBallot(cm_option='fast')
             >>> rule_eb_exact = RuleExhaustiveBallot(cm_option='exact')
-            >>> _ = rule_eb_fast(profile)
-            >>> _ = rule_eb_exact(profile)
+            >>> _ = rule_eb_fast(my_profile)
+            >>> _ = rule_eb_exact(my_profile)
             >>> rule_eb_fast.cm_option
             'fast'
         """

@@ -296,6 +296,7 @@ class RuleKApproval(Rule):
     })
 
     def __init__(self, k=1, **kwargs):
+        # noinspection PyTypeChecker
         self.k = None
         super().__init__(
             with_two_candidates_reduces_to_plurality=(k == 1), is_based_on_rk=True,

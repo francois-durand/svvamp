@@ -423,44 +423,44 @@
 <span class="sd">        Same &#39;rule&#39; object, different profiles:</span>
 
 <span class="sd">            &gt;&gt;&gt; rule = RuleExhaustiveBallot()</span>
-<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
+<span class="sd">            &gt;&gt;&gt; my_profile = Profile(preferences_rk=[</span>
 <span class="sd">            ...     [0, 1, 2],</span>
 <span class="sd">            ...     [0, 2, 1],</span>
 <span class="sd">            ...     [1, 0, 2],</span>
 <span class="sd">            ...     [2, 0, 1],</span>
 <span class="sd">            ...     [2, 1, 0],</span>
 <span class="sd">            ... ])</span>
-<span class="sd">            &gt;&gt;&gt; rule(profile).w_</span>
+<span class="sd">            &gt;&gt;&gt; rule(my_profile).w_</span>
 <span class="sd">            0</span>
-<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
+<span class="sd">            &gt;&gt;&gt; my_profile = Profile(preferences_rk=[</span>
 <span class="sd">            ...     [0, 2, 1],</span>
 <span class="sd">            ...     [2, 0, 1],</span>
 <span class="sd">            ...     [2, 0, 1],</span>
 <span class="sd">            ...     [2, 0, 1],</span>
 <span class="sd">            ...     [2, 1, 0],</span>
 <span class="sd">            ... ])</span>
-<span class="sd">            &gt;&gt;&gt; rule(profile).w_</span>
+<span class="sd">            &gt;&gt;&gt; rule(my_profile).w_</span>
 <span class="sd">            2</span>
 
 <span class="sd">        Same profile, different &#39;rule&#39; objects:</span>
 
-<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
+<span class="sd">            &gt;&gt;&gt; my_profile = Profile(preferences_rk=[</span>
 <span class="sd">            ...     [0, 1, 2],</span>
 <span class="sd">            ...     [0, 2, 1],</span>
 <span class="sd">            ...     [1, 0, 2],</span>
 <span class="sd">            ...     [2, 0, 1],</span>
 <span class="sd">            ...     [2, 1, 0],</span>
 <span class="sd">            ... ])</span>
-<span class="sd">            &gt;&gt;&gt; rule_1 = RuleExhaustiveBallot()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule_1 = RuleExhaustiveBallot()(my_profile)</span>
 <span class="sd">            &gt;&gt;&gt; rule_1.w_</span>
 <span class="sd">            0</span>
-<span class="sd">            &gt;&gt;&gt; rule_2 = RuleExhaustiveBallot()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule_2 = RuleExhaustiveBallot()(my_profile)</span>
 <span class="sd">            &gt;&gt;&gt; rule_2.w_</span>
 <span class="sd">            0</span>
 
 <span class="sd">        Check that the new rule does not change the options of the old one (which used to be a bug):</span>
 
-<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
+<span class="sd">            &gt;&gt;&gt; my_profile = Profile(preferences_rk=[</span>
 <span class="sd">            ...     [0, 1, 2],</span>
 <span class="sd">            ...     [0, 2, 1],</span>
 <span class="sd">            ...     [1, 0, 2],</span>
@@ -469,8 +469,8 @@
 <span class="sd">            ... ])</span>
 <span class="sd">            &gt;&gt;&gt; rule_eb_fast = RuleExhaustiveBallot(cm_option=&#39;fast&#39;)</span>
 <span class="sd">            &gt;&gt;&gt; rule_eb_exact = RuleExhaustiveBallot(cm_option=&#39;exact&#39;)</span>
-<span class="sd">            &gt;&gt;&gt; _ = rule_eb_fast(profile)</span>
-<span class="sd">            &gt;&gt;&gt; _ = rule_eb_exact(profile)</span>
+<span class="sd">            &gt;&gt;&gt; _ = rule_eb_fast(my_profile)</span>
+<span class="sd">            &gt;&gt;&gt; _ = rule_eb_exact(my_profile)</span>
 <span class="sd">            &gt;&gt;&gt; rule_eb_fast.cm_option</span>
 <span class="sd">            &#39;fast&#39;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
