@@ -28,6 +28,35 @@ from svvamp.preferences.profile import Profile
 class RuleNanson(Rule):
     """Nanson method.
 
+    Options
+    -------
+        >>> RuleNanson.print_options_parameters()
+        cm_option: ['fast', 'exact']. Default: 'fast'.
+        icm_option: ['exact']. Default: 'exact'.
+        iia_subset_maximum_size: is_number. Default: 2.
+        im_option: ['lazy', 'exact']. Default: 'lazy'.
+        tm_option: ['lazy', 'exact']. Default: 'exact'.
+        um_option: ['lazy', 'exact']. Default: 'lazy'.
+
+    Notes
+    -----
+    At each round, all candidates with a Borda score strictly lower than average are simultaneously eliminated. When
+    all remaining candidates have the same Borda score, it means that the matrix of duels (for this subset of
+    candidates) has only ties. Then the candidate with lowest index is declared the winner. Since a Condorcet winner
+    has always a Borda score higher than average, Nanson method meets the Condorcet criterion.
+
+    * :meth:`is_cm_`: Deciding CM is NP-complete. Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
+    * :meth:`is_icm_`: Exact in polynomial time.
+    * :meth:`is_im_`: Deciding IM is NP-complete. Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
+    * :meth:`is_iia_`: Exact in polynomial time.
+    * :meth:`is_tm_`: Exact in polynomial time.
+    * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
+
+    References
+    ----------
+    'Complexity of and algorithms for the manipulation of Borda, Nanson's and Baldwin's voting rules',
+    Jessica Davies, George Katsirelos, Nina Narodytska, Toby Walsh and Lirong Xia, 2014.
+
     Examples
     --------
         >>> profile = Profile(preferences_ut=[
@@ -261,25 +290,6 @@ class RuleNanson(Rule):
         [0. 1. 3.]
         sufficient_coalition_size_cm =
         [0. 2. 3.]
-
-    Notes
-    -----
-    At each round, all candidates with a Borda score strictly lower than average are simultaneously eliminated. When
-    all remaining candidates have the same Borda score, it means that the matrix of duels (for this subset of
-    candidates) has only ties. Then the candidate with lowest index is declared the winner. Since a Condorcet winner
-    has always a Borda score higher than average, Nanson method meets the Condorcet criterion.
-
-    * :meth:`is_cm_`: Deciding CM is NP-complete. Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
-    * :meth:`is_icm_`: Exact in polynomial time.
-    * :meth:`is_im_`: Deciding IM is NP-complete. Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
-    * :meth:`is_iia_`: Exact in polynomial time.
-    * :meth:`is_tm_`: Exact in polynomial time.
-    * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
-
-    References
-    ----------
-    'Complexity of and algorithms for the manipulation of Borda, Nanson's and Baldwin's voting rules',
-    Jessica Davies, George Katsirelos, Nina Narodytska, Toby Walsh and Lirong Xia, 2014.
     """
 
     full_name = 'Nanson'

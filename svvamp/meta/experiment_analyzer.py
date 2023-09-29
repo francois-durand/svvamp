@@ -76,7 +76,7 @@ class ExperimentAnalyzer:
 
     Anyway, you can then call the object with `experiment_analyzer()`. You can override the parameters (like
     `base_profile`, `n_samples`, etc) when making the call. For example:
-    `experiment_analyzer(base_profile) = another_base_profile`.
+    `experiment_analyzer(base_profile=another_base_profile)`.
     """
 
     def __init__(self,

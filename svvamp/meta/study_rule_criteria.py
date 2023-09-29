@@ -32,27 +32,27 @@ class StudyRuleCriteria:
     ----------
     manipulation_criteria : List of str
         Manipulation criteria that need to be studied. If None (default), then all criteria related to
-        collective manipulation are taken: ['is_tm_', 'is_um_', 'is_icm_', 'is_cm_']. If [], then no criterion is taken.
-        Note that by default, 'is_iia_' and 'is_im_' are NOT included.
+        collective manipulation are taken: `['is_tm_', 'is_um_', 'is_icm_', 'is_cm_']`. If [], then no criterion is
+        taken. Note that by default, `'is_iia_'` and `'is_im_'` are NOT included.
     manipulation_criteria_c : List of str
-        This is where you put criteria such as 'candidates_cm_', 'candidates_tm_', etc.
+        This is where you put criteria such as `'candidates_cm_'`, `'candidates_tm_'`, etc.
     manipulation_only : bool
         If True, then result_criteria and utility criteria are ignored, i.e. set to [].
     result_criteria : List of str
         Result criteria that need to be studied. If None(default), then all criteria are taken:
-        ['w_is_weak_condorcet_winner_', 'w_missed_weak_condorcet_winner_', ...].
+        `['w_is_weak_condorcet_winner_', 'w_missed_weak_condorcet_winner_', ...]`.
     utility_criteria : List
         List of tuples  (criterion, func, name), where:
         criterion: the numerical data to be processed.
         func: an aggregating function.
         name: the name chosen for this pair criterion / aggregation function.
-        Example: ('total_utility_w_', np.mean, 'total_u_mean').
+        Example: `('total_utility_w_', np.mean, 'total_u_mean')`.
         Will compute the mean of total_utility_w over the populations and the result will be called 'total_u_mean'.
         If utility_criteria is None (default), then use:
-        [('total_utility_w_', np.max, 'total_u_max'),
-         ('total_utility_w_', np.min, 'total_u_min'),
-         ('total_utility_w_', np.mean, 'total_u_mean'),
-         ('total_utility_w_', np.std, 'total_u_std')].
+        `[('total_utility_w_', np.max, 'total_u_max'),
+        ('total_utility_w_', np.min, 'total_u_min'),
+        ('total_utility_w_', np.mean, 'total_u_mean'),
+        ('total_utility_w_', np.std, 'total_u_std')]`.
     numerical_criteria : List of str
         Other numerical criteria that need to be studied. These criteria must correspond to attributes in the rule
         that output a pair (inf, sup), for example `nb_candidates_cm_` or `worst_relative_welfare_with_cm_`.

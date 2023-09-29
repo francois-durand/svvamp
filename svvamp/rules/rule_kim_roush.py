@@ -28,6 +28,34 @@ from svvamp.preferences.profile import Profile
 class RuleKimRoush(Rule):
     """Kim-Roush method.
 
+    Options
+    -------
+        >>> RuleKimRoush.print_options_parameters()
+        cm_option: ['lazy', 'exact']. Default: 'lazy'.
+        icm_option: ['lazy']. Default: 'lazy'.
+        iia_subset_maximum_size: is_number. Default: 2.
+        im_option: ['lazy', 'exact']. Default: 'lazy'.
+        tm_option: ['lazy', 'exact']. Default: 'exact'.
+        um_option: ['lazy', 'exact']. Default: 'lazy'.
+
+    Notes
+    -----
+    At each round, all candidates with a Veto score strictly lower than average are simultaneously eliminated. When
+    all remaining candidates have the same Veto score, the candidate with lowest index is declared the winner.
+
+    Kim-Roush method does not meets InfMC.
+
+    * :meth:`is_cm_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
+    * :meth:`is_icm_`: Non-exact algorithm from superclass :class:`Rule`.
+    * :meth:`is_im_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
+    * :meth:`is_iia`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
+    * :meth:`is_tm_`: Exact in polynomial time.
+    * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
+
+    References
+    ----------
+    'Statistical Manipulability of Social Choice Functions', K.H. Kim and F.W. Roush, 1996.
+
     Examples
     --------
         >>> profile = Profile(preferences_ut=[
@@ -257,24 +285,6 @@ class RuleKimRoush(Rule):
         [0. 1. 3.]
         sufficient_coalition_size_cm =
         [0. 2. 3.]
-
-    Notes
-    -----
-    At each round, all candidates with a Veto score strictly lower than average are simultaneously eliminated. When
-    all remaining candidates have the same Veto score, the candidate with lowest index is declared the winner.
-
-    Kim-Roush method does not meets InfMC.
-
-    * :meth:`is_cm_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
-    * :meth:`is_icm_`: Non-exact algorithm from superclass :class:`Rule`.
-    * :meth:`is_im_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
-    * :meth:`is_iia`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
-    * :meth:`is_tm_`: Exact in polynomial time.
-    * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
-
-    References
-    ----------
-    'Statistical Manipulability of Social Choice Functions', K.H. Kim and F.W. Roush, 1996.
     """
 
     full_name = 'Kim-Roush'

@@ -27,48 +27,48 @@ from svvamp.preferences.profile import Profile
 from svvamp.utils.misc import indent
 
 
-class StudyProfileCriteria():
+class StudyProfileCriteria:
+    """A set of criteria to study for the simulator about the profiles.
+
+    Parameters
+    ----------
+    boolean_criteria : List of str
+        Each string must correspond to a boolean criterion defined in Profile.
+    numerical_criteria : List of tuple
+        Each tuple is of the form (criterion, func, name), where:
+            criterion: the numerical data to be processed.
+            func: an aggregating function.
+            name: the name chosen for this pair criterion / aggregation function.
+    special_candidates_criteria : List of str
+        Each string must correspond to an attribute defined in Profile that returns the
+        index of a candidate or NaN.
+    array_criteria : List of str
+        Each string must correspond to a attribute defined in Profile that returns an 1d array of size n_c
+        (the number of candidates).
+    matrix_criteria : List of str
+        Each string must correspond to a attribute defined in Profile that returns an array (whatever
+        its size).
+
+    Examples
+    --------
+    For each argument, if None (default), then a quite extensive pre-defined list is used. Hence, the typical usage
+    is simply:
+
+        >>> study_profile_criteria = StudyProfileCriteria()
+
+    Here is an example of manually defined `numerical_criteria`:
+
+        >>> study_profile_criteria = StudyProfileCriteria(numerical_criteria=[
+        ...     ('total_utility_mean', np.mean, 'total_u_mean_mean')
+        ... ])
+
+    For each profile, this will compute `total_utility_mean` (mean over the candidates). Then it will use `np.mean`
+    to calculate the mean over the profiles. The result will be called 'total_u_mean_mean'.
+    """
 
     def __init__(self, boolean_criteria=None, numerical_criteria=None,
                  special_candidates_criteria=None, array_criteria=None,
                  matrix_criteria=None):
-        """A set of criteria to study for the simulator about the profiles.
-
-        Parameters
-        ----------
-        boolean_criteria : List of str
-            Each string must correspond to a boolean criterion defined in Profile.
-        numerical_criteria : List of tuple
-            Each tuple is of the form (criterion, func, name), where:
-                criterion: the numerical data to be processed.
-                func: an aggregating function.
-                name: the name chosen for this pair criterion / aggregation function.
-        special_candidates_criteria : List of str
-            Each string must correspond to an attribute defined in Profile that returns the
-            index of a candidate or NaN.
-        array_criteria : List of str
-            Each string must correspond to a attribute defined in Profile that returns an 1d array of size n_c
-            (the number of candidates).
-        matrix_criteria : List of str
-            Each string must correspond to a attribute defined in Profile that returns an array (whatever
-            its size).
-
-        Examples
-        --------
-        For each argument, if None (default), then a quite extensive pre-defined list is used. Hence, the typical usage
-        is simply:
-
-            >>> study_profile_criteria = StudyProfileCriteria()
-
-        Here is an example of manually defined `numerical_criteria`:
-
-            >>> study_profile_criteria = StudyProfileCriteria(numerical_criteria=[
-            ...     ('total_utility_mean', np.mean, 'total_u_mean_mean')
-            ... ])
-
-        For each profile, this will compute `total_utility_mean` (mean over the candidates). Then it will use `np.mean`
-        to calculate the mean over the profiles. The result will be called 'total_u_mean_mean'.
-        """
         if boolean_criteria is None:
             boolean_criteria = [
                 'exists_condorcet_admissible',

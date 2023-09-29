@@ -31,6 +31,67 @@ from svvamp.utils.misc import preferences_ut_to_matrix_duels_ut, matrix_victorie
 class RuleTideman(Rule):
     """Tideman rule (combination of Smith set and IRV-like elimination).
 
+    Options
+    -------
+        >>> RuleTideman.print_options_parameters()
+        cm_option: ['fast', 'slow', 'very_slow', 'exact']. Default: 'fast'.
+        icm_option: ['exact']. Default: 'exact'.
+        iia_subset_maximum_size: is_number. Default: 2.
+        im_option: ['lazy', 'exact']. Default: 'lazy'.
+        tm_option: ['exact']. Default: 'exact'.
+        um_option: ['lazy', 'exact']. Default: 'lazy'.
+
+    Notes
+    -----
+    Each voter must provide a strict total order. Restrict the election to the Smith Set (in the sense of
+    :attr:`smith_set_rk`), then eliminate the plurality loser, then iterate.
+
+    * :meth:`is_cm_`:
+
+        * :attr:`cm_option` = ``'fast'``: Rely on :class:`RuleIRV`'s fast algorithm. Polynomial heuristic. Can prove
+          CM but unable to decide non-CM (except in rare obvious cases).
+        * :attr:`cm_option` = ``'slow'``: Rely on :class:`RuleExhaustiveBallot`'s exact algorithm. Non-polynomial
+          heuristic (:math:`2^{n_c}`). Quite efficient to prove CM or non-CM.
+        * :attr:`cm_option` = ``'very_slow'``: Rely on :class:`RuleIRV`'s exact algorithm. Non-polynomial
+          heuristic (:math:`n_c!`). Very efficient to prove CM or non-CM.
+        * :attr:`cm_option` = ``'exact'``: Non-polynomial algorithm from superclass :class:`Rule`.
+
+        Each algorithm above exploits the faster ones. For example, if :attr:`cm_option` = ``'very_slow'``,
+        SVVAMP tries the fast algorithm first, then the slow one, then the 'very slow' one. As soon as it reaches
+        a decision, computation stops.
+
+    Tideman does not :attr:`meets_condorcet_c_ut_abs_ctb`:
+
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 0. ,  1. , -0.5],
+        ...     [ 0.5,  0. ,  0.5],
+        ... ], preferences_rk=[
+        ...     [1, 0, 2],
+        ...     [2, 0, 1],
+        ... ])
+        >>> RuleTideman()(profile).w_
+        1
+        >>> profile.condorcet_winner_ut_abs_ctb
+        0
+
+    Tideman does not :attr:`meets_condorcet_c_ut_rel`:
+
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 1. ,  1. , -1. ],
+        ...     [ 0.5,  1. , -0.5],
+        ... ], preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [1, 0, 2],
+        ... ])
+        >>> RuleTideman()(profile).w_
+        0
+        >>> profile.condorcet_winner_ut_rel
+        1
+
+    References
+    ----------
+    'Four Condorcet-Hare Hybrid Methods for Single-Winner Elections', James Green-Armytage, 2011.
+
     Examples
     --------
         >>> profile = Profile(preferences_ut=[
@@ -258,57 +319,6 @@ class RuleTideman(Rule):
         [0. 1. 2.]
         sufficient_coalition_size_cm =
         [0. 2. 4.]
-
-    Tideman does not :attr:`meets_condorcet_c_ut_abs_ctb`:
-
-        >>> profile = Profile(preferences_ut=[
-        ...     [ 0. ,  1. , -0.5],
-        ...     [ 0.5,  0. ,  0.5],
-        ... ], preferences_rk=[
-        ...     [1, 0, 2],
-        ...     [2, 0, 1],
-        ... ])
-        >>> RuleTideman()(profile).w_
-        1
-        >>> profile.condorcet_winner_ut_abs_ctb
-        0
-
-    Tideman does not :attr:`meets_condorcet_c_ut_rel`:
-
-        >>> profile = Profile(preferences_ut=[
-        ...     [ 1. ,  1. , -1. ],
-        ...     [ 0.5,  1. , -0.5],
-        ... ], preferences_rk=[
-        ...     [0, 1, 2],
-        ...     [1, 0, 2],
-        ... ])
-        >>> RuleTideman()(profile).w_
-        0
-        >>> profile.condorcet_winner_ut_rel
-        1
-
-    Notes
-    -----
-    Each voter must provide a strict total order. Restrict the election to the Smith Set (in the sense of
-    :attr:`smith_set_rk`), then eliminate the plurality loser, then iterate.
-
-    * :meth:`is_cm_`:
-
-        * :attr:`cm_option` = ``'fast'``: Rely on :class:`RuleIRV`'s fast algorithm. Polynomial heuristic. Can prove
-          CM but unable to decide non-CM (except in rare obvious cases).
-        * :attr:`cm_option` = ``'slow'``: Rely on :class:`RuleExhaustiveBallot`'s exact algorithm. Non-polynomial
-          heuristic (:math:`2^{n_c}`). Quite efficient to prove CM or non-CM.
-        * :attr:`cm_option` = ``'very_slow'``: Rely on :class:`RuleIRV`'s exact algorithm. Non-polynomial
-          heuristic (:math:`n_c!`). Very efficient to prove CM or non-CM.
-        * :attr:`cm_option` = ``'exact'``: Non-polynomial algorithm from superclass :class:`Rule`.
-
-        Each algorithm above exploits the faster ones. For example, if :attr:`cm_option` = ``'very_slow'``,
-        SVVAMP tries the fast algorithm first, then the slow one, then the 'very slow' one. As soon as it reaches
-        a decision, computation stops.
-
-    References
-    ----------
-    'Four Condorcet-Hare Hybrid Methods for Single-Winner Elections', James Green-Armytage, 2011.
     """
 
     full_name = 'Tideman'

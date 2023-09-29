@@ -29,6 +29,21 @@ from svvamp.preferences.profile import Profile
 class RuleSlater(Rule):
     """Slater method.
 
+    Options
+    -------
+        >>> RuleSlater.print_options_parameters()
+        cm_option: ['lazy', 'exact']. Default: 'lazy'.
+        icm_option: ['exact']. Default: 'exact'.
+        iia_subset_maximum_size: is_number. Default: 2.
+        im_option: ['lazy', 'exact']. Default: 'lazy'.
+        tm_option: ['lazy', 'exact']. Default: 'exact'.
+        um_option: ['lazy', 'exact']. Default: 'lazy'.
+
+    Notes
+    -----
+    The Slater method is defined similarly to the Kemeny method, but relying on the matrix of victories instead
+    of the matrix of duels.
+
     Examples
     --------
         >>> profile = Profile(preferences_ut=[

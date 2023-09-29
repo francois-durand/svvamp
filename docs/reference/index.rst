@@ -1,26 +1,49 @@
 Reference
 =========
 
-Preferences
------------
+Profiles
+--------
 
 .. toctree::
    :maxdepth: 3
 
    preferences/profile
    preferences/profile_from_file
+   preferences/profile_subset_candidates
+   preferences/profile_um
+
+Generators of Profiles
+----------------------
+
+.. toctree::
+   :maxdepth: 3
+
+   preferences/generator_profile
    preferences/generator_profile_cubic_uniform
    preferences/generator_profile_euclidean_box
    preferences/generator_profile_gaussian_well
    preferences/generator_profile_ianc
    preferences/generator_profile_ic
    preferences/generator_profile_ladder
+   preferences/generator_profile_noise
+   preferences/generator_profile_noised_file
    preferences/generator_profile_perturbed_culture
    preferences/generator_profile_spheroid
+   preferences/generator_profile_unanimous
    preferences/generator_profile_vmf_hypercircle
    preferences/generator_profile_vmf_hypersphere
 
-Voting rules
+Plurality Elimination Engines
+-----------------------------
+
+.. toctree::
+   :maxdepth: 3
+
+   preferences/plurality_elimination_engine
+   preferences/plurality_elimination_engine_profile
+   preferences/plurality_elimination_engine_profile_um
+
+Voting Rules
 ------------
 
 .. toctree::
@@ -61,3 +84,24 @@ Voting rules
    rules/rule_two_round
    rules/rule_veto
    rules/rule_woodall
+
+Meta
+----
+
+.. toctree::
+   :maxdepth: 3
+
+   meta/study_profile_criteria
+   meta/study_rule_criteria
+   meta/voting_rule_tasks
+   meta/experiment_analyzer
+   meta/experiments_compiler
+
+Utils
+-----
+
+.. toctree::
+   :maxdepth: 3
+
+   utils/my_log
+   utils/initialize_random_seeds

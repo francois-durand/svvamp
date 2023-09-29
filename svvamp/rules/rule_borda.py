@@ -28,6 +28,43 @@ from svvamp.preferences.profile import Profile
 class RuleBorda(Rule):
     """Borda rule.
 
+    Options
+    -------
+        >>> RuleBorda.print_options_parameters()
+        cm_option: ['fast', 'exact']. Default: 'fast'.
+        icm_option: ['fast']. Default: 'fast'.
+        iia_subset_maximum_size: is_number. Default: 2.
+        im_option: ['exact']. Default: 'exact'.
+        tm_option: ['exact']. Default: 'exact'.
+        um_option: ['exact']. Default: 'exact'.
+
+    Notes
+    -----
+    Voter ``v`` gives (:attr:`n_c` - 1) points to her top-ranked candidate, (:attr:`n_c` - 2) to the second, ..., 0 to
+    the last. Ties are broken by natural order on the candidates (lower index wins).
+
+    * :meth:`is_cm_`: Deciding CM is NP-complete.
+
+        * :attr:`cm_option` = ``'fast'``: Zuckerman et al. (2009). This approximation algorithm is polynomial and has
+          a window of error of 1 manipulator.
+        * :attr:`cm_option` = ``'exact'``: Non-polynomial algorithm from superclass :class:`Rule`.
+
+    * :meth:`is_icm_`: Algorithm is polynomial and has a window of error of 1 manipulator.
+    * :meth:`is_im_`: Exact in polynomial time.
+    * :meth:`is_iia_`: Exact in polynomial time.
+    * :meth:`is_tm_`: Exact in polynomial time.
+    * :meth:`is_um_`: Exact in polynomial time.
+
+    References
+    ----------
+    'Algorithms for the coalitional manipulation problem', M. Zuckerman, A. Procaccia and J. Rosenschein, 2009.
+
+    'Unweighted Coalitional Manipulation Under the Borda Rule is NP-Hard', Nadja Betzler, Rolf Niedermeier and
+    Gerhard Woeginger, 2011.
+
+    'Complexity of and algorithms for the manipulation of Borda, Nanson's and Baldwin's voting rules',
+    Jessica Davies, George Katsirelos, Nina Narodytska, Toby Walsh and Lirong Xia, 2014.
+
     Examples
     --------
         >>> profile = Profile(preferences_ut=[
@@ -255,33 +292,6 @@ class RuleBorda(Rule):
         [0. 2. 3.]
         sufficient_coalition_size_cm =
         [0. 2. 3.]
-
-    Notes
-    -----
-    Voter ``v`` gives (:attr:`n_c` - 1) points to her top-ranked candidate, (:attr:`n_c` - 2) to the second, ..., 0 to
-    the last. Ties are broken by natural order on the candidates (lower index wins).
-
-    * :meth:`is_cm_`: Deciding CM is NP-complete.
-
-        * :attr:`cm_option` = ``'fast'``: Zuckerman et al. (2009). This approximation algorithm is polynomial and has
-          a window of error of 1 manipulator.
-        * :attr:`cm_option` = ``'exact'``: Non-polynomial algorithm from superclass :class:`Rule`.
-
-    * :meth:`is_icm_`: Algorithm is polynomial and has a window of error of 1 manipulator.
-    * :meth:`is_im_`: Exact in polynomial time.
-    * :meth:`is_iia_`: Exact in polynomial time.
-    * :meth:`is_tm_`: Exact in polynomial time.
-    * :meth:`is_um_`: Exact in polynomial time.
-
-    References
-    ----------
-    'Algorithms for the coalitional manipulation problem', M. Zuckerman, A. Procaccia and J. Rosenschein, 2009.
-
-    'Unweighted Coalitional Manipulation Under the Borda Rule is NP-Hard', Nadja Betzler, Rolf Niedermeier and
-    Gerhard Woeginger, 2011.
-
-    'Complexity of and algorithms for the manipulation of Borda, Nanson's and Baldwin's voting rules',
-    Jessica Davies, George Katsirelos, Nina Narodytska, Toby Walsh and Lirong Xia, 2014.
     """
 
     full_name = 'Borda'

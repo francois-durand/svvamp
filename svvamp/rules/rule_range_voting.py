@@ -55,6 +55,41 @@ class RuleRangeVoting(Rule):
 
         See :attr:`ballots` for more details.
 
+    Options
+    -------
+        >>> RuleRangeVoting.print_options_parameters()
+        cm_option: ['exact']. Default: 'exact'.
+        icm_option: ['exact']. Default: 'exact'.
+        iia_subset_maximum_size: is_number. Default: 2.
+        im_option: ['exact']. Default: 'exact'.
+        max_grade: isfinite. Default: 1.
+        min_grade: isfinite. Default: 0.
+        rescale_grades: is_bool. Default: True.
+        step_grade: isfinite. Default: 0.
+        tm_option: ['exact']. Default: 'exact'.
+        um_option: ['exact']. Default: 'exact'.
+
+    Notes
+    -----
+    Each voter attributes a grade to each candidate. By default, authorized grades are all numbers in the interval
+    [:attr:`min_grade`, :attr:`max_grade`]. To use a discrete set of notes, modify attribute :attr:`step_grade`.
+
+    The candidate with highest average grade wins. In case of a tie, the tied candidate with lowest index is declared
+    the winner.
+
+    Default behavior of sincere voters: voter ``v`` applies an affine transformation to her utilities
+    :attr:`preferences_ut`\ ``[v, :]`` to get her grades, such that her least-liked candidate receives
+    :attr:`min_grade` and her most-liked candidate receives :attr:`max_grade`. To modify this behavior, use attribute
+    :attr:`rescale_grades`. For more details about the behavior of sincere voters, see :attr:`ballots`.
+
+    * :meth:`~svvamp.Election.not_iia`:
+
+        * If :attr:`rescale_grades` = ``False``, then Range voting always meets IIA.
+        * If :attr:`rescale_grades` = ``True``, then non-polynomial or non-exact algorithms from superclass
+          :class:`Rule` are used.
+
+    * :meth:`is_cm_`, :meth:`is_icm_`, :meth:`is_im_`, :meth:`is_tm_`, :meth:`is_um_`: Exact in polynomial time.
+
     Examples
     --------
         >>> profile = Profile(preferences_ut=[
@@ -282,27 +317,6 @@ class RuleRangeVoting(Rule):
         [0. 3. 3.]
         sufficient_coalition_size_cm =
         [0. 3. 3.]
-
-    Notes
-    -----
-    Each voter attributes a grade to each candidate. By default, authorized grades are all numbers in the interval
-    [:attr:`min_grade`, :attr:`max_grade`]. To use a discrete set of notes, modify attribute :attr:`step_grade`.
-
-    The candidate with highest average grade wins. In case of a tie, the tied candidate with lowest index is declared
-    the winner.
-
-    Default behavior of sincere voters: voter ``v`` applies an affine transformation to her utilities
-    :attr:`preferences_ut`\ ``[v, :]`` to get her grades, such that her least-liked candidate receives
-    :attr:`min_grade` and her most-liked candidate receives :attr:`max_grade`. To modify this behavior, use attribute
-    :attr:`rescale_grades`. For more details about the behavior of sincere voters, see :attr:`ballots`.
-
-    * :meth:`~svvamp.Election.not_iia`:
-
-        * If :attr:`rescale_grades` = ``False``, then Range voting always meets IIA.
-        * If :attr:`rescale_grades` = ``True``, then non-polynomial or non-exact algorithms from superclass
-          :class:`Rule` are used.
-
-    * :meth:`is_cm_`, :meth:`is_icm_`, :meth:`is_im_`, :meth:`is_tm_`, :meth:`is_um_`: Exact in polynomial time.
     """
 
     full_name = 'Range Voting'

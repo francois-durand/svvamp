@@ -3,6 +3,16 @@ from svvamp.preferences.plurality_elimination_engine import PluralityElimination
 
 
 class PluralityEliminationEngineProfile(PluralityEliminationEngine):
+    """
+    Plurality elimination engine for the general class `Profile`.
+
+    This class is used internally by SVVAMP. It is not intended for the end user.
+
+    Parameters
+    ----------
+    profile: Profile
+        The profile.
+    """
 
     def __init__(self, profile):
         super().__init__(profile)

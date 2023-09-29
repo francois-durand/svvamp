@@ -28,6 +28,46 @@ from svvamp.preferences.profile import Profile
 class RuleIteratedBucklin(Rule):
     """Iterated Bucklin method.
 
+    Options
+    -------
+        >>> RuleIteratedBucklin.print_options_parameters()
+        cm_option: ['lazy', 'exact']. Default: 'lazy'.
+        icm_option: ['lazy']. Default: 'lazy'.
+        iia_subset_maximum_size: is_number. Default: 2.
+        im_option: ['lazy', 'exact']. Default: 'lazy'.
+        tm_option: ['lazy', 'exact']. Default: 'exact'.
+        um_option: ['lazy', 'exact']. Default: 'lazy'.
+
+    Notes
+    -----
+    The candidate with least *adjusted median Borda score* (cf. below) is eliminated. Then the new Borda scores are
+    computed. Etc. Ties are broken in favor of lower-index candidates: in case of a tie, the candidate with highest
+    index is eliminated.
+
+    Adjusted median Borda score:
+
+        Let ``med_c`` be the median Borda score for candidate ``c``. Let ``x_c`` the number of voters who put a lower
+        Borda score to ``c``. Then ``c``'s adjusted median is ``med_c - x_c / (n_v + 1)``.
+
+        If ``med_c > med_d``, then it is also true for the adjusted median. If ``med_c = med_d``, then ``c`` has a
+        better adjusted median iff ``x_c < x_d``, i.e. if more voters give to ``c`` the Borda score ``med_c`` or
+        higher.
+
+        So, the best candidate by adjusted median is the :class:`~Bucklin` winner. Here, at each round,
+        we eliminate the candidate with lowest adjusted median Borda score, which justifies the name of "Iterated
+        Bucklin method".
+
+    Unlike Baldwin method (= Iterated Borda), Iterated Bucklin does not meet the Condorcet criterion. Indeed,
+    a Condorcet winner may have the (strictly) worst median ranking.
+
+    * :meth:`is_cm_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
+    * :meth:`is_icm_`: The algorithm from superclass :class:`Rule` is polynomial and has a window of error of 1
+      manipulator.
+    * :meth:`is_im_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
+    * :meth:`is_iia`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
+    * :meth:`is_tm_`: Exact in polynomial time.
+    * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
+
     Examples
     --------
         >>> profile = Profile(preferences_ut=[
@@ -257,36 +297,6 @@ class RuleIteratedBucklin(Rule):
         [0. 0. 1.]
         sufficient_coalition_size_cm =
         [0. 2. 3.]
-
-    Notes
-    -----
-    The candidate with least *adjusted median Borda score* (cf. below) is eliminated. Then the new Borda scores are
-    computed. Etc. Ties are broken in favor of lower-index candidates: in case of a tie, the candidate with highest
-    index is eliminated.
-
-    Adjusted median Borda score:
-
-        Let ``med_c`` be the median Borda score for candidate ``c``. Let ``x_c`` the number of voters who put a lower
-        Borda score to ``c``. Then ``c``'s adjusted median is ``med_c - x_c / (n_v + 1)``.
-
-        If ``med_c > med_d``, then it is also true for the adjusted median. If ``med_c = med_d``, then ``c`` has a
-        better adjusted median iff ``x_c < x_d``, i.e. if more voters give to ``c`` the Borda score ``med_c`` or
-        higher.
-
-        So, the best candidate by adjusted median is the :class:`~Bucklin` winner. Here, at each round,
-        we eliminate the candidate with lowest adjusted median Borda score, which justifies the name of "Iterated
-        Bucklin method".
-
-    Unlike Baldwin method (= Iterated Borda), Iterated Bucklin does not meet the Condorcet criterion. Indeed,
-    a Condorcet winner may have the (strictly) worst median ranking.
-
-    * :meth:`is_cm_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
-    * :meth:`is_icm_`: The algorithm from superclass :class:`Rule` is polynomial and has a window of error of 1
-      manipulator.
-    * :meth:`is_im_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
-    * :meth:`is_iia`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
-    * :meth:`is_tm_`: Exact in polynomial time.
-    * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
     """
 
     full_name = 'Iterated Bucklin'

@@ -27,7 +27,53 @@ from svvamp.preferences.profile import Profile
 
 class RuleBlack(Rule):
     """
-    Black rule
+    Black rule.
+
+    Options
+    -------
+        >>> RuleBlack.print_options_parameters()
+        cm_option: ['lazy', 'exact']. Default: 'lazy'.
+        icm_option: ['exact']. Default: 'exact'.
+        iia_subset_maximum_size: is_number. Default: 2.
+        im_option: ['lazy', 'exact']. Default: 'lazy'.
+        tm_option: ['lazy', 'exact']. Default: 'exact'.
+        um_option: ['lazy', 'exact']. Default: 'lazy'.
+
+    Notes
+    -----
+    Select the Condorcet winner if any, otherwise select the Borda winner.
+
+    Black does not :attr:`meets_condorcet_c_ut_rel`:
+
+        >>> profile = Profile(preferences_ut=[
+        ...     [-1. , -0.5, -0.5],
+        ...     [-1. , -0.5,  0. ],
+        ... ], preferences_rk=[
+        ...     [1, 2, 0],
+        ...     [2, 1, 0],
+        ... ])
+        >>> RuleBlack()(profile).w_
+        1
+        >>> profile.condorcet_winner_ut_rel
+        2
+
+    Black does not :attr:`meets_majority_favorite_c_ut_ctb`:
+
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 0.5, -1. ,  0. ],
+        ...     [-1. ,  0. ,  0.5],
+        ... ], preferences_rk=[
+        ...     [0, 2, 1],
+        ...     [2, 1, 0],
+        ... ])
+        >>> RuleBlack()(profile).w_
+        2
+        >>> profile.majority_favorite_ut_ctb
+        0
+
+    References
+    ----------
+    'The theory of committees and elections'. Duncan Black, 1958.
 
     Examples
     --------
@@ -258,36 +304,6 @@ class RuleBlack(Rule):
         [0. 1. 1.]
         sufficient_coalition_size_cm =
         [0. 2. 3.]
-
-    Notes
-    -----
-    Black does not :attr:`meets_condorcet_c_ut_rel`:
-
-        >>> profile = Profile(preferences_ut=[
-        ...     [-1. , -0.5, -0.5],
-        ...     [-1. , -0.5,  0. ],
-        ... ], preferences_rk=[
-        ...     [1, 2, 0],
-        ...     [2, 1, 0],
-        ... ])
-        >>> RuleBlack()(profile).w_
-        1
-        >>> profile.condorcet_winner_ut_rel
-        2
-
-    Black does not :attr:`meets_majority_favorite_c_ut_ctb`:
-
-        >>> profile = Profile(preferences_ut=[
-        ...     [ 0.5, -1. ,  0. ],
-        ...     [-1. ,  0. ,  0.5],
-        ... ], preferences_rk=[
-        ...     [0, 2, 1],
-        ...     [2, 1, 0],
-        ... ])
-        >>> RuleBlack()(profile).w_
-        2
-        >>> profile.majority_favorite_ut_ctb
-        0
     """
 
     full_name = 'Black'

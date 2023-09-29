@@ -29,6 +29,8 @@ class ProfileUM(Profile):
     """
     Profile used for Unison Manipulation.
 
+    This class is used internally by SVVAMP. It is not intended for the end user.
+
     Parameters
     ----------
     profile_s: Profile

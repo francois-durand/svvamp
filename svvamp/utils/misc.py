@@ -444,3 +444,42 @@ def indent(s, n_spaces=4):
             Second line
     """
     return '    ' + s.replace('\n', '\n    ')
+
+
+def euclidean_distances(voters_positions, candidates_positions):
+    """
+    Euclidean distances.
+
+    This emulates scipy.spatial.distance.cdist, but avoids an (overkill) dependency on scipy.
+
+    Parameters
+    ----------
+    voters_positions: ndarray
+        Array n_v * n_dim. Position of each voter.
+    candidates_positions: ndarray
+        Array n_c * n_dim. Position of each candidate.
+
+    Returns
+    -------
+    ndarray
+        Array n_v * n_c. Euclidean distance between each voter and each candidate.
+
+    Examples
+    --------
+        >>> voters_positions = np.array([
+        ...     [.1, .5],
+        ...     [-.3, .4],
+        ...     [-.7, .6],
+        ... ])
+        >>> candidates_positions = np.array([
+        ...     [-.3, -.2],
+        ...     [0., -.6],
+        ...     [.9, .9],
+        ...     [-1., -.3],
+        ... ])
+        >>> euclidean_distances(voters_positions, candidates_positions)
+        array([[0.80622577, 1.1045361 , 0.89442719, 1.36014705],
+               [0.6       , 1.04403065, 1.3       , 0.98994949],
+               [0.89442719, 1.3892444 , 1.62788206, 0.9486833 ]])
+    """
+    return np.sqrt(((voters_positions[:, np.newaxis, :] - candidates_positions[np.newaxis, :, :])**2).sum(axis=2))

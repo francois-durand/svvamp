@@ -57,6 +57,52 @@ class RuleMajorityJudgment(Rule):
 
         See :attr:`ballots` for more details.
 
+    Options
+    -------
+        >>> RuleMajorityJudgment.print_options_parameters()
+        cm_option: ['exact']. Default: 'exact'.
+        icm_option: ['exact']. Default: 'exact'.
+        iia_subset_maximum_size: is_number. Default: 2.
+        im_option: ['exact']. Default: 'exact'.
+        max_grade: isfinite. Default: 1.
+        min_grade: isfinite. Default: 0.
+        rescale_grades: is_bool. Default: True.
+        step_grade: isfinite. Default: 0.
+        tm_option: ['exact']. Default: 'exact'.
+        um_option: ['exact']. Default: 'exact'.
+
+    Notes
+    -----
+    Each voter attributes a grade to each candidate. By default, authorized grades are all numbers in the interval
+    [:attr:`min_grade`, :attr:`max_grade`]. To use a discrete set of notes, modify attribute :attr:`step_grade`.
+
+    .. note::
+
+        Majority Judgement, as promoted by its authors, uses a discrete set of non-numerical grades. For our purposes,
+        using a discrete set of numerical grades (:attr:`step_grade` > 0) is isomorphic to this voting system. In
+        contrast, using a continuous set of grades (:attr:`step_grade` = 0) is a variant of this voting system, which
+        has the advantage of being canonical, in the sense that there is no need to choose the number of authorized
+        grades more or less arbitrarily.
+
+    The candidate with highest median grade wins. For the tie-breaking rule, see :attr:`scores`.
+
+    Default behavior of sincere voters: voter ``v`` applies an affine transformation to her utilities
+    :attr:`preferences_ut`\ ``[v, :]`` to get her grades, such that her least-liked candidate receives
+    :attr:`min_grade` and her most-liked candidate receives :attr:`max_grade`. To modify this behavior, use attribute
+    :attr:`rescale_grades`. For more details about the behavior of sincere voters, see :attr:`ballots`.
+
+    * :meth:`not_iia`:
+
+        * If :attr:`rescale_grades` = ``False``, then Majority Judgment always meets IIA.
+        * If :attr:`rescale_grades` = ``True``, then non-polynomial or non-exact algorithms from superclass
+          :class:`Rule` are used.
+
+    * :meth:`is_cm_`, :meth:`is_icm_`, :meth:`is_im_`, :meth:`is_tm_`, :meth:`is_um_`: Exact in polynomial time.
+
+    References
+    ----------
+    Majority Judgment : Measuring, Ranking, and Electing. Michel Balinski and Rida Laraki, 2010.
+
     Examples
     --------
         >>> profile = Profile(preferences_ut=[
@@ -286,38 +332,6 @@ class RuleMajorityJudgment(Rule):
         [0. 3. 3.]
         sufficient_coalition_size_cm =
         [0. 3. 3.]
-
-    Notes
-    -----
-    Each voter attributes a grade to each candidate. By default, authorized grades are all numbers in the interval
-    [:attr:`min_grade`, :attr:`max_grade`]. To use a discrete set of notes, modify attribute :attr:`step_grade`.
-
-    .. note::
-
-        Majority Judgement, as promoted by its authors, uses a discrete set of non-numerical grades. For our purposes,
-        using a discrete set of numerical grades (:attr:`step_grade` > 0) is isomorphic to this voting system. In
-        contrast, using a continuous set of grades (:attr:`step_grade` = 0) is a variant of this voting system, which
-        has the advantage of being canonical, in the sense that there is no need to choose the number of authorized
-        grades more or less arbitrarily.
-
-    The candidate with highest median grade wins. For the tie-breaking rule, see :attr:`scores`.
-
-    Default behavior of sincere voters: voter ``v`` applies an affine transformation to her utilities
-    :attr:`preferences_ut`\ ``[v, :]`` to get her grades, such that her least-liked candidate receives
-    :attr:`min_grade` and her most-liked candidate receives :attr:`max_grade`. To modify this behavior, use attribute
-    :attr:`rescale_grades`. For more details about the behavior of sincere voters, see :attr:`ballots`.
-
-    * :meth:`not_iia`:
-
-        * If :attr:`rescale_grades` = ``False``, then Majority Judgment always meets IIA.
-        * If :attr:`rescale_grades` = ``True``, then non-polynomial or non-exact algorithms from superclass
-          :class:`Rule` are used.
-
-    * :meth:`is_cm_`, :meth:`is_icm_`, :meth:`is_im_`, :meth:`is_tm_`, :meth:`is_um_`: Exact in polynomial time.
-
-    References
-    ----------
-    Majority Judgment : Measuring, Ranking, and Electing. Michel Balinski and Rida Laraki, 2010.
     """
 
     full_name = 'Majority Judgment'

@@ -27,7 +27,9 @@ from svvamp.preferences.profile import Profile
 
 
 class ProfileSubsetCandidates(Profile):
-    """Sub-profile for a subset of the original candidates
+    """Sub-profile for a subset of the original candidates.
+
+    This class is used internally by SVVAMP. It is not intended for the end user.
 
     Parameters
     ----------

@@ -27,7 +27,44 @@ from svvamp.preferences.profile import Profile
 
 
 class RuleIRVDuels(Rule):
-    """IRV with elimination duels.
+    """IRV with elimination duels. Also known as Viennot rule.
+
+    Options
+    -------
+        >>> RuleIRVDuels.print_options_parameters()
+        cm_option: ['lazy', 'exact']. Default: 'lazy'.
+        icm_option: ['exact']. Default: 'exact'.
+        iia_subset_maximum_size: is_number. Default: 2.
+        im_option: ['lazy', 'exact']. Default: 'lazy'.
+        tm_option: ['lazy', 'exact']. Default: 'exact'.
+        um_option: ['lazy', 'exact']. Default: 'lazy'.
+
+    Notes
+    -----
+    Principle: each round, perform a duel between the two least-favorite candidates and eliminate the loser of this
+    duel.
+
+    * Even round ``r`` (including round 0): the two non-eliminated candidates who are ranked first (among the
+      non-eliminated candidates) by least voters are selected for the elimination duels that is held in round
+      ``r + 1``.
+    * Odd round ``r``: voters vote for the selected candidate they like most in the duel. The candidate with least
+      votes is eliminated.
+
+    This method meets the Condorcet criterion.
+
+    We thank Laurent Viennot for the idea of this voting system.
+
+    * :meth:`is_cm_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
+    * :meth:`is_icm_`: Exact in polynomial time.
+    * :meth:`is_im_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
+    * :meth:`~svvamp.Election.not_iia`: Exact in polynomial time.
+    * :meth:`is_tm_`: Exact in polynomial time.
+    * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
+
+    See Also
+    --------
+    :class:`RuleExhaustiveBallot`, :class:`RuleIRV`, :class:`RuleICRV`, :class:`RuleCondorcetAbsIRV`,
+    :class:`RuleCondorcetVtbIRV`.
 
     Examples
     --------
@@ -262,33 +299,6 @@ class RuleIRVDuels(Rule):
         [0. 1. 2.]
         sufficient_coalition_size_cm =
         [0. 2. 3.]
-
-    Notes
-    -----
-    Principle: each round, perform a duel between the two least-favorite candidates and eliminate the loser of this
-    duel.
-
-    * Even round ``r`` (including round 0): the two non-eliminated candidates who are ranked first (among the
-      non-eliminated candidates) by least voters are selected for the elimination duels that is held in round
-      ``r + 1``.
-    * Odd round ``r``: voters vote for the selected candidate they like most in the duel. The candidate with least
-      votes is eliminated.
-
-    This method meets the Condorcet criterion.
-
-    We thank Laurent Viennot for the idea of this voting system.
-
-    * :meth:`is_cm_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
-    * :meth:`is_icm_`: Exact in polynomial time.
-    * :meth:`is_im_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
-    * :meth:`~svvamp.Election.not_iia`: Exact in polynomial time.
-    * :meth:`is_tm_`: Exact in polynomial time.
-    * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
-
-    See Also
-    --------
-    :class:`RuleExhaustiveBallot`, :class:`RuleIRV`, :class:`RuleICRV`, :class:`RuleCondorcetAbsIRV`,
-    :class:`RuleCondorcetVtbIRV`.
     """
 
     full_name = 'IRV-Duels'

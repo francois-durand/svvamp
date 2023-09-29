@@ -56,6 +56,52 @@ class RuleSTAR(Rule):
 
         See :attr:`ballots` for more details.
 
+    Options
+    -------
+        >>> RuleSTAR.print_options_parameters()
+        cm_option: ['exact']. Default: 'exact'.
+        icm_option: ['exact']. Default: 'exact'.
+        iia_subset_maximum_size: is_number. Default: 2.
+        im_option: ['exact']. Default: 'exact'.
+        max_grade: isfinite. Default: 1.
+        min_grade: isfinite. Default: 0.
+        rescale_grades: is_bool. Default: True.
+        step_grade: isfinite. Default: 0.
+        tm_option: ['exact']. Default: 'exact'.
+        um_option: ['exact']. Default: 'exact'.
+
+    Notes
+    -----
+    Each voter attributes a grade to each candidate. By default, authorized grades are all numbers in the interval
+    [:attr:`min_grade`, :attr:`max_grade`]. To use a discrete set of notes, modify attribute :attr:`step_grade`.
+
+    The two candidates with highest average grades are selected for a virtual second round. During this second round,
+    the two candidates are compared by majority voting: the score of one candidate is the number of voters who
+    gave her a strictly larger grade than to the other candidate.
+
+    Default behavior of sincere voters: voter ``v`` applies an affine transformation to her utilities
+    :attr:`preferences_ut`\ ``[v, :]`` to get her grades, such that her least-liked candidate receives
+    :attr:`min_grade` and her most-liked candidate receives :attr:`max_grade`. To modify this behavior, use attribute
+    :attr:`rescale_grades`. For more details about the behavior of sincere voters, see :attr:`ballots`.
+
+    * :meth:`is_cm_`, :meth:`is_icm_`, :meth:`is_im_`, :meth:`is_tm_`, :meth:`is_um_`: Exact in polynomial time.
+
+    STAR does not :attr:`meets_majority_favorite_c_ut`:
+
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 0. ,  0. ,  0. , -1. , -0.5,  0. ],
+        ...     [ 0.5,  0.5,  0.5,  1. ,  0. , -1. ],
+        ...     [ 0. , -0.5, -1. ,  1. , -1. , -1. ],
+        ... ], preferences_rk=[
+        ...     [2, 0, 5, 1, 4, 3],
+        ...     [3, 0, 1, 2, 4, 5],
+        ...     [3, 0, 1, 4, 5, 2],
+        ... ])
+        >>> RuleSTAR()(profile).w_
+        0
+        >>> profile.majority_favorite_ut
+        3
+
     Examples
     --------
         >>> profile = Profile(preferences_ut=[
@@ -285,38 +331,6 @@ class RuleSTAR(Rule):
         [0. 3. 3.]
         sufficient_coalition_size_cm =
         [0. 3. 3.]
-
-    STAR does not :attr:`meets_majority_favorite_c_ut`:
-
-        >>> profile = Profile(preferences_ut=[
-        ...     [ 0. ,  0. ,  0. , -1. , -0.5,  0. ],
-        ...     [ 0.5,  0.5,  0.5,  1. ,  0. , -1. ],
-        ...     [ 0. , -0.5, -1. ,  1. , -1. , -1. ],
-        ... ], preferences_rk=[
-        ...     [2, 0, 5, 1, 4, 3],
-        ...     [3, 0, 1, 2, 4, 5],
-        ...     [3, 0, 1, 4, 5, 2],
-        ... ])
-        >>> RuleSTAR()(profile).w_
-        0
-        >>> profile.majority_favorite_ut
-        3
-
-    Notes
-    -----
-    Each voter attributes a grade to each candidate. By default, authorized grades are all numbers in the interval
-    [:attr:`min_grade`, :attr:`max_grade`]. To use a discrete set of notes, modify attribute :attr:`step_grade`.
-
-    The two candidates with highest average grades are selected for a virtual second round. During this second round,
-    the two candidates are compared by majority voting: the score of one candidate is the number of voters who
-    gave her a strictly larger grade than to the other candidate.
-
-    Default behavior of sincere voters: voter ``v`` applies an affine transformation to her utilities
-    :attr:`preferences_ut`\ ``[v, :]`` to get her grades, such that her least-liked candidate receives
-    :attr:`min_grade` and her most-liked candidate receives :attr:`max_grade`. To modify this behavior, use attribute
-    :attr:`rescale_grades`. For more details about the behavior of sincere voters, see :attr:`ballots`.
-
-    * :meth:`is_cm_`, :meth:`is_icm_`, :meth:`is_im_`, :meth:`is_tm_`, :meth:`is_um_`: Exact in polynomial time.
     """
 
     full_name = 'Scoring Then Automatic Runoff'
