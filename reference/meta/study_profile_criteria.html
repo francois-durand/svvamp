@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>StudyProfileCriteria &mdash; SVVAMP 0.9.1 documentation</title>
+  <title>&lt;no title&gt; &mdash; SVVAMP 0.9.1 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -20,8 +20,8 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="StudyRuleCriteria" href="study_rule_criteria.html" />
-    <link rel="prev" title="RuleWoodall" href="../rules/rule_woodall.html" /> 
+    <link rel="next" title="&lt;no title&gt;" href="study_rule_criteria.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="../rules/rule_woodall.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -58,14 +58,21 @@
 <li class="toctree-l2"><a class="reference internal" href="../index.html#plurality-elimination-engines">Plurality Elimination Engines</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../index.html#voting-rules">Voting Rules</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html#meta">Meta</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">StudyProfileCriteria</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#svvamp.StudyProfileCriteria"><code class="docutils literal notranslate"><span class="pre">StudyProfileCriteria</span></code></a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">StudyProfileCriteria</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.StudyProfileCriteria.append_array_criterion"><code class="docutils literal notranslate"><span class="pre">StudyProfileCriteria.append_array_criterion()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.StudyProfileCriteria.append_boolean_criterion"><code class="docutils literal notranslate"><span class="pre">StudyProfileCriteria.append_boolean_criterion()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.StudyProfileCriteria.append_matrix_criterion"><code class="docutils literal notranslate"><span class="pre">StudyProfileCriteria.append_matrix_criterion()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.StudyProfileCriteria.append_numerical_criterion"><code class="docutils literal notranslate"><span class="pre">StudyProfileCriteria.append_numerical_criterion()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.StudyProfileCriteria.append_special_candidates_criterion"><code class="docutils literal notranslate"><span class="pre">StudyProfileCriteria.append_special_candidates_criterion()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.StudyProfileCriteria.check_sanity"><code class="docutils literal notranslate"><span class="pre">StudyProfileCriteria.check_sanity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.StudyProfileCriteria.remove"><code class="docutils literal notranslate"><span class="pre">StudyProfileCriteria.remove()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.StudyProfileCriteria.rename_numerical_criterion"><code class="docutils literal notranslate"><span class="pre">StudyProfileCriteria.rename_numerical_criterion()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="study_rule_criteria.html">StudyRuleCriteria</a></li>
-<li class="toctree-l3"><a class="reference internal" href="voting_rule_tasks.html">VotingRuleTasks</a></li>
-<li class="toctree-l3"><a class="reference internal" href="experiment_analyzer.html">ExperimentAnalyzer</a></li>
-<li class="toctree-l3"><a class="reference internal" href="experiments_compiler.html">ExperimentsCompiler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="study_rule_criteria.html"><code class="docutils literal notranslate"><span class="pre">StudyRuleCriteria</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="voting_rule_tasks.html"><code class="docutils literal notranslate"><span class="pre">VotingRuleTasks</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="experiment_analyzer.html"><code class="docutils literal notranslate"><span class="pre">ExperimentAnalyzer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="experiments_compiler.html"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../index.html#utils">Utils</a></li>
@@ -91,7 +98,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../index.html">Reference</a></li>
-      <li class="breadcrumb-item active">StudyProfileCriteria</li>
+      <li class="breadcrumb-item active">&lt;no title&gt;</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../_sources/reference/meta/study_profile_criteria.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -101,9 +108,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="studyprofilecriteria">
-<h1>StudyProfileCriteria<a class="headerlink" href="#studyprofilecriteria" title="Link to this heading"></a></h1>
-<dl class="py class">
+  <dl class="py class">
 <dt class="sig sig-object py" id="svvamp.StudyProfileCriteria">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">svvamp.</span></span><span class="sig-name descname"><span class="pre">StudyProfileCriteria</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">boolean_criteria</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numerical_criteria</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">special_candidates_criteria</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">array_criteria</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matrix_criteria</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/study_profile_criteria.html#StudyProfileCriteria"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.StudyProfileCriteria" title="Link to this definition"></a></dt>
 <dd><p>A set of criteria to study for the simulator about the profiles.</p>
@@ -433,14 +438,13 @@ calculate the mean over the profiles. The result will be called ‘total_u_mean_
 
 </dd></dl>
 
-</section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../rules/rule_woodall.html" class="btn btn-neutral float-left" title="RuleWoodall" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="study_rule_criteria.html" class="btn btn-neutral float-right" title="StudyRuleCriteria" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../rules/rule_woodall.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="study_rule_criteria.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

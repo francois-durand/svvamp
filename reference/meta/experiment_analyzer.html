@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ExperimentAnalyzer &mdash; SVVAMP 0.9.1 documentation</title>
+  <title>&lt;no title&gt; &mdash; SVVAMP 0.9.1 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -20,8 +20,8 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="ExperimentsCompiler" href="experiments_compiler.html" />
-    <link rel="prev" title="VotingRuleTasks" href="voting_rule_tasks.html" /> 
+    <link rel="next" title="&lt;no title&gt;" href="experiments_compiler.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="voting_rule_tasks.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -58,14 +58,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../index.html#plurality-elimination-engines">Plurality Elimination Engines</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../index.html#voting-rules">Voting Rules</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html#meta">Meta</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="study_profile_criteria.html">StudyProfileCriteria</a></li>
-<li class="toctree-l3"><a class="reference internal" href="study_rule_criteria.html">StudyRuleCriteria</a></li>
-<li class="toctree-l3"><a class="reference internal" href="voting_rule_tasks.html">VotingRuleTasks</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">ExperimentAnalyzer</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#svvamp.ExperimentAnalyzer"><code class="docutils literal notranslate"><span class="pre">ExperimentAnalyzer</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="experiments_compiler.html">ExperimentsCompiler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="study_profile_criteria.html"><code class="docutils literal notranslate"><span class="pre">StudyProfileCriteria</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="study_rule_criteria.html"><code class="docutils literal notranslate"><span class="pre">StudyRuleCriteria</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="voting_rule_tasks.html"><code class="docutils literal notranslate"><span class="pre">VotingRuleTasks</span></code></a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">ExperimentAnalyzer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="experiments_compiler.html"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../index.html#utils">Utils</a></li>
@@ -91,7 +88,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../index.html">Reference</a></li>
-      <li class="breadcrumb-item active">ExperimentAnalyzer</li>
+      <li class="breadcrumb-item active">&lt;no title&gt;</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../_sources/reference/meta/experiment_analyzer.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -101,9 +98,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="experimentanalyzer">
-<h1>ExperimentAnalyzer<a class="headerlink" href="#experimentanalyzer" title="Link to this heading"></a></h1>
-<dl class="py class">
+  <dl class="py class">
 <dt class="sig sig-object py" id="svvamp.ExperimentAnalyzer">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">svvamp.</span></span><span class="sig-name descname"><span class="pre">ExperimentAnalyzer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_profile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_noise</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">absolute_noise</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">study_profile_criteria</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">voting_rule_tasks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'out'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file_suffix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_csv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ping_period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/experiment_analyzer.html#ExperimentAnalyzer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.ExperimentAnalyzer" title="Link to this definition"></a></dt>
 <dd><p>Analyze a voting experiment.</p>
@@ -143,14 +138,13 @@
 <cite>experiment_analyzer(base_profile=another_base_profile)</cite>.</p>
 </dd></dl>
 
-</section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="voting_rule_tasks.html" class="btn btn-neutral float-left" title="VotingRuleTasks" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="experiments_compiler.html" class="btn btn-neutral float-right" title="ExperimentsCompiler" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="voting_rule_tasks.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="experiments_compiler.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

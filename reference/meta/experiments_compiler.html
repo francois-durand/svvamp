@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ExperimentsCompiler &mdash; SVVAMP 0.9.1 documentation</title>
+  <title>&lt;no title&gt; &mdash; SVVAMP 0.9.1 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -20,8 +20,8 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="MyLog" href="../utils/my_log.html" />
-    <link rel="prev" title="ExperimentAnalyzer" href="experiment_analyzer.html" /> 
+    <link rel="next" title="&lt;no title&gt;" href="../utils/my_log.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="experiment_analyzer.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -58,12 +58,29 @@
 <li class="toctree-l2"><a class="reference internal" href="../index.html#plurality-elimination-engines">Plurality Elimination Engines</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../index.html#voting-rules">Voting Rules</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html#meta">Meta</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="study_profile_criteria.html">StudyProfileCriteria</a></li>
-<li class="toctree-l3"><a class="reference internal" href="study_rule_criteria.html">StudyRuleCriteria</a></li>
-<li class="toctree-l3"><a class="reference internal" href="voting_rule_tasks.html">VotingRuleTasks</a></li>
-<li class="toctree-l3"><a class="reference internal" href="experiment_analyzer.html">ExperimentAnalyzer</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">ExperimentsCompiler</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#svvamp.ExperimentsCompiler"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="study_profile_criteria.html"><code class="docutils literal notranslate"><span class="pre">StudyProfileCriteria</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="study_rule_criteria.html"><code class="docutils literal notranslate"><span class="pre">StudyRuleCriteria</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="voting_rule_tasks.html"><code class="docutils literal notranslate"><span class="pre">VotingRuleTasks</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="experiment_analyzer.html"><code class="docutils literal notranslate"><span class="pre">ExperimentAnalyzer</span></code></a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.ExperimentsCompiler.cm_complexity_index_bar_plot"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler.cm_complexity_index_bar_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.ExperimentsCompiler.cm_power_index_bar_plot"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler.cm_power_index_bar_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.ExperimentsCompiler.cm_rate_bar_plot"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler.cm_rate_bar_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.ExperimentsCompiler.cm_tm_um_rate_bar_plot"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler.cm_tm_um_rate_bar_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.ExperimentsCompiler.condorcet_consistency_bar_plot"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler.condorcet_consistency_bar_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.ExperimentsCompiler.df_computation_time"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler.df_computation_time()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.ExperimentsCompiler.df_computation_time_cumulative"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler.df_computation_time_cumulative()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.ExperimentsCompiler.loss_social_welfare_bar_plot"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler.loss_social_welfare_bar_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.ExperimentsCompiler.my_tikzplotlib_save"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler.my_tikzplotlib_save()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.ExperimentsCompiler.nb_candidates_cm_bar_plot"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler.nb_candidates_cm_bar_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.ExperimentsCompiler.nb_candidates_cm_line_plot"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler.nb_candidates_cm_line_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.ExperimentsCompiler.profile_features_bar_plot"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler.profile_features_bar_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.ExperimentsCompiler.profiles_scatter_plot"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler.profiles_scatter_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.ExperimentsCompiler.rate_bar_plot"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler.rate_bar_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.ExperimentsCompiler.replace_rule_names"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler.replace_rule_names()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.ExperimentsCompiler.resistant_condorcet_line"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler.resistant_condorcet_line()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.ExperimentsCompiler.tm_rate_bar_plot"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler.tm_rate_bar_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#svvamp.ExperimentsCompiler.um_rate_bar_plot"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler.um_rate_bar_plot()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -91,7 +108,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../index.html">Reference</a></li>
-      <li class="breadcrumb-item active">ExperimentsCompiler</li>
+      <li class="breadcrumb-item active">&lt;no title&gt;</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../_sources/reference/meta/experiments_compiler.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -101,9 +118,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="experimentscompiler">
-<h1>ExperimentsCompiler<a class="headerlink" href="#experimentscompiler" title="Link to this heading"></a></h1>
-<dl class="py class">
+  <dl class="py class">
 <dt class="sig sig-object py" id="svvamp.ExperimentsCompiler">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">svvamp.</span></span><span class="sig-name descname"><span class="pre">ExperimentsCompiler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prefix_tikz_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tikz_directory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tikz'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results_directory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'out'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(16,</span> <span class="pre">8)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/meta/experiments_compiler.html#ExperimentsCompiler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.ExperimentsCompiler" title="Link to this definition"></a></dt>
 <dd><p>Compile the results of several experiments.</p>
@@ -229,14 +244,13 @@ analyses.</p>
 
 </dd></dl>
 
-</section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="experiment_analyzer.html" class="btn btn-neutral float-left" title="ExperimentAnalyzer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../utils/my_log.html" class="btn btn-neutral float-right" title="MyLog" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="experiment_analyzer.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../utils/my_log.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
