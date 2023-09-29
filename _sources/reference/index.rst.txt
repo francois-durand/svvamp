@@ -5,7 +5,7 @@ Profiles
 --------
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    preferences/profile
    preferences/profile_from_file
@@ -16,7 +16,7 @@ Generators of Profiles
 ----------------------
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    preferences/generator_profile
    preferences/generator_profile_cubic_uniform
@@ -37,7 +37,7 @@ Plurality Elimination Engines
 -----------------------------
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    preferences/plurality_elimination_engine
    preferences/plurality_elimination_engine_profile
@@ -47,7 +47,7 @@ Voting Rules
 ------------
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    rules/rule
    rules/rule_approval
@@ -89,7 +89,7 @@ Meta
 ----
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    meta/study_profile_criteria
    meta/study_rule_criteria
@@ -101,7 +101,7 @@ Utils
 -----
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    utils/my_log
    utils/initialize_random_seeds
