@@ -2,7 +2,7 @@ Tutorials
 =========
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    tutorial_first_steps
    tutorial_profile
