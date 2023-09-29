@@ -4,6 +4,18 @@
 History
 =======
 
+---------------------------------------------------------------------------
+0.10.0 (2023-09-29): New profile generators, voting rules and CM algorithms
+---------------------------------------------------------------------------
+
+* Add ``GeneratorProfileIc``: Profile generator using the 'Impartial Culture' model.
+* Add ``GeneratorProfilePerturbedCulture``: Profile generator using the 'Perturbed Culture' model.
+* Add ``GeneratorProfileUnanimous``: Profile generator with identical voters.
+* Add ``RuleKApproval``: k-Approval.
+* Add ``RuleSlater``: Slater method.
+* Improve CM algorithms for ``RuleBaldwin``, ``RuleCopeland``, ``RuleIRVDuels``, ``RuleKemeny``, ``RuleKimRoush``,
+  ``RuleNanson``, ``RuleRankedPairs``, and ``RuleSplitCycle``.
+
 ----------------------------------------
 0.9.1 (2022-03-24): Compatibility issues
 ----------------------------------------
