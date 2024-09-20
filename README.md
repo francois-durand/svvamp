@@ -2,10 +2,10 @@
 
 
 [![PyPI Status](https://img.shields.io/pypi/v/svvamp.svg)](https://pypi.python.org/pypi/svvamp)
-[![Build Status](https://github.com/francois-durand/svvamp/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/francois-durand/svvamp/actions?query=workflow%3Abuild)
-[![Documentation Status](https://github.com/francois-durand/svvamp/actions/workflows/docs.yml/badge.svg?branch=main)](https://github.com/francois-durand/svvamp/actions?query=workflow%3Adocs)
-[![License](https://img.shields.io/github/license/francois-durand/svvamp)](https://github.com/francois-durand/svvamp/blob/main/LICENSE)
-[![Code Coverage](https://codecov.io/gh/francois-durand/svvamp/branch/main/graphs/badge.svg)](https://codecov.io/gh/francois-durand/svvamp/tree/main)
+[![Build Status](https://github.com/francois-durand/svvamp/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/francois-durand/svvamp/actions?query=workflow%3Abuild)
+[![Documentation Status](https://github.com/francois-durand/svvamp/actions/workflows/docs.yml/badge.svg?branch=master)](https://github.com/francois-durand/svvamp/actions?query=workflow%3Adocs)
+[![License](https://img.shields.io/github/license/francois-durand/svvamp)](https://github.com/francois-durand/svvamp/blob/master/LICENSE)
+[![Code Coverage](https://codecov.io/gh/francois-durand/svvamp/branch/master/graphs/badge.svg)](https://codecov.io/gh/francois-durand/svvamp/tree/master)
 
 Simulator of Various Voting Algorithms in Manipulating Populations
 
