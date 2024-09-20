@@ -127,13 +127,13 @@ class ProfileSubsetCandidates(Profile):
     def n_c(self):
         candidates_subset = np.array(self.candidates_subset)
         if candidates_subset.dtype == bool:
-            return np.sum(candidates_subset)
+            return int(np.sum(candidates_subset))
         else:
             return len(candidates_subset)
 
     @cached_property
     def labels_candidates(self):
-        return list(np.array(self.parent_profile.labels_candidates)[self.candidates_subset])
+        return [str(label) for label in np.array(self.parent_profile.labels_candidates)[self.candidates_subset]]
 
     @cached_property
     def preferences_ut(self):

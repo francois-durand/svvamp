@@ -325,13 +325,13 @@ class RuleIteratedBucklin(Rule):
                 median = np.median(preferences_borda_temp[:, c])
                 x = np.sum(np.less(preferences_borda_temp[:, c], median))
                 scores[r, c] = median - x / (self.profile_.n_v + 1)
-            loser = np.where(scores[r, :] == np.min(scores[r, :]))[0][-1]  # Tie-breaking: last index
+            loser = int(np.where(scores[r, :] == np.min(scores[r, :]))[0][-1])  # Tie-breaking: last index
             is_eliminated[loser] = True
             worst_to_best.append(loser)
             preferences_borda_temp[
                 np.less(preferences_borda_temp, preferences_borda_temp[:, loser][:, np.newaxis])
             ] += 1
-        w = np.argmin(is_eliminated)
+        w = int(np.argmin(is_eliminated))
         worst_to_best.append(w)
         candidates_by_scores_best_to_worst = worst_to_best[::-1]
         return {'scores': scores, 'w': w, 'candidates_by_scores_best_to_worst': candidates_by_scores_best_to_worst}

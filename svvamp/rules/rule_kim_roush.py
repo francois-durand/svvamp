@@ -357,8 +357,8 @@ class RuleKimRoush(Rule):
             ).astype(float))
             score_temp[np.logical_not(is_alive)] = np.inf
             score_average = - self.profile_.n_v / np.sum(is_alive)
-        candidates_by_scores_best_to_worst = np.array(candidates_worst_to_best[::-1])
-        w = candidates_by_scores_best_to_worst[0]
+        candidates_by_scores_best_to_worst = np.array([int(c) for c in candidates_worst_to_best[::-1]])
+        w = int(candidates_by_scores_best_to_worst[0])
         scores = np.array(scores)
         return {'scores': scores, 'w': w, 'one_v_might_be_pivotal': one_v_might_be_pivotal,
                 'candidates_by_scores_best_to_worst': candidates_by_scores_best_to_worst}

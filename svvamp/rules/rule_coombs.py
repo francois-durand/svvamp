@@ -327,7 +327,7 @@ class RuleCoombs(Rule):
         for r in range(self.profile_.n_c - 1):
             scores[r, :] = - np.bincount(np.argmin(preferences_borda_temp, 1), minlength=self.profile_.n_c)
             scores[r, is_eliminated] = np.nan
-            loser = np.where(scores[r, :] == np.nanmin(scores[r, :]))[0][-1]  # Tie-breaking: the last index
+            loser = int(np.where(scores[r, :] == np.nanmin(scores[r, :]))[0][-1])  # Tie-breaking: the last index
             is_eliminated[loser] = True
             worst_to_best.append(loser)
             preferences_borda_temp[:, loser] = self.profile_.n_c + 1
@@ -340,7 +340,7 @@ class RuleCoombs(Rule):
             self.mylogv("np.max(margins_r) =", np.nanmax(margins_r), 3)
             if np.nanmax(margins_r) <= 2:
                 one_v_might_be_pivotal = True
-        w = np.argmin(is_eliminated)
+        w = int(np.argmin(is_eliminated))
         worst_to_best.append(w)
         candidates_by_scores_best_to_worst = worst_to_best[::-1]
         return {'scores': scores, 'one_v_might_be_pivotal': one_v_might_be_pivotal, 'w': w,

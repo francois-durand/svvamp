@@ -104,10 +104,10 @@ def _z_partition(lam: list):
         >>> factorial(7) // _z_partition([3, 2, 2])
         210
     """
-    return np.prod([
+    return int(np.prod([
         (cycle_length ** n_occurrences) * factorial(n_occurrences)
         for cycle_length, n_occurrences in Counter(lam).items()
-    ])
+    ]))
 
 
 def _enumerate_partitions(n: int):
@@ -171,7 +171,7 @@ def lcm(*args):
         60
     """
     # noinspection PyUnresolvedReferences
-    return np.lcm.reduce(args)
+    return int(np.lcm.reduce(args))
 
 
 def gcd(*args):
@@ -186,7 +186,7 @@ def gcd(*args):
         3
     """
     # noinspection PyUnresolvedReferences
-    return np.gcd.reduce(args)
+    return int(np.gcd.reduce(args))
 
 
 def _pairs_lam_mu_and_probabilities(n: int, m: int):

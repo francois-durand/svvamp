@@ -24,8 +24,21 @@ import os
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
-from pathlib import Path
+import matplotlib.backends.backend_pgf
+matplotlib.backends.backend_pgf.common_texification = matplotlib.backends.backend_pgf._tex_escape
+import matplotlib.legend
+def get_legend_handles(legend):
+    return legend.legend_handles
+matplotlib.legend.Legend.legendHandles = property(get_legend_handles)
+import webcolors
+
+def integer_rgb_to_hex(rgb):
+    return "#{:02x}{:02x}{:02x}".format(*rgb)
+
+webcolors.CSS3_HEX_TO_NAMES = {integer_rgb_to_hex(webcolors.name_to_rgb(name)): name
+                               for name in webcolors.names("css3")}
 import tikzplotlib
+from pathlib import Path
 from svvamp.utils.tikzplotlib_fix_ncols import tikzplotlib_fix_ncols
 
 

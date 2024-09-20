@@ -161,9 +161,9 @@ def test_demo_profile():
         total_utility_c =
         [3 7 5]
         PROFILE: Compute total_utility_min
-        total_utility_min = 3
+        total_utility_min = 3.0
         PROFILE: Compute total_utility_max
-        total_utility_max = 7
+        total_utility_max = 7.0
         PROFILE: Compute total_utility_mean
         total_utility_mean = 5.0
         PROFILE: Compute total_utility_std

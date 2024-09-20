@@ -462,7 +462,7 @@ class RuleSTAR(Rule):
         --------
             >>> rule = RuleSTAR(min_grade=0, max_grade=5, step_grade=1)
             >>> rule.second_best_grade
-            4
+            np.int64(4)
 
             >>> rule = RuleSTAR(min_grade=0, max_grade=1, step_grade=0)
             >>> rule.second_best_grade
@@ -542,8 +542,8 @@ class RuleSTAR(Rule):
         self.mylog("Count ballots", 1)
         # First round
         scores_first_round = np.sum(self.ballots_, 0)
-        c = np.argmax(scores_first_round)
-        d = np.argmax([-np.inf if i == c else s for i, s in enumerate(scores_first_round)])
+        c = int(np.argmax(scores_first_round))
+        d = int(np.argmax([-np.inf if i == c else s for i, s in enumerate(scores_first_round)]))
         # Second round
         scores_second_round = np.zeros(self.profile_.n_c)
         scores_second_round[c] = np.sum(self.ballots_[:, c] > self.ballots_[:, d])

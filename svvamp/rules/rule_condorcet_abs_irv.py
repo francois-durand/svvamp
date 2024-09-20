@@ -398,8 +398,8 @@ class RuleCondorcetAbsIRV(Rule):
         --------
             >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2], [1, 2, 0], [1, 2, 0], [2, 0, 1]])
             >>> rule = RuleCondorcetAbsIRV()(profile)
-            >>> list(rule.candidates_by_scores_best_to_worst_)
-            [0, 1, 2]
+            >>> rule.candidates_by_scores_best_to_worst_
+            array([0, 1, 2])
         """
         if not np.isnan(self.profile_.condorcet_winner_ut_abs):
             return np.argsort(- self.scores_, kind='mergesort')

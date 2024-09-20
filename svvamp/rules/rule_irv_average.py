@@ -320,7 +320,7 @@ class RuleIRVAverage(Rule):
             scores = plurality_elimination_engine.scores
             self.mylogv("scores =", scores, 3)
             # Does someone win immediately?
-            best_candidate = np.nanargmax(scores)
+            best_candidate = int(np.nanargmax(scores))
             best_score = scores[best_candidate]
             if best_score > self.profile_.n_v / 2:
                 return best_candidate
@@ -329,7 +329,7 @@ class RuleIRVAverage(Rule):
             least_score = np.nanmin(scores)
             if score_average == least_score:
                 # TODO: Eliminate only one, then iterate?
-                return np.where(scores == score_average)[0][0]
+                return int(np.where(scores == score_average)[0][0])
             losers = np.where(scores < score_average)[0]
             self.mylogv("losers =", losers, 3)
             # Prepare the next round

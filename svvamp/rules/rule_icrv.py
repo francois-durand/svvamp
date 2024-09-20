@@ -506,8 +506,8 @@ class RuleICRV(Rule):
             ...     [3, 2, 0, 1],
             ... ])
             >>> rule = RuleICRV()(profile)
-            >>> list(rule.losing_candidates_)
-            [2, 1, 0]
+            >>> rule.losing_candidates_
+            array([2, 1, 0])
         """
         self.mylog("Compute ordered list of losing candidates", 1)
         if self.w_ == self.irv_.w_:

@@ -467,7 +467,7 @@ class RuleExhaustiveBallot(Rule):
             scores[r, np.logical_not(is_alive)] = np.nan
             self.mylogv("scores[r, :] =", scores[r, :], 3)
             # Who gets eliminated?
-            loser = np.where(scores[r, :] == np.nanmin(scores[r, :]))[0][-1]  # Tie-breaking: the last index
+            loser = int(np.where(scores[r, :] == np.nanmin(scores[r, :]))[0][-1])  # Tie-breaking: the last index
             self.mylogv("loser =", loser, 3)
             margins[r, :] = (scores[r, :] - scores[r, loser] + (np.array(range(self.profile_.n_c)) < loser))
             min_margin_r = np.nanmin(margins[r, margins[r, :] != 0])
@@ -487,7 +487,7 @@ class RuleExhaustiveBallot(Rule):
             is_alive[loser] = False
             worst_to_best.append(loser)
             preferences_borda_rk_temp[:, loser] = -1
-        w = np.argmax(is_alive)
+        w = int(np.argmax(is_alive))
         worst_to_best.append(w)
         elimination_path = np.array(worst_to_best)
         candidates_by_scores_best_to_worst = np.array(worst_to_best[::-1])
@@ -516,7 +516,7 @@ class RuleExhaustiveBallot(Rule):
             # Result of Plurality voting
             self.mylogv("scores_r =", scores_r, 3)
             # Does someone win immediately?
-            best_candidate = np.nanargmax(scores_r)
+            best_candidate = int(np.nanargmax(scores_r))
             best_score = scores_r[best_candidate]
             if best_score > self.profile_.n_v / 2:
                 return best_candidate
@@ -525,7 +525,7 @@ class RuleExhaustiveBallot(Rule):
             plurality_elimination_engine.eliminate_candidate(loser)
             self.mylogv("loser =", loser, 3)
         # After the last round...
-        return plurality_elimination_engine.candidates_alive[0]
+        return int(plurality_elimination_engine.candidates_alive[0])
 
     @cached_property
     def scores_(self):
@@ -582,8 +582,8 @@ class RuleExhaustiveBallot(Rule):
             ...     [2, 0, 1],
             ... ])
             >>> rule = RuleExhaustiveBallot()(profile)
-            >>> list(rule.elimination_path_)
-            [1, 2, 0]
+            >>> rule.elimination_path_
+            array([1, 2, 0])
         """
         return self._count_ballots_['elimination_path']
 

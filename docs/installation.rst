@@ -38,14 +38,14 @@ Or download the `tarball`_:
 
 .. code-block:: console
 
-    $ curl -OJL https://github.com/francois-durand/svvamp/tarball/master
+    $ curl -OJL https://github.com/francois-durand/svvamp/tarball/main
 
 Once you have a copy of the source, you can install it with:
 
 .. code-block:: console
 
-    $ python setup.py install
+    $ pip install .
 
 
 .. _Github repo: https://github.com/francois-durand/svvamp
-.. _tarball: https://github.com/francois-durand/svvamp/tarball/master
+.. _tarball: https://github.com/francois-durand/svvamp/tarball/main

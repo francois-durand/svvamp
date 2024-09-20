@@ -340,7 +340,7 @@ class RuleRankedPairs(Rule):
             matrix_duels_vtb_temp[d, c] = 0
             if not nx.has_path(dig, d, c):
                 dig.add_edge(c, d, weight=self.profile_.matrix_duels_rk[c, d])
-        candidates_by_scores_best_to_worst = list(nx.topological_sort(dig))
+        candidates_by_scores_best_to_worst = [int(c) for c in list(nx.topological_sort(dig))]
         w = candidates_by_scores_best_to_worst[0]
         scores = nx.to_numpy_array(dig)
         return {'scores': scores, 'w': w, 'candidates_by_scores_best_to_worst': candidates_by_scores_best_to_worst}

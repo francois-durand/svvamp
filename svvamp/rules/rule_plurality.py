@@ -340,7 +340,7 @@ class RulePlurality(Rule):
         index_w_r_in_subset = np.argmax(scores_r)
         w_r = candidates_r[index_w_r_in_subset]
         self.mylogv("IIA: Winner =", w_r, 3)
-        return w_r
+        return int(w_r)
 
     # %% Individual manipulation (IM)
 

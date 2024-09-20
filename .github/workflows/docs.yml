@@ -1,39 +1,44 @@
-# This workflow will generate the docs on each push, and publish them on GitHub Pages if the branch is "master".
-
+# This workflow will generate the docs on each push, and publish them on GitHub Pages if the branch is the main one.
 name: docs
 
 on: [push]
 
+permissions:
+  contents: write
+
 jobs:
-  build-and-deploy:
+  docs:
     runs-on: ubuntu-latest
     steps:
-
-      - name: Checkout
-        uses: actions/checkout@v2
+      - name: Check out
+        uses: actions/checkout@v3
         with:
           persist-credentials: false
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
+      - name: Set up python
+        uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: '3.11'
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          virtualenvs-create: true
+          virtualenvs-in-project: true
 
       - name: Install dependencies
         run: |
+          poetry install
           sudo apt install pandoc
-          python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-          python setup.py install
 
       - name: Build Sphinx documentation
         run: |
+          source .venv/bin/activate
           sphinx-build -a -E -b html docs build
 
       - name: Deploy Sphinx documentation on Github Pages
-        uses: JamesIves/github-pages-deploy-action@3.7.1
-        if: github.ref == 'refs/heads/master'
+        uses: JamesIves/github-pages-deploy-action@v4
+        if: github.ref == 'refs/heads/main'
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
           FOLDER: build/

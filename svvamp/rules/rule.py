@@ -638,17 +638,17 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     @cached_property
     def total_utility_w_(self):
         """Float. The total utility for the sincere winner :attr:`w_`."""
-        return self.profile_.total_utility_c[self.w_]
+        return float(self.profile_.total_utility_c[self.w_])
 
     @cached_property
     def mean_utility_w_(self):
         """Float. The mean utility for the sincere winner :attr:`w_`."""
-        return self.profile_.mean_utility_c[self.w_]
+        return float(self.profile_.mean_utility_c[self.w_])
 
     @cached_property
     def relative_social_welfare_w_(self):
         """Float. The relative social welfare for the sincere winner :attr:`w_`."""
-        return self.profile_.relative_social_welfare_c[self.w_]
+        return float(self.profile_.relative_social_welfare_c[self.w_])
 
     # %% Condorcet efficiency and variants
 
@@ -3475,8 +3475,8 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     @cached_property
     def nb_candidates_cm_(self):
         """Number of candidates who can benefit from CM."""
-        inf = np.sum(equal_true(self.candidates_cm_))
-        sup = inf + np.sum(np.isnan(self.candidates_cm_))
+        inf = int(np.sum(equal_true(self.candidates_cm_)))
+        sup = int(inf + np.sum(np.isnan(self.candidates_cm_)))
         return inf, sup
 
     @cached_property
@@ -3484,12 +3484,12 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         """Worst relative social welfare (sincere winner or candidate who can benefit from CM)."""
         possible_winners = self.candidates_cm_.copy()
         possible_winners[self.w_] = True
-        inf = np.min(
+        inf = float(np.min(
             self.profile_.relative_social_welfare_c[(equal_true(possible_winners)) | np.isnan(possible_winners)]
-        )
-        sup = np.min(
+        ))
+        sup = float(np.min(
             self.profile_.relative_social_welfare_c[equal_true(possible_winners)]
-        )
+        ))
         return inf, sup
 
     @cached_property
@@ -3515,7 +3515,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             print(n_sincere_c)
             print(self.necessary_coalition_size_cm_)
             raise ValueError
-        return inf, sup
+        return float(inf), float(sup)
 
     @cached_property
     def is_tm_or_um_(self):

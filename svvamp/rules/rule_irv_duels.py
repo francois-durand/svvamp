@@ -377,7 +377,7 @@ class RuleIRVDuels(Rule):
             else:
                 loser = selected_one
             plurality_elimination_engine.eliminate_candidate_and_update_scores(loser)
-        return plurality_elimination_engine.candidates_alive[0]
+        return int(plurality_elimination_engine.candidates_alive[0])
 
     @cached_property
     def scores_(self):

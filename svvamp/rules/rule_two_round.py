@@ -681,7 +681,7 @@ class RuleTwoRound(Rule):
             >>> rule = RuleTwoRound()(profile)
             >>> _ = rule._cm_is_initialized_general_
             >>> rule._cm_main_work_c_(c=1, optimize_bounds=True)
-            >>> rule._sufficient_coalition_size_cm[1]
+            >>> float(rule._sufficient_coalition_size_cm[1])
             4.0
 
         In the following counter-intuitive case, the sufficient manipulator is indeed 0: only the last voter wants
@@ -704,7 +704,7 @@ class RuleTwoRound(Rule):
             >>> rule = RuleTwoRound()(profile)
             >>> _ = rule._cm_is_initialized_general_
             >>> rule._cm_main_work_c_(c=0, optimize_bounds=True)
-            >>> rule._sufficient_coalition_size_cm[0]
+            >>> float(rule._sufficient_coalition_size_cm[0])
             0.0
         """
         n_s = self.profile_.n_v - self.profile_.matrix_duels_ut.astype(int)[c, self.w_]

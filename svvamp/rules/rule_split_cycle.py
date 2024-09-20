@@ -320,7 +320,7 @@ class RuleSplitCycle(Rule):
             >>> def cowinners(profile):
             ...     results = RuleSplitCycle._count_ballot_aux(profile.matrix_duels_rk)
             ...     my_better_or_tie_c = results['better_or_tie_c']
-            ...     return list(np.where(my_better_or_tie_c == np.max(my_better_or_tie_c))[0])
+            ...     return [int(cand) for cand in np.where(my_better_or_tie_c == np.max(my_better_or_tie_c))[0]]
 
             >>> profile = Profile(preferences_rk=
             ...     [[a, c, b]] * 5
@@ -468,7 +468,7 @@ class RuleSplitCycle(Rule):
         better_or_tie_c = np.sum(strength >= margin_graph.T, 1)
         candidates_by_scores_best_to_worst = np.argsort(- better_or_tie_c, kind='mergesort')
         winners = np.where(better_or_tie_c == np.max(better_or_tie_c))[0]
-        w = candidates_by_scores_best_to_worst[0]
+        w = int(candidates_by_scores_best_to_worst[0])
         return {'w': w, 'winners': winners, 'margin_graph': margin_graph, 'strength': strength,
                 'better_or_tie_c': better_or_tie_c,
                 'candidates_by_scores_best_to_worst': candidates_by_scores_best_to_worst}

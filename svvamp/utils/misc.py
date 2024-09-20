@@ -151,7 +151,7 @@ def matrix_victories_to_smith_set(matrix_victories):
     n_c = matrix_victories.shape[0]
     copeland_scores = matrix_victories.sum(axis=1)
     # Let us gain some time if there is a Condorcet winner
-    best_candidate = np.argmax(copeland_scores)
+    best_candidate = int(np.argmax(copeland_scores))
     if copeland_scores[best_candidate] == n_c - 1 + matrix_victories[0, 0]:
         return [best_candidate]
     # General case

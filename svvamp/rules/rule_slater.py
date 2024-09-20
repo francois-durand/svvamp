@@ -402,7 +402,7 @@ class RuleSlater(Rule):
             ...     [2, 0, 1],
             ... ])
             >>> rule = RuleSlater(cm_option='exact')(profile)
-            >>> rule.sufficient_coalition_size_cm_[1]
+            >>> float(rule.sufficient_coalition_size_cm_[1])
             3.0
         """
         is_quick_escape_fast = self._cm_main_work_c_fast_(c, optimize_bounds)

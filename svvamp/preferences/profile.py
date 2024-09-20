@@ -868,7 +868,7 @@ class Profile(my_log.MyLog):
             1
         """
         self.mylog("Compute number of Condorcet-admissible candidates", 1)
-        return np.sum(self.condorcet_admissible_candidates)
+        return int(np.sum(self.condorcet_admissible_candidates))
 
     @cached_property
     def exists_condorcet_admissible(self):
@@ -882,7 +882,7 @@ class Profile(my_log.MyLog):
             >>> profile.exists_condorcet_admissible
             True
         """
-        return np.any(self.condorcet_admissible_candidates)
+        return bool(np.any(self.condorcet_admissible_candidates))
 
     @cached_property
     def not_exists_condorcet_admissible(self):
@@ -932,7 +932,7 @@ class Profile(my_log.MyLog):
             1
         """
         self.mylog("Compute number of weak Condorcet winners", 1)
-        return np.sum(self.weak_condorcet_winners)
+        return int(np.sum(self.weak_condorcet_winners))
 
     @cached_property
     def exists_weak_condorcet_winner(self):
@@ -946,7 +946,7 @@ class Profile(my_log.MyLog):
             >>> profile.exists_weak_condorcet_winner
             True
         """
-        return np.any(self.weak_condorcet_winners)
+        return bool(np.any(self.weak_condorcet_winners))
 
     @cached_property
     def not_exists_weak_condorcet_winner(self):
@@ -1014,7 +1014,7 @@ class Profile(my_log.MyLog):
             >>> profile.not_exists_condorcet_winner_rk_ctb
             False
         """
-        return np.isnan(self.condorcet_winner_rk_ctb)
+        return bool(np.isnan(self.condorcet_winner_rk_ctb))
 
     @cached_property
     def condorcet_winner_rk(self):
@@ -1070,7 +1070,7 @@ class Profile(my_log.MyLog):
             >>> profile.not_exists_condorcet_winner_rk
             False
         """
-        return np.isnan(self.condorcet_winner_rk)
+        return bool(np.isnan(self.condorcet_winner_rk))
 
     @cached_property
     def condorcet_winner_ut_rel_ctb(self):
@@ -1126,7 +1126,7 @@ class Profile(my_log.MyLog):
             >>> profile.not_exists_condorcet_winner_ut_rel_ctb
             False
         """
-        return np.isnan(self.condorcet_winner_ut_rel_ctb)
+        return bool(np.isnan(self.condorcet_winner_ut_rel_ctb))
 
     @cached_property
     def condorcet_winner_ut_rel(self):
@@ -1182,7 +1182,7 @@ class Profile(my_log.MyLog):
             >>> profile.not_exists_condorcet_winner_ut_rel
             False
         """
-        return np.isnan(self.condorcet_winner_ut_rel)
+        return bool(np.isnan(self.condorcet_winner_ut_rel))
 
     @cached_property
     def condorcet_winner_ut_abs_ctb(self):
@@ -1237,7 +1237,7 @@ class Profile(my_log.MyLog):
             >>> profile.not_exists_condorcet_winner_ut_abs_ctb
             False
         """
-        return np.isnan(self.condorcet_winner_ut_abs_ctb)
+        return bool(np.isnan(self.condorcet_winner_ut_abs_ctb))
 
     @cached_property
     def condorcet_winner_ut_abs(self):
@@ -1292,7 +1292,7 @@ class Profile(my_log.MyLog):
             >>> profile.not_exists_condorcet_winner_ut_abs
             False
         """
-        return np.isnan(self.condorcet_winner_ut_abs)
+        return bool(np.isnan(self.condorcet_winner_ut_abs))
 
     # %% Resistant Condorcet winner
 
@@ -1355,7 +1355,7 @@ class Profile(my_log.MyLog):
             >>> profile.not_exists_resistant_condorcet_winner
             False
         """
-        return np.isnan(self.resistant_condorcet_winner)
+        return bool(np.isnan(self.resistant_condorcet_winner))
 
     @cached_property
     def threshold_c_prevents_w_condorcet_ut_abs(self):
@@ -1536,7 +1536,7 @@ class Profile(my_log.MyLog):
         :attr:`~svvamp.Population.not_exists_majority_favorite_rk_ctb`.
         """
         self.mylog("Compute majority favorite (rk_ctb)", 1)
-        c = np.argmax(self.plurality_scores_rk)
+        c = int(np.argmax(self.plurality_scores_rk))
         score_c = self.plurality_scores_rk[c]
         if score_c > self.n_v / 2 or (c == 0 and score_c == self.n_v / 2):
             return c
@@ -1566,7 +1566,7 @@ class Profile(my_log.MyLog):
             >>> profile.not_exists_majority_favorite_rk_ctb
             False
         """
-        return np.isnan(self.majority_favorite_rk_ctb)
+        return bool(np.isnan(self.majority_favorite_rk_ctb))
 
     @cached_property
     def majority_favorite_ut_ctb(self):
@@ -1593,7 +1593,7 @@ class Profile(my_log.MyLog):
         :attr:`~svvamp.Population.not_exists_majority_favorite_ut_ctb`.
         """
         self.mylog("Compute majority favorite (ut_ctb)", 1)
-        c = np.argmax(self.plurality_scores_ut)
+        c = int(np.argmax(self.plurality_scores_ut))
         score_c = self.plurality_scores_ut[c]
         if score_c > self.n_v / 2 or (c == 0 and score_c == self.n_v / 2):
             return c
@@ -1623,7 +1623,7 @@ class Profile(my_log.MyLog):
             >>> profile.not_exists_majority_favorite_ut_ctb
             False
         """
-        return np.isnan(self.majority_favorite_ut_ctb)
+        return bool(np.isnan(self.majority_favorite_ut_ctb))
 
     @cached_property
     def majority_favorite_rk(self):
@@ -1649,7 +1649,7 @@ class Profile(my_log.MyLog):
         :attr:`~svvamp.Population.not_exists_majority_favorite_rk`.
         """
         self.mylog("Compute majority favorite (rk)", 1)
-        c = np.argmax(self.plurality_scores_rk)
+        c = int(np.argmax(self.plurality_scores_rk))
         score_c = self.plurality_scores_rk[c]
         if score_c > self.n_v / 2:
             return c
@@ -1679,7 +1679,7 @@ class Profile(my_log.MyLog):
             >>> profile.not_exists_majority_favorite_rk
             False
         """
-        return np.isnan(self.majority_favorite_rk)
+        return bool(np.isnan(self.majority_favorite_rk))
 
     @cached_property
     def majority_favorite_ut(self):
@@ -1705,7 +1705,7 @@ class Profile(my_log.MyLog):
         :attr:`~svvamp.Population.not_exists_majority_favorite_ut`.
         """
         self.mylog("Compute majority favorite (ut)", 1)
-        c = np.argmax(self.plurality_scores_ut)
+        c = int(np.argmax(self.plurality_scores_ut))
         score_c = self.plurality_scores_ut[c]
         if score_c > self.n_v / 2:
             return c
@@ -1735,7 +1735,7 @@ class Profile(my_log.MyLog):
             >>> profile.not_exists_majority_favorite_ut
             False
         """
-        return np.isnan(self.majority_favorite_ut)
+        return bool(np.isnan(self.majority_favorite_ut))
 
     # %% Total utilities
 
@@ -1763,10 +1763,10 @@ class Profile(my_log.MyLog):
             >>> from svvamp import Profile
             >>> profile = Profile(preferences_ut=[[5, 1, 2], [4, 10, 1]])
             >>> profile.total_utility_min
-            3
+            3.0
         """
         self.mylog("Compute total_utility_min", 1)
-        return np.min(self.total_utility_c)
+        return float(np.min(self.total_utility_c))
 
     @cached_property
     def total_utility_max(self):
@@ -1777,10 +1777,10 @@ class Profile(my_log.MyLog):
             >>> from svvamp import Profile
             >>> profile = Profile(preferences_ut=[[5, 1, 2], [4, 10, 1]])
             >>> profile.total_utility_max
-            11
+            11.0
         """
         self.mylog("Compute total_utility_max", 1)
-        return np.max(self.total_utility_c)
+        return float(np.max(self.total_utility_c))
 
     @cached_property
     def total_utility_mean(self):
@@ -1794,7 +1794,7 @@ class Profile(my_log.MyLog):
             True
         """
         self.mylog("Compute total_utility_mean", 1)
-        return np.mean(self.total_utility_c)
+        return float(np.mean(self.total_utility_c))
 
     @cached_property
     def total_utility_std(self):
@@ -1804,11 +1804,11 @@ class Profile(my_log.MyLog):
         --------
             >>> from svvamp import Profile
             >>> profile = Profile(preferences_ut=[[5, 1, 2], [4, 10, 1]])
-            >>> profile.total_utility_std == np.std([9, 11, 3])
+            >>> profile.total_utility_std == float(np.std([9, 11, 3]))
             True
         """
         self.mylog("Compute total_utility_std", 1)
-        return np.std(self.total_utility_c, ddof=0)
+        return float(np.std(self.total_utility_c, ddof=0))
 
     # %% Relative social welfare
 
@@ -1865,7 +1865,7 @@ class Profile(my_log.MyLog):
             1.5
         """
         self.mylog("Compute mean_utility_min", 1)
-        return np.min(self.mean_utility_c)
+        return float(np.min(self.mean_utility_c))
 
     @cached_property
     def mean_utility_max(self):
@@ -1879,7 +1879,7 @@ class Profile(my_log.MyLog):
             5.5
         """
         self.mylog("Compute mean_utility_max", 1)
-        return np.max(self.mean_utility_c)
+        return float(np.max(self.mean_utility_c))
 
     @cached_property
     def mean_utility_mean(self):
@@ -1893,7 +1893,7 @@ class Profile(my_log.MyLog):
             True
         """
         self.mylog("Compute mean_utility_mean", 1)
-        return np.mean(self.mean_utility_c)
+        return float(np.mean(self.mean_utility_c))
 
     @cached_property
     def mean_utility_std(self):
@@ -1903,11 +1903,11 @@ class Profile(my_log.MyLog):
         --------
             >>> from svvamp import Profile
             >>> profile = Profile(preferences_ut=[[5, 1, 2], [4, 10, 1]])
-            >>> profile.mean_utility_std == np.std([4.5, 5.5, 1.5])
+            >>> profile.mean_utility_std == float(np.std([4.5, 5.5, 1.5]))
             True
         """
         self.mylog("Compute mean_utility_std", 1)
-        return np.std(self.mean_utility_c, ddof=0)
+        return float(np.std(self.mean_utility_c, ddof=0))
 
     # %% Borda scores
 
@@ -2439,8 +2439,8 @@ class Profile(my_log.MyLog):
              [ 0 -5 -2 -2  2]]
             total_utility_c =
             [  2  -8   6  -8 -22]
-            total_utility_min = -22
-            total_utility_max = 6
+            total_utility_min = -22.0
+            total_utility_max = 6.0
             total_utility_mean = -6.0
             total_utility_std = 9.715966241192895
             <BLANKLINE>

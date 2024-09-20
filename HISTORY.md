@@ -1,12 +1,7 @@
-.. :changelog:
+# History
 
-=======
-History
-=======
 
----------------------------------------------------------------------------
-0.10.0 (2023-09-29): New profile generators, voting rules and CM algorithms
----------------------------------------------------------------------------
+## 0.10.0 (2023-09-29): New profile generators, voting rules and CM algorithms
 
 * Add ``GeneratorProfileIc``: Profile generator using the 'Impartial Culture' model.
 * Add ``GeneratorProfilePerturbedCulture``: Profile generator using the 'Perturbed Culture' model.
@@ -16,31 +11,23 @@ History
 * Improve CM algorithms for ``RuleBaldwin``, ``RuleCopeland``, ``RuleIRVDuels``, ``RuleKemeny``, ``RuleKimRoush``,
   ``RuleNanson``, ``RuleRankedPairs``, and ``RuleSplitCycle``.
 
-----------------------------------------
-0.9.1 (2022-03-24): Compatibility issues
-----------------------------------------
+## 0.9.1 (2022-03-24): Compatibility issues
 
 * ``GeneratorProfileIanc`` is now compatible with Python < 3.8.
 * However, starting from this release, the official compatibility of SVVAMP is with Python
   3.8, 3.9 and 3.10 (no support for Python 3.6 and 3.7).
 
-----------------------------------------
-0.9.0 (2022-03-24): GeneratorProfileIanc
-----------------------------------------
+## 0.9.0 (2022-03-24): GeneratorProfileIanc
 
 * Add ``GeneratorProfileIanc``: profile generator for the Impartial, Anonymous and Neutral Culture.
 
--------------------------------------------------
-0.8.3 (2021-08-01): Fix bug in ExperimentAnalyzer
--------------------------------------------------
+## 0.8.3 (2021-08-01): Fix bug in ExperimentAnalyzer
 
 * Fix bug in ``ExperimentAnalyzer``: for ``StudyRuleCriteria.numerical_criteria``, the aggregation was not done
   properly.
 * Several cosmetic changes in ``ExperimentsCompiler``.
 
-------------------------------------------------------------------
-0.8.2 (2021-07-29): Necessary coalition size to break IRV-Immunity
-------------------------------------------------------------------
+## 0.8.2 (2021-07-29): Necessary coalition size to break IRV-Immunity
 
 * Add ``Profile.necessary_coalition_size_to_break_irv_immunity``: necessary coalition size to break IRV immunity (for
   each candidate different from the IRV-immune candidate, if one exists).
@@ -48,17 +35,13 @@ History
   ``RuleCondorcetVtbIRV``, ``RuleExhaustiveBallot``, ``RuleICRV``, ``RuleIRV``, ``RuleIRVAverage``, ``RuleSmithIRV``,
   ``RuleTideman`` and ``RuleWoodall``.
 
----------------------------------------------------
-0.8.1 (2021-07-29): Use IRV-immune candidate for UM
----------------------------------------------------
+## 0.8.1 (2021-07-29): Use IRV-immune candidate for UM
 
 * ``RuleCondorcetAbsIRV``, ``RuleCondorcetVtbIRV``, ``RuleExhaustiveBallot``, ``RuleICRV``, ``RuleIRV``,
   ``RuleIRVAverage``, ``RuleSmithIRV``, ``RuleTideman`` and ``RuleWoodall``: add a precheck for UM based on the
   notion of IRV-immune candidate.
 
-----------------------------------------
-0.8.0 (2021-07-29): IRV-immune candidate
-----------------------------------------
+## 0.8.0 (2021-07-29): IRV-immune candidate
 
 * Introduce the notion of *IRV-immune candidate*. A candidate `w` is IRV-immune iff in any subset of candidates
   containing `w`, the plurality score of `w` is more than `n_v / card(subset)`. This implies that in IRV (and most
@@ -72,17 +55,13 @@ History
   ``RuleWoodall``.
 * Add a UM precheck before CM in ``RuleSmithIRV``, ``RuleTideman`` and ``RuleWoodall``.
 
-----------------------------------------
-0.7.0 (2021-07-28): Better bounds for CM
-----------------------------------------
+## 0.7.0 (2021-07-28): Better bounds for CM
 
 * Introduce a heuristic method to improve the bounds ``necessary_coalition_size_cm_`` and
   ``sufficient_coalition_size_cm_`` in the case of rules based on rankings.
 * Bug fix: in previous version (0.6.12), the IRV-CM precheck for UM was not activated for ``RuleCondorcetVtbIRV``.
 
-----------------------------------------------------------
-0.6.12 (2021-07-28): Fix bug in PluralityEliminationEngine
-----------------------------------------------------------
+## 0.6.12 (2021-07-28): Fix bug in PluralityEliminationEngine
 
 * Fix bug in ``PluralityEliminationEngine``: the previous version used to modify the original profile, which was
   not desired.
@@ -92,38 +71,28 @@ History
   then we can conclude that Condorcet-IRV is not CM, and in particular not UM.
 * Minor acceleration for ``RuleWoodall`` when the IRV winner is in the Smith set.
 
------------------------------------------
-0.6.11 (2021-07-28): Accelerate ProfileUM
------------------------------------------
+## 0.6.11 (2021-07-28): Accelerate ProfileUM
 
 * ``ProfileUM``: implement a dedicated implementation for ``plurality_scores_rk`` and ``plurality_scores_ut``.
 
------------------------------------------------
-0.6.10 (2021-07-28): PluralityEliminationEngine
------------------------------------------------
+## 0.6.10 (2021-07-28): PluralityEliminationEngine
 
 * Add ``PluralityEliminationEngine`` and its subclasses, ``PluralityEliminationEngineProfile`` and
   ``PluralityEliminationEngineProfileUM``. This is used to speed up the computation of the winner for
   ``RuleExhaustiveBallot``, ``RuleICRV``, ``RuleIRVAverage``, ``IRVDuels`` and ``RuleTideman``.
 
------------------------------------------------------------------------
-0.6.9 (2021-07-28): Accelerate Exhaustive Ballot and some related rules
------------------------------------------------------------------------
+## 0.6.9 (2021-07-28): Accelerate Exhaustive Ballot and some related rules
 
 * Accelerate the computation of the winner for ``RuleCondorcetAbsIRV``, ``RuleCondorcetVtbIRV``,
   ``RuleExhaustiveBallot``, ``RuleICRV``, ``RuleIRVAverage`` and ``RuleTideman``. This is especially useful
   to accelerate some manipulation methods, such as TM, UM, IM or IIA.
 
------------------------------------------------------------------------
-0.6.8 (2021-07-27): Accelerate Exhaustive Ballot and some related rules
------------------------------------------------------------------------
+## 0.6.8 (2021-07-27): Accelerate Exhaustive Ballot and some related rules
 
 * ``RuleExhaustiveBallot``, ``RuleCondorcetAbsIRV`` and ``RuleCondorcetVtbIRV``: accelerate counting the ballots. This
   also speeds up ``RuleIRV``, which relies directly on ``RuleExhaustiveBallot``.
 
----------------------------------
-0.6.7 (2021-07-27): Accelerations
----------------------------------
+## 0.6.7 (2021-07-27): Accelerations
 
 * The option ``sort_voters`` in ``Profile`` and related classes (such as ``GeneratorProfile`` and its subclasses) is
   now False by default.
@@ -134,15 +103,11 @@ History
 * Improve the management of options in ``RuleExhaustiveBallot`` and ``RuleIRV``. In some (common) cases, it accelerates
   the computation of related voting rules (``RuleCondorcetAbsIRV``, etc).
 
-----------------------------------------
-0.6.6 (2021-07-27): Fix bug in ProfileUM
-----------------------------------------
+## 0.6.6 (2021-07-27): Fix bug in ProfileUM
 
 * Fix bug: ``preferences_rk`` was an array of floats, it is now an array of integers.
 
----------------------------------
-0.6.5 (2021-07-27): Accelerations
----------------------------------
+## 0.6.5 (2021-07-27): Accelerations
 
 * Accelerate ``ProfileSubsetCandidates`` (used for IIA but also for some voting rules such as ``RuleTideman``).
 * Add ``ProfileUM``. This is used to speed up the generic exact algorithm for UM in the case of voting rules based
@@ -151,55 +116,41 @@ History
 * Accelerate ``preferences_ut_to_matrix_duels_ut``.
 * Accelerate ``matrix_victories_to_smith_set``.
 
------------------------------------------------
-0.6.4 (2021-07-27): Option "faster" for Maximin
------------------------------------------------
+## 0.6.4 (2021-07-27): Option "faster" for Maximin
 
 * ``RuleMaximin``: implement ``cm_option=faster``, which is as precise as ``fast`` to compute ``is_cm_``, less precise
   to compute the bounds ``necessary_coalition_size_cm_`` and ``sufficient_coalition_size_cm_``, but a lot faster.
 
-------------------------------------------------------
-0.6.3 (2021-07-27): Accelerate ProfileSubsetCandidates
-------------------------------------------------------
+## 0.6.3 (2021-07-27): Accelerate ProfileSubsetCandidates
 
 * ``Profile`` now has a parameter ``preferences_borda_rk``. At initialization, it can be given instead of
   ``preferences_rk``.
 * ``ProfileSubsetCandidates``: accelerate the initialization method.
 
---------------------------------------
-0.6.2 (2021-07-27): Accelerate Maximin
---------------------------------------
+## 0.6.2 (2021-07-27): Accelerate Maximin
 
 * Accelerate ``RuleMaximin.necessary_coalition_size_cm_`` and ``RuleMaximin.sufficient_coalition_size_cm_``.
 * Add ``RuleMaximin.sufficient_coalition_size_um_c_``: number of manipulators that are sufficient (and necessary)
   for UM.
 
---------------------------------------
-0.6.1 (2021-07-27): Accelerate Profile
---------------------------------------
+## 0.6.1 (2021-07-27): Accelerate Profile
 
 * Accelerate ``Profile``: lazy evaluation of attributes ``preferences_rk``, ``preferences_ut``, ``preferences_borda_rk``
   and ``preferences_borda_ut``. This leads to a very significant acceleration for many methods (typically TM, UM and
   IIA, but also CM and IM for some voting rules).
 
----------------------------------------
-0.6.0 (2021-07-26): ExperimentsCompiler
----------------------------------------
+## 0.6.0 (2021-07-26): ExperimentsCompiler
 
 * Add ``ExperimentsCompiler``: draw plots and prepare tables based on the results computed by ``ExperimentAnalyzer``
   on several experiments.
 * Accelerate ``RuleMajorityJudgment.necessary_coalition_size_cm_`` and
   ``RuleMajorityJudgment.sufficient_coalition_size_cm_``.
 
----------------------------------------
-0.5.1 (2021-07-24): Fix PyPI deployment
----------------------------------------
+## 0.5.1 (2021-07-24): Fix PyPI deployment
 
 * Fix PyPI deployment.
 
-------------------------
-0.5.0 (2021-07-24): Meta
-------------------------
+## 0.5.0 (2021-07-24): Meta
 
 * This release focuses on "meta" tools that make the simulations easier.
 
@@ -240,31 +191,23 @@ History
   * ``RULE_CLASSES`` is renamed to ``ALL_RULE_CLASSES``.
   * Add utility functions ``indent`` and ``pseudo_bool_not``.
 
----------------------------------
-0.4.3 (2021-07-21): Accelerations
----------------------------------
+## 0.4.3 (2021-07-21): Accelerations
 
 * ``Rule``: accelerate trivial manipulation (TM) for rules based on rankings.
 * ``Profile``: compute ``preferences_borda_ut`` only when needed. In particular, if often accelerates trivial
   manipulation (which relies on examining an alternate Profile object, with trivial strategy for manipulators).
 * ``RuleMajorityJudgment``, ``RuleRangeVoting`` and ``RuleSTAR``: accelerate the computation of the ballots.
 
---------------------------------------------------
-0.4.2 (2021-07-20): Accelerate plurality_scores_ut
---------------------------------------------------
+## 0.4.2 (2021-07-20): Accelerate plurality_scores_ut
 
 * Accelerate ``Profile.plurality_scores_ut``. As an example, for a profile with 65,000 voters and 5 candidates,
   the new version is approximately 10 times faster.
 
---------------------------------------------------------
-0.4.1 (2021-07-20): Fix Missing Subpackage in Deployment
---------------------------------------------------------
+## 0.4.1 (2021-07-20): Fix Missing Subpackage in Deployment
 
 * Fix bug: in some distributions, some subpackages of Svvamp were not included.
 
-------------------------------------------------------
-0.4.0 (2021-07-19): Black, Copeland, Split Cycle, STAR
-------------------------------------------------------
+## 0.4.0 (2021-07-19): Black, Copeland, Split Cycle, STAR
 
 * Add ``RuleBlack``.
 * Add ``RuleCopeland``.
@@ -273,9 +216,7 @@ History
 * In ``RuleRangeVoting`` and ``RuleMajorityJudgment``, add an attribute ``allowed_grades``: a list of the
   allowed grades.
 
---------------------------------------------------------------
-0.3.0 (2021-07-16): New CM Algorithms for Smith-IRV-Like Rules
---------------------------------------------------------------
+## 0.3.0 (2021-07-16): New CM Algorithms for Smith-IRV-Like Rules
 
 * New CM algorithms for Smith-IRV-like rules:
 
@@ -299,9 +240,7 @@ History
   * Fix a bug in ``RuleExhaustiveBallot`` and ``RuleIRV``: applying a voting rule to a profile was able to change the
     options of another (related) rule.
 
-------------------------------------------------------
-0.2.0 (2021-07-13): Smith-IRV and Similar Voting Rules
-------------------------------------------------------
+## 0.2.0 (2021-07-13): Smith-IRV and Similar Voting Rules
 
 * A ``Profile`` object can now compute its Smith set (also called "top cycle"): ``smith_set_rk``, ``smith_set_rk_ctb``,
   ``smith_set_ut_abs``, ``smith_set_ut_abs_ctb``, ``smith_set_ut_rel``, ``smith_set_ut_rel_ctb``.
@@ -316,21 +255,15 @@ History
   * Add ``Rule._set_random_options``.
   * Add ``Rule._random_instruction``.
 
---------------------------------------
-0.1.2 (2021-07-12): Fix Release Number
---------------------------------------
+## 0.1.2 (2021-07-12): Fix Release Number
 
 * Fix release number.
 
-----------------------------------
-0.1.1 (2021-07-12): Fix Deployment
-----------------------------------
+## 0.1.1 (2021-07-12): Fix Deployment
 
 * Fix deployment on PyPI.
 
-----------------------------------------
-0.1.0 (2021-07-12): Complete Refactoring
-----------------------------------------
+## 0.1.0 (2021-07-12): Complete Refactoring
 
 * Refactor the code completely. New architecture, especially for ``Rule`` (formerly ``Election``), avoiding
   diamond inheritance. Rename most classes, properties and methods.
@@ -340,29 +273,21 @@ History
 * Tutorials are now Jupyter notebooks.
 * New rules: Kim-Roush and IRV-Average.
 
-------------------------------------------
-0.0.4 (2015-03-10): Fix a Bug in Plurality
-------------------------------------------
+## 0.0.4 (2015-03-10): Fix a Bug in Plurality
 
 * Correct a minor bug in Plurality.IM (voters_IM is now updated).
 
-----------------------------------------------------
-0.0.3 (2015-02-28): Miscellaneous Minor Improvements
-----------------------------------------------------
+## 0.0.3 (2015-02-28): Miscellaneous Minor Improvements
 
 * Rename functions and attributes with suffix _vtb to _rk.
 * Allow to define a population by both utilities and rankings.
 * Add shift to Euclidean box model.
 * Range voting / Majority Judgment: with a discrete set of grades, send to closest authorized grades.
 
-------------------------------------------
-0.0.2 (2015-02-16): SVVAMP's Core Features
-------------------------------------------
+## 0.0.2 (2015-02-16): SVVAMP's Core Features
 
 * 8 population models and 23 voting systems.
 
----------------------------------
-0.0.1 (2015-02-14): First Release
----------------------------------
+## 0.0.1 (2015-02-14): First Release
 
 * First release on PyPI.

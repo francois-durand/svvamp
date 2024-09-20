@@ -538,8 +538,8 @@ class RuleIRV(Rule):
             ...     [2, 1, 0],
             ... ])
             >>> rule = RuleIRV()(profile)
-            >>> list(rule.candidates_by_scores_best_to_worst_)
-            [0, 2, 1]
+            >>> rule.candidates_by_scores_best_to_worst_
+            array([0, 2, 1])
         """
         return self.eb_.candidates_by_scores_best_to_worst_
 
@@ -558,8 +558,8 @@ class RuleIRV(Rule):
             ...     [2, 1, 0],
             ... ])
             >>> rule = RuleIRV()(profile)
-            >>> list(rule.elimination_path_)
-            [1, 2, 0]
+            >>> rule.elimination_path_
+            array([1, 2, 0])
         """
         return self.eb_.elimination_path_
 

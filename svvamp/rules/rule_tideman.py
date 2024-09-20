@@ -443,7 +443,7 @@ class RuleTideman(Rule):
                 plurality_elimination_engine.eliminate_candidate_and_update_scores(loser)
             scores = plurality_elimination_engine.scores
             if plurality_elimination_engine.nb_candidates_alive == 2:
-                return np.nanargmax(scores)
+                return int(np.nanargmax(scores))
             plurality_loser = np.where(scores == np.nanmin(scores))[0][-1]  # Tie-breaking: the last index
             plurality_elimination_engine.eliminate_candidate(plurality_loser)
 
@@ -565,7 +565,7 @@ class RuleTideman(Rule):
             losing_candidates = losing_candidates[np.argsort(
                 - self.profile_.matrix_duels_ut[losing_candidates, self.w_], kind='mergesort')]
             losing_candidates = np.concatenate(([self.irv_.w_], losing_candidates))
-        return losing_candidates
+        return [int(c) for c in losing_candidates]
 
     def _cm_aux_(self, c, ballots_m, preferences_rk_s):
         profile_test = Profile(preferences_rk=np.concatenate((preferences_rk_s, ballots_m)), sort_voters=False)

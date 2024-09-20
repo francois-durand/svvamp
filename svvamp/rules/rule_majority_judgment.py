@@ -553,7 +553,7 @@ class RuleMajorityJudgment(Rule):
         the winner.
         """
         self.mylog("Compute winner", 1)
-        return self.candidates_by_scores_best_to_worst_[0]
+        return int(self.candidates_by_scores_best_to_worst_[0])
 
     # %% Manipulation criteria of the voting system
 

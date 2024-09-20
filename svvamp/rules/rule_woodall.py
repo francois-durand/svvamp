@@ -394,8 +394,8 @@ class RuleWoodall(Rule):
             # Included in the following case, but faster
             return self.irv_.w_
         else:
-            return next(c for c in self.irv_.candidates_by_scores_best_to_worst_
-                        if c in self.profile_.smith_set_rk)
+            return int(next(c for c in self.irv_.candidates_by_scores_best_to_worst_
+                            if c in self.profile_.smith_set_rk))
 
     @cached_property
     def scores_(self):
@@ -520,7 +520,7 @@ class RuleWoodall(Rule):
             losing_candidates = losing_candidates[np.argsort(
                 - self.profile_.matrix_duels_ut[losing_candidates, self.w_], kind='mergesort')]
             losing_candidates = np.concatenate(([self.irv_.w_], losing_candidates))
-        return losing_candidates
+        return [int(c) for c in losing_candidates]
 
     def _cm_aux_(self, c, ballots_m, preferences_rk_s):
         profile_test = Profile(preferences_rk=np.concatenate((preferences_rk_s, ballots_m)), sort_voters=False)

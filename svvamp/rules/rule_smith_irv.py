@@ -498,7 +498,7 @@ class RuleSmithIRV(Rule):
             losing_candidates = losing_candidates[np.argsort(
                 - self.profile_.matrix_duels_ut[losing_candidates, self.w_], kind='mergesort')]
             losing_candidates = np.concatenate(([self.irv_.w_], losing_candidates))
-        return losing_candidates
+        return [int(c) for c in losing_candidates]
 
     def _cm_preliminary_checks_c_subclass_(self, c, optimize_bounds):
         """CM: preliminary checks for challenger ``c``.
