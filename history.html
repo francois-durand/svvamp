@@ -1,128 +1,462 @@
-<!DOCTYPE html>
-<html class="writer-html5" lang="en" >
-<head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>History &mdash; SVVAMP 0.10.0 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>History &#8212; SVVAMP 0.10.0 documentation</title>
   
-        <script src="_static/jquery.js?v=5d32c60e"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=82662543"></script>
-        <script src="_static/doctools.js?v=888ff710"></script>
-        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="_static/js/theme.js"></script>
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script src="_static/documentation_options.js?v=82662543"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'history';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Credits" href="authors.html" /> 
-</head>
+    <link rel="prev" title="Credits" href="authors.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
 
-          
-          
-          <a href="index.html" class="icon icon-home">
-            SVVAMP
-          </a>
-              <div class="version">
-                0.10.0
-              </div>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="readme.html">SVVAMP</a></li>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorials/index.html">Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reference/index.html">Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">History</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#new-profile-generators-voting-rules-and-cm-algorithms">0.10.0 (2023-09-29): New profile generators, voting rules and CM algorithms</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#compatibility-issues">0.9.1 (2022-03-24): Compatibility issues</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#generatorprofileianc">0.9.0 (2022-03-24): GeneratorProfileIanc</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#fix-bug-in-experimentanalyzer">0.8.3 (2021-08-01): Fix bug in ExperimentAnalyzer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#necessary-coalition-size-to-break-irv-immunity">0.8.2 (2021-07-29): Necessary coalition size to break IRV-Immunity</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#use-irv-immune-candidate-for-um">0.8.1 (2021-07-29): Use IRV-immune candidate for UM</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#irv-immune-candidate">0.8.0 (2021-07-29): IRV-immune candidate</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#better-bounds-for-cm">0.7.0 (2021-07-28): Better bounds for CM</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#fix-bug-in-pluralityeliminationengine">0.6.12 (2021-07-28): Fix bug in PluralityEliminationEngine</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#accelerate-profileum">0.6.11 (2021-07-28): Accelerate ProfileUM</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#pluralityeliminationengine">0.6.10 (2021-07-28): PluralityEliminationEngine</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#accelerate-exhaustive-ballot-and-some-related-rules">0.6.9 (2021-07-28): Accelerate Exhaustive Ballot and some related rules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id1">0.6.8 (2021-07-27): Accelerate Exhaustive Ballot and some related rules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#accelerations">0.6.7 (2021-07-27): Accelerations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#fix-bug-in-profileum">0.6.6 (2021-07-27): Fix bug in ProfileUM</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">0.6.5 (2021-07-27): Accelerations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#option-faster-for-maximin">0.6.4 (2021-07-27): Option “faster” for Maximin</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#accelerate-profilesubsetcandidates">0.6.3 (2021-07-27): Accelerate ProfileSubsetCandidates</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#accelerate-maximin">0.6.2 (2021-07-27): Accelerate Maximin</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#accelerate-profile">0.6.1 (2021-07-27): Accelerate Profile</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#experimentscompiler">0.6.0 (2021-07-26): ExperimentsCompiler</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#fix-pypi-deployment">0.5.1 (2021-07-24): Fix PyPI deployment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#meta">0.5.0 (2021-07-24): Meta</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">0.4.3 (2021-07-21): Accelerations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#accelerate-plurality-scores-ut">0.4.2 (2021-07-20): Accelerate plurality_scores_ut</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#fix-missing-subpackage-in-deployment">0.4.1 (2021-07-20): Fix Missing Subpackage in Deployment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#black-copeland-split-cycle-star">0.4.0 (2021-07-19): Black, Copeland, Split Cycle, STAR</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#new-cm-algorithms-for-smith-irv-like-rules">0.3.0 (2021-07-16): New CM Algorithms for Smith-IRV-Like Rules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#smith-irv-and-similar-voting-rules">0.2.0 (2021-07-13): Smith-IRV and Similar Voting Rules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#fix-release-number">0.1.2 (2021-07-12): Fix Release Number</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#fix-deployment">0.1.1 (2021-07-12): Fix Deployment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#complete-refactoring">0.1.0 (2021-07-12): Complete Refactoring</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#fix-a-bug-in-plurality">0.0.4 (2015-03-10): Fix a Bug in Plurality</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#miscellaneous-minor-improvements">0.0.3 (2015-02-28): Miscellaneous Minor Improvements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#svvamp-s-core-features">0.0.2 (2015-02-16): SVVAMP’s Core Features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#first-release">0.0.1 (2015-02-14): First Release</a></li>
-</ul>
-</li>
-</ul>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
 
-        </div>
-      </div>
-    </nav>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">SVVAMP</a>
-      </nav>
+  
 
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">History</li>
-      <li class="wy-breadcrumbs-aside">
-            <a href="_sources/history.rst.txt" rel="nofollow"> View page source</a>
-      </li>
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">SVVAMP 0.10.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="readme.html">
+                        SVVAMP
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="installation.html">
+                        Installation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="usage.html">
+                        Usage
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="tutorials/index.html">
+                        Tutorials
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="reference/index.html">
+                        Reference
+                      </a>
+                    </li>
+                
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="contributing.html">
+                        Contributing
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="authors.html">
+                        Credits
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link dropdown-item nav-internal" href="#">
+                        History
+                      </a>
+                    </li>
+                
+                </ul>
+            </li>
+            
   </ul>
-  <hr/>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/francois-durand/svvamp" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary" tabindex="0">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item">
+<nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="readme.html">
+                        SVVAMP
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="installation.html">
+                        Installation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="usage.html">
+                        Usage
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="tutorials/index.html">
+                        Tutorials
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="reference/index.html">
+                        Reference
+                      </a>
+                    </li>
+                
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-nav-more-links-2">
+                    More
+                </button>
+                <ul id="pst-nav-more-links-2" class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="contributing.html">
+                        Contributing
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="authors.html">
+                        Credits
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link dropdown-item nav-internal" href="#">
+                        History
+                      </a>
+                    </li>
+                
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/francois-durand/svvamp" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">History</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
   <section id="history">
-<h1>History<a class="headerlink" href="#history" title="Link to this heading"></a></h1>
+<h1>History<a class="headerlink" href="#history" title="Link to this heading">#</a></h1>
 <section id="new-profile-generators-voting-rules-and-cm-algorithms">
-<h2>0.10.0 (2023-09-29): New profile generators, voting rules and CM algorithms<a class="headerlink" href="#new-profile-generators-voting-rules-and-cm-algorithms" title="Link to this heading"></a></h2>
+<h2>0.10.0 (2023-09-29): New profile generators, voting rules and CM algorithms<a class="headerlink" href="#new-profile-generators-voting-rules-and-cm-algorithms" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Add <code class="docutils literal notranslate"><span class="pre">GeneratorProfileIc</span></code>: Profile generator using the ‘Impartial Culture’ model.</p></li>
 <li><p>Add <code class="docutils literal notranslate"><span class="pre">GeneratorProfilePerturbedCulture</span></code>: Profile generator using the ‘Perturbed Culture’ model.</p></li>
@@ -134,7 +468,7 @@
 </ul>
 </section>
 <section id="compatibility-issues">
-<h2>0.9.1 (2022-03-24): Compatibility issues<a class="headerlink" href="#compatibility-issues" title="Link to this heading"></a></h2>
+<h2>0.9.1 (2022-03-24): Compatibility issues<a class="headerlink" href="#compatibility-issues" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">GeneratorProfileIanc</span></code> is now compatible with Python &lt; 3.8.</p></li>
 <li><p>However, starting from this release, the official compatibility of SVVAMP is with Python
@@ -142,13 +476,13 @@
 </ul>
 </section>
 <section id="generatorprofileianc">
-<h2>0.9.0 (2022-03-24): GeneratorProfileIanc<a class="headerlink" href="#generatorprofileianc" title="Link to this heading"></a></h2>
+<h2>0.9.0 (2022-03-24): GeneratorProfileIanc<a class="headerlink" href="#generatorprofileianc" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Add <code class="docutils literal notranslate"><span class="pre">GeneratorProfileIanc</span></code>: profile generator for the Impartial, Anonymous and Neutral Culture.</p></li>
 </ul>
 </section>
 <section id="fix-bug-in-experimentanalyzer">
-<h2>0.8.3 (2021-08-01): Fix bug in ExperimentAnalyzer<a class="headerlink" href="#fix-bug-in-experimentanalyzer" title="Link to this heading"></a></h2>
+<h2>0.8.3 (2021-08-01): Fix bug in ExperimentAnalyzer<a class="headerlink" href="#fix-bug-in-experimentanalyzer" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Fix bug in <code class="docutils literal notranslate"><span class="pre">ExperimentAnalyzer</span></code>: for <code class="docutils literal notranslate"><span class="pre">StudyRuleCriteria.numerical_criteria</span></code>, the aggregation was not done
 properly.</p></li>
@@ -156,7 +490,7 @@ properly.</p></li>
 </ul>
 </section>
 <section id="necessary-coalition-size-to-break-irv-immunity">
-<h2>0.8.2 (2021-07-29): Necessary coalition size to break IRV-Immunity<a class="headerlink" href="#necessary-coalition-size-to-break-irv-immunity" title="Link to this heading"></a></h2>
+<h2>0.8.2 (2021-07-29): Necessary coalition size to break IRV-Immunity<a class="headerlink" href="#necessary-coalition-size-to-break-irv-immunity" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Add <code class="docutils literal notranslate"><span class="pre">Profile.necessary_coalition_size_to_break_irv_immunity</span></code>: necessary coalition size to break IRV immunity (for
 each candidate different from the IRV-immune candidate, if one exists).</p></li>
@@ -166,7 +500,7 @@ each candidate different from the IRV-immune candidate, if one exists).</p></li>
 </ul>
 </section>
 <section id="use-irv-immune-candidate-for-um">
-<h2>0.8.1 (2021-07-29): Use IRV-immune candidate for UM<a class="headerlink" href="#use-irv-immune-candidate-for-um" title="Link to this heading"></a></h2>
+<h2>0.8.1 (2021-07-29): Use IRV-immune candidate for UM<a class="headerlink" href="#use-irv-immune-candidate-for-um" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">RuleCondorcetAbsIRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleCondorcetVtbIRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleExhaustiveBallot</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleICRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleIRV</span></code>,
 <code class="docutils literal notranslate"><span class="pre">RuleIRVAverage</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleSmithIRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleTideman</span></code> and <code class="docutils literal notranslate"><span class="pre">RuleWoodall</span></code>: add a precheck for UM based on the
@@ -174,15 +508,15 @@ notion of IRV-immune candidate.</p></li>
 </ul>
 </section>
 <section id="irv-immune-candidate">
-<h2>0.8.0 (2021-07-29): IRV-immune candidate<a class="headerlink" href="#irv-immune-candidate" title="Link to this heading"></a></h2>
+<h2>0.8.0 (2021-07-29): IRV-immune candidate<a class="headerlink" href="#irv-immune-candidate" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p>Introduce the notion of <em>IRV-immune candidate</em>. A candidate <cite>w</cite> is IRV-immune iff in any subset of candidates
-containing <cite>w</cite>, the plurality score of <cite>w</cite> is more than <cite>n_v / card(subset)</cite>. This implies that in IRV (and most
-related rules), <cite>w</cite> is the winner and CM is impossible.</p></li>
+<li><p>Introduce the notion of <em>IRV-immune candidate</em>. A candidate <code class="docutils literal notranslate"><span class="pre">w</span></code> is IRV-immune iff in any subset of candidates
+containing <code class="docutils literal notranslate"><span class="pre">w</span></code>, the plurality score of <code class="docutils literal notranslate"><span class="pre">w</span></code> is more than <code class="docutils literal notranslate"><span class="pre">n_v</span> <span class="pre">/</span> <span class="pre">card(subset)</span></code>. This implies that in IRV (and most
+related rules), <code class="docutils literal notranslate"><span class="pre">w</span></code> is the winner and CM is impossible.</p></li>
 <li><p>Add <code class="docutils literal notranslate"><span class="pre">Profile.exists_irv_immune_candidate</span></code>: whether there exists an IRV-immune candidate.</p></li>
-<li><p>Add <code class="docutils literal notranslate"><span class="pre">Profile.c_might_be_there_when_cw_is_eliminated_irv_style</span></code>: whether a candidate <cite>c</cite> might be present in a
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">Profile.c_might_be_there_when_cw_is_eliminated_irv_style</span></code>: whether a candidate <code class="docutils literal notranslate"><span class="pre">c</span></code> might be present in a
 round where the Condorcet winner is eliminated, IRV-style. In IRV (and most related rules), this condition is
-necessary to be able to cast CM in favor of <cite>c</cite>.</p></li>
+necessary to be able to cast CM in favor of <code class="docutils literal notranslate"><span class="pre">c</span></code>.</p></li>
 <li><p>Use the above mentioned notions to improve the CM algorithm of <code class="docutils literal notranslate"><span class="pre">RuleCondorcetAbsIRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleCondorcetVtbIRV</span></code>,
 <code class="docutils literal notranslate"><span class="pre">RuleExhaustiveBallot</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleICRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleIRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleIRVAverage</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleSmithIRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleTideman</span></code> and
 <code class="docutils literal notranslate"><span class="pre">RuleWoodall</span></code>.</p></li>
@@ -190,7 +524,7 @@ necessary to be able to cast CM in favor of <cite>c</cite>.</p></li>
 </ul>
 </section>
 <section id="better-bounds-for-cm">
-<h2>0.7.0 (2021-07-28): Better bounds for CM<a class="headerlink" href="#better-bounds-for-cm" title="Link to this heading"></a></h2>
+<h2>0.7.0 (2021-07-28): Better bounds for CM<a class="headerlink" href="#better-bounds-for-cm" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Introduce a heuristic method to improve the bounds <code class="docutils literal notranslate"><span class="pre">necessary_coalition_size_cm_</span></code> and
 <code class="docutils literal notranslate"><span class="pre">sufficient_coalition_size_cm_</span></code> in the case of rules based on rankings.</p></li>
@@ -198,7 +532,7 @@ necessary to be able to cast CM in favor of <cite>c</cite>.</p></li>
 </ul>
 </section>
 <section id="fix-bug-in-pluralityeliminationengine">
-<h2>0.6.12 (2021-07-28): Fix bug in PluralityEliminationEngine<a class="headerlink" href="#fix-bug-in-pluralityeliminationengine" title="Link to this heading"></a></h2>
+<h2>0.6.12 (2021-07-28): Fix bug in PluralityEliminationEngine<a class="headerlink" href="#fix-bug-in-pluralityeliminationengine" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Fix bug in <code class="docutils literal notranslate"><span class="pre">PluralityEliminationEngine</span></code>: the previous version used to modify the original profile, which was
 not desired.</p></li>
@@ -210,13 +544,13 @@ then we can conclude that Condorcet-IRV is not CM, and in particular not UM.</p>
 </ul>
 </section>
 <section id="accelerate-profileum">
-<h2>0.6.11 (2021-07-28): Accelerate ProfileUM<a class="headerlink" href="#accelerate-profileum" title="Link to this heading"></a></h2>
+<h2>0.6.11 (2021-07-28): Accelerate ProfileUM<a class="headerlink" href="#accelerate-profileum" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">ProfileUM</span></code>: implement a dedicated implementation for <code class="docutils literal notranslate"><span class="pre">plurality_scores_rk</span></code> and <code class="docutils literal notranslate"><span class="pre">plurality_scores_ut</span></code>.</p></li>
 </ul>
 </section>
 <section id="pluralityeliminationengine">
-<h2>0.6.10 (2021-07-28): PluralityEliminationEngine<a class="headerlink" href="#pluralityeliminationengine" title="Link to this heading"></a></h2>
+<h2>0.6.10 (2021-07-28): PluralityEliminationEngine<a class="headerlink" href="#pluralityeliminationengine" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Add <code class="docutils literal notranslate"><span class="pre">PluralityEliminationEngine</span></code> and its subclasses, <code class="docutils literal notranslate"><span class="pre">PluralityEliminationEngineProfile</span></code> and
 <code class="docutils literal notranslate"><span class="pre">PluralityEliminationEngineProfileUM</span></code>. This is used to speed up the computation of the winner for
@@ -224,7 +558,7 @@ then we can conclude that Condorcet-IRV is not CM, and in particular not UM.</p>
 </ul>
 </section>
 <section id="accelerate-exhaustive-ballot-and-some-related-rules">
-<h2>0.6.9 (2021-07-28): Accelerate Exhaustive Ballot and some related rules<a class="headerlink" href="#accelerate-exhaustive-ballot-and-some-related-rules" title="Link to this heading"></a></h2>
+<h2>0.6.9 (2021-07-28): Accelerate Exhaustive Ballot and some related rules<a class="headerlink" href="#accelerate-exhaustive-ballot-and-some-related-rules" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Accelerate the computation of the winner for <code class="docutils literal notranslate"><span class="pre">RuleCondorcetAbsIRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleCondorcetVtbIRV</span></code>,
 <code class="docutils literal notranslate"><span class="pre">RuleExhaustiveBallot</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleICRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleIRVAverage</span></code> and <code class="docutils literal notranslate"><span class="pre">RuleTideman</span></code>. This is especially useful
@@ -232,14 +566,14 @@ to accelerate some manipulation methods, such as TM, UM, IM or IIA.</p></li>
 </ul>
 </section>
 <section id="id1">
-<h2>0.6.8 (2021-07-27): Accelerate Exhaustive Ballot and some related rules<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<h2>0.6.8 (2021-07-27): Accelerate Exhaustive Ballot and some related rules<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">RuleExhaustiveBallot</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleCondorcetAbsIRV</span></code> and <code class="docutils literal notranslate"><span class="pre">RuleCondorcetVtbIRV</span></code>: accelerate counting the ballots. This
 also speeds up <code class="docutils literal notranslate"><span class="pre">RuleIRV</span></code>, which relies directly on <code class="docutils literal notranslate"><span class="pre">RuleExhaustiveBallot</span></code>.</p></li>
 </ul>
 </section>
 <section id="accelerations">
-<h2>0.6.7 (2021-07-27): Accelerations<a class="headerlink" href="#accelerations" title="Link to this heading"></a></h2>
+<h2>0.6.7 (2021-07-27): Accelerations<a class="headerlink" href="#accelerations" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>The option <code class="docutils literal notranslate"><span class="pre">sort_voters</span></code> in <code class="docutils literal notranslate"><span class="pre">Profile</span></code> and related classes (such as <code class="docutils literal notranslate"><span class="pre">GeneratorProfile</span></code> and its subclasses) is
 now False by default.</p></li>
@@ -252,13 +586,13 @@ the computation of related voting rules (<code class="docutils literal notransla
 </ul>
 </section>
 <section id="fix-bug-in-profileum">
-<h2>0.6.6 (2021-07-27): Fix bug in ProfileUM<a class="headerlink" href="#fix-bug-in-profileum" title="Link to this heading"></a></h2>
+<h2>0.6.6 (2021-07-27): Fix bug in ProfileUM<a class="headerlink" href="#fix-bug-in-profileum" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Fix bug: <code class="docutils literal notranslate"><span class="pre">preferences_rk</span></code> was an array of floats, it is now an array of integers.</p></li>
 </ul>
 </section>
 <section id="id2">
-<h2>0.6.5 (2021-07-27): Accelerations<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<h2>0.6.5 (2021-07-27): Accelerations<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Accelerate <code class="docutils literal notranslate"><span class="pre">ProfileSubsetCandidates</span></code> (used for IIA but also for some voting rules such as <code class="docutils literal notranslate"><span class="pre">RuleTideman</span></code>).</p></li>
 <li><p>Add <code class="docutils literal notranslate"><span class="pre">ProfileUM</span></code>. This is used to speed up the generic exact algorithm for UM in the case of voting rules based
@@ -269,14 +603,14 @@ on rankings.</p></li>
 </ul>
 </section>
 <section id="option-faster-for-maximin">
-<h2>0.6.4 (2021-07-27): Option “faster” for Maximin<a class="headerlink" href="#option-faster-for-maximin" title="Link to this heading"></a></h2>
+<h2>0.6.4 (2021-07-27): Option “faster” for Maximin<a class="headerlink" href="#option-faster-for-maximin" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">RuleMaximin</span></code>: implement <code class="docutils literal notranslate"><span class="pre">cm_option=faster</span></code>, which is as precise as <code class="docutils literal notranslate"><span class="pre">fast</span></code> to compute <code class="docutils literal notranslate"><span class="pre">is_cm_</span></code>, less precise
 to compute the bounds <code class="docutils literal notranslate"><span class="pre">necessary_coalition_size_cm_</span></code> and <code class="docutils literal notranslate"><span class="pre">sufficient_coalition_size_cm_</span></code>, but a lot faster.</p></li>
 </ul>
 </section>
 <section id="accelerate-profilesubsetcandidates">
-<h2>0.6.3 (2021-07-27): Accelerate ProfileSubsetCandidates<a class="headerlink" href="#accelerate-profilesubsetcandidates" title="Link to this heading"></a></h2>
+<h2>0.6.3 (2021-07-27): Accelerate ProfileSubsetCandidates<a class="headerlink" href="#accelerate-profilesubsetcandidates" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">Profile</span></code> now has a parameter <code class="docutils literal notranslate"><span class="pre">preferences_borda_rk</span></code>. At initialization, it can be given instead of
 <code class="docutils literal notranslate"><span class="pre">preferences_rk</span></code>.</p></li>
@@ -284,7 +618,7 @@ to compute the bounds <code class="docutils literal notranslate"><span class="pr
 </ul>
 </section>
 <section id="accelerate-maximin">
-<h2>0.6.2 (2021-07-27): Accelerate Maximin<a class="headerlink" href="#accelerate-maximin" title="Link to this heading"></a></h2>
+<h2>0.6.2 (2021-07-27): Accelerate Maximin<a class="headerlink" href="#accelerate-maximin" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Accelerate <code class="docutils literal notranslate"><span class="pre">RuleMaximin.necessary_coalition_size_cm_</span></code> and <code class="docutils literal notranslate"><span class="pre">RuleMaximin.sufficient_coalition_size_cm_</span></code>.</p></li>
 <li><p>Add <code class="docutils literal notranslate"><span class="pre">RuleMaximin.sufficient_coalition_size_um_c_</span></code>: number of manipulators that are sufficient (and necessary)
@@ -292,7 +626,7 @@ for UM.</p></li>
 </ul>
 </section>
 <section id="accelerate-profile">
-<h2>0.6.1 (2021-07-27): Accelerate Profile<a class="headerlink" href="#accelerate-profile" title="Link to this heading"></a></h2>
+<h2>0.6.1 (2021-07-27): Accelerate Profile<a class="headerlink" href="#accelerate-profile" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Accelerate <code class="docutils literal notranslate"><span class="pre">Profile</span></code>: lazy evaluation of attributes <code class="docutils literal notranslate"><span class="pre">preferences_rk</span></code>, <code class="docutils literal notranslate"><span class="pre">preferences_ut</span></code>, <code class="docutils literal notranslate"><span class="pre">preferences_borda_rk</span></code>
 and <code class="docutils literal notranslate"><span class="pre">preferences_borda_ut</span></code>. This leads to a very significant acceleration for many methods (typically TM, UM and
@@ -300,7 +634,7 @@ IIA, but also CM and IM for some voting rules).</p></li>
 </ul>
 </section>
 <section id="experimentscompiler">
-<h2>0.6.0 (2021-07-26): ExperimentsCompiler<a class="headerlink" href="#experimentscompiler" title="Link to this heading"></a></h2>
+<h2>0.6.0 (2021-07-26): ExperimentsCompiler<a class="headerlink" href="#experimentscompiler" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Add <code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler</span></code>: draw plots and prepare tables based on the results computed by <code class="docutils literal notranslate"><span class="pre">ExperimentAnalyzer</span></code>
 on several experiments.</p></li>
@@ -309,13 +643,13 @@ on several experiments.</p></li>
 </ul>
 </section>
 <section id="fix-pypi-deployment">
-<h2>0.5.1 (2021-07-24): Fix PyPI deployment<a class="headerlink" href="#fix-pypi-deployment" title="Link to this heading"></a></h2>
+<h2>0.5.1 (2021-07-24): Fix PyPI deployment<a class="headerlink" href="#fix-pypi-deployment" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Fix PyPI deployment.</p></li>
 </ul>
 </section>
 <section id="meta">
-<h2>0.5.0 (2021-07-24): Meta<a class="headerlink" href="#meta" title="Link to this heading"></a></h2>
+<h2>0.5.0 (2021-07-24): Meta<a class="headerlink" href="#meta" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>This release focuses on “meta” tools that make the simulations easier.</p>
 <ul>
@@ -363,7 +697,7 @@ other profile generators.</p></li>
 </ul>
 </section>
 <section id="id3">
-<h2>0.4.3 (2021-07-21): Accelerations<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<h2>0.4.3 (2021-07-21): Accelerations<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">Rule</span></code>: accelerate trivial manipulation (TM) for rules based on rankings.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Profile</span></code>: compute <code class="docutils literal notranslate"><span class="pre">preferences_borda_ut</span></code> only when needed. In particular, if often accelerates trivial
@@ -372,20 +706,20 @@ manipulation (which relies on examining an alternate Profile object, with trivia
 </ul>
 </section>
 <section id="accelerate-plurality-scores-ut">
-<h2>0.4.2 (2021-07-20): Accelerate plurality_scores_ut<a class="headerlink" href="#accelerate-plurality-scores-ut" title="Link to this heading"></a></h2>
+<h2>0.4.2 (2021-07-20): Accelerate plurality_scores_ut<a class="headerlink" href="#accelerate-plurality-scores-ut" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Accelerate <code class="docutils literal notranslate"><span class="pre">Profile.plurality_scores_ut</span></code>. As an example, for a profile with 65,000 voters and 5 candidates,
 the new version is approximately 10 times faster.</p></li>
 </ul>
 </section>
 <section id="fix-missing-subpackage-in-deployment">
-<h2>0.4.1 (2021-07-20): Fix Missing Subpackage in Deployment<a class="headerlink" href="#fix-missing-subpackage-in-deployment" title="Link to this heading"></a></h2>
+<h2>0.4.1 (2021-07-20): Fix Missing Subpackage in Deployment<a class="headerlink" href="#fix-missing-subpackage-in-deployment" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Fix bug: in some distributions, some subpackages of Svvamp were not included.</p></li>
 </ul>
 </section>
 <section id="black-copeland-split-cycle-star">
-<h2>0.4.0 (2021-07-19): Black, Copeland, Split Cycle, STAR<a class="headerlink" href="#black-copeland-split-cycle-star" title="Link to this heading"></a></h2>
+<h2>0.4.0 (2021-07-19): Black, Copeland, Split Cycle, STAR<a class="headerlink" href="#black-copeland-split-cycle-star" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Add <code class="docutils literal notranslate"><span class="pre">RuleBlack</span></code>.</p></li>
 <li><p>Add <code class="docutils literal notranslate"><span class="pre">RuleCopeland</span></code>.</p></li>
@@ -396,7 +730,7 @@ allowed grades.</p></li>
 </ul>
 </section>
 <section id="new-cm-algorithms-for-smith-irv-like-rules">
-<h2>0.3.0 (2021-07-16): New CM Algorithms for Smith-IRV-Like Rules<a class="headerlink" href="#new-cm-algorithms-for-smith-irv-like-rules" title="Link to this heading"></a></h2>
+<h2>0.3.0 (2021-07-16): New CM Algorithms for Smith-IRV-Like Rules<a class="headerlink" href="#new-cm-algorithms-for-smith-irv-like-rules" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>New CM algorithms for Smith-IRV-like rules:</p>
 <ul>
@@ -426,7 +760,7 @@ options of another (related) rule.</p></li>
 </ul>
 </section>
 <section id="smith-irv-and-similar-voting-rules">
-<h2>0.2.0 (2021-07-13): Smith-IRV and Similar Voting Rules<a class="headerlink" href="#smith-irv-and-similar-voting-rules" title="Link to this heading"></a></h2>
+<h2>0.2.0 (2021-07-13): Smith-IRV and Similar Voting Rules<a class="headerlink" href="#smith-irv-and-similar-voting-rules" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>A <code class="docutils literal notranslate"><span class="pre">Profile</span></code> object can now compute its Smith set (also called “top cycle”): <code class="docutils literal notranslate"><span class="pre">smith_set_rk</span></code>, <code class="docutils literal notranslate"><span class="pre">smith_set_rk_ctb</span></code>,
 <code class="docutils literal notranslate"><span class="pre">smith_set_ut_abs</span></code>, <code class="docutils literal notranslate"><span class="pre">smith_set_ut_abs_ctb</span></code>, <code class="docutils literal notranslate"><span class="pre">smith_set_ut_rel</span></code>, <code class="docutils literal notranslate"><span class="pre">smith_set_ut_rel_ctb</span></code>.</p></li>
@@ -445,19 +779,19 @@ options of another (related) rule.</p></li>
 </ul>
 </section>
 <section id="fix-release-number">
-<h2>0.1.2 (2021-07-12): Fix Release Number<a class="headerlink" href="#fix-release-number" title="Link to this heading"></a></h2>
+<h2>0.1.2 (2021-07-12): Fix Release Number<a class="headerlink" href="#fix-release-number" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Fix release number.</p></li>
 </ul>
 </section>
 <section id="fix-deployment">
-<h2>0.1.1 (2021-07-12): Fix Deployment<a class="headerlink" href="#fix-deployment" title="Link to this heading"></a></h2>
+<h2>0.1.1 (2021-07-12): Fix Deployment<a class="headerlink" href="#fix-deployment" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Fix deployment on PyPI.</p></li>
 </ul>
 </section>
 <section id="complete-refactoring">
-<h2>0.1.0 (2021-07-12): Complete Refactoring<a class="headerlink" href="#complete-refactoring" title="Link to this heading"></a></h2>
+<h2>0.1.0 (2021-07-12): Complete Refactoring<a class="headerlink" href="#complete-refactoring" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Refactor the code completely. New architecture, especially for <code class="docutils literal notranslate"><span class="pre">Rule</span></code> (formerly <code class="docutils literal notranslate"><span class="pre">Election</span></code>), avoiding
 diamond inheritance. Rename most classes, properties and methods.</p></li>
@@ -469,13 +803,13 @@ diamond inheritance. Rename most classes, properties and methods.</p></li>
 </ul>
 </section>
 <section id="fix-a-bug-in-plurality">
-<h2>0.0.4 (2015-03-10): Fix a Bug in Plurality<a class="headerlink" href="#fix-a-bug-in-plurality" title="Link to this heading"></a></h2>
+<h2>0.0.4 (2015-03-10): Fix a Bug in Plurality<a class="headerlink" href="#fix-a-bug-in-plurality" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Correct a minor bug in Plurality.IM (voters_IM is now updated).</p></li>
 </ul>
 </section>
 <section id="miscellaneous-minor-improvements">
-<h2>0.0.3 (2015-02-28): Miscellaneous Minor Improvements<a class="headerlink" href="#miscellaneous-minor-improvements" title="Link to this heading"></a></h2>
+<h2>0.0.3 (2015-02-28): Miscellaneous Minor Improvements<a class="headerlink" href="#miscellaneous-minor-improvements" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Rename functions and attributes with suffix _vtb to _rk.</p></li>
 <li><p>Allow to define a population by both utilities and rankings.</p></li>
@@ -484,13 +818,13 @@ diamond inheritance. Rename most classes, properties and methods.</p></li>
 </ul>
 </section>
 <section id="svvamp-s-core-features">
-<h2>0.0.2 (2015-02-16): SVVAMP’s Core Features<a class="headerlink" href="#svvamp-s-core-features" title="Link to this heading"></a></h2>
+<h2>0.0.2 (2015-02-16): SVVAMP’s Core Features<a class="headerlink" href="#svvamp-s-core-features" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>8 population models and 23 voting systems.</p></li>
 </ul>
 </section>
 <section id="first-release">
-<h2>0.0.1 (2015-02-14): First Release<a class="headerlink" href="#first-release" title="Link to this heading"></a></h2>
+<h2>0.0.1 (2015-02-14): First Release<a class="headerlink" href="#first-release" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>First release on PyPI.</p></li>
 </ul>
@@ -498,33 +832,142 @@ diamond inheritance. Rename most classes, properties and methods.</p></li>
 </section>
 
 
-           </div>
-          </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="authors.html" class="btn btn-neutral float-left" title="Credits" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-    </div>
-
-  <hr/>
-
-  <div role="contentinfo">
-    <p>&#169; Copyright 2021, François Durand.</p>
-  </div>
-
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
-
-</footer>
-        </div>
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="authors.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Credits</p>
       </div>
-    </section>
-  </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
-</body>
+  <div class="sidebar-secondary-item">
+
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-profile-generators-voting-rules-and-cm-algorithms">0.10.0 (2023-09-29): New profile generators, voting rules and CM algorithms</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compatibility-issues">0.9.1 (2022-03-24): Compatibility issues</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generatorprofileianc">0.9.0 (2022-03-24): GeneratorProfileIanc</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fix-bug-in-experimentanalyzer">0.8.3 (2021-08-01): Fix bug in ExperimentAnalyzer</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#necessary-coalition-size-to-break-irv-immunity">0.8.2 (2021-07-29): Necessary coalition size to break IRV-Immunity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#use-irv-immune-candidate-for-um">0.8.1 (2021-07-29): Use IRV-immune candidate for UM</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#irv-immune-candidate">0.8.0 (2021-07-29): IRV-immune candidate</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#better-bounds-for-cm">0.7.0 (2021-07-28): Better bounds for CM</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fix-bug-in-pluralityeliminationengine">0.6.12 (2021-07-28): Fix bug in PluralityEliminationEngine</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#accelerate-profileum">0.6.11 (2021-07-28): Accelerate ProfileUM</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pluralityeliminationengine">0.6.10 (2021-07-28): PluralityEliminationEngine</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#accelerate-exhaustive-ballot-and-some-related-rules">0.6.9 (2021-07-28): Accelerate Exhaustive Ballot and some related rules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">0.6.8 (2021-07-27): Accelerate Exhaustive Ballot and some related rules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#accelerations">0.6.7 (2021-07-27): Accelerations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fix-bug-in-profileum">0.6.6 (2021-07-27): Fix bug in ProfileUM</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">0.6.5 (2021-07-27): Accelerations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#option-faster-for-maximin">0.6.4 (2021-07-27): Option “faster” for Maximin</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#accelerate-profilesubsetcandidates">0.6.3 (2021-07-27): Accelerate ProfileSubsetCandidates</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#accelerate-maximin">0.6.2 (2021-07-27): Accelerate Maximin</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#accelerate-profile">0.6.1 (2021-07-27): Accelerate Profile</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#experimentscompiler">0.6.0 (2021-07-26): ExperimentsCompiler</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fix-pypi-deployment">0.5.1 (2021-07-24): Fix PyPI deployment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#meta">0.5.0 (2021-07-24): Meta</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">0.4.3 (2021-07-21): Accelerations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#accelerate-plurality-scores-ut">0.4.2 (2021-07-20): Accelerate plurality_scores_ut</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fix-missing-subpackage-in-deployment">0.4.1 (2021-07-20): Fix Missing Subpackage in Deployment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#black-copeland-split-cycle-star">0.4.0 (2021-07-19): Black, Copeland, Split Cycle, STAR</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-cm-algorithms-for-smith-irv-like-rules">0.3.0 (2021-07-16): New CM Algorithms for Smith-IRV-Like Rules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#smith-irv-and-similar-voting-rules">0.2.0 (2021-07-13): Smith-IRV and Similar Voting Rules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fix-release-number">0.1.2 (2021-07-12): Fix Release Number</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fix-deployment">0.1.1 (2021-07-12): Fix Deployment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#complete-refactoring">0.1.0 (2021-07-12): Complete Refactoring</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fix-a-bug-in-plurality">0.0.4 (2015-03-10): Fix a Bug in Plurality</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#miscellaneous-minor-improvements">0.0.3 (2015-02-28): Miscellaneous Minor Improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp-s-core-features">0.0.2 (2015-02-16): SVVAMP’s Core Features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#first-release">0.0.1 (2015-02-14): First Release</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/history.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, François Durand.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.14.4.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
 </html>

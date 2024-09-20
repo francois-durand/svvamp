@@ -1,125 +1,559 @@
-<!DOCTYPE html>
-<html class="writer-html5" lang="en" >
-<head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>&lt;no title&gt; &mdash; SVVAMP 0.10.0 documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>&lt;no title&gt; &#8212; SVVAMP 0.10.0 documentation</title>
   
-        <script src="../../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../_static/documentation_options.js?v=82662543"></script>
-        <script src="../../_static/doctools.js?v=888ff710"></script>
-        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script src="../../_static/js/theme.js"></script>
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script src="../../_static/documentation_options.js?v=82662543"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/preferences/generator_profile_spheroid';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="&lt;no title&gt;" href="generator_profile_unanimous.html" />
-    <link rel="prev" title="&lt;no title&gt;" href="generator_profile_perturbed_culture.html" /> 
-</head>
+    <link rel="prev" title="&lt;no title&gt;" href="generator_profile_perturbed_culture.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
 
-          
-          
-          <a href="../../index.html" class="icon icon-home">
-            SVVAMP
-          </a>
-              <div class="version">
-                0.10.0
-              </div>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../../readme.html">SVVAMP</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../index.html#profiles">Profiles</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../index.html#generators-of-profiles">Generators of Profiles</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="generator_profile.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfile</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="generator_profile_cubic_uniform.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileCubicUniform</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="generator_profile_euclidean_box.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileEuclideanBox</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="generator_profile_gaussian_well.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileGaussianWell</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="generator_profile_ianc.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileIanc</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="generator_profile_ic.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileIc</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="generator_profile_ladder.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileLadder</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="generator_profile_noise.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileNoise</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="generator_profile_noised_file.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileNoisedFile</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="generator_profile_perturbed_culture.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfilePerturbedCulture</span></code></a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileSpheroid</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="generator_profile_unanimous.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileUnanimous</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="generator_profile_vmf_hypercircle.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileVMFHypercircle</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="generator_profile_vmf_hypersphere.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileVMFHypersphere</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../index.html#plurality-elimination-engines">Plurality Elimination Engines</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../index.html#voting-rules">Voting Rules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../index.html#meta">Meta</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../index.html#utils">Utils</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../authors.html">Credits</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../history.html">History</a></li>
-</ul>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
 
-        </div>
-      </div>
-    </nav>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">SVVAMP</a>
-      </nav>
+  
 
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="../index.html">Reference</a></li>
-      <li class="breadcrumb-item active">&lt;no title&gt;</li>
-      <li class="wy-breadcrumbs-aside">
-            <a href="../../_sources/reference/preferences/generator_profile_spheroid.rst.txt" rel="nofollow"> View page source</a>
-      </li>
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">SVVAMP 0.10.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../readme.html">
+                        SVVAMP
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../installation.html">
+                        Installation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../usage.html">
+                        Usage
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../tutorials/index.html">
+                        Tutorials
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../index.html">
+                        Reference
+                      </a>
+                    </li>
+                
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="../../contributing.html">
+                        Contributing
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="../../authors.html">
+                        Credits
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="../../history.html">
+                        History
+                      </a>
+                    </li>
+                
+                </ul>
+            </li>
+            
   </ul>
-  <hr/>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/francois-durand/svvamp" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary" tabindex="0">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item">
+<nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../readme.html">
+                        SVVAMP
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../installation.html">
+                        Installation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../usage.html">
+                        Usage
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../tutorials/index.html">
+                        Tutorials
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../index.html">
+                        Reference
+                      </a>
+                    </li>
+                
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-nav-more-links-2">
+                    More
+                </button>
+                <ul id="pst-nav-more-links-2" class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="../../contributing.html">
+                        Contributing
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="../../authors.html">
+                        Credits
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="../../history.html">
+                        History
+                      </a>
+                    </li>
+                
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/francois-durand/svvamp" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="profile.html"><code class="docutils literal notranslate"><span class="pre">Profile</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="profile_from_file.html"><code class="docutils literal notranslate"><span class="pre">ProfileFromFile</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="profile_subset_candidates.html"><code class="docutils literal notranslate"><span class="pre">ProfileSubsetCandidates</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="profile_um.html"><code class="docutils literal notranslate"><span class="pre">ProfileUM</span></code></a></li>
+</ul>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="generator_profile.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfile</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="generator_profile_cubic_uniform.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileCubicUniform</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="generator_profile_euclidean_box.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileEuclideanBox</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="generator_profile_gaussian_well.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileGaussianWell</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="generator_profile_ianc.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileIanc</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="generator_profile_ic.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileIc</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="generator_profile_ladder.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileLadder</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="generator_profile_noise.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileNoise</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="generator_profile_noised_file.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileNoisedFile</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="generator_profile_perturbed_culture.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfilePerturbedCulture</span></code></a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileSpheroid</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="generator_profile_unanimous.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileUnanimous</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="generator_profile_vmf_hypercircle.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileVMFHypercircle</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="generator_profile_vmf_hypersphere.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileVMFHypersphere</span></code></a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="plurality_elimination_engine.html"><code class="docutils literal notranslate"><span class="pre">PluralityEliminationEngine</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="plurality_elimination_engine_profile.html"><code class="docutils literal notranslate"><span class="pre">PluralityEliminationEngineProfile</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="plurality_elimination_engine_profile_um.html"><code class="docutils literal notranslate"><span class="pre">PluralityEliminationEngineProfileUM</span></code></a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule.html"><code class="docutils literal notranslate"><span class="pre">Rule</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_approval.html"><code class="docutils literal notranslate"><span class="pre">RuleApproval</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_baldwin.html"><code class="docutils literal notranslate"><span class="pre">RuleBaldwin</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_black.html"><code class="docutils literal notranslate"><span class="pre">RuleBlack</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_borda.html"><code class="docutils literal notranslate"><span class="pre">RuleBorda</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_bucklin.html"><code class="docutils literal notranslate"><span class="pre">RuleBucklin</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_condorcet_abs_irv.html"><code class="docutils literal notranslate"><span class="pre">RuleCondorcetAbsIRV</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_condorcet_sum_defeats.html"><code class="docutils literal notranslate"><span class="pre">RuleCondorcetSumDefeats</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_condorcet_vtb_irv.html"><code class="docutils literal notranslate"><span class="pre">RuleCondorcetVtbIRV</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_coombs.html"><code class="docutils literal notranslate"><span class="pre">RuleCoombs</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_copeland.html"><code class="docutils literal notranslate"><span class="pre">RuleCopeland</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_exhaustive_ballot.html"><code class="docutils literal notranslate"><span class="pre">RuleExhaustiveBallot</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_icrv.html"><code class="docutils literal notranslate"><span class="pre">RuleICRV</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_irv.html"><code class="docutils literal notranslate"><span class="pre">RuleIRV</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_irv_average.html"><code class="docutils literal notranslate"><span class="pre">RuleIRVAverage</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_irv_duels.html"><code class="docutils literal notranslate"><span class="pre">RuleIRVDuels</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_iterated_bucklin.html"><code class="docutils literal notranslate"><span class="pre">RuleIteratedBucklin</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_k_approval.html"><code class="docutils literal notranslate"><span class="pre">RuleKApproval</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_kemeny.html"><code class="docutils literal notranslate"><span class="pre">RuleKemeny</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_kim_roush.html"><code class="docutils literal notranslate"><span class="pre">RuleKimRoush</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_majority_judgment.html"><code class="docutils literal notranslate"><span class="pre">RuleMajorityJudgment</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_maximin.html"><code class="docutils literal notranslate"><span class="pre">RuleMaximin</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_nanson.html"><code class="docutils literal notranslate"><span class="pre">RuleNanson</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_plurality.html"><code class="docutils literal notranslate"><span class="pre">RulePlurality</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_range_voting.html"><code class="docutils literal notranslate"><span class="pre">RuleRangeVoting</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_ranked_pairs.html"><code class="docutils literal notranslate"><span class="pre">RuleRankedPairs</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_schulze.html"><code class="docutils literal notranslate"><span class="pre">RuleSchulze</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_slater.html"><code class="docutils literal notranslate"><span class="pre">RuleSlater</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_smith_irv.html"><code class="docutils literal notranslate"><span class="pre">RuleSmithIRV</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_split_cycle.html"><code class="docutils literal notranslate"><span class="pre">RuleSplitCycle</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_star.html"><code class="docutils literal notranslate"><span class="pre">RuleSTAR</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_tideman.html"><code class="docutils literal notranslate"><span class="pre">RuleTideman</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_two_round.html"><code class="docutils literal notranslate"><span class="pre">RuleTwoRound</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_veto.html"><code class="docutils literal notranslate"><span class="pre">RuleVeto</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_woodall.html"><code class="docutils literal notranslate"><span class="pre">RuleWoodall</span></code></a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../meta/study_profile_criteria.html"><code class="docutils literal notranslate"><span class="pre">StudyProfileCriteria</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meta/study_rule_criteria.html"><code class="docutils literal notranslate"><span class="pre">StudyRuleCriteria</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meta/voting_rule_tasks.html"><code class="docutils literal notranslate"><span class="pre">VotingRuleTasks</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meta/experiment_analyzer.html"><code class="docutils literal notranslate"><span class="pre">ExperimentAnalyzer</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meta/experiments_compiler.html"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler</span></code></a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../utils/my_log.html"><code class="docutils literal notranslate"><span class="pre">MyLog</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../utils/initialize_random_seeds.html"><code class="docutils literal notranslate"><span class="pre">initialize_random_seeds()</span></code></a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Reference</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">&lt;no title&gt;</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
   <dl class="py class">
 <dt class="sig sig-object py" id="svvamp.GeneratorProfileSpheroid">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">svvamp.</span></span><span class="sig-name descname"><span class="pre">GeneratorProfileSpheroid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stretching</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_voters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/preferences/generator_profile_spheroid.html#GeneratorProfileSpheroid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.GeneratorProfileSpheroid" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">svvamp.</span></span><span class="sig-name descname"><span class="pre">GeneratorProfileSpheroid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stretching</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_voters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/preferences/generator_profile_spheroid.html#GeneratorProfileSpheroid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.GeneratorProfileSpheroid" title="Link to this definition">#</a></dt>
 <dd><p>Profile generator using the ‘Spheroid’ model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>n_v</strong> (<em>int</em>) – Number of voters.</p></li>
-<li><p><strong>n_c</strong> (<em>int</em>) – Number of candidates.</p></li>
+<li><p><strong>n_v</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Number of voters.</p></li>
+<li><p><strong>n_c</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Number of candidates.</p></li>
 <li><p><strong>stretching</strong> (<em>number</em>) – Number between 0 and <code class="docutils literal notranslate"><span class="pre">numpy.inf</span></code> (both included).</p></li>
-<li><p><strong>sort_voters</strong> (<em>bool</em>) – This argument is passed to <a class="reference internal" href="profile.html#svvamp.Profile" title="svvamp.Profile"><code class="xref py py-class docutils literal notranslate"><span class="pre">Profile</span></code></a>.</p></li>
+<li><p><strong>sort_voters</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – This argument is passed to <a class="reference internal" href="profile.html#svvamp.Profile" title="svvamp.Profile"><code class="xref py py-class docutils literal notranslate"><span class="pre">Profile</span></code></a>.</p></li>
 </ul>
 </dd>
 </dl>
@@ -165,34 +599,105 @@ spherical model with <code class="docutils literal notranslate"><span class="pre
 
 
 
-           </div>
-          </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="generator_profile_perturbed_culture.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="generator_profile_unanimous.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
-
-  <hr/>
-
-  <div role="contentinfo">
-    <p>&#169; Copyright 2021, François Durand.</p>
-  </div>
-
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
-
-</footer>
-        </div>
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="generator_profile_perturbed_culture.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">&lt;no title&gt;</p>
       </div>
-    </section>
-  </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
+    </a>
+    <a class="right-next"
+       href="generator_profile_unanimous.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">&lt;no title&gt;</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
-</body>
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="../../_sources/reference/preferences/generator_profile_spheroid.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, François Durand.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.14.4.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
 </html>
