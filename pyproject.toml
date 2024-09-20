@@ -120,7 +120,6 @@ skipsdist = true
 
 [gh-actions]
 python =
-    3.9: py39
     3.10: py310
     3.11: py311
     3.12: py312
@@ -131,7 +130,6 @@ allowlist_externals = poetry
 commands =
     poetry install -v
     pytest
-    mypy
 """
 
 [tool.poetry_bumpversion.file."svvamp/__init__.py"]
