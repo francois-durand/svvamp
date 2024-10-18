@@ -1,5 +1,9 @@
 # History
 
+## 0.11.0 (2024-10-18): Conversion to Poetry
+
+* Conversion to Poetry instead of Setuptools.
+* The official compatibility of SVVAMP is now with Python 3.10, 3.11, and 3.12.
 
 ## 0.10.0 (2023-09-29): New profile generators, voting rules and CM algorithms
 
