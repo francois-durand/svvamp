@@ -511,15 +511,15 @@ document.write(`
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-array([[3, 2, 1, 0, 4],
-       [4, 0, 3, 2, 1],
-       [4, 3, 0, 2, 1],
-       [4, 0, 2, 3, 1],
-       [0, 1, 3, 2, 4],
-       [4, 1, 2, 3, 0],
-       [4, 2, 1, 3, 0],
-       [2, 4, 0, 1, 3],
-       [1, 3, 4, 2, 0]])
+array([[2, 0, 4, 1, 3],
+       [4, 1, 0, 2, 3],
+       [3, 0, 4, 1, 2],
+       [3, 1, 4, 2, 0],
+       [0, 2, 4, 3, 1],
+       [4, 3, 0, 1, 2],
+       [1, 4, 2, 0, 3],
+       [2, 0, 3, 1, 4],
+       [0, 4, 3, 2, 1]])
 </pre></div></div>
 </div>
 <p>Define a voting rule:</p>
@@ -546,7 +546,7 @@ array([[3, 2, 1, 0, 4],
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;svvamp.rules.rule_plurality.RulePlurality at 0x2c8da9a4cb0&gt;
+&lt;svvamp.rules.rule_plurality.RulePlurality at 0x17b8f9d6270&gt;
 </pre></div></div>
 </div>
 <p>Ballots:</p>
@@ -564,7 +564,7 @@ array([[3, 2, 1, 0, 4],
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-array([3, 4, 4, 4, 0, 4, 4, 2, 1])
+array([2, 4, 3, 3, 0, 4, 1, 2, 0])
 </pre></div></div>
 </div>
 <p>Scores:</p>
@@ -582,7 +582,7 @@ array([3, 4, 4, 4, 0, 4, 4, 2, 1])
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-array([1, 1, 1, 1, 5])
+array([2, 1, 2, 2, 2])
 </pre></div></div>
 </div>
 <p>Order the candidates according to their scores:</p>
@@ -600,7 +600,7 @@ array([1, 1, 1, 1, 5])
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-array([4, 0, 1, 2, 3])
+array([0, 2, 3, 4, 1])
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -617,7 +617,7 @@ array([4, 0, 1, 2, 3])
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-array([5, 1, 1, 1, 1])
+array([2, 2, 2, 2, 1])
 </pre></div></div>
 </div>
 <p>The winner, her score and her total utility:</p>
@@ -635,7 +635,7 @@ array([5, 1, 1, 1, 1])
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-4
+0
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -652,7 +652,7 @@ array([5, 1, 1, 1, 1])
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-np.int64(5)
+np.int64(2)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -669,7 +669,7 @@ np.int64(5)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-2.1412861765091997
+0.7459377376822462
 </pre></div></div>
 </div>
 <p>Decide whether the winner of the election is a Condorcet winner:</p>
