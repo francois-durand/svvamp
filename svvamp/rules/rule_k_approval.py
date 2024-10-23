@@ -300,7 +300,7 @@ class RuleKApproval(Rule):
         self.k = None
         super().__init__(
             with_two_candidates_reduces_to_plurality=(k == 1), is_based_on_rk=True,
-            precheck_um=False, precheck_icm=False, precheck_tm=False,
+            precheck_um=False, precheck_icm=False, precheck_tm=False, precheck_heuristic=False,
             log_identity="K-APPROVAL", k=k, **kwargs
         )
 

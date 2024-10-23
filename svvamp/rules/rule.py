@@ -61,6 +61,9 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     precheck_icm : bool
         If ``True``, then before computing CM, we check whether there is ICM. Remark: when the voting system meets
         InfMC_c_ctb, then precheck on ICM will not do better than other basic prechecks.
+    precheck_heuristic : bool
+        If ``True``, then before computing CM, we check whether a relatively simple heuristic can guarantee CM.
+        However this heuristic is costly, so it is better to avoid it for rules where computing CM exactly is cheap.
     log_identity : str
         Cf. :class:`MyLog`.
     kwargs
@@ -189,7 +192,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     def __init__(self,
                  with_two_candidates_reduces_to_plurality=False, is_based_on_rk=False,
                  is_based_on_ut_minus1_1=False, meets_iia=False,
-                 precheck_um=True, precheck_tm=True, precheck_icm=True,
+                 precheck_um=True, precheck_tm=True, precheck_icm=True, precheck_heuristic=True,
                  log_identity='RULE', **kwargs):
         # Log
         super().__init__()
@@ -202,6 +205,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         self.precheck_um = precheck_um
         self.precheck_tm = precheck_tm
         self.precheck_icm = precheck_icm
+        self.precheck_heuristic = precheck_heuristic
         # Options
         self._iia_subset_maximum_size = None
         self._im_option = None
@@ -3272,7 +3276,8 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
                                     or self._necessary_coalition_size_cm[c] > n_m):
             return
         # Try to improve bounds with heuristic
-        self._cm_preliminary_optimize_bound_heuristic_(c, optimize_bounds)
+        if self.precheck_heuristic:
+            self._cm_preliminary_optimize_bound_heuristic_(c, optimize_bounds)
 
     def _cm_preliminary_optimize_bound_heuristic_(self, c, optimize_bounds):
         """CM: Try to improve bounds with heuristic.

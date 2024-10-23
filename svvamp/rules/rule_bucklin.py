@@ -308,6 +308,7 @@ class RuleBucklin(Rule):
         super().__init__(
             with_two_candidates_reduces_to_plurality=True, is_based_on_rk=True,
             precheck_icm=False,  # Bucklin does not meet infmc_c_ctb, but precheck on ICM is not interesting anyway.
+            precheck_heuristic=False,
             log_identity="BUCKLIN", **kwargs
         )
 
