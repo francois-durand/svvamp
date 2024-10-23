@@ -3182,7 +3182,8 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         n_m = self.profile_.matrix_duels_ut[c, self.w_]  # Number of manipulators
         n_s = self.profile_.n_v - n_m  # Number of sincere voters
         # Pretest based on Informed Majority Coalition Criterion
-        if self.meets_infmc_c_ctb and c == 0:
+        condition = (c == 0 and self.meets_infmc_c_ctb)
+        if condition:
             self._update_sufficient(
                 self._sufficient_coalition_size_cm, c, n_s,
                 'CM: Preliminary checks: InfMC_c_ctb => \n    sufficient_coalition_size_cm[c] = n_s =')
@@ -3191,7 +3192,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         if self.meets_infmc_c:
             self._update_sufficient(
                 self._sufficient_coalition_size_cm, c, n_s + 1,
-                'CM: Preliminary checks: InfMC_c => \n    sufficient_coalition_size_cm[c] = n_s + 1 =')
+                r'CM: Preliminary checks: InfMC_c => \n    sufficient_coalition_size_cm[c] = n_s + 1 =')
             if not optimize_bounds and n_m >= self._sufficient_coalition_size_cm[c]:
                 return
         # Pretest based on the majority favorite criterion
