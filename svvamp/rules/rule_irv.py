@@ -40,6 +40,7 @@ class RuleIRV(Rule):
         icm_option: ['exact']. Default: 'exact'.
         iia_subset_maximum_size: is_number. Default: 2.
         im_option: ['lazy', 'exact']. Default: 'lazy'.
+        precheck_heuristic: is_bool. Default: True.
         tm_option: ['exact']. Default: 'exact'.
         um_option: ['fast', 'exact']. Default: 'fast'.
 
@@ -320,7 +321,7 @@ class RuleIRV(Rule):
         'cm_option': {'allowed': ['fast', 'slow', 'exact'], 'default': 'fast'},
         'tm_option': {'allowed': ['exact'], 'default': 'exact'},
         'icm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'fast_algo': {'allowed': ['c_minus_max', 'minus_max', 'hardest_first'], 'default': 'c_minus_max'}
+        'fast_algo': {'allowed': ['c_minus_max', 'minus_max', 'hardest_first'], 'default': 'c_minus_max'},
     })
 
     def __init__(self, **kwargs):
@@ -437,7 +438,7 @@ class RuleIRV(Rule):
             eb_options['im_option'] = 'exact'
         if self.um_option == 'exact':
             eb_options['um_option'] = 'exact'
-        self.eb_ = RuleExhaustiveBallot(**eb_options)(self.profile_)
+        self.eb_ = RuleExhaustiveBallot(precheck_heuristic=self.precheck_heuristic, **eb_options)(self.profile_)
         # Initialize examples of manipulating ballots
         self._example_ballots_cm_c = {c: None for c in range(profile.n_c)}
         self._example_ballots_cm_w_against = {w_other_rule: None for w_other_rule in range(profile.n_c)}

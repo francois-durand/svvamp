@@ -61,9 +61,6 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     precheck_icm : bool
         If ``True``, then before computing CM, we check whether there is ICM. Remark: when the voting system meets
         InfMC_c_ctb, then precheck on ICM will not do better than other basic prechecks.
-    precheck_heuristic : bool
-        If ``True``, then before computing CM, we check whether a relatively simple heuristic can guarantee CM.
-        However this heuristic is costly, so it is better to avoid it for rules where computing CM exactly is cheap.
     log_identity : str
         Cf. :class:`MyLog`.
     kwargs
@@ -119,6 +116,10 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
                 algorithms, it can decide manipulation to ``True``, ``False`` or return ``numpy.nan`` (undecided).
 
     For a given voting system, the default option is the most precise algorithm running in polynomial time.
+
+    `precheck_heuristic` is a bool. If ``True``, then before computing CM, we check whether a relatively simple
+    heuristic can guarantee CM. However this heuristic is costly, so it is better to avoid it for rules where computing
+    CM exactly is cheap, or when speed is paramount.
 
     **Option for Independence of Irrelevant Alternatives (IIA)**
 
@@ -180,7 +181,8 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         'tm_option': {'allowed': ['lazy', 'exact'], 'default': 'exact'},
         'um_option': {'allowed': ['lazy', 'exact'], 'default': 'lazy'},
         'icm_option': {'allowed': ['lazy'], 'default': 'lazy'},
-        'cm_option': {'allowed': ['lazy', 'exact'], 'default': 'lazy'}
+        'cm_option': {'allowed': ['lazy', 'exact'], 'default': 'lazy'},
+        'precheck_heuristic': {'allowed': type_checker.is_bool, 'default': True},
     }
     """dict: Options parameters. It is a dictionary of allowed and default options. Allowed is a minimal check that will
     be performed before launching big simulations, but other checks might be performed when setting the option.
@@ -192,7 +194,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     def __init__(self,
                  with_two_candidates_reduces_to_plurality=False, is_based_on_rk=False,
                  is_based_on_ut_minus1_1=False, meets_iia=False,
-                 precheck_um=True, precheck_tm=True, precheck_icm=True, precheck_heuristic=True,
+                 precheck_um=True, precheck_tm=True, precheck_icm=True,
                  log_identity='RULE', **kwargs):
         # Log
         super().__init__()
@@ -205,7 +207,6 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         self.precheck_um = precheck_um
         self.precheck_tm = precheck_tm
         self.precheck_icm = precheck_icm
-        self.precheck_heuristic = precheck_heuristic
         # Options
         self._iia_subset_maximum_size = None
         self._im_option = None
@@ -213,6 +214,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         self._um_option = None
         self._icm_option = None
         self._cm_option = None
+        self.precheck_heuristic = None
         self._result_options = {}
         # Each option used for the RESULT of the election must be stored in self._result_options, even if there is also
         # an attribute for the option.

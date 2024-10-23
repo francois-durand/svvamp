@@ -37,6 +37,7 @@ class RuleExhaustiveBallot(Rule):
         icm_option: ['exact']. Default: 'exact'.
         iia_subset_maximum_size: is_number. Default: 2.
         im_option: ['lazy', 'exact']. Default: 'lazy'.
+        precheck_heuristic: is_bool. Default: True.
         tm_option: ['exact']. Default: 'exact'.
         um_option: ['fast', 'exact']. Default: 'fast'.
 
@@ -317,7 +318,7 @@ class RuleExhaustiveBallot(Rule):
         'cm_option': {'allowed': ['fast', 'exact'], 'default': 'fast'},
         'tm_option': {'allowed': ['exact'], 'default': 'exact'},
         'icm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'fast_algo': {'allowed': ['c_minus_max', 'minus_max', 'hardest_first'], 'default': 'c_minus_max'}
+        'fast_algo': {'allowed': ['c_minus_max', 'minus_max', 'hardest_first'], 'default': 'c_minus_max'},
     })
 
     def __init__(self, **kwargs):

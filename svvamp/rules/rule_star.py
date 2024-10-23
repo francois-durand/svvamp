@@ -65,6 +65,7 @@ class RuleSTAR(Rule):
         im_option: ['exact']. Default: 'exact'.
         max_grade: isfinite. Default: 1.
         min_grade: isfinite. Default: 0.
+        precheck_heuristic: [False]. Default: False.
         rescale_grades: is_bool. Default: True.
         step_grade: isfinite. Default: 0.
         tm_option: ['exact']. Default: 'exact'.
@@ -346,7 +347,8 @@ class RuleSTAR(Rule):
         'tm_option': {'allowed': ['exact'], 'default': 'exact'},
         'um_option': {'allowed': ['exact'], 'default': 'exact'},
         'icm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'cm_option': {'allowed': ['exact'], 'default': 'exact'}
+        'cm_option': {'allowed': ['exact'], 'default': 'exact'},
+        'precheck_heuristic': {'allowed': [False], 'default': False},
     })
 
     def __init__(self, **kwargs):

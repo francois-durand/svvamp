@@ -24,6 +24,7 @@ from svvamp.rules.rule import Rule
 from svvamp.utils.util_cache import cached_property
 from svvamp.utils.pseudo_bool import equal_true
 from svvamp.preferences.profile import Profile
+from svvamp.utils import type_checker
 
 
 class RuleBucklin(Rule):
@@ -36,6 +37,7 @@ class RuleBucklin(Rule):
         icm_option: ['exact']. Default: 'exact'.
         iia_subset_maximum_size: is_number. Default: 2.
         im_option: ['exact']. Default: 'exact'.
+        precheck_heuristic: is_bool. Default: True.
         tm_option: ['exact']. Default: 'exact'.
         um_option: ['exact']. Default: 'exact'.
 
@@ -302,13 +304,13 @@ class RuleBucklin(Rule):
         'um_option': {'allowed': ['exact'], 'default': 'exact'},
         'icm_option': {'allowed': ['exact'], 'default': 'exact'},
         'cm_option': {'allowed': ['exact'], 'default': 'exact'},
+        'precheck_heuristic': {'allowed': type_checker.is_bool, 'default': True},
     })
 
     def __init__(self, **kwargs):
         super().__init__(
             with_two_candidates_reduces_to_plurality=True, is_based_on_rk=True,
             precheck_icm=False,  # Bucklin does not meet infmc_c_ctb, but precheck on ICM is not interesting anyway.
-            precheck_heuristic=False,
             log_identity="BUCKLIN", **kwargs
         )
 

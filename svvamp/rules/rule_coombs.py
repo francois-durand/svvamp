@@ -35,6 +35,7 @@ class RuleCoombs(Rule):
         icm_option: ['exact']. Default: 'exact'.
         iia_subset_maximum_size: is_number. Default: 2.
         im_option: ['fast', 'exact']. Default: 'fast'.
+        precheck_heuristic: is_bool. Default: True.
         tm_option: ['exact']. Default: 'exact'.
         um_option: ['fast', 'exact']. Default: 'fast'.
 

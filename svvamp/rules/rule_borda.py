@@ -35,6 +35,7 @@ class RuleBorda(Rule):
         icm_option: ['fast']. Default: 'fast'.
         iia_subset_maximum_size: is_number. Default: 2.
         im_option: ['exact']. Default: 'exact'.
+        precheck_heuristic: is_bool. Default: True.
         tm_option: ['exact']. Default: 'exact'.
         um_option: ['exact']. Default: 'exact'.
 

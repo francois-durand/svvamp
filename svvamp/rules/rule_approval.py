@@ -48,6 +48,7 @@ class RuleApproval(Rule):
         icm_option: ['exact']. Default: 'exact'.
         iia_subset_maximum_size: is_number. Default: 2.
         im_option: ['exact']. Default: 'exact'.
+        precheck_heuristic: [False]. Default: False.
         tm_option: ['exact']. Default: 'exact'.
         um_option: ['exact']. Default: 'exact'.
 
@@ -304,7 +305,8 @@ class RuleApproval(Rule):
         'tm_option': {'allowed': ['exact'], 'default': 'exact'},
         'um_option': {'allowed': ['exact'], 'default': 'exact'},
         'icm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'cm_option': {'allowed': ['exact'], 'default': 'exact'}
+        'cm_option': {'allowed': ['exact'], 'default': 'exact'},
+        'precheck_heuristic': {'allowed': [False], 'default': False},
     })
 
     def __init__(self, approval_comparator='>', approval_threshold=0., **kwargs):

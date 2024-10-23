@@ -35,6 +35,7 @@ class RulePlurality(Rule):
         icm_option: ['exact']. Default: 'exact'.
         iia_subset_maximum_size: is_number. Default: 2.
         im_option: ['exact']. Default: 'exact'.
+        precheck_heuristic: [False]. Default: False.
         tm_option: ['exact']. Default: 'exact'.
         um_option: ['exact']. Default: 'exact'.
 
@@ -282,13 +283,14 @@ class RulePlurality(Rule):
         'tm_option': {'allowed': ['exact'], 'default': 'exact'},
         'um_option': {'allowed': ['exact'], 'default': 'exact'},
         'icm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'cm_option': {'allowed': ['exact'], 'default': 'exact'}
+        'cm_option': {'allowed': ['exact'], 'default': 'exact'},
+        'precheck_heuristic': {'allowed': [False], 'default': False},
     })
 
     def __init__(self, **kwargs):
         super().__init__(
             with_two_candidates_reduces_to_plurality=True, is_based_on_rk=True,
-            precheck_tm=False, precheck_um=False, precheck_icm=False, precheck_heuristic=False,
+            precheck_tm=False, precheck_um=False, precheck_icm=False,
             log_identity="PLURALITY", **kwargs
         )
 
