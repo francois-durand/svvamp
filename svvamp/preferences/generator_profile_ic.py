@@ -22,6 +22,7 @@ This file is part of SVVAMP.
 import numpy as np
 from svvamp.preferences.generator_profile import GeneratorProfile
 from svvamp.preferences.profile import Profile
+from svvamp.utils.misc import preferences_ut_to_preferences_rk
 
 
 class GeneratorProfileIc(GeneratorProfile):
@@ -55,10 +56,9 @@ class GeneratorProfileIc(GeneratorProfile):
         super().__init__(sort_voters=sort_voters)
 
     def __call__(self):
-        preferences_rk = np.array([
-            np.random.permutation(self.n_c)
-            for _ in range(self.n_v)
-        ])
+        # The code below is quicker than a (more intuitive) list comprehension based on np.random.permutation(self.n_c)
+        pseudo_preferences_ut = np.random.rand(self.n_v, self.n_c)
+        preferences_rk = preferences_ut_to_preferences_rk(pseudo_preferences_ut)
         return Profile(
             preferences_rk=preferences_rk,
             log_creation=self.log_creation, sort_voters=self.sort_voters

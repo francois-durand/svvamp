@@ -22,6 +22,7 @@ This file is part of SVVAMP.
 import numpy as np
 from svvamp.preferences.generator_profile import GeneratorProfile
 from svvamp.preferences.profile import Profile
+from svvamp.utils.misc import preferences_ut_to_preferences_rk
 
 
 class GeneratorProfilePerturbedCulture(GeneratorProfile):
@@ -85,10 +86,12 @@ class GeneratorProfilePerturbedCulture(GeneratorProfile):
             ranking = np.random.permutation(self.n_c)
         else:
             ranking = self.ranking
-        preferences_rk = np.array([
-            ranking if np.random.rand() < self.theta else np.random.permutation(self.n_c)
-            for _ in range(self.n_v)
-        ])
+        # First pretend that everybody is from Impartial Culture.
+        pseudo_preferences_ut = np.random.rand(self.n_v, self.n_c)
+        preferences_rk = preferences_ut_to_preferences_rk(pseudo_preferences_ut)
+        # Then replace some voters with Dirac voters.
+        dirac_voters = (np.random.rand(self.n_v) < self.theta)
+        preferences_rk[dirac_voters, :] = ranking
         return Profile(
             preferences_rk=preferences_rk,
             log_creation=self.log_creation, sort_voters=self.sort_voters
