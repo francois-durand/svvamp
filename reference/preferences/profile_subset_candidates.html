@@ -28,7 +28,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
@@ -635,7 +635,7 @@ given as a list of indexes, not as a list of booleans).</p>
 <dd><p>2d array of integers. <code class="docutils literal notranslate"><span class="pre">matrix_duels_rk[c,</span> <span class="pre">d]</span></code> is the number of voters who rank candidate <code class="docutils literal notranslate"><span class="pre">c</span></code> before
 <code class="docutils literal notranslate"><span class="pre">d</span></code> (in the sense of <code class="xref py py-attr docutils literal notranslate"><span class="pre">preferences_rk</span></code>). By convention, diagonal coefficients are
 set to 0.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">svvamp</span> <span class="kn">import</span> <span class="n">Profile</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">svvamp</span><span class="w"> </span><span class="kn">import</span> <span class="n">Profile</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_rk</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">matrix_duels_rk</span>
 <span class="go">array([[0, 2, 2],</span>
@@ -650,7 +650,7 @@ set to 0.</p>
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">matrix_duels_ut</span></span><a class="headerlink" href="#svvamp.ProfileSubsetCandidates.matrix_duels_ut" title="Link to this definition">#</a></dt>
 <dd><p>2d array of integers. <code class="docutils literal notranslate"><span class="pre">matrix_duels_ut[c,</span> <span class="pre">d]</span></code> is the number of voters who have a strictly greater
 utility for <code class="docutils literal notranslate"><span class="pre">c</span></code> than for <code class="docutils literal notranslate"><span class="pre">d</span></code>. By convention, diagonal coefficients are set to <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">svvamp</span> <span class="kn">import</span> <span class="n">Profile</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">svvamp</span><span class="w"> </span><span class="kn">import</span> <span class="n">Profile</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_rk</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">matrix_duels_ut</span>
 <span class="go">array([[0, 2, 2],</span>
@@ -930,7 +930,7 @@ example, <code class="docutils literal notranslate"><span class="pre">preference
 <dd><p>1d array of numbers. <code class="docutils literal notranslate"><span class="pre">total_utility_c[c]</span></code> is the total utility for candidate <code class="docutils literal notranslate"><span class="pre">c</span></code> (i.e. the sum of
 <code class="docutils literal notranslate"><span class="pre">c</span></code>’s column in matrix <code class="xref py py-attr docutils literal notranslate"><span class="pre">preferences_ut</span></code>).</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">svvamp</span> <span class="kn">import</span> <span class="n">Profile</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">svvamp</span><span class="w"> </span><span class="kn">import</span> <span class="n">Profile</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">total_utility_c</span>
 <span class="go">array([ 9, 11,  3])</span>

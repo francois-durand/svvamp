@@ -27,7 +27,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
@@ -472,16 +472,16 @@ document.write(`
 <span class="sd">    You should have received a copy of the GNU General Public License</span>
 <span class="sd">    along with SVVAMP.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">svvamp.utils.misc</span> <span class="kn">import</span> <span class="n">initialize_random_seeds</span>
-<span class="kn">from</span> <span class="nn">svvamp.utils.util_cache</span> <span class="kn">import</span> <span class="n">cached_property</span>
-<span class="kn">from</span> <span class="nn">svvamp.preferences.profile</span> <span class="kn">import</span> <span class="n">preferences_ut_to_preferences_rk</span><span class="p">,</span> <span class="n">preferences_ut_to_preferences_borda_ut</span>
-<span class="kn">from</span> <span class="nn">svvamp.preferences.profile</span> <span class="kn">import</span> <span class="n">Profile</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.utils.misc</span><span class="w"> </span><span class="kn">import</span> <span class="n">initialize_random_seeds</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.utils.util_cache</span><span class="w"> </span><span class="kn">import</span> <span class="n">cached_property</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.preferences.profile</span><span class="w"> </span><span class="kn">import</span> <span class="n">preferences_ut_to_preferences_rk</span><span class="p">,</span> <span class="n">preferences_ut_to_preferences_borda_ut</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.preferences.profile</span><span class="w"> </span><span class="kn">import</span> <span class="n">Profile</span>
 
 
 <div class="viewcode-block" id="ProfileSubsetCandidates">
 <a class="viewcode-back" href="../../../reference/preferences/profile_subset_candidates.html#svvamp.ProfileSubsetCandidates">[docs]</a>
-<span class="k">class</span> <span class="nc">ProfileSubsetCandidates</span><span class="p">(</span><span class="n">Profile</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ProfileSubsetCandidates</span><span class="p">(</span><span class="n">Profile</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Sub-profile for a subset of the original candidates.</span>
 
 <span class="sd">    This class is used internally by SVVAMP. It is not intended for the end user.</span>
@@ -566,7 +566,7 @@ document.write(`
 <span class="sd">        3</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent_profile</span><span class="p">,</span> <span class="n">candidates_subset</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent_profile</span><span class="p">,</span> <span class="n">candidates_subset</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">parent_profile</span> <span class="o">=</span> <span class="n">parent_profile</span>
         <span class="c1"># noinspection PyTypeChecker</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">candidates_subset</span> <span class="o">=</span> <span class="n">candidates_subset</span>
@@ -575,11 +575,11 @@ document.write(`
     <span class="c1"># %% Preferences</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">n_v</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">n_v</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent_profile</span><span class="o">.</span><span class="n">n_v</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">n_c</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">n_c</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">candidates_subset</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates_subset</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">candidates_subset</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="nb">bool</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">candidates_subset</span><span class="p">))</span>
@@ -587,63 +587,63 @@ document.write(`
             <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">candidates_subset</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">labels_candidates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">labels_candidates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">label</span><span class="p">)</span> <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent_profile</span><span class="o">.</span><span class="n">labels_candidates</span><span class="p">)[</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates_subset</span><span class="p">]]</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">preferences_ut</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">preferences_ut</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent_profile</span><span class="o">.</span><span class="n">preferences_ut</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates_subset</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">preferences_borda_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">preferences_borda_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent_profile</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates_subset</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">preferences_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">preferences_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">preferences_ut_to_preferences_rk</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">preferences_borda_ut</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">preferences_borda_ut</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">preferences_ut_to_preferences_borda_ut</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preferences_ut</span><span class="p">)</span>
 
     <span class="c1"># %% Matrix of duels</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">matrix_duels_ut</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">matrix_duels_ut</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent_profile</span><span class="o">.</span><span class="n">matrix_duels_ut</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates_subset</span><span class="p">,</span> <span class="p">:][:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates_subset</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">matrix_duels_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">matrix_duels_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent_profile</span><span class="o">.</span><span class="n">matrix_duels_rk</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates_subset</span><span class="p">,</span> <span class="p">:][:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates_subset</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">matrix_victories_ut_abs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">matrix_victories_ut_abs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent_profile</span><span class="o">.</span><span class="n">matrix_victories_ut_abs</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates_subset</span><span class="p">,</span> <span class="p">:][:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates_subset</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">matrix_victories_ut_abs_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">matrix_victories_ut_abs_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent_profile</span><span class="o">.</span><span class="n">matrix_victories_ut_abs_ctb</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates_subset</span><span class="p">,</span> <span class="p">:][:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates_subset</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">matrix_victories_ut_rel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">matrix_victories_ut_rel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent_profile</span><span class="o">.</span><span class="n">matrix_victories_ut_rel</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates_subset</span><span class="p">,</span> <span class="p">:][:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates_subset</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">matrix_victories_ut_rel_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">matrix_victories_ut_rel_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent_profile</span><span class="o">.</span><span class="n">matrix_victories_ut_rel_ctb</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates_subset</span><span class="p">,</span> <span class="p">:][:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates_subset</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">matrix_victories_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">matrix_victories_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent_profile</span><span class="o">.</span><span class="n">matrix_victories_rk</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates_subset</span><span class="p">,</span> <span class="p">:][:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates_subset</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">matrix_victories_rk_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">matrix_victories_rk_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent_profile</span><span class="o">.</span><span class="n">matrix_victories_rk_ctb</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates_subset</span><span class="p">,</span> <span class="p">:][:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates_subset</span><span class="p">]</span>
 
     <span class="c1"># %% Total utilities</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">total_utility_c</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">total_utility_c</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent_profile</span><span class="o">.</span><span class="n">total_utility_c</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates_subset</span><span class="p">]</span></div>
 
 </pre></div>

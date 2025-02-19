@@ -27,7 +27,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
@@ -473,27 +473,27 @@ document.write(`
 <span class="sd">    along with SVVAMP.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">itertools</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">itertools</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="c1"># noinspection PyUnresolvedReferences</span>
-<span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="n">Axes3D</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits.mplot3d</span><span class="w"> </span><span class="kn">import</span> <span class="n">Axes3D</span>
 
-<span class="kn">from</span> <span class="nn">svvamp.utils.printing</span> <span class="kn">import</span> <span class="n">printm</span><span class="p">,</span> <span class="n">print_title</span>
-<span class="kn">from</span> <span class="nn">svvamp.utils</span> <span class="kn">import</span> <span class="n">my_log</span>
-<span class="kn">from</span> <span class="nn">svvamp.utils.util_cache</span> <span class="kn">import</span> <span class="n">cached_property</span>
-<span class="kn">from</span> <span class="nn">svvamp.utils.misc</span> <span class="kn">import</span> <span class="n">initialize_random_seeds</span>
-<span class="kn">from</span> <span class="nn">svvamp.utils.misc</span> <span class="kn">import</span> <span class="n">preferences_ut_to_preferences_rk</span><span class="p">,</span> <span class="n">preferences_rk_to_preferences_borda_rk</span><span class="p">,</span> \
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.utils.printing</span><span class="w"> </span><span class="kn">import</span> <span class="n">printm</span><span class="p">,</span> <span class="n">print_title</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">my_log</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.utils.util_cache</span><span class="w"> </span><span class="kn">import</span> <span class="n">cached_property</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.utils.misc</span><span class="w"> </span><span class="kn">import</span> <span class="n">initialize_random_seeds</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.utils.misc</span><span class="w"> </span><span class="kn">import</span> <span class="n">preferences_ut_to_preferences_rk</span><span class="p">,</span> <span class="n">preferences_rk_to_preferences_borda_rk</span><span class="p">,</span> \
     <span class="n">preferences_ut_to_preferences_borda_ut</span><span class="p">,</span> <span class="n">preferences_ut_to_matrix_duels_ut</span><span class="p">,</span> <span class="n">is_resistant_condorcet</span><span class="p">,</span> \
     <span class="n">matrix_victories_to_smith_set</span>
-<span class="kn">from</span> <span class="nn">svvamp.utils.pseudo_bool</span> <span class="kn">import</span> <span class="n">equal_true</span>
-<span class="kn">from</span> <span class="nn">svvamp.preferences.plurality_elimination_engine_profile</span> <span class="kn">import</span> <span class="n">PluralityEliminationEngineProfile</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.utils.pseudo_bool</span><span class="w"> </span><span class="kn">import</span> <span class="n">equal_true</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.preferences.plurality_elimination_engine_profile</span><span class="w"> </span><span class="kn">import</span> <span class="n">PluralityEliminationEngineProfile</span>
 
 
 <div class="viewcode-block" id="Profile">
 <a class="viewcode-back" href="../../../reference/preferences/profile.html#svvamp.Profile">[docs]</a>
-<span class="k">class</span> <span class="nc">Profile</span><span class="p">(</span><span class="n">my_log</span><span class="o">.</span><span class="n">MyLog</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Profile</span><span class="p">(</span><span class="n">my_log</span><span class="o">.</span><span class="n">MyLog</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a profile of voters with preferences over some candidates.</span>
 
 <span class="sd">    Parameters</span>
@@ -600,7 +600,7 @@ document.write(`
 <span class="sd">        ValueError: Please provide at least preferences_rk, preferences_borda_rk or preferences_ut.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preferences_ut</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">preferences_rk</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">preferences_borda_rk</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preferences_ut</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">preferences_rk</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">preferences_borda_rk</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">log_creation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">labels_candidates</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sort_voters</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">log_identity</span><span class="o">=</span><span class="s2">&quot;PROFILE&quot;</span><span class="p">)</span>
 
@@ -623,7 +623,7 @@ document.write(`
     <span class="c1"># %% Basic variables</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">n_v</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">n_v</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;int : Number of voters.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_rk_input</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">n_v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_rk_input</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -634,7 +634,7 @@ document.write(`
         <span class="k">return</span> <span class="n">n_v</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">n_c</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">n_c</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;int : Number of candidates.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_rk_input</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">n_c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_rk_input</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -645,7 +645,7 @@ document.write(`
         <span class="k">return</span> <span class="n">n_c</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">_preferences_rk_unsorted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_preferences_rk_unsorted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;preferences_rk, before sorting by voter.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_rk_input</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_rk_input</span>
@@ -656,7 +656,7 @@ document.write(`
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Please provide at least preferences_rk, preferences_borda_rk or preferences_ut.&#39;</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">_preferences_borda_rk_unsorted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_preferences_borda_rk_unsorted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;preferences_borda_rk, before sorting by voter.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_borda_rk_input</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_borda_rk_input</span>
@@ -664,7 +664,7 @@ document.write(`
             <span class="k">return</span> <span class="n">preferences_rk_to_preferences_borda_rk</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_preferences_rk_unsorted</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">_preferences_ut_unsorted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_preferences_ut_unsorted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;preferences_ut, before sorting by voter.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_ut_input</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_ut_input</span>
@@ -672,12 +672,12 @@ document.write(`
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_borda_rk_unsorted</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">_preferences_borda_ut_unsorted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_preferences_borda_ut_unsorted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;preferences_borda_ut, before sorting by voter.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">preferences_ut_to_preferences_borda_ut</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_preferences_ut_unsorted</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">_index_sort_voters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_index_sort_voters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Index used to sort by voter.&quot;&quot;&quot;</span>
         <span class="c1"># Sort voters by strict ranking, then by weak order (deducted from utility)</span>
         <span class="n">sort_criterion</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
@@ -689,7 +689,7 @@ document.write(`
         <span class="k">return</span> <span class="n">indexes</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">preferences_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">preferences_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;2d array of integers. ``preferences_rk[v, k]`` is the candidate at rank ``k`` for voter ``v``. For</span>
 <span class="sd">        example, ``preferences_rk[v, 0]`` is ``v``&#39;s preferred candidate.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -699,7 +699,7 @@ document.write(`
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_rk_unsorted</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">preferences_ut</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">preferences_ut</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;2d array of floats. ``preferences_ut[v, c]`` is the utility of  candidate ``c`` as seen by voter ``v``.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sort_voters</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_ut_unsorted</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_index_sort_voters</span><span class="p">,</span> <span class="p">::]</span>
@@ -707,7 +707,7 @@ document.write(`
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_ut_unsorted</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">preferences_borda_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">preferences_borda_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;2d array of integers. ``preferences_borda_rk[v, c]`` gains 1 point for each candidate ``d`` such that</span>
 <span class="sd">        voter ``v`` ranks ``c`` before ``d``. So, these Borda scores are between ``0`` and ``C - 1``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -717,7 +717,7 @@ document.write(`
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_borda_rk_unsorted</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">preferences_borda_ut</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">preferences_borda_ut</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;2d array of floats. ``preferences_borda_ut[v, c]`` gains 1 point for each ``d`` such that ``v`` strictly</span>
 <span class="sd">        prefers ``c`` to ``d`` (in the sense of utilities), and 0.5 point for each ``d`` such that ``v`` is</span>
 <span class="sd">        indifferent between ``c`` and ``d``. So, these Borda scores are between ``0`` and ``C - 1``.</span>
@@ -728,7 +728,7 @@ document.write(`
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preferences_borda_ut_unsorted</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">labels_candidates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">labels_candidates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;List of :attr:`~svvamp.Population.n_c` strings (names of the candidates).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels_candidates</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -736,13 +736,13 @@ document.write(`
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels_candidates</span>
 
     <span class="nd">@labels_candidates</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">labels_candidates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">labels_candidates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_labels_candidates</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="c1"># %% Identify voters with the same ordinal preferences.</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">v_has_same_ordinal_preferences_as_previous_voter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">v_has_same_ordinal_preferences_as_previous_voter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of booleans. ``v_has_same_ordinal_preferences_as_previous_voter[v]`` is ``True`` iff voter ``v``</span>
 <span class="sd">        has the same preference strict order (row in :attr:`~svvamp.Population.preferences_rk`) and the same</span>
 <span class="sd">        preference weak order (row in :attr:`~svvamp.Population.preferences_borda_ut`) as voter ``v-1``. By convention,</span>
@@ -767,7 +767,7 @@ document.write(`
     <span class="c1"># %% Plurality scores</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">plurality_scores_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plurality_scores_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of int. ``plurality_scores_rk[c]`` is the number of voters for whom ``c`` is the top-ranked</span>
 <span class="sd">        candidate (with voter tie-breaking).</span>
 
@@ -780,7 +780,7 @@ document.write(`
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preferences_rk</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">minlength</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_c</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">plurality_scores_ut</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plurality_scores_ut</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of int. ``plurality_scores_ut[c]`` is the number of voters who strictly prefer ``c`` to all</span>
 <span class="sd">        other candidates. If a voter has several candidates with maximal utility, then none of them receives any point.</span>
 
@@ -798,7 +798,7 @@ document.write(`
     <span class="c1"># %% Matrix of duels</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">matrix_duels_ut</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">matrix_duels_ut</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;2d array of integers. ``matrix_duels_ut[c, d]`` is the number of voters who have a strictly greater</span>
 <span class="sd">        utility for ``c`` than for ``d``. By convention, diagonal coefficients are set to ``0``.</span>
 
@@ -813,7 +813,7 @@ document.write(`
         <span class="k">return</span> <span class="n">preferences_ut_to_matrix_duels_ut</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preferences_borda_ut</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">matrix_duels_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">matrix_duels_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;2d array of integers. ``matrix_duels_rk[c, d]`` is the number of voters who rank candidate ``c`` before</span>
 <span class="sd">        ``d`` (in the sense of :attr:`~svvamp.Population.preferences_rk`). By convention, diagonal coefficients are</span>
 <span class="sd">        set to 0.</span>
@@ -829,7 +829,7 @@ document.write(`
         <span class="k">return</span> <span class="n">preferences_ut_to_matrix_duels_ut</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">matrix_victories_ut_abs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">matrix_victories_ut_abs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;2d array of values in {0, 0.5, 1}. Matrix of absolute victories based on</span>
 <span class="sd">        :attr:`~svvamp.Population.matrix_duels_ut`.</span>
 
@@ -876,7 +876,7 @@ document.write(`
                 <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix_duels_ut</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_v</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">matrix_victories_ut_abs_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">matrix_victories_ut_abs_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;2d array of values in {0, 1}. Matrix of absolute victories based on</span>
 <span class="sd">        :attr:`~svvamp.Population.matrix_duels_ut`, with tie-breaks on candidates.</span>
 
@@ -928,7 +928,7 @@ document.write(`
         <span class="k">return</span> <span class="n">result</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">matrix_victories_ut_rel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">matrix_victories_ut_rel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;2d array of values in {0, 0.5, 1}. Matrix of relative victories based on</span>
 <span class="sd">        :attr:`~svvamp.Population.matrix_duels_ut`.</span>
 
@@ -964,7 +964,7 @@ document.write(`
         <span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">matrix_victories_ut_rel_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">matrix_victories_ut_rel_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;2d array of values in {0, 1}. Matrix of relative victories based on</span>
 <span class="sd">        :attr:`~svvamp.Population.matrix_duels_ut`, with tie-breaks on candidates.</span>
 
@@ -1006,7 +1006,7 @@ document.write(`
         <span class="k">return</span> <span class="n">result</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">matrix_victories_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">matrix_victories_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;2d array of values in {0, 0.5, 1}. Matrix of victories based on :attr:`~svvamp.Population.matrix_duels_rk`.</span>
 
 <span class="sd">        ``matrix_victories_rk[c, d]`` is:</span>
@@ -1039,7 +1039,7 @@ document.write(`
                 <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix_duels_rk</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_v</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">matrix_victories_rk_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">matrix_victories_rk_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;2d array of values in {0, 1}. Matrix of victories based on :attr:`~svvamp.Population.matrix_duels_rk`,</span>
 <span class="sd">        with tie-breaks on candidates.</span>
 
@@ -1083,7 +1083,7 @@ document.write(`
     <span class="c1"># %% Existence of Condorcet order</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">exists_condorcet_order_rk_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">exists_condorcet_order_rk_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. True iff in matrix :attr:`~svvamp.Population.matrix_victories_rk_ctb`, there is a candidate with</span>
 <span class="sd">        ``n_c - 1`` victories, a candidate with ``n_c - 2`` victories, etc.</span>
 
@@ -1104,7 +1104,7 @@ document.write(`
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_c</span><span class="p">),</span> <span class="n">temp</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">not_exists_condorcet_order_rk_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">not_exists_condorcet_order_rk_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. Cf. :attr:`~svvamp.Population.exists_condorcet_order_rk_ctb`.</span>
 
 <span class="sd">        Examples</span>
@@ -1117,7 +1117,7 @@ document.write(`
         <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">exists_condorcet_order_rk_ctb</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">exists_condorcet_order_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">exists_condorcet_order_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. True iff in matrix :attr:`~svvamp.Population.matrix_victories_rk`, there is a candidate with</span>
 <span class="sd">        ``n_c - 1`` victories, a candidate with ``n_c - 2`` victories, etc.</span>
 
@@ -1138,7 +1138,7 @@ document.write(`
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_c</span><span class="p">),</span> <span class="n">temp</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">not_exists_condorcet_order_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">not_exists_condorcet_order_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. Cf. :attr:`~svvamp.Population.exists_condorcet_order_rk`.</span>
 
 <span class="sd">        Examples</span>
@@ -1151,7 +1151,7 @@ document.write(`
         <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">exists_condorcet_order_rk</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">exists_condorcet_order_ut_abs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">exists_condorcet_order_ut_abs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. True iff in matrix :attr:`~svvamp.Population.matrix_victories_ut_abs`, there is a candidate with</span>
 <span class="sd">        ``n_c - 1`` victories, a candidate with ``n_c - 2`` victories, etc.</span>
 
@@ -1172,7 +1172,7 @@ document.write(`
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_c</span><span class="p">),</span> <span class="n">temp</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">not_exists_condorcet_order_ut_abs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">not_exists_condorcet_order_ut_abs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. Cf. :attr:`~svvamp.Population.exists_condorcet_order_ut_abs`.</span>
 
 <span class="sd">        Examples</span>
@@ -1185,7 +1185,7 @@ document.write(`
         <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">exists_condorcet_order_ut_abs</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">exists_condorcet_order_ut_abs_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">exists_condorcet_order_ut_abs_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. True iff in matrix :attr:`~svvamp.Population.matrix_victories_ut_abs_ctb`, there is a candidate</span>
 <span class="sd">        with ``n_c - 1`` victories, a candidate with ``n_c - 2`` victories, etc.</span>
 
@@ -1206,7 +1206,7 @@ document.write(`
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_c</span><span class="p">),</span> <span class="n">temp</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">not_exists_condorcet_order_ut_abs_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">not_exists_condorcet_order_ut_abs_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. Cf. :attr:`~svvamp.Population.exists_condorcet_order_ut_abs_ctb`.</span>
 
 <span class="sd">        Examples</span>
@@ -1219,7 +1219,7 @@ document.write(`
         <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">exists_condorcet_order_ut_abs_ctb</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">exists_condorcet_order_ut_rel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">exists_condorcet_order_ut_rel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. True iff in matrix :attr:`~svvamp.Population.matrix_victories_ut_rel`, there is a candidate with</span>
 <span class="sd">        ``n_c - 1`` victories, a candidate with ``n_c - 2`` victories, etc.</span>
 
@@ -1240,7 +1240,7 @@ document.write(`
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_c</span><span class="p">),</span> <span class="n">temp</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">not_exists_condorcet_order_ut_rel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">not_exists_condorcet_order_ut_rel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. Cf. :attr:`~svvamp.Population.exists_condorcet_order_ut_rel`.</span>
 
 <span class="sd">        Examples</span>
@@ -1253,7 +1253,7 @@ document.write(`
         <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">exists_condorcet_order_ut_rel</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">exists_condorcet_order_ut_rel_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">exists_condorcet_order_ut_rel_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. True iff in matrix :attr:`~svvamp.Population.matrix_victories_ut_rel_ctb`, there is a candidate</span>
 <span class="sd">        with ``n_c - 1`` victories, a candidate with ``n_c - 2`` victories, etc.</span>
 
@@ -1274,7 +1274,7 @@ document.write(`
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_c</span><span class="p">),</span> <span class="n">temp</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">not_exists_condorcet_order_ut_rel_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">not_exists_condorcet_order_ut_rel_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean. Cf. :attr:`~svvamp.Population.exists_condorcet_order_ut_rel_ctb`.</span>
 
 <span class="sd">        Examples</span>
@@ -1289,7 +1289,7 @@ document.write(`
     <span class="c1"># %% Condorcet winner and variants</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">condorcet_admissible_candidates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">condorcet_admissible_candidates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of booleans. ``condorcet_admissible_candidates[c]`` is ``True`` iff candidate ``c`` is</span>
 <span class="sd">        Condorcet-admissible, i.e. iff no candidate ``d`` has an absolute victory against ``c`` (in the sense of</span>
 <span class="sd">        :attr:`~svvamp.Population.matrix_victories_ut_abs`).</span>
@@ -1311,7 +1311,7 @@ document.write(`
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matrix_victories_ut_abs</span> <span class="o">&lt;=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">nb_condorcet_admissible</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">nb_condorcet_admissible</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Integer (number of Condorcet-admissible candidates,</span>
 <span class="sd">        :attr:`~svvamp.Population.condorcet_admissible_candidates`).</span>
 
@@ -1326,7 +1326,7 @@ document.write(`
         <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">condorcet_admissible_candidates</span><span class="p">))</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">exists_condorcet_admissible</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">exists_condorcet_admissible</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean (``True`` iff there is at least one Condorcet-admissible candidate,</span>
 <span class="sd">        :attr:`~svvamp.Population.condorcet_admissible_candidates`).</span>
 
@@ -1340,7 +1340,7 @@ document.write(`
         <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">condorcet_admissible_candidates</span><span class="p">))</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">not_exists_condorcet_admissible</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">not_exists_condorcet_admissible</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean (``True`` iff there is no Condorcet-admissible candidate,</span>
 <span class="sd">        :attr:`~svvamp.Population.condorcet_admissible_candidates`).</span>
 
@@ -1354,7 +1354,7 @@ document.write(`
         <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">exists_condorcet_admissible</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">weak_condorcet_winners</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">weak_condorcet_winners</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of booleans. ``weak_condorcet_winners[c]`` is ``True`` iff candidate ``c`` is a weak Condorcet</span>
 <span class="sd">        winner, i.e. iff no candidate ``d`` has a relative victory against ``c`` (in the sense of</span>
 <span class="sd">        :attr:`~svvamp.Population.matrix_victories_ut_rel`).</span>
@@ -1376,7 +1376,7 @@ document.write(`
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matrix_victories_ut_rel</span> <span class="o">&lt;=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">nb_weak_condorcet_winners</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">nb_weak_condorcet_winners</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Integer (number of weak Condorcet winners, :attr:`~svvamp.Population.weak_condorcet_winners`).</span>
 
 <span class="sd">        Examples</span>
@@ -1390,7 +1390,7 @@ document.write(`
         <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weak_condorcet_winners</span><span class="p">))</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">exists_weak_condorcet_winner</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">exists_weak_condorcet_winner</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean (``True`` iff there is at least one weak Condorcet winner,</span>
 <span class="sd">        :attr:`~svvamp.Population.weak_condorcet_winners`).</span>
 
@@ -1404,7 +1404,7 @@ document.write(`
         <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weak_condorcet_winners</span><span class="p">))</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">not_exists_weak_condorcet_winner</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">not_exists_weak_condorcet_winner</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean (``True`` iff there is no weak Condorcet winner, :attr:`~svvamp.Population.weak_condorcet_winners`).</span>
 
 <span class="sd">        Examples</span>
@@ -1417,7 +1417,7 @@ document.write(`
         <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">exists_weak_condorcet_winner</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">condorcet_winner_rk_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">condorcet_winner_rk_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Integer or ``NaN``. Candidate who has only victories in</span>
 <span class="sd">        :attr:`~svvamp.Population.matrix_victories_rk_ctb`. If there is no such candidate, then ``NaN``.</span>
 
@@ -1446,7 +1446,7 @@ document.write(`
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">exists_condorcet_winner_rk_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">exists_condorcet_winner_rk_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean (``True`` iff there is a :attr:`~svvamp.Population.condorcet_winner_rk_ctb`).</span>
 
 <span class="sd">        Examples</span>
@@ -1459,7 +1459,7 @@ document.write(`
         <span class="k">return</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">condorcet_winner_rk_ctb</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">not_exists_condorcet_winner_rk_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">not_exists_condorcet_winner_rk_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean (``True`` iff there is no :attr:`~svvamp.Population.condorcet_winner_rk_ctb`).</span>
 
 <span class="sd">        Examples</span>
@@ -1472,7 +1472,7 @@ document.write(`
         <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">condorcet_winner_rk_ctb</span><span class="p">))</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">condorcet_winner_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">condorcet_winner_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Integer or ``NaN``. Candidate who has only victories in :attr:`~svvamp.Population.matrix_victories_rk`. If</span>
 <span class="sd">        there is no such candidate, then ``NaN``.</span>
 
@@ -1502,7 +1502,7 @@ document.write(`
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">exists_condorcet_winner_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">exists_condorcet_winner_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean (``True`` iff there is a :attr:`~svvamp.Population.condorcet_winner_rk`).</span>
 
 <span class="sd">        Examples</span>
@@ -1515,7 +1515,7 @@ document.write(`
         <span class="k">return</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">condorcet_winner_rk</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">not_exists_condorcet_winner_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">not_exists_condorcet_winner_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean (``True`` iff there is no :attr:`~svvamp.Population.condorcet_winner_rk`).</span>
 
 <span class="sd">        Examples</span>
@@ -1528,7 +1528,7 @@ document.write(`
         <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">condorcet_winner_rk</span><span class="p">))</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">condorcet_winner_ut_rel_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">condorcet_winner_ut_rel_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Integer or ``NaN``. Candidate who has only victories in</span>
 <span class="sd">        :attr:`~svvamp.Population.matrix_victories_ut_rel_ctb`. If there is no such candidate, then ``NaN``.</span>
 
@@ -1558,7 +1558,7 @@ document.write(`
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">exists_condorcet_winner_ut_rel_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">exists_condorcet_winner_ut_rel_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean (``True`` iff there is a :attr:`~svvamp.Population.condorcet_winner_ut_rel_ctb`).</span>
 
 <span class="sd">        Examples</span>
@@ -1571,7 +1571,7 @@ document.write(`
         <span class="k">return</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">condorcet_winner_ut_rel_ctb</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">not_exists_condorcet_winner_ut_rel_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">not_exists_condorcet_winner_ut_rel_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean (``True`` iff there is no :attr:`~svvamp.Population.condorcet_winner_ut_rel_ctb`).</span>
 
 <span class="sd">        Examples</span>
@@ -1584,7 +1584,7 @@ document.write(`
         <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">condorcet_winner_ut_rel_ctb</span><span class="p">))</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">condorcet_winner_ut_rel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">condorcet_winner_ut_rel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Integer or ``NaN``. Candidate who has only victories in</span>
 <span class="sd">        :attr:`~svvamp.Population.matrix_victories_ut_rel`. If there is no such candidate, then ``NaN``.</span>
 
@@ -1614,7 +1614,7 @@ document.write(`
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">exists_condorcet_winner_ut_rel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">exists_condorcet_winner_ut_rel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean (``True`` iff there is a :attr:`~svvamp.Population.condorcet_winner_ut_rel`).</span>
 
 <span class="sd">        Examples</span>
@@ -1627,7 +1627,7 @@ document.write(`
         <span class="k">return</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">condorcet_winner_ut_rel</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">not_exists_condorcet_winner_ut_rel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">not_exists_condorcet_winner_ut_rel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean (``True`` iff there is no :attr:`~svvamp.Population.condorcet_winner_ut_rel`).</span>
 
 <span class="sd">        Examples</span>
@@ -1640,7 +1640,7 @@ document.write(`
         <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">condorcet_winner_ut_rel</span><span class="p">))</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">condorcet_winner_ut_abs_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">condorcet_winner_ut_abs_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Integer or ``NaN``. Candidate who has only victories in</span>
 <span class="sd">        :attr:`~svvamp.Population.matrix_victories_ut_abs_ctb`. If there is no such candidate, then ``NaN``.</span>
 
@@ -1669,7 +1669,7 @@ document.write(`
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">exists_condorcet_winner_ut_abs_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">exists_condorcet_winner_ut_abs_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean (``True`` iff there is a :attr:`~svvamp.Population.condorcet_winner_ut_abs_ctb`).</span>
 
 <span class="sd">        Examples</span>
@@ -1682,7 +1682,7 @@ document.write(`
         <span class="k">return</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">condorcet_winner_ut_abs_ctb</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">not_exists_condorcet_winner_ut_abs_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">not_exists_condorcet_winner_ut_abs_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean (``True`` iff there is no :attr:`~svvamp.Population.condorcet_winner_ut_abs_ctb`).</span>
 
 <span class="sd">        Examples</span>
@@ -1695,7 +1695,7 @@ document.write(`
         <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">condorcet_winner_ut_abs_ctb</span><span class="p">))</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">condorcet_winner_ut_abs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">condorcet_winner_ut_abs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Integer or ``NaN``. Candidate who has only victories in</span>
 <span class="sd">        :attr:`~svvamp.Population.matrix_victories_ut_abs`. If there is no such candidate, then ``NaN``.</span>
 
@@ -1724,7 +1724,7 @@ document.write(`
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">exists_condorcet_winner_ut_abs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">exists_condorcet_winner_ut_abs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean (``True`` iff there is a :attr:`~svvamp.Population.condorcet_winner_ut_abs`).</span>
 
 <span class="sd">        Examples</span>
@@ -1737,7 +1737,7 @@ document.write(`
         <span class="k">return</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">condorcet_winner_ut_abs</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">not_exists_condorcet_winner_ut_abs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">not_exists_condorcet_winner_ut_abs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean (``True`` iff there is no :attr:`~svvamp.Population.condorcet_winner_ut_abs`).</span>
 
 <span class="sd">        Examples</span>
@@ -1752,7 +1752,7 @@ document.write(`
     <span class="c1"># %% Resistant Condorcet winner</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">resistant_condorcet_winner</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">resistant_condorcet_winner</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Integer or ``NaN``. Resistant Condorcet Winner. If there is no such candidate, then ``NaN``.</span>
 
 <span class="sd">        A Condorcet winner ``w`` (in the sense of :attr:`~svvamp.Population.condorcet_winner_ut_abs`) is resistant</span>
@@ -1787,7 +1787,7 @@ document.write(`
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">exists_resistant_condorcet_winner</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">exists_resistant_condorcet_winner</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean (``True`` iff there is a :attr:`~svvamp.Population.resistant_condorcet_winner`).</span>
 
 <span class="sd">        Examples</span>
@@ -1800,7 +1800,7 @@ document.write(`
         <span class="k">return</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resistant_condorcet_winner</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">not_exists_resistant_condorcet_winner</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">not_exists_resistant_condorcet_winner</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean (``True`` iff there is no :attr:`~svvamp.Population.resistant_condorcet_winner`).</span>
 
 <span class="sd">        Examples</span>
@@ -1813,7 +1813,7 @@ document.write(`
         <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resistant_condorcet_winner</span><span class="p">))</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">threshold_c_prevents_w_condorcet_ut_abs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">threshold_c_prevents_w_condorcet_ut_abs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;2d array of integers. Threshold for ``c``-manipulators to prevent ``w`` from being a Condorcet winner (in</span>
 <span class="sd">        the sense of :attr:`~svvamp.Population.condorcet_winner_ut_abs`).</span>
 
@@ -1887,7 +1887,7 @@ document.write(`
     <span class="c1"># %% Smith Set</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">smith_set_rk_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">smith_set_rk_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;List. Smith set computed from :attr:`~svvamp.Population.matrix_victories_rk_ctb`.</span>
 
 <span class="sd">        Examples</span>
@@ -1900,7 +1900,7 @@ document.write(`
         <span class="k">return</span> <span class="n">matrix_victories_to_smith_set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matrix_victories_rk_ctb</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">smith_set_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">smith_set_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;List. Smith set computed from :attr:`~svvamp.Population.matrix_victories_rk`.</span>
 
 <span class="sd">        Examples</span>
@@ -1913,7 +1913,7 @@ document.write(`
         <span class="k">return</span> <span class="n">matrix_victories_to_smith_set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matrix_victories_rk</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">smith_set_ut_rel_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">smith_set_ut_rel_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;List. Smith set computed from :attr:`~svvamp.Population.matrix_victories_ut_rel_ctb`.</span>
 
 <span class="sd">        Examples</span>
@@ -1926,7 +1926,7 @@ document.write(`
         <span class="k">return</span> <span class="n">matrix_victories_to_smith_set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matrix_victories_ut_rel_ctb</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">smith_set_ut_rel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">smith_set_ut_rel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;List. Smith set computed from :attr:`~svvamp.Population.matrix_victories_ut_rel`.</span>
 
 <span class="sd">        Examples</span>
@@ -1939,7 +1939,7 @@ document.write(`
         <span class="k">return</span> <span class="n">matrix_victories_to_smith_set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matrix_victories_ut_rel</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">smith_set_ut_abs_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">smith_set_ut_abs_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;List. Smith set computed from :attr:`~svvamp.Population.matrix_victories_ut_abs_ctb`.</span>
 
 <span class="sd">        Examples</span>
@@ -1952,7 +1952,7 @@ document.write(`
         <span class="k">return</span> <span class="n">matrix_victories_to_smith_set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matrix_victories_ut_abs_ctb</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">smith_set_ut_abs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">smith_set_ut_abs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;List. Smith set computed from :attr:`~svvamp.Population.matrix_victories_ut_abs`.</span>
 
 <span class="sd">        Examples</span>
@@ -1967,7 +1967,7 @@ document.write(`
     <span class="c1"># %% Majority favorite</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">majority_favorite_rk_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">majority_favorite_rk_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Integer or ``NaN``. Candidate who has strictly more than n_v/2 in</span>
 <span class="sd">        :attr:`~svvamp.Population.plurality_scores_rk`. Can also be candidate 0 with exactly n_v/2. If there is no such</span>
 <span class="sd">        candidate, then ``NaN``.</span>
@@ -1998,7 +1998,7 @@ document.write(`
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">exists_majority_favorite_rk_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">exists_majority_favorite_rk_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean (``True`` iff there is a :attr:`~svvamp.Population.majority_favorite_rk_ctb`).</span>
 
 <span class="sd">        Examples</span>
@@ -2011,7 +2011,7 @@ document.write(`
         <span class="k">return</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">majority_favorite_rk_ctb</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">not_exists_majority_favorite_rk_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">not_exists_majority_favorite_rk_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean (``True`` iff there is no :attr:`~svvamp.Population.majority_favorite_rk_ctb`).</span>
 
 <span class="sd">        Examples</span>
@@ -2024,7 +2024,7 @@ document.write(`
         <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">majority_favorite_rk_ctb</span><span class="p">))</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">majority_favorite_ut_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">majority_favorite_ut_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Integer or ``NaN``. Candidate who has strictly more than n_v/2 in</span>
 <span class="sd">        :attr:`~svvamp.Population.plurality_scores_ut`. Can also be candidate 0 with exactly n_v/2. If there is no</span>
 <span class="sd">        such candidate, then ``NaN``.</span>
@@ -2055,7 +2055,7 @@ document.write(`
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">exists_majority_favorite_ut_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">exists_majority_favorite_ut_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean (``True`` iff there is a :attr:`~svvamp.Population.majority_favorite_ut_ctb`).</span>
 
 <span class="sd">        Examples</span>
@@ -2068,7 +2068,7 @@ document.write(`
         <span class="k">return</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">majority_favorite_ut_ctb</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">not_exists_majority_favorite_ut_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">not_exists_majority_favorite_ut_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean (``True`` iff there is no :attr:`~svvamp.Population.majority_favorite_ut_ctb`).</span>
 
 <span class="sd">        Examples</span>
@@ -2081,7 +2081,7 @@ document.write(`
         <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">majority_favorite_ut_ctb</span><span class="p">))</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">majority_favorite_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">majority_favorite_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Integer or ``NaN``. Candidate who has strictly more than n_v/2 in</span>
 <span class="sd">        :attr:`~svvamp.Population.plurality_scores_rk`. If there is no such candidate, then ``NaN``.</span>
 
@@ -2111,7 +2111,7 @@ document.write(`
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">exists_majority_favorite_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">exists_majority_favorite_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean (``True`` iff there is a :attr:`~svvamp.Population.majority_favorite_rk`).</span>
 
 <span class="sd">        Examples</span>
@@ -2124,7 +2124,7 @@ document.write(`
         <span class="k">return</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">majority_favorite_rk</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">not_exists_majority_favorite_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">not_exists_majority_favorite_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean (``True`` iff there is no :attr:`~svvamp.Population.majority_favorite_rk`).</span>
 
 <span class="sd">        Examples</span>
@@ -2137,7 +2137,7 @@ document.write(`
         <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">majority_favorite_rk</span><span class="p">))</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">majority_favorite_ut</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">majority_favorite_ut</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Integer or ``NaN``. Candidate who has strictly more than n_v/2 in</span>
 <span class="sd">        :attr:`~svvamp.Population.plurality_scores_ut`. If there is no such candidate, then ``NaN``.</span>
 
@@ -2167,7 +2167,7 @@ document.write(`
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">exists_majority_favorite_ut</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">exists_majority_favorite_ut</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean (``True`` iff there is a :attr:`~svvamp.Population.majority_favorite_ut`).</span>
 
 <span class="sd">        Examples</span>
@@ -2180,7 +2180,7 @@ document.write(`
         <span class="k">return</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">majority_favorite_ut</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">not_exists_majority_favorite_ut</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">not_exists_majority_favorite_ut</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Boolean (``True`` iff there is no :attr:`~svvamp.Population.majority_favorite_ut`).</span>
 
 <span class="sd">        Examples</span>
@@ -2195,7 +2195,7 @@ document.write(`
     <span class="c1"># %% Total utilities</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">total_utility_c</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">total_utility_c</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of numbers. ``total_utility_c[c]`` is the total utility for candidate ``c`` (i.e. the sum of</span>
 <span class="sd">        ``c``&#39;s column in matrix :attr:`~svvamp.Population.preferences_ut`).</span>
 
@@ -2210,7 +2210,7 @@ document.write(`
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preferences_ut</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">total_utility_min</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">total_utility_min</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Float. ``total_utility_min`` is the minimum of :attr:`~svvamp.Population.total_utility_c`.</span>
 
 <span class="sd">        Examples</span>
@@ -2224,7 +2224,7 @@ document.write(`
         <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total_utility_c</span><span class="p">))</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">total_utility_max</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">total_utility_max</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Float. ``total_utility_max`` is the maximum of :attr:`~svvamp.Population.total_utility_c`.</span>
 
 <span class="sd">        Examples</span>
@@ -2238,7 +2238,7 @@ document.write(`
         <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total_utility_c</span><span class="p">))</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">total_utility_mean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">total_utility_mean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Float. ``total_utility_mean`` is the mean of :attr:`~svvamp.Population.total_utility_c`.</span>
 
 <span class="sd">        Examples</span>
@@ -2252,7 +2252,7 @@ document.write(`
         <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total_utility_c</span><span class="p">))</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">total_utility_std</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">total_utility_std</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Float. ``total_utility_std`` is the standard deviation of :attr:`~svvamp.Population.total_utility_c`.</span>
 
 <span class="sd">        Examples</span>
@@ -2268,7 +2268,7 @@ document.write(`
     <span class="c1"># %% Relative social welfare</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">relative_social_welfare_c</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">relative_social_welfare_c</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of numbers. ``relative_social_welfare_c[c]`` is equal to ``total_utility_c[c]``, but renormalized</span>
 <span class="sd">        so that the minimum is 0 and the maximum is 1.</span>
 
@@ -2294,7 +2294,7 @@ document.write(`
     <span class="c1"># %% Mean utilities</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">mean_utility_c</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">mean_utility_c</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of floats. ``mean_utility_c[c]`` is the mean utility for candidate ``c`` (i.e. the mean of</span>
 <span class="sd">        ``c``&#39;s column in matrix :attr:`~svvamp.Population.preferences_ut`).</span>
 
@@ -2309,7 +2309,7 @@ document.write(`
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preferences_ut</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">mean_utility_min</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">mean_utility_min</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Float. ``mean_utility_min`` is the minimum of :attr:`~svvamp.Population.mean_utility_c`.</span>
 
 <span class="sd">        Examples</span>
@@ -2323,7 +2323,7 @@ document.write(`
         <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mean_utility_c</span><span class="p">))</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">mean_utility_max</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">mean_utility_max</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Float. ``mean_utility_max`` is the maximum of :attr:`~svvamp.Population.mean_utility_c`.</span>
 
 <span class="sd">        Examples</span>
@@ -2337,7 +2337,7 @@ document.write(`
         <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mean_utility_c</span><span class="p">))</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">mean_utility_mean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">mean_utility_mean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Float. ``mean_utility_mean`` is the mean of :attr:`~svvamp.Population.mean_utility_c`.</span>
 
 <span class="sd">        Examples</span>
@@ -2351,7 +2351,7 @@ document.write(`
         <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mean_utility_c</span><span class="p">))</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">mean_utility_std</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">mean_utility_std</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Float. ``mean_utility_std`` is the standard deviation of :attr:`~svvamp.Population.mean_utility_c`.</span>
 
 <span class="sd">        Examples</span>
@@ -2367,7 +2367,7 @@ document.write(`
     <span class="c1"># %% Borda scores</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">borda_score_c_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">borda_score_c_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of integers. ``borda_score_c_rk[c]`` is the total Borda score of candidate ``c`` (using</span>
 <span class="sd">        :attr:`~svvamp.Population.preferences_borda_rk`, i.e. strict preferences).</span>
 
@@ -2382,7 +2382,7 @@ document.write(`
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matrix_duels_rk</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">borda_score_c_ut</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">borda_score_c_ut</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of floats. ``borda_score_c_ut[c]`` is the total Borda score of candidate ``c`` (using</span>
 <span class="sd">        :attr:`~svvamp.Population.preferences_borda_ut`, i.e. weak preferences).</span>
 
@@ -2397,14 +2397,14 @@ document.write(`
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preferences_borda_ut</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">_tuple_decreasing_borda_score_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_tuple_decreasing_borda_score_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">candidates_by_decreasing_borda_score_rk</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">borda_score_c_rk</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;mergesort&#39;</span><span class="p">),</span>
                                                            <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
         <span class="n">decreasing_borda_scores_rk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">borda_score_c_rk</span><span class="p">[</span><span class="n">candidates_by_decreasing_borda_score_rk</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">candidates_by_decreasing_borda_score_rk</span><span class="p">,</span> <span class="n">decreasing_borda_scores_rk</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">candidates_by_decreasing_borda_score_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">candidates_by_decreasing_borda_score_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of integers. ``candidates_by_decreasing_borda_score_rk[k]`` is the candidate ranked ``k``\</span>
 <span class="sd">        :sup:`th` by decreasing Borda score (using :attr:`~svvamp.Population.borda_score_c_rk`, i.e. strict</span>
 <span class="sd">        preferences).</span>
@@ -2422,7 +2422,7 @@ document.write(`
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tuple_decreasing_borda_score_rk</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">decreasing_borda_scores_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">decreasing_borda_scores_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of integers. ``decreasing_borda_scores_rk[k]`` is the ``k``-th Borda score (using</span>
 <span class="sd">        :attr:`~svvamp.Population.borda_score_c_rk`, i.e. strict preferences) by decreasing order.</span>
 
@@ -2439,14 +2439,14 @@ document.write(`
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tuple_decreasing_borda_score_rk</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">_tuple_decreasing_borda_score_ut</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_tuple_decreasing_borda_score_ut</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">candidates_by_decreasing_borda_score_ut</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">borda_score_c_ut</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;mergesort&#39;</span><span class="p">),</span>
                                                            <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
         <span class="n">decreasing_borda_scores_ut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">borda_score_c_ut</span><span class="p">[</span><span class="n">candidates_by_decreasing_borda_score_ut</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">candidates_by_decreasing_borda_score_ut</span><span class="p">,</span> <span class="n">decreasing_borda_scores_ut</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">candidates_by_decreasing_borda_score_ut</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">candidates_by_decreasing_borda_score_ut</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of integers. ``candidates_by_decreasing_borda_score_ut[k]`` is the candidate ranked ``k``\</span>
 <span class="sd">        :sup:`th` by decreasing Borda score (using :attr:`~svvamp.Population.borda_score_c_ut`, i.e. weak preferences).</span>
 
@@ -2463,7 +2463,7 @@ document.write(`
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tuple_decreasing_borda_score_ut</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">decreasing_borda_scores_ut</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">decreasing_borda_scores_ut</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of integers. ``decreasing_borda_scores_ut[k]`` is the ``k``-th Borda score (using</span>
 <span class="sd">        :attr:`~svvamp.Population.borda_score_c_ut`, i.e. weak preferences) by decreasing order.</span>
 
@@ -2483,7 +2483,7 @@ document.write(`
 
 <div class="viewcode-block" id="Profile.plot3">
 <a class="viewcode-back" href="../../../reference/preferences/profile.html#svvamp.Profile.plot3">[docs]</a>
-    <span class="k">def</span> <span class="nf">plot3</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indexes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">use_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot3</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indexes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">use_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Plot utilities for 3 candidates (with approval limit).</span>
 
 <span class="sd">        Parameters</span>
@@ -2589,7 +2589,7 @@ document.write(`
 
 <div class="viewcode-block" id="Profile.plot4">
 <a class="viewcode-back" href="../../../reference/preferences/profile.html#svvamp.Profile.plot4">[docs]</a>
-    <span class="k">def</span> <span class="nf">plot4</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indexes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">use_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot4</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indexes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">use_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Plot utilities for 4 candidates (without approval limit).</span>
 
 <span class="sd">        Parameters</span>
@@ -2677,7 +2677,7 @@ document.write(`
         <span class="n">ys</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">zs</span> <span class="o">=</span> <span class="p">[]</span>
 
-        <span class="k">def</span> <span class="nf">add_line</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">add_line</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">):</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;v1 and v2 are vertices.&quot;&quot;&quot;</span>
             <span class="k">if</span> <span class="n">normalize</span><span class="p">:</span>
                 <span class="n">theta_tot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">v1</span> <span class="o">*</span> <span class="n">v2</span><span class="p">))</span>
@@ -2692,7 +2692,7 @@ document.write(`
                 <span class="n">ys</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">v1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">v2</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">50</span><span class="p">))</span>
                 <span class="n">zs</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">v1</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">v2</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">50</span><span class="p">))</span>
 
-        <span class="k">def</span> <span class="nf">image</span><span class="p">(</span><span class="n">vertex</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">image</span><span class="p">(</span><span class="n">vertex</span><span class="p">):</span>
             <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">vertex</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
             <span class="n">result</span> <span class="o">=</span> <span class="n">result</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
             <span class="n">the_temp_parallel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">result</span><span class="o">*</span><span class="n">unitary_parallel</span><span class="p">)</span> <span class="o">*</span> <span class="n">unitary_parallel</span>
@@ -2741,7 +2741,7 @@ document.write(`
 
 <div class="viewcode-block" id="Profile.demo">
 <a class="viewcode-back" href="../../../reference/preferences/profile.html#svvamp.Profile.demo">[docs]</a>
-    <span class="k">def</span> <span class="nf">demo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log_depth</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">demo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log_depth</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Demonstrate the methods of :class:`~svvamp.Population` class.</span>
 
 <span class="sd">        Parameters</span>
@@ -3153,7 +3153,7 @@ document.write(`
         <span class="c1">#  V</span>
         <span class="c1"># Condorcet-admissible (False)</span>
 
-        <span class="k">def</span> <span class="nf">display_bool</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">display_bool</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
             <span class="k">return</span> <span class="s1">&#39;(True) &#39;</span> <span class="k">if</span> <span class="n">equal_true</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">else</span> <span class="s1">&#39;(False)&#39;</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;maj_fav_ut &#39;</span> <span class="o">+</span> <span class="n">display_bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">majority_favorite_ut</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;             ==&gt;            &#39;</span>
               <span class="o">+</span> <span class="s1">&#39;maj_fav_ut_ctb &#39;</span> <span class="o">+</span> <span class="n">display_bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">majority_favorite_ut_ctb</span><span class="p">))</span>
@@ -3189,7 +3189,7 @@ document.write(`
 
 <div class="viewcode-block" id="Profile.to_doctest_string">
 <a class="viewcode-back" href="../../../reference/preferences/profile.html#svvamp.Profile.to_doctest_string">[docs]</a>
-    <span class="k">def</span> <span class="nf">to_doctest_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ut</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">rk</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_doctest_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ut</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">rk</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert to string, in the doctest format.</span>
 
 <span class="sd">        Parameters</span>
@@ -3245,15 +3245,15 @@ document.write(`
         <span class="k">return</span> <span class="n">s</span></div>
 
 
-    <span class="k">def</span> <span class="nf">to_csv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_csv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preferences_ut</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">labels_candidates</span><span class="p">)</span>
         <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;;&#39;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">plurality_elimination_engine</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plurality_elimination_engine</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">PluralityEliminationEngineProfile</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">c_might_be_there_when_cw_is_eliminated_irv_style</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">c_might_be_there_when_cw_is_eliminated_irv_style</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Whether a candidate c might be present in a round where the Condorcet winner is eliminated, IRV-style.</span>
 
 <span class="sd">        Returns</span>
@@ -3296,11 +3296,11 @@ document.write(`
         <span class="k">return</span> <span class="n">c_might_be_there_when_w_is_eliminated_irv_style</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">exists_irv_immune_candidate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Whether there exists a &#39;IRV-immune&#39; candidate.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">exists_super_condorcet_winner</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Whether there exists a super Condorcet winner.</span>
 
-<span class="sd">        A candidate `w` is IRV-immune iff she is Condorcet winner (rk ctb) and for any other candidate `c`,</span>
-<span class="sd">        we have that `c_might_be_there_when_cw_is_eliminated_irv_style[c] ` is False. In other words, there is no</span>
+<span class="sd">        A candidate `w` is the super Condorcet winner iff she is Condorcet winner (rk ctb) and for any other candidate</span>
+<span class="sd">        `c`, we have that `c_might_be_there_when_cw_is_eliminated_irv_style[c] ` is False. In other words, there is no</span>
 <span class="sd">        subset of candidates containing `w` such that `w` has at most `n_v / card(subset)` plurality votes.</span>
 
 <span class="sd">        Examples</span>
@@ -3308,13 +3308,13 @@ document.write(`
 <span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [1, 2, 0], [1, 2, 0], [2, 0, 1]])</span>
 <span class="sd">            &gt;&gt;&gt; profile.condorcet_winner_rk_ctb</span>
 <span class="sd">            2</span>
-<span class="sd">            &gt;&gt;&gt; profile.exists_irv_immune_candidate</span>
+<span class="sd">            &gt;&gt;&gt; profile.exists_super_condorcet_winner</span>
 <span class="sd">            False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">exists_condorcet_order_rk_ctb</span> <span class="ow">and</span> <span class="ow">not</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">c_might_be_there_when_cw_is_eliminated_irv_style</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">exists_condorcet_winner_rk_ctb</span> <span class="ow">and</span> <span class="ow">not</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">c_might_be_there_when_cw_is_eliminated_irv_style</span><span class="p">))</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">necessary_coalition_size_to_break_irv_immunity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">necessary_coalition_size_to_break_irv_immunity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Necessary coalition size to break IRV immunity.</span>
 
 <span class="sd">        Returns</span>

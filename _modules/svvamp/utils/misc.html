@@ -27,7 +27,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
@@ -451,12 +451,12 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <h1>Source code for svvamp.utils.misc</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">random</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">networkx</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nx</span>
 
 
-<span class="k">def</span> <span class="nf">preferences_ut_to_preferences_rk</span><span class="p">(</span><span class="n">preferences_ut</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">preferences_ut_to_preferences_rk</span><span class="p">(</span><span class="n">preferences_ut</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert utilities to rankings.</span>
 
 <span class="sd">    Parameters</span>
@@ -483,7 +483,7 @@ document.write(`
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">lexsort</span><span class="p">((</span><span class="n">tiebreaker</span><span class="p">,</span> <span class="o">-</span> <span class="n">preferences_ut</span><span class="p">),</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">preferences_rk_to_preferences_borda_rk</span><span class="p">(</span><span class="n">preferences_rk</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">preferences_rk_to_preferences_borda_rk</span><span class="p">(</span><span class="n">preferences_rk</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert rankings to Borda scores.</span>
 
 <span class="sd">    Parameters</span>
@@ -507,7 +507,7 @@ document.write(`
     <span class="k">return</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">preferences_rk</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span> <span class="o">+</span> <span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span>
 
 
-<span class="k">def</span> <span class="nf">preferences_ut_to_preferences_borda_ut</span><span class="p">(</span><span class="n">preferences_ut</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">preferences_ut_to_preferences_borda_ut</span><span class="p">(</span><span class="n">preferences_ut</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert utilities to Borda scores (with possible equalities).</span>
 
 <span class="sd">    Parameters</span>
@@ -539,7 +539,7 @@ document.write(`
     <span class="k">return</span> <span class="n">preference_borda_ut</span>
 
 
-<span class="k">def</span> <span class="nf">preferences_ut_to_matrix_duels_ut</span><span class="p">(</span><span class="n">preferences_ut</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">preferences_ut_to_matrix_duels_ut</span><span class="p">(</span><span class="n">preferences_ut</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute the matrix of duels.</span>
 
 <span class="sd">    Parameters</span>
@@ -564,7 +564,7 @@ document.write(`
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">preferences_ut</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">preferences_ut</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">matrix_victories_to_smith_set</span><span class="p">(</span><span class="n">matrix_victories</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">matrix_victories_to_smith_set</span><span class="p">(</span><span class="n">matrix_victories</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Smith set associated to a matrix of victories.</span>
 
@@ -621,7 +621,7 @@ document.write(`
         <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
 
 
-<span class="k">def</span> <span class="nf">is_resistant_condorcet</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">preferences_ut</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_resistant_condorcet</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">preferences_ut</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Test for resistant Condorcet winner.</span>
 
 <span class="sd">    A Condorcet winner ``w`` is *resistant* iff in any Condorcet voting system, the profile is not manipulable (cf.</span>
@@ -664,7 +664,7 @@ document.write(`
     <span class="k">return</span> <span class="kc">True</span>
 
 
-<span class="k">def</span> <span class="nf">compute_next_subset_with_w</span><span class="p">(</span><span class="n">prev_subset</span><span class="p">,</span> <span class="n">n_c</span><span class="p">,</span> <span class="n">n_c_r</span><span class="p">,</span> <span class="n">w</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_next_subset_with_w</span><span class="p">(</span><span class="n">prev_subset</span><span class="p">,</span> <span class="n">n_c</span><span class="p">,</span> <span class="n">n_c_r</span><span class="p">,</span> <span class="n">w</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute the next subset containing w, by lexicographic order.</span>
 
 <span class="sd">    This function is internally used by :class:`Rule` to compute Independence of Irrelevant Alternatives (IIA).</span>
@@ -720,7 +720,7 @@ document.write(`
     <span class="k">return</span> <span class="n">next_subset</span>
 
 
-<span class="k">def</span> <span class="nf">compute_next_permutation</span><span class="p">(</span><span class="n">prev_permutation</span><span class="p">,</span> <span class="n">n_c</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_next_permutation</span><span class="p">(</span><span class="n">prev_permutation</span><span class="p">,</span> <span class="n">n_c</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute next permutation by lexicographic order.</span>
 
 <span class="sd">    Parameters</span>
@@ -764,7 +764,7 @@ document.write(`
     <span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">compute_next_borda_clever</span><span class="p">(</span><span class="n">prev_permutation</span><span class="p">,</span> <span class="n">prev_favorite</span><span class="p">,</span> <span class="n">n_c</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_next_borda_clever</span><span class="p">(</span><span class="n">prev_permutation</span><span class="p">,</span> <span class="n">prev_favorite</span><span class="p">,</span> <span class="n">n_c</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute next vector of Borda scores in &#39;clever&#39; order.</span>
 
 <span class="sd">    Parameters</span>
@@ -830,7 +830,7 @@ document.write(`
     <span class="k">return</span> <span class="n">next_permutation</span><span class="p">,</span> <span class="n">next_favorite</span>
 
 
-<span class="k">def</span> <span class="nf">strong_connected_components</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">strong_connected_components</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Strong connected components of a digraph, sorted by topological order.</span>
 
 <span class="sd">    Parameters</span>
@@ -861,7 +861,7 @@ document.write(`
 
 <div class="viewcode-block" id="initialize_random_seeds">
 <a class="viewcode-back" href="../../../reference/utils/initialize_random_seeds.html#svvamp.initialize_random_seeds">[docs]</a>
-<span class="k">def</span> <span class="nf">initialize_random_seeds</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">initialize_random_seeds</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize the random seeds.</span>
 
 <span class="sd">    Parameters</span>
@@ -874,7 +874,7 @@ document.write(`
 
 
 
-<span class="k">def</span> <span class="nf">indent</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">n_spaces</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">indent</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">n_spaces</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Indent a string.</span>
 
 <span class="sd">    Parameters</span>
@@ -901,7 +901,7 @@ document.write(`
     <span class="k">return</span> <span class="s1">&#39; &#39;</span> <span class="o">*</span> <span class="n">n_spaces</span> <span class="o">+</span> <span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">    &#39;</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">euclidean_distances</span><span class="p">(</span><span class="n">voters_positions</span><span class="p">,</span> <span class="n">candidates_positions</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">euclidean_distances</span><span class="p">(</span><span class="n">voters_positions</span><span class="p">,</span> <span class="n">candidates_positions</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Euclidean distances.</span>
 

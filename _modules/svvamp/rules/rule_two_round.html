@@ -27,7 +27,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
@@ -472,15 +472,15 @@ document.write(`
 <span class="sd">    You should have received a copy of the GNU General Public License</span>
 <span class="sd">    along with SVVAMP.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">svvamp.rules.rule</span> <span class="kn">import</span> <span class="n">Rule</span>
-<span class="kn">from</span> <span class="nn">svvamp.utils.util_cache</span> <span class="kn">import</span> <span class="n">cached_property</span>
-<span class="kn">from</span> <span class="nn">svvamp.preferences.profile</span> <span class="kn">import</span> <span class="n">Profile</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.rules.rule</span><span class="w"> </span><span class="kn">import</span> <span class="n">Rule</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.utils.util_cache</span><span class="w"> </span><span class="kn">import</span> <span class="n">cached_property</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.preferences.profile</span><span class="w"> </span><span class="kn">import</span> <span class="n">Profile</span>
 
 
 <div class="viewcode-block" id="RuleTwoRound">
 <a class="viewcode-back" href="../../../reference/rules/rule_two_round.html#svvamp.RuleTwoRound">[docs]</a>
-<span class="k">class</span> <span class="nc">RuleTwoRound</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">RuleTwoRound</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Two Round System.</span>
 
 <span class="sd">    Options</span>
@@ -490,6 +490,7 @@ document.write(`
 <span class="sd">        icm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
 <span class="sd">        iia_subset_maximum_size: is_number. Default: 2.</span>
 <span class="sd">        im_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        precheck_heuristic: [False]. Default: False.</span>
 <span class="sd">        tm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
 <span class="sd">        um_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
 
@@ -742,10 +743,11 @@ document.write(`
         <span class="s1">&#39;tm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">},</span>
         <span class="s1">&#39;um_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">},</span>
         <span class="s1">&#39;icm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">},</span>
-        <span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">}</span>
+        <span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">},</span>
+        <span class="s1">&#39;precheck_heuristic&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="kc">False</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
     <span class="p">})</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">with_two_candidates_reduces_to_plurality</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">is_based_on_rk</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">precheck_um</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">precheck_icm</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">precheck_tm</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -755,7 +757,7 @@ document.write(`
     <span class="c1"># %% Counting the ballots</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">_count_ballots_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_count_ballots_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Count ballots&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="c1"># First round</span>
         <span class="n">scores_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">plurality_scores_rk</span><span class="p">)</span>
@@ -769,21 +771,21 @@ document.write(`
         <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;w&#39;</span><span class="p">:</span> <span class="n">w</span><span class="p">,</span> <span class="s1">&#39;selected_one&#39;</span><span class="p">:</span> <span class="n">selected_one</span><span class="p">,</span> <span class="s1">&#39;selected_two&#39;</span><span class="p">:</span> <span class="n">selected_two</span><span class="p">}</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">selected_one_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">selected_one_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Integer. The candidate with highest score at first round.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s1">&#39;selected_one&#39;</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">selected_two_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">selected_two_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Integer. The candidate with second highest score at first round.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s1">&#39;selected_two&#39;</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">w_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">w_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s1">&#39;w&#39;</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">ballots_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">ballots_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;2d array of integers. ``ballots[v, r]`` is the candidate for which voter ``v`` votes at round ``r``,</span>
 <span class="sd">        where ``r`` = 0 (first round) or ``r`` = 1 (second round).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -795,7 +797,7 @@ document.write(`
         <span class="k">return</span> <span class="n">ballots</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">scores_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">scores_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;2d array. ``scores[r, c]`` is the number of voters who vote for candidate ``c`` at round ``r``,</span>
 <span class="sd">        where ``r`` = 0 (first round) or ``r`` = 1 (second round).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -807,7 +809,7 @@ document.write(`
         <span class="k">return</span> <span class="n">scores</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">candidates_by_scores_best_to_worst_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">candidates_by_scores_best_to_worst_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of integers. ``candidates_by_scores_best_to_worst[k]`` is the candidate with ``k``-th</span>
 <span class="sd">        best score. Finalists are sorted by their score at second round. Other candidates are sorted by their score</span>
 <span class="sd">        at first round.</span>
@@ -818,12 +820,12 @@ document.write(`
     <span class="c1"># %% Manipulation criteria of the voting system</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">meets_majority_favorite_c_rk_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">meets_majority_favorite_c_rk_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="kc">True</span>
 
     <span class="c1"># %% Individual manipulation (IM)</span>
 
-    <span class="k">def</span> <span class="nf">_compute_im_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_compute_im_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute IM: is_im, candidates_im, _voters_im and v_im_for_c.</span>
 
 <span class="sd">        For Two Round, since calculation is not so expensive, we compute everything, even if complete_mode = False.</span>
@@ -940,7 +942,7 @@ document.write(`
                     <span class="bp">self</span><span class="o">.</span><span class="n">_voters_im</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_is_im</span> <span class="o">=</span> <span class="kc">True</span>
 
-    <span class="k">def</span> <span class="nf">_compute_im_v_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">c_is_wanted</span><span class="p">,</span> <span class="n">stop_if_true</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_compute_im_v_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">c_is_wanted</span><span class="p">,</span> <span class="n">stop_if_true</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_compute_im_</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 
     <span class="c1"># %% Trivial Manipulation (TM)</span>
@@ -949,7 +951,7 @@ document.write(`
 
     <span class="c1"># %% Unison manipulation (UM)</span>
 
-    <span class="k">def</span> <span class="nf">_um_main_work_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_um_main_work_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            &gt;&gt;&gt; profile = Profile([</span>
 <span class="sd">            ...     [0, 2, 1],</span>
@@ -1087,7 +1089,7 @@ document.write(`
 
     <span class="c1"># %% Coalition Manipulation (CM)</span>
 
-    <span class="k">def</span> <span class="nf">_cm_main_work_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_cm_main_work_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
 <span class="sd">            ...     [0, 1, 2],</span>

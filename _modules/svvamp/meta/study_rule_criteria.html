@@ -27,7 +27,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
@@ -473,14 +473,14 @@ document.write(`
 <span class="sd">    along with SVVAMP.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">svvamp.utils.misc</span> <span class="kn">import</span> <span class="n">indent</span>
-<span class="kn">from</span> <span class="nn">svvamp.rules.rule_irv</span> <span class="kn">import</span> <span class="n">RuleIRV</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.utils.misc</span><span class="w"> </span><span class="kn">import</span> <span class="n">indent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.rules.rule_irv</span><span class="w"> </span><span class="kn">import</span> <span class="n">RuleIRV</span>
 
 
 <div class="viewcode-block" id="StudyRuleCriteria">
 <a class="viewcode-back" href="../../../reference/meta/study_rule_criteria.html#svvamp.StudyRuleCriteria">[docs]</a>
-<span class="k">class</span> <span class="nc">StudyRuleCriteria</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">StudyRuleCriteria</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A set of criteria to study for the simulator about one or several voting rules.</span>
 
 <span class="sd">    Parameters</span>
@@ -513,7 +513,7 @@ document.write(`
 <span class="sd">        that output a pair (inf, sup), for example `nb_candidates_cm_` or `worst_relative_welfare_with_cm_`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">manipulation_criteria</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">manipulation_criteria_c</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">manipulation_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">manipulation_criteria</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">manipulation_criteria_c</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">manipulation_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                  <span class="n">result_criteria</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">utility_criteria</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">numerical_criteria</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="c1"># Manipulation criteria</span>
         <span class="k">if</span> <span class="n">manipulation_criteria</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -587,7 +587,7 @@ document.write(`
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">numerical_criteria</span> <span class="o">=</span> <span class="n">numerical_criteria</span>
 
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            &gt;&gt;&gt; study_rule_criteria = StudyRuleCriteria(</span>
 <span class="sd">            ...     manipulation_criteria=[&#39;is_cm_&#39;],</span>
@@ -641,7 +641,7 @@ document.write(`
 
 <div class="viewcode-block" id="StudyRuleCriteria.remove">
 <a class="viewcode-back" href="../../../reference/meta/study_rule_criteria.html#svvamp.StudyRuleCriteria.remove">[docs]</a>
-    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">criterion</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">criterion</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Remove a criterion</span>
 
 <span class="sd">        Remove all occurrences of a criterion (generally zero or one) from this `StudyRuleCriteria` object.</span>
@@ -689,7 +689,7 @@ document.write(`
 
 <div class="viewcode-block" id="StudyRuleCriteria.append_manipulation_criterion">
 <a class="viewcode-back" href="../../../reference/meta/study_rule_criteria.html#svvamp.StudyRuleCriteria.append_manipulation_criterion">[docs]</a>
-    <span class="k">def</span> <span class="nf">append_manipulation_criterion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">criterion</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">append_manipulation_criterion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">criterion</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a manipulation criterion</span>
 
 <span class="sd">        Parameters</span>
@@ -722,7 +722,7 @@ document.write(`
 
 <div class="viewcode-block" id="StudyRuleCriteria.append_manipulation_criterion_c">
 <a class="viewcode-back" href="../../../reference/meta/study_rule_criteria.html#svvamp.StudyRuleCriteria.append_manipulation_criterion_c">[docs]</a>
-    <span class="k">def</span> <span class="nf">append_manipulation_criterion_c</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">criterion</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">append_manipulation_criterion_c</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">criterion</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a manipulation criterion (for candidates)</span>
 
 <span class="sd">        Parameters</span>
@@ -756,7 +756,7 @@ document.write(`
 
 <div class="viewcode-block" id="StudyRuleCriteria.append_result_criterion">
 <a class="viewcode-back" href="../../../reference/meta/study_rule_criteria.html#svvamp.StudyRuleCriteria.append_result_criterion">[docs]</a>
-    <span class="k">def</span> <span class="nf">append_result_criterion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">criterion</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">append_result_criterion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">criterion</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a result criterion</span>
 
 <span class="sd">        Parameters</span>
@@ -787,7 +787,7 @@ document.write(`
 
 <div class="viewcode-block" id="StudyRuleCriteria.append_utility_criterion">
 <a class="viewcode-back" href="../../../reference/meta/study_rule_criteria.html#svvamp.StudyRuleCriteria.append_utility_criterion">[docs]</a>
-    <span class="k">def</span> <span class="nf">append_utility_criterion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">append_utility_criterion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a utility criterion</span>
 
 <span class="sd">        Parameters</span>
@@ -826,7 +826,7 @@ document.write(`
 
 <div class="viewcode-block" id="StudyRuleCriteria.append_numerical_criterion">
 <a class="viewcode-back" href="../../../reference/meta/study_rule_criteria.html#svvamp.StudyRuleCriteria.append_numerical_criterion">[docs]</a>
-    <span class="k">def</span> <span class="nf">append_numerical_criterion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">criterion</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">append_numerical_criterion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">criterion</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a numerical criterion</span>
 
 <span class="sd">        Parameters</span>
@@ -857,7 +857,7 @@ document.write(`
 
 <div class="viewcode-block" id="StudyRuleCriteria.check_sanity">
 <a class="viewcode-back" href="../../../reference/meta/study_rule_criteria.html#svvamp.StudyRuleCriteria.check_sanity">[docs]</a>
-    <span class="k">def</span> <span class="nf">check_sanity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rule_class</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_sanity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rule_class</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Check sanity of the object</span>
 
 <span class="sd">        Preform some basic checks. It is recommended to use this method before launching big simulations.</span>

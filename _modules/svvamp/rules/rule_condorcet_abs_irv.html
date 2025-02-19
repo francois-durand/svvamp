@@ -27,7 +27,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
@@ -472,18 +472,18 @@ document.write(`
 <span class="sd">    You should have received a copy of the GNU General Public License</span>
 <span class="sd">    along with SVVAMP.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">svvamp.rules.rule</span> <span class="kn">import</span> <span class="n">Rule</span>
-<span class="kn">from</span> <span class="nn">svvamp.utils.util_cache</span> <span class="kn">import</span> <span class="n">cached_property</span>
-<span class="kn">from</span> <span class="nn">svvamp.preferences.profile</span> <span class="kn">import</span> <span class="n">Profile</span>
-<span class="kn">from</span> <span class="nn">svvamp.utils.misc</span> <span class="kn">import</span> <span class="n">preferences_ut_to_matrix_duels_ut</span>
-<span class="kn">from</span> <span class="nn">svvamp.utils.pseudo_bool</span> <span class="kn">import</span> <span class="n">equal_false</span>
-<span class="kn">from</span> <span class="nn">svvamp.rules.rule_irv</span> <span class="kn">import</span> <span class="n">RuleIRV</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.rules.rule</span><span class="w"> </span><span class="kn">import</span> <span class="n">Rule</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.utils.util_cache</span><span class="w"> </span><span class="kn">import</span> <span class="n">cached_property</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.preferences.profile</span><span class="w"> </span><span class="kn">import</span> <span class="n">Profile</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.utils.misc</span><span class="w"> </span><span class="kn">import</span> <span class="n">preferences_ut_to_matrix_duels_ut</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.utils.pseudo_bool</span><span class="w"> </span><span class="kn">import</span> <span class="n">equal_false</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.rules.rule_irv</span><span class="w"> </span><span class="kn">import</span> <span class="n">RuleIRV</span>
 
 
 <div class="viewcode-block" id="RuleCondorcetAbsIRV">
 <a class="viewcode-back" href="../../../reference/rules/rule_condorcet_abs_irv.html#svvamp.RuleCondorcetAbsIRV">[docs]</a>
-<span class="k">class</span> <span class="nc">RuleCondorcetAbsIRV</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">RuleCondorcetAbsIRV</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Absolute-Condorcet Instant Runoff Voting.</span>
 
 <span class="sd">    Options</span>
@@ -493,6 +493,7 @@ document.write(`
 <span class="sd">        icm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
 <span class="sd">        iia_subset_maximum_size: is_number. Default: 2.</span>
 <span class="sd">        im_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="sd">        precheck_heuristic: is_bool. Default: True.</span>
 <span class="sd">        tm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
 <span class="sd">        um_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
 
@@ -778,7 +779,7 @@ document.write(`
         <span class="s1">&#39;icm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">}</span>
     <span class="p">})</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">irv_</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">with_two_candidates_reduces_to_plurality</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">is_based_on_rk</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -786,7 +787,7 @@ document.write(`
             <span class="n">log_identity</span><span class="o">=</span><span class="s2">&quot;CONDORCET_ABS_IRV&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
         <span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">profile</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">profile</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            &gt;&gt;&gt; my_profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])</span>
 <span class="sd">            &gt;&gt;&gt; rule = RuleCondorcetAbsIRV(cm_option=&#39;slow&#39;)(my_profile)</span>
@@ -812,14 +813,14 @@ document.write(`
     <span class="c1"># %% Counting the ballots</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">w_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">w_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">condorcet_winner_ut_abs</span><span class="p">):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">condorcet_winner_ut_abs</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">irv_</span><span class="o">.</span><span class="n">w_</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">scores_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">scores_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;1d or 2d array.</span>
 
 <span class="sd">            * If there is a Condorcet winner, then ``scores[c]`` is the number of victories for ``c`` in</span>
@@ -842,7 +843,7 @@ document.write(`
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">irv_</span><span class="o">.</span><span class="n">scores_</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">candidates_by_scores_best_to_worst_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">candidates_by_scores_best_to_worst_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of integers.</span>
 
 <span class="sd">            * If there is a Condorcet winner, candidates are sorted according to their (scalar) score.</span>
@@ -862,7 +863,7 @@ document.write(`
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">irv_</span><span class="o">.</span><span class="n">candidates_by_scores_best_to_worst_</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">_v_might_be_pivotal_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_v_might_be_pivotal_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
 <span class="sd">            ...     [1, 0, 2],</span>
@@ -905,17 +906,17 @@ document.write(`
         <span class="k">return</span> <span class="n">v_might_be_pivotal</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">v_might_im_for_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">v_might_im_for_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_v_might_be_pivotal_</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">))</span>
 
     <span class="c1"># %% Manipulation criteria of the voting system</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">meets_majority_favorite_c_rk_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">meets_majority_favorite_c_rk_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="kc">True</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">meets_condorcet_c_ut_abs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">meets_condorcet_c_ut_abs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="kc">True</span>
 
     <span class="c1"># %% Individual manipulation (IM)</span>
@@ -930,7 +931,7 @@ document.write(`
 
     <span class="c1"># TODO: should be implemented .</span>
 
-    <span class="k">def</span> <span class="nf">_um_preliminary_checks_general_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_um_preliminary_checks_general_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
 <span class="sd">            ...     [ 0. , -0.5,  1. ,  0.5],</span>
@@ -948,7 +949,7 @@ document.write(`
             <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_um</span><span class="p">[:]</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_um_was_computed_with_candidates</span> <span class="o">=</span> <span class="kc">True</span>
 
-    <span class="k">def</span> <span class="nf">_um_preliminary_checks_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_um_preliminary_checks_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
 <span class="sd">            ...     [1, 0, 2],</span>
@@ -975,7 +976,7 @@ document.write(`
     <span class="c1"># %% Coalition Manipulation (CM)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">losing_candidates_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">losing_candidates_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;If ``irv_.w_`` does not win, then we put her first. Other losers are sorted as usual. (scores in</span>
 <span class="sd">        ``matrix_duels_ut``).</span>
 
@@ -1008,7 +1009,7 @@ document.write(`
             <span class="n">losing_candidates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(([</span><span class="bp">self</span><span class="o">.</span><span class="n">irv_</span><span class="o">.</span><span class="n">w_</span><span class="p">],</span> <span class="n">losing_candidates</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">losing_candidates</span>
 
-    <span class="k">def</span> <span class="nf">_cm_preliminary_checks_general_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_cm_preliminary_checks_general_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># We check IRV first.</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">irv_</span><span class="o">.</span><span class="n">w_</span><span class="p">:</span>
             <span class="c1"># Then IRV is manipulable anyway (for ``w``, so a precheck on IRV would give us no information).</span>
@@ -1025,7 +1026,7 @@ document.write(`
                 <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_cm</span><span class="p">[:]</span> <span class="o">=</span> <span class="kc">False</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_cm_was_computed_with_candidates</span> <span class="o">=</span> <span class="kc">True</span>
 
-    <span class="k">def</span> <span class="nf">_cm_main_work_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_cm_main_work_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
 <span class="sd">            ...     [0, 2, 1],</span>

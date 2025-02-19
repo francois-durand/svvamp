@@ -27,7 +27,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
@@ -472,19 +472,19 @@ document.write(`
 <span class="sd">    You should have received a copy of the GNU General Public License</span>
 <span class="sd">    along with SVVAMP.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">itertools</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">svvamp.rules.rule</span> <span class="kn">import</span> <span class="n">Rule</span>
-<span class="kn">from</span> <span class="nn">svvamp.utils.util_cache</span> <span class="kn">import</span> <span class="n">cached_property</span>
-<span class="kn">from</span> <span class="nn">svvamp.preferences.profile</span> <span class="kn">import</span> <span class="n">Profile</span>
-<span class="kn">from</span> <span class="nn">svvamp.utils.pseudo_bool</span> <span class="kn">import</span> <span class="n">neginf_to_zero</span><span class="p">,</span> <span class="n">equal_false</span><span class="p">,</span> <span class="n">equal_true</span>
-<span class="kn">from</span> <span class="nn">svvamp.rules.rule_exhaustive_ballot</span> <span class="kn">import</span> <span class="n">RuleExhaustiveBallot</span>
-<span class="kn">from</span> <span class="nn">svvamp.utils.misc</span> <span class="kn">import</span> <span class="n">preferences_ut_to_matrix_duels_ut</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">itertools</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.rules.rule</span><span class="w"> </span><span class="kn">import</span> <span class="n">Rule</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.utils.util_cache</span><span class="w"> </span><span class="kn">import</span> <span class="n">cached_property</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.preferences.profile</span><span class="w"> </span><span class="kn">import</span> <span class="n">Profile</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.utils.pseudo_bool</span><span class="w"> </span><span class="kn">import</span> <span class="n">neginf_to_zero</span><span class="p">,</span> <span class="n">equal_false</span><span class="p">,</span> <span class="n">equal_true</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.rules.rule_exhaustive_ballot</span><span class="w"> </span><span class="kn">import</span> <span class="n">RuleExhaustiveBallot</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.utils.misc</span><span class="w"> </span><span class="kn">import</span> <span class="n">preferences_ut_to_matrix_duels_ut</span>
 
 
 <div class="viewcode-block" id="RuleIRV">
 <a class="viewcode-back" href="../../../reference/rules/rule_irv.html#svvamp.RuleIRV">[docs]</a>
-<span class="k">class</span> <span class="nc">RuleIRV</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">RuleIRV</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Instant-Runoff Voting (IRV). Also known as Single Transferable Voting, Alternative Vote, Hare method.</span>
 
 <span class="sd">    Options</span>
@@ -495,6 +495,7 @@ document.write(`
 <span class="sd">        icm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
 <span class="sd">        iia_subset_maximum_size: is_number. Default: 2.</span>
 <span class="sd">        im_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="sd">        precheck_heuristic: is_bool. Default: True.</span>
 <span class="sd">        tm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
 <span class="sd">        um_option: [&#39;fast&#39;, &#39;exact&#39;]. Default: &#39;fast&#39;.</span>
 
@@ -775,10 +776,10 @@ document.write(`
         <span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;fast&#39;</span><span class="p">,</span> <span class="s1">&#39;slow&#39;</span><span class="p">,</span> <span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;fast&#39;</span><span class="p">},</span>
         <span class="s1">&#39;tm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">},</span>
         <span class="s1">&#39;icm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">},</span>
-        <span class="s1">&#39;fast_algo&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;c_minus_max&#39;</span><span class="p">,</span> <span class="s1">&#39;minus_max&#39;</span><span class="p">,</span> <span class="s1">&#39;hardest_first&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;c_minus_max&#39;</span><span class="p">}</span>
+        <span class="s1">&#39;fast_algo&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;c_minus_max&#39;</span><span class="p">,</span> <span class="s1">&#39;minus_max&#39;</span><span class="p">,</span> <span class="s1">&#39;hardest_first&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;c_minus_max&#39;</span><span class="p">},</span>
     <span class="p">})</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_fast_algo</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
@@ -789,7 +790,7 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">_example_ballots_cm_c</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_example_ballots_cm_w_against</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">profile</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">profile</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -892,7 +893,7 @@ document.write(`
             <span class="n">eb_options</span><span class="p">[</span><span class="s1">&#39;im_option&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;exact&#39;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">um_option</span> <span class="o">==</span> <span class="s1">&#39;exact&#39;</span><span class="p">:</span>
             <span class="n">eb_options</span><span class="p">[</span><span class="s1">&#39;um_option&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;exact&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span> <span class="o">=</span> <span class="n">RuleExhaustiveBallot</span><span class="p">(</span><span class="o">**</span><span class="n">eb_options</span><span class="p">)(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span> <span class="o">=</span> <span class="n">RuleExhaustiveBallot</span><span class="p">(</span><span class="n">precheck_heuristic</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">precheck_heuristic</span><span class="p">,</span> <span class="o">**</span><span class="n">eb_options</span><span class="p">)(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="p">)</span>
         <span class="c1"># Initialize examples of manipulating ballots</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_example_ballots_cm_c</span> <span class="o">=</span> <span class="p">{</span><span class="n">c</span><span class="p">:</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">profile</span><span class="o">.</span><span class="n">n_c</span><span class="p">)}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_example_ballots_cm_w_against</span> <span class="o">=</span> <span class="p">{</span><span class="n">w_other_rule</span><span class="p">:</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">w_other_rule</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">profile</span><span class="o">.</span><span class="n">n_c</span><span class="p">)}</span>
@@ -901,13 +902,13 @@ document.write(`
     <span class="c1"># %% Dealing with the options</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">fast_algo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fast_algo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;String. Algorithm used for CM (resp. UM) when cm_option (resp. um_option) is &#39;fast&#39;. Mostly for developers.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fast_algo</span>
 
     <span class="nd">@fast_algo</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">fast_algo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fast_algo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fast_algo</span> <span class="o">==</span> <span class="n">value</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="k">if</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">options_parameters</span><span class="p">[</span><span class="s1">&#39;fast_algo&#39;</span><span class="p">][</span><span class="s1">&#39;allowed&#39;</span><span class="p">]:</span>
@@ -919,14 +920,14 @@ document.write(`
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown value for option fast_algo: &quot;</span> <span class="o">+</span> <span class="nb">format</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">log_um_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">log_um_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">um_option</span> <span class="o">==</span> <span class="s1">&#39;exact&#39;</span><span class="p">:</span>
             <span class="k">return</span> <span class="s2">&quot;um_option = exact&quot;</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="s2">&quot;um_option = &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">um_option</span> <span class="o">+</span> <span class="s2">&quot;, fast_algo = &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">fast_algo</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">log_cm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">log_cm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span> <span class="o">==</span> <span class="s1">&#39;exact&#39;</span><span class="p">:</span>
             <span class="k">return</span> <span class="s2">&quot;cm_option = exact&quot;</span>
         <span class="k">else</span><span class="p">:</span>
@@ -936,17 +937,17 @@ document.write(`
     <span class="c1"># %% Counting the ballots</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">ballots_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">ballots_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;2d array of integers. ``ballots[v, r]`` is the candidate for which voter ``v`` votes at round ``r``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">ballots_</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">w_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">w_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">w_</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">scores_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">scores_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;2d array. ``scores[r, c]`` is the number of voters who vote for candidate ``c`` at round ``r``.</span>
 
 <span class="sd">        For eliminated candidates, ``scores[r, c] = numpy.nan``. In contrast, ``scores[r, c] = 0`` means that</span>
@@ -955,7 +956,7 @@ document.write(`
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">scores_</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">margins_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">margins_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;2d array. ``margins_[r, c]`` is the number of votes that ``c`` must lose to be eliminated at round ``r``</span>
 <span class="sd">        (all other things being equal). The candidate who is eliminated at round ``r`` is the only one for which</span>
 <span class="sd">        ``margins_[r, c] = 0``.</span>
@@ -979,7 +980,7 @@ document.write(`
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">margins_</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">candidates_by_scores_best_to_worst_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">candidates_by_scores_best_to_worst_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of integers. ``candidates_by_scores_best_to_worst`` is the list of all candidates in the reverse</span>
 <span class="sd">        order of their elimination.</span>
 
@@ -999,7 +1000,7 @@ document.write(`
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">candidates_by_scores_best_to_worst_</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">elimination_path_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">elimination_path_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of integers. Same as :attr:`~svvamp.ExhaustiveBallot.candidates_by_scores_best_to_worst`,</span>
 <span class="sd">        but in the reverse order.</span>
 
@@ -1019,58 +1020,58 @@ document.write(`
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">elimination_path_</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">v_might_be_pivotal_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">v_might_be_pivotal_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">v_might_be_pivotal_</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">v_might_im_for_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">v_might_im_for_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">v_might_im_for_c_</span>
 
     <span class="c1"># %% Manipulation criteria of the voting system</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">meets_majority_favorite_c_rk_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">meets_majority_favorite_c_rk_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="kc">True</span>
 
     <span class="c1"># %% For these manipulation variables, we identify with Exhaustive Ballot</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">v_wants_to_help_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">v_wants_to_help_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">v_wants_to_help_c_</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">c_has_supporters_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">c_has_supporters_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">c_has_supporters_</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">losing_candidates_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">losing_candidates_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">losing_candidates_</span>
 
     <span class="c1"># %% Independence of Irrelevant Alternatives (IIA)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">is_iia_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_iia_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">iia_subset_maximum_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">iia_subset_maximum_size</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">is_iia_</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">is_not_iia_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_not_iia_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">iia_subset_maximum_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">iia_subset_maximum_size</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">is_not_iia_</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">example_winner_iia_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">example_winner_iia_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">iia_subset_maximum_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">iia_subset_maximum_size</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">example_winner_iia_</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">example_subset_iia_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">example_subset_iia_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">iia_subset_maximum_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">iia_subset_maximum_size</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">example_subset_iia_</span>
 
     <span class="c1"># %% Individual manipulation (IM)</span>
 
-    <span class="k">def</span> <span class="nf">_im_main_work_v_exact_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">c_is_wanted</span><span class="p">,</span> <span class="n">nb_wanted_undecided</span><span class="p">,</span> <span class="n">stop_if_true</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_im_main_work_v_exact_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">c_is_wanted</span><span class="p">,</span> <span class="n">nb_wanted_undecided</span><span class="p">,</span> <span class="n">stop_if_true</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
 <span class="sd">            ...     [0, 1, 2],</span>
@@ -1299,7 +1300,7 @@ document.write(`
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;im_aux_exact: r =&quot;</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;im_aux_exact: natural_loser_r[r] =&quot;</span><span class="p">,</span> <span class="n">natural_loser_r</span><span class="p">[</span><span class="n">r</span><span class="p">],</span> <span class="mi">3</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_im_preliminary_checks_general_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_im_preliminary_checks_general_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_v_im_for_c</span><span class="p">,</span> <span class="kc">False</span><span class="p">)):</span>
             <span class="k">return</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">im_option</span> <span class="o">==</span> <span class="s2">&quot;exact&quot;</span><span class="p">:</span>
@@ -1310,7 +1311,7 @@ document.write(`
                 <span class="bp">self</span><span class="o">.</span><span class="n">_v_im_for_c</span><span class="p">[:]</span> <span class="o">=</span> <span class="kc">False</span>
                 <span class="c1"># Other variables will be updated in ``_im_preliminary_checks_general``.</span>
 
-    <span class="k">def</span> <span class="nf">_im_preliminary_checks_v_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_im_preliminary_checks_v_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
         <span class="c1"># Pretest based on Exhaustive Ballot</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">im_option</span> <span class="o">==</span> <span class="s2">&quot;exact&quot;</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isneginf</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_v_im_for_c</span><span class="p">[</span><span class="n">v</span><span class="p">,</span> <span class="p">:])):</span>
@@ -1322,21 +1323,21 @@ document.write(`
     <span class="c1"># %% Trivial Manipulation (TM)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">is_tm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_tm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># self.eb_.tm_option = self.tm_option</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">is_tm_</span>
 
-    <span class="k">def</span> <span class="nf">is_tm_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_tm_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
         <span class="c1"># self.eb_.tm_option = self.tm_option</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">is_tm_c_</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">candidates_tm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">candidates_tm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># self.eb_.tm_option = self.tm_option</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">candidates_tm_</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">example_path_tm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">example_path_tm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Examples</span>
 <span class="sd">        --------</span>
@@ -1355,7 +1356,7 @@ document.write(`
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">example_path_tm_</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">sufficient_coalition_size_tm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sufficient_coalition_size_tm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Examples</span>
 <span class="sd">        --------</span>
@@ -1373,41 +1374,41 @@ document.write(`
         <span class="c1"># self.eb_.tm_option = self.tm_option</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">sufficient_coalition_size_tm_</span>
 
-    <span class="k">def</span> <span class="nf">example_path_tm_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">example_path_tm_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
         <span class="c1"># self.eb_.tm_option = self.tm_option</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">example_path_tm_c_</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">sufficient_coalition_size_tm_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sufficient_coalition_size_tm_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
         <span class="c1"># self.eb_.tm_option = self.tm_option</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">sufficient_coalition_size_tm_c_</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
 
     <span class="c1"># %% Ignorant-Coalition Manipulation (ICM)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">is_icm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_icm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># self.eb_.icm_option = self.icm_option</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">is_icm_</span>
 
-    <span class="k">def</span> <span class="nf">is_icm_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_icm_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
         <span class="c1"># self.eb_.icm_option = self.icm_option</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">is_icm_c_</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">is_icm_c_with_bounds_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_icm_c_with_bounds_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
         <span class="c1"># self.eb_.icm_option = self.icm_option</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">is_icm_c_with_bounds_</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">candidates_icm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">candidates_icm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># self.eb_.icm_option = self.icm_option</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">candidates_icm_</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">necessary_coalition_size_icm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">necessary_coalition_size_icm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># self.eb_.icm_option = self.icm_option</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">necessary_coalition_size_icm_</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">sufficient_coalition_size_icm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sufficient_coalition_size_icm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># self.eb_.icm_option = self.icm_option</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">sufficient_coalition_size_icm_</span>
 
@@ -1416,11 +1417,11 @@ document.write(`
     <span class="c1"># TODO: implement UM slow (use EB exact, but not IRV exact).</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">_um_is_initialized_general_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_um_is_initialized_general_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_example_path_um</span> <span class="o">=</span> <span class="p">{</span><span class="n">c</span><span class="p">:</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">)}</span>
         <span class="k">return</span> <span class="kc">True</span>
 
-    <span class="k">def</span> <span class="nf">_um_preliminary_checks_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_um_preliminary_checks_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
 <span class="sd">            ...     [2, 0, 1],</span>
@@ -1440,7 +1441,7 @@ document.write(`
                 <span class="c1"># Impossible to manipulate with n_m manipulators</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_um</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
 
-    <span class="k">def</span> <span class="nf">_um_aux_fast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_m</span><span class="p">,</span> <span class="n">preferences_borda_s</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_um_aux_fast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_m</span><span class="p">,</span> <span class="n">preferences_borda_s</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Fast algorithm used for UM.</span>
 
 <span class="sd">        Parameters</span>
@@ -1647,7 +1648,7 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;um_aux_fast: example_path_fast =&quot;</span><span class="p">,</span> <span class="n">example_path_fast</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">example_path_fast</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_um_aux_exact</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_m</span><span class="p">,</span> <span class="n">preferences_borda_s</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_um_aux_exact</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_m</span><span class="p">,</span> <span class="n">preferences_borda_s</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Exact algorithm used for UM.</span>
 
 <span class="sd">        Parameters</span>
@@ -1852,7 +1853,7 @@ document.write(`
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;um_aux_exact: r =&quot;</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;um_aux_exact: natural_loser_r[r] =&quot;</span><span class="p">,</span> <span class="n">natural_loser_r</span><span class="p">[</span><span class="n">r</span><span class="p">],</span> <span class="mi">3</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_um_preliminary_checks_general_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_um_preliminary_checks_general_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
 <span class="sd">            ...     [0, 1, 2],</span>
@@ -1892,7 +1893,7 @@ document.write(`
                 <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_um</span><span class="p">[:]</span> <span class="o">=</span> <span class="kc">False</span>
                 <span class="c1"># Other variables will be updated in ``_um_preliminary_checks_general``.</span>
 
-    <span class="k">def</span> <span class="nf">_um_main_work_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_um_main_work_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
         <span class="n">exact</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">um_option</span> <span class="o">==</span> <span class="s2">&quot;exact&quot;</span><span class="p">)</span>
         <span class="n">n_m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_ut</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span>
         <span class="n">manip_found_fast</span><span class="p">,</span> <span class="n">example_path_fast</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_um_aux_fast</span><span class="p">(</span>
@@ -1927,7 +1928,7 @@ document.write(`
     <span class="c1"># %% Coalition Manipulation (CM)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">example_path_cm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">example_path_cm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Examples</span>
 <span class="sd">        --------</span>
@@ -1945,7 +1946,7 @@ document.write(`
         <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates_cm_</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_example_path_cm</span>
 
-    <span class="k">def</span> <span class="nf">example_path_cm_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">example_path_cm_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Examples</span>
 <span class="sd">        --------</span>
@@ -1963,7 +1964,7 @@ document.write(`
         <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_cm_c_</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_example_path_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">example_ballots_cm_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">example_ballots_cm_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        To manipulate for c against w.</span>
 
@@ -2002,7 +2003,7 @@ document.write(`
                 <span class="n">c</span><span class="p">,</span> <span class="n">n_m</span><span class="p">,</span> <span class="n">suggested_path</span><span class="p">,</span> <span class="n">preferences_borda_s</span><span class="p">,</span> <span class="n">matrix_duels_temp</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_example_ballots_cm_c</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">example_ballots_cm_w_against_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">w_other_rule</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">example_ballots_cm_w_against_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">w_other_rule</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        To manipulate for w when in a sibling rule, the winner is different (w_other_rule).</span>
 
@@ -2030,7 +2031,7 @@ document.write(`
                 <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">,</span> <span class="n">n_m</span><span class="p">,</span> <span class="n">suggested_path</span><span class="p">,</span> <span class="n">preferences_borda_s</span><span class="p">,</span> <span class="n">matrix_duels_temp</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_example_ballots_cm_w_against</span><span class="p">[</span><span class="n">w_other_rule</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">_example_ballots_cm_c_aux</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_m</span><span class="p">,</span> <span class="n">suggested_path</span><span class="p">,</span> <span class="n">preferences_borda_s</span><span class="p">,</span> <span class="n">matrix_duels_temp</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_example_ballots_cm_c_aux</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_m</span><span class="p">,</span> <span class="n">suggested_path</span><span class="p">,</span> <span class="n">preferences_borda_s</span><span class="p">,</span> <span class="n">matrix_duels_temp</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Example of manipulating ballots (in rk format).</span>
 
 <span class="sd">        Parameters</span>
@@ -2155,13 +2156,13 @@ document.write(`
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ballots_m</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">_cm_is_initialized_general_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_cm_is_initialized_general_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_example_path_cm</span> <span class="o">=</span> <span class="p">{</span><span class="n">c</span><span class="p">:</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">)}</span>
         <span class="c1"># Rule: each time ``self._sufficient_coalition_size_cm[c]`` is decreased, the corresponding elimination path</span>
         <span class="c1"># must be stored.</span>
         <span class="k">return</span> <span class="kc">True</span>
 
-    <span class="k">def</span> <span class="nf">_cm_aux_fast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_max</span><span class="p">,</span> <span class="n">preferences_borda_s</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_cm_aux_fast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_max</span><span class="p">,</span> <span class="n">preferences_borda_s</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Fast algorithm used for CM.</span>
 
 <span class="sd">        Parameters</span>
@@ -2316,7 +2317,7 @@ document.write(`
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">n_manip_fast</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
 
-    <span class="k">def</span> <span class="nf">_cm_aux_slow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">suggested_path</span><span class="p">,</span> <span class="n">preferences_borda_s</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_cm_aux_slow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">suggested_path</span><span class="p">,</span> <span class="n">preferences_borda_s</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;&#39;Slow&#39; algorithm used for CM. Checks only if suggested_path works.</span>
 
 <span class="sd">        Parameters</span>
@@ -2378,7 +2379,7 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_slow: Conclusion: n_manip_slow =&quot;</span><span class="p">,</span> <span class="n">n_manip_slow</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">n_manip_slow</span>
 
-    <span class="k">def</span> <span class="nf">_cm_aux_exact</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_max</span><span class="p">,</span> <span class="n">n_min</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">,</span> <span class="n">suggested_path</span><span class="p">,</span> <span class="n">preferences_borda_s</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_cm_aux_exact</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_max</span><span class="p">,</span> <span class="n">n_min</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">,</span> <span class="n">suggested_path</span><span class="p">,</span> <span class="n">preferences_borda_s</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Exact algorithm used for CM.</span>
 
 <span class="sd">        Parameters</span>
@@ -2588,7 +2589,7 @@ document.write(`
             <span class="n">r</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: r =&quot;</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_cm_preliminary_checks_general_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_cm_preliminary_checks_general_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span> <span class="o">==</span> <span class="s2">&quot;slow&quot;</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span> <span class="o">==</span> <span class="s1">&#39;exact&#39;</span><span class="p">:</span>
             <span class="c1"># In that case, we check Exhaustive Ballot first</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">cm_option</span> <span class="o">=</span> <span class="s2">&quot;exact&quot;</span>
@@ -2598,7 +2599,7 @@ document.write(`
                 <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_cm</span><span class="p">[:]</span> <span class="o">=</span> <span class="kc">False</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_cm_was_computed_with_candidates</span> <span class="o">=</span> <span class="kc">True</span>
 
-    <span class="k">def</span> <span class="nf">_cm_preliminary_checks_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_cm_preliminary_checks_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
         <span class="c1"># A mandatory additional precheck, to ensure that ``_example_path_cm[c]`` is updated if</span>
         <span class="c1"># ``sufficient_coalition_size_cm[c]`` has been updated. We use the following syntax (instead of</span>
         <span class="c1"># ``_cm_preliminary_checks_c_subclass``) because we want the test on TM here to be done, even if another one</span>
@@ -2635,7 +2636,7 @@ document.write(`
                                    <span class="s1">&#39;CM: Preliminary checks: Use EB =&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
                                    <span class="s1">&#39;    necessary_coalition_size_cm[c] = EB._necessary_coalition_size_cm[c] =&#39;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_cm_main_work_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_cm_main_work_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
 <span class="sd">            ...     [0, 2, 1, 3],</span>

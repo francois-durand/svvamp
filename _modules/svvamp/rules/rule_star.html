@@ -27,7 +27,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
@@ -472,18 +472,18 @@ document.write(`
 <span class="sd">    You should have received a copy of the GNU General Public License</span>
 <span class="sd">    along with SVVAMP.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">floor</span><span class="p">,</span> <span class="n">ceil</span>
-<span class="kn">from</span> <span class="nn">svvamp.rules.rule</span> <span class="kn">import</span> <span class="n">Rule</span>
-<span class="kn">from</span> <span class="nn">svvamp.utils</span> <span class="kn">import</span> <span class="n">type_checker</span>
-<span class="kn">from</span> <span class="nn">svvamp.utils.util_cache</span> <span class="kn">import</span> <span class="n">cached_property</span>
-<span class="kn">from</span> <span class="nn">svvamp.preferences.profile</span> <span class="kn">import</span> <span class="n">Profile</span>
-<span class="kn">from</span> <span class="nn">svvamp.utils.misc</span> <span class="kn">import</span> <span class="n">preferences_ut_to_matrix_duels_ut</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">floor</span><span class="p">,</span> <span class="n">ceil</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.rules.rule</span><span class="w"> </span><span class="kn">import</span> <span class="n">Rule</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">type_checker</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.utils.util_cache</span><span class="w"> </span><span class="kn">import</span> <span class="n">cached_property</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.preferences.profile</span><span class="w"> </span><span class="kn">import</span> <span class="n">Profile</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.utils.misc</span><span class="w"> </span><span class="kn">import</span> <span class="n">preferences_ut_to_matrix_duels_ut</span>
 
 
 <div class="viewcode-block" id="RuleSTAR">
 <a class="viewcode-back" href="../../../reference/rules/rule_star.html#svvamp.RuleSTAR">[docs]</a>
-<span class="k">class</span> <span class="nc">RuleSTAR</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">RuleSTAR</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;STAR (Scoring Then Automatic Runoff).</span>
 
 <span class="sd">    Parameters</span>
@@ -520,6 +520,7 @@ document.write(`
 <span class="sd">        im_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
 <span class="sd">        max_grade: isfinite. Default: 1.</span>
 <span class="sd">        min_grade: isfinite. Default: 0.</span>
+<span class="sd">        precheck_heuristic: [False]. Default: False.</span>
 <span class="sd">        rescale_grades: is_bool. Default: True.</span>
 <span class="sd">        step_grade: isfinite. Default: 0.</span>
 <span class="sd">        tm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
@@ -801,10 +802,11 @@ document.write(`
         <span class="s1">&#39;tm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">},</span>
         <span class="s1">&#39;um_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">},</span>
         <span class="s1">&#39;icm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">},</span>
-        <span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">}</span>
+        <span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">},</span>
+        <span class="s1">&#39;precheck_heuristic&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="kc">False</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
     <span class="p">})</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_min_grade</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_max_grade</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_step_grade</span> <span class="o">=</span> <span class="kc">None</span>
@@ -821,11 +823,11 @@ document.write(`
     <span class="c1"># %% Setting the parameters</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">min_grade</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">min_grade</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_min_grade</span>
 
     <span class="nd">@min_grade</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">min_grade</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">min_grade</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_min_grade</span> <span class="o">==</span> <span class="n">value</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options_parameters</span><span class="p">[</span><span class="s1">&#39;min_grade&#39;</span><span class="p">][</span><span class="s1">&#39;allowed&#39;</span><span class="p">](</span><span class="n">value</span><span class="p">):</span>
@@ -837,11 +839,11 @@ document.write(`
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown value for min_grade: &quot;</span> <span class="o">+</span> <span class="nb">format</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">max_grade</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">max_grade</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_grade</span>
 
     <span class="nd">@max_grade</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">max_grade</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">max_grade</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_grade</span> <span class="o">==</span> <span class="n">value</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options_parameters</span><span class="p">[</span><span class="s1">&#39;max_grade&#39;</span><span class="p">][</span><span class="s1">&#39;allowed&#39;</span><span class="p">](</span><span class="n">value</span><span class="p">):</span>
@@ -853,11 +855,11 @@ document.write(`
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown value for max_grade: &quot;</span> <span class="o">+</span> <span class="nb">format</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">step_grade</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">step_grade</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_step_grade</span>
 
     <span class="nd">@step_grade</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">step_grade</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">step_grade</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_step_grade</span> <span class="o">==</span> <span class="n">value</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options_parameters</span><span class="p">[</span><span class="s1">&#39;step_grade&#39;</span><span class="p">][</span><span class="s1">&#39;allowed&#39;</span><span class="p">](</span><span class="n">value</span><span class="p">):</span>
@@ -869,11 +871,11 @@ document.write(`
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown value for step_grade: &quot;</span> <span class="o">+</span> <span class="nb">format</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">rescale_grades</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rescale_grades</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rescale_grades</span>
 
     <span class="nd">@rescale_grades</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">rescale_grades</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rescale_grades</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rescale_grades</span> <span class="o">==</span> <span class="n">value</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options_parameters</span><span class="p">[</span><span class="s1">&#39;rescale_grades&#39;</span><span class="p">][</span><span class="s1">&#39;allowed&#39;</span><span class="p">](</span><span class="n">value</span><span class="p">):</span>
@@ -885,7 +887,7 @@ document.write(`
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown value for rescale_grades: &quot;</span> <span class="o">+</span> <span class="nb">format</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">allowed_grades</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">allowed_grades</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;List or None. If ``step_grade`` is positive, the list of authorized grades. If ``step_grade`` is zero</span>
 <span class="sd">        (continuous set of grades), then None.</span>
 
@@ -907,7 +909,7 @@ document.write(`
             <span class="p">))</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">second_best_grade</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">second_best_grade</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Number : second highest possible grade. Useful for manipulation algorithms.</span>
 
 <span class="sd">        If step_grade = 0, then conventionally, this returns `max_grade` (whereas the actual second best possible</span>
@@ -931,7 +933,7 @@ document.write(`
     <span class="c1"># %% Counting the ballots</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">ballots_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">ballots_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;2d array of integers. ``ballots[v, c]`` is the grade attributed by voter ``v`` to candidate ``c`` (when</span>
 <span class="sd">        voting sincerely). The following process is used.</span>
 
@@ -993,7 +995,7 @@ document.write(`
         <span class="k">return</span> <span class="n">ballots</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">_count_ballots_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_count_ballots_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Count ballots&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="c1"># First round</span>
         <span class="n">scores_first_round</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ballots_</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
@@ -1008,18 +1010,18 @@ document.write(`
                 <span class="s1">&#39;scores&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">scores_first_round</span><span class="p">,</span> <span class="n">scores_second_round</span><span class="p">])}</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">w_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">w_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s1">&#39;w&#39;</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">scores_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">scores_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;2d array of numbers. ``scores_[0, c]`` is the total grade of candidate ``c``. ``scores_[1, c]`` the number</span>
 <span class="sd">        of voters who vote for ``c`` during the second round (and 0 if ``c`` is not selected for the second round).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s1">&#39;scores&#39;</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">scores_average_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">scores_average_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;2d array of floats. ``scores_[0, c]`` is the average grade of candidate ``c``. ``scores_[1, c]`` the number</span>
 <span class="sd">        of voters who vote for ``c`` during the second round (and 0 if ``c`` is not selected for the second round).</span>
 
@@ -1043,7 +1045,7 @@ document.write(`
         <span class="p">])</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">candidates_by_scores_best_to_worst_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">candidates_by_scores_best_to_worst_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of integers. ``candidates_by_scores_best_to_worst[k]`` is the candidate with ``k``-th</span>
 <span class="sd">        best score. Finalists are sorted by their score at second round. Other candidates are sorted by their score</span>
 <span class="sd">        at first round.</span>
@@ -1054,12 +1056,12 @@ document.write(`
     <span class="c1"># %% Manipulation criteria of the voting system</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">meets_ignmc_c_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">meets_ignmc_c_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="kc">True</span>
 
     <span class="c1"># %% Individual manipulation (IM)</span>
 
-    <span class="k">def</span> <span class="nf">_im_main_work_v_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">c_is_wanted</span><span class="p">,</span> <span class="n">nb_wanted_undecided</span><span class="p">,</span> <span class="n">stop_if_true</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_im_main_work_v_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">c_is_wanted</span><span class="p">,</span> <span class="n">nb_wanted_undecided</span><span class="p">,</span> <span class="n">stop_if_true</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
 <span class="sd">            ...     [ 1. , -0.5,  0. ],</span>
@@ -1182,7 +1184,7 @@ document.write(`
 
     <span class="c1"># %% Coalition Manipulation (CM)</span>
 
-    <span class="k">def</span> <span class="nf">_cm_main_work_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_cm_main_work_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
 <span class="sd">            ...     [ 0.5,  0.5,  0. ],</span>
@@ -1248,7 +1250,7 @@ document.write(`
 
     <span class="c1"># %% Trivial Manipulation (TM)</span>
 
-    <span class="k">def</span> <span class="nf">_tm_main_work_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_tm_main_work_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
         <span class="c1"># Manipulators give min_grade to all candidates, except max_grade for c.</span>
         <span class="n">preferences_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_ut</span><span class="p">)</span>
         <span class="n">preferences_test</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">v_wants_to_help_c_</span><span class="p">[:,</span> <span class="n">c</span><span class="p">],</span> <span class="p">:]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_grade</span>
@@ -1258,7 +1260,7 @@ document.write(`
 
     <span class="c1"># %% Unison Manipulation (UM)</span>
 
-    <span class="k">def</span> <span class="nf">_um_main_work_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_um_main_work_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
 <span class="sd">            ...     [ 1. , -0.5,  1. ],</span>

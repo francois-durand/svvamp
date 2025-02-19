@@ -27,7 +27,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
@@ -473,16 +473,16 @@ document.write(`
 <span class="sd">    along with SVVAMP.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">itertools</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">itertools</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">svvamp.preferences.profile</span> <span class="kn">import</span> <span class="n">Profile</span>
-<span class="kn">from</span> <span class="nn">svvamp.utils.misc</span> <span class="kn">import</span> <span class="n">indent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.preferences.profile</span><span class="w"> </span><span class="kn">import</span> <span class="n">Profile</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.utils.misc</span><span class="w"> </span><span class="kn">import</span> <span class="n">indent</span>
 
 
 <div class="viewcode-block" id="StudyProfileCriteria">
 <a class="viewcode-back" href="../../../reference/meta/study_profile_criteria.html#svvamp.StudyProfileCriteria">[docs]</a>
-<span class="k">class</span> <span class="nc">StudyProfileCriteria</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">StudyProfileCriteria</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A set of criteria to study for the simulator about the profiles.</span>
 
 <span class="sd">    Parameters</span>
@@ -521,7 +521,7 @@ document.write(`
 <span class="sd">    to calculate the mean over the profiles. The result will be called &#39;total_u_mean_mean&#39;.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">boolean_criteria</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">numerical_criteria</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">boolean_criteria</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">numerical_criteria</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">special_candidates_criteria</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">array_criteria</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">matrix_criteria</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">boolean_criteria</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -545,7 +545,7 @@ document.write(`
                 <span class="s1">&#39;exists_majority_favorite_rk&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;exists_majority_favorite_ut_ctb&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;exists_majority_favorite_ut&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;exists_irv_immune_candidate&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;exists_super_condorcet_winner&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;not_exists_condorcet_admissible&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;not_exists_weak_condorcet_winner&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;not_exists_condorcet_winner_rk_ctb&#39;</span><span class="p">,</span>
@@ -631,7 +631,7 @@ document.write(`
             <span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">matrix_criteria</span> <span class="o">=</span> <span class="n">matrix_criteria</span>
 
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            &gt;&gt;&gt; study_profile_criteria = StudyProfileCriteria(</span>
 <span class="sd">            ...     boolean_criteria=[&#39;exists_condorcet_winner_rk&#39;],</span>
@@ -682,7 +682,7 @@ document.write(`
 
 <div class="viewcode-block" id="StudyProfileCriteria.check_sanity">
 <a class="viewcode-back" href="../../../reference/meta/study_profile_criteria.html#svvamp.StudyProfileCriteria.check_sanity">[docs]</a>
-    <span class="k">def</span> <span class="nf">check_sanity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_sanity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Check sanity of the object</span>
 
 <span class="sd">        Preforms some basic checks. It is recommended to use this method before launching big simulations.</span>
@@ -738,7 +738,7 @@ document.write(`
 
 <div class="viewcode-block" id="StudyProfileCriteria.remove">
 <a class="viewcode-back" href="../../../reference/meta/study_profile_criteria.html#svvamp.StudyProfileCriteria.remove">[docs]</a>
-    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">criterion</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">criterion</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Remove a criterion</span>
 
 <span class="sd">        Parameters</span>
@@ -795,7 +795,7 @@ document.write(`
 
 <div class="viewcode-block" id="StudyProfileCriteria.append_boolean_criterion">
 <a class="viewcode-back" href="../../../reference/meta/study_profile_criteria.html#svvamp.StudyProfileCriteria.append_boolean_criterion">[docs]</a>
-    <span class="k">def</span> <span class="nf">append_boolean_criterion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">criterion</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">append_boolean_criterion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">criterion</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a boolean criterion</span>
 
 <span class="sd">        Parameters</span>
@@ -828,7 +828,7 @@ document.write(`
 
 <div class="viewcode-block" id="StudyProfileCriteria.append_numerical_criterion">
 <a class="viewcode-back" href="../../../reference/meta/study_profile_criteria.html#svvamp.StudyProfileCriteria.append_numerical_criterion">[docs]</a>
-    <span class="k">def</span> <span class="nf">append_numerical_criterion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">append_numerical_criterion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a numerical criterion</span>
 
 <span class="sd">        Parameters</span>
@@ -870,7 +870,7 @@ document.write(`
 
 <div class="viewcode-block" id="StudyProfileCriteria.rename_numerical_criterion">
 <a class="viewcode-back" href="../../../reference/meta/study_profile_criteria.html#svvamp.StudyProfileCriteria.rename_numerical_criterion">[docs]</a>
-    <span class="k">def</span> <span class="nf">rename_numerical_criterion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">old_name</span><span class="p">,</span> <span class="n">new_name</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rename_numerical_criterion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">old_name</span><span class="p">,</span> <span class="n">new_name</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Rename a numerical criterion</span>
 
 <span class="sd">        Parameters</span>
@@ -905,7 +905,7 @@ document.write(`
 
 <div class="viewcode-block" id="StudyProfileCriteria.append_special_candidates_criterion">
 <a class="viewcode-back" href="../../../reference/meta/study_profile_criteria.html#svvamp.StudyProfileCriteria.append_special_candidates_criterion">[docs]</a>
-    <span class="k">def</span> <span class="nf">append_special_candidates_criterion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">criterion</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">append_special_candidates_criterion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">criterion</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a &#39;special candidates&#39; criterion</span>
 
 <span class="sd">        Parameters</span>
@@ -938,7 +938,7 @@ document.write(`
 
 <div class="viewcode-block" id="StudyProfileCriteria.append_array_criterion">
 <a class="viewcode-back" href="../../../reference/meta/study_profile_criteria.html#svvamp.StudyProfileCriteria.append_array_criterion">[docs]</a>
-    <span class="k">def</span> <span class="nf">append_array_criterion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">criterion</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">append_array_criterion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">criterion</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Add an array criterion</span>
 
 <span class="sd">        Parameters</span>
@@ -971,7 +971,7 @@ document.write(`
 
 <div class="viewcode-block" id="StudyProfileCriteria.append_matrix_criterion">
 <a class="viewcode-back" href="../../../reference/meta/study_profile_criteria.html#svvamp.StudyProfileCriteria.append_matrix_criterion">[docs]</a>
-    <span class="k">def</span> <span class="nf">append_matrix_criterion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">criterion</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">append_matrix_criterion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">criterion</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a matrix criterion</span>
 
 <span class="sd">        Parameters</span>

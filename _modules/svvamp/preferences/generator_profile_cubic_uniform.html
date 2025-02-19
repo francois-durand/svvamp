@@ -27,7 +27,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
@@ -472,14 +472,14 @@ document.write(`
 <span class="sd">    You should have received a copy of the GNU General Public License</span>
 <span class="sd">    along with SVVAMP.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">svvamp.preferences.generator_profile</span> <span class="kn">import</span> <span class="n">GeneratorProfile</span>
-<span class="kn">from</span> <span class="nn">svvamp.preferences.profile</span> <span class="kn">import</span> <span class="n">Profile</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.preferences.generator_profile</span><span class="w"> </span><span class="kn">import</span> <span class="n">GeneratorProfile</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.preferences.profile</span><span class="w"> </span><span class="kn">import</span> <span class="n">Profile</span>
 
 
 <div class="viewcode-block" id="GeneratorProfileCubicUniform">
 <a class="viewcode-back" href="../../../reference/preferences/generator_profile_cubic_uniform.html#svvamp.GeneratorProfileCubicUniform">[docs]</a>
-<span class="k">class</span> <span class="nc">GeneratorProfileCubicUniform</span><span class="p">(</span><span class="n">GeneratorProfile</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">GeneratorProfileCubicUniform</span><span class="p">(</span><span class="n">GeneratorProfile</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Profile generator using the &#39;Cubic uniform&#39; model.</span>
 
 <span class="sd">    Each coefficient ``preferences_ut[v, c]`` is drawn independently and uniformly in the interval [-1, 1]. The</span>
@@ -502,13 +502,13 @@ document.write(`
 <span class="sd">        (10, 3)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_v</span><span class="p">,</span> <span class="n">n_c</span><span class="p">,</span> <span class="n">sort_voters</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_v</span><span class="p">,</span> <span class="n">n_c</span><span class="p">,</span> <span class="n">sort_voters</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_v</span> <span class="o">=</span> <span class="n">n_v</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_c</span> <span class="o">=</span> <span class="n">n_c</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log_creation</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Cubic uniform&#39;</span><span class="p">,</span> <span class="n">n_c</span><span class="p">,</span> <span class="n">n_v</span><span class="p">]</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">sort_voters</span><span class="o">=</span><span class="n">sort_voters</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_v</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_c</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">log_creation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">log_creation</span><span class="p">,</span>
                        <span class="n">sort_voters</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sort_voters</span><span class="p">)</span></div>
 

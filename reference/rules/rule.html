@@ -28,7 +28,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
@@ -615,6 +615,9 @@ algorithms, it can decide manipulation to <code class="docutils literal notransl
 </ul>
 </div></blockquote>
 <p>For a given voting system, the default option is the most precise algorithm running in polynomial time.</p>
+<p><cite>precheck_heuristic</cite> is a bool. If <code class="docutils literal notranslate"><span class="pre">True</span></code>, then before computing CM, we check whether a relatively simple
+heuristic can guarantee CM. However this heuristic is costly, so it is better to avoid it for rules where computing
+CM exactly is cheap, or when speed is paramount.</p>
 <p><strong>Option for Independence of Irrelevant Alternatives (IIA)</strong></p>
 <p>The default algorithm for <code class="xref py py-attr docutils literal notranslate"><span class="pre">not_iia</span></code> first performs some preliminary checks based on the
 known properties of the voting system under study. For example, if it meets the Condorcet criterion,
@@ -1379,7 +1382,7 @@ but not the numerical evaluation of <span class="math notranslate nohighlight">\
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="svvamp.Rule.options_parameters">
-<span class="sig-name descname"><span class="pre">options_parameters</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'cm_option':</span> <span class="pre">{'allowed':</span> <span class="pre">['lazy',</span> <span class="pre">'exact'],</span> <span class="pre">'default':</span> <span class="pre">'lazy'},</span> <span class="pre">'icm_option':</span> <span class="pre">{'allowed':</span> <span class="pre">['lazy'],</span> <span class="pre">'default':</span> <span class="pre">'lazy'},</span> <span class="pre">'iia_subset_maximum_size':</span> <span class="pre">{'allowed':</span> <span class="pre">&lt;function</span> <span class="pre">is_number&gt;,</span> <span class="pre">'default':</span> <span class="pre">2},</span> <span class="pre">'im_option':</span> <span class="pre">{'allowed':</span> <span class="pre">['lazy',</span> <span class="pre">'exact'],</span> <span class="pre">'default':</span> <span class="pre">'lazy'},</span> <span class="pre">'tm_option':</span> <span class="pre">{'allowed':</span> <span class="pre">['lazy',</span> <span class="pre">'exact'],</span> <span class="pre">'default':</span> <span class="pre">'exact'},</span> <span class="pre">'um_option':</span> <span class="pre">{'allowed':</span> <span class="pre">['lazy',</span> <span class="pre">'exact'],</span> <span class="pre">'default':</span> <span class="pre">'lazy'}}</span></em><a class="headerlink" href="#svvamp.Rule.options_parameters" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">options_parameters</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'cm_option':</span> <span class="pre">{'allowed':</span> <span class="pre">['lazy',</span> <span class="pre">'exact'],</span> <span class="pre">'default':</span> <span class="pre">'lazy'},</span> <span class="pre">'icm_option':</span> <span class="pre">{'allowed':</span> <span class="pre">['lazy'],</span> <span class="pre">'default':</span> <span class="pre">'lazy'},</span> <span class="pre">'iia_subset_maximum_size':</span> <span class="pre">{'allowed':</span> <span class="pre">&lt;function</span> <span class="pre">is_number&gt;,</span> <span class="pre">'default':</span> <span class="pre">2},</span> <span class="pre">'im_option':</span> <span class="pre">{'allowed':</span> <span class="pre">['lazy',</span> <span class="pre">'exact'],</span> <span class="pre">'default':</span> <span class="pre">'lazy'},</span> <span class="pre">'precheck_heuristic':</span> <span class="pre">{'allowed':</span> <span class="pre">&lt;function</span> <span class="pre">is_bool&gt;,</span> <span class="pre">'default':</span> <span class="pre">True},</span> <span class="pre">'tm_option':</span> <span class="pre">{'allowed':</span> <span class="pre">['lazy',</span> <span class="pre">'exact'],</span> <span class="pre">'default':</span> <span class="pre">'exact'},</span> <span class="pre">'um_option':</span> <span class="pre">{'allowed':</span> <span class="pre">['lazy',</span> <span class="pre">'exact'],</span> <span class="pre">'default':</span> <span class="pre">'lazy'}}</span></em><a class="headerlink" href="#svvamp.Rule.options_parameters" title="Link to this definition">#</a></dt>
 <dd><p>Options parameters. It is a dictionary of allowed and default options. Allowed is a minimal check that will
 be performed before launching big simulations, but other checks might be performed when setting the option.
 Allowed is either a list of values, like [‘lazy’, ‘fast’, ‘exact’], or a function checking if the parameter
