@@ -2844,7 +2844,7 @@ class Profile(my_log.MyLog):
             >>> profile.exists_irv_immune_candidate
             False
         """
-        return self.exists_condorcet_order_rk_ctb and not(np.any(self.c_might_be_there_when_cw_is_eliminated_irv_style))
+        return self.exists_condorcet_winner_rk_ctb and not(np.any(self.c_might_be_there_when_cw_is_eliminated_irv_style))
 
     @cached_property
     def necessary_coalition_size_to_break_irv_immunity(self):
