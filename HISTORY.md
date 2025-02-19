@@ -1,5 +1,14 @@
 # History
 
+# 0.12.0 (2025-02-19): Accelerations and Bug Fixes
+
+* In ``Rule`` and its subclasses, add option ``precheck_heuristic`` (heuristic precheck before computing CM). In
+  earlier versions of SVVAMP, this precheck was automatically activated for all rules. However, this heuristic is
+  costly. Hence, for rules where computing CM exactly is cheap, it is now deactivated by default.
+* Accelerate ``GeneratorProfileIc`` and ``GeneratorProfilePerturbedCulture``.
+* Rename "IRV-immune candidate" to "super Condorcet winner".
+* Fix bug in ``Profile.exists_super_condorcet_winner``.
+
 ## 0.11.0 (2024-10-18): Conversion to Poetry
 
 * Conversion to Poetry instead of Setuptools.
