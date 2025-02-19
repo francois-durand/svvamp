@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "svvamp"
-version = "0.11.0"
+version = "0.12.0"
 description = "Simulator of Various Voting Algorithms in Manipulating Populations"
 authors = ["François Durand <fradurand@gmail.com>"]
 repository = "https://github.com/francois-durand/svvamp"
