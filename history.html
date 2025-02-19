@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>History &#8212; SVVAMP 0.11.0 documentation</title>
+    <title>History &#8212; SVVAMP 0.12.0 documentation</title>
   
   
   
@@ -35,7 +35,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
   <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
 
-    <script src="_static/documentation_options.js?v=f3b36f1a"></script>
+    <script src="_static/documentation_options.js?v=61ccb1f1"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -116,7 +116,7 @@
   
   
   
-    <p class="title logo__title">SVVAMP 0.11.0 documentation</p>
+    <p class="title logo__title">SVVAMP 0.12.0 documentation</p>
   
 </a></div>
     
@@ -455,6 +455,17 @@ document.write(`
                   
   <section id="history">
 <h1>History<a class="headerlink" href="#history" title="Link to this heading">#</a></h1>
+</section>
+<section id="accelerations-and-bug-fixes">
+<h1>0.12.0 (2025-02-19): Accelerations and Bug Fixes<a class="headerlink" href="#accelerations-and-bug-fixes" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>In <code class="docutils literal notranslate"><span class="pre">Rule</span></code> and its subclasses, add option <code class="docutils literal notranslate"><span class="pre">precheck_heuristic</span></code> (heuristic precheck before computing CM). In
+earlier versions of SVVAMP, this precheck was automatically activated for all rules. However, this heuristic is
+costly. Hence, for rules where computing CM exactly is cheap, it is now deactivated by default.</p></li>
+<li><p>Accelerate <code class="docutils literal notranslate"><span class="pre">GeneratorProfileIc</span></code> and <code class="docutils literal notranslate"><span class="pre">GeneratorProfilePerturbedCulture</span></code>.</p></li>
+<li><p>Rename “IRV-immune candidate” to “super Condorcet winner”.</p></li>
+<li><p>Fix bug in <code class="docutils literal notranslate"><span class="pre">Profile.exists_super_condorcet_winner</span></code>.</p></li>
+</ul>
 <section id="conversion-to-poetry">
 <h2>0.11.0 (2024-10-18): Conversion to Poetry<a class="headerlink" href="#conversion-to-poetry" title="Link to this heading">#</a></h2>
 <ul class="simple">
@@ -873,6 +884,8 @@ diamond inheritance. Rename most classes, properties and methods.</p></li>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">History</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#accelerations-and-bug-fixes">0.12.0 (2025-02-19): Accelerations and Bug Fixes</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conversion-to-poetry">0.11.0 (2024-10-18): Conversion to Poetry</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-profile-generators-voting-rules-and-cm-algorithms">0.10.0 (2023-09-29): New profile generators, voting rules and CM algorithms</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compatibility-issues">0.9.1 (2022-03-24): Compatibility issues</a></li>
@@ -911,6 +924,9 @@ diamond inheritance. Rename most classes, properties and methods.</p></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp-s-core-features">0.0.2 (2015-02-16): SVVAMP’s Core Features</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#first-release">0.0.1 (2015-02-14): First Release</a></li>
 </ul>
+</li>
+</ul>
+
   </nav></div>
 
   <div class="sidebar-secondary-item">
