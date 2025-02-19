@@ -2829,11 +2829,11 @@ class Profile(my_log.MyLog):
         return c_might_be_there_when_w_is_eliminated_irv_style
 
     @cached_property
-    def exists_irv_immune_candidate(self):
-        """Whether there exists a 'IRV-immune' candidate.
+    def exists_super_condorcet_winner(self):
+        """Whether there exists a super Condorcet winner.
 
-        A candidate `w` is IRV-immune iff she is Condorcet winner (rk ctb) and for any other candidate `c`,
-        we have that `c_might_be_there_when_cw_is_eliminated_irv_style[c] ` is False. In other words, there is no
+        A candidate `w` is the super Condorcet winner iff she is Condorcet winner (rk ctb) and for any other candidate
+        `c`, we have that `c_might_be_there_when_cw_is_eliminated_irv_style[c] ` is False. In other words, there is no
         subset of candidates containing `w` such that `w` has at most `n_v / card(subset)` plurality votes.
 
         Examples
@@ -2841,7 +2841,7 @@ class Profile(my_log.MyLog):
             >>> profile = Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [1, 2, 0], [1, 2, 0], [2, 0, 1]])
             >>> profile.condorcet_winner_rk_ctb
             2
-            >>> profile.exists_irv_immune_candidate
+            >>> profile.exists_super_condorcet_winner
             False
         """
         return self.exists_condorcet_winner_rk_ctb and not(np.any(self.c_might_be_there_when_cw_is_eliminated_irv_style))

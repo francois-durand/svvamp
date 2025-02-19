@@ -133,7 +133,7 @@ class ExperimentsCompiler:
         d_criterion_legend = {
             'exists_condorcet_winner_rk': 'CW',
             'exists_condorcet_order_rk': 'CO',
-            # 'exists_irv_immune_candidate': 'IRV-immune candidate',
+            # 'exists_super_condorcet_winner': 'SCW',
             'exists_resistant_condorcet_winner': 'RCW',
             'exists_majority_favorite_rk': 'MF'
         }
