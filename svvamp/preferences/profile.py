@@ -2898,3 +2898,36 @@ class Profile(my_log.MyLog):
                         n_m = min(n_m, n_m_new)
             result[c] = n_m
         return result
+
+    @cached_property
+    def exists_semi_resistant_condorcet_winner(self):
+        """Whether there exists a semi-resistant Condorcet winner.
+
+        In a purely ordinal setting without indiferrence, a candidate `w` is the semi-resistant Condorcet winner (SRCW)
+        iff for any pair (c, d) of other candidates, we have `|w > c and w > d| > |c > w|`. In other words, the
+        manipulators in favor of `c` cannot make it so that the duel (w, d) has a worse score than the duel (c, w).
+
+        In the general case, the condition is `|non c >_ut w and w >_rk d| > |c >_rk w|`.
+
+        Examples
+        --------
+            >>> profile = Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [1, 2, 0], [1, 2, 0], [2, 0, 1]])
+            >>> profile.condorcet_winner_rk
+            2
+            >>> profile.exists_semi_resistant_condorcet_winner
+            False
+        """
+        if not self.exists_condorcet_winner_rk:
+            return False
+        w = self.condorcet_winner_rk
+        for c in range(self.n_c):
+            if c == w:
+                continue
+            v_does_not_prefer_c_to_w = (self.preferences_ut[:, w] >= self.preferences_ut[:, c])
+            for d in range(self.n_c):
+                if d == w or d == c:
+                    continue
+                v_prefers_w_to_d = (self.preferences_borda_rk[:, w] > self.preferences_borda_rk[:, d])
+                if np.sum(np.logical_and(v_does_not_prefer_c_to_w, v_prefers_w_to_d)) <= self.matrix_duels_rk[c, w]:
+                    return False
+        return True

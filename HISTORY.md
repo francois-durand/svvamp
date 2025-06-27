@@ -1,6 +1,6 @@
 # History
 
-# 0.12.0 (2025-02-19): Accelerations and Bug Fixes
+## 0.12.0 (2025-02-19): Accelerations and Bug Fixes
 
 * In ``Rule`` and its subclasses, add option ``precheck_heuristic`` (heuristic precheck before computing CM). In
   earlier versions of SVVAMP, this precheck was automatically activated for all rules. However, this heuristic is
