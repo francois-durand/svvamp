@@ -412,11 +412,11 @@ class RuleKemeny(Rule):
         #   * score(r) - score(r') >= 0
         #   * [W(c, w) + W(j_1, w) + ... + W(j_k, w)] - [W(w, c) + W(w, j_1) + ... + W(w, j_k)] >= 0
         #   * A(c, w) + A(j_1, w) + ... + A(j_k, w) >= 0  (where A is the antisymmetric matrix of duels)
-        #   * A_s(c, w) + n_m + (A(j_1, w) + n_m) + ... + (A(j_k, w) + n_m) >= 0
+        #   * A_s(c, w) + n_m + (A_s(j_1, w) + n_m) + ... + (A_s(j_k, w) + n_m) >= 0
         # It must only be true for a well-chosen subset {j_1, \ldots, j_k}, which is true iff it holds for the most
-        # favorable subset where each (A(j, w) + n_m) is positive. So:
-        #   * A_s(c, w) + n_m + \sum_{j != c, w} max(0, A(j, w) + n_m)) >= 0.
-        #   * M(c, w) + \sum_{j != c, w} max(O, M(j, w)) >= 0, where M = A + n_m.
+        # favorable subset where each (A_s(j, w) + n_m) is positive. So:
+        #   * A_s(c, w) + n_m + \sum_{j != c, w} max(0, A_s(j, w) + n_m)) >= 0.
+        #   * M(c, w) + \sum_{j != c, w} max(O, M(j, w)) >= 0, where M = A_s + n_m.
         n_c = self.profile_.n_c
         n_m = self.profile_.matrix_duels_ut[c, self.w_]
         profile_sincere = Profile(
