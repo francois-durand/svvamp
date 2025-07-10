@@ -64,6 +64,7 @@ from svvamp.rules.rule_split_cycle import RuleSplitCycle
 from svvamp.rules.rule_star import RuleSTAR
 from svvamp.rules.rule_two_round import RuleTwoRound
 from svvamp.rules.rule_veto import RuleVeto
+from svvamp.rules.rule_young import RuleYoung
 
 # Voting Rule: IRV Family
 from svvamp.rules.rule_exhaustive_ballot import RuleExhaustiveBallot
