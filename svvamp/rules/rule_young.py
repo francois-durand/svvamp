@@ -96,7 +96,7 @@ class RuleYoung(DeleteCacheMixin, my_log.MyLog):
             # weak Condorcet winners, but none of them is a Condorcet winner. We do not try to cover this edge case
             # for the moment.
             return np.nan
-        if self.profile_.exists_semi_resistant_condorcet_winner:
+        if self.profile_.exists_pair_safe_condorcet_winner:
             # TODO: In cases with indifference, check if this condition is correct.
             # If there is a semi-resistant Condorcet winner, then it is not CM
             return False

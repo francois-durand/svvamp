@@ -134,7 +134,8 @@ class ExperimentsCompiler:
             'exists_condorcet_winner_rk': 'CW',
             'exists_condorcet_order_rk': 'CO',
             'exists_super_condorcet_winner': 'SCW',
-            'exists_semi_resistant_condorcet_winner': 'SRCW',
+            'exists_pair_safe_condorcet_winner': 'PSCW',
+            'exists_set_safe_condorcet_winner': 'SSCW',
             'exists_resistant_condorcet_winner': 'RCW',
             'exists_majority_favorite_rk': 'MF'
         }

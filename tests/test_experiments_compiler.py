@@ -62,11 +62,14 @@ def test():
         <BLANKLINE>
         [2 rows x 24 columns]
         >>> experiment_compiler.profile_features_bar_plot()  # doctest: +NORMALIZE_WHITESPACE
-             Rate
-        CW    1.0
-        CO    1.0
-        RCW   1.0
-        MF    1.0
+              Rate
+        CW     1.0
+        CO     1.0
+        SCW    1.0
+        PSCW   1.0
+        SSCW   1.0
+        RCW    1.0
+        MF     1.0
         >>> experiment_compiler.cm_rate_bar_plot()  # doctest: +NORMALIZE_WHITESPACE
                      Rate (lower bound)  Rate (upper bound)  Rate (uncertainty)
         Rule (abbr)

@@ -2900,10 +2900,44 @@ class Profile(my_log.MyLog):
         return result
 
     @cached_property
-    def exists_semi_resistant_condorcet_winner(self):
-        """Whether there exists a semi-resistant Condorcet winner.
+    def size_bicoalition(self):
+        """Size of the bicoalition.
 
-        In a purely ordinal setting without indiferrence, a candidate `w` is the semi-resistant Condorcet winner (SRCW)
+        If there is no Condorcet winner (rk ctb), then return np.nan. If there is a Condorcet winner (rk ctb), then
+        size_bicoalition[c, d] is the size of the bicoalition (c, d) (cf. below). This notion is used for the notions
+        of pair-safe Condorcet winner and set-safe Condorcet winner.
+
+        Returns
+        -------
+        ndarray or np.nan
+            If there is no :attr:`condorcet_winner_rk`, then return np.nan.
+            If there is a :attr:`condorcet_winner_rk`, denoted w, then return a 2D array of shape (n_c, n_c) where the
+            value at position (c, d) is the size of the bicoalition (c, d), i.e., the number of voters who do not
+            prefer `c` to `w` in the sense of utilities (i.e., who would stay sincere in the context of a manipulation
+            for `c`) and who prefer `w` to `d` in the sense of rankings. In particular `size_bicoalition[c, c]` is the
+            number of voters who rank `c` before `w`.  By convention (and in accordance with the general definition),
+            all coefficients of the row `w` and the column `w` are set to 0.
+        """
+        if not self.exists_condorcet_winner_rk:
+            return np.nan
+        w = self.condorcet_winner_rk
+        size_bicoalition = np.zeros((self.n_c, self.n_c), dtype=int)
+        for c in range(self.n_c):
+            if c == w:
+                continue
+            v_does_not_prefer_c_to_w = (self.preferences_ut[:, w] >= self.preferences_ut[:, c])
+            for d in range(self.n_c):
+                if d == w:
+                    continue
+                v_prefers_w_to_d = (self.preferences_borda_rk[:, w] > self.preferences_borda_rk[:, d])
+                size_bicoalition[c, d] = np.sum(np.logical_and(v_does_not_prefer_c_to_w, v_prefers_w_to_d))
+        return size_bicoalition
+
+    @cached_property
+    def pair_safe_condorcet_winner(self):
+        """Integer or ``NaN``. Pair-Safe Condorcet Winner (PSCW). If there is no such candidate, then ``NaN``.
+
+        In a purely ordinal setting without indifference, a candidate `w` is the pair-safe Condorcet winner (PSCW)
         iff for any pair (c, d) of other candidates, we have `|w > c and w > d| > |c > w|`. In other words, the
         manipulators in favor of `c` cannot make it so that the duel (w, d) has a worse score than the duel (c, w).
 
@@ -2911,23 +2945,103 @@ class Profile(my_log.MyLog):
 
         Examples
         --------
-            >>> profile = Profile(preferences_rk=[[0, 2, 1], [0, 2, 1], [1, 2, 0], [1, 2, 0], [2, 0, 1]])
-            >>> profile.condorcet_winner_rk
-            2
-            >>> profile.exists_semi_resistant_condorcet_winner
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.pair_safe_condorcet_winner
+            0
+
+        No PSCW:
+
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [1, 2, 0], [2, 0, 1]])
+            >>> profile.pair_safe_condorcet_winner
+            nan
+
+        See Also
+        --------
+        :attr:`~svvamp.Population.exists_pair_safe_condorcet_winner`,
+        :attr:`~svvamp.Population.not_exists_pair_safe_condorcet_winner`.
+        """
+        if not self.exists_condorcet_winner_rk:
+            return np.nan
+        w = self.condorcet_winner_rk
+        for c in range(self.n_c):
+            if c == w:
+                continue
+            for d in range(self.n_c):
+                if d == w or d == c:
+                    continue
+                n_voters_who_do_not_prefer_c_to_w_and_rank_w_before_d = self.size_bicoalition[c, d]
+                if n_voters_who_do_not_prefer_c_to_w_and_rank_w_before_d <= self.matrix_duels_rk[c, w]:
+                    return np.nan
+        return w
+
+    @cached_property
+    def exists_pair_safe_condorcet_winner(self):
+        """Boolean (``True`` iff there is a :attr:`~svvamp.Population.pair_safe_condorcet_winner`).
+
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.exists_pair_safe_condorcet_winner
+            True
+        """
+        return not np.isnan(self.pair_safe_condorcet_winner)
+
+    @cached_property
+    def not_exists_pair_safe_condorcet_winner(self):
+        """Boolean (``True`` iff there is no :attr:`~svvamp.Population.pair_safe_condorcet_winner`).
+
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.not_exists_pair_safe_condorcet_winner
             False
         """
+        return bool(np.isnan(self.pair_safe_condorcet_winner))
+
+    @cached_property
+    def set_safe_condorcet_winner(self):
+        # TODO: Document this notion.
         if not self.exists_condorcet_winner_rk:
             return False
         w = self.condorcet_winner_rk
         for c in range(self.n_c):
             if c == w:
                 continue
-            v_does_not_prefer_c_to_w = (self.preferences_ut[:, w] >= self.preferences_ut[:, c])
+            n_voters_who_do_not_prefer_c_to_w = self.n_v - self.matrix_duels_ut[c, w]
+            total = 2 * n_voters_who_do_not_prefer_c_to_w - self.n_v
             for d in range(self.n_c):
                 if d == w or d == c:
                     continue
-                v_prefers_w_to_d = (self.preferences_borda_rk[:, w] > self.preferences_borda_rk[:, d])
-                if np.sum(np.logical_and(v_does_not_prefer_c_to_w, v_prefers_w_to_d)) <= self.matrix_duels_rk[c, w]:
-                    return False
+                total += min(0, 2 * self.size_bicoalition[c, d] - self.n_v)
+            if total <= 0:
+                return False
         return True
+
+    @cached_property
+    def exists_set_safe_condorcet_winner(self):
+        """Boolean (``True`` iff there is a :attr:`~svvamp.Population.set_safe_condorcet_winner`).
+
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.exists_set_safe_condorcet_winner
+            True
+        """
+        return not np.isnan(self.set_safe_condorcet_winner)
+
+    @cached_property
+    def not_exists_set_safe_condorcet_winner(self):
+        """Boolean (``True`` iff there is no :attr:`~svvamp.Population.set_safe_condorcet_winner`).
+
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.not_exists_set_safe_condorcet_winner
+            False
+        """
+        return bool(np.isnan(self.set_safe_condorcet_winner))
