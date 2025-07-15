@@ -2929,8 +2929,8 @@ class Profile(my_log.MyLog):
             for d in range(self.n_c):
                 if d == w:
                     continue
-                v_prefers_w_to_d = (self.preferences_borda_rk[:, w] > self.preferences_borda_rk[:, d])
-                size_bicoalition[c, d] = np.sum(np.logical_and(v_does_not_prefer_c_to_w, v_prefers_w_to_d))
+                v_ranks_w_above_d = (self.preferences_borda_rk[:, w] > self.preferences_borda_rk[:, d])
+                size_bicoalition[c, d] = np.sum(np.logical_and(v_does_not_prefer_c_to_w, v_ranks_w_above_d))
         return size_bicoalition
 
     @cached_property
@@ -3005,20 +3005,20 @@ class Profile(my_log.MyLog):
     def set_safe_condorcet_winner(self):
         # TODO: Document this notion.
         if not self.exists_condorcet_winner_rk:
-            return False
+            return np.nan
         w = self.condorcet_winner_rk
         for c in range(self.n_c):
             if c == w:
                 continue
-            n_voters_who_do_not_prefer_c_to_w = self.n_v - self.matrix_duels_ut[c, w]
-            total = 2 * n_voters_who_do_not_prefer_c_to_w - self.n_v
+            n_voters_who_rank_w_above_c = self.matrix_duels_rk[w, c]
+            total = 2 * n_voters_who_rank_w_above_c - self.n_v
             for d in range(self.n_c):
                 if d == w or d == c:
                     continue
                 total += min(0, 2 * self.size_bicoalition[c, d] - self.n_v)
             if total <= 0:
-                return False
-        return True
+                return np.nan
+        return w
 
     @cached_property
     def exists_set_safe_condorcet_winner(self):
