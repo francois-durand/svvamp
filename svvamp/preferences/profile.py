@@ -2941,7 +2941,7 @@ class Profile(my_log.MyLog):
         iff for any pair (c, d) of other candidates, we have `|w > c and w > d| > |c > w|`. In other words, the
         manipulators in favor of `c` cannot make it so that the duel (w, d) has a worse score than the duel (c, w).
 
-        In the general case, the condition is `|non c >_ut w and w >_rk d| > |c >_rk w|`.
+        In the general case, the condition is `| w >=_ut c and w >_rk d| > |c >_rk w|`.
 
         Examples
         --------
@@ -3003,7 +3003,41 @@ class Profile(my_log.MyLog):
 
     @cached_property
     def set_safe_condorcet_winner(self):
-        # TODO: Document this notion.
+        """
+        Integer or ``NaN``. Set-Safe Condorcet Winner (SSCW). If there is no such candidate, then ``NaN``.
+
+        A candidate `w` is the set-safe Condorcet winner (SSCW) iff for any other candidate `c`, the manipulators in
+        favor of `c` cannot make it so that in a subset S of the candidates containing both `c` and `w`, candidate
+        `w` has a Borda score less than or equal to the average Borda score. If we consider antisymmetric Borda scores
+        (counting +1 each time a candidate is below, and -1 each time a candidate is above), then it means that
+        the manipulators cannot make it so that `w` has a Borda score less than or equal to zero in a subset of
+        candidates containing both `c` and `w`.
+
+        It can be shown that it is equivalent to say that for each candidate `c`, we have that
+        | w >_rk c| - n_v / 2 + \sum_{d \neq w, c} min(0, | w >=_ut c and w >_rk d | - n_v / 2) > 0.
+
+        Considering the subsets with only one other candidate `d`, we deduce that a Set-Safe Condorcet winner (SSCW) is
+        also a Pair-Safe Condorcet winner (PSCW). Considering the subsets with no other candidate `d`, we deduce
+        that an SSCW is a Condorcet winner (rk).
+
+        Examples
+        --------
+            >>> from svvamp import Profile
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+            >>> profile.set_safe_condorcet_winner
+            0
+
+        No SSCW:
+
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [1, 2, 0], [2, 0, 1]])
+            >>> profile.set_safe_condorcet_winner
+            nan
+
+        See Also
+        --------
+        :attr:`~svvamp.Population.exists_set_safe_condorcet_winner`,
+        :attr:`~svvamp.Population.not_exists_set_safe_condorcet_winner`.
+        """
         if not self.exists_condorcet_winner_rk:
             return np.nan
         w = self.condorcet_winner_rk
