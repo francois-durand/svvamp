@@ -37,10 +37,9 @@ class RuleYoung(DeleteCacheMixin, my_log.MyLog):
     Consider that the implementation of `is_cm_` is trustworthy only if voters have no indifference.
     """
 
-    def __init__(self, log_identity='YOUNG'):
-        # Log
+    def __init__(self):
         super().__init__()
-        self.log_identity = log_identity
+        self.log_identity = 'YOUNG'
         # Initialize the computed variables
         self.profile_ = None
 
@@ -85,6 +84,7 @@ class RuleYoung(DeleteCacheMixin, my_log.MyLog):
         """Boolean (or ``numpy.nan``). ``True`` if a CM is possible, ``False`` otherwise. If the algorithm cannot
         decide, then ``numpy.nan``.
         """
+        self.mylog("CM: Compute is_cm_", 1)
         if not self.profile_.exists_weak_condorcet_winner:
             # For any candidate (and in particular the winner), there exists an opponent strictly preferred
             # by more than half of the voters. Hence, it is CM.
@@ -126,8 +126,10 @@ class RuleYoung(DeleteCacheMixin, my_log.MyLog):
         bool or numpy.nan
             True if it is CM in favor of `c`, False otherwise. Can be `numpy.nan` if the algorithm cannot decide.
         """
-        n_manipulators = self.profile_.matrix_duels_ut[c, self.w_]
-        score_c_cm_lower_bound = 2 * n_manipulators - 1
+        self.mylogv("CM: Compute _is_cm_for_c_ for c =", c, 1)
+        n_m = self.profile_.matrix_duels_ut[c, self.w_]
+        score_c_cm_lower_bound = 2 * n_m - 1
+        self.mylogv("CM: score_c_cm_lower_bound =", score_c_cm_lower_bound, 1)
         # Note : We could add the sincere voters who rank `c` first (and thus have `c` indifferent with `w`), but
         # this is a very marginal case, so we do not waste computation time on it.
 
@@ -147,9 +149,11 @@ class RuleYoung(DeleteCacheMixin, my_log.MyLog):
                                  > self.profile_.preferences_borda_rk[:, d])
             new_upper_bound = 2 * np.sum(np.logical_and(v_sincere, v_ranks_w_above_d)) - 1
             score_w_cm_upper_bound = min(score_w_cm_upper_bound, new_upper_bound)
+        self.mylogv("CM: score_w_cm_upper_bound =", score_w_cm_upper_bound, 1)
         if not score_c_cm_lower_bound > score_w_cm_upper_bound:
             # We failed to prove that `c` can surpass `w`, but it might still be possible (especially if we have
             # indifference).
+            self.mylogv("CM: Failed to prove CM for c =", c, 2)
             return np.nan
 
         # We manage to defeat w. Now, we need to check that we defeat all the d's. Let d be a third candidate.
@@ -163,10 +167,14 @@ class RuleYoung(DeleteCacheMixin, my_log.MyLog):
             v_ranks_d_above_c = (self.profile_.preferences_borda_rk[:, d]
                                  > self.profile_.preferences_borda_rk[:, c])
             score_d_upper_bound = 2 * np.sum(np.logical_and(v_sincere, v_ranks_d_above_c)) - 1
+            self.mylogv("CM: d =", d, 2)
+            self.mylogv("CM: score_d_upper_bound =", score_d_upper_bound, 2)
             if not score_c_cm_lower_bound > score_d_upper_bound:
                 # We failed to prove that `c` can surpass `d`, but it might still be possible (especially if we have
                 # indifference).
+                self.mylogv("CM: Failed to prove CM for c =", c, 2)
                 return np.nan
 
         # We managed to prove that `c` can surpass `w` and all the d's.
+        self.mylogv("CM: Proved CM for c =", c, 2)
         return True

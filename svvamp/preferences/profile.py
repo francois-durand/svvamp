@@ -2809,6 +2809,7 @@ class Profile(my_log.MyLog):
             >>> print(profile.c_might_be_there_when_cw_is_eliminated_irv_style)
             None
         """
+        self.mylog("Compute c_might_be_there_when_cw_is_eliminated_irv_style", 1)
         if not self.exists_condorcet_winner_rk_ctb:
             return None
         w = self.condorcet_winner_rk_ctb
@@ -2844,6 +2845,7 @@ class Profile(my_log.MyLog):
             >>> profile.exists_super_condorcet_winner
             False
         """
+        self.mylog("Compute exists_super_condorcet_winner", 1)
         return self.exists_condorcet_winner_rk_ctb and not(np.any(self.c_might_be_there_when_cw_is_eliminated_irv_style))
 
     @cached_property
@@ -2874,6 +2876,7 @@ class Profile(my_log.MyLog):
             >>> print(profile.necessary_coalition_size_to_break_irv_immunity)
             None
         """
+        self.mylog("Compute necessary_coalition_size_to_break_irv_immunity", 1)
         if not self.exists_condorcet_winner_rk_ctb:
             return None
         w = self.condorcet_winner_rk_ctb
@@ -2918,6 +2921,7 @@ class Profile(my_log.MyLog):
             number of voters who rank `c` before `w`.  By convention (and in accordance with the general definition),
             all coefficients of the row `w` and the column `w` are set to 0.
         """
+        self.mylog("Compute size_bicoalition", 1)
         if not self.exists_condorcet_winner_rk:
             return np.nan
         w = self.condorcet_winner_rk
@@ -2961,6 +2965,7 @@ class Profile(my_log.MyLog):
         :attr:`~svvamp.Population.exists_pair_safe_condorcet_winner`,
         :attr:`~svvamp.Population.not_exists_pair_safe_condorcet_winner`.
         """
+        self.mylog("Compute pair_safe_condorcet_winner", 1)
         if not self.exists_condorcet_winner_rk:
             return np.nan
         w = self.condorcet_winner_rk
@@ -3014,7 +3019,7 @@ class Profile(my_log.MyLog):
         candidates containing both `c` and `w`.
 
         It can be shown that it is equivalent to say that for each candidate `c`, we have that
-        | w >_rk c| - n_v / 2 + \sum_{d \neq w, c} min(0, | w >=_ut c and w >_rk d | - n_v / 2) > 0.
+        | w >_rk c| - n_v / 2 + sum_{d \neq w, c} min(0, | w >=_ut c and w >_rk d | - n_v / 2) > 0.
 
         Considering the subsets with only one other candidate `d`, we deduce that a Set-Safe Condorcet winner (SSCW) is
         also a Pair-Safe Condorcet winner (PSCW). Considering the subsets with no other candidate `d`, we deduce
@@ -3038,6 +3043,7 @@ class Profile(my_log.MyLog):
         :attr:`~svvamp.Population.exists_set_safe_condorcet_winner`,
         :attr:`~svvamp.Population.not_exists_set_safe_condorcet_winner`.
         """
+        self.mylog("Compute set_safe_condorcet_winner", 1)
         if not self.exists_condorcet_winner_rk:
             return np.nan
         w = self.condorcet_winner_rk

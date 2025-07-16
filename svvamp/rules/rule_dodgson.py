@@ -39,10 +39,9 @@ class RuleDodgson(DeleteCacheMixin, my_log.MyLog):
     Consider that the implementation of `is_cm_` is trustworthy only if voters have no indifference.
     """
 
-    def __init__(self, log_identity='DODGSON'):
-        # Log
+    def __init__(self):
         super().__init__()
-        self.log_identity = log_identity
+        self.log_identity = 'DODGSON'
         # Initialize the computed variables
         self.profile_ = None
 
@@ -87,6 +86,7 @@ class RuleDodgson(DeleteCacheMixin, my_log.MyLog):
         """Boolean (or ``numpy.nan``). ``True`` if a CM is possible, ``False`` otherwise. If the algorithm cannot
         decide, then ``numpy.nan``.
         """
+        self.mylog("CM: Compute is_cm_", 1)
         if not self.profile_.exists_condorcet_admissible:
             # For any candidate (and in particular the winner), there exists an opponent strictly preferred
             # by more than half of the voters. Hence, it is CM.
@@ -129,7 +129,7 @@ class RuleDodgson(DeleteCacheMixin, my_log.MyLog):
         bool or numpy.nan
             True if it is CM in favor of `c`, False otherwise. Can be `numpy.nan` if the algorithm cannot decide.
         """
-        # print(f"{c=}")
+        self.mylogv("CM: Compute _is_cm_for_c_ for c =", c, 1)
         strict_majority = floor(self.profile_.n_v / 2) + 1
         strict_minority = self.profile_.n_v - strict_majority
         v_sincere = (self.profile_.preferences_ut[:, self.w_] >= self.profile_.preferences_ut[:, c])
@@ -148,19 +148,20 @@ class RuleDodgson(DeleteCacheMixin, my_log.MyLog):
                 self.profile_.preferences_borda_rk[:, d] > self.profile_.preferences_borda_rk[:, c]
             ))
             if n_voters_who_are_sincere_and_rank_d_above_c[d] > strict_minority:
-                # print("c_does_not_win_against_some_d = True")
+                self.mylogv("CM: c does not win against d =", d, 2)
                 c_does_not_win_against_some_d = True
                 penalty_c_cm_lower_bound += n_voters_who_are_sincere_and_rank_d_above_c[d] - strict_minority
         penalty_c_cm_lower_bound += self.profile_.matrix_duels_rk[self.w_, c] - strict_minority
+        self.mylogv("CM: penalty_c_cm_lower_bound =", penalty_c_cm_lower_bound, 2)
         # Bound for `w`: Swaps needed to become majority winner, only with sincere voters. This is necessarily possible,
         # because `w` is Condorcet-admissible (hence the manipulators are a minority).
         n_w_first = self.profile_.plurality_scores_rk[self.w_]
         points_needed_for_w_to_be_majority_winner = max(0, strict_majority - n_w_first)
         # Quick check with loose bound
         penalty_w_cm_upper_bound = points_needed_for_w_to_be_majority_winner * (self.profile_.n_c - 1)
-        # print(f"{penalty_c_cm_lower_bound=}")
-        # print(f"{penalty_w_cm_upper_bound=}")
+        self.mylogv("CM: penalty_w_cm_upper_bound (loose) =", penalty_w_cm_upper_bound, 2)
         if penalty_c_cm_lower_bound > penalty_w_cm_upper_bound:
+            self.mylogv("CM: Impossible for c =", c, 2)
             return False
         # Slower check with improved bound
         penalty_w_cm_upper_bound = 0
@@ -173,16 +174,17 @@ class RuleDodgson(DeleteCacheMixin, my_log.MyLog):
             else:
                 penalty_w_cm_upper_bound += n_sincere_voters_rank_w_at_this_rank * rank
                 points_needed_for_w_to_be_majority_winner -= n_sincere_voters_rank_w_at_this_rank
-        # print(f"{penalty_c_cm_lower_bound=}")
-        # print(f"{penalty_w_cm_upper_bound=}")
+        self.mylogv("CM: penalty_w_cm_upper_bound (improved) =", penalty_w_cm_upper_bound, 2)
         if penalty_c_cm_lower_bound > penalty_w_cm_upper_bound:
+            self.mylogv("CM: Impossible for c =", c, 2)
             return False
+        self.mylogv("CM: Failed to prove non-CM for c =", c, 2)
 
         # Now, we have failed to prove non-CM.
         # If `c` does not win against some `d`, then TM might be possible, but we won't bother with that case and
         # just say that we do not know.
         if c_does_not_win_against_some_d:
-            # print("c_does_not_win_against_some_d")
+            self.mylogv("CM: c does not win against some d => Failed to prove TM for c =", c, 2)
             return np.nan
 
         # Now, we are in the case where `c` wins against all the `d`'s. We just need to take care of the swaps used to
@@ -199,11 +201,11 @@ class RuleDodgson(DeleteCacheMixin, my_log.MyLog):
             else:
                 penalty_c_tm += n_voters_with_this_gap * gap
                 points_needed -= n_voters_with_this_gap
+        self.mylogv("CM: penalty_c_tm =", penalty_c_tm, 2)
         # `penalty_c_tm` is also a lower bound of the penalty of `c` for any kind of manipulation. Hence in passing,
         # we get another chance to prove non-CM.
-        # print(f"{penalty_c_tm=}")
-        # print(f"{penalty_w_cm_upper_bound=}")
         if penalty_c_tm > penalty_w_cm_upper_bound:
+            self.mylogv("CM: Impossible for c =", c, 2)
             return False
 
         # Now, compute a lower bound for the penalty of the winner `w_`.
@@ -213,11 +215,10 @@ class RuleDodgson(DeleteCacheMixin, my_log.MyLog):
                 continue
             score_d_against_w = self.profile_.n_v - self.profile_.size_bicoalition[c, d]
             penalty_w_cm_lower_bound += max(0, score_d_against_w - strict_minority)
-        # print(f"{penalty_c_tm=}")
-        # print(f"{penalty_w_cm_lower_bound=}")
+        self.mylogv("CM: penalty_w_cm_lower_bound =", penalty_w_cm_lower_bound, 2)
         if not penalty_c_tm < penalty_w_cm_lower_bound:
             # We failed to prove that `c` can surpass `w`, but it might still be possible.
-            # print("Not proved due to w")
+            self.mylogv("CM: Failed to prove TM for c =", c, 2)
             return np.nan
 
         # We manage to defeat w. Now, we need to check that we defeat all the d's. Let d be a third candidate.
@@ -242,10 +243,9 @@ class RuleDodgson(DeleteCacheMixin, my_log.MyLog):
                 else:
                     score_d_vs_e = self.profile_.matrix_duels_rk[d, e]
                 penalty_d_cm_lower_bound += max(0, strict_majority - score_d_vs_e)
-            # print(f"{penalty_c_tm=}")
-            # print(f"{penalty_d_cm_lower_bound=}")
+            self.mylogv("CM: penalty_d_cm_lower_bound =", penalty_d_cm_lower_bound, 2)
             if not penalty_c_tm < penalty_d_cm_lower_bound:
                 # We failed to prove that `c` can surpass `d`, but it might still be possible.
-                # print("Not proved due to d")
+                self.mylogv("CM: Failed to prove TM for c =", c, 2)
                 return np.nan
         return True
