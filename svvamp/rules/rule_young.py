@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on 27 june 2025, 15:33
+Created on 11 july 2025, 15:33
 Copyright François Durand 2014-2025
 fradurand@gmail.com
 
@@ -98,7 +98,7 @@ class RuleYoung(DeleteCacheMixin, my_log.MyLog):
             return np.nan
         if self.profile_.exists_pair_safe_condorcet_winner:
             # TODO: In cases with indifference, check if this condition is correct.
-            # If there is a semi-resistant Condorcet winner, then it is not CM
+            # If there is a pair-safe Condorcet winner, then it is not CM
             return False
         # Now we are in the case where the winner is known, it is a Condorcet winner (rk), it is a weak Condorcet
         # winner (in the sense of utilities) and it is not semi-resistant.

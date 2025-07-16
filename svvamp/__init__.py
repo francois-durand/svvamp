@@ -48,6 +48,7 @@ from svvamp.rules.rule_bucklin import RuleBucklin
 from svvamp.rules.rule_condorcet_sum_defeats import RuleCondorcetSumDefeats
 from svvamp.rules.rule_coombs import RuleCoombs
 from svvamp.rules.rule_copeland import RuleCopeland
+from svvamp.rules.rule_dodgson import RuleDodgson
 from svvamp.rules.rule_irv_duels import RuleIRVDuels
 from svvamp.rules.rule_iterated_bucklin import RuleIteratedBucklin
 from svvamp.rules.rule_k_approval import RuleKApproval
