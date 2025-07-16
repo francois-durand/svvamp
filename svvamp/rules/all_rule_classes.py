@@ -7,6 +7,7 @@ from svvamp.rules.rule_bucklin import RuleBucklin
 from svvamp.rules.rule_condorcet_sum_defeats import RuleCondorcetSumDefeats
 from svvamp.rules.rule_coombs import RuleCoombs
 from svvamp.rules.rule_copeland import RuleCopeland
+from svvamp.rules.rule_dodgson import RuleDodgson
 from svvamp.rules.rule_irv_duels import RuleIRVDuels
 from svvamp.rules.rule_iterated_bucklin import RuleIteratedBucklin
 from svvamp.rules.rule_k_approval import RuleKApproval
@@ -24,6 +25,7 @@ from svvamp.rules.rule_split_cycle import RuleSplitCycle
 from svvamp.rules.rule_star import RuleSTAR
 from svvamp.rules.rule_two_round import RuleTwoRound
 from svvamp.rules.rule_veto import RuleVeto
+from svvamp.rules.rule_young import RuleYoung
 
 # Voting Rule: IRV Family
 from svvamp.rules.rule_exhaustive_ballot import RuleExhaustiveBallot
@@ -40,6 +42,7 @@ ALL_RULE_CLASSES = [
     RuleApproval,
     RuleBaldwin, RuleBlack, RuleBorda, RuleBucklin,
     RuleCondorcetSumDefeats, RuleCoombs, RuleCopeland,
+    RuleDodgson,
     RuleIRVDuels, RuleIteratedBucklin,
     RuleKApproval, RuleKemeny, RuleKimRoush,
     RuleMajorityJudgment, RuleMaximin,
@@ -49,6 +52,7 @@ ALL_RULE_CLASSES = [
     RuleSchulze, RuleSlater, RuleSplitCycle, RuleSTAR,
     RuleTwoRound,
     RuleVeto,
+    RuleYoung,
     RuleExhaustiveBallot, RuleIRV, RuleCondorcetAbsIRV, RuleCondorcetVtbIRV,
     RuleICRV, RuleIRVAverage, RuleSmithIRV, RuleTideman, RuleWoodall,
 ]

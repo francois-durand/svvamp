@@ -37,6 +37,9 @@ class RuleYoung(DeleteCacheMixin, my_log.MyLog):
     Consider that the implementation of `is_cm_` is trustworthy only if voters have no indifference.
     """
 
+    full_name = 'Young'
+    abbreviation = 'You'
+
     def __init__(self):
         super().__init__()
         self.log_identity = 'YOUNG'
@@ -78,6 +81,14 @@ class RuleYoung(DeleteCacheMixin, my_log.MyLog):
         return result[np.argsort(- self.profile_.matrix_duels_ut[result, self.w_], kind='mergesort')]
 
     # %% Coalition Manipulation (CM)
+
+    def log_(self, method_name):
+        """Log corresponding to a particular manipulation method.
+        """
+        if '_cm_' in method_name:
+            return "cm_option = fast"
+        else:
+            raise NotImplementedError()
 
     @cached_property
     def is_cm_(self):
