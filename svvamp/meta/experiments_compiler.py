@@ -161,7 +161,8 @@ class ExperimentsCompiler:
         self.my_tikzplotlib_save(tikz_file, x_ticks_labels=d_criterion_legend.values())
         return df_plot
 
-    def rate_bar_plot(self, criterion, ylabel, tikz_file, draw_rcw_line=False):
+    def rate_bar_plot(self, criterion, ylabel, tikz_file,
+                      draw_rcw_line=False, draw_pscw_line=False, draw_sscw_line=False):
         """Bar plot: Rate of some criterion (auxiliary function)."""
         # Create the pivot table
         df_plot = self.df[self.df['Criterion'] == criterion].pivot_table(
@@ -174,6 +175,10 @@ class ExperimentsCompiler:
         fig, ax = plt.subplots(figsize=self.figsize)
         if draw_rcw_line:
             self.resistant_condorcet_line()
+        if draw_pscw_line:
+            self.pscw_line()
+        if draw_sscw_line:
+            self.sscw_line()
         plt.bar(
             df_plot.index,
             df_plot['Rate (lower bound)'],
@@ -191,7 +196,7 @@ class ExperimentsCompiler:
     def cm_rate_bar_plot(self, tikz_file='cm_rate_bar_plot.tex'):
         """Bar plot: CM rate."""
         return self.rate_bar_plot(criterion='is_cm_', ylabel='CM rate', tikz_file=tikz_file,
-                                  draw_rcw_line=True)
+                                  draw_rcw_line=True, draw_pscw_line=True, draw_sscw_line=True)
 
     def tm_rate_bar_plot(self, tikz_file='tm_rate_bar_plot.tex'):
         """Bar plot: TM rate."""
@@ -547,8 +552,44 @@ class ExperimentsCompiler:
             index='Rule'
         ).index.size
         plt.hlines(1 - rcw_rate, -1, nb_rules, 'purple', linestyles='dashed', zorder=-1)
-        plt.text(6.5, 1 - rcw_rate + 0.03, 'RCW bound', color='purple',
-                 horizontalalignment='center', verticalalignment='bottom', fontsize='medium')
+        plt.text(4.5, 1 - rcw_rate + 0.02, 'RCW bound', color='purple',
+                 horizontalalignment='left', verticalalignment='bottom', fontsize='medium')
+
+    def sscw_line(self):
+        """Draw the 'SSCW' line."""
+        sscw_rate = self.df[
+            self.df['Criterion'] == 'exists_set_safe_condorcet_winner'
+        ].pivot_table(
+            values=['Rate (lower bound)'],
+            index='Rule'
+        ).iloc[0, 0]
+        nb_rules = self.df[
+            self.df['Criterion'] == 'is_cm_'
+        ].pivot_table(
+            values=['Rate (lower bound)'],
+            index='Rule'
+        ).index.size
+        plt.hlines(1 - sscw_rate, -1, nb_rules, 'purple', linestyles='dashed', zorder=-1)
+        plt.text(4.5, 1 - sscw_rate + 0.02, 'SSCW bound', color='purple',
+                 horizontalalignment='left', verticalalignment='bottom', fontsize='medium')
+
+    def pscw_line(self):
+        """Draw the 'PSCW' line."""
+        pscw_rate = self.df[
+            self.df['Criterion'] == 'exists_pair_safe_condorcet_winner'
+        ].pivot_table(
+            values=['Rate (lower bound)'],
+            index='Rule'
+        ).iloc[0, 0]
+        nb_rules = self.df[
+            self.df['Criterion'] == 'is_cm_'
+        ].pivot_table(
+            values=['Rate (lower bound)'],
+            index='Rule'
+        ).index.size
+        plt.hlines(1 - pscw_rate, -1, nb_rules, 'purple', linestyles='dashed', zorder=-1)
+        plt.text(4.5, 1 - pscw_rate - 0.02, 'PSCW bound', color='purple',
+                 horizontalalignment='left', verticalalignment='top', fontsize='medium')
 
     def my_tikzplotlib_save(self, tikz_file, x_ticks_labels=None,
                             axis_width=r'\axisWidth', axis_height=r'\axisHeight'):
