@@ -172,6 +172,8 @@ class Profile(my_log.MyLog):
         """int : Number of voters."""
         if self._preferences_rk_input is not None:
             n_v = self._preferences_rk_input.shape[0]
+        elif self._preferences_borda_rk_input is not None:
+            n_v = self._preferences_borda_rk_input.shape[0]
         else:
             n_v = self._preferences_ut_input.shape[0]
         # if n_v < 2:
@@ -183,6 +185,8 @@ class Profile(my_log.MyLog):
         """int : Number of candidates."""
         if self._preferences_rk_input is not None:
             n_c = self._preferences_rk_input.shape[1]
+        elif self._preferences_borda_rk_input is not None:
+            n_c = self._preferences_borda_rk_input.shape[1]
         else:
             n_c = self._preferences_ut_input.shape[1]
         if n_c < 2:

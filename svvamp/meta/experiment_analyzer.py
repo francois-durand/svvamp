@@ -273,7 +273,8 @@ class ExperimentAnalyzer:
             for i_task, (rule_class, options, study_rule_criteria) in enumerate(self.voting_rule_tasks):
                 election = rule_class(**options)(profile)
                 # The winner
-                results_vs_winner[i_task][election.w_] += 1
+                if not np.isnan(election.w_):  # Test needed for RuleDodgson and RuleYoung, which can return `nan`
+                    results_vs_winner[i_task][election.w_] += 1
                 # Result criteria
                 for i_criterion, criterion in enumerate(study_rule_criteria.result_criteria):
                     answer = getattr(election, criterion)
