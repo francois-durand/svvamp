@@ -29,6 +29,14 @@ class RuleCopeland(Rule):
     """
     Copeland rule
 
+    Parameters
+    ----------
+    tie_break_rule : str
+        'lexico' of 'random'. Default: 'lexico'. If `tie_break_rule` is 'lexico', then the candidate with the lowest
+        index is selected in case of a tie (usual behavior of SVVAMP for the other voting rules). If `tie_break_rule`
+        is `random`, then each time a profile is loaded, a tie-break order over the candidates is drawn at random.
+        This tie-break is used for the result of the sincere election, but also in case of manipulation.
+
     Options
     -------
         >>> RuleCopeland.print_options_parameters()
@@ -71,6 +79,15 @@ class RuleCopeland(Rule):
         1
         >>> profile.majority_favorite_ut_ctb
         0
+
+    * :meth:`is_im_`: Deciding CM is in P (but a dedicated algorithm is not implemented yet).
+    * :meth:`is_cm_`: Deciding CM is NP-complete.
+
+    References
+    ----------
+    'The Computational Difficulty of Manipulating an Election', J. J. Bartholdi III, C. A. Tovey and M. A. Trick, 1989.
+
+    'Manipulation of copeland elections', Piotr Faliszewski, Edith Hemaspaandra and Henning Schnoor, 2010.
 
     Examples
     --------
@@ -307,17 +324,56 @@ class RuleCopeland(Rule):
     options_parameters = Rule.options_parameters.copy()
     options_parameters['icm_option'] = {'allowed': ['exact'], 'default': 'exact'}
     options_parameters['cm_option'] = {'allowed': ['fast', 'exact'], 'default': 'fast'}
+    options_parameters['tie_break_rule'] = {'allowed': ['lexico', 'random'], 'default': 'lexico'}
 
-    def __init__(self, **kwargs):
+    def __init__(self, tie_break_rule='lexico', **kwargs):
+        self._tie_break_rule = None
         super().__init__(
             with_two_candidates_reduces_to_plurality=True, is_based_on_rk=True,
             precheck_icm=False,
+            tie_break_rule=tie_break_rule,
             log_identity="COPELAND", **kwargs
         )
 
+    # %% Setting the parameters
+
+    @property
+    def tie_break_rule(self):
+        return self._tie_break_rule
+
+    @tie_break_rule.setter
+    def tie_break_rule(self, value):
+        if self._tie_break_rule == value:
+            return
+        if value in self.options_parameters['tie_break_rule']['allowed']:
+            self.mylogv("Setting tie_break_rule =", value, 1)
+            self._tie_break_rule = value
+            self._result_options['tie_break_rule'] = value
+            self.delete_cache()
+        else:
+            raise ValueError("Unknown option for tie_break_rule: " + format(value))
+
+    # %% Election results
+
+    @cached_property
+    def tie_break_weights_(self):
+        """1d array of integers. Tie-break weights over the candidates.
+
+        A larger number means a more favored candidate. For example, the lexico tie-break order is represented by
+        [n_c - 1, ..., 0], i.e., candidate 0 has a `tie-break strength` of `n_c - 1`, and so on.
+        """
+        if self.tie_break_rule == 'lexico':
+            return np.arange(self.profile_.n_c - 1, -1, -1)
+        else:
+            return np.random.permutation(self.profile_.n_c)
+
     @cached_property
     def scores_(self):
-        return self.profile_.matrix_victories_rk.sum(axis=1)
+        if self.tie_break_rule == 'lexico':
+            # Keep the scores more readable when using the lexico tie-break rule.
+            return self.profile_.matrix_victories_rk.sum(axis=1)
+        else:
+            return self.profile_.matrix_victories_rk.sum(axis=1) + self.tie_break_weights_ / (2 * self.profile_.n_c)
 
     # %% Manipulation criteria of the voting system
 
@@ -327,6 +383,13 @@ class RuleCopeland(Rule):
 
     @cached_property
     def meets_ignmc_c_ctb(self):
+        if self.tie_break_rule == 'lexico':
+            return True
+        else:
+            return False
+
+    @cached_property
+    def meets_ignmc_c(self):
         return True
 
     # %% Coalition Manipulation (CM)
@@ -349,19 +412,43 @@ class RuleCopeland(Rule):
             >>> rule.necessary_coalition_size_cm_
             array([3., 0., 2.])
         """
+        # Necessary condition for CM: Check that `c` can have a better score than `w`.
+        pref_borda_rk_s = self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :]
+        matrix_duels_s = Profile(preferences_ut=pref_borda_rk_s).matrix_duels_ut
+        score_w_lower_bound = (
+            np.sum(matrix_duels_s[self.w_, :] > self.profile_.n_v / 2)
+            + .5 * np.sum(matrix_duels_s[self.w_, :] == self.profile_.n_v / 2)
+            + self.tie_break_weights_[self.w_] / (2 * self.profile_.n_c)
+        )
+        score_c_upper_bound = (
+            np.sum(matrix_duels_s[:, c] < self.profile_.n_v / 2) - 1
+            + np.sum(matrix_duels_s[:, c] == self.profile_.n_v / 2)
+            + self.tie_break_weights_[c] / (2 * self.profile_.n_c)
+        )
+        self.mylogm('CM: Fast algorithm: matrix_duels_s =', matrix_duels_s, 3)
+        self.mylogv('CM: Fast algorithm: score_w_lower_bound =', score_w_lower_bound, 3)
+        self.mylogv('CM: Fast algorithm: score_c_upper_bound =', score_c_upper_bound, 3)
+        if score_w_lower_bound > score_c_upper_bound:
+            n_m = self.profile_.matrix_duels_ut[c, self.w_]
+            self._update_necessary(self._necessary_coalition_size_cm, c, n_m + 1,
+                                   'CM: Fast algorithm: necessary_coalition_size_cm =')
+
+        # Dedicated algorithm for `n_c = 3`
         if self.profile_.n_c == 3:
-            pref_borda_rk_s = self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :]
-            matrix_duels_s = Profile(preferences_ut=pref_borda_rk_s).matrix_duels_ut
             matrix_duels_s_antisym = matrix_duels_s - matrix_duels_s.T
-            d = np.argmax(matrix_duels_s_antisym[:, c])  # Opponent in the most difficult duel for `c`
-            e = 3 - c - d  # Opponent in the easiest duel for `c`
+            # d : Opponent in the most difficult duel for `c`
+            d = np.argmax(matrix_duels_s_antisym[:, c] + self.tie_break_weights_ / self.profile_.n_c)
+            # e : Opponent in the easiest duel for `c`
+            e = 3 - c - d
             # 2 victories => `c` is CW => `c` wins
             sufficient_2_victories = matrix_duels_s_antisym[d, c] + 1
             # 1.5 victories (with a tie against `d`). Then the only dangerous opponent is `d`, who might also have
             # 1.5 victories.
-            #   * If `c < d`, then `c` will win anyway (possibly by tie-breaking rule).
-            #   * If `c > d`, then `d` must not win against `e`, i.e. `e` must at least tie with `d`.
-            if c < d:
+            #   * If `self.tie_break_weights_[c] > self.tie_break_weights_[d]`, then `c` will win anyway (possibly by
+            #   tie-breaking rule).
+            #   * If `self.tie_break_weights_[c] < self.tie_break_weights_[d]`, then `d` must not win against `e`, i.e.
+            #   `e` must at least tie with `d`.
+            if self.tie_break_weights_[c] > self.tie_break_weights_[d]:
                 sufficient_1_dot_5_victories = max(
                     matrix_duels_s_antisym[d, c],
                     matrix_duels_s_antisym[e, c] + 1
@@ -373,9 +460,10 @@ class RuleCopeland(Rule):
                     matrix_duels_s_antisym[d, e]
                 )
             # 1 victory (i.e. against `e`).
-            #   * If `c == 0`, then `e` must win against `d` and the tie-breaking rule makes `c` win.
-            #   * If `c != 0`, then she cannot win with only 1 victory.
-            if c == 0:
+            #   * If `self.tie_break_weights_[c] == n_c - 1`, then `e` must win against `d` and the tie-breaking rule
+            #   makes `c` win.
+            #   * If `self.tie_break_weights_[c] != n_c - 1`, then she cannot win with only 1 victory.
+            if self.tie_break_weights_[c] == self.profile_.n_c - 1:
                 sufficient_1_victory = max(
                     matrix_duels_s_antisym[e, c] + 1,
                     matrix_duels_s_antisym[d, e] + 1
@@ -383,9 +471,10 @@ class RuleCopeland(Rule):
             else:
                 sufficient_1_victory = np.inf
             # 2 ties.
-            #   * If `c == 0`, then `e` must tie with `d` and the tie-breaking rule makes `c` win.
-            #   * If `c != 0`, then she cannot win with only 2 ties.
-            if c == 0:
+            #   * If `self.tie_break_weights_[c] == n_c - 1`, then `e` must tie with `d` and the tie-breaking rule
+            #   makes `c` win.
+            #   * If `self.tie_break_weights_[c] != n_c - 1`, then she cannot win with only 2 ties.
+            if self.tie_break_weights_[c] == self.profile_.n_c - 1:
                 sufficient_2_ties = max(
                     matrix_duels_s_antisym[e, c],
                     matrix_duels_s_antisym[d, c],

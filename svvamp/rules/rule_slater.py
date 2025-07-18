@@ -29,6 +29,14 @@ from svvamp.preferences.profile import Profile
 class RuleSlater(Rule):
     """Slater method.
 
+    Parameters
+    ----------
+    tie_break_rule : str
+        'lexico' of 'random'. Default: 'lexico'. If `tie_break_rule` is 'lexico', then the candidate with the lowest
+        index is selected in case of a tie (usual behavior of SVVAMP for the other voting rules). If `tie_break_rule`
+        is `random`, then each time a profile is loaded, a tie-break order over the candidates is drawn at random.
+        This tie-break is used for the result of the sincere election, but also in case of manipulation.
+
     Options
     -------
         >>> RuleSlater.print_options_parameters()
@@ -279,13 +287,48 @@ class RuleSlater(Rule):
 
     options_parameters = Rule.options_parameters.copy()
     options_parameters['icm_option'] = {'allowed': ['exact'], 'default': 'exact'}
+    options_parameters['tie_break_rule'] = {'allowed': ['lexico', 'random'], 'default': 'lexico'}
 
-    def __init__(self, **kwargs):
+    def __init__(self, tie_break_rule='lexico', **kwargs):
+        self._tie_break_rule = None
         super().__init__(
             with_two_candidates_reduces_to_plurality=True, is_based_on_rk=True,
             precheck_icm=True,
+            tie_break_rule=tie_break_rule,
             log_identity="SLATER", **kwargs
         )
+
+    # %% Setting the parameters
+
+    @property
+    def tie_break_rule(self):
+        return self._tie_break_rule
+
+    @tie_break_rule.setter
+    def tie_break_rule(self, value):
+        if self._tie_break_rule == value:
+            return
+        if value in self.options_parameters['tie_break_rule']['allowed']:
+            self.mylogv("Setting tie_break_rule =", value, 1)
+            self._tie_break_rule = value
+            self._result_options['tie_break_rule'] = value
+            self.delete_cache()
+        else:
+            raise ValueError("Unknown option for tie_break_rule: " + format(value))
+
+    # %% Election results
+
+    @cached_property
+    def tie_break_weights_(self):
+        """1d array of integers. Tie-break weights over the candidates.
+
+        A larger number means a more favored candidate. For example, the lexico tie-break order is represented by
+        [n_c - 1, ..., 0], i.e., candidate 0 has a `tie-break strength` of `n_c - 1`, and so on.
+        """
+        if self.tie_break_rule == 'lexico':
+            return np.arange(self.profile_.n_c - 1, -1, -1)
+        else:
+            return np.random.permutation(self.profile_.n_c)
 
     @cached_property
     def _strong_connected_components_(self):
@@ -321,7 +364,15 @@ class RuleSlater(Rule):
             self.mylogv("order =", order, 3)
             score = np.sum(self.profile_.matrix_victories_rk[:, order][order, :][np.triu_indices(size_component)])
             self.mylogv("score =", score, 3)
-            if score > best_score:
+            found_better_order = (
+                score > best_score
+                or (
+                    score == best_score
+                    and self.tie_break_rule == 'random'
+                    and tuple(self.tie_break_weights_[order]) > tuple(self.tie_break_weights_[best_order])
+                )
+            )
+            if found_better_order:
                 best_order, best_score = order, score
             order = compute_next_permutation(order, size_component)
         self.mylogv("best_order =", best_order, 3)
@@ -353,7 +404,15 @@ class RuleSlater(Rule):
                 self.mylogv("order =", order, 3)
                 score = np.sum(self.profile_.matrix_victories_rk[:, order][order, :][np.triu_indices(size_component)])
                 self.mylogv("score =", score, 3)
-                if score > best_score:
+                found_better_order = (
+                    score > best_score
+                    or (
+                        score == best_score
+                        and self.tie_break_rule == 'random'
+                        and tuple(self.tie_break_weights_[order]) > tuple(self.tie_break_weights_[best_order])
+                    )
+                )
+                if found_better_order:
                     best_order, best_score = order, score
                 order = compute_next_permutation(order, size_component)
             self.mylogv("best_order =", best_order, 3)
@@ -390,6 +449,40 @@ class RuleSlater(Rule):
 
         * Try to improve bounds ``_sufficient_coalition_size_cm[c]`` and ``_necessary_coalition_size_cm[c]``.
         """
+        # Necessary condition for CM: For certain (d_1, ..., d_k), the order `c > d_1 > ... > d_k > w` must
+        # have a better score than `w > c > d_1 > ... > d_k`. Denoting `M` the matrix of victories (after manipulation)
+        # and `A` the corresponding antisymmetric matrix, it means that `s = A[c, w] + \sum A[d_i, w] >= 0`, and it must
+        # be a strict inequality if the tie-break favors `w` over `c`.
+        pref_borda_rk_s = self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :]
+        matrix_duels_s = Profile(preferences_ut=pref_borda_rk_s).matrix_duels_ut
+        a_c_w_best_case = self.profile_.matrix_victories_rk[c, self.w_] - self.profile_.matrix_victories_rk[self.w_, c]
+        n_defeats_w_best_case = np.sum(matrix_duels_s[self.w_, :] < self.profile_.n_v / 2) - 1
+        s = a_c_w_best_case + n_defeats_w_best_case
+        tie_breaks_favors_c_over_w = (self.tie_break_weights_[c] > self.tie_break_weights_[self.w_])
+        self.mylogm('CM: Fast algorithm: matrix_duels_s =', matrix_duels_s, 3)
+        self.mylogv('CM: Fast algorithm: a_c_w_best_case =', a_c_w_best_case, 3)
+        self.mylogv('CM: Fast algorithm: n_defeats_w_best_case =', n_defeats_w_best_case, 3)
+        if not s + tie_breaks_favors_c_over_w > 0:
+            n_m = self.profile_.matrix_duels_ut[c, self.w_]
+            self._update_necessary(self._necessary_coalition_size_cm, c, n_m + 1,
+                                   'CM: Fast algorithm: necessary_coalition_size_cm =')
+            # No need to continue, the second condition would not improve this bound.
+            # But this is not a quick escape, since we wouldn't do better if we came in this method again.
+            return False
+
+        # Second necessary condition. The order `c > d_1 > ... > d_k > w` must have a better score than
+        # `d_1 > ... > d_k > w > c`. With the same notations as above, it means that
+        # `s = A[c, w] + \sum A[c, d_i] >= 0`, and it must be a strict inequality if the tie-break favors `d_1` over
+        # `c`. We do not know d_1 (and we don't want to bother), but we know that the tie-break might help `c` only
+        # if `c` is not last in the tie-break order.
+        n_victories_c_best_case = np.sum(matrix_duels_s[:, c] < self.profile_.n_v / 2) - 1
+        s = a_c_w_best_case + n_victories_c_best_case
+        tie_break_might_help_c = (self.tie_break_weights_[c] > 0)
+        self.mylogv('CM: Fast algorithm: n_victories_c_best_case =', n_victories_c_best_case, 3)
+        if not s + tie_break_might_help_c > 0:
+            n_m = self.profile_.matrix_duels_ut[c, self.w_]
+            self._update_necessary(self._necessary_coalition_size_cm, c, n_m + 1,
+                                   'CM: Fast algorithm: necessary_coalition_size_cm =')
         return False
 
     def _cm_main_work_c_(self, c, optimize_bounds):
