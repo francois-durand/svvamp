@@ -140,12 +140,12 @@ class ExperimentsCompiler:
         """Bar plot: Features of the profiles (existence of Condorcet winner, etc)."""
         d_criterion_legend = {
             'exists_condorcet_winner_rk': 'CW',
-            # 'exists_condorcet_order_rk': 'CO',
+            'exists_condorcet_order_rk': 'CO',
             'exists_super_condorcet_winner': 'SCW',
             'exists_pair_safe_condorcet_winner': 'PSCW',
             'exists_set_safe_condorcet_winner': 'SSCW',
             'exists_resistant_condorcet_winner': 'RCW',
-            # 'exists_majority_favorite_rk': 'MF',
+            'exists_majority_favorite_rk': 'MF',
         }
         d_criterion_rate = {}
         for criterion in d_criterion_legend.keys():

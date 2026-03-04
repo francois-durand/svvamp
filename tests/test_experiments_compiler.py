@@ -31,15 +31,15 @@ def test():
         ... )
         VotingRuleTasks: Sanity check was successful.
         >>> experiment_analyzer(
-        ...     base_profile=ProfileFromFile(os.path.join(this_dir, 'ED-00004-00000040.soc')),
-        ...     output_file_suffix='ED-00004-00000040',
+        ...     base_profile=ProfileFromFile(os.path.join(this_dir, '00004-00000040.soc')),
+        ...     output_file_suffix='00004-00000040',
         ... )
         Compute...
         Write results in csv files...
         Simulation finished
         >>> experiment_analyzer(
-        ...     base_profile=ProfileFromFile(os.path.join(this_dir, 'ED-00004-00000067.soc')),
-        ...     output_file_suffix='ED-00004-00000067',
+        ...     base_profile=ProfileFromFile(os.path.join(this_dir, '00004-00000067.soc')),
+        ...     output_file_suffix='00004-00000067',
         ... )
         Compute...
         Write results in csv files...

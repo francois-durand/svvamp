@@ -18,7 +18,7 @@ def test():
 
     Define and run the experiment analyzer:
 
-        >>> file = os.path.join(this_dir, 'ED-00017-00000001.toi')
+        >>> file = os.path.join(this_dir, '00017-00000001.toi')
         >>> base_profile = ProfileFromFile(file)
         >>> experiment_analyzer = ExperimentAnalyzer(output_dir=output_dir, ping_period=1)
         >>> experiment_analyzer(

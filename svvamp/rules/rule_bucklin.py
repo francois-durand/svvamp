@@ -643,7 +643,7 @@ class RuleBucklin(Rule):
             ... ])
             >>> rule = RuleBucklin()(profile)
             >>> rule.candidates_cm_
-            array([1., 0., 0.])
+            array([0., 0., 0.])
 
             >>> profile = Profile(preferences_ut=[
             ...     [ 1. ,  0. ,  1. ,  0. ],

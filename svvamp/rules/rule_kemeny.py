@@ -47,6 +47,7 @@ class RuleKemeny(Rule):
         precheck_heuristic: is_bool. Default: True.
         tm_option: ['lazy', 'exact']. Default: 'exact'.
         um_option: ['lazy', 'exact']. Default: 'lazy'.
+        winner_option: ['exact', 'lazy']. Default: 'exact'.
 
     Notes
     -----

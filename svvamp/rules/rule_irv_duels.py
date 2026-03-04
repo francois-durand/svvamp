@@ -33,7 +33,7 @@ class RuleIRVDuels(Rule):
     Options
     -------
         >>> RuleIRVDuels.print_options_parameters()
-        cm_option: ['lazy', 'exact']. Default: 'lazy'.
+        cm_option: ['lazy', 'slow', 'exact']. Default: 'lazy'.
         icm_option: ['exact']. Default: 'exact'.
         iia_subset_maximum_size: is_number. Default: 2.
         im_option: ['lazy', 'exact']. Default: 'lazy'.

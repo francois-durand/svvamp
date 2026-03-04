@@ -24,7 +24,7 @@ def test_from_cvr():
 
 
 def test_from_preflib():
-    file = os.path.join(os.path.dirname(__file__), 'ED-00001-00000001.soi')
+    file = os.path.join(os.path.dirname(__file__), '00001-00000001.soi')
     profile = ProfileFromFile(file)
     assert profile.preferences_ut.shape == (43942, 12)
     assert profile.labels_candidates == [
@@ -34,9 +34,9 @@ def test_from_preflib():
 
 
 def test_from_preflib_with_ties():
-    file = os.path.join(os.path.dirname(__file__), 'ED-00017-00000001.toi')
+    file = os.path.join(os.path.dirname(__file__), '00017-00000001.toi')
     profile = ProfileFromFile(file)
-    assert profile.preferences_ut.shape == (4189, 4)
+    assert profile.preferences_ut.shape == (4173, 4)
 
 
 def test_sort_candidates():

@@ -50,8 +50,10 @@ class RuleSlater(Rule):
         iia_subset_maximum_size: is_number. Default: 2.
         im_option: ['lazy', 'exact']. Default: 'lazy'.
         precheck_heuristic: is_bool. Default: True.
+        tie_break_rule: ['lexico', 'random']. Default: 'lexico'.
         tm_option: ['lazy', 'exact']. Default: 'exact'.
         um_option: ['lazy', 'exact']. Default: 'lazy'.
+        winner_option: ['exact', 'lazy']. Default: 'exact'.
 
     Notes
     -----
@@ -277,12 +279,12 @@ class RuleSlater(Rule):
         ***********************************
         *   Coalition Manipulation (CM)   *
         ***********************************
-        is_cm = nan
+        is_cm = False
         log_cm: cm_option = lazy, um_option = lazy, icm_option = exact, tm_option = exact
         candidates_cm =
-        [ 0.  0. nan]
+        [0. 0. 0.]
         necessary_coalition_size_cm =
-        [0. 1. 2.]
+        [0. 1. 3.]
         sufficient_coalition_size_cm =
         [0. 2. 3.]
     """

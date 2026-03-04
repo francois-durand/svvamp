@@ -26,6 +26,7 @@ import copy
 from svvamp.meta.study_rule_criteria import StudyRuleCriteria
 from svvamp.rules.all_rule_classes import ALL_RULE_CLASSES
 from svvamp.rules.rule_approval import RuleApproval
+from svvamp.rules.rule_dodgson import RuleDodgson
 from svvamp.rules.rule_plurality import RulePlurality
 from svvamp.rules.rule_ranked_pairs import RuleRankedPairs
 from svvamp.rules.rule_schulze import RuleSchulze
@@ -33,6 +34,7 @@ from svvamp.rules.rule_exhaustive_ballot import RuleExhaustiveBallot
 from svvamp.rules.rule_irv import RuleIRV
 from svvamp.rules.rule_condorcet_vtb_irv import RuleCondorcetVtbIRV
 from svvamp.rules.rule_icrv import RuleICRV
+from svvamp.rules.rule_young import RuleYoung
 from svvamp.utils.misc import indent
 
 
@@ -1099,6 +1101,8 @@ class VotingRuleTasks(list):
         Confirm that a configuration is sound:
 
             >>> voting_rule_tasks = VotingRuleTasks()
+            >>> voting_rule_tasks.remove_rule(RuleDodgson)
+            >>> voting_rule_tasks.remove_rule(RuleYoung)
             >>> voting_rule_tasks.check_sanity()
             VotingRuleTasks: Sanity check was successful.
 
