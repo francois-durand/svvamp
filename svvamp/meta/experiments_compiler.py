@@ -61,7 +61,7 @@ class ExperimentsCompiler:
         figsize: tuple
             Size of the figures.
         ignore_rules_abbr: list of str
-            List of rules abbreviations to ignore.
+            List of rules to ignore, given as abbreviations.
     """
 
     def __init__(self, prefix_tikz_file, tikz_directory='tikz', results_directory='out', figsize=(16, 8),
@@ -266,7 +266,7 @@ class ExperimentsCompiler:
 
     def cm_xm_rate_bar_plot(self, n_c_equal=None, n_c_ge=None, n_c_le=None,
                             tikz_file='cm_xm_rate_bar_plot.tex'):
-        """Bar plot: CM and XM rates."""
+        """Bar plot: CM and XM rates. [Beta feature]"""
         # Create the pivot table
         constraint_cm = self.df['Criterion'] == 'is_cm_'
         constraint_xm = self.df['Criterion'] == 'is_xm_'
@@ -486,6 +486,7 @@ class ExperimentsCompiler:
                                      d_rule_color=None,
                                      exponent_y_axis=1, tikz_file='nb_candidates_rate_line_plot.tex',
                                      d_old_new=None):
+        """Line plot representing a rate as a function of the number of candidates."""
         # Pivot table for uncertainty
         df_uncertainty = self.df[(self.df['Criterion'] == criterion)].pivot_table(
             values=['Rate (uncertainty)'],

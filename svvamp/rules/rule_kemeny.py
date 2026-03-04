@@ -29,6 +29,14 @@ from svvamp.preferences.profile import Profile
 class RuleKemeny(Rule):
     """Kemeny method.
 
+    Parameters
+    ----------
+    winner_option : str
+        'exact' or 'lazy'. Default: 'exact'. If `winner_option` is 'exact', then the winner is computed as usual.
+         If `winner_option` is 'lazy', then the winner is computed only in the obvious case where there is a Condorcet
+         winner; note that if there is no Condorcet-admissible candidate, it is however possible to decide ``is_cm_``
+         automatically to True.
+
     Options
     -------
         >>> RuleKemeny.print_options_parameters()

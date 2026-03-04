@@ -2889,10 +2889,12 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
 
     @cached_property
     def theta_critical_(self):
+        """Critical concentration parameter in the Perturbed Culture model."""
         raise NotImplementedError(f'Not implemented for class {self.__class__.__name__}.')
 
     @cached_property
     def is_xm_(self):
+        """XM. [Beta feature]"""
         if self.profile_.theta_empirical > self.theta_critical_:
             self.mylog("XM: Theta > theta_c, so XM is False", 2)
             return False

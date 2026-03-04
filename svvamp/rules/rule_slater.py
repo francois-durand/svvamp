@@ -31,6 +31,11 @@ class RuleSlater(Rule):
 
     Parameters
     ----------
+    winner_option : str
+        'exact' or 'lazy'. Default: 'exact'. If `winner_option` is 'exact', then the winner is computed as usual.
+         If `winner_option` is 'lazy', then the winner is computed only in the obvious case where there is a Condorcet
+         winner; note that if there is no Condorcet-admissible candidate, it is however possible to decide ``is_cm_``
+         automatically to True.
     tie_break_rule : str
         'lexico' of 'random'. Default: 'lexico'. If `tie_break_rule` is 'lexico', then the candidate with the lowest
         index is selected in case of a tie (usual behavior of SVVAMP for the other voting rules). If `tie_break_rule`

@@ -34,7 +34,7 @@ class RuleDodgson(DeleteCacheMixin, my_log.MyLog):
     This emulates a part of `Rule` functionalities, but it is not a subclass of `Rule`. The core difference is that
     `self.w_` may be `numpy.nan`, which means that the winner is not known. For that reason, many other methods from
     `Rule` are not implemented here. As of now, the main purpose of this class is to implement `is_cm_` to evaluate
-    the coalitional manipulability of Dodgson method.
+    the coalitional manipulability of the Dodgson method.
 
     Consider that the implementation of `is_cm_` is trustworthy only if voters have no indifference.
     """

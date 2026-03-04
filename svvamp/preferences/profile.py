@@ -3093,7 +3093,7 @@ class Profile(my_log.MyLog):
     @cached_property
     def theta_empirical(self):
         """
-        Empirical concentration parameter (in the Perturbed Culture model).
+        Empirical concentration parameter (in the Perturbed Culture model). [Beta feature]
         """
         # Old version based on the average score in duels
         # if not self.exists_condorcet_order_rk:
