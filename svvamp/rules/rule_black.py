@@ -360,4 +360,10 @@ class RuleBlack(Rule):
 
     @cached_property
     def theta_critical_(self):
+        """
+            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
+            >>> rule = RuleBlack()(profile)
+            >>> rule.theta_critical_
+            0.25
+        """
         return 1/4

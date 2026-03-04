@@ -58,6 +58,14 @@ class GeneratorProfileNoise(GeneratorProfile):
         >>> profile = generator()
         >>> profile.preferences_rk.shape
         (2, 3)
+
+    With an exponential noise:
+
+        >>> generator = GeneratorProfileNoise(base_profile=Profile(preferences_ut=[[5, 1, 2], [4, 10, 1]]),
+        ...                                   absolute_noise=.1, exponential_noise=True)
+        >>> profile = generator()
+        >>> profile.preferences_rk.shape
+        (2, 3)
     """
 
     def __init__(self, base_profile, relative_noise=0., absolute_noise=0., exponential_noise=False,

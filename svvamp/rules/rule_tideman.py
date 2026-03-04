@@ -758,4 +758,10 @@ class RuleTideman(Rule):
 
     @cached_property
     def theta_critical_(self):
+        """
+            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
+            >>> rule = RuleTideman()(profile)
+            >>> rule.theta_critical_
+            0
+        """
         return 0

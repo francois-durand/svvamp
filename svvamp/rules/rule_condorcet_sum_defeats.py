@@ -349,6 +349,20 @@ class RuleCondorcetSumDefeats(Rule):
 
         For ``_sufficient_coalition_size_cm`` and ``_necessary_coalition_size_cm``, it is not recommended to do
         better here.
+
+        Examples
+        --------
+        An example with a Set-Safe Condorcet Winner who is not a Resistant Condorcet Winner:
+
+            >>> profile = Profile(preferences_rk=(
+            ...     [[0, 1, 2, 3, 4]] * 40
+            ...     + [[1, 0, 2, 3, 4]] * 36
+            ...     + [[2, 3, 0, 1, 4]] * 12
+            ...     + [[2, 4, 0, 1, 3]] * 12
+            ... ))
+            >>> rule = RuleCondorcetSumDefeats()(profile)
+            >>> rule.is_cm_
+            False
         """
         if self.profile_.exists_set_safe_condorcet_winner:
             self.mylog("CM impossible (w is a Set-Safe Condorcet winner)", 2)
@@ -358,5 +372,11 @@ class RuleCondorcetSumDefeats(Rule):
 
     @cached_property
     def theta_critical_(self):
+        """
+            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
+            >>> rule = RuleCondorcetSumDefeats()(profile)
+            >>> rule.theta_critical_
+            0.18181818181818182
+        """
         n_c = self.profile_.n_c
         return (n_c - 2) / (4 * n_c - 5)

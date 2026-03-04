@@ -727,5 +727,11 @@ class RuleBucklin(Rule):
 
     @cached_property
     def theta_critical_(self):
+        """
+            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
+            >>> rule = RuleBucklin()(profile)
+            >>> rule.theta_critical_
+            0.3333333333333333
+        """
         n_c = self.profile_.n_c
         return (n_c - 2) / (2 * n_c - 2)

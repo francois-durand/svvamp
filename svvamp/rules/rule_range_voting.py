@@ -637,5 +637,11 @@ class RuleRangeVoting(Rule):
 
     @cached_property
     def theta_critical_(self):
+        """
+            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
+            >>> rule = RuleRangeVoting()(profile)
+            >>> rule.theta_critical_
+            1
+        """
         # This value is conventional.
         return 1

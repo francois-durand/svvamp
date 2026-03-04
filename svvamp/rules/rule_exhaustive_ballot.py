@@ -927,11 +927,12 @@ class RuleExhaustiveBallot(Rule):
                     situation_for_c = - np.nanmax(scores_s_temp[candidates != c])
                 elif self.fast_algo == "hardest_first":
                     situation_for_c = n_manip_d
-                else:
+                else:  # pragma: no cover
+                    # This should never happen because of the setter of fast_algo, but just in case...
                     raise NotImplementedError("Unknown fast algorithm: " + format(self.fast_algo))
                 self.mylogv("cm_aux_fast: scores_s_temp =", scores_s_temp, 3)
                 self.mylogv("cm_aux_fast: situation_for_c =", situation_for_c, 3)
-                # Is the the best ``d`` so far?
+                # Is it the best ``d`` so far?
                 # Lexicographic comparison on three criteria (highest ``situation``, lowest number of manipulators,
                 # lowest index).
                 if [situation_for_c, -n_manip_d, -d] > [best_situation_for_c, -n_manip_r, -best_d]:
@@ -1489,4 +1490,10 @@ class RuleExhaustiveBallot(Rule):
 
     @cached_property
     def theta_critical_(self):
+        """
+            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
+            >>> rule = RuleExhaustiveBallot()(profile)
+            >>> rule.theta_critical_
+            0
+        """
         return 0

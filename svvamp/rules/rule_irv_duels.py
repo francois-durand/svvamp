@@ -784,4 +784,10 @@ class RuleIRVDuels(Rule):
 
     @cached_property
     def theta_critical_(self):
+        """
+            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
+            >>> rule = RuleIRVDuels()(profile)
+            >>> rule.theta_critical_
+            0.14285714285714285
+        """
         return 1/7

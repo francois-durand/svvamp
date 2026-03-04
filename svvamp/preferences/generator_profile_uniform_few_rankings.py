@@ -58,6 +58,14 @@ class GeneratorProfileUniformFewRankings(GeneratorProfile):
         >>> profile = generator()
         >>> profile.preferences_rk.shape
         (10, 3)
+
+    Note: if ``n_max_rankings`` is at least as large as the total number of rankings, then this generator is equivalent
+    to ``GeneratorProfileIc``.
+
+        >>> generator = GeneratorProfileUniformFewRankings(n_v=10, n_c=3, n_max_rankings=6)
+        >>> profile = generator()
+        >>> profile.preferences_rk.shape
+        (10, 3)
     """
 
     def __init__(self, n_v, n_c, n_max_rankings, sort_voters=False):

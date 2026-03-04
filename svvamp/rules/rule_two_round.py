@@ -742,5 +742,11 @@ class RuleTwoRound(Rule):
 
     @cached_property
     def theta_critical_(self):
+        """
+            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
+            >>> rule = RuleTwoRound()(profile)
+            >>> rule.theta_critical_
+            0.058823529411764705
+        """
         n_c = self.profile_.n_c
         return (n_c - 3) / (5 * n_c - 3)

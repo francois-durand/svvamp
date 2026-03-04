@@ -195,6 +195,12 @@ class RuleYoung(DeleteCacheMixin, my_log.MyLog):
     # %% Estimation of CM via empirical theta (XM)
     @cached_property
     def theta_critical_(self):
+        """
+            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
+            >>> rule = RuleYoung()(profile)
+            >>> rule.theta_critical_
+            0.14285714285714285
+        """
         return 1/7
 
     @cached_property

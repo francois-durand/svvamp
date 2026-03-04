@@ -547,4 +547,12 @@ class RuleSlater(Rule):
 
     @cached_property
     def theta_critical_(self):
+        """
+            This is only valid for at least 4 candidates.
+
+            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
+            >>> rule = RuleSlater()(profile)
+            >>> rule.theta_critical_
+            0.25
+        """
         return 1/4

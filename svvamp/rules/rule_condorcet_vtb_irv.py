@@ -642,7 +642,7 @@ class RuleCondorcetVtbIRV(Rule):
             self.mylogv("cm_aux: scores_m_new_r =", scores_m_new_r, 3)
             # Update variables for next round
             scores_m_begin_r = scores_m_begin_r + scores_m_new_r
-            if np.sum(scores_m_begin_r) > n_m:
+            if np.sum(scores_m_begin_r) > n_m:  # pragma: no cover
                 raise NotImplementedError("Error: this should not happen.")
             scores_m_begin_r[d] = 0
             is_candidate_alive_begin_r[d] = False
@@ -975,4 +975,10 @@ class RuleCondorcetVtbIRV(Rule):
 
     @cached_property
     def theta_critical_(self):
+        """
+            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
+            >>> rule = RuleCondorcetVtbIRV()(profile)
+            >>> rule.theta_critical_
+            0
+        """
         return 0

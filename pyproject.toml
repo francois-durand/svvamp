@@ -99,6 +99,11 @@ ignore = [
 
 [tool.coverage.report]
 skip_empty = true
+exclude_lines = [
+    "pragma: no cover",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+]
 
 [tool.coverage.run]
 branch = true

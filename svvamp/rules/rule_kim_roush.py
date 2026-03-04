@@ -447,5 +447,11 @@ class RuleKimRoush(Rule):
 
     @cached_property
     def theta_critical_(self):
+        """
+            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
+            >>> rule = RuleKimRoush()(profile)
+            >>> rule.theta_critical_
+            0.5
+        """
         n_c = self.profile_.n_c
         return (n_c - 2) / n_c

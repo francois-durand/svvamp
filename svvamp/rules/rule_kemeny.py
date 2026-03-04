@@ -474,5 +474,11 @@ class RuleKemeny(Rule):
 
     @cached_property
     def theta_critical_(self):
+        """
+            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
+            >>> rule = RuleKemeny()(profile)
+            >>> rule.theta_critical_
+            0.18181818181818182
+        """
         n_c = self.profile_.n_c
         return (n_c - 2) / (4 * n_c - 5)

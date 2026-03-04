@@ -253,6 +253,15 @@ class ProfileUM(Profile):
 
     @cached_property
     def plurality_scores_rk(self):
+        """List: plurality scores, relying on 'rk' preferences.
+
+        Examples
+        --------
+            >>> profile_s = Profile(preferences_ut=[[1., .5, 0.], [.5, 1., 0.]])
+            >>> profile_um = ProfileUM(profile_s=profile_s, n_m=2, ballot_rk=[1, 2, 0])
+            >>> profile_um.plurality_scores_rk
+            array([1., 3., 0.])
+        """
         plurality_scores_rk = np.zeros(self.n_c)
         plurality_scores_rk[self.ballot_rk[0]] = self.n_m
         plurality_scores_rk += self.profile_s.plurality_scores_rk

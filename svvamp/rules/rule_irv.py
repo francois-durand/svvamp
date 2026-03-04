@@ -2317,4 +2317,10 @@ class RuleIRV(Rule):
 
     @cached_property
     def theta_critical_(self):
+        """
+            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
+            >>> rule = RuleIRV()(profile)
+            >>> rule.theta_critical_
+            0
+        """
         return 0

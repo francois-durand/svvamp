@@ -519,4 +519,12 @@ class RuleCopeland(Rule):
 
     @cached_property
     def theta_critical_(self):
+        """
+            This is only valid for at least 5 candidates.
+
+            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3, 4]])
+            >>> rule = RuleCopeland()(profile)
+            >>> rule.theta_critical_
+            0.25
+        """
         return 1/4
