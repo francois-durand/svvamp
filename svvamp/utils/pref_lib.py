@@ -60,34 +60,50 @@ Date:	April 4, 2013
   * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 import numpy as np
+import unicodedata
 from svvamp.utils.misc import preferences_ut_to_preferences_borda_ut
+
+
+def clean_string(s):
+    return (
+        unicodedata.normalize("NFKD", s)
+        .encode("ascii", errors="ignore")
+        .decode("ascii")
+    )
 
 
 def preflib_to_preferences_ut(file_name):
     # PreflibUtils.py
-    input_file = open(file_name, 'r')
-    # Number of candidates
-    the_line = input_file.readline()
+    input_file = open(file_name, 'r', encoding="utf-8", errors="replace")
+    in_first_header = True  # Header, excluding the candidate names
+    n_c, n_v, unique_orders = None, None, None
+    while in_first_header:
+        the_line = clean_string(input_file.readline())
+        if "# NUMBER ALTERNATIVES" in the_line:
+            bits = the_line.strip().split(":")
+            n_c = int(bits[1].strip())
+        if "# NUMBER VOTERS" in the_line:
+            bits = the_line.strip().split(":")
+            n_v = int(bits[1].strip())
+        if "# NUMBER UNIQUE ORDERS" in the_line:
+            bits = the_line.strip().split(":")
+            unique_orders = int(bits[1].strip())
+            in_first_header = False
     # Map of candidates
-    n_c = int(the_line.strip())
     candidates_map = {}
     labels_candidates = []
     for c in range(n_c):
-        bits = input_file.readline().strip().split(",")
-        candidates_map[int(bits[0].strip()) - 1] = bits[1].strip()
+        bits = clean_string(input_file.readline()).strip().split(":")
+        candidates_map[c] = bits[1].strip()
         labels_candidates.append(bits[1].strip())
-    # Now we have V, sum_of_vote_count, num_unique orders
-    bits = input_file.readline().strip().split(",")
-    n_v = int(bits[0].strip())
-    unique_orders = int(bits[2].strip())
     # Now, the ballots themselves
     preferences_utilities = np.zeros((n_v, n_c))
     start_index = 0
     for i in range(unique_orders):
         rec = input_file.readline().strip()
         # need to parse the rec properly..
-        count = int(rec[:rec.index(",")])
-        bits = rec[rec.index(",")+1:].strip().split(",")
+        count = int(rec[:rec.index(":")])
+        bits = rec[rec.index(":")+1:].strip().split(",")
         ballot_temp = np.full(n_c, - n_c)
         if rec.find("{") == -1:
             # its strict, just split on ,
