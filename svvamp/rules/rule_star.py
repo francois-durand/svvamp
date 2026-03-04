@@ -335,7 +335,7 @@ class RuleSTAR(Rule):
     """
 
     full_name = 'Scoring Then Automatic Runoff'
-    abbreviation = 'STAR'
+    abbreviation = 'Sta'
 
     options_parameters = Rule.options_parameters.copy()
     options_parameters.update({

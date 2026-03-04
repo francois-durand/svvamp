@@ -309,7 +309,7 @@ class RuleCondorcetVtbIRV(Rule):
     """
 
     full_name = 'Condorcet IRV'
-    abbreviation = 'CIRV'
+    abbreviation = 'CI'
 
     options_parameters = Rule.options_parameters.copy()
     options_parameters.update({

@@ -326,7 +326,7 @@ class RuleSmithIRV(Rule):
     """
 
     full_name = 'Smith-IRV'
-    abbreviation = 'SIRV'
+    abbreviation = 'SI'
 
     options_parameters = Rule.options_parameters.copy()
     options_parameters.update({

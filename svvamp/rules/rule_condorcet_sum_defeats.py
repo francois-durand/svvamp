@@ -301,8 +301,8 @@ class RuleCondorcetSumDefeats(Rule):
         [0. 2. 3.]
     """
 
-    full_name = 'Condorcet Sum Defeats'
-    abbreviation = 'CSD'
+    full_name = 'Simplified Dodgson'
+    abbreviation = 'SD'
 
     options_parameters = Rule.options_parameters.copy()
 

@@ -279,8 +279,8 @@ class RuleTwoRound(Rule):
         [0. 2. 4.]
     """
 
-    full_name = 'Two Round System'
-    abbreviation = 'TR'
+    full_name = 'Plurality with Runoff'
+    abbreviation = 'PR'
 
     options_parameters = Rule.options_parameters.copy()
     options_parameters.update({

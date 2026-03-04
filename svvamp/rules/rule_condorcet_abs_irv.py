@@ -315,7 +315,7 @@ class RuleCondorcetAbsIRV(Rule):
     """
 
     full_name = 'Absolute-Condorcet IRV'
-    abbreviation = 'ACIRV'
+    abbreviation = 'ACI'
 
     options_parameters = Rule.options_parameters.copy()
     options_parameters.update({
