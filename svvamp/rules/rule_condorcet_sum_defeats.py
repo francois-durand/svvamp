@@ -337,3 +337,21 @@ class RuleCondorcetSumDefeats(Rule):
     @cached_property
     def meets_infmc_c_ctb(self):
         return True
+
+    def _cm_preliminary_checks_general_subclass_(self):
+        """Do preliminary checks for CM. Only first time CM is launched.
+
+        Can update ``_is_cm`` to True or False (instead of -inf).
+
+        * If ``_is_cm`` becomes True, it is not necessary to update a specific ``_candidates_cm[c]``.
+        * If ``_is_cm`` becomes False, then all ``_candidates_cm[c]`` must become False. And it is recommended that
+        ``_cm_was_computed_with_candidates`` becomes True.
+
+        For ``_sufficient_coalition_size_cm`` and ``_necessary_coalition_size_cm``, it is not recommended to do
+        better here.
+        """
+        if self.profile_.exists_set_safe_condorcet_winner:
+            self.mylog("CM impossible (w is a Set-Safe Condorcet winner)", 2)
+            self._is_cm = False
+            self._candidates_cm[:] = False
+            self._cm_was_computed_with_candidates = True
