@@ -46,6 +46,9 @@ class ExperimentAnalyzer:
             Relative noise used by `GeneratorProfileNoise`.
         absolute_noise: float, optional
             Absolute noise used by `GeneratorProfileNoise`.
+        exponential_noise : bool
+            If True, the noise for each candidate follows an exponential distribution whose parameter is proportional
+            to its plurality score in the base profile. If False, the noise is uniform.
         study_profile_criteria: StudyProfileCriteria, optional
             Profile criteria to be studied.
         voting_rule_tasks: VotingRuleTasks, optional
@@ -84,6 +87,7 @@ class ExperimentAnalyzer:
                  n_samples=1,
                  relative_noise=0.,
                  absolute_noise=0.,
+                 exponential_noise=False,
                  study_profile_criteria=None,
                  voting_rule_tasks=None,
                  output_dir='out',
@@ -107,6 +111,7 @@ class ExperimentAnalyzer:
         self.default_n_samples = n_samples
         self.default_relative_noise = relative_noise
         self.default_absolute_noise = absolute_noise
+        self.default_exponential_noise = exponential_noise
         self.default_study_profile_criteria = study_profile_criteria
         self.default_voting_rule_tasks = voting_rule_tasks
         self.default_output_dir = output_dir
@@ -118,6 +123,7 @@ class ExperimentAnalyzer:
         self.n_samples = None
         self.relative_noise = None
         self.absolute_noise = None
+        self.exponential_noise = None
         self.study_profile_criteria = None
         self.voting_rule_tasks = None
         self.output_dir = None
@@ -162,6 +168,7 @@ class ExperimentAnalyzer:
         n_samples=None,
         relative_noise=None,
         absolute_noise=None,
+        exponential_noise=None,
         study_profile_criteria=None,
         voting_rule_tasks=None,
         output_dir=None,
@@ -174,6 +181,7 @@ class ExperimentAnalyzer:
         self.n_samples = self.default_n_samples if n_samples is None else n_samples
         self.relative_noise = self.default_relative_noise if relative_noise is None else relative_noise
         self.absolute_noise = self.default_absolute_noise if absolute_noise is None else absolute_noise
+        self.exponential_noise = self.default_exponential_noise if exponential_noise is None else exponential_noise
         self.study_profile_criteria = (self.default_study_profile_criteria if study_profile_criteria is None
                                        else study_profile_criteria)
         self.voting_rule_tasks = self.default_voting_rule_tasks if voting_rule_tasks is None else voting_rule_tasks
@@ -240,7 +248,8 @@ class ExperimentAnalyzer:
         ]
         self._prepare_csv()
         generator_profile = GeneratorProfileNoise(
-            base_profile=self.base_profile, relative_noise=self.relative_noise, absolute_noise=self.absolute_noise)
+            base_profile=self.base_profile, relative_noise=self.relative_noise, absolute_noise=self.absolute_noise,
+            exponential_noise=self.exponential_noise)
         # Heavy lifting
         print('Compute...')
         for n_iterations in range(self.n_samples):

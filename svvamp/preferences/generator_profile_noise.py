@@ -35,6 +35,9 @@ class GeneratorProfileNoise(GeneratorProfile):
         The relative noise.
     absolute_noise : number
         The absolute noise
+    exponential_noise : bool
+        If True, the noise for each candidate follows an exponential distribution whose parameter is proportional
+        to its plurality score in the base profile. If False, the noise is uniform.
     sort_voters : bool
         This argument is passed to :class:`Profile`.
 
@@ -43,6 +46,10 @@ class GeneratorProfileNoise(GeneratorProfile):
     We compute ``total_noise = absolute_noise + relative_noise * amplitude``, where ``amplitude`` is the difference
     between the lowest and the highest utility. Then to each ``preferences_ut[v, c]``, a random noise is added which
     is drawn independently and uniformly in the interval ``[- total_noise, total_noise]``.
+
+    If `exponential_noise` is True, the noise added to each candidate `c` for each voter `v` is drawn independently
+    from an exponential distribution with scale parameter proportional to the plurality score of `c` in the base
+    profile.
 
     Examples
     --------
@@ -53,25 +60,38 @@ class GeneratorProfileNoise(GeneratorProfile):
         (2, 3)
     """
 
-    def __init__(self, base_profile, relative_noise=0., absolute_noise=0., sort_voters=False):
+    def __init__(self, base_profile, relative_noise=0., absolute_noise=0., exponential_noise=False,
+                 sort_voters=False):
         self.base_profile = base_profile
         self.base_ut = self.base_profile.preferences_ut.astype(float)
         self.n_v, self.n_c = self.base_profile.n_v, self.base_profile.n_c
         self.relative_noise = relative_noise
         self.absolute_noise = absolute_noise
+        self.exponential_noise = exponential_noise
         self.sort_voters = sort_voters
         # Total noise
         self.total_noise = self.absolute_noise
         if relative_noise != 0:
             amplitude = np.max(self.base_ut) - np.min(self.base_ut)
             self.total_noise += relative_noise * amplitude
+        # Scales of the exponential noise (if relevant)
+        self.scales_exponential = None
+        if self.exponential_noise:
+            plurality_scores = self.base_profile.plurality_scores_ut
+            eps = 1e-8
+            self.scales_exponential = (plurality_scores / plurality_scores.mean()) + eps
         self.log_creation = ['Noise Adder', 'Base profile', str(base_profile),
-                             'Relative noise', relative_noise, 'Absolute noise', absolute_noise]
+                             'Relative noise', relative_noise, 'Absolute noise', absolute_noise,
+                             'Exponential noise', exponential_noise]
         super().__init__(sort_voters=sort_voters)
 
     def __call__(self):
         preferences_ut = self.base_ut.copy()
         if self.total_noise != 0:
-            preferences_ut += self.total_noise * 2 * (0.5 - np.random.rand(self.n_v, self.n_c))
+            if self.exponential_noise:
+                noise = np.random.exponential(scale=self.scales_exponential, size=(self.n_v, self.n_c))
+            else:  # Uniform noise
+                noise = 2 * (0.5 - np.random.rand(self.n_v, self.n_c))
+            preferences_ut += self.total_noise * noise
         return Profile(preferences_ut=preferences_ut, log_creation=self.log_creation,
                        labels_candidates=self.base_profile.labels_candidates, sort_voters=self.sort_voters)
