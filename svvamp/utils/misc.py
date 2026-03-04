@@ -1,6 +1,7 @@
 import random
 import numpy as np
 import networkx as nx
+from itertools import chain, combinations
 
 
 def preferences_ut_to_preferences_rk(preferences_ut):
@@ -482,3 +483,32 @@ def euclidean_distances(voters_positions, candidates_positions):
                [0.89442719, 1.3892444 , 1.62788206, 0.9486833 ]])
     """
     return np.sqrt(((voters_positions[:, np.newaxis, :] - candidates_positions[np.newaxis, :, :])**2).sum(axis=2))
+
+
+def powerset(lst, min_size=0):
+    """Subsequences of the list from shortest to longest.
+
+    Examples
+    --------
+        >>> for s in powerset([1, 2, 3]):
+        ...     print(s)
+        ()
+        (1,)
+        (2,)
+        (3,)
+        (1, 2)
+        (1, 3)
+        (2, 3)
+        (1, 2, 3)
+
+        >>> for s in powerset([1, 2, 3], min_size=1):
+        ...     print(s)
+        (1,)
+        (2,)
+        (3,)
+        (1, 2)
+        (1, 3)
+        (2, 3)
+        (1, 2, 3)
+    """
+    return chain.from_iterable(combinations(lst, r) for r in range(min_size, len(lst) + 1))

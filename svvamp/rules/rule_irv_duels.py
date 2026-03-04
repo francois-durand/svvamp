@@ -19,10 +19,11 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+from itertools import product
 import numpy as np
 from svvamp.rules.rule import Rule
 from svvamp.utils.util_cache import cached_property
-from svvamp.utils.misc import preferences_ut_to_matrix_duels_ut
+from svvamp.utils.misc import preferences_ut_to_matrix_duels_ut, powerset
 from svvamp.preferences.profile import Profile
 
 
@@ -56,6 +57,13 @@ class RuleIRVDuels(Rule):
     We thank Laurent Viennot for the idea of this voting system.
 
     * :meth:`is_cm_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
+
+        * :attr:`cm_option` = ``'lazy'``: Non-exact algorithms from superclass :class:`Rule`.Can prove
+          CM but unable to decide non-CM (except in rare obvious cases).
+        * :attr:`cm_option` = ``'slow'``: Non-polynomial heuristic (:math:`2^{n_c}`). Quite efficient to prove CM
+          or non-CM.
+        * :attr:`cm_option` = ``'exact'``: Exact algorithm (:math:`(n_c!)^2`, ouch!).
+
     * :meth:`is_icm_`: Exact in polynomial time.
     * :meth:`is_im_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
     * :meth:`~svvamp.Election.not_iia`: Exact in polynomial time.
@@ -302,12 +310,12 @@ class RuleIRVDuels(Rule):
         [0. 2. 3.]
     """
 
-    full_name = 'IRV-Duels'
-    abbreviation = 'IRVD'
+    full_name = 'Viennot'
+    abbreviation = 'Vie'
 
     options_parameters = Rule.options_parameters.copy()
     options_parameters['icm_option'] = {'allowed': ['exact'], 'default': 'exact'}
-    options_parameters['cm_option'] = {'allowed': ['lazy', 'exact'], 'default': 'lazy'}
+    options_parameters['cm_option'] = {'allowed': ['lazy', 'slow', 'exact'], 'default': 'lazy'}
 
     def __init__(self, **kwargs):
         super().__init__(
@@ -404,6 +412,54 @@ class RuleIRVDuels(Rule):
         return True
 
     # %% Coalition Manipulation (CM)
+
+    def _cm_aux_slow(self, c, optimize_bounds, preferences_borda_s, matrix_duels_s):
+        """'Slow' algorithm used for CM. Try to prove non-CM.
+
+        Parameters
+        ----------
+        c : int
+            Candidate for which we want to manipulate.
+        """
+        # The d's are the candidates (!= c, w) who can defeat `w` in a pairwise comparison (after manipulation).
+        # The e's are the candidates (!= c, w) who cannot.
+        n_v = self.profile_.n_v
+        n_c = self.profile_.n_c
+        n_m = self.profile_.matrix_duels_ut[c, self.w_]  # Number of manipulators
+        d_can_defeat_w = (matrix_duels_s[self.w_, :] < n_v / 2) | (
+                (matrix_duels_s[self.w_, :] == n_v / 2) & (np.arange(n_c) < self.w_))
+        e_cannot_defeat_w = np.logical_not(d_can_defeat_w)
+        d_can_defeat_w[self.w_] = False
+        d_can_defeat_w[c] = False
+        e_cannot_defeat_w[c] = False
+        all_ds = np.where(d_can_defeat_w)[0]
+        all_es = np.where(e_cannot_defeat_w)[0]
+        n_m_sufficient_to_beat_w = np.inf
+        for ds, es in product(powerset(all_ds, min_size=1), powerset(all_es)):
+            subset_candidates = set(ds) | set(es) | {c} | {self.w_}
+            candidate_is_absent = [i not in subset_candidates for i in range(n_c)]
+            pref_copy = np.copy(preferences_borda_s)
+            pref_copy[:, candidate_is_absent] = -1
+            ballots_s = np.argmax(pref_copy, axis=1)
+            scores_s = np.bincount(ballots_s, minlength=n_c)
+            the_d = ds[::-1][np.argmin(scores_s[list(ds)][::-1])]  # The easiest d to select along with w_
+            if scores_s[self.w_] > scores_s[the_d] or (scores_s[self.w_] == scores_s[the_d] and self.w_ < the_d):
+                score_to_beat = scores_s[self.w_]
+                candidate_to_beat = self.w_
+            else:
+                score_to_beat = scores_s[the_d]
+                candidate_to_beat = the_d
+            score_needed = (np.arange(n_c) > candidate_to_beat) + score_to_beat
+            n_m_beat_w_new = np.sum(np.maximum(score_needed - scores_s, 0)[list(subset_candidates - {the_d, self.w_})])
+            if n_m_beat_w_new < n_m_sufficient_to_beat_w:
+                n_m_sufficient_to_beat_w = n_m_beat_w_new
+                if not optimize_bounds and n_m_sufficient_to_beat_w <= n_m:
+                    # We failed to prove non-CM. This is a quick escape.
+                    return True
+        self._update_necessary(
+            self._necessary_coalition_size_cm, c, n_m_sufficient_to_beat_w,
+            'CM: Update necessary_coalition_size_cm[c] = ')
+        return False
 
     def _cm_aux_exact(self, c, n_max, n_min, optimize_bounds, preferences_borda_s, matrix_duels_s):
         """Exact algorithm used for CM.
@@ -683,15 +739,26 @@ class RuleIRVDuels(Rule):
             >>> rule.is_cm_c_(0)
             False
         """
-        if not self.cm_option == "exact":
+        if self.cm_option == "lazy":
             # With 'lazy' option, we stop here anyway.
             return False
-        # From this point, we have necessarily the 'exact' option.
+
+        # From this point, we have the 'slow' or the 'exact' option.
         n_m = self.profile_.matrix_duels_ut[c, self.w_]
-        n_max = self._sufficient_coalition_size_cm[c] - 1 if optimize_bounds else n_m
-        n_min = self._necessary_coalition_size_cm[c]
         preferences_borda_s = self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :]
         matrix_duels_s = preferences_ut_to_matrix_duels_ut(preferences_borda_s)
+        if self.cm_option == 'slow':
+            quick_escape = self._cm_aux_slow(
+                c=c,
+                optimize_bounds=optimize_bounds,
+                preferences_borda_s=preferences_borda_s,
+                matrix_duels_s=matrix_duels_s
+            )
+            return quick_escape
+
+        # From this point, we necessarily have the 'exact' option.
+        n_max = self._sufficient_coalition_size_cm[c] - 1 if optimize_bounds else n_m
+        n_min = self._necessary_coalition_size_cm[c]
         n_manip_exact, example_path_losers, example_path_winners, quick_escape = self._cm_aux_exact(
             c=c,
             n_max=n_max,
