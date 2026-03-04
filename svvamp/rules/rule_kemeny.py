@@ -300,13 +300,36 @@ class RuleKemeny(Rule):
 
     options_parameters = Rule.options_parameters.copy()
     options_parameters['icm_option'] = {'allowed': ['exact'], 'default': 'exact'}
+    options_parameters['winner_option'] = {'allowed': ['exact', 'lazy'], 'default': 'exact'}
 
-    def __init__(self, **kwargs):
+    def __init__(self, winner_option='exact', **kwargs):
+        self._winner_option = None
         super().__init__(
             with_two_candidates_reduces_to_plurality=True, is_based_on_rk=True,
             precheck_icm=True,
+            winner_option=winner_option,
             log_identity="KEMENY", **kwargs
         )
+
+    # %% Setting the parameters
+
+    @property
+    def winner_option(self):
+        return self._winner_option
+
+    @winner_option.setter
+    def winner_option(self, value):
+        if self._winner_option == value:
+            return
+        if value in self.options_parameters['winner_option']['allowed']:
+            self.mylogv("Setting winner_option =", value, 1)
+            self._winner_option = value
+            self._result_options['winner_option'] = value
+            self.delete_cache()
+        else:
+            raise ValueError("Unknown value for winner_option: " + format(value))
+
+    # %% Election results
 
     @cached_property
     def _strong_connected_components_(self):
@@ -354,6 +377,10 @@ class RuleKemeny(Rule):
 
     @cached_property
     def w_(self):
+        if self.profile_.exists_condorcet_winner_rk_ctb:
+            return self.profile_.condorcet_winner_rk_ctb
+        if self.winner_option == 'lazy':
+            return np.nan
         return self._count_first_component_['w']
 
     @cached_property
@@ -404,6 +431,13 @@ class RuleKemeny(Rule):
         return True
 
     # %% Coalition Manipulation (CM)
+
+    @cached_property
+    def is_cm_(self):
+        if not self.profile_.exists_condorcet_admissible:
+            self.mylog("There no Condorcet-admissible candidate, so coalition manipulation is possible.", 2)
+            return True
+        return super().is_cm_
 
     def _cm_preliminary_checks_c_subclass_(self, c, optimize_bounds):
         # We want a Kemeny order like r = c > j_1 > ... > j_k > w > j_{k+1} > ... j_{n_c - 2}.
