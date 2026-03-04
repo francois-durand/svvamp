@@ -816,6 +816,10 @@ class RuleMaximin(Rule):
         is_quick_escape_exact = self._cm_main_work_c_exact_(c, optimize_bounds)
         return is_quick_escape_fast or is_quick_escape_exact
 
+    @cached_property
+    def theta_critical_(self):
+        return 1/7
+
 
 class StackFamily:
     """Family of stacks. Used for the manipulation of Maximin.

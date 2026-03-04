@@ -462,3 +462,8 @@ class RuleKemeny(Rule):
         if m_column_w[c] + np.sum(np.maximum(0, m_column_w[neither_c_nor_w])) < 0:
             self._update_necessary(self._necessary_coalition_size_cm, c, n_m + 1,
                                    'CM: Preliminary check: necessary_coalition_size_cm =')
+
+    @cached_property
+    def theta_critical_(self):
+        n_c = self.profile_.n_c
+        return (n_c - 2) / (4 * n_c - 5)

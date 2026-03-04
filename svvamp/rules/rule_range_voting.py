@@ -634,3 +634,8 @@ class RuleRangeVoting(Rule):
     # %% Ignorant-Coalition Manipulation (ICM)
 
     # Since Range Voting meets IgnMC_c_ctb, the general methods are exact.
+
+    @cached_property
+    def theta_critical_(self):
+        # This value is conventional.
+        return 1

@@ -432,3 +432,8 @@ class RulePlurality(Rule):
         # necessary to use ``max(..., 0)``.
         self._sufficient_coalition_size_cm[c] = scores_s[self.w_] - scores_s[c] + (c > self.w_)
         self._necessary_coalition_size_cm[c] = self._sufficient_coalition_size_cm[c]
+
+    @cached_property
+    def theta_critical_(self):
+        n_c = self.profile_.n_c
+        return (n_c - 2) / (3 * n_c - 2)

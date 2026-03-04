@@ -880,3 +880,8 @@ class RuleCoombs(Rule):
                 self._update_necessary(self._necessary_coalition_size_cm, c, n_m + 1,
                                        'CM: Update necessary_coalition_size_cm = n_m + 1 =')
                 return True
+
+    @cached_property
+    def theta_critical_(self):
+        n_c = self.profile_.n_c
+        return (n_c - 1) / (3 * n_c - 1)

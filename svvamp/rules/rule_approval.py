@@ -547,3 +547,8 @@ class RuleApproval(Rule):
     # %% Ignorant-Coalition Manipulation (ICM)
 
     # Defined in the superclass.
+
+    @cached_property
+    def theta_critical_(self):
+        # This value is conventional.
+        return 1

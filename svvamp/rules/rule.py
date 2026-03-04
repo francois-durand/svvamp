@@ -336,6 +336,8 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             return self.log_um_
         if '_cm_' in method_name:
             return self.log_cm_
+        if '_xm_' in method_name:
+            return self.log_xm_
 
     def __call__(self, profile):
         """
@@ -2877,6 +2879,29 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             return
         is_quick_escape = self._icm_main_work_c_(c, optimize_bounds)
         self._icm_conclude_c(c, is_quick_escape)
+
+    # %% Estimation of CM via empirical theta (XM)
+    @cached_property
+    def log_xm_(self):
+        """String. Parameters used to compute :meth:`is_xm_` and related methods.
+        """
+        return "xm_option = exact"
+
+    @cached_property
+    def theta_critical_(self):
+        raise NotImplementedError(f'Not implemented for class {self.__class__.__name__}.')
+
+    @cached_property
+    def is_xm_(self):
+        if self.profile_.theta_empirical > self.theta_critical_:
+            self.mylog("XM: Theta > theta_c, so XM is False", 2)
+            return False
+        elif self.profile_.theta_empirical < self.theta_critical_:
+            self.mylog("XM: Theta < theta_c, so XM is True", 2)
+            return True
+        else:
+            self.mylog("XM: Theta == theta_c, so XM is unknown", 2)
+            return np.nan
 
     # %% Coalition Manipulation (CM)
 

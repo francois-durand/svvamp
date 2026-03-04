@@ -528,3 +528,8 @@ class RuleBaldwin(Rule):
         # with = ``n_m`` manipulators).
         is_quick_escape_exact = self._cm_main_work_c_exact_(c, optimize_bounds)
         return is_quick_escape_fast or is_quick_escape_exact
+
+    @cached_property
+    def theta_critical_(self):
+        n_c = self.profile_.n_c
+        return (n_c - 2) / (4 * n_c - 5)

@@ -3089,3 +3089,42 @@ class Profile(my_log.MyLog):
             False
         """
         return bool(np.isnan(self.set_safe_condorcet_winner))
+
+    @cached_property
+    def theta_empirical(self):
+        """
+        Empirical concentration parameter (in the Perturbed Culture model).
+        """
+        # Old version based on the average score in duels
+        # if not self.exists_condorcet_order_rk:
+        #     return 0
+        # copeland_scores = np.copy(self.matrix_victories_rk.sum(1))
+        # candidates_ordered = np.array(np.argsort(- copeland_scores, kind='mergesort'), dtype=int)
+        # matrix_reordered = self.matrix_duels_rk[:, candidates_ordered][candidates_ordered, :]
+        # matrix_antisym = matrix_reordered - matrix_reordered.T
+        # sum_above_diagonal = np.sum(matrix_antisym[np.triu_indices(self.n_c, k=1)])
+        # n_c, n_v = self.n_c, self.n_v
+        # return sum_above_diagonal / (n_c * (n_c - 1) / 2) / n_v
+
+        # New version based on the maximin score of the Condorcet winner => Quite good for Netflix, not for Fairvote
+        # if not self.exists_condorcet_winner_rk:
+        #     return -1
+        # w = self.condorcet_winner_rk
+        # max_c_against_w = self.matrix_duels_rk[:, w].max()
+        # min_w_against_c = self.n_v - max_c_against_w
+        # antisym_score = min_w_against_c - max_c_against_w
+        # return antisym_score / self.n_v
+
+        # Test version based on "bicoalitions" => Relatively good for Fairvote, not tested yet on Netflix
+        # if not self.exists_condorcet_order_rk:
+        #     return -1
+        # w = self.condorcet_winner_rk
+        # size_bicoalition = self.size_bicoalition.copy()
+        # min_size_bicoalition = np.min(size_bicoalition[np.arange(self.n_c) != w, :][:, np.arange(self.n_c) != w])
+        # relative_min_size_bicoalition = min_size_bicoalition / self.n_v
+        # return (3 * relative_min_size_bicoalition - 1) / 2
+
+        # Test version based on the plurality score of the best candidate => Not good at all
+        best_plurality_score_normalized = np.max(self.plurality_scores_rk) / self.n_v
+        s = best_plurality_score_normalized
+        return (s * self.n_c - 1) / (self.n_c - 1)

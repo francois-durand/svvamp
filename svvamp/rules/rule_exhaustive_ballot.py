@@ -1486,3 +1486,7 @@ class RuleExhaustiveBallot(Rule):
                     self._necessary_coalition_size_cm, c, self.profile_.matrix_duels_ut[c, self.w_] + 1,
                     'CM: Update necessary_coalition_size_cm[c] = n_m + 1 =')
                 return True
+
+    @cached_property
+    def theta_critical_(self):
+        return 0

@@ -724,3 +724,8 @@ class RuleBucklin(Rule):
             self._update_necessary(self._necessary_coalition_size_cm, c, n_m + 1,
                                    'CM: Exact: Manipulation proven impossible for n_m manipulators =>\n'
                                    '    necessary_coalition_size_cm[c] = n_m + 1 =')
+
+    @cached_property
+    def theta_critical_(self):
+        n_c = self.profile_.n_c
+        return (n_c - 2) / (2 * n_c - 2)

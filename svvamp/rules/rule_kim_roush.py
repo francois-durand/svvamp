@@ -444,3 +444,8 @@ class RuleKimRoush(Rule):
                 n_m_necessary = n_vetos_s[c] - n_vetos_s[self.w_]
         self._update_necessary(self._necessary_coalition_size_cm, c, n_m_necessary,
                                'CM: w must lose => necessary_coalition_size_cm[c] = ')
+
+    @cached_property
+    def theta_critical_(self):
+        n_c = self.profile_.n_c
+        return (n_c - 2) / n_c

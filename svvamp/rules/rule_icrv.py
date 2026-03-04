@@ -762,3 +762,7 @@ class RuleICRV(Rule):
                 self.mylog('CM: c, self.irv_.w_ and self.w_ are all distinct', 3)
         if self.cm_option == 'exact':
             return self._cm_main_work_c_exact_(c, optimize_bounds)
+
+    @cached_property
+    def theta_critical_(self):
+        return 0

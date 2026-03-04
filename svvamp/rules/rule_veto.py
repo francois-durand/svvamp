@@ -431,3 +431,7 @@ class RuleVeto(Rule):
         self._sufficient_coalition_size_cm[c] = np.sum(
             np.maximum(scores_test - scores_test[c] + (np.array(range(self.profile_.n_c)) < c), 0))
         self._necessary_coalition_size_cm[c] = self._sufficient_coalition_size_cm[c]
+
+    @cached_property
+    def theta_critical_(self):
+        return 1

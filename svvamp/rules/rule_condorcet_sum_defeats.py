@@ -355,3 +355,8 @@ class RuleCondorcetSumDefeats(Rule):
             self._is_cm = False
             self._candidates_cm[:] = False
             self._cm_was_computed_with_candidates = True
+
+    @cached_property
+    def theta_critical_(self):
+        n_c = self.profile_.n_c
+        return (n_c - 2) / (4 * n_c - 5)

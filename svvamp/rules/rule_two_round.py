@@ -739,3 +739,8 @@ class RuleTwoRound(Rule):
             if self._sufficient_coalition_size_cm[c] == self._necessary_coalition_size_cm[c]:
                 return
         self._necessary_coalition_size_cm[c] = self._sufficient_coalition_size_cm[c]
+
+    @cached_property
+    def theta_critical_(self):
+        n_c = self.profile_.n_c
+        return (n_c - 3) / (5 * n_c - 3)

@@ -973,3 +973,7 @@ class RuleSchulze(Rule):
             self._um_main_work_c_exact_rankings_(c)
         else:
             self._candidates_um[c] = np.nan
+
+    @cached_property
+    def theta_critical_(self):
+        return 1/7

@@ -792,3 +792,8 @@ class RuleMajorityJudgment(Rule):
     # %% Ignorant-Coalition Manipulation (ICM)
 
     # Since Majority Judgment meets IgnMC_c_tb, the general methods are exact.
+
+    @cached_property
+    def theta_critical_(self):
+        # This value is conventional.
+        return 1

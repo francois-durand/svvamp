@@ -765,3 +765,7 @@ class RuleCondorcetAbsIRV(Rule):
         if self.cm_option == 'exact':
             is_quick_escape_two = self._cm_main_work_c_exact_(c, optimize_bounds)
         return is_quick_escape_one or is_quick_escape_two
+
+    @cached_property
+    def theta_critical_(self):
+        return 0

@@ -89,6 +89,8 @@ class RuleDodgson(DeleteCacheMixin, my_log.MyLog):
         """
         if '_cm_' in method_name:
             return "cm_option = fast"
+        elif '_xm_' in method_name:
+            return "xm_option = exact"
         else:
             raise NotImplementedError()
 
@@ -260,3 +262,21 @@ class RuleDodgson(DeleteCacheMixin, my_log.MyLog):
                 self.mylogv("CM: Failed to prove TM for c =", c, 2)
                 return np.nan
         return True
+
+    # %% Estimation of CM via empirical theta (XM)
+    @cached_property
+    def theta_critical_(self):
+        n_c = self.profile_.n_c
+        return (n_c - 2) / (4 * n_c - 5)
+
+    @cached_property
+    def is_xm_(self):
+        if self.profile_.theta_empirical > self.theta_critical_:
+            self.mylog("XM: Theta > theta_c, so XM is False", 2)
+            return False
+        elif self.profile_.theta_empirical < self.theta_critical_:
+            self.mylog("XM: Theta < theta_c, so XM is True", 2)
+            return True
+        else:
+            self.mylog("XM: Theta == theta_c, so XM is unknown", 2)
+            return np.nan

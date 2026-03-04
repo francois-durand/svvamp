@@ -357,3 +357,7 @@ class RuleBlack(Rule):
     @cached_property
     def meets_ignmc_c_ctb(self):
         return True
+
+    @cached_property
+    def theta_critical_(self):
+        return 1/4

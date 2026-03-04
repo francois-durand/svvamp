@@ -781,3 +781,7 @@ class RuleIRVDuels(Rule):
                     self._necessary_coalition_size_cm, c, n_m + 1,
                     'CM: Update necessary_coalition_size_cm[c] = n_m + 1 =')
         return quick_escape
+
+    @cached_property
+    def theta_critical_(self):
+        return 1/7

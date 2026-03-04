@@ -428,3 +428,7 @@ class RuleRankedPairs(Rule):
         n_m_necessary = np.ceil(np.max(score_k_against_c - worst_defeat_k))
         self._update_necessary(self._necessary_coalition_size_cm, c, n_m_necessary,
                                'CM: Preliminary check: necessary_coalition_size_cm =')
+
+    @cached_property
+    def theta_critical_(self):
+        return 1/7
