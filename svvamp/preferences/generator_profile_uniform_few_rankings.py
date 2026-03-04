@@ -39,7 +39,7 @@ class GeneratorProfileUniformFewRankings(GeneratorProfile):
         Number of candidates.
     n_max_rankings : int
         Maximum number of rankings to draw. If ``n_max_rankings`` is greater than the total number of rankings,
-        then all rankings are drawn.
+        then all rankings are used.
     sort_voters : bool
         This argument is passed to :class:`Profile`.
 

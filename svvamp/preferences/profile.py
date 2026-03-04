@@ -3022,8 +3022,11 @@ class Profile(my_log.MyLog):
         the manipulators cannot make it so that `w` has a Borda score less than or equal to zero in a subset of
         candidates containing both `c` and `w`.
 
-        It can be shown that it is equivalent to say that for each candidate `c`, we have that
-        | w >_rk c| - n_v / 2 + sum_{d \neq w, c} min(0, | w >=_ut c and w >_rk d | - n_v / 2) > 0.
+        It can be shown that it is equivalent to say that for each candidate `c`, we have that:
+
+        .. math::
+
+            | w >_{rk} c| - n_v / 2 + \\sum_{d \\neq w, c} \\min(0, | w \\geq_{ut} c \\text{ and } w >_{rk} d | - n_v / 2) > 0.
 
         Considering the subsets with only one other candidate `d`, we deduce that a Set-Safe Condorcet winner (SSCW) is
         also a Pair-Safe Condorcet winner (PSCW). Considering the subsets with no other candidate `d`, we deduce
