@@ -601,8 +601,8 @@ class RuleBucklin(Rule):
         d_can_be_added_before_last_round = np.logical_and(d_can_be_added, scores_prev + n_m <= self.profile_.n_v / 2)
 
         # We can conclude.
-        self._candidates_um[c] = (np.sum(d_can_be_added) >= r - 1
-                                  and np.sum(d_can_be_added_before_last_round) >= r - 2)
+        self._candidates_um[c] = (np.sum(d_can_be_added) >= r
+                                  and np.sum(d_can_be_added_before_last_round) >= r - 1)
 
     # %% Ignorant-Coalition Manipulation (ICM)
 
@@ -715,8 +715,8 @@ class RuleBucklin(Rule):
             votes_can_be_added_before_last_r[d] = min(np.floor(self.profile_.n_v / 2) - scores_prev[d],
                                                       votes_can_be_added[d])
 
-        if (not one_d_beats_c_anyway and sum(votes_can_be_added) >= (r - 1) * n_m
-                and sum(votes_can_be_added_before_last_r) >= (r - 2) * n_m):
+        if (not one_d_beats_c_anyway and sum(votes_can_be_added) >= r * n_m
+                and sum(votes_can_be_added_before_last_r) >= (r - 1) * n_m):
             self._update_sufficient(self._sufficient_coalition_size_cm, c, n_m,
                                     'CM: Exact: Manipulation found for n_m manipulators =>\n'
                                     '    sufficient_coalition_size_cm = n_m =')
