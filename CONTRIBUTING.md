@@ -51,18 +51,18 @@ If you are proposing a feature:
 
 Ready to contribute? Here's how to set up **svvamp** for local development.
 
-### 1. Fork the repository
+## 1. Fork the repository
 
 Fork the repository on GitHub.
 
-### 2. Clone your fork
+## 2. Clone your fork
 
 ```bash
 git clone git@github.com:your_name_here/svvamp.git
 cd svvamp
 ```
 
-### 3. Create the development environment
+## 3. Create the development environment
 
 This project uses **uv** to manage environments and dependencies.
 
@@ -78,7 +78,7 @@ Install the package in editable mode with development dependencies:
 uv pip install -e ".[dev]"
 ```
 
-### 4. Create a branch
+## 4. Create a branch
 
 Create a branch for your contribution:
 
