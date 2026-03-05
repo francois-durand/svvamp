@@ -10,19 +10,19 @@ def test_not_enough_candidates():
 
 def test_set_labels_candidates():
     """
-        >>> profile = Profile(preferences_ut=[[1, 0], [1, 0]])
-        >>> profile.labels_candidates
-        ['0', '1']
-        >>> profile.labels_candidates = ['Alice', 'Bob']
-        >>> profile.labels_candidates
-        ['Alice', 'Bob']
+    >>> profile = Profile(preferences_ut=[[1, 0], [1, 0]])
+    >>> profile.labels_candidates
+    ['0', '1']
+    >>> profile.labels_candidates = ['Alice', 'Bob']
+    >>> profile.labels_candidates
+    ['Alice', 'Bob']
     """
     pass
 
 
 def test_to_csv():
     """
-        >>> profile = Profile(preferences_ut=[[1, 0], [1, 0]])
-        >>> profile.to_csv(file_name='file_test_profile_to_csv.csv')
+    >>> profile = Profile(preferences_ut=[[1, 0], [1, 0]])
+    >>> profile.to_csv(file_name='file_test_profile_to_csv.csv')
     """
     pass

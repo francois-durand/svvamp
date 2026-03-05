@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 from math import floor
 import numpy as np
 
@@ -39,12 +40,12 @@ class RuleDodgson(DeleteCacheMixin, my_log.MyLog):
     Consider that the implementation of `is_cm_` is trustworthy only if voters have no indifference.
     """
 
-    full_name = 'Dodgson'
-    abbreviation = 'Dod'
+    full_name = "Dodgson"
+    abbreviation = "Dod"
 
     def __init__(self):
         super().__init__()
-        self.log_identity = 'DODGSON'
+        self.log_identity = "DODGSON"
         # Initialize the computed variables
         self.profile_ = None
 
@@ -54,14 +55,13 @@ class RuleDodgson(DeleteCacheMixin, my_log.MyLog):
         ----------
         profile : Profile
         """
-        self.delete_cache(suffix='_')
+        self.delete_cache(suffix="_")
         self.profile_ = profile
         return self
 
     @cached_property
     def w_(self):
-        """Integer (winning candidate).
-        """
+        """Integer (winning candidate)."""
         self.mylog("Compute winner", 1)
         if self.profile_.exists_condorcet_winner_rk:
             return self.profile_.condorcet_winner_rk
@@ -70,26 +70,23 @@ class RuleDodgson(DeleteCacheMixin, my_log.MyLog):
 
     @cached_property
     def losing_candidates_(self):
-        """1d of Integers. List of losing candidates, in a decreasing order of (heuristic) dangerousness
-        """
+        """1d of Integers. List of losing candidates, in a decreasing order of (heuristic) dangerousness"""
         self.mylog("Compute ordered list of losing candidates", 1)
         if np.isnan(self.w_):
             # If the winner is not known, we cannot compute the losing candidates.
             return np.isnan
-        result = np.concatenate((
-            np.array(range(0, self.w_), dtype=int),
-            np.array(range(self.w_ + 1, self.profile_.n_c), dtype=int)
-        ))
-        return result[np.argsort(- self.profile_.matrix_duels_ut[result, self.w_], kind='mergesort')]
+        result = np.concatenate(
+            (np.array(range(0, self.w_), dtype=int), np.array(range(self.w_ + 1, self.profile_.n_c), dtype=int))
+        )
+        return result[np.argsort(-self.profile_.matrix_duels_ut[result, self.w_], kind="mergesort")]
 
     # %% Coalition Manipulation (CM)
 
     def log_(self, method_name):
-        """Log corresponding to a particular manipulation method.
-        """
-        if '_cm_' in method_name:
+        """Log corresponding to a particular manipulation method."""
+        if "_cm_" in method_name:
             return "cm_option = fast"
-        elif '_xm_' in method_name:
+        elif "_xm_" in method_name:
             return "xm_option = exact"
         else:
             raise NotImplementedError()
@@ -145,7 +142,7 @@ class RuleDodgson(DeleteCacheMixin, my_log.MyLog):
         self.mylogv("CM: Compute _is_cm_for_c_ for c =", c, 1)
         strict_majority = floor(self.profile_.n_v / 2) + 1
         strict_minority = self.profile_.n_v - strict_majority
-        v_sincere = (self.profile_.preferences_ut[:, self.w_] >= self.profile_.preferences_ut[:, c])
+        v_sincere = self.profile_.preferences_ut[:, self.w_] >= self.profile_.preferences_ut[:, c]
 
         # First, we try to prove that manipulation is impossible by showing that the penalty of `c` will necessarily
         # be higher than the one of `w` (typical case of CM failure).
@@ -156,10 +153,11 @@ class RuleDodgson(DeleteCacheMixin, my_log.MyLog):
         for d in self.losing_candidates_:
             if d == c:
                 continue
-            n_voters_who_are_sincere_and_rank_d_above_c[d] = np.sum(np.logical_and(
-                v_sincere,
-                self.profile_.preferences_borda_rk[:, d] > self.profile_.preferences_borda_rk[:, c]
-            ))
+            n_voters_who_are_sincere_and_rank_d_above_c[d] = np.sum(
+                np.logical_and(
+                    v_sincere, self.profile_.preferences_borda_rk[:, d] > self.profile_.preferences_borda_rk[:, c]
+                )
+            )
             if n_voters_who_are_sincere_and_rank_d_above_c[d] > strict_minority:
                 self.mylogv("CM: c does not win against d =", d, 2)
                 c_does_not_win_against_some_d = True
@@ -267,10 +265,10 @@ class RuleDodgson(DeleteCacheMixin, my_log.MyLog):
     @cached_property
     def theta_critical_(self):
         """
-            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
-            >>> rule = RuleDodgson()(profile)
-            >>> rule.theta_critical_
-            0.18181818181818182
+        >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
+        >>> rule = RuleDodgson()(profile)
+        >>> rule.theta_critical_
+        0.18181818181818182
         """
         n_c = self.profile_.n_c
         return (n_c - 2) / (4 * n_c - 5)

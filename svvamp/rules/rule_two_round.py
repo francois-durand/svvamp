@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import numpy as np
 from svvamp.rules.rule import Rule
 from svvamp.utils.util_cache import cached_property
@@ -279,24 +280,30 @@ class RuleTwoRound(Rule):
         [0. 2. 4.]
     """
 
-    full_name = 'Plurality with Runoff'
-    abbreviation = 'PR'
+    full_name = "Plurality with Runoff"
+    abbreviation = "PR"
 
     options_parameters = Rule.options_parameters.copy()
-    options_parameters.update({
-        'im_option': {'allowed': ['exact'], 'default': 'exact'},
-        'tm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'um_option': {'allowed': ['exact'], 'default': 'exact'},
-        'icm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'cm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'precheck_heuristic': {'allowed': [False], 'default': False},
-    })
+    options_parameters.update(
+        {
+            "im_option": {"allowed": ["exact"], "default": "exact"},
+            "tm_option": {"allowed": ["exact"], "default": "exact"},
+            "um_option": {"allowed": ["exact"], "default": "exact"},
+            "icm_option": {"allowed": ["exact"], "default": "exact"},
+            "cm_option": {"allowed": ["exact"], "default": "exact"},
+            "precheck_heuristic": {"allowed": [False], "default": False},
+        }
+    )
 
     def __init__(self, **kwargs):
         super().__init__(
-            with_two_candidates_reduces_to_plurality=True, is_based_on_rk=True,
-            precheck_um=False, precheck_icm=False, precheck_tm=False,
-            log_identity="TWO_ROUND", **kwargs
+            with_two_candidates_reduces_to_plurality=True,
+            is_based_on_rk=True,
+            precheck_um=False,
+            precheck_icm=False,
+            precheck_tm=False,
+            log_identity="TWO_ROUND",
+            **kwargs,
         )
 
     # %% Counting the ballots
@@ -313,21 +320,21 @@ class RuleTwoRound(Rule):
         selected_two = d
         # Second round
         w = c if self.profile_.matrix_victories_rk_ctb[c, d] else d
-        return {'w': w, 'selected_one': selected_one, 'selected_two': selected_two}
+        return {"w": w, "selected_one": selected_one, "selected_two": selected_two}
 
     @cached_property
     def selected_one_(self):
         """Integer. The candidate with highest score at first round."""
-        return self._count_ballots_['selected_one']
+        return self._count_ballots_["selected_one"]
 
     @cached_property
     def selected_two_(self):
         """Integer. The candidate with second highest score at first round."""
-        return self._count_ballots_['selected_two']
+        return self._count_ballots_["selected_two"]
 
     @cached_property
     def w_(self):
-        return self._count_ballots_['w']
+        return self._count_ballots_["w"]
 
     @cached_property
     def ballots_(self):
@@ -360,7 +367,7 @@ class RuleTwoRound(Rule):
         at first round.
         """
         self.mylog("Count candidates_by_scores_best_to_worst", 1)
-        return np.argsort(- np.max(self.scores_, 0))
+        return np.argsort(-np.max(self.scores_, 0))
 
     # %% Manipulation criteria of the voting system
 
@@ -467,28 +474,34 @@ class RuleTwoRound(Rule):
                 # Second round
                 score_one_without_v = self.profile_.matrix_duels_rk[selected_one_m, selected_two_m]
                 score_two_without_v = self.profile_.matrix_duels_rk[selected_two_m, selected_one_m]
-                if (self.profile_.preferences_borda_rk[v, selected_one_m] >
-                        self.profile_.preferences_borda_rk[v, selected_two_m]):
+                if (
+                    self.profile_.preferences_borda_rk[v, selected_one_m]
+                    > self.profile_.preferences_borda_rk[v, selected_two_m]
+                ):
                     score_one_without_v -= 1
                 else:
                     score_two_without_v -= 1
                 # Conclusions
-                if (self.v_wants_to_help_c_[v, selected_one_m]
-                        and score_one_without_v + 1 + (selected_one_m < selected_two_m) > score_two_without_v):
+                if (
+                    self.v_wants_to_help_c_[v, selected_one_m]
+                    and score_one_without_v + 1 + (selected_one_m < selected_two_m) > score_two_without_v
+                ):
                     self._v_im_for_c[v, selected_one_m] = True
                     self._candidates_im[selected_one_m] = True
                     self._voters_im[v] = True
                     self._is_im = True
                     continue
-                if (self.v_wants_to_help_c_[v, selected_two_m]
-                        and score_two_without_v + 1 + (selected_two_m < selected_one_m) > score_one_without_v):
+                if (
+                    self.v_wants_to_help_c_[v, selected_two_m]
+                    and score_two_without_v + 1 + (selected_two_m < selected_one_m) > score_one_without_v
+                ):
                     self._v_im_for_c[v, selected_two_m] = True
                     self._candidates_im[selected_two_m] = True
                     self._voters_im[v] = True
                     self._is_im = True
 
     def _compute_im_v_(self, v, c_is_wanted, stop_if_true):
-        self._compute_im_(mode='', c=None)
+        self._compute_im_(mode="", c=None)
 
     # %% Trivial Manipulation (TM)
 
@@ -498,86 +511,86 @@ class RuleTwoRound(Rule):
 
     def _um_main_work_c_(self, c):
         """
-            >>> profile = Profile([
-            ...     [0, 2, 1],
-            ...     [0, 2, 1],
-            ...     [1, 0, 2],
-            ...     [1, 0, 2],
-            ...     [2, 0, 1],
-            ... ])
-            >>> rule = RuleTwoRound()(profile)
-            >>> rule.candidates_um_
-            array([0., 0., 0.])
+        >>> profile = Profile([
+        ...     [0, 2, 1],
+        ...     [0, 2, 1],
+        ...     [1, 0, 2],
+        ...     [1, 0, 2],
+        ...     [2, 0, 1],
+        ... ])
+        >>> rule = RuleTwoRound()(profile)
+        >>> rule.candidates_um_
+        array([0., 0., 0.])
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 1, 3, 2],
-            ...     [0, 2, 1, 3],
-            ...     [1, 2, 0, 3],
-            ...     [2, 1, 0, 3],
-            ...     [3, 1, 2, 0],
-            ... ])
-            >>> rule = RuleTwoRound()(profile)
-            >>> rule.candidates_um_
-            array([0., 0., 1., 0.])
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 1, 3, 2],
+        ...     [0, 2, 1, 3],
+        ...     [1, 2, 0, 3],
+        ...     [2, 1, 0, 3],
+        ...     [3, 1, 2, 0],
+        ... ])
+        >>> rule = RuleTwoRound()(profile)
+        >>> rule.candidates_um_
+        array([0., 0., 1., 0.])
 
-            Cases where ``c`` is ``selected_one_s``:
+        Cases where ``c`` is ``selected_one_s``:
 
-            >>> profile = Profile(preferences_ut=[
-            ...     [ 0.5,  0.5, -1. , -0.5],
-            ...     [ 0.5, -1. , -1. , -0.5],
-            ...     [-0.5,  0.5, -1. , -0.5],
-            ...     [-0.5,  0.5,  1. , -0.5],
-            ...     [ 0. ,  1. ,  0. ,  1. ],
-            ... ], preferences_rk=[
-            ...     [0, 1, 3, 2],
-            ...     [0, 3, 1, 2],
-            ...     [1, 0, 3, 2],
-            ...     [2, 1, 3, 0],
-            ...     [3, 1, 0, 2],
-            ... ])
-            >>> rule = RuleTwoRound()(profile)
-            >>> rule.candidates_um_
-            array([1., 0., 0., 1.])
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 0.5,  0.5, -1. , -0.5],
+        ...     [ 0.5, -1. , -1. , -0.5],
+        ...     [-0.5,  0.5, -1. , -0.5],
+        ...     [-0.5,  0.5,  1. , -0.5],
+        ...     [ 0. ,  1. ,  0. ,  1. ],
+        ... ], preferences_rk=[
+        ...     [0, 1, 3, 2],
+        ...     [0, 3, 1, 2],
+        ...     [1, 0, 3, 2],
+        ...     [2, 1, 3, 0],
+        ...     [3, 1, 0, 2],
+        ... ])
+        >>> rule = RuleTwoRound()(profile)
+        >>> rule.candidates_um_
+        array([1., 0., 0., 1.])
 
-            >>> profile = Profile(preferences_ut=[
-            ...     [ 1. ,  0. , -1. ,  1. ,  1. ],
-            ...     [ 0. , -0.5,  1. , -0.5,  1. ],
-            ...     [ 1. ,  1. ,  0.5,  1. ,  1. ],
-            ...     [-0.5, -1. ,  0. ,  1. , -1. ],
-            ...     [ 0. , -1. ,  0. ,  0. , -1. ],
-            ...     [ 0.5, -0.5,  1. ,  0. ,  1. ],
-            ... ], preferences_rk=[
-            ...     [0, 4, 3, 1, 2],
-            ...     [2, 4, 0, 1, 3],
-            ...     [3, 0, 4, 1, 2],
-            ...     [3, 2, 0, 4, 1],
-            ...     [3, 2, 0, 4, 1],
-            ...     [4, 2, 0, 3, 1],
-            ... ])
-            >>> rule = RuleTwoRound()(profile)
-            >>> rule.candidates_um_
-            array([0., 0., 1., 0., 0.])
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 1. ,  0. , -1. ,  1. ,  1. ],
+        ...     [ 0. , -0.5,  1. , -0.5,  1. ],
+        ...     [ 1. ,  1. ,  0.5,  1. ,  1. ],
+        ...     [-0.5, -1. ,  0. ,  1. , -1. ],
+        ...     [ 0. , -1. ,  0. ,  0. , -1. ],
+        ...     [ 0.5, -0.5,  1. ,  0. ,  1. ],
+        ... ], preferences_rk=[
+        ...     [0, 4, 3, 1, 2],
+        ...     [2, 4, 0, 1, 3],
+        ...     [3, 0, 4, 1, 2],
+        ...     [3, 2, 0, 4, 1],
+        ...     [3, 2, 0, 4, 1],
+        ...     [4, 2, 0, 3, 1],
+        ... ])
+        >>> rule = RuleTwoRound()(profile)
+        >>> rule.candidates_um_
+        array([0., 0., 1., 0., 0.])
 
-            >>> profile = Profile(preferences_ut=[
-            ...     [ 0. ,  0. ,  1. , -0.5, -0.5,  0. , -0.5],
-            ...     [ 0. , -0.5, -1. ,  0. , -0.5, -0.5, -0.5],
-            ...     [ 0. , -0.5, -0.5, -1. ,  1. , -1. , -0.5],
-            ...     [ 0. ,  0. , -1. ,  0.5,  1. ,  0. ,  1. ],
-            ...     [ 1. , -1. , -1. , -1. ,  1. ,  1. ,  1. ],
-            ...     [-0.5, -1. ,  0.5,  1. ,  0.5, -1. ,  1. ],
-            ...     [-1. ,  0. , -1. ,  0.5,  0.5,  0.5,  1. ],
-            ... ], preferences_rk=[
-            ...     [2, 0, 1, 5, 3, 6, 4],
-            ...     [3, 0, 1, 6, 4, 5, 2],
-            ...     [4, 0, 6, 2, 1, 3, 5],
-            ...     [4, 6, 3, 5, 1, 0, 2],
-            ...     [4, 6, 5, 0, 2, 1, 3],
-            ...     [6, 3, 4, 2, 0, 1, 5],
-            ...     [6, 5, 4, 3, 1, 2, 0],
-            ... ])
-            >>> rule = RuleTwoRound()(profile)
-            >>> rule.candidates_um_
-            array([0., 0., 0., 0., 1., 0., 0.])
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 0. ,  0. ,  1. , -0.5, -0.5,  0. , -0.5],
+        ...     [ 0. , -0.5, -1. ,  0. , -0.5, -0.5, -0.5],
+        ...     [ 0. , -0.5, -0.5, -1. ,  1. , -1. , -0.5],
+        ...     [ 0. ,  0. , -1. ,  0.5,  1. ,  0. ,  1. ],
+        ...     [ 1. , -1. , -1. , -1. ,  1. ,  1. ,  1. ],
+        ...     [-0.5, -1. ,  0.5,  1. ,  0.5, -1. ,  1. ],
+        ...     [-1. ,  0. , -1. ,  0.5,  0.5,  0.5,  1. ],
+        ... ], preferences_rk=[
+        ...     [2, 0, 1, 5, 3, 6, 4],
+        ...     [3, 0, 1, 6, 4, 5, 2],
+        ...     [4, 0, 6, 2, 1, 3, 5],
+        ...     [4, 6, 3, 5, 1, 0, 2],
+        ...     [4, 6, 5, 0, 2, 1, 3],
+        ...     [6, 3, 4, 2, 0, 1, 5],
+        ...     [6, 5, 4, 3, 1, 2, 0],
+        ... ])
+        >>> rule = RuleTwoRound()(profile)
+        >>> rule.candidates_um_
+        array([0., 0., 0., 0., 1., 0., 0.])
         """
         n_m = self.profile_.matrix_duels_ut.astype(int)[c, self.w_]
         n_s = self.profile_.n_v - n_m
@@ -600,7 +613,8 @@ class RuleTwoRound(Rule):
             d = selected_one_s
             d_vs_c = np.sum(
                 self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), d]
-                > self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), c])
+                > self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), c]
+            )
             c_vs_d = n_s - d_vs_c
             if c_vs_d + n_m < d_vs_c + (d < c):
                 self._candidates_um[c] = False
@@ -619,7 +633,8 @@ class RuleTwoRound(Rule):
             # Second round
             d_vs_c = np.sum(
                 self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), d]
-                > self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), c])
+                > self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), c]
+            )
             c_vs_d = n_s - d_vs_c
             if c_vs_d + n_m < d_vs_c + (d < c):
                 self._candidates_um[c] = False
@@ -725,17 +740,23 @@ class RuleTwoRound(Rule):
                 scores_temp[d] = -1
                 scores_temp[c] = -1
                 e = np.argmax(scores_temp)
-                n_m_first = (max(0, np.add(scores_first_round_s[e] - scores_first_round_s[c], e < c))
-                             + max(0, np.add(scores_first_round_s[e] - scores_first_round_s[d], e < d)))
+                n_m_first = max(0, np.add(scores_first_round_s[e] - scores_first_round_s[c], e < c)) + max(
+                    0, np.add(scores_first_round_s[e] - scores_first_round_s[d], e < d)
+                )
             # Second round.
             d_vs_c = np.sum(
                 self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), d]
-                > self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), c])
+                > self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), c]
+            )
             c_vs_d = n_s - d_vs_c
             n_m_second = max(0, d_vs_c - c_vs_d + (d < c))
             # Conclude: how many manipulators are needed?
-            self._update_sufficient(self._sufficient_coalition_size_cm, c, max(n_m_first, n_m_second),
-                                    'CM: Update sufficient_coalition_size_cm[c] =')
+            self._update_sufficient(
+                self._sufficient_coalition_size_cm,
+                c,
+                max(n_m_first, n_m_second),
+                "CM: Update sufficient_coalition_size_cm[c] =",
+            )
             if self._sufficient_coalition_size_cm[c] == self._necessary_coalition_size_cm[c]:
                 return
         self._necessary_coalition_size_cm[c] = self._sufficient_coalition_size_cm[c]
@@ -743,10 +764,10 @@ class RuleTwoRound(Rule):
     @cached_property
     def theta_critical_(self):
         """
-            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
-            >>> rule = RuleTwoRound()(profile)
-            >>> rule.theta_critical_
-            0.058823529411764705
+        >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
+        >>> rule = RuleTwoRound()(profile)
+        >>> rule.theta_critical_
+        0.058823529411764705
         """
         n_c = self.profile_.n_c
         return (n_c - 3) / (5 * n_c - 3)

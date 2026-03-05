@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 from itertools import product
 import numpy as np
 from svvamp.rules.rule import Rule
@@ -310,18 +311,20 @@ class RuleIRVDuels(Rule):
         [0. 2. 3.]
     """
 
-    full_name = 'Viennot'
-    abbreviation = 'Vie'
+    full_name = "Viennot"
+    abbreviation = "Vie"
 
     options_parameters = Rule.options_parameters.copy()
-    options_parameters['icm_option'] = {'allowed': ['exact'], 'default': 'exact'}
-    options_parameters['cm_option'] = {'allowed': ['lazy', 'slow', 'exact'], 'default': 'lazy'}
+    options_parameters["icm_option"] = {"allowed": ["exact"], "default": "exact"}
+    options_parameters["cm_option"] = {"allowed": ["lazy", "slow", "exact"], "default": "lazy"}
 
     def __init__(self, **kwargs):
         super().__init__(
-            with_two_candidates_reduces_to_plurality=True, is_based_on_rk=True,
+            with_two_candidates_reduces_to_plurality=True,
+            is_based_on_rk=True,
             precheck_icm=False,
-            log_identity="IRV_DUELS", **kwargs
+            log_identity="IRV_DUELS",
+            **kwargs,
         )
 
     # %% Counting the ballots
@@ -329,17 +332,17 @@ class RuleIRVDuels(Rule):
     @cached_property
     def _count_ballots_(self):
         """
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 2, 1],
-            ...     [0, 2, 1],
-            ...     [1, 2, 0],
-            ... ])
-            >>> rule = RuleIRVDuels()(profile)
-            >>> rule.scores_
-            array([[ 2.,  1.,  0.],
-                   [nan,  1.,  2.],
-                   [ 2., nan,  1.],
-                   [ 2., nan,  1.]])
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 2, 1],
+        ...     [0, 2, 1],
+        ...     [1, 2, 0],
+        ... ])
+        >>> rule = RuleIRVDuels()(profile)
+        >>> rule.scores_
+        array([[ 2.,  1.,  0.],
+               [nan,  1.,  2.],
+               [ 2., nan,  1.],
+               [ 2., nan,  1.]])
         """
         self.mylog("Count ballots", 1)
         scores = np.full((2 * self.profile_.n_c - 2, self.profile_.n_c), np.nan)
@@ -347,20 +350,21 @@ class RuleIRVDuels(Rule):
         worst_to_best = []
         for r in range(self.profile_.n_c - 1):
             # Select the two worst scores
-            scores[2*r, is_candidate_alive] = np.sum(
+            scores[2 * r, is_candidate_alive] = np.sum(
                 self.profile_.preferences_borda_rk[:, is_candidate_alive]
                 == np.max(self.profile_.preferences_borda_rk[:, is_candidate_alive], 1)[:, np.newaxis],
-                0)
+                0,
+            )
             selected_one = np.where(scores[2 * r, :] == np.nanmin(scores[2 * r, :]))[0][-1]
-            score_selected_one = scores[2*r, selected_one]
-            scores[2*r, selected_one] = np.inf
+            score_selected_one = scores[2 * r, selected_one]
+            scores[2 * r, selected_one] = np.inf
             selected_two = np.where(scores[2 * r, :] == np.nanmin(scores[2 * r, :]))[0][-1]
-            scores[2*r, selected_one] = score_selected_one
+            scores[2 * r, selected_one] = score_selected_one
             self.mylogv("selected_one =", selected_one, 3)
             self.mylogv("selected_two =", selected_two, 3)
             # Do the duel
-            scores[2*r + 1, selected_one] = self.profile_.matrix_duels_rk[selected_one, selected_two]
-            scores[2*r + 1, selected_two] = self.profile_.matrix_duels_rk[selected_two, selected_one]
+            scores[2 * r + 1, selected_one] = self.profile_.matrix_duels_rk[selected_one, selected_two]
+            scores[2 * r + 1, selected_two] = self.profile_.matrix_duels_rk[selected_two, selected_one]
             if self.profile_.matrix_victories_rk_ctb[selected_one, selected_two] == 1:
                 loser = selected_two
             else:
@@ -370,7 +374,7 @@ class RuleIRVDuels(Rule):
         w = np.argmax(is_candidate_alive)
         worst_to_best.append(w)
         candidates_by_scores_best_to_worst = np.array(worst_to_best[::-1])
-        return {'scores': scores, 'w': w, 'candidates_by_scores_best_to_worst': candidates_by_scores_best_to_worst}
+        return {"scores": scores, "w": w, "candidates_by_scores_best_to_worst": candidates_by_scores_best_to_worst}
 
     @cached_property
     def w_(self):
@@ -397,13 +401,12 @@ class RuleIRVDuels(Rule):
         * For odd rounds ``r``, only the two candidates who are selected for the elimination duels get scores.
           ``scores[r, c]`` is the number of voters who vote for ``c`` in this elimination duel.
         """
-        return self._count_ballots_['scores']
+        return self._count_ballots_["scores"]
 
     @cached_property
     def candidates_by_scores_best_to_worst_(self):
-        """1d array of integers. Candidates are sorted in the reverse order of their elimination.
-        """
-        return self._count_ballots_['candidates_by_scores_best_to_worst']
+        """1d array of integers. Candidates are sorted in the reverse order of their elimination."""
+        return self._count_ballots_["candidates_by_scores_best_to_worst"]
 
     # TODO: self.v_might_im_for_c
 
@@ -427,7 +430,8 @@ class RuleIRVDuels(Rule):
         n_c = self.profile_.n_c
         n_m = self.profile_.matrix_duels_ut[c, self.w_]  # Number of manipulators
         d_can_defeat_w = (matrix_duels_s[self.w_, :] < n_v / 2) | (
-                (matrix_duels_s[self.w_, :] == n_v / 2) & (np.arange(n_c) < self.w_))
+            (matrix_duels_s[self.w_, :] == n_v / 2) & (np.arange(n_c) < self.w_)
+        )
         e_cannot_defeat_w = np.logical_not(d_can_defeat_w)
         d_can_defeat_w[self.w_] = False
         d_can_defeat_w[c] = False
@@ -457,8 +461,11 @@ class RuleIRVDuels(Rule):
                     # We failed to prove non-CM. This is a quick escape.
                     return True
         self._update_necessary(
-            self._necessary_coalition_size_cm, c, n_m_sufficient_to_beat_w,
-            'CM: Update necessary_coalition_size_cm[c] = ')
+            self._necessary_coalition_size_cm,
+            c,
+            n_m_sufficient_to_beat_w,
+            "CM: Update necessary_coalition_size_cm[c] = ",
+        )
         return False
 
     def _cm_aux_exact(self, c, n_max, n_min, optimize_bounds, preferences_borda_s, matrix_duels_s):
@@ -567,13 +574,13 @@ class RuleIRVDuels(Rule):
         n_manip_used_before_r = np.zeros(self.profile_.n_c - 1, dtype=int)
         scores_m_begin_r = np.zeros((self.profile_.n_c - 1, self.profile_.n_c))
         scores_tot_begin_r = np.zeros((self.profile_.n_c - 1, self.profile_.n_c))
-        scores_tot_begin_r[0, :] = np.sum(np.equal(
-            preferences_borda_s, np.max(preferences_borda_s, 1)[:, np.newaxis]
-        ), 0)
-        self.mylogv('cm_aux_exact: c =', c, 3)
+        scores_tot_begin_r[0, :] = np.sum(
+            np.equal(preferences_borda_s, np.max(preferences_borda_s, 1)[:, np.newaxis]), 0
+        )
+        self.mylogv("cm_aux_exact: c =", c, 3)
         self.mylogv("cm_aux_exact: r =", r, 3)
         suggested_loser_r = {0: np.array([cand for cand in candidates if cand != c])}  # Possible losers of the duel
-        suggested_winner_r = {0: np.array(candidates)}                                 # Possible winners of the duel
+        suggested_winner_r = {0: np.array(candidates)}  # Possible winners of the duel
         index_loser_in_suggested_r = np.zeros(self.profile_.n_c - 1, dtype=int)
         # Index of the loser of the duel in ``suggested_loser_r``.
         index_winner_in_suggested_r = np.zeros(self.profile_.n_c - 1, dtype=int)
@@ -631,10 +638,14 @@ class RuleIRVDuels(Rule):
                 cand_to_beat = loser  # Candidate whose score we must beat
                 other_selected = winner
             scores_m_new_r = np.zeros(self.profile_.n_c)
-            scores_m_new_r[is_candidate_alive_begin_r[r, :]] = np.maximum((
-                score_to_beat - scores_tot_begin_r[r, is_candidate_alive_begin_r[r, :]]
-                + (candidates[is_candidate_alive_begin_r[r, :]] > cand_to_beat)
-            ), 0)
+            scores_m_new_r[is_candidate_alive_begin_r[r, :]] = np.maximum(
+                (
+                    score_to_beat
+                    - scores_tot_begin_r[r, is_candidate_alive_begin_r[r, :]]
+                    + (candidates[is_candidate_alive_begin_r[r, :]] > cand_to_beat)
+                ),
+                0,
+            )
             scores_m_new_r[other_selected] = 0  # No need to give points to the other selected
             scores_m_end_r = scores_m_begin_r[r, :] + scores_m_new_r
             n_manip_r_and_before = max(n_manip_used_before_r[r], np.sum(scores_m_end_r))
@@ -658,19 +669,20 @@ class RuleIRVDuels(Rule):
                     except IndexError:  # pragma: no cover
                         # TO DO: Investigate whether this case can actually happen.
                         self._reached_uncovered_code()
-                        print(f'{r=}')
-                        print(f'{index_loser_in_suggested_r=}')
-                        print(f'{suggested_loser_r=}')
-                        print(f'{index_winner_in_suggested_r=}')
-                        print(f'{suggested_winner_r=}')
+                        print(f"{r=}")
+                        print(f"{index_loser_in_suggested_r=}")
+                        print(f"{suggested_loser_r=}")
+                        print(f"{index_winner_in_suggested_r=}")
+                        print(f"{suggested_winner_r=}")
                         raise IndexError
                 self.mylog("cm_aux_exact: CM found", 3)
                 self.mylogv("cm_aux_exact: n_manip_final =", n_manip_final, 3)
                 self.mylogv("cm_aux_exact: example_path_losers =", example_path_losers, 3)
                 self.mylogv("cm_aux_exact: example_path_winners =", example_path_winners, 3)
                 if n_manip_final == n_min:
-                    self.mylogv("cm_aux_exact: End of exploration: it is not possible to do better than n_min =",
-                                n_min, 3)
+                    self.mylogv(
+                        "cm_aux_exact: End of exploration: it is not possible to do better than n_min =", n_min, 3
+                    )
                     return n_manip_final, np.array(example_path_losers), np.array(example_path_winners), False
                 if not optimize_bounds:
                     return n_manip_final, np.array(example_path_losers), np.array(example_path_winners), True
@@ -685,11 +697,13 @@ class RuleIRVDuels(Rule):
             is_candidate_alive_begin_r[r + 1, loser] = False
             self.mylogv("cm_aux_exact: is_candidate_alive_begin_r[r+1, :] =", is_candidate_alive_begin_r[r + 1, :], 3)
             scores_tot_begin_r[r + 1, :] = np.full(self.profile_.n_c, np.nan)
-            scores_tot_begin_r[r + 1, is_candidate_alive_begin_r[r + 1, :]] = (
-                np.sum(np.equal(
+            scores_tot_begin_r[r + 1, is_candidate_alive_begin_r[r + 1, :]] = np.sum(
+                np.equal(
                     preferences_borda_s[:, is_candidate_alive_begin_r[r + 1, :]],
-                    np.max(preferences_borda_s[:, is_candidate_alive_begin_r[r + 1, :]], 1)[:, np.newaxis]
-                ), 0))
+                    np.max(preferences_borda_s[:, is_candidate_alive_begin_r[r + 1, :]], 1)[:, np.newaxis],
+                ),
+                0,
+            )
             self.mylogv("cm_aux_exact: scores_s_begin_r[r+1, :] =", scores_tot_begin_r[r + 1, :], 3)
             scores_m_begin_r[r + 1, :] = scores_m_end_r
             scores_m_begin_r[r + 1, loser] = 0
@@ -703,7 +717,8 @@ class RuleIRVDuels(Rule):
             if max_score + (most_serious_opponent < c) > n_s + n_max_updated - max_score:
                 self.mylogv("cm_aux_exact: most_serious_opponent =", most_serious_opponent, 3)
                 self.mylog(
-                    "cm_aux_exact: Manipulation impossible by this path (an opponent will have too many votes)", 3)
+                    "cm_aux_exact: Manipulation impossible by this path (an opponent will have too many votes)", 3
+                )
                 index_winner_in_suggested_r[r] += 1
                 continue
 
@@ -719,25 +734,25 @@ class RuleIRVDuels(Rule):
 
     def _cm_main_work_c_(self, c, optimize_bounds):
         """
-            >>> profile = Profile(preferences_rk=[
-            ...     [2, 1, 0],
-            ...     [0, 2, 1],
-            ...     [0, 2, 1],
-            ...     [2, 0, 1],
-            ... ])
-            >>> rule = RuleIRVDuels(cm_option='exact')(profile)
-            >>> rule.necessary_coalition_size_cm_
-            array([0., 3., 3.])
+        >>> profile = Profile(preferences_rk=[
+        ...     [2, 1, 0],
+        ...     [0, 2, 1],
+        ...     [0, 2, 1],
+        ...     [2, 0, 1],
+        ... ])
+        >>> rule = RuleIRVDuels(cm_option='exact')(profile)
+        >>> rule.necessary_coalition_size_cm_
+        array([0., 3., 3.])
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [1, 0, 2],
-            ...     [1, 2, 0],
-            ...     [0, 2, 1],
-            ...     [2, 1, 0],
-            ... ])
-            >>> rule = RuleIRVDuels(cm_option='exact')(profile)
-            >>> rule.is_cm_c_(0)
-            False
+        >>> profile = Profile(preferences_rk=[
+        ...     [1, 0, 2],
+        ...     [1, 2, 0],
+        ...     [0, 2, 1],
+        ...     [2, 1, 0],
+        ... ])
+        >>> rule = RuleIRVDuels(cm_option='exact')(profile)
+        >>> rule.is_cm_c_(0)
+        False
         """
         if self.cm_option == "lazy":
             # With 'lazy' option, we stop here anyway.
@@ -747,12 +762,12 @@ class RuleIRVDuels(Rule):
         n_m = self.profile_.matrix_duels_ut[c, self.w_]
         preferences_borda_s = self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :]
         matrix_duels_s = preferences_ut_to_matrix_duels_ut(preferences_borda_s)
-        if self.cm_option == 'slow':
+        if self.cm_option == "slow":
             quick_escape = self._cm_aux_slow(
                 c=c,
                 optimize_bounds=optimize_bounds,
                 preferences_borda_s=preferences_borda_s,
-                matrix_duels_s=matrix_duels_s
+                matrix_duels_s=matrix_duels_s,
             )
             return quick_escape
 
@@ -765,29 +780,37 @@ class RuleIRVDuels(Rule):
             n_min=n_min,
             optimize_bounds=optimize_bounds,
             preferences_borda_s=preferences_borda_s,
-            matrix_duels_s=matrix_duels_s
+            matrix_duels_s=matrix_duels_s,
         )
-        self.mylogv('CM: Exact algorithm: n_manip_exact =', n_manip_exact)
-        self._update_sufficient(self._sufficient_coalition_size_cm, c, n_manip_exact,
-                                'CM: Fast algorithm: sufficient_coalition_size_cm =')
+        self.mylogv("CM: Exact algorithm: n_manip_exact =", n_manip_exact)
+        self._update_sufficient(
+            self._sufficient_coalition_size_cm, c, n_manip_exact, "CM: Fast algorithm: sufficient_coalition_size_cm ="
+        )
         # Update necessary coalition and return
         if optimize_bounds:
-            self._update_necessary(self._necessary_coalition_size_cm, c, self._sufficient_coalition_size_cm[c],
-                                   'CM: Update necessary_coalition_size_cm[c] = sufficient_coalition_size_cm[c] =')
+            self._update_necessary(
+                self._necessary_coalition_size_cm,
+                c,
+                self._sufficient_coalition_size_cm[c],
+                "CM: Update necessary_coalition_size_cm[c] = sufficient_coalition_size_cm[c] =",
+            )
         else:
             if n_m < self._sufficient_coalition_size_cm[c]:
                 # We have explored everything with ``n_max = n_m`` but manipulation failed.
                 self._update_necessary(
-                    self._necessary_coalition_size_cm, c, n_m + 1,
-                    'CM: Update necessary_coalition_size_cm[c] = n_m + 1 =')
+                    self._necessary_coalition_size_cm,
+                    c,
+                    n_m + 1,
+                    "CM: Update necessary_coalition_size_cm[c] = n_m + 1 =",
+                )
         return quick_escape
 
     @cached_property
     def theta_critical_(self):
         """
-            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
-            >>> rule = RuleIRVDuels()(profile)
-            >>> rule.theta_critical_
-            0.14285714285714285
+        >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
+        >>> rule = RuleIRVDuels()(profile)
+        >>> rule.theta_critical_
+        0.14285714285714285
         """
-        return 1/7
+        return 1 / 7

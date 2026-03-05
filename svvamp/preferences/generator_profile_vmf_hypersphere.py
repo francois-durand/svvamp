@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import numpy as np
 from svvamp.utils.misc import initialize_random_seeds
 from svvamp.utils.von_mises_fisher import profile_vmf_aux
@@ -152,8 +153,9 @@ class GeneratorProfileVMFHypersphere(GeneratorProfile):
         Wood (1994) - Simulation of the von Mises Fisher distribution
     """
 
-    def __init__(self, n_v, n_c, vmf_concentration, vmf_probability=None, vmf_pole=None, stretching=1,
-                 sort_voters=False):
+    def __init__(
+        self, n_v, n_c, vmf_concentration, vmf_probability=None, vmf_pole=None, stretching=1, sort_voters=False
+    ):
         self.n_v = n_v
         self.n_c = n_c
         # Ensure that _vmf_concentration is an np.array. Compute k, its size.
@@ -177,8 +179,19 @@ class GeneratorProfileVMFHypersphere(GeneratorProfile):
             if self.vmf_pole.ndim == 1:
                 self.vmf_pole = self.vmf_pole[np.newaxis, :]
         self.stretching = stretching
-        self.log_creation = ['VMFHypersphere', n_c, n_v, 'VMF Concentration', vmf_concentration,
-                             'VMF Probability', vmf_probability, 'VMF Pole', vmf_pole, 'Stretching', stretching]
+        self.log_creation = [
+            "VMFHypersphere",
+            n_c,
+            n_v,
+            "VMF Concentration",
+            vmf_concentration,
+            "VMF Probability",
+            vmf_probability,
+            "VMF Pole",
+            vmf_pole,
+            "Stretching",
+            stretching,
+        ]
         super().__init__(sort_voters=sort_voters)
 
     def __call__(self):
@@ -189,15 +202,18 @@ class GeneratorProfileVMFHypersphere(GeneratorProfile):
         # Use Von-Mises Fisher
         preferences_ut = np.zeros((self.n_v, self.n_c))
         for i in range(self.k):
-            preferences_ut[cum_cardinal_i[i]:cum_cardinal_i[i+1], :] = profile_vmf_aux(
-                n_c=self.n_c, n_v=cardinal_group_i[i], concentration=self.vmf_concentration[i],
-                pole=self.vmf_pole[i, :])
+            preferences_ut[cum_cardinal_i[i] : cum_cardinal_i[i + 1], :] = profile_vmf_aux(
+                n_c=self.n_c, n_v=cardinal_group_i[i], concentration=self.vmf_concentration[i], pole=self.vmf_pole[i, :]
+            )
         # Apply stretching. Cf. comments in PopulationSpheroid.
         if self.stretching < 1:
-            preferences_ut = (preferences_ut
-                              + np.sum(preferences_ut, 1)[:, np.newaxis] * (self.stretching - 1) / self.n_c)
+            preferences_ut = (
+                preferences_ut + np.sum(preferences_ut, 1)[:, np.newaxis] * (self.stretching - 1) / self.n_c
+            )
         elif self.stretching > 1:
-            preferences_ut = (preferences_ut / self.stretching
-                              + np.sum(preferences_ut, 1)[:, np.newaxis] * (1 - 1 / self.stretching) / self.n_c)
+            preferences_ut = (
+                preferences_ut / self.stretching
+                + np.sum(preferences_ut, 1)[:, np.newaxis] * (1 - 1 / self.stretching) / self.n_c
+            )
         # Conclude
         return Profile(preferences_ut=preferences_ut, log_creation=self.log_creation, sort_voters=self.sort_voters)

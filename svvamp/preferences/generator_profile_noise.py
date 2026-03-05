@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import numpy as np
 from svvamp.preferences.generator_profile import GeneratorProfile
 from svvamp.preferences.profile import Profile
@@ -68,8 +69,9 @@ class GeneratorProfileNoise(GeneratorProfile):
         (2, 3)
     """
 
-    def __init__(self, base_profile, relative_noise=0., absolute_noise=0., exponential_noise=False,
-                 sort_voters=False):
+    def __init__(
+        self, base_profile, relative_noise=0.0, absolute_noise=0.0, exponential_noise=False, sort_voters=False
+    ):
         self.base_profile = base_profile
         self.base_ut = self.base_profile.preferences_ut.astype(float)
         self.n_v, self.n_c = self.base_profile.n_v, self.base_profile.n_c
@@ -88,9 +90,17 @@ class GeneratorProfileNoise(GeneratorProfile):
             plurality_scores = self.base_profile.plurality_scores_ut
             eps = 1e-8
             self.scales_exponential = (plurality_scores / plurality_scores.mean()) + eps
-        self.log_creation = ['Noise Adder', 'Base profile', str(base_profile),
-                             'Relative noise', relative_noise, 'Absolute noise', absolute_noise,
-                             'Exponential noise', exponential_noise]
+        self.log_creation = [
+            "Noise Adder",
+            "Base profile",
+            str(base_profile),
+            "Relative noise",
+            relative_noise,
+            "Absolute noise",
+            absolute_noise,
+            "Exponential noise",
+            exponential_noise,
+        ]
         super().__init__(sort_voters=sort_voters)
 
     def __call__(self):
@@ -101,5 +111,9 @@ class GeneratorProfileNoise(GeneratorProfile):
             else:  # Uniform noise
                 noise = 2 * (0.5 - np.random.rand(self.n_v, self.n_c))
             preferences_ut += self.total_noise * noise
-        return Profile(preferences_ut=preferences_ut, log_creation=self.log_creation,
-                       labels_candidates=self.base_profile.labels_candidates, sort_voters=self.sort_voters)
+        return Profile(
+            preferences_ut=preferences_ut,
+            log_creation=self.log_creation,
+            labels_candidates=self.base_profile.labels_candidates,
+            sort_voters=self.sort_voters,
+        )

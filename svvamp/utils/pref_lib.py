@@ -59,22 +59,19 @@ Date:	April 4, 2013
   * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
   * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
+
 import numpy as np
 import unicodedata
 from svvamp.utils.misc import preferences_ut_to_preferences_borda_ut
 
 
 def clean_string(s):
-    return (
-        unicodedata.normalize("NFKD", s)
-        .encode("ascii", errors="ignore")
-        .decode("ascii")
-    )
+    return unicodedata.normalize("NFKD", s).encode("ascii", errors="ignore").decode("ascii")
 
 
 def preflib_to_preferences_ut(file_name):
     # PreflibUtils.py
-    input_file = open(file_name, 'r', encoding="utf-8", errors="replace")
+    input_file = open(file_name, "r", encoding="utf-8", errors="replace")
     in_first_header = True  # Header, excluding the candidate names
     n_c, n_v, unique_orders = None, None, None
     while in_first_header:
@@ -102,13 +99,13 @@ def preflib_to_preferences_ut(file_name):
     for i in range(unique_orders):
         rec = input_file.readline().strip()
         # need to parse the rec properly..
-        count = int(rec[:rec.index(":")])
-        bits = rec[rec.index(":")+1:].strip().split(",")
-        ballot_temp = np.full(n_c, - n_c)
+        count = int(rec[: rec.index(":")])
+        bits = rec[rec.index(":") + 1 :].strip().split(",")
+        ballot_temp = np.full(n_c, -n_c)
         if rec.find("{") == -1:
             # its strict, just split on ,
             for crank in range(len(bits)):
-                ballot_temp[int(bits[crank]) - 1] = - crank
+                ballot_temp[int(bits[crank]) - 1] = -crank
         else:
             crank = 0
             partial = False
@@ -116,18 +113,19 @@ def preflib_to_preferences_ut(file_name):
                 if ccand.find("{") != -1:
                     partial = True
                     t = ccand.replace("{", "")
-                    ballot_temp[int(t.strip()) - 1] = - crank
+                    ballot_temp[int(t.strip()) - 1] = -crank
                 elif ccand.find("}") != -1:
                     partial = False
                     t = ccand.replace("}", "")
-                    ballot_temp[int(t.strip()) - 1] = - crank
+                    ballot_temp[int(t.strip()) - 1] = -crank
                     crank += 1
                 else:
-                    ballot_temp[int(ccand.strip()) - 1] = - crank
+                    ballot_temp[int(ccand.strip()) - 1] = -crank
                     if not partial:
                         crank += 1
-        preferences_utilities[start_index:start_index + count, :] = (
-            preferences_ut_to_preferences_borda_ut(ballot_temp[np.newaxis, :]) - (n_c - 1) / 2)
+        preferences_utilities[start_index : start_index + count, :] = (
+            preferences_ut_to_preferences_borda_ut(ballot_temp[np.newaxis, :]) - (n_c - 1) / 2
+        )
         start_index += count
     input_file.close()
     return preferences_utilities, labels_candidates

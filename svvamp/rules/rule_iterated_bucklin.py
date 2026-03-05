@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import numpy as np
 from svvamp.rules.rule import Rule
 from svvamp.utils.util_cache import cached_property
@@ -300,15 +301,17 @@ class RuleIteratedBucklin(Rule):
         [0. 2. 3.]
     """
 
-    full_name = 'Iterated Bucklin'
-    abbreviation = 'IB'
+    full_name = "Iterated Bucklin"
+    abbreviation = "IB"
 
     options_parameters = Rule.options_parameters.copy()
 
     def __init__(self, **kwargs):
         super().__init__(
-            with_two_candidates_reduces_to_plurality=True, is_based_on_rk=True,
-            log_identity="ITERATED_BUCKLIN", **kwargs
+            with_two_candidates_reduces_to_plurality=True,
+            is_based_on_rk=True,
+            log_identity="ITERATED_BUCKLIN",
+            **kwargs,
         )
 
     @cached_property
@@ -335,46 +338,45 @@ class RuleIteratedBucklin(Rule):
         w = int(np.argmin(is_eliminated))
         worst_to_best.append(w)
         candidates_by_scores_best_to_worst = worst_to_best[::-1]
-        return {'scores': scores, 'w': w, 'candidates_by_scores_best_to_worst': candidates_by_scores_best_to_worst}
+        return {"scores": scores, "w": w, "candidates_by_scores_best_to_worst": candidates_by_scores_best_to_worst}
 
     @cached_property
     def scores_(self):
         """2d array of integers. ``scores[r, c]`` is the adjusted median Borda score of candidate ``c`` at
         elimination round ``r``.
         """
-        return self._count_ballots_['scores']
+        return self._count_ballots_["scores"]
 
     @cached_property
     def w_(self):
-        return self._count_ballots_['w']
+        return self._count_ballots_["w"]
 
     @cached_property
     def candidates_by_scores_best_to_worst_(self):
-        """1d array of integers. Candidates are sorted according to their order of elimination.
-        """
-        return self._count_ballots_['candidates_by_scores_best_to_worst']
+        """1d array of integers. Candidates are sorted according to their order of elimination."""
+        return self._count_ballots_["candidates_by_scores_best_to_worst"]
 
     # noinspection PyProtectedMember
     @cached_property
     def _one_v_might_be_pivotal_(self):
         """
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 1, 2],
-            ...     [0, 2, 1],
-            ...     [0, 2, 1],
-            ...     [0, 2, 1],
-            ...     [2, 0, 1],
-            ... ])
-            >>> rule = RuleIteratedBucklin()(profile)
-            >>> rule._one_v_might_be_pivotal_
-            False
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [0, 2, 1],
+        ...     [0, 2, 1],
+        ...     [0, 2, 1],
+        ...     [2, 0, 1],
+        ... ])
+        >>> rule = RuleIteratedBucklin()(profile)
+        >>> rule._one_v_might_be_pivotal_
+        False
         """
         scores_r = np.zeros(self.profile_.n_c)
         is_eliminated = np.zeros(self.profile_.n_c, dtype=bool)
         preferences_borda_temp = np.copy(self.profile_.preferences_borda_rk)
         for r in range(self.profile_.n_c - 1):
             self.mylogv("Pre-testing pivotality: round r =", r, 3)
-            loser_sincere = (self.candidates_by_scores_best_to_worst_[-1 - r])
+            loser_sincere = self.candidates_by_scores_best_to_worst_[-1 - r]
             self.mylogv("Pre-testing pivotality: loser_sincere =", loser_sincere, 3)
             # At worst, one manipulator can put one ``c`` from top to bottom or from bottom to top. Can this change the
             # loser of this round?
@@ -384,7 +386,8 @@ class RuleIteratedBucklin(Rule):
                     continue
                 if c == loser_sincere:
                     median = np.median(
-                        np.concatenate((preferences_borda_temp[:, c], [self.profile_.n_c, self.profile_.n_c])))
+                        np.concatenate((preferences_borda_temp[:, c], [self.profile_.n_c, self.profile_.n_c]))
+                    )
                     x = sum(preferences_borda_temp[:, c] < median) - 1
                 else:
                     median = np.median(np.concatenate((preferences_borda_temp[:, c], [1, 1])))

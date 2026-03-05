@@ -4,17 +4,21 @@ from svvamp.utils.misc import preferences_ut_to_preferences_borda_ut
 
 
 def cvr_to_preferences_ut(file_name):
-    df = pd.read_csv(filepath_or_buffer=file_name, sep=',', index_col=False)
+    df = pd.read_csv(filepath_or_buffer=file_name, sep=",", index_col=False)
     last_rank = int(df.columns[-1][4:])  # E.g. if the last column is named 'rank3' => last_rank = 3.
     # Drop useless columns
     df.drop(columns=df.columns[:-last_rank], inplace=True)
     # Replace special values with NaN
-    df.replace(to_replace=r'^(WRITE-IN)|(writein)|(Write-In)|(Write-in)|(skipped)|(overvote).*',
-               value=np.nan, regex=True, inplace=True)
+    df.replace(
+        to_replace=r"^(WRITE-IN)|(writein)|(Write-In)|(Write-in)|(skipped)|(overvote).*",
+        value=np.nan,
+        regex=True,
+        inplace=True,
+    )
     # Compute the set of candidates
     set_candidates = set()
     for rank in range(1, last_rank + 1):
-        column_name = 'rank{}'.format(rank)
+        column_name = "rank{}".format(rank)
         candidates_in_column = df[column_name].unique()
         set_candidates.update(candidates_in_column)
     if np.nan in set_candidates:
@@ -31,7 +35,7 @@ def cvr_to_preferences_ut(file_name):
             continue
         voter_utilities = np.zeros(n_c, dtype=int)
         for rank in range(1, last_rank + 1):
-            column_name = 'rank{}'.format(rank)
+            column_name = "rank{}".format(rank)
             candidate = row[column_name]
             if not np.isnan(candidate):
                 voter_utilities[int(candidate)] = n_c - rank

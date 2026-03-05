@@ -1,8 +1,8 @@
 """Top-level package for SVVAMP."""
 
 __author__ = """François Durand"""
-__email__ = 'fradurand@gmail.com'
-__version__ = '0.12.0'
+__email__ = "fradurand@gmail.com"
+__version__ = "0.12.0"
 
 
 # Utils

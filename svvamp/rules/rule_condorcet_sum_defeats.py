@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import numpy as np
 from svvamp.rules.rule import Rule
 from svvamp.utils.util_cache import cached_property
@@ -301,16 +302,18 @@ class RuleCondorcetSumDefeats(Rule):
         [0. 2. 3.]
     """
 
-    full_name = 'Simplified Dodgson'
-    abbreviation = 'SD'
+    full_name = "Simplified Dodgson"
+    abbreviation = "SD"
 
     options_parameters = Rule.options_parameters.copy()
 
     def __init__(self, **kwargs):
         super().__init__(
-            with_two_candidates_reduces_to_plurality=True, is_based_on_rk=True,
+            with_two_candidates_reduces_to_plurality=True,
+            is_based_on_rk=True,
             precheck_icm=False,
-            log_identity="CONDORCET_SUM_DEFEATS", **kwargs
+            log_identity="CONDORCET_SUM_DEFEATS",
+            **kwargs,
         )
 
     @cached_property
@@ -326,8 +329,11 @@ class RuleCondorcetSumDefeats(Rule):
         self.mylog("Compute scores", 1)
         scores = np.zeros(self.profile_.n_c)
         for c in range(self.profile_.n_c):
-            scores[c] = - np.sum(np.floor(self.profile_.n_v / 2) + 1
-                                 - self.profile_.matrix_duels_rk[c, self.profile_.matrix_victories_rk[:, c] > 0])
+            scores[c] = -np.sum(
+                np.floor(self.profile_.n_v / 2)
+                + 1
+                - self.profile_.matrix_duels_rk[c, self.profile_.matrix_victories_rk[:, c] > 0]
+            )
         return scores
 
     @cached_property
@@ -373,10 +379,10 @@ class RuleCondorcetSumDefeats(Rule):
     @cached_property
     def theta_critical_(self):
         """
-            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
-            >>> rule = RuleCondorcetSumDefeats()(profile)
-            >>> rule.theta_critical_
-            0.18181818181818182
+        >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
+        >>> rule = RuleCondorcetSumDefeats()(profile)
+        >>> rule.theta_critical_
+        0.18181818181818182
         """
         n_c = self.profile_.n_c
         return (n_c - 2) / (4 * n_c - 5)

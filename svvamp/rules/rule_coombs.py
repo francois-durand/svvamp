@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import numpy as np
 from svvamp.rules.rule import Rule
 from svvamp.utils.util_cache import cached_property
@@ -297,23 +298,28 @@ class RuleCoombs(Rule):
         [0. 2. 3.]
     """
 
-    full_name = 'Coombs'
-    abbreviation = 'Coo'
+    full_name = "Coombs"
+    abbreviation = "Coo"
 
     options_parameters = Rule.options_parameters.copy()
-    options_parameters.update({
-        'im_option': {'allowed': ['fast', 'exact'], 'default': 'fast'},
-        'tm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'um_option': {'allowed': ['fast', 'exact'], 'default': 'fast'},
-        'icm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'cm_option': {'allowed': ['fast', 'exact'], 'default': 'fast'},
-    })
+    options_parameters.update(
+        {
+            "im_option": {"allowed": ["fast", "exact"], "default": "fast"},
+            "tm_option": {"allowed": ["exact"], "default": "exact"},
+            "um_option": {"allowed": ["fast", "exact"], "default": "fast"},
+            "icm_option": {"allowed": ["exact"], "default": "exact"},
+            "cm_option": {"allowed": ["fast", "exact"], "default": "fast"},
+        }
+    )
 
     def __init__(self, **kwargs):
         super().__init__(
-            with_two_candidates_reduces_to_plurality=True, is_based_on_rk=True,
-            precheck_um=False, precheck_icm=False,
-            log_identity="COOMBS", **kwargs
+            with_two_candidates_reduces_to_plurality=True,
+            is_based_on_rk=True,
+            precheck_um=False,
+            precheck_icm=False,
+            log_identity="COOMBS",
+            **kwargs,
         )
 
     @cached_property
@@ -326,7 +332,7 @@ class RuleCoombs(Rule):
         # preferences_borda_temp : we will put ``n_c + 1`` for eliminated candidates
         preferences_borda_temp = np.copy(self.profile_.preferences_borda_rk)
         for r in range(self.profile_.n_c - 1):
-            scores[r, :] = - np.bincount(np.argmin(preferences_borda_temp, 1), minlength=self.profile_.n_c)
+            scores[r, :] = -np.bincount(np.argmin(preferences_borda_temp, 1), minlength=self.profile_.n_c)
             scores[r, is_eliminated] = np.nan
             loser = int(np.where(scores[r, :] == np.nanmin(scores[r, :]))[0][-1])  # Tie-breaking: the last index
             is_eliminated[loser] = True
@@ -344,31 +350,35 @@ class RuleCoombs(Rule):
         w = int(np.argmin(is_eliminated))
         worst_to_best.append(w)
         candidates_by_scores_best_to_worst = worst_to_best[::-1]
-        return {'scores': scores, 'one_v_might_be_pivotal': one_v_might_be_pivotal, 'w': w,
-                'candidates_by_scores_best_to_worst': candidates_by_scores_best_to_worst}
+        return {
+            "scores": scores,
+            "one_v_might_be_pivotal": one_v_might_be_pivotal,
+            "w": w,
+            "candidates_by_scores_best_to_worst": candidates_by_scores_best_to_worst,
+        }
 
     @cached_property
     def scores_(self):
         """2d array of integers. ``scores[r, c]`` is minus the number of voters who vote against candidate ``c`` at
         elimination round ``r``.
         """
-        return self._count_ballots_['scores']
+        return self._count_ballots_["scores"]
 
     @cached_property
     def w_(self):
         """Integer (winning candidate)."""
-        return self._count_ballots_['w']
+        return self._count_ballots_["w"]
 
     @cached_property
     def candidates_by_scores_best_to_worst_(self):
         """1d array of integers. Candidates are sorted according to their order of elimination. By definition /
         convention, ``candidates_by_scores_best_to_worst_[0]`` = :attr:`w_`.
         """
-        return self._count_ballots_['candidates_by_scores_best_to_worst']
+        return self._count_ballots_["candidates_by_scores_best_to_worst"]
 
     @cached_property
     def _one_v_might_be_pivotal_(self):
-        return self._count_ballots_['one_v_might_be_pivotal']
+        return self._count_ballots_["one_v_might_be_pivotal"]
 
     @cached_property
     def v_might_im_for_c_(self):
@@ -388,12 +398,12 @@ class RuleCoombs(Rule):
     def um_option(self, value):
         if self._um_option == value:
             return
-        if value in self.options_parameters['um_option']['allowed']:
+        if value in self.options_parameters["um_option"]["allowed"]:
             self.mylogv("Setting um_option =", value, 1)
             self._cm_option = value
             self._um_option = value
-            self.delete_cache(contains='_um_', suffix='_')
-            self.delete_cache(contains='_cm_', suffix='_')
+            self.delete_cache(contains="_um_", suffix="_")
+            self.delete_cache(contains="_cm_", suffix="_")
         else:
             raise ValueError("Unknown value for um_option: " + format(value))
 
@@ -405,12 +415,12 @@ class RuleCoombs(Rule):
     def cm_option(self, value):
         if self._cm_option == value:
             return
-        if value in self.options_parameters['cm_option']['allowed']:
+        if value in self.options_parameters["cm_option"]["allowed"]:
             self.mylogv("Setting cm_option =", value, 1)
             self._cm_option = value
             self._um_option = value
-            self.delete_cache(contains='_um_', suffix='_')
-            self.delete_cache(contains='_cm_', suffix='_')
+            self.delete_cache(contains="_um_", suffix="_")
+            self.delete_cache(contains="_cm_", suffix="_")
         else:
             raise ValueError("Unknown value for cm_option: " + format(value))
 
@@ -476,10 +486,13 @@ class RuleCoombs(Rule):
                 is_candidate_alive_begin_r = np.copy(is_candidate_alive_end_r)
                 is_candidate_alive_begin_r[d] = True
                 scores_s = np.zeros(self.profile_.n_c)
-                scores_s[is_candidate_alive_begin_r] = - np.sum(np.equal(
-                    preferences_borda_s[:, is_candidate_alive_begin_r],
-                    np.min(preferences_borda_s[:, is_candidate_alive_begin_r], 1)[:, np.newaxis]
-                ), 0)
+                scores_s[is_candidate_alive_begin_r] = -np.sum(
+                    np.equal(
+                        preferences_borda_s[:, is_candidate_alive_begin_r],
+                        np.min(preferences_borda_s[:, is_candidate_alive_begin_r], 1)[:, np.newaxis],
+                    ),
+                    0,
+                )
                 # self.mylogv("cm_AUX: scores_s =", scores_s, 3)
                 normal_loser = np.where(scores_s == np.min(scores_s))[0][-1]  # Tie-breaking
                 nb_manip_d = max(0, scores_s[d] - scores_s[normal_loser] + (d < normal_loser))
@@ -557,10 +570,13 @@ class RuleCoombs(Rule):
                     is_candidate_alive_begin_r = np.copy(is_candidate_alive_end_r)
                     is_candidate_alive_begin_r[d] = True
                     scores_s = np.zeros(self.profile_.n_c)
-                    scores_s[is_candidate_alive_begin_r] = - np.sum(np.equal(
-                        preferences_borda_s[:, is_candidate_alive_begin_r],
-                        np.min(preferences_borda_s[:, is_candidate_alive_begin_r], 1)[:, np.newaxis]
-                    ), 0)
+                    scores_s[is_candidate_alive_begin_r] = -np.sum(
+                        np.equal(
+                            preferences_borda_s[:, is_candidate_alive_begin_r],
+                            np.min(preferences_borda_s[:, is_candidate_alive_begin_r], 1)[:, np.newaxis],
+                        ),
+                        0,
+                    )
                     # self.mylogv("scores_s =", scores_s, 3)
                     normal_loser = np.where(scores_s == np.nanmin(scores_s))[0][-1]  # Tie-breaking
                     nb_manip_r = max(scores_s[d] - scores_s[normal_loser] + (d < normal_loser), 0)
@@ -570,8 +586,8 @@ class RuleCoombs(Rule):
                         continue
                     if tuple(is_candidate_alive_begin_r) in situations_begin_r:
                         situations_begin_r[tuple(is_candidate_alive_begin_r)] = min(
-                            situations_begin_r[tuple(is_candidate_alive_begin_r)],
-                            nb_manip_r_and_after)
+                            situations_begin_r[tuple(is_candidate_alive_begin_r)], nb_manip_r_and_after
+                        )
                     else:
                         situations_begin_r[tuple(is_candidate_alive_begin_r)] = nb_manip_r_and_after
             self.mylogv("cm_aux_exact: situations_begin_r =", situations_begin_r, 3)
@@ -590,64 +606,64 @@ class RuleCoombs(Rule):
 
     def _im_main_work_v_(self, v, c_is_wanted, nb_wanted_undecided, stop_if_true):
         """
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 2, 3, 1],
-            ...     [1, 0, 3, 2],
-            ...     [1, 3, 2, 0],
-            ...     [2, 1, 3, 0],
-            ...     [3, 1, 0, 2],
-            ... ])
-            >>> rule = RuleCoombs()(profile)
-            >>> rule.is_im_
-            True
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 2, 3, 1],
+        ...     [1, 0, 3, 2],
+        ...     [1, 3, 2, 0],
+        ...     [2, 1, 3, 0],
+        ...     [3, 1, 0, 2],
+        ... ])
+        >>> rule = RuleCoombs()(profile)
+        >>> rule.is_im_
+        True
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 2, 1],
-            ...     [0, 2, 1],
-            ...     [1, 0, 2],
-            ...     [2, 0, 1],
-            ...     [2, 1, 0],
-            ... ])
-            >>> rule = RuleCoombs()(profile)
-            >>> rule.is_im_c_with_voters_(2)
-            (nan, array([ 0.,  0.,  0., nan, nan]))
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 2, 1],
+        ...     [0, 2, 1],
+        ...     [1, 0, 2],
+        ...     [2, 0, 1],
+        ...     [2, 1, 0],
+        ... ])
+        >>> rule = RuleCoombs()(profile)
+        >>> rule.is_im_c_with_voters_(2)
+        (nan, array([ 0.,  0.,  0., nan, nan]))
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 2, 1],
-            ...     [0, 2, 1],
-            ...     [1, 0, 2],
-            ...     [2, 0, 1],
-            ...     [2, 1, 0],
-            ... ])
-            >>> rule = RuleCoombs(im_option='exact')(profile)
-            >>> rule.is_im_
-            False
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 2, 1],
+        ...     [0, 2, 1],
+        ...     [1, 0, 2],
+        ...     [2, 0, 1],
+        ...     [2, 1, 0],
+        ... ])
+        >>> rule = RuleCoombs(im_option='exact')(profile)
+        >>> rule.is_im_
+        False
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 1, 2],
-            ...     [0, 1, 2],
-            ...     [2, 0, 1],
-            ...     [2, 1, 0],
-            ...     [2, 1, 0],
-            ... ])
-            >>> rule = RuleCoombs(im_option='exact')(profile)
-            >>> rule.is_im_
-            True
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [0, 1, 2],
+        ...     [2, 0, 1],
+        ...     [2, 1, 0],
+        ...     [2, 1, 0],
+        ... ])
+        >>> rule = RuleCoombs(im_option='exact')(profile)
+        >>> rule.is_im_
+        True
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 1, 2],
-            ...     [1, 0, 2],
-            ...     [1, 2, 0],
-            ...     [2, 0, 1],
-            ...     [2, 0, 1],
-            ... ])
-            >>> rule = RuleCoombs()(profile)
-            >>> rule.v_im_for_c_
-            array([[ 0.,  0.,  0.],
-                   [ 0., nan,  0.],
-                   [ 0., nan,  1.],
-                   [ 0.,  0., nan],
-                   [ 0.,  0., nan]])
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [1, 0, 2],
+        ...     [1, 2, 0],
+        ...     [2, 0, 1],
+        ...     [2, 0, 1],
+        ... ])
+        >>> rule = RuleCoombs()(profile)
+        >>> rule.v_im_for_c_
+        array([[ 0.,  0.,  0.],
+               [ 0., nan,  0.],
+               [ 0., nan,  1.],
+               [ 0.,  0., nan],
+               [ 0.,  0., nan]])
         """
         preferences_borda_s = self.profile_.preferences_borda_rk[np.array(range(self.profile_.n_v)) != v, :]
         for c in range(self.profile_.n_c):
@@ -655,7 +671,7 @@ class RuleCoombs(Rule):
                 continue
             if not np.isneginf(self._v_im_for_c[v, c]):
                 continue
-            self.mylogv('IM: Candidate c =', c, 3)
+            self.mylogv("IM: Candidate c =", c, 3)
             n_manip_fast = self._cm_aux_fast(c, n_max=1, preferences_borda_s=preferences_borda_s)
             self.mylogv("IM: Fast: n_manip_fast =", n_manip_fast, 3)
             if n_manip_fast <= 1:
@@ -666,7 +682,7 @@ class RuleCoombs(Rule):
                 if stop_if_true:
                     return
                 continue  # pragma: no cover - Not really "executed" because of Python optimization
-            if self.im_option != 'exact':
+            if self.im_option != "exact":
                 self._v_im_for_c[v, c] = np.nan
                 continue
             n_manip_exact = self._cm_aux_exact(c, n_max=1, preferences_borda_s=preferences_borda_s)
@@ -706,126 +722,126 @@ class RuleCoombs(Rule):
 
     def _cm_main_work_c_(self, c, optimize_bounds):
         """
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 2, 1, 3],
-            ...     [0, 2, 3, 1],
-            ...     [0, 2, 3, 1],
-            ...     [3, 0, 2, 1],
-            ...     [3, 1, 2, 0],
-            ... ])
-            >>> rule = RuleCoombs(cm_option='exact')(profile)
-            >>> rule.candidates_cm_
-            array([0., 0., 0., 0.])
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 2, 1, 3],
+        ...     [0, 2, 3, 1],
+        ...     [0, 2, 3, 1],
+        ...     [3, 0, 2, 1],
+        ...     [3, 1, 2, 0],
+        ... ])
+        >>> rule = RuleCoombs(cm_option='exact')(profile)
+        >>> rule.candidates_cm_
+        array([0., 0., 0., 0.])
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 1, 2],
-            ...     [0, 2, 1],
-            ...     [0, 2, 1],
-            ...     [0, 2, 1],
-            ...     [2, 0, 1],
-            ... ])
-            >>> rule = RuleCoombs(cm_option='exact')(profile)
-            >>> rule.necessary_coalition_size_cm_
-            array([0., 5., 4.])
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [0, 2, 1],
+        ...     [0, 2, 1],
+        ...     [0, 2, 1],
+        ...     [2, 0, 1],
+        ... ])
+        >>> rule = RuleCoombs(cm_option='exact')(profile)
+        >>> rule.necessary_coalition_size_cm_
+        array([0., 5., 4.])
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [1, 3, 0, 2],
-            ...     [2, 0, 3, 1],
-            ...     [2, 1, 3, 0],
-            ...     [3, 1, 0, 2],
-            ...     [3, 2, 1, 0],
-            ... ])
-            >>> rule = RuleCoombs(cm_option='exact')(profile)
-            >>> rule.candidates_cm_
-            array([0., 1., 1., 0.])
+        >>> profile = Profile(preferences_rk=[
+        ...     [1, 3, 0, 2],
+        ...     [2, 0, 3, 1],
+        ...     [2, 1, 3, 0],
+        ...     [3, 1, 0, 2],
+        ...     [3, 2, 1, 0],
+        ... ])
+        >>> rule = RuleCoombs(cm_option='exact')(profile)
+        >>> rule.candidates_cm_
+        array([0., 1., 1., 0.])
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [1, 2, 0, 3],
-            ...     [1, 3, 2, 0],
-            ...     [2, 0, 3, 1],
-            ...     [2, 1, 3, 0],
-            ...     [3, 2, 0, 1],
-            ... ])
-            >>> rule = RuleCoombs(cm_option='exact')(profile)
-            >>> rule.candidates_cm_
-            array([0., 1., 0., 1.])
+        >>> profile = Profile(preferences_rk=[
+        ...     [1, 2, 0, 3],
+        ...     [1, 3, 2, 0],
+        ...     [2, 0, 3, 1],
+        ...     [2, 1, 3, 0],
+        ...     [3, 2, 0, 1],
+        ... ])
+        >>> rule = RuleCoombs(cm_option='exact')(profile)
+        >>> rule.candidates_cm_
+        array([0., 1., 0., 1.])
 
-            >>> profile = Profile(preferences_ut=[
-            ...     [ 0. ,  0. ],
-            ...     [ 0.5, -0.5],
-            ...     [-0.5, -1. ],
-            ...     [-0.5,  0. ],
-            ...     [ 0. ,  0.5],
-            ...     [-0.5, -0.5],
-            ... ], preferences_rk=[
-            ...     [0, 1],
-            ...     [0, 1],
-            ...     [0, 1],
-            ...     [1, 0],
-            ...     [1, 0],
-            ...     [1, 0],
-            ... ])
-            >>> rule = RuleCoombs(cm_option='exact')(profile)
-            >>> rule.is_cm_c_(1)
-            False
-            >>> rule.sufficient_coalition_size_cm_
-            array([0., 3.])
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 0. ,  0. ],
+        ...     [ 0.5, -0.5],
+        ...     [-0.5, -1. ],
+        ...     [-0.5,  0. ],
+        ...     [ 0. ,  0.5],
+        ...     [-0.5, -0.5],
+        ... ], preferences_rk=[
+        ...     [0, 1],
+        ...     [0, 1],
+        ...     [0, 1],
+        ...     [1, 0],
+        ...     [1, 0],
+        ...     [1, 0],
+        ... ])
+        >>> rule = RuleCoombs(cm_option='exact')(profile)
+        >>> rule.is_cm_c_(1)
+        False
+        >>> rule.sufficient_coalition_size_cm_
+        array([0., 3.])
 
-            >>> profile = Profile(preferences_ut=[
-            ...     [-0.5,  0.5,  0. ],
-            ...     [ 0. , -1. , -0.5],
-            ...     [-0.5, -0.5, -1. ],
-            ...     [-0.5, -0.5,  0.5],
-            ... ], preferences_rk=[
-            ...     [1, 2, 0],
-            ...     [0, 2, 1],
-            ...     [0, 1, 2],
-            ...     [2, 1, 0],
-            ... ])
-            >>> rule = RuleCoombs(cm_option='exact')(profile)
-            >>> rule.candidates_cm_
-            array([1., 0., 1.])
+        >>> profile = Profile(preferences_ut=[
+        ...     [-0.5,  0.5,  0. ],
+        ...     [ 0. , -1. , -0.5],
+        ...     [-0.5, -0.5, -1. ],
+        ...     [-0.5, -0.5,  0.5],
+        ... ], preferences_rk=[
+        ...     [1, 2, 0],
+        ...     [0, 2, 1],
+        ...     [0, 1, 2],
+        ...     [2, 1, 0],
+        ... ])
+        >>> rule = RuleCoombs(cm_option='exact')(profile)
+        >>> rule.candidates_cm_
+        array([1., 0., 1.])
 
-            >>> profile = Profile(preferences_ut=[
-            ...     [ 0. , -0.5, -0.5,  0. ],
-            ...     [ 1. ,  0. ,  0. ,  0. ],
-            ...     [-1. ,  1. , -0.5,  0. ],
-            ...     [-0.5,  0. , -1. , -0.5],
-            ...     [ 1. , -1. ,  0.5,  0.5],
-            ...     [-1. , -0.5,  1. ,  0. ],
-            ... ], preferences_rk=[
-            ...     [3, 0, 2, 1],
-            ...     [0, 2, 3, 1],
-            ...     [1, 3, 2, 0],
-            ...     [1, 3, 0, 2],
-            ...     [0, 2, 3, 1],
-            ...     [2, 3, 1, 0],
-            ... ])
-            >>> rule = RuleCoombs(cm_option='exact')(profile)
-            >>> rule.candidates_cm_
-            array([0., 0., 0., 1.])
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 0. , -0.5, -0.5,  0. ],
+        ...     [ 1. ,  0. ,  0. ,  0. ],
+        ...     [-1. ,  1. , -0.5,  0. ],
+        ...     [-0.5,  0. , -1. , -0.5],
+        ...     [ 1. , -1. ,  0.5,  0.5],
+        ...     [-1. , -0.5,  1. ,  0. ],
+        ... ], preferences_rk=[
+        ...     [3, 0, 2, 1],
+        ...     [0, 2, 3, 1],
+        ...     [1, 3, 2, 0],
+        ...     [1, 3, 0, 2],
+        ...     [0, 2, 3, 1],
+        ...     [2, 3, 1, 0],
+        ... ])
+        >>> rule = RuleCoombs(cm_option='exact')(profile)
+        >>> rule.candidates_cm_
+        array([0., 0., 0., 1.])
 
-            >>> profile = Profile(preferences_ut=[
-            ...     [ 1. , -0.5,  0.5,  1. ],
-            ...     [ 0.5,  0.5,  0. ,  0.5],
-            ...     [ 0. ,  0.5,  1. , -1. ],
-            ...     [-0.5, -0.5,  0. , -0.5],
-            ...     [ 0.5,  1. ,  1. ,  0. ],
-            ... ], preferences_rk=[
-            ...     [3, 0, 2, 1],
-            ...     [3, 1, 0, 2],
-            ...     [2, 1, 0, 3],
-            ...     [2, 0, 3, 1],
-            ...     [2, 1, 0, 3],
-            ... ])
-            >>> rule = RuleCoombs(um_option='exact', cm_option='exact')(profile)
-            >>> rule.candidates_um_
-            array([1., 0., 0., 0.])
-            >>> rule.necessary_coalition_size_cm_
-            array([2., 2., 0., 3.])
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 1. , -0.5,  0.5,  1. ],
+        ...     [ 0.5,  0.5,  0. ,  0.5],
+        ...     [ 0. ,  0.5,  1. , -1. ],
+        ...     [-0.5, -0.5,  0. , -0.5],
+        ...     [ 0.5,  1. ,  1. ,  0. ],
+        ... ], preferences_rk=[
+        ...     [3, 0, 2, 1],
+        ...     [3, 1, 0, 2],
+        ...     [2, 1, 0, 3],
+        ...     [2, 0, 3, 1],
+        ...     [2, 1, 0, 3],
+        ... ])
+        >>> rule = RuleCoombs(um_option='exact', cm_option='exact')(profile)
+        >>> rule.candidates_um_
+        array([1., 0., 0., 0.])
+        >>> rule.necessary_coalition_size_cm_
+        array([2., 2., 0., 3.])
         """
         n_m = self.profile_.matrix_duels_ut[c, self.w_]
-        exact = (self.cm_option == "exact")
+        exact = self.cm_option == "exact"
         if optimize_bounds and exact:
             n_max = self._sufficient_coalition_size_cm[c] - 1
         else:
@@ -837,11 +853,14 @@ class RuleCoombs(Rule):
             self.mylog("CM: Fast algorithm will not do better than what we already know", 3)
             return
         n_manip_fast = self._cm_aux_fast(
-            c, n_max,
-            preferences_borda_s=self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :])
+            c,
+            n_max,
+            preferences_borda_s=self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :],
+        )
         self.mylogv("CM: n_manip_fast =", n_manip_fast, 3)
-        self._update_sufficient(self._sufficient_coalition_size_cm, c, n_manip_fast,
-                                'CM: Update sufficient_coalition_size_cm =')
+        self._update_sufficient(
+            self._sufficient_coalition_size_cm, c, n_manip_fast, "CM: Update sufficient_coalition_size_cm ="
+        )
         if not exact:
             # With fast algo, we stop here anyway. It is not a "quick escape" (if we'd try again with
             # ``optimize_bound``, we would not try better).
@@ -858,13 +877,16 @@ class RuleCoombs(Rule):
         n_max_updated = min(n_manip_fast - 1, n_max)
         self.mylogv("CM: n_max_updated =", n_max_updated, 3)
         n_manip_exact = self._cm_aux_exact(
-            c, n_max_updated,
-            preferences_borda_s=self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :])
+            c,
+            n_max_updated,
+            preferences_borda_s=self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :],
+        )
         self.mylogv("CM: n_manip_exact =", n_manip_exact)
         n_manip = min(n_manip_fast, n_manip_exact)
         self.mylogv("CM: n_manip =", n_manip, 3)
-        self._update_sufficient(self._sufficient_coalition_size_cm, c, n_manip,
-                                'CM: Update sufficient_coalition_size_cm =')
+        self._update_sufficient(
+            self._sufficient_coalition_size_cm, c, n_manip, "CM: Update sufficient_coalition_size_cm ="
+        )
         # Update necessary coalition and return
         if optimize_bounds:
             self._necessary_coalition_size_cm[c] = self._sufficient_coalition_size_cm[c]
@@ -877,17 +899,18 @@ class RuleCoombs(Rule):
             else:
                 # We have explored everything with ``n_max = n_m`` but manipulation failed. However, we have not
                 # optimized sufficient_size (which must be higher than ``n_m``), so it is a quick escape.
-                self._update_necessary(self._necessary_coalition_size_cm, c, n_m + 1,
-                                       'CM: Update necessary_coalition_size_cm = n_m + 1 =')
+                self._update_necessary(
+                    self._necessary_coalition_size_cm, c, n_m + 1, "CM: Update necessary_coalition_size_cm = n_m + 1 ="
+                )
                 return True
 
     @cached_property
     def theta_critical_(self):
         """
-            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
-            >>> rule = RuleCoombs()(profile)
-            >>> rule.theta_critical_
-            0.2727272727272727
+        >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
+        >>> rule = RuleCoombs()(profile)
+        >>> rule.theta_critical_
+        0.2727272727272727
         """
         n_c = self.profile_.n_c
         return (n_c - 1) / (3 * n_c - 1)

@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import numpy as np
 from svvamp.preferences.generator_profile import GeneratorProfile
 from svvamp.preferences.profile import Profile
@@ -83,7 +84,7 @@ class GeneratorProfileSpheroid(GeneratorProfile):
         self.n_v = n_v
         self.n_c = n_c
         self.stretching = stretching
-        self.log_creation = ['Spheroid', n_c, n_v, 'Stretching', stretching]
+        self.log_creation = ["Spheroid", n_c, n_v, "Stretching", stretching]
         super().__init__(sort_voters=sort_voters)
 
     def __call__(self):
@@ -98,9 +99,12 @@ class GeneratorProfileSpheroid(GeneratorProfile):
         # where 1/n_c J is the orthogonal projection on diagonal (1, ..., 1) and (Id - 1/n_c J) is the projection on its
         # orthogonal hyperplane.
         if self.stretching < 1:
-            preferences_ut = (preferences_ut
-                              + np.sum(preferences_ut, 1)[:, np.newaxis] * (self.stretching - 1) / self.n_c)
+            preferences_ut = (
+                preferences_ut + np.sum(preferences_ut, 1)[:, np.newaxis] * (self.stretching - 1) / self.n_c
+            )
         elif self.stretching > 1:
-            preferences_ut = (preferences_ut / self.stretching
-                              + np.sum(preferences_ut, 1)[:, np.newaxis] * (1 - 1 / self.stretching) / self.n_c)
+            preferences_ut = (
+                preferences_ut / self.stretching
+                + np.sum(preferences_ut, 1)[:, np.newaxis] * (1 - 1 / self.stretching) / self.n_c
+            )
         return Profile(preferences_ut=preferences_ut, log_creation=self.log_creation, sort_voters=self.sort_voters)

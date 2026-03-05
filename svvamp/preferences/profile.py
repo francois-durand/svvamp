@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """
 Created on Mon Sep 22 15:24:52 2014
 Copyright François Durand 2014-2018
@@ -24,6 +24,7 @@ import itertools
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+
 # noinspection PyUnresolvedReferences
 from mpl_toolkits.mplot3d import Axes3D
 
@@ -31,9 +32,14 @@ from svvamp.utils.printing import printm, print_title
 from svvamp.utils import my_log
 from svvamp.utils.util_cache import cached_property
 from svvamp.utils.misc import initialize_random_seeds
-from svvamp.utils.misc import preferences_ut_to_preferences_rk, preferences_rk_to_preferences_borda_rk, \
-    preferences_ut_to_preferences_borda_ut, preferences_ut_to_matrix_duels_ut, is_resistant_condorcet, \
-    matrix_victories_to_smith_set
+from svvamp.utils.misc import (
+    preferences_ut_to_preferences_rk,
+    preferences_rk_to_preferences_borda_rk,
+    preferences_ut_to_preferences_borda_ut,
+    preferences_ut_to_matrix_duels_ut,
+    is_resistant_condorcet,
+    matrix_victories_to_smith_set,
+)
 from svvamp.utils.pseudo_bool import equal_true
 from svvamp.preferences.plurality_elimination_engine_profile import PluralityEliminationEngineProfile
 
@@ -145,8 +151,15 @@ class Profile(my_log.MyLog):
         ValueError: Please provide at least preferences_rk, preferences_borda_rk or preferences_ut.
     """
 
-    def __init__(self, preferences_ut=None, preferences_rk=None, preferences_borda_rk=None,
-                 log_creation=None, labels_candidates=None, sort_voters=False):
+    def __init__(
+        self,
+        preferences_ut=None,
+        preferences_rk=None,
+        preferences_borda_rk=None,
+        log_creation=None,
+        labels_candidates=None,
+        sort_voters=False,
+    ):
         super().__init__(log_identity="PROFILE")
 
         if preferences_ut is None:
@@ -202,7 +215,7 @@ class Profile(my_log.MyLog):
             return preferences_ut_to_preferences_rk(self._preferences_borda_rk_input)
         if self._preferences_ut_input is not None:
             return preferences_ut_to_preferences_rk(self._preferences_ut_input)
-        raise ValueError('Please provide at least preferences_rk, preferences_borda_rk or preferences_ut.')
+        raise ValueError("Please provide at least preferences_rk, preferences_borda_rk or preferences_ut.")
 
     @cached_property
     def _preferences_borda_rk_unsorted(self):
@@ -230,8 +243,7 @@ class Profile(my_log.MyLog):
         """Index used to sort by voter."""
         # Sort voters by strict ranking, then by weak order (deducted from utility)
         sort_criterion = np.concatenate(
-            (self._preferences_rk_unsorted, self._preferences_borda_ut_unsorted),
-            axis=1
+            (self._preferences_rk_unsorted, self._preferences_borda_ut_unsorted), axis=1
         ).tolist()
         # noinspection PyUnresolvedReferences
         indexes = sorted(range(self.n_v), key=sort_criterion.__getitem__)
@@ -278,8 +290,7 @@ class Profile(my_log.MyLog):
 
     @property
     def labels_candidates(self):
-        """List of :attr:`~svvamp.Population.n_c` strings (names of the candidates).
-        """
+        """List of :attr:`~svvamp.Population.n_c` strings (names of the candidates)."""
         if self._labels_candidates is None:
             self._labels_candidates = [str(x) for x in range(self.n_c)]
         return self._labels_candidates
@@ -303,15 +314,21 @@ class Profile(my_log.MyLog):
         array([False,  True])
         """
         self.mylog("Compute v_has_same_ordinal_preferences_as_previous_voter", 1)
-        return np.concatenate((
+        return np.concatenate(
+            (
                 [False],
                 np.logical_and(
-                    np.all(self.preferences_rk[range(self.n_v - 1), :]
-                           == self.preferences_rk[range(1, self.n_v), :], 1),
-                    np.all(self.preferences_borda_ut[range(self.n_v - 1), :]
-                           == self.preferences_borda_ut[range(1, self.n_v), :], 1)
-                )
-        ))
+                    np.all(
+                        self.preferences_rk[range(self.n_v - 1), :] == self.preferences_rk[range(1, self.n_v), :], 1
+                    ),
+                    np.all(
+                        self.preferences_borda_ut[range(self.n_v - 1), :]
+                        == self.preferences_borda_ut[range(1, self.n_v), :],
+                        1,
+                    ),
+                ),
+            )
+        )
 
     # %% Plurality scores
 
@@ -421,8 +438,9 @@ class Profile(my_log.MyLog):
                    [0., 0.]])
         """
         self.mylog("Compute matrix_victories_ut_abs", 1)
-        return (np.multiply(0.5, self.matrix_duels_ut >= self.n_v / 2)
-                + np.multiply(0.5, self.matrix_duels_ut > self.n_v / 2))
+        return np.multiply(0.5, self.matrix_duels_ut >= self.n_v / 2) + np.multiply(
+            0.5, self.matrix_duels_ut > self.n_v / 2
+        )
 
     @cached_property
     def matrix_victories_ut_abs_ctb(self):
@@ -584,8 +602,9 @@ class Profile(my_log.MyLog):
 
         """
         self.mylog("Compute matrix_victories_rk", 1)
-        return (np.multiply(0.5, self.matrix_duels_rk >= self.n_v / 2)
-                + np.multiply(0.5, self.matrix_duels_rk > self.n_v / 2))
+        return np.multiply(0.5, self.matrix_duels_rk >= self.n_v / 2) + np.multiply(
+            0.5, self.matrix_duels_rk > self.n_v / 2
+        )
 
     @cached_property
     def matrix_victories_rk_ctb(self):
@@ -1419,16 +1438,15 @@ class Profile(my_log.MyLog):
                 if c == w:
                     result[c, w] = 0
                     continue
-                v_does_not_prefer_c_to_w = (self.preferences_ut[:, w] >= self.preferences_ut[:, c])
+                v_does_not_prefer_c_to_w = self.preferences_ut[:, w] >= self.preferences_ut[:, c]
                 for d in range(self.n_c):
                     if d == w:
                         continue
                         # But d == c is allowed (useful if self.C == 2)
-                    v_prefers_w_to_d = (self.preferences_ut[:, w] > self.preferences_ut[:, d])
-                    threshold_c_makes_w_not_win_against_d = (
-                        np.multiply(2, np.sum(np.logical_and(v_does_not_prefer_c_to_w, v_prefers_w_to_d)))
-                        - np.sum(v_does_not_prefer_c_to_w)
-                    )
+                    v_prefers_w_to_d = self.preferences_ut[:, w] > self.preferences_ut[:, d]
+                    threshold_c_makes_w_not_win_against_d = np.multiply(
+                        2, np.sum(np.logical_and(v_does_not_prefer_c_to_w, v_prefers_w_to_d))
+                    ) - np.sum(v_does_not_prefer_c_to_w)
                     result[c, w] = np.minimum(result[c, w], threshold_c_makes_w_not_win_against_d)
                 result = np.maximum(result, 0)
         return result
@@ -1947,8 +1965,9 @@ class Profile(my_log.MyLog):
 
     @cached_property
     def _tuple_decreasing_borda_score_rk(self):
-        candidates_by_decreasing_borda_score_rk = np.array(np.argsort(- self.borda_score_c_rk, kind='mergesort'),
-                                                           dtype=int)
+        candidates_by_decreasing_borda_score_rk = np.array(
+            np.argsort(-self.borda_score_c_rk, kind="mergesort"), dtype=int
+        )
         decreasing_borda_scores_rk = self.borda_score_c_rk[candidates_by_decreasing_borda_score_rk]
         return candidates_by_decreasing_borda_score_rk, decreasing_borda_scores_rk
 
@@ -1989,8 +2008,9 @@ class Profile(my_log.MyLog):
 
     @cached_property
     def _tuple_decreasing_borda_score_ut(self):
-        candidates_by_decreasing_borda_score_ut = np.array(np.argsort(- self.borda_score_c_ut, kind='mergesort'),
-                                                           dtype=int)
+        candidates_by_decreasing_borda_score_ut = np.array(
+            np.argsort(-self.borda_score_c_ut, kind="mergesort"), dtype=int
+        )
         decreasing_borda_scores_ut = self.borda_score_c_ut[candidates_by_decreasing_borda_score_ut]
         return candidates_by_decreasing_borda_score_ut, decreasing_borda_scores_ut
 
@@ -2082,15 +2102,15 @@ class Profile(my_log.MyLog):
             _indexes = indexes
         # Define figure
         fig = plt.figure()
-        ax = fig.add_subplot(111, projection='3d')
+        ax = fig.add_subplot(111, projection="3d")
         # North-South axis (not plotted anymore)
         # ax.plot(xs=[-1, 1], ys=[-1, 1], zs=[-1, 1], c='k')
         # Equator
         theta = np.linspace(0, 2 * np.pi, 200)
         xs = np.cos(theta) / np.sqrt(2) - np.sin(theta) / np.sqrt(6)
-        ys = - np.cos(theta) / np.sqrt(2) - np.sin(theta) / np.sqrt(6)
+        ys = -np.cos(theta) / np.sqrt(2) - np.sin(theta) / np.sqrt(6)
         zs = 2 * np.sin(theta) / np.sqrt(6)
-        ax.scatter(xs, ys, zs, s=7, c='b')
+        ax.scatter(xs, ys, zs, s=7, c="b")
         # Frontiers between strict orders
         for i in range(3):
             pole = np.full(3, 1 / np.sqrt(3))
@@ -2100,26 +2120,26 @@ class Profile(my_log.MyLog):
             xs = np.cos(theta) * pole[0] + np.sin(theta) * ortho[0]
             ys = np.cos(theta) * pole[1] + np.sin(theta) * ortho[1]
             zs = np.cos(theta) * pole[2] + np.sin(theta) * ortho[2]
-            ax.scatter(xs, ys, zs, s=7, c='b')
+            ax.scatter(xs, ys, zs, s=7, c="b")
         # Voters
         mat_temp = np.copy(self.preferences_ut[:, _indexes]).astype(float)
-        self.mylogm('mat_temp =', mat_temp, 3)
+        self.mylogm("mat_temp =", mat_temp, 3)
         if normalize:
             for v in range(mat_temp.shape[0]):
-                norm = np.sqrt(np.sum(mat_temp[v, :]**2))
+                norm = np.sqrt(np.sum(mat_temp[v, :] ** 2))
                 if norm > 0:
                     mat_temp[v, :] /= norm
-            self.mylogm('mat_temp =', mat_temp, 3)
-        ax.scatter(mat_temp[:, 0], mat_temp[:, 1], mat_temp[:, 2], s=40, c='r', marker='o')
+            self.mylogm("mat_temp =", mat_temp, 3)
+        ax.scatter(mat_temp[:, 0], mat_temp[:, 1], mat_temp[:, 2], s=40, c="r", marker="o")
         # Axes and labels
         if use_labels:
-            ax.set_xlabel(self.labels_candidates[_indexes[0]] + ' (' + str(_indexes[0]) + ')')
-            ax.set_ylabel(self.labels_candidates[_indexes[1]] + ' (' + str(_indexes[1]) + ')')
-            ax.set_zlabel(self.labels_candidates[_indexes[2]] + ' (' + str(_indexes[2]) + ')')
+            ax.set_xlabel(self.labels_candidates[_indexes[0]] + " (" + str(_indexes[0]) + ")")
+            ax.set_ylabel(self.labels_candidates[_indexes[1]] + " (" + str(_indexes[1]) + ")")
+            ax.set_zlabel(self.labels_candidates[_indexes[2]] + " (" + str(_indexes[2]) + ")")
         else:
-            ax.set_xlabel('Candidate ' + str(_indexes[0]))
-            ax.set_ylabel('Candidate ' + str(_indexes[1]))
-            ax.set_zlabel('Candidate ' + str(_indexes[2]))
+            ax.set_xlabel("Candidate " + str(_indexes[0]))
+            ax.set_ylabel("Candidate " + str(_indexes[1]))
+            ax.set_zlabel("Candidate " + str(_indexes[2]))
         temp = 1 / np.sqrt(2)
         for best in range(3):
             for worst in range(3):
@@ -2128,9 +2148,13 @@ class Profile(my_log.MyLog):
                 other = 3 - best - worst
                 position = np.zeros(3)
                 position[best] = temp
-                position[worst] = - temp
-                ax.text(position[0], position[1], position[2],
-                        ' ' + str(_indexes[best]) + ' > ' + str(_indexes[other]) + ' > ' + str(_indexes[worst]))
+                position[worst] = -temp
+                ax.text(
+                    position[0],
+                    position[1],
+                    position[2],
+                    " " + str(_indexes[best]) + " > " + str(_indexes[other]) + " > " + str(_indexes[worst]),
+                )
         # plt.show()
 
     def plot4(self, indexes=None, normalize=True, use_labels=True):
@@ -2193,7 +2217,7 @@ class Profile(my_log.MyLog):
             _indexes = indexes
         # Define figure
         fig = plt.figure()
-        ax = fig.add_subplot(111, projection='3d')
+        ax = fig.add_subplot(111, projection="3d")
 
         # Voters
         # We transform the population matrix to send it to R^3
@@ -2210,11 +2234,11 @@ class Profile(my_log.MyLog):
         # 3. Normalize if asked
         if normalize:
             for v in range(mat_temp.shape[0]):
-                norm = np.sqrt(np.sum(mat_temp[v, :]**2))
+                norm = np.sqrt(np.sum(mat_temp[v, :] ** 2))
                 if norm > 0:
                     mat_temp[v, :] /= norm
         # 4. Now just do not care about last coordinate, it is 0.
-        ax.scatter(mat_temp[:, 0], mat_temp[:, 1], mat_temp[:, 2], s=40, c='r', marker='o')
+        ax.scatter(mat_temp[:, 0], mat_temp[:, 1], mat_temp[:, 2], s=40, c="r", marker="o")
 
         # Permutohedron
         xs = []
@@ -2239,11 +2263,12 @@ class Profile(my_log.MyLog):
         def image(vertex):
             result = np.multiply(vertex, 2) - 1
             result = result - np.mean(result)
-            the_temp_parallel = np.sum(result*unitary_parallel) * unitary_parallel
+            the_temp_parallel = np.sum(result * unitary_parallel) * unitary_parallel
             result -= 2 * the_temp_parallel
             if normalize:
                 result = result / np.sqrt(np.sum(result**2))
             return result
+
         for i in range(4):
             for j in range(4):
                 if j == i:
@@ -2252,9 +2277,9 @@ class Profile(my_log.MyLog):
                 vertex1 = image(np.array(range(4)) == i)
                 if use_labels:
                     pass
-                    ax.text(vertex1[0], vertex1[1], vertex1[2], '   Favorite = ' + self.labels_candidates[_indexes[i]])
+                    ax.text(vertex1[0], vertex1[1], vertex1[2], "   Favorite = " + self.labels_candidates[_indexes[i]])
                 else:
-                    ax.text(vertex1[0], vertex1[1], vertex1[2], '   Favorite = ' + str(_indexes[i]))
+                    ax.text(vertex1[0], vertex1[1], vertex1[2], "   Favorite = " + str(_indexes[i]))
                 # Vertex 2 of type [1, 1, 1, 0]
                 vertex2 = np.ones(4)
                 vertex2[j] = 0
@@ -2274,10 +2299,10 @@ class Profile(my_log.MyLog):
                 vertex2[j] = 0
                 vertex2 = image(vertex2)
                 add_line(vertex1, vertex2)
-        ax.scatter(xs, ys, zs, s=7, c='b')
+        ax.scatter(xs, ys, zs, s=7, c="b")
 
         # Conclude
-        plt.axis('off')
+        plt.axis("off")
         # plt.show()
 
     # %% Demo
@@ -2597,8 +2622,9 @@ class Profile(my_log.MyLog):
         printm("preferences_borda_rk =", self.preferences_borda_rk)
         printm("preferences_rk =", self.preferences_rk)
 
-        printm("v_has_same_ordinal_preferences_as_previous_voter =",
-               self.v_has_same_ordinal_preferences_as_previous_voter)
+        printm(
+            "v_has_same_ordinal_preferences_as_previous_voter =", self.v_has_same_ordinal_preferences_as_previous_voter
+        )
 
         print_title("Plurality scores")
         printm("preferences_rk (reminder) =", self.preferences_rk)
@@ -2695,33 +2721,59 @@ class Profile(my_log.MyLog):
         # Condorcet-admissible (False)
 
         def display_bool(value):
-            return '(True) ' if equal_true(value) else '(False)'
-        print('maj_fav_ut ' + display_bool(self.majority_favorite_ut) + '             ==>            '
-              + 'maj_fav_ut_ctb ' + display_bool(self.majority_favorite_ut_ctb))
-        print(' ||          ||                                     ||           ||')
-        print(' ||          V                                      V            ||')
-        print(' ||         maj_fav_rk ' + display_bool(self.majority_favorite_rk) + ' ==> '
-              + 'maj_fav_rk_ctb ' + display_bool(self.majority_favorite_rk_ctb) + '        ||')
-        print(' V                         ||       ||                           ||')
-        print('Resistant Condorcet ' + display_bool(self.resistant_condorcet_winner)
-              + '                                      ||')
-        print(' ||                        ||       ||                           ||')
-        print(' V                         ||       ||                           V')
-        print('Condorcet_ut_abs ' + display_bool(self.condorcet_winner_ut_abs) + '       ==>      '
-              'Condorcet_ut_abs_ctb ' + display_bool(self.condorcet_winner_ut_abs_ctb) + '')
-        print(' ||          ||            ||       ||              ||           ||')
-        print(' ||          V             V        V               V            ||')
-        print(' ||       Condorcet_rk ' + display_bool(self.exists_condorcet_winner_rk) +
-              ' ==> Condorcet_rk_ctb ' + display_bool(self.exists_condorcet_winner_rk_ctb) + '      ||')
-        print(' V                                                               V')
-        print('Condorcet_ut_rel ' + display_bool(self.exists_condorcet_winner_ut_rel) +
-              '       ==>      Condorcet_ut_rel_ctb ' + display_bool(self.exists_condorcet_winner_ut_rel_ctb))
-        print(' ||')
-        print(' V')
-        print('Weak Condorcet ' + display_bool(self.exists_weak_condorcet_winner))
-        print(' ||')
-        print(' V')
-        print('Condorcet-admissible ' + display_bool(self.exists_condorcet_admissible))
+            return "(True) " if equal_true(value) else "(False)"
+
+        print(
+            "maj_fav_ut "
+            + display_bool(self.majority_favorite_ut)
+            + "             ==>            "
+            + "maj_fav_ut_ctb "
+            + display_bool(self.majority_favorite_ut_ctb)
+        )
+        print(" ||          ||                                     ||           ||")
+        print(" ||          V                                      V            ||")
+        print(
+            " ||         maj_fav_rk "
+            + display_bool(self.majority_favorite_rk)
+            + " ==> "
+            + "maj_fav_rk_ctb "
+            + display_bool(self.majority_favorite_rk_ctb)
+            + "        ||"
+        )
+        print(" V                         ||       ||                           ||")
+        print(
+            "Resistant Condorcet "
+            + display_bool(self.resistant_condorcet_winner)
+            + "                                      ||"
+        )
+        print(" ||                        ||       ||                           ||")
+        print(" V                         ||       ||                           V")
+        print(
+            "Condorcet_ut_abs " + display_bool(self.condorcet_winner_ut_abs) + "       ==>      "
+            "Condorcet_ut_abs_ctb " + display_bool(self.condorcet_winner_ut_abs_ctb) + ""
+        )
+        print(" ||          ||            ||       ||              ||           ||")
+        print(" ||          V             V        V               V            ||")
+        print(
+            " ||       Condorcet_rk "
+            + display_bool(self.exists_condorcet_winner_rk)
+            + " ==> Condorcet_rk_ctb "
+            + display_bool(self.exists_condorcet_winner_rk_ctb)
+            + "      ||"
+        )
+        print(" V                                                               V")
+        print(
+            "Condorcet_ut_rel "
+            + display_bool(self.exists_condorcet_winner_ut_rel)
+            + "       ==>      Condorcet_ut_rel_ctb "
+            + display_bool(self.exists_condorcet_winner_ut_rel_ctb)
+        )
+        print(" ||")
+        print(" V")
+        print("Weak Condorcet " + display_bool(self.exists_weak_condorcet_winner))
+        print(" ||")
+        print(" V")
+        print("Condorcet-admissible " + display_bool(self.exists_condorcet_admissible))
 
         self.log_depth = old_log_depth
 
@@ -2754,37 +2806,37 @@ class Profile(my_log.MyLog):
             ...     [0, 1],
             ... ])
         """
-        s = '            >>> profile = Profile('
+        s = "            >>> profile = Profile("
         arguments = []
         if ut:
-            argument = ''
-            argument += 'preferences_ut=[\n'
+            argument = ""
+            argument += "preferences_ut=[\n"
             argument += (
                 repr(self.preferences_ut)
-                .replace('array([', '            ...     ')
-                .replace('\n       ', '\n            ...     ')
-                .replace('])', ',')
+                .replace("array([", "            ...     ")
+                .replace("\n       ", "\n            ...     ")
+                .replace("])", ",")
             )
-            argument += '\n            ... ]'
+            argument += "\n            ... ]"
             arguments.append(argument)
         if rk:
-            argument = ''
-            argument += 'preferences_rk=[\n'
+            argument = ""
+            argument += "preferences_rk=[\n"
             argument += (
                 repr(self.preferences_rk)
-                .replace('array([', '            ...     ')
-                .replace('\n       ', '\n            ...     ')
-                .replace('])', ',')
+                .replace("array([", "            ...     ")
+                .replace("\n       ", "\n            ...     ")
+                .replace("])", ",")
             )
-            argument += '\n            ... ]'
+            argument += "\n            ... ]"
             arguments.append(argument)
-        s += ', '.join(arguments)
-        s += ')'
+        s += ", ".join(arguments)
+        s += ")"
         return s
 
     def to_csv(self, file_name):
         df = pd.DataFrame(self.preferences_ut, columns=self.labels_candidates)
-        df.to_csv(file_name, sep=';')
+        df.to_csv(file_name, sep=";")
 
     def plurality_elimination_engine(self):
         return PluralityEliminationEngineProfile(self)
@@ -2850,7 +2902,9 @@ class Profile(my_log.MyLog):
             False
         """
         self.mylog("Compute exists_super_condorcet_winner", 1)
-        return self.exists_condorcet_winner_rk_ctb and not(np.any(self.c_might_be_there_when_cw_is_eliminated_irv_style))
+        return self.exists_condorcet_winner_rk_ctb and not (
+            np.any(self.c_might_be_there_when_cw_is_eliminated_irv_style)
+        )
 
     @cached_property
     def necessary_coalition_size_to_break_irv_immunity(self):
@@ -2890,7 +2944,7 @@ class Profile(my_log.MyLog):
                 continue
             other_candidates = [d for d in range(self.n_c) if d != c and d != w]
             n_s = self.n_v - self.matrix_duels_ut[c, w]
-            voters_s = (self.preferences_ut[:, w] >= self.preferences_ut[:, c])
+            voters_s = self.preferences_ut[:, w] >= self.preferences_ut[:, c]
             n_m = None
             for n_opponents in range(0, self.n_c - 1):
                 nb_candidates_r = n_opponents + 2
@@ -2933,11 +2987,11 @@ class Profile(my_log.MyLog):
         for c in range(self.n_c):
             if c == w:
                 continue
-            v_does_not_prefer_c_to_w = (self.preferences_ut[:, w] >= self.preferences_ut[:, c])
+            v_does_not_prefer_c_to_w = self.preferences_ut[:, w] >= self.preferences_ut[:, c]
             for d in range(self.n_c):
                 if d == w:
                     continue
-                v_ranks_w_above_d = (self.preferences_borda_rk[:, w] > self.preferences_borda_rk[:, d])
+                v_ranks_w_above_d = self.preferences_borda_rk[:, w] > self.preferences_borda_rk[:, d]
                 size_bicoalition[c, d] = np.sum(np.logical_and(v_does_not_prefer_c_to_w, v_ranks_w_above_d))
         return size_bicoalition
 

@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import numpy as np
 from svvamp.rules.rule import Rule
 from svvamp.utils.util_cache import cached_property
@@ -274,37 +275,41 @@ class RulePlurality(Rule):
         [0. 2. 3.]
     """
 
-    full_name = 'Plurality'
-    abbreviation = 'Plu'
+    full_name = "Plurality"
+    abbreviation = "Plu"
 
     options_parameters = Rule.options_parameters.copy()
-    options_parameters.update({
-        'im_option': {'allowed': ['exact'], 'default': 'exact'},
-        'tm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'um_option': {'allowed': ['exact'], 'default': 'exact'},
-        'icm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'cm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'precheck_heuristic': {'allowed': [False], 'default': False},
-    })
+    options_parameters.update(
+        {
+            "im_option": {"allowed": ["exact"], "default": "exact"},
+            "tm_option": {"allowed": ["exact"], "default": "exact"},
+            "um_option": {"allowed": ["exact"], "default": "exact"},
+            "icm_option": {"allowed": ["exact"], "default": "exact"},
+            "cm_option": {"allowed": ["exact"], "default": "exact"},
+            "precheck_heuristic": {"allowed": [False], "default": False},
+        }
+    )
 
     def __init__(self, **kwargs):
         super().__init__(
-            with_two_candidates_reduces_to_plurality=True, is_based_on_rk=True,
-            precheck_tm=False, precheck_um=False, precheck_icm=False,
-            log_identity="PLURALITY", **kwargs
+            with_two_candidates_reduces_to_plurality=True,
+            is_based_on_rk=True,
+            precheck_tm=False,
+            precheck_um=False,
+            precheck_icm=False,
+            log_identity="PLURALITY",
+            **kwargs,
         )
 
     @cached_property
     def ballots_(self):
-        """1d array of integers. ``ballots[v]`` is the candidate on voter ``v``'s ballot.
-        """
+        """1d array of integers. ``ballots[v]`` is the candidate on voter ``v``'s ballot."""
         self.mylog("Compute ballots", 1)
         return self.profile_.preferences_rk[:, 0]
 
     @cached_property
     def scores_(self):
-        """1d array of integers. ``scores[c]`` is the number of voters who vote for candidate ``c``.
-        """
+        """1d array of integers. ``scores[c]`` is the number of voters who vote for candidate ``c``."""
         self.mylog("Compute scores", 1)
         return self.profile_.plurality_scores_rk
 
@@ -319,26 +324,27 @@ class RulePlurality(Rule):
     # noinspection PyProtectedMember
     def _compute_winner_of_subset_(self, candidates_r):
         """
-            >>> profile = Profile(preferences_ut=[
-            ...     [ 0. , -0.5, -1. ],
-            ...     [ 1. , -1. ,  0.5],
-            ...     [ 0.5,  0.5, -0.5],
-            ...     [ 0.5,  0. ,  1. ],
-            ...     [-1. , -1. ,  1. ],
-            ... ], preferences_rk=[
-            ...     [0, 1, 2],
-            ...     [0, 2, 1],
-            ...     [1, 0, 2],
-            ...     [2, 0, 1],
-            ...     [2, 1, 0],
-            ... ])
-            >>> rule = RulePlurality()(profile)
-            >>> rule._compute_winner_of_subset_(candidates_r=np.array([0, 1]))
-            0
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 0. , -0.5, -1. ],
+        ...     [ 1. , -1. ,  0.5],
+        ...     [ 0.5,  0.5, -0.5],
+        ...     [ 0.5,  0. ,  1. ],
+        ...     [-1. , -1. ,  1. ],
+        ... ], preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [0, 2, 1],
+        ...     [1, 0, 2],
+        ...     [2, 0, 1],
+        ...     [2, 1, 0],
+        ... ])
+        >>> rule = RulePlurality()(profile)
+        >>> rule._compute_winner_of_subset_(candidates_r=np.array([0, 1]))
+        0
         """
         self.mylogv("IIA: Compute winner of subset ", candidates_r, 3)
-        scores_r = np.bincount(np.argmax(self.profile_.preferences_borda_rk[:, candidates_r], 1),
-                               minlength=candidates_r.shape[0])
+        scores_r = np.bincount(
+            np.argmax(self.profile_.preferences_borda_rk[:, candidates_r], 1), minlength=candidates_r.shape[0]
+        )
         index_w_r_in_subset = np.argmax(scores_r)
         w_r = candidates_r[index_w_r_in_subset]
         self.mylogv("IIA: Winner =", w_r, 3)
@@ -384,13 +390,14 @@ class RulePlurality(Rule):
         # * And ``v`` does not already vote for for ``c_test``,
         self._v_im_for_c = np.logical_and(
             close_races[np.newaxis, :],
-            np.logical_and(self.v_wants_to_help_c_, self.profile_.preferences_borda_rk != self.profile_.n_c - 1))
+            np.logical_and(self.v_wants_to_help_c_, self.profile_.preferences_borda_rk != self.profile_.n_c - 1),
+        )
         self._candidates_im = np.any(self._v_im_for_c, 0)
         self._voters_im = np.any(self._v_im_for_c, 1)
         self._is_im = np.any(self._candidates_im)
 
     def _compute_im_v_(self, v, c_is_wanted, stop_if_true):
-        self._compute_im_(mode='', c=None)
+        self._compute_im_(mode="", c=None)
 
     # %% Trivial Manipulation (TM)
 
@@ -425,8 +432,9 @@ class RulePlurality(Rule):
     # %% Coalition Manipulation (CM)
 
     def _cm_main_work_c_exact_(self, c, optimize_bounds):
-        scores_s = np.bincount(self.profile_.preferences_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), 0],
-                               minlength=self.profile_.n_c)
+        scores_s = np.bincount(
+            self.profile_.preferences_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), 0], minlength=self.profile_.n_c
+        )
         # We need as many manipulators as ``scores_s[w] - scores_s[c]``, plus one if ``c > w`` (because in this case,
         #  ``c`` is disadvantaged by the tie-breaking rule). N.B.: this value cannot be negative, so it is not
         # necessary to use ``max(..., 0)``.
@@ -436,10 +444,10 @@ class RulePlurality(Rule):
     @cached_property
     def theta_critical_(self):
         """
-            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
-            >>> rule = RulePlurality()(profile)
-            >>> rule.theta_critical_
-            0.2
+        >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
+        >>> rule = RulePlurality()(profile)
+        >>> rule.theta_critical_
+        0.2
         """
         n_c = self.profile_.n_c
         return (n_c - 2) / (3 * n_c - 2)

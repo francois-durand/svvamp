@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import numpy as np
 from svvamp.preferences.generator_profile import GeneratorProfile
 from svvamp.preferences.profile import Profile
@@ -78,7 +79,7 @@ class GeneratorProfilePerturbedCulture(GeneratorProfile):
         self.n_c = n_c
         self.theta = theta
         self.ranking = ranking
-        self.log_creation = ['Perturbed Culture', n_c, n_v, theta, ranking]
+        self.log_creation = ["Perturbed Culture", n_c, n_v, theta, ranking]
         super().__init__(sort_voters=sort_voters)
 
     def __call__(self):
@@ -90,9 +91,6 @@ class GeneratorProfilePerturbedCulture(GeneratorProfile):
         pseudo_preferences_ut = np.random.rand(self.n_v, self.n_c)
         preferences_rk = preferences_ut_to_preferences_rk(pseudo_preferences_ut)
         # Then replace some voters with Dirac voters.
-        dirac_voters = (np.random.rand(self.n_v) < self.theta)
+        dirac_voters = np.random.rand(self.n_v) < self.theta
         preferences_rk[dirac_voters, :] = ranking
-        return Profile(
-            preferences_rk=preferences_rk,
-            log_creation=self.log_creation, sort_voters=self.sort_voters
-        )
+        return Profile(preferences_rk=preferences_rk, log_creation=self.log_creation, sort_voters=self.sort_voters)

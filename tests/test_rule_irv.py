@@ -3,80 +3,80 @@ from svvamp import RuleIRV, Profile
 
 def test_fast_algo_setter():
     """
-        >>> rule = RuleIRV()
-        >>> rule.fast_algo = 'foo'
-        Traceback (most recent call last):
-        ValueError: Unknown value for option fast_algo: foo
+    >>> rule = RuleIRV()
+    >>> rule.fast_algo = 'foo'
+    Traceback (most recent call last):
+    ValueError: Unknown value for option fast_algo: foo
     """
     pass
 
 
 def test_log_um_():
     """
-        >>> rule = RuleIRV(um_option='exact')
-        >>> rule.log_um_
-        'um_option = exact'
+    >>> rule = RuleIRV(um_option='exact')
+    >>> rule.log_um_
+    'um_option = exact'
     """
     pass
 
 
 def test_log_cm_():
     """
-        >>> rule = RuleIRV(cm_option='exact')
-        >>> rule.log_cm_
-        'cm_option = exact'
+    >>> rule = RuleIRV(cm_option='exact')
+    >>> rule.log_cm_
+    'cm_option = exact'
     """
     pass
 
 
 def test_v_might_be_pivotal():
     """
-        >>> profile = Profile(preferences_rk=[
-        ...     [0, 1, 2],
-        ...     [0, 2, 1],
-        ...     [1, 0, 2],
-        ...     [2, 0, 1],
-        ...     [2, 1, 0],
-        ... ])
-        >>> rule = RuleIRV()(profile)
-        >>> rule.v_might_be_pivotal_
-        array([ True,  True,  True,  True,  True])
+    >>> profile = Profile(preferences_rk=[
+    ...     [0, 1, 2],
+    ...     [0, 2, 1],
+    ...     [1, 0, 2],
+    ...     [2, 0, 1],
+    ...     [2, 1, 0],
+    ... ])
+    >>> rule = RuleIRV()(profile)
+    >>> rule.v_might_be_pivotal_
+    array([ True,  True,  True,  True,  True])
     """
     pass
 
 
 def test_v_might_im_for_c():
     """
-        >>> profile = Profile(preferences_rk=[
-        ...     [0, 1, 2],
-        ...     [0, 2, 1],
-        ...     [1, 0, 2],
-        ...     [2, 0, 1],
-        ...     [2, 1, 0],
-        ... ])
-        >>> rule = RuleIRV()(profile)
-        >>> rule.v_might_im_for_c_
-        array([[ True,  True,  True],
-               [ True,  True,  True],
-               [ True,  True,  True],
-               [ True,  True,  True],
-               [ True,  True,  True]])
+    >>> profile = Profile(preferences_rk=[
+    ...     [0, 1, 2],
+    ...     [0, 2, 1],
+    ...     [1, 0, 2],
+    ...     [2, 0, 1],
+    ...     [2, 1, 0],
+    ... ])
+    >>> rule = RuleIRV()(profile)
+    >>> rule.v_might_im_for_c_
+    array([[ True,  True,  True],
+           [ True,  True,  True],
+           [ True,  True,  True],
+           [ True,  True,  True],
+           [ True,  True,  True]])
     """
     pass
 
 
 def test_is_not_iia():
     """
-        >>> profile = Profile(preferences_rk=[
-        ...     [0, 1, 2],
-        ...     [0, 2, 1],
-        ...     [1, 0, 2],
-        ...     [2, 0, 1],
-        ...     [2, 1, 0],
-        ... ])
-        >>> rule = RuleIRV()(profile)
-        >>> rule.is_not_iia_
-        False
+    >>> profile = Profile(preferences_rk=[
+    ...     [0, 1, 2],
+    ...     [0, 2, 1],
+    ...     [1, 0, 2],
+    ...     [2, 0, 1],
+    ...     [2, 1, 0],
+    ... ])
+    >>> rule = RuleIRV()(profile)
+    >>> rule.is_not_iia_
+    False
     """
     pass
 
@@ -103,14 +103,14 @@ def test_is_icm_c():
 
 def test_is_tm_or_um():
     """
-        >>> profile = Profile(preferences_rk=[
-        ...     [1, 2, 0],
-        ...     [1, 0, 2],
-        ...     [2, 0, 1],
-        ...     [0, 2, 1],
-        ... ])
-        >>> profile = RuleIRV()(profile)
-        >>> profile.is_tm_or_um_
-        nan
+    >>> profile = Profile(preferences_rk=[
+    ...     [1, 2, 0],
+    ...     [1, 0, 2],
+    ...     [2, 0, 1],
+    ...     [0, 2, 1],
+    ... ])
+    >>> profile = RuleIRV()(profile)
+    >>> profile.is_tm_or_um_
+    nan
     """
     pass

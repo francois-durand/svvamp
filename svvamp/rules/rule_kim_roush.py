@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import numpy as np
 from svvamp.rules.rule import Rule
 from svvamp.utils.util_cache import cached_property
@@ -288,15 +289,14 @@ class RuleKimRoush(Rule):
         [0. 2. 3.]
     """
 
-    full_name = 'Kim-Roush'
-    abbreviation = 'KR'
+    full_name = "Kim-Roush"
+    abbreviation = "KR"
 
     options_parameters = Rule.options_parameters.copy()
 
     def __init__(self, **kwargs):
         super().__init__(
-            with_two_candidates_reduces_to_plurality=True, is_based_on_rk=True,
-            log_identity="KIM-ROUSH", **kwargs
+            with_two_candidates_reduces_to_plurality=True, is_based_on_rk=True, log_identity="KIM-ROUSH", **kwargs
         )
 
     @cached_property
@@ -315,10 +315,12 @@ class RuleKimRoush(Rule):
         one_v_might_be_pivotal = False
         # score_temp[c] = - number of vetos
         # score_temp[c] will be inf when c is eliminated
-        score_temp = np.array(- np.bincount(
-            self.profile_.preferences_rk[:, self.profile_.n_c - 1], minlength=self.profile_.n_c
-        ).astype(float))
-        score_average = - self.profile_.n_v / self.profile_.n_c
+        score_temp = np.array(
+            -np.bincount(self.profile_.preferences_rk[:, self.profile_.n_c - 1], minlength=self.profile_.n_c).astype(
+                float
+            )
+        )
+        score_average = -self.profile_.n_v / self.profile_.n_c
         candidates = np.array(range(self.profile_.n_c))
         is_alive = np.ones(self.profile_.n_c, dtype=bool)
         while True:  # This is a round
@@ -352,17 +354,23 @@ class RuleKimRoush(Rule):
                 one_v_might_be_pivotal = True
                 self.mylog("One voter might be pivotal", 2)
             candidates_alive = candidates[is_alive]
-            score_temp = np.array(- np.bincount(
-                candidates_alive[np.argmin(self.profile_.preferences_borda_rk[:, is_alive], 1)],
-                minlength=self.profile_.n_c
-            ).astype(float))
+            score_temp = np.array(
+                -np.bincount(
+                    candidates_alive[np.argmin(self.profile_.preferences_borda_rk[:, is_alive], 1)],
+                    minlength=self.profile_.n_c,
+                ).astype(float)
+            )
             score_temp[np.logical_not(is_alive)] = np.inf
-            score_average = - self.profile_.n_v / np.sum(is_alive)
+            score_average = -self.profile_.n_v / np.sum(is_alive)
         candidates_by_scores_best_to_worst = np.array([int(c) for c in candidates_worst_to_best[::-1]])
         w = int(candidates_by_scores_best_to_worst[0])
         scores = np.array(scores)
-        return {'scores': scores, 'w': w, 'one_v_might_be_pivotal': one_v_might_be_pivotal,
-                'candidates_by_scores_best_to_worst': candidates_by_scores_best_to_worst}
+        return {
+            "scores": scores,
+            "w": w,
+            "one_v_might_be_pivotal": one_v_might_be_pivotal,
+            "candidates_by_scores_best_to_worst": candidates_by_scores_best_to_worst,
+        }
 
     @cached_property
     def scores_(self):
@@ -370,11 +378,11 @@ class RuleKimRoush(Rule):
 
         By convention, if candidate ``c`` does not participate to round ``r``, then ``scores[r, c] = numpy.inf``.
         """
-        return self._count_ballots_['scores']
+        return self._count_ballots_["scores"]
 
     @cached_property
     def w_(self):
-        return self._count_ballots_['w']
+        return self._count_ballots_["w"]
 
     @cached_property
     def candidates_by_scores_best_to_worst_(self):
@@ -382,44 +390,52 @@ class RuleKimRoush(Rule):
         candidates are eliminated during the same round, they are sorted by Veto score at that round (more vetos are
         eliminated first) and, in case of a tie, by their index ( highest indexes are eliminated first).
         """
-        return self._count_ballots_['candidates_by_scores_best_to_worst']
+        return self._count_ballots_["candidates_by_scores_best_to_worst"]
 
     @cached_property
     def v_might_im_for_c_(self):
-        return np.full((self.profile_.n_v, self.profile_.n_c), self._count_ballots_['one_v_might_be_pivotal'])
+        return np.full((self.profile_.n_v, self.profile_.n_c), self._count_ballots_["one_v_might_be_pivotal"])
 
     # %% CM
 
     def _cm_preliminary_checks_c_subclass_(self, c, optimize_bounds):
         """
-            >>> profile = Profile(preferences_rk=[
-            ...     [1, 2, 0],
-            ...     [1, 0, 2],
-            ...     [2, 1, 0],
-            ...     [2, 0, 1],
-            ... ])
-            >>> rule = RuleKimRoush()(profile)
-            >>> rule.sufficient_coalition_size_cm_
-            array([3., 0., 2.])
+        >>> profile = Profile(preferences_rk=[
+        ...     [1, 2, 0],
+        ...     [1, 0, 2],
+        ...     [2, 1, 0],
+        ...     [2, 0, 1],
+        ... ])
+        >>> rule = RuleKimRoush()(profile)
+        >>> rule.sufficient_coalition_size_cm_
+        array([3., 0., 2.])
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [2, 1, 0],
-            ...     [2, 0, 1],
-            ...     [2, 0, 1],
-            ...     [1, 2, 0],
-            ... ])
-            >>> rule = RuleKimRoush()(profile)
-            >>> rule.necessary_coalition_size_cm_
-            array([2., 3., 0.])
+        >>> profile = Profile(preferences_rk=[
+        ...     [2, 1, 0],
+        ...     [2, 0, 1],
+        ...     [2, 0, 1],
+        ...     [1, 2, 0],
+        ... ])
+        >>> rule = RuleKimRoush()(profile)
+        >>> rule.necessary_coalition_size_cm_
+        array([2., 3., 0.])
         """
         n_c = self.profile_.n_c
         n_m = self.profile_.matrix_duels_ut[c, self.w_]
         n_s = self.profile_.n_v - n_m
-        self._update_sufficient(self._sufficient_coalition_size_cm, c, (n_s + 1) * (n_c - 1),
-                                'CM: Obvious bound => sufficient_coalition_size_cm[c] = ')
+        self._update_sufficient(
+            self._sufficient_coalition_size_cm,
+            c,
+            (n_s + 1) * (n_c - 1),
+            "CM: Obvious bound => sufficient_coalition_size_cm[c] = ",
+        )
         # c must not be eliminated during the first round
-        self._update_necessary(self._necessary_coalition_size_cm, c, - self.scores_[0, c] * n_c - n_s,
-                               'CM: Obvious bound => necessary_coalition_size_cm[c] = ')
+        self._update_necessary(
+            self._necessary_coalition_size_cm,
+            c,
+            -self.scores_[0, c] * n_c - n_s,
+            "CM: Obvious bound => necessary_coalition_size_cm[c] = ",
+        )
         # We need to make `w` lose. Two options:
         # * Have more than `n_v / k` vetos. But as long as `c` is here, the only sincere voters who can cast a
         #   veto against `w` are those who rank `c` before `w` (which is possible only if they have the same
@@ -442,16 +458,17 @@ class RuleKimRoush(Rule):
             max_vetos_except_w = max(n_vetos_s[np.arange(n_c) != self.w_])
             if min_vetos_except_w == max_vetos_except_w:
                 n_m_necessary = n_vetos_s[c] - n_vetos_s[self.w_]
-        self._update_necessary(self._necessary_coalition_size_cm, c, n_m_necessary,
-                               'CM: w must lose => necessary_coalition_size_cm[c] = ')
+        self._update_necessary(
+            self._necessary_coalition_size_cm, c, n_m_necessary, "CM: w must lose => necessary_coalition_size_cm[c] = "
+        )
 
     @cached_property
     def theta_critical_(self):
         """
-            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
-            >>> rule = RuleKimRoush()(profile)
-            >>> rule.theta_critical_
-            0.5
+        >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
+        >>> rule = RuleKimRoush()(profile)
+        >>> rule.theta_critical_
+        0.5
         """
         n_c = self.profile_.n_c
         return (n_c - 2) / n_c

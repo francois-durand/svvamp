@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import numpy as np
 from math import floor, ceil
 from svvamp.rules.rule import Rule
@@ -320,22 +321,24 @@ class RuleRangeVoting(Rule):
         [0. 3. 3.]
     """
 
-    full_name = 'Range Voting'
-    abbreviation = 'RV'
+    full_name = "Range Voting"
+    abbreviation = "RV"
 
     options_parameters = Rule.options_parameters.copy()
-    options_parameters.update({
-        'max_grade': {'allowed': np.isfinite, 'default': 1},
-        'min_grade': {'allowed': np.isfinite, 'default': 0},
-        'step_grade': {'allowed': np.isfinite, 'default': 0},
-        'rescale_grades': {'allowed': type_checker.is_bool, 'default': True},
-        'im_option': {'allowed': ['exact'], 'default': 'exact'},
-        'tm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'um_option': {'allowed': ['exact'], 'default': 'exact'},
-        'icm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'cm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'precheck_heuristic': {'allowed': [False], 'default': False},
-    })
+    options_parameters.update(
+        {
+            "max_grade": {"allowed": np.isfinite, "default": 1},
+            "min_grade": {"allowed": np.isfinite, "default": 0},
+            "step_grade": {"allowed": np.isfinite, "default": 0},
+            "rescale_grades": {"allowed": type_checker.is_bool, "default": True},
+            "im_option": {"allowed": ["exact"], "default": "exact"},
+            "tm_option": {"allowed": ["exact"], "default": "exact"},
+            "um_option": {"allowed": ["exact"], "default": "exact"},
+            "icm_option": {"allowed": ["exact"], "default": "exact"},
+            "cm_option": {"allowed": ["exact"], "default": "exact"},
+            "precheck_heuristic": {"allowed": [False], "default": False},
+        }
+    )
 
     def __init__(self, **kwargs):
         self._min_grade = None
@@ -347,8 +350,11 @@ class RuleRangeVoting(Rule):
             # # Even if ``rescale_grades = True``, a voter who has the same utility for ``c`` and ``d`` will not vote
             # # the same in Range Voting and in Plurality.
             is_based_on_rk=False,
-            precheck_um=False, precheck_tm=False, precheck_icm=False,
-            log_identity="RANGE_VOTING", **kwargs
+            precheck_um=False,
+            precheck_tm=False,
+            precheck_icm=False,
+            log_identity="RANGE_VOTING",
+            **kwargs,
         )
 
     # %% Setting the parameters
@@ -361,10 +367,10 @@ class RuleRangeVoting(Rule):
     def min_grade(self, value):
         if self._min_grade == value:
             return
-        if self.options_parameters['min_grade']['allowed'](value):
+        if self.options_parameters["min_grade"]["allowed"](value):
             self.mylogv("Setting min_grade =", value, 1)
             self._min_grade = value
-            self._result_options['min_grade'] = value
+            self._result_options["min_grade"] = value
             self.delete_cache()
         else:
             raise ValueError("Unknown value for min_grade: " + format(value))
@@ -377,10 +383,10 @@ class RuleRangeVoting(Rule):
     def max_grade(self, value):
         if self._max_grade == value:
             return
-        if self.options_parameters['max_grade']['allowed'](value):
+        if self.options_parameters["max_grade"]["allowed"](value):
             self.mylogv("Setting max_grade =", value, 1)
             self._max_grade = value
-            self._result_options['max_grade'] = value
+            self._result_options["max_grade"] = value
             self.delete_cache()
         else:
             raise ValueError("Unknown value for max_grade: " + format(value))
@@ -393,10 +399,10 @@ class RuleRangeVoting(Rule):
     def step_grade(self, value):
         if self._step_grade == value:
             return
-        if self.options_parameters['step_grade']['allowed'](value):
+        if self.options_parameters["step_grade"]["allowed"](value):
             self.mylogv("Setting step_grade =", value, 1)
             self._step_grade = value
-            self._result_options['step_grade'] = value
+            self._result_options["step_grade"] = value
             self.delete_cache()
         else:
             raise ValueError("Unknown value for step_grade: " + format(value))
@@ -409,10 +415,10 @@ class RuleRangeVoting(Rule):
     def rescale_grades(self, value):
         if self._rescale_grades == value:
             return
-        if self.options_parameters['rescale_grades']['allowed'](value):
+        if self.options_parameters["rescale_grades"]["allowed"](value):
             self.mylogv("Setting rescale_grades =", value, 1)
             self._rescale_grades = value
-            self._result_options['rescale_grades'] = value
+            self._result_options["rescale_grades"] = value
             self.delete_cache()
         else:
             raise ValueError("Unknown value for rescale_grades: " + format(value))
@@ -433,11 +439,13 @@ class RuleRangeVoting(Rule):
         else:
             i_lowest_rung = floor(self.min_grade / self.step_grade) + 1
             i_highest_rung = ceil(self.max_grade / self.step_grade) - 1
-            return np.concatenate((
-                [self.min_grade],
-                np.array(range(i_lowest_rung, i_highest_rung + 1)) * self.step_grade,
-                [self.max_grade]
-            ))
+            return np.concatenate(
+                (
+                    [self.min_grade],
+                    np.array(range(i_lowest_rung, i_highest_rung + 1)) * self.step_grade,
+                    [self.max_grade],
+                )
+            )
 
     # %% Counting the ballots
 
@@ -485,7 +493,7 @@ class RuleRangeVoting(Rule):
                 self.profile_.preferences_ut * (self.max_grade - self.min_grade),
                 delta_util[:, np.newaxis],
                 out=np.zeros(self.profile_.preferences_ut.shape),
-                where=delta_util[:, np.newaxis] != 0
+                where=delta_util[:, np.newaxis] != 0,
             )  # `out` and `where` ensure that when dividing by zero, the result will be zero.
             # Additive renormalization
             middle_grade = (np.max(ballots, axis=1) + np.min(ballots, axis=1)) / 2
@@ -505,8 +513,7 @@ class RuleRangeVoting(Rule):
 
     @cached_property
     def scores_sum_(self):
-        """1d array of floats. ``scores_sum_[c]`` is the total grade of candidate ``c``.
-        """
+        """1d array of floats. ``scores_sum_[c]`` is the total grade of candidate ``c``."""
         # Note for developers: this is used internally for manipulation computations. Compared to the average grade,
         # this limits problems of float approximation, especially for IM method.
         self.mylog("Compute scores_sum_", 1)
@@ -514,8 +521,7 @@ class RuleRangeVoting(Rule):
 
     @cached_property
     def scores_(self):
-        """1d array of floats. ``scores_[c]`` is the average grade of candidate ``c``.
-        """
+        """1d array of floats. ``scores_[c]`` is the average grade of candidate ``c``."""
         return np.around(self.scores_sum_ / self.profile_.n_v, 12)
 
     # %% Manipulation criteria of the voting system
@@ -546,27 +552,27 @@ class RuleRangeVoting(Rule):
 
     def _im_main_work_v_(self, v, c_is_wanted, nb_wanted_undecided, stop_if_true):
         """
-            >>> profile = Profile([
-            ...     [ 1. , -0.5,  0. ],
-            ...     [ 0.5,  1. , -1. ],
-            ...     [-0.5,  0.5, -1. ],
-            ...     [ 1. ,  0. ,  1. ],
-            ...     [-1. , -0.5,  1. ],
-            ... ])
-            >>> rule = RuleRangeVoting()(profile)
-            >>> rule.is_im_c_(1)
-            False
+        >>> profile = Profile([
+        ...     [ 1. , -0.5,  0. ],
+        ...     [ 0.5,  1. , -1. ],
+        ...     [-0.5,  0.5, -1. ],
+        ...     [ 1. ,  0. ,  1. ],
+        ...     [-1. , -0.5,  1. ],
+        ... ])
+        >>> rule = RuleRangeVoting()(profile)
+        >>> rule.is_im_c_(1)
+        False
 
-            >>> profile = Profile([
-            ...     [ 1. , -1. ,  1. ],
-            ...     [ 1. , -1. ,  0.5],
-            ...     [-0.5,  1. ,  0.5],
-            ...     [-1. ,  0. , -0.5],
-            ...     [-1. ,  0.5, -0.5],
-            ... ])
-            >>> rule = RuleRangeVoting()(profile)
-            >>> rule.is_im_c_(1)
-            True
+        >>> profile = Profile([
+        ...     [ 1. , -1. ,  1. ],
+        ...     [ 1. , -1. ,  0.5],
+        ...     [-0.5,  1. ,  0.5],
+        ...     [-1. ,  0. , -0.5],
+        ...     [-1. ,  0.5, -0.5],
+        ... ])
+        >>> rule = RuleRangeVoting()(profile)
+        >>> rule.is_im_c_(1)
+        True
         """
         scores_without_v = self.scores_sum_ - self.ballots_[v, :]
         w_without_v = np.argmax(np.around(scores_without_v, 12))
@@ -596,8 +602,9 @@ class RuleRangeVoting(Rule):
     def _cm_main_work_c_(self, c, optimize_bounds):
         scores_temp = np.sum(self.ballots_[np.logical_not(self.v_wants_to_help_c_[:, c]), :], 0)
         w_temp = np.argmax(np.around(scores_temp, 12))
-        sufficient_not_rounded = np.around((scores_temp[w_temp] - scores_temp[c]) / (self.max_grade - self.min_grade),
-                                           12)
+        sufficient_not_rounded = np.around(
+            (scores_temp[w_temp] - scores_temp[c]) / (self.max_grade - self.min_grade), 12
+        )
         self.mylogv("sufficient_not_rounded =", sufficient_not_rounded, 2)
         if sufficient_not_rounded % 1 == 0 and c > w_temp:
             self._sufficient_coalition_size_cm[c] = sufficient_not_rounded + 1
@@ -638,10 +645,10 @@ class RuleRangeVoting(Rule):
     @cached_property
     def theta_critical_(self):
         """
-            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
-            >>> rule = RuleRangeVoting()(profile)
-            >>> rule.theta_critical_
-            1
+        >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
+        >>> rule = RuleRangeVoting()(profile)
+        >>> rule.theta_critical_
+        1
         """
         # This value is conventional.
         return 1

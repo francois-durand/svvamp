@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import random
 from math import factorial
 import numpy as np
@@ -72,8 +73,8 @@ class GeneratorProfileUniformFewRankings(GeneratorProfile):
         self.n_v = n_v
         self.n_c = n_c
         self.n_max_rankings = n_max_rankings
-        self.use_impartial_culture = (self.n_max_rankings >= factorial(self.n_c))
-        self.log_creation = ['UniformFewRankings', n_c, n_v, n_max_rankings]
+        self.use_impartial_culture = self.n_max_rankings >= factorial(self.n_c)
+        self.log_creation = ["UniformFewRankings", n_c, n_v, n_max_rankings]
         super().__init__(sort_voters=sort_voters)
 
     def __call__(self):
@@ -89,7 +90,4 @@ class GeneratorProfileUniformFewRankings(GeneratorProfile):
                 n_rankings += 1
         # Draw the preferences of each voter uniformly at random from the subset of rankings
         preferences_rk = np.array(random.choices(list(rankings), k=self.n_v))
-        return Profile(
-            preferences_rk=preferences_rk,
-            log_creation=self.log_creation, sort_voters=self.sort_voters
-        )
+        return Profile(preferences_rk=preferences_rk, log_creation=self.log_creation, sort_voters=self.sort_voters)

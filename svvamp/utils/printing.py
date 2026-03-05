@@ -38,10 +38,10 @@ def print_title(s):
         ***************
     """
     length = len(s)
-    print('')
-    print('*' * (length + 8))
-    print('*   ' + s + '   *')
-    print('*' * (length + 8))
+    print("")
+    print("*" * (length + 8))
+    print("*   " + s + "   *")
+    print("*" * (length + 8))
 
 
 def print_big_title(s):
@@ -62,9 +62,9 @@ def print_big_title(s):
         *******************
     """
     length = len(s)
-    print('')
-    print('*' * (length + 8))
-    print('*' + ' ' * (length + 6) + '*')
-    print('*   ' + s + '   *')
-    print('*' + ' ' * (length + 6) + '*')
-    print('*' * (length + 8))
+    print("")
+    print("*" * (length + 8))
+    print("*" + " " * (length + 6) + "*")
+    print("*   " + s + "   *")
+    print("*" + " " * (length + 6) + "*")
+    print("*" * (length + 8))

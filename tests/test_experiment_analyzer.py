@@ -1,6 +1,13 @@
 import os
-from svvamp import ExperimentAnalyzer, ProfileFromFile, VotingRuleTasks, RuleCondorcetAbsIRV, StudyProfileCriteria, \
-    StudyRuleCriteria, RuleRangeVoting
+from svvamp import (
+    ExperimentAnalyzer,
+    ProfileFromFile,
+    VotingRuleTasks,
+    RuleCondorcetAbsIRV,
+    StudyProfileCriteria,
+    StudyRuleCriteria,
+    RuleRangeVoting,
+)
 
 
 def test():

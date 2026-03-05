@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import numpy as np
 from svvamp.preferences.generator_profile import GeneratorProfile
 from svvamp.preferences.profile import Profile
@@ -68,14 +69,24 @@ class GeneratorProfileGaussianWell(GeneratorProfile):
         self.sigma = np.array(sigma)
         self.n_dim = len(self.sigma)
         self.shift = np.zeros(self.n_dim) if shift is None else np.array(shift)
-        self.log_creation = ['Gaussian well', self.n_c, self.n_v, 'Sigma', self.sigma,
-                             'Shift', self.shift, 'Number of dimensions', self.n_dim]
+        self.log_creation = [
+            "Gaussian well",
+            self.n_c,
+            self.n_v,
+            "Sigma",
+            self.sigma,
+            "Shift",
+            self.shift,
+            "Number of dimensions",
+            self.n_dim,
+        ]
         super().__init__(sort_voters=sort_voters)
 
     def __call__(self):
         voters_positions = np.random.randn(self.n_v, self.n_dim) * self.sigma
         candidates_positions = self.shift + np.random.randn(self.n_c, self.n_dim) * self.sigma
-        preferences_utilities = - euclidean_distances(voters_positions, candidates_positions)
+        preferences_utilities = -euclidean_distances(voters_positions, candidates_positions)
         preferences_utilities -= np.average(preferences_utilities)
-        return Profile(preferences_ut=preferences_utilities, log_creation=self.log_creation,
-                       sort_voters=self.sort_voters)
+        return Profile(
+            preferences_ut=preferences_utilities, log_creation=self.log_creation, sort_voters=self.sort_voters
+        )

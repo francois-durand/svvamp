@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import numpy as np
 from svvamp.rules.rule import Rule
 from svvamp.utils.util_cache import cached_property
@@ -289,23 +290,25 @@ class RuleSlater(Rule):
         [0. 2. 3.]
     """
 
-    full_name = 'Slater'
-    abbreviation = 'Sla'
+    full_name = "Slater"
+    abbreviation = "Sla"
 
     options_parameters = Rule.options_parameters.copy()
-    options_parameters['icm_option'] = {'allowed': ['exact'], 'default': 'exact'}
-    options_parameters['tie_break_rule'] = {'allowed': ['lexico', 'random'], 'default': 'lexico'}
-    options_parameters['winner_option'] = {'allowed': ['exact', 'lazy'], 'default': 'exact'}
+    options_parameters["icm_option"] = {"allowed": ["exact"], "default": "exact"}
+    options_parameters["tie_break_rule"] = {"allowed": ["lexico", "random"], "default": "lexico"}
+    options_parameters["winner_option"] = {"allowed": ["exact", "lazy"], "default": "exact"}
 
-    def __init__(self, tie_break_rule='lexico', winner_option='exact', **kwargs):
+    def __init__(self, tie_break_rule="lexico", winner_option="exact", **kwargs):
         self._tie_break_rule = None
         self._winner_option = None
         super().__init__(
-            with_two_candidates_reduces_to_plurality=True, is_based_on_rk=True,
+            with_two_candidates_reduces_to_plurality=True,
+            is_based_on_rk=True,
             precheck_icm=True,
             tie_break_rule=tie_break_rule,
             winner_option=winner_option,
-            log_identity="SLATER", **kwargs
+            log_identity="SLATER",
+            **kwargs,
         )
 
     # %% Setting the parameters
@@ -318,10 +321,10 @@ class RuleSlater(Rule):
     def winner_option(self, value):
         if self._winner_option == value:
             return
-        if value in self.options_parameters['winner_option']['allowed']:
+        if value in self.options_parameters["winner_option"]["allowed"]:
             self.mylogv("Setting winner_option =", value, 1)
             self._winner_option = value
-            self._result_options['winner_option'] = value
+            self._result_options["winner_option"] = value
             self.delete_cache()
         else:
             raise ValueError("Unknown value for winner_option: " + format(value))
@@ -334,10 +337,10 @@ class RuleSlater(Rule):
     def tie_break_rule(self, value):
         if self._tie_break_rule == value:
             return
-        if value in self.options_parameters['tie_break_rule']['allowed']:
+        if value in self.options_parameters["tie_break_rule"]["allowed"]:
             self.mylogv("Setting tie_break_rule =", value, 1)
             self._tie_break_rule = value
-            self._result_options['tie_break_rule'] = value
+            self._result_options["tie_break_rule"] = value
             self.delete_cache()
         else:
             raise ValueError("Unknown option for tie_break_rule: " + format(value))
@@ -351,7 +354,7 @@ class RuleSlater(Rule):
         A larger number means a more favored candidate. For example, the lexico tie-break order is represented by
         [n_c - 1, ..., 0], i.e., candidate 0 has a `tie-break strength` of `n_c - 1`, and so on.
         """
-        if self.tie_break_rule == 'lexico':
+        if self.tie_break_rule == "lexico":
             return np.arange(self.profile_.n_c - 1, -1, -1)
         else:
             return np.random.permutation(self.profile_.n_c)
@@ -362,8 +365,7 @@ class RuleSlater(Rule):
 
     @cached_property
     def score_w_(self):
-        """Integer. With our convention, ``scores_w_`` = :attr:`n_c` - 1.
-        """
+        """Integer. With our convention, ``scores_w_`` = :attr:`n_c` - 1."""
         self.mylog("Compute winner's score", 1)
         return self.profile_.n_c - 1
 
@@ -390,13 +392,10 @@ class RuleSlater(Rule):
             self.mylogv("order =", order, 3)
             score = np.sum(self.profile_.matrix_victories_rk[:, order][order, :][np.triu_indices(size_component)])
             self.mylogv("score =", score, 3)
-            found_better_order = (
-                score > best_score
-                or (
-                    score == best_score
-                    and self.tie_break_rule == 'random'
-                    and tuple(self.tie_break_weights_[order]) > tuple(self.tie_break_weights_[best_order])
-                )
+            found_better_order = score > best_score or (
+                score == best_score
+                and self.tie_break_rule == "random"
+                and tuple(self.tie_break_weights_[order]) > tuple(self.tie_break_weights_[best_order])
             )
             if found_better_order:
                 best_order, best_score = order, score
@@ -405,20 +404,21 @@ class RuleSlater(Rule):
         w = best_order[0]
         candidates_by_scores_best_to_worst_first_component.extend(best_order)
         return {
-            'candidates_by_scores_best_to_worst_first_component': candidates_by_scores_best_to_worst_first_component,
-            'w': w}
+            "candidates_by_scores_best_to_worst_first_component": candidates_by_scores_best_to_worst_first_component,
+            "w": w,
+        }
 
     @cached_property
     def w_(self):
         if self.profile_.exists_condorcet_winner_rk_ctb:
             return self.profile_.condorcet_winner_rk_ctb
-        if self.winner_option == 'lazy':
+        if self.winner_option == "lazy":
             return np.nan
-        return self._count_first_component_['w']
+        return self._count_first_component_["w"]
 
     @cached_property
     def _candidates_by_scores_best_to_worst_first_component_(self):
-        return self._count_first_component_['candidates_by_scores_best_to_worst_first_component']
+        return self._count_first_component_["candidates_by_scores_best_to_worst_first_component"]
 
     @cached_property
     def _count_ballots_(self):
@@ -434,13 +434,10 @@ class RuleSlater(Rule):
                 self.mylogv("order =", order, 3)
                 score = np.sum(self.profile_.matrix_victories_rk[:, order][order, :][np.triu_indices(size_component)])
                 self.mylogv("score =", score, 3)
-                found_better_order = (
-                    score > best_score
-                    or (
-                        score == best_score
-                        and self.tie_break_rule == 'random'
-                        and tuple(self.tie_break_weights_[order]) > tuple(self.tie_break_weights_[best_order])
-                    )
+                found_better_order = score > best_score or (
+                    score == best_score
+                    and self.tie_break_rule == "random"
+                    and tuple(self.tie_break_weights_[order]) > tuple(self.tie_break_weights_[best_order])
                 )
                 if found_better_order:
                     best_order, best_score = order, score
@@ -449,14 +446,14 @@ class RuleSlater(Rule):
             candidates_by_scores_best_to_worst.extend(best_order)
         candidates_by_scores_best_to_worst = np.array(candidates_by_scores_best_to_worst)
         scores = self.profile_.n_c - 1 - np.argsort(candidates_by_scores_best_to_worst)
-        return {'scores': scores, 'candidates_by_scores_best_to_worst': candidates_by_scores_best_to_worst}
+        return {"scores": scores, "candidates_by_scores_best_to_worst": candidates_by_scores_best_to_worst}
 
     @cached_property
     def scores_(self):
         """1d array of integers. By convention, scores are integers from 1 to :attr:`n_c`, with :attr:`n_c` for the
         winner and 1 for the last candidate in Kemeny optimal order.
         """
-        return self._count_ballots_['scores']
+        return self._count_ballots_["scores"]
 
     @cached_property
     def candidates_by_scores_best_to_worst_(self):
@@ -465,7 +462,7 @@ class RuleSlater(Rule):
         In case several orders are optimal, the first one by lexicographic order is given. This implies that if
         several winners are possible, the one with lowest index is declared the winner.
         """
-        return self._count_ballots_['candidates_by_scores_best_to_worst']
+        return self._count_ballots_["candidates_by_scores_best_to_worst"]
 
     @cached_property
     def meets_condorcet_c_rk_ctb(self):
@@ -495,14 +492,15 @@ class RuleSlater(Rule):
         a_c_w_best_case = self.profile_.matrix_victories_rk[c, self.w_] - self.profile_.matrix_victories_rk[self.w_, c]
         n_defeats_w_best_case = np.sum(matrix_duels_s[self.w_, :] < self.profile_.n_v / 2) - 1
         s = a_c_w_best_case + n_defeats_w_best_case
-        tie_breaks_favors_c_over_w = (self.tie_break_weights_[c] > self.tie_break_weights_[self.w_])
-        self.mylogm('CM: Fast algorithm: matrix_duels_s =', matrix_duels_s, 3)
-        self.mylogv('CM: Fast algorithm: a_c_w_best_case =', a_c_w_best_case, 3)
-        self.mylogv('CM: Fast algorithm: n_defeats_w_best_case =', n_defeats_w_best_case, 3)
+        tie_breaks_favors_c_over_w = self.tie_break_weights_[c] > self.tie_break_weights_[self.w_]
+        self.mylogm("CM: Fast algorithm: matrix_duels_s =", matrix_duels_s, 3)
+        self.mylogv("CM: Fast algorithm: a_c_w_best_case =", a_c_w_best_case, 3)
+        self.mylogv("CM: Fast algorithm: n_defeats_w_best_case =", n_defeats_w_best_case, 3)
         if not s + tie_breaks_favors_c_over_w > 0:
             n_m = self.profile_.matrix_duels_ut[c, self.w_]
-            self._update_necessary(self._necessary_coalition_size_cm, c, n_m + 1,
-                                   'CM: Fast algorithm: necessary_coalition_size_cm =')
+            self._update_necessary(
+                self._necessary_coalition_size_cm, c, n_m + 1, "CM: Fast algorithm: necessary_coalition_size_cm ="
+            )
             # No need to continue, the second condition would not improve this bound.
             # But this is not a quick escape, since we wouldn't do better if we came in this method again.
             return False
@@ -514,12 +512,13 @@ class RuleSlater(Rule):
         # if `c` is not last in the tie-break order.
         n_victories_c_best_case = np.sum(matrix_duels_s[:, c] < self.profile_.n_v / 2) - 1
         s = a_c_w_best_case + n_victories_c_best_case
-        tie_break_might_help_c = (self.tie_break_weights_[c] > 0)
-        self.mylogv('CM: Fast algorithm: n_victories_c_best_case =', n_victories_c_best_case, 3)
+        tie_break_might_help_c = self.tie_break_weights_[c] > 0
+        self.mylogv("CM: Fast algorithm: n_victories_c_best_case =", n_victories_c_best_case, 3)
         if not s + tie_break_might_help_c > 0:
             n_m = self.profile_.matrix_duels_ut[c, self.w_]
-            self._update_necessary(self._necessary_coalition_size_cm, c, n_m + 1,
-                                   'CM: Fast algorithm: necessary_coalition_size_cm =')
+            self._update_necessary(
+                self._necessary_coalition_size_cm, c, n_m + 1, "CM: Fast algorithm: necessary_coalition_size_cm ="
+            )
         return False
 
     def _cm_main_work_c_(self, c, optimize_bounds):
@@ -548,11 +547,11 @@ class RuleSlater(Rule):
     @cached_property
     def theta_critical_(self):
         """
-            This is only valid for at least 4 candidates.
+        This is only valid for at least 4 candidates.
 
-            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
-            >>> rule = RuleSlater()(profile)
-            >>> rule.theta_critical_
-            0.25
+        >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
+        >>> rule = RuleSlater()(profile)
+        >>> rule.theta_critical_
+        0.25
         """
-        return 1/4
+        return 1 / 4

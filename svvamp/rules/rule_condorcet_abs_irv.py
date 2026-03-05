@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import numpy as np
 from svvamp.rules.rule import Rule
 from svvamp.utils.util_cache import cached_property
@@ -314,44 +315,49 @@ class RuleCondorcetAbsIRV(Rule):
         [0. 2. 4.]
     """
 
-    full_name = 'Absolute-Condorcet IRV'
-    abbreviation = 'ACI'
+    full_name = "Absolute-Condorcet IRV"
+    abbreviation = "ACI"
 
     options_parameters = Rule.options_parameters.copy()
-    options_parameters.update({
-        'cm_option': {'allowed': ['fast', 'slow', 'very_slow', 'exact'], 'default': 'fast'},
-        'tm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'icm_option': {'allowed': ['exact'], 'default': 'exact'}
-    })
+    options_parameters.update(
+        {
+            "cm_option": {"allowed": ["fast", "slow", "very_slow", "exact"], "default": "fast"},
+            "tm_option": {"allowed": ["exact"], "default": "exact"},
+            "icm_option": {"allowed": ["exact"], "default": "exact"},
+        }
+    )
 
     def __init__(self, **kwargs):
         self.irv_ = None
         super().__init__(
-            with_two_candidates_reduces_to_plurality=True, is_based_on_rk=True,
-            precheck_um=False, precheck_icm=False,
-            log_identity="CONDORCET_ABS_IRV", **kwargs
+            with_two_candidates_reduces_to_plurality=True,
+            is_based_on_rk=True,
+            precheck_um=False,
+            precheck_icm=False,
+            log_identity="CONDORCET_ABS_IRV",
+            **kwargs,
         )
 
     def __call__(self, profile):
         """
-            >>> my_profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-            >>> rule = RuleCondorcetAbsIRV(cm_option='slow')(my_profile)
-            >>> rule.irv_.cm_option
-            'slow'
-            >>> rule = RuleCondorcetAbsIRV(cm_option='exact')(my_profile)
-            >>> rule.irv_.cm_option
-            'exact'
+        >>> my_profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
+        >>> rule = RuleCondorcetAbsIRV(cm_option='slow')(my_profile)
+        >>> rule.irv_.cm_option
+        'slow'
+        >>> rule = RuleCondorcetAbsIRV(cm_option='exact')(my_profile)
+        >>> rule.irv_.cm_option
+        'exact'
         """
-        self.delete_cache(suffix='_')
+        self.delete_cache(suffix="_")
         self.profile_ = profile
         # Grab the IRV ballot of the profile (or create it)
         irv_options = {}
-        if self.cm_option == 'fast':
-            irv_options['cm_option'] = 'fast'
-        elif self.cm_option == 'slow':
-            irv_options['cm_option'] = 'slow'
+        if self.cm_option == "fast":
+            irv_options["cm_option"] = "fast"
+        elif self.cm_option == "slow":
+            irv_options["cm_option"] = "slow"
         else:  # self.cm_option in {'very_slow', 'exact'}
-            irv_options['cm_option'] = 'exact'
+            irv_options["cm_option"] = "exact"
         self.irv_ = RuleIRV(**irv_options)(self.profile_)
         return self
 
@@ -403,22 +409,22 @@ class RuleCondorcetAbsIRV(Rule):
             array([0, 1, 2])
         """
         if not np.isnan(self.profile_.condorcet_winner_ut_abs):
-            return np.argsort(- self.scores_, kind='mergesort')
+            return np.argsort(-self.scores_, kind="mergesort")
         else:
             return self.irv_.candidates_by_scores_best_to_worst_
 
     @cached_property
     def _v_might_be_pivotal_(self):
         """
-            >>> profile = Profile(preferences_rk=[
-            ...     [1, 0, 2],
-            ...     [2, 1, 0],
-            ...     [0, 2, 1],
-            ...     [1, 2, 0],
-            ... ])
-            >>> rule = RuleCondorcetAbsIRV()(profile)
-            >>> rule.is_im_v_(0)
-            False
+        >>> profile = Profile(preferences_rk=[
+        ...     [1, 0, 2],
+        ...     [2, 1, 0],
+        ...     [0, 2, 1],
+        ...     [1, 2, 0],
+        ... ])
+        >>> rule = RuleCondorcetAbsIRV()(profile)
+        >>> rule.is_im_v_(0)
+        False
         """
         self.mylog("Count ballots", 1)
         if not np.isnan(self.profile_.condorcet_winner_ut_abs):
@@ -435,8 +441,10 @@ class RuleCondorcetAbsIRV(Rule):
             v_might_be_pivotal = np.copy(eb.v_might_be_pivotal_)
             # Another way of being (maybe) pivotal: create a Condorcet winner.
             for c in range(self.profile_.n_c):
-                if np.any(self.profile_.matrix_duels_ut[c, np.not_equal(np.array(range(self.profile_.n_c)), c)]
-                          <= self.profile_.n_v / 2 - 1):
+                if np.any(
+                    self.profile_.matrix_duels_ut[c, np.not_equal(np.array(range(self.profile_.n_c)), c)]
+                    <= self.profile_.n_v / 2 - 1
+                ):
                     # ``c`` cannot become a Condorcet winner.
                     continue
                 # ``close_candidates`` are the candidates against which ``c`` does not have a victory.
@@ -445,9 +453,15 @@ class RuleCondorcetAbsIRV(Rule):
                 # Voter ``v`` can make ``c`` become a Condorcet winner iff, among ``close_candidates``, she likes ``c``
                 # the least (this way, she can improve ``c``'s scores in all these duels, compared to her sincere
                 # voting).
-                v_might_be_pivotal[np.all(np.less(
-                    self.profile_.preferences_ut[:, c][:, np.newaxis], self.profile_.preferences_ut[:, close_candidates]
-                ), 1)] = True
+                v_might_be_pivotal[
+                    np.all(
+                        np.less(
+                            self.profile_.preferences_ut[:, c][:, np.newaxis],
+                            self.profile_.preferences_ut[:, close_candidates],
+                        ),
+                        1,
+                    )
+                ] = True
         return v_might_be_pivotal
 
     @cached_property
@@ -478,16 +492,16 @@ class RuleCondorcetAbsIRV(Rule):
 
     def _um_preliminary_checks_general_subclass_(self):
         """
-            >>> profile = Profile(preferences_ut=[
-            ...     [ 0. , -0.5,  1. ,  0.5],
-            ...     [-1. ,  0.5,  1. ,  1. ],
-            ... ], preferences_rk=[
-            ...     [2, 3, 0, 1],
-            ...     [3, 2, 1, 0],
-            ... ])
-            >>> rule = RuleCondorcetAbsIRV(um_option='exact')(profile)
-            >>> rule.candidates_um_
-            array([0., 0., 0., 0.])
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 0. , -0.5,  1. ,  0.5],
+        ...     [-1. ,  0.5,  1. ,  1. ],
+        ... ], preferences_rk=[
+        ...     [2, 3, 0, 1],
+        ...     [3, 2, 1, 0],
+        ... ])
+        >>> rule = RuleCondorcetAbsIRV(um_option='exact')(profile)
+        >>> rule.candidates_um_
+        array([0., 0., 0., 0.])
         """
         if equal_false(self.irv_.is_cm_):
             self._is_um = False
@@ -496,17 +510,17 @@ class RuleCondorcetAbsIRV(Rule):
 
     def _um_preliminary_checks_c_(self, c):
         """
-            >>> profile = Profile(preferences_rk=[
-            ...     [1, 0, 2],
-            ...     [1, 0, 2],
-            ...     [0, 2, 1],
-            ...     [2, 1, 0],
-            ... ])
-            >>> rule = RuleCondorcetAbsIRV(um_option='exact')(profile)
-            >>> rule.is_um_c_(0)
-            False
+        >>> profile = Profile(preferences_rk=[
+        ...     [1, 0, 2],
+        ...     [1, 0, 2],
+        ...     [0, 2, 1],
+        ...     [2, 1, 0],
+        ... ])
+        >>> rule = RuleCondorcetAbsIRV(um_option='exact')(profile)
+        >>> rule.is_um_c_(0)
+        False
         """
-        if self.um_option not in {'fast', 'lazy'} or self.cm_option not in {'fast', 'lazy'}:
+        if self.um_option not in {"fast", "lazy"} or self.cm_option not in {"fast", "lazy"}:
             if (
                 self.w_ == self.profile_.condorcet_winner_rk_ctb
                 and not self.profile_.c_might_be_there_when_cw_is_eliminated_irv_style[c]
@@ -541,16 +555,20 @@ class RuleCondorcetAbsIRV(Rule):
         self.mylog("Compute ordered list of losing candidates", 1)
         if self.w_ == self.irv_.w_:
             # As usual
-            losing_candidates = np.concatenate((
-                np.array(range(0, self.w_), dtype=int), np.array(range(self.w_ + 1, self.profile_.n_c), dtype=int)))
-            losing_candidates = losing_candidates[np.argsort(
-                - self.profile_.matrix_duels_ut[losing_candidates, self.w_], kind='mergesort')]
+            losing_candidates = np.concatenate(
+                (np.array(range(0, self.w_), dtype=int), np.array(range(self.w_ + 1, self.profile_.n_c), dtype=int))
+            )
+            losing_candidates = losing_candidates[
+                np.argsort(-self.profile_.matrix_duels_ut[losing_candidates, self.w_], kind="mergesort")
+            ]
         else:
             # Put irv_.w_ first.
-            losing_candidates = np.array([
-                c for c in range(self.profile_.n_c) if c != self.w_ and c != self.irv_.w_]).astype(int)
-            losing_candidates = losing_candidates[np.argsort(
-                - self.profile_.matrix_duels_ut[losing_candidates, self.w_], kind='mergesort')]
+            losing_candidates = np.array(
+                [c for c in range(self.profile_.n_c) if c != self.w_ and c != self.irv_.w_]
+            ).astype(int)
+            losing_candidates = losing_candidates[
+                np.argsort(-self.profile_.matrix_duels_ut[losing_candidates, self.w_], kind="mergesort")
+            ]
             losing_candidates = np.concatenate(([self.irv_.w_], losing_candidates))
         return losing_candidates
 
@@ -573,82 +591,82 @@ class RuleCondorcetAbsIRV(Rule):
 
     def _cm_main_work_c_(self, c, optimize_bounds):
         """
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 2, 1],
-            ...     [0, 2, 1],
-            ...     [1, 0, 2],
-            ...     [1, 0, 2],
-            ...     [2, 0, 1],
-            ... ])
-            >>> rule = RuleCondorcetAbsIRV(cm_option='slow')(profile)
-            >>> rule.candidates_cm_
-            array([0., 0., 0.])
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 2, 1],
+        ...     [0, 2, 1],
+        ...     [1, 0, 2],
+        ...     [1, 0, 2],
+        ...     [2, 0, 1],
+        ... ])
+        >>> rule = RuleCondorcetAbsIRV(cm_option='slow')(profile)
+        >>> rule.candidates_cm_
+        array([0., 0., 0.])
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 2, 1],
-            ...     [0, 2, 1],
-            ...     [1, 0, 2],
-            ...     [1, 0, 2],
-            ...     [2, 0, 1],
-            ... ])
-            >>> rule = RuleCondorcetAbsIRV(cm_option='very_slow')(profile)
-            >>> rule.candidates_cm_
-            array([0., 0., 0.])
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 2, 1],
+        ...     [0, 2, 1],
+        ...     [1, 0, 2],
+        ...     [1, 0, 2],
+        ...     [2, 0, 1],
+        ... ])
+        >>> rule = RuleCondorcetAbsIRV(cm_option='very_slow')(profile)
+        >>> rule.candidates_cm_
+        array([0., 0., 0.])
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 2, 1],
-            ...     [0, 2, 1],
-            ...     [1, 0, 2],
-            ...     [1, 0, 2],
-            ...     [2, 0, 1],
-            ... ])
-            >>> rule = RuleCondorcetAbsIRV(cm_option='exact')(profile)
-            >>> rule.candidates_cm_
-            array([0., 0., 0.])
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 2, 1],
+        ...     [0, 2, 1],
+        ...     [1, 0, 2],
+        ...     [1, 0, 2],
+        ...     [2, 0, 1],
+        ... ])
+        >>> rule = RuleCondorcetAbsIRV(cm_option='exact')(profile)
+        >>> rule.candidates_cm_
+        array([0., 0., 0.])
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 2, 1, 3],
-            ...     [1, 0, 2, 3],
-            ...     [1, 0, 3, 2],
-            ...     [2, 3, 0, 1],
-            ...     [3, 0, 1, 2],
-            ... ])
-            >>> rule = RuleCondorcetAbsIRV(cm_option='slow')(profile)
-            >>> rule.is_cm_
-            nan
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 2, 1, 3],
+        ...     [1, 0, 2, 3],
+        ...     [1, 0, 3, 2],
+        ...     [2, 3, 0, 1],
+        ...     [3, 0, 1, 2],
+        ... ])
+        >>> rule = RuleCondorcetAbsIRV(cm_option='slow')(profile)
+        >>> rule.is_cm_
+        nan
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 2, 1, 3],
-            ...     [1, 0, 2, 3],
-            ...     [1, 0, 3, 2],
-            ...     [2, 3, 0, 1],
-            ...     [3, 0, 1, 2],
-            ... ])
-            >>> rule = RuleCondorcetAbsIRV(cm_option='very_slow')(profile)
-            >>> rule.is_cm_
-            False
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 2, 1, 3],
+        ...     [1, 0, 2, 3],
+        ...     [1, 0, 3, 2],
+        ...     [2, 3, 0, 1],
+        ...     [3, 0, 1, 2],
+        ... ])
+        >>> rule = RuleCondorcetAbsIRV(cm_option='very_slow')(profile)
+        >>> rule.is_cm_
+        False
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 2, 1, 3],
-            ...     [1, 2, 0, 3],
-            ...     [2, 1, 3, 0],
-            ...     [3, 1, 0, 2],
-            ...     [3, 2, 1, 0],
-            ... ])
-            >>> rule = RuleCondorcetAbsIRV(cm_option='exact')(profile)
-            >>> rule.is_cm_
-            True
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 2, 1, 3],
+        ...     [1, 2, 0, 3],
+        ...     [2, 1, 3, 0],
+        ...     [3, 1, 0, 2],
+        ...     [3, 2, 1, 0],
+        ... ])
+        >>> rule = RuleCondorcetAbsIRV(cm_option='exact')(profile)
+        >>> rule.is_cm_
+        True
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 2, 1],
-            ...     [1, 0, 2],
-            ...     [1, 0, 2],
-            ...     [2, 1, 0],
-            ...     [2, 1, 0],
-            ... ])
-            >>> rule = RuleCondorcetAbsIRV(cm_option='very_slow')(profile)
-            >>> rule.is_cm_c_(1)
-            False
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 2, 1],
+        ...     [1, 0, 2],
+        ...     [1, 0, 2],
+        ...     [2, 1, 0],
+        ...     [2, 1, 0],
+        ... ])
+        >>> rule = RuleCondorcetAbsIRV(cm_option='very_slow')(profile)
+        >>> rule.is_cm_c_(1)
+        False
         """
         # Decondorcification is independent from what we will do for IRV. It just gives a necessary coalition size.
         #
@@ -685,17 +703,21 @@ class RuleCondorcetAbsIRV(Rule):
         n_s = self.profile_.n_v - n_m
         candidates = np.array(range(self.profile_.n_c))
         preferences_utilities_s = self.profile_.preferences_ut[np.logical_not(self.v_wants_to_help_c_[:, c]), :]
-        matrix_duels_temp = (preferences_ut_to_matrix_duels_ut(preferences_utilities_s))
+        matrix_duels_temp = preferences_ut_to_matrix_duels_ut(preferences_utilities_s)
         self.mylogm("CM: matrix_duels_temp =", matrix_duels_temp, 3)
         # More preliminary checks. It's more convenient to put them in that method, because we need
         # ``preferences_utilities_s`` and ``matrix_duels_temp``.
         # ``min_d(matrix_duels_temp[c, d]) + n_m > (n_s + n_m) / 2``, i.e.:
         # ``n_m >= n_s + 1 - 2 * min_d(matrix_duels_temp[c, d])``
-        d_neq_c = (np.array(range(self.profile_.n_c)) != c)
+        d_neq_c = np.array(range(self.profile_.n_c)) != c
         n_manip_becomes_cond = np.maximum(n_s + 1 - 2 * np.min(matrix_duels_temp[c, d_neq_c]), 0)
         self.mylogv("CM: n_manip_becomes_cond =", n_manip_becomes_cond, 3)
-        self._update_sufficient(self._sufficient_coalition_size_cm, c, n_manip_becomes_cond,
-                                'CM: Update sufficient_coalition_size_cm[c] = n_manip_becomes_cond =')
+        self._update_sufficient(
+            self._sufficient_coalition_size_cm,
+            c,
+            n_manip_becomes_cond,
+            "CM: Update sufficient_coalition_size_cm[c] = n_manip_becomes_cond =",
+        )
         if not optimize_bounds and n_m >= self._sufficient_coalition_size_cm[c]:  # pragma: no cover
             # TO DO: Investigate whether this case can actually happen.
             self._reached_uncovered_code()
@@ -706,12 +728,16 @@ class RuleCondorcetAbsIRV(Rule):
         # ``2 * max_d(min_e(matrix_duels_temp[d, e])) - n_s <= n_m``
         n_manip_prevent_cond = 0
         for d in candidates[d_neq_c]:
-            e_neq_d = (np.array(range(self.profile_.n_c)) != d)
+            e_neq_d = np.array(range(self.profile_.n_c)) != d
             n_prevent_d = np.maximum(2 * np.min(matrix_duels_temp[d, e_neq_d]) - n_s, 0)
             n_manip_prevent_cond = max(n_manip_prevent_cond, n_prevent_d)
         self.mylogv("CM: n_manip_prevent_cond =", n_manip_prevent_cond, 3)
-        self._update_necessary(self._necessary_coalition_size_cm, c, n_manip_prevent_cond,
-                               'CM: Update necessary_coalition_size_cm[c] = n_manip_prevent_cond =')
+        self._update_necessary(
+            self._necessary_coalition_size_cm,
+            c,
+            n_manip_prevent_cond,
+            "CM: Update necessary_coalition_size_cm[c] = n_manip_prevent_cond =",
+        )
         if not optimize_bounds and self._necessary_coalition_size_cm[c] > n_m:
             return True
 
@@ -728,25 +754,35 @@ class RuleCondorcetAbsIRV(Rule):
             else:
                 self.irv_.is_cm_c_(c)
                 is_quick_escape_one = True
-            self.mylog('CM: c != self.irv_.w_ == self.w_', 3)
-            self.mylogv("CM: self.irv_.sufficient_coalition_size_cm_[c] =",
-                        self.irv_.sufficient_coalition_size_cm_[c], 3)
-            self._update_sufficient(self._sufficient_coalition_size_cm, c,
-                                    max(self.irv_.sufficient_coalition_size_cm_[c], n_manip_prevent_cond),
-                                    'CM: Update sufficient_coalition_size[c] =')
+            self.mylog("CM: c != self.irv_.w_ == self.w_", 3)
+            self.mylogv(
+                "CM: self.irv_.sufficient_coalition_size_cm_[c] =", self.irv_.sufficient_coalition_size_cm_[c], 3
+            )
+            self._update_sufficient(
+                self._sufficient_coalition_size_cm,
+                c,
+                max(self.irv_.sufficient_coalition_size_cm_[c], n_manip_prevent_cond),
+                "CM: Update sufficient_coalition_size[c] =",
+            )
             self.mylogv("CM: self.irv_.necessary_coalition_size_cm_[c] =", self.irv_.necessary_coalition_size_cm_[c], 3)
             self._update_necessary(
-                self._necessary_coalition_size_cm, c,
+                self._necessary_coalition_size_cm,
+                c,
                 min(n_manip_becomes_cond, max(self.irv_.necessary_coalition_size_cm_[c], n_manip_prevent_cond)),
-                'CM: Update necessary_coalition_size[c] =')
+                "CM: Update necessary_coalition_size[c] =",
+            )
         else:
             if c == self.irv_.w_:
-                self.mylog('CM: c == self.irv_.w_ != self.w_', 3)
+                self.mylog("CM: c == self.irv_.w_ != self.w_", 3)
                 self.mylogv("CM: sufficient size for IRV (sincere IRV) =", n_m, 3)
-                self._update_sufficient(self._sufficient_coalition_size_cm, c, max(n_m, n_manip_prevent_cond),
-                                        'CM: Update sufficient_coalition_size[c] =')
+                self._update_sufficient(
+                    self._sufficient_coalition_size_cm,
+                    c,
+                    max(n_m, n_manip_prevent_cond),
+                    "CM: Update sufficient_coalition_size[c] =",
+                )
             else:
-                self.mylog('CM: c, self.w_, self.irv_.w_ all distinct', 3)
+                self.mylog("CM: c, self.w_, self.irv_.w_ all distinct", 3)
                 # We do not know how many manipulators can make ``c`` win in IRV (note that it would not be the same
                 # set of manipulators in IRV and here)
         # self.mylogv("CM: Preliminary checks.2: necessary_coalition_size_cm[c] =",
@@ -762,16 +798,16 @@ class RuleCondorcetAbsIRV(Rule):
         #     self.mylogv("CM: Preliminary checks.2: CM is unknown for c =", c, 2)
         # Real work
         is_quick_escape_two = False
-        if self.cm_option == 'exact':
+        if self.cm_option == "exact":
             is_quick_escape_two = self._cm_main_work_c_exact_(c, optimize_bounds)
         return is_quick_escape_one or is_quick_escape_two
 
     @cached_property
     def theta_critical_(self):
         """
-            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
-            >>> rule = RuleCondorcetAbsIRV()(profile)
-            >>> rule.theta_critical_
-            0
+        >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
+        >>> rule = RuleCondorcetAbsIRV()(profile)
+        >>> rule.theta_critical_
+        0
         """
         return 0

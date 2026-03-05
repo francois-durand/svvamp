@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import numpy as np
 from svvamp.rules.rule import Rule
 from svvamp.utils.util_cache import cached_property
@@ -283,40 +284,45 @@ class RuleKApproval(Rule):
         [0. 2. 5.]
     """
 
-    full_name = 'k-Approval'
-    abbreviation = 'kAV'
+    full_name = "k-Approval"
+    abbreviation = "kAV"
 
     options_parameters = Rule.options_parameters.copy()
-    options_parameters.update({
-        'k': {'allowed': type_checker.is_number, 'default': 1},
-        'im_option': {'allowed': ['exact'], 'default': 'exact'},
-        'tm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'um_option': {'allowed': ['exact'], 'default': 'exact'},
-        'icm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'cm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'precheck_heuristic': {'allowed': [False], 'default': False},
-    })
+    options_parameters.update(
+        {
+            "k": {"allowed": type_checker.is_number, "default": 1},
+            "im_option": {"allowed": ["exact"], "default": "exact"},
+            "tm_option": {"allowed": ["exact"], "default": "exact"},
+            "um_option": {"allowed": ["exact"], "default": "exact"},
+            "icm_option": {"allowed": ["exact"], "default": "exact"},
+            "cm_option": {"allowed": ["exact"], "default": "exact"},
+            "precheck_heuristic": {"allowed": [False], "default": False},
+        }
+    )
 
     def __init__(self, k=1, **kwargs):
         # noinspection PyTypeChecker
         self.k = None
         super().__init__(
-            with_two_candidates_reduces_to_plurality=(k == 1), is_based_on_rk=True,
-            precheck_um=False, precheck_icm=False, precheck_tm=False,
-            log_identity="K-APPROVAL", k=k, **kwargs
+            with_two_candidates_reduces_to_plurality=(k == 1),
+            is_based_on_rk=True,
+            precheck_um=False,
+            precheck_icm=False,
+            precheck_tm=False,
+            log_identity="K-APPROVAL",
+            k=k,
+            **kwargs,
         )
 
     @cached_property
     def ballots_(self):
-        """2d array of values in {0, 1}. ``ballots_[v, c] = 1`` iff voter ``v`` votes for candidates ``c``.
-        """
+        """2d array of values in {0, 1}. ``ballots_[v, c] = 1`` iff voter ``v`` votes for candidates ``c``."""
         self.mylog("Compute ballots", 1)
         return np.greater_equal(self.profile_.preferences_borda_rk, self.profile_.n_c - self.k)
 
     @cached_property
     def scores_(self):
-        """1d array of integers. ``scores_[c]`` is the number of approvals for candidate ``c``.
-        """
+        """1d array of integers. ``scores_[c]`` is the number of approvals for candidate ``c``."""
         self.mylog("Compute scores", 1)
         return np.sum(self.ballots_, axis=0)
 
@@ -348,8 +354,8 @@ class RuleKApproval(Rule):
         n_c = self.profile_.n_c
         scores_without_v = self.scores_[np.newaxis, :] + np.array(range(n_c - 1, -1, -1)) / n_c - self.ballots_
         scores_without_v_ascending = np.sort(scores_without_v)  # sorted for each voter
-        not_in_k_minus_one_weakest = (scores_without_v >= scores_without_v_ascending[:, self.k - 1][:, np.newaxis])
-        scores_without_v_ascending[:, 0:self.k - 1] += 1  # Add 1 point to the `k-1` weakest candidates
+        not_in_k_minus_one_weakest = scores_without_v >= scores_without_v_ascending[:, self.k - 1][:, np.newaxis]
+        scores_without_v_ascending[:, 0 : self.k - 1] += 1  # Add 1 point to the `k-1` weakest candidates
         max_scores_approving_k_minus_one_weakest = np.max(scores_without_v_ascending, axis=1)
         scores_without_v_ascending[:, self.k - 1] += 1  # Add also 1 point to the `k`-th weakest candidate
         max_scores_approving_k_weakest = np.max(scores_without_v_ascending, axis=1)
@@ -374,31 +380,29 @@ class RuleKApproval(Rule):
             + np.array(range(self.profile_.n_c - 1, -1, -1)) / self.profile_.n_c
         )
         scores_other_candidates = np.sort(scores_from_sincere_voters[np.arange(self.profile_.n_c) != c])
-        scores_other_candidates[0:self.k - 1] += n_m  # Give n_m points to the k-1 weakest other candidates
-        self._candidates_um[c] = (
-            scores_from_sincere_voters[c] + n_m > np.max(scores_other_candidates)
-        )
+        scores_other_candidates[0 : self.k - 1] += n_m  # Give n_m points to the k-1 weakest other candidates
+        self._candidates_um[c] = scores_from_sincere_voters[c] + n_m > np.max(scores_other_candidates)
 
     # %% Ignorant-Coalition Manipulation (ICM)
 
     def _icm_main_work_c_(self, c, optimize_bounds):
         """
-            >>> profile = Profile(preferences_ut=[
-            ...     [-1. ,  0. ,  0.5,  0.5,  0.5],
-            ...     [ 0. , -0.5, -1. , -1. ,  0.5],
-            ...     [ 0.5,  0.5, -1. ,  0. , -0.5],
-            ...     [-1. , -0.5,  0.5,  1. ,  0.5],
-            ...     [-1. ,  1. ,  0.5,  1. ,  0.5],
-            ... ], preferences_rk=[
-            ...     [2, 4, 3, 1, 0],
-            ...     [4, 0, 1, 2, 3],
-            ...     [1, 0, 3, 4, 2],
-            ...     [3, 2, 4, 1, 0],
-            ...     [1, 3, 2, 4, 0],
-            ... ])
-            >>> rule = RuleKApproval(k=1)(profile)
-            >>> rule.candidates_icm_
-            array([0., 0., 0., 0., 1.])
+        >>> profile = Profile(preferences_ut=[
+        ...     [-1. ,  0. ,  0.5,  0.5,  0.5],
+        ...     [ 0. , -0.5, -1. , -1. ,  0.5],
+        ...     [ 0.5,  0.5, -1. ,  0. , -0.5],
+        ...     [-1. , -0.5,  0.5,  1. ,  0.5],
+        ...     [-1. ,  1. ,  0.5,  1. ,  0.5],
+        ... ], preferences_rk=[
+        ...     [2, 4, 3, 1, 0],
+        ...     [4, 0, 1, 2, 3],
+        ...     [1, 0, 3, 4, 2],
+        ...     [3, 2, 4, 1, 0],
+        ...     [1, 3, 2, 4, 0],
+        ... ])
+        >>> rule = RuleKApproval(k=1)(profile)
+        >>> rule.candidates_icm_
+        array([0., 0., 0., 0., 1.])
         """
         # Manipulators must distribute `(k - 1) n_m` approvals among the other `n_c - 1` candidates. In the best case,
         # these approvals are distributed equally (no remainder), so each other candidate has
@@ -417,17 +421,17 @@ class RuleKApproval(Rule):
             if r == 0:
                 if c == 0:
                     # The best other candidate is 1, with a score of `q + n_s`.
-                    icm_succeeds = (n_m >= q + n_s)
+                    icm_succeeds = n_m >= q + n_s
                 else:
                     # The best other candidate is 0, with a score of `q + n_s`.
-                    icm_succeeds = (n_m > q + n_s)
+                    icm_succeeds = n_m > q + n_s
             else:
                 if c < self.profile_.n_c - r:
                     # The best other candidate is `n_c - r`, with a score of `q + 1 + n_s`.
-                    icm_succeeds = (n_m >= q + 1 + n_s)
+                    icm_succeeds = n_m >= q + 1 + n_s
                 else:
                     # The best other candidate has a lower index than `c` and a score of `q + 1 + n_s`.
-                    icm_succeeds = (n_m > q + 1 + n_s)
+                    icm_succeeds = n_m > q + 1 + n_s
             if icm_succeeds:
                 self._sufficient_coalition_size_icm[c] = n_m
                 self._necessary_coalition_size_icm[c] = self._sufficient_coalition_size_icm[c]
@@ -458,7 +462,6 @@ class RuleKApproval(Rule):
         #       case, we have n_m * p >= sum_i(gap[i]) >= #max * max_i(gap[i]) > p * max_i(gap[i]), which leads to
         #       n_m > max_i(gap[i]). With one manipulator less, the condition on the height still holds.
         self._sufficient_coalition_size_cm[c] = max(
-            np.max(gaps_other_candidates),
-            np.ceil(np.sum(gaps_other_candidates) / p)
+            np.max(gaps_other_candidates), np.ceil(np.sum(gaps_other_candidates) / p)
         )
         self._necessary_coalition_size_cm[c] = self._sufficient_coalition_size_cm[c]

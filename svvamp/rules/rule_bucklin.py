@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import numpy as np
 from svvamp.rules.rule import Rule
 from svvamp.utils.util_cache import cached_property
@@ -294,24 +295,28 @@ class RuleBucklin(Rule):
         [0. 2. 4.]
     """
 
-    full_name = 'Bucklin'
-    abbreviation = 'Buc'
+    full_name = "Bucklin"
+    abbreviation = "Buc"
 
     options_parameters = Rule.options_parameters.copy()
-    options_parameters.update({
-        'im_option': {'allowed': ['exact'], 'default': 'exact'},
-        'tm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'um_option': {'allowed': ['exact'], 'default': 'exact'},
-        'icm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'cm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'precheck_heuristic': {'allowed': type_checker.is_bool, 'default': True},
-    })
+    options_parameters.update(
+        {
+            "im_option": {"allowed": ["exact"], "default": "exact"},
+            "tm_option": {"allowed": ["exact"], "default": "exact"},
+            "um_option": {"allowed": ["exact"], "default": "exact"},
+            "icm_option": {"allowed": ["exact"], "default": "exact"},
+            "cm_option": {"allowed": ["exact"], "default": "exact"},
+            "precheck_heuristic": {"allowed": type_checker.is_bool, "default": True},
+        }
+    )
 
     def __init__(self, **kwargs):
         super().__init__(
-            with_two_candidates_reduces_to_plurality=True, is_based_on_rk=True,
+            with_two_candidates_reduces_to_plurality=True,
+            is_based_on_rk=True,
             precheck_icm=False,  # Bucklin does not meet infmc_c_ctb, but precheck on ICM is not interesting anyway.
-            log_identity="BUCKLIN", **kwargs
+            log_identity="BUCKLIN",
+            **kwargs,
         )
 
     @cached_property
@@ -328,8 +333,8 @@ class RuleBucklin(Rule):
                 w_r = np.argmax(scores_r)
                 if scores_r[w_r] > self.profile_.n_v / 2:
                     w = w_r
-                    candidates_by_scores_best_to_worst = np.argsort(- scores_r, kind='mergesort')
-        return {'scores': scores, 'w': w, 'candidates_by_scores_best_to_worst': candidates_by_scores_best_to_worst}
+                    candidates_by_scores_best_to_worst = np.argsort(-scores_r, kind="mergesort")
+        return {"scores": scores, "w": w, "candidates_by_scores_best_to_worst": candidates_by_scores_best_to_worst}
 
     @property
     def scores_(self):
@@ -339,14 +344,14 @@ class RuleBucklin(Rule):
         For information, ballot are still counted after the round where the decision is made (it is used for
         manipulation algorithms).
         """
-        return self._count_ballots_['scores']
+        return self._count_ballots_["scores"]
 
     @property
     def w_(self):
         """Integer (winning candidate). When at least one candidate has more than :attr:`n_v`/2 votes, the candidate
         with most votes gets elected. In case of a tie, the candidate with highest index wins.
         """
-        return self._count_ballots_['w']
+        return self._count_ballots_["w"]
 
     @property
     def candidates_by_scores_best_to_worst_(self):
@@ -355,7 +360,7 @@ class RuleBucklin(Rule):
 
         By definition, ``candidates_by_scores_best_to_worst_[0]`` = :attr:`w_`.
         """
-        return self._count_ballots_['candidates_by_scores_best_to_worst']
+        return self._count_ballots_["candidates_by_scores_best_to_worst"]
 
     @cached_property
     def v_might_im_for_c_(self):
@@ -367,7 +372,7 @@ class RuleBucklin(Rule):
         pseudo_scores = np.copy(self.scores_)
         pseudo_scores[:, np.array(range(self.profile_.n_c)) != self.w_] += 1
         pseudo_scores[:, self.w_] -= 1
-        self.mylogm('Pseudo-scores =', pseudo_scores)
+        self.mylogm("Pseudo-scores =", pseudo_scores)
         r = np.argmax(pseudo_scores[self.w_] > self.profile_.n_v / 2)
         c_has_a_chance = np.zeros(self.profile_.n_c)
         for c in range(self.profile_.n_c):
@@ -389,90 +394,90 @@ class RuleBucklin(Rule):
 
     def _im_main_work_v_(self, v, c_is_wanted, nb_wanted_undecided, stop_if_true):
         """
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 1, 2],
-            ...     [0, 2, 1],
-            ...     [0, 2, 1],
-            ...     [0, 2, 1],
-            ...     [2, 0, 1],
-            ... ])
-            >>> rule = RuleBucklin()(profile)
-            >>> rule.is_im_
-            False
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [0, 2, 1],
+        ...     [0, 2, 1],
+        ...     [0, 2, 1],
+        ...     [2, 0, 1],
+        ... ])
+        >>> rule = RuleBucklin()(profile)
+        >>> rule.is_im_
+        False
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [1, 0, 2],
-            ...     [2, 0, 1],
-            ...     [2, 0, 1],
-            ...     [2, 1, 0],
-            ...     [2, 1, 0],
-            ... ])
-            >>> rule = RuleBucklin()(profile)
-            >>> rule.is_im_
-            False
+        >>> profile = Profile(preferences_rk=[
+        ...     [1, 0, 2],
+        ...     [2, 0, 1],
+        ...     [2, 0, 1],
+        ...     [2, 1, 0],
+        ...     [2, 1, 0],
+        ... ])
+        >>> rule = RuleBucklin()(profile)
+        >>> rule.is_im_
+        False
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [1, 2, 0],
-            ...     [1, 2, 0],
-            ...     [1, 2, 0],
-            ...     [2, 0, 1],
-            ...     [2, 0, 1],
-            ... ])
-            >>> rule = RuleBucklin()(profile)
-            >>> rule.is_im_
-            False
+        >>> profile = Profile(preferences_rk=[
+        ...     [1, 2, 0],
+        ...     [1, 2, 0],
+        ...     [1, 2, 0],
+        ...     [2, 0, 1],
+        ...     [2, 0, 1],
+        ... ])
+        >>> rule = RuleBucklin()(profile)
+        >>> rule.is_im_
+        False
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 1, 2],
-            ...     [0, 2, 1],
-            ...     [0, 2, 1],
-            ...     [0, 2, 1],
-            ...     [2, 0, 1],
-            ... ])
-            >>> rule = RuleBucklin()(profile)
-            >>> rule.is_im_c_(2)
-            False
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [0, 2, 1],
+        ...     [0, 2, 1],
+        ...     [0, 2, 1],
+        ...     [2, 0, 1],
+        ... ])
+        >>> rule = RuleBucklin()(profile)
+        >>> rule.is_im_c_(2)
+        False
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 1, 2],
-            ...     [1, 0, 2],
-            ...     [1, 0, 2],
-            ...     [1, 2, 0],
-            ...     [2, 0, 1],
-            ...     [2, 1, 0],
-            ... ])
-            >>> rule = RuleBucklin()(profile)
-            >>> rule.is_im_
-            True
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [1, 0, 2],
+        ...     [1, 0, 2],
+        ...     [1, 2, 0],
+        ...     [2, 0, 1],
+        ...     [2, 1, 0],
+        ... ])
+        >>> rule = RuleBucklin()(profile)
+        >>> rule.is_im_
+        True
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 1, 2],
-            ...     [1, 0, 2],
-            ...     [1, 0, 2],
-            ...     [1, 2, 0],
-            ...     [2, 0, 1],
-            ...     [2, 1, 0],
-            ... ])
-            >>> rule = RuleBucklin()(profile)
-            >>> rule.candidates_im_
-            array([1., 0., 0.])
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [1, 0, 2],
+        ...     [1, 0, 2],
+        ...     [1, 2, 0],
+        ...     [2, 0, 1],
+        ...     [2, 1, 0],
+        ... ])
+        >>> rule = RuleBucklin()(profile)
+        >>> rule.candidates_im_
+        array([1., 0., 0.])
 
-            >>> profile = Profile(preferences_ut=[
-            ...     [ 0. ,  1. ,  0.5,  0. ,  0. ],
-            ...     [ 0. ,  1. ,  1. , -1. ,  0. ],
-            ...     [ 0. , -1. , -0.5,  1. ,  0. ],
-            ...     [-0.5, -0.5, -0.5, -1. ,  1. ],
-            ...     [ 0. ,  0. , -1. ,  0.5,  1. ],
-            ... ], preferences_rk=[
-            ...     [1, 2, 3, 0, 4],
-            ...     [1, 2, 4, 0, 3],
-            ...     [3, 0, 4, 2, 1],
-            ...     [4, 0, 2, 1, 3],
-            ...     [4, 3, 1, 0, 2],
-            ... ])
-            >>> rule = RuleBucklin()(profile)
-            >>> rule.is_im_
-            False
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 0. ,  1. ,  0.5,  0. ,  0. ],
+        ...     [ 0. ,  1. ,  1. , -1. ,  0. ],
+        ...     [ 0. , -1. , -0.5,  1. ,  0. ],
+        ...     [-0.5, -0.5, -0.5, -1. ,  1. ],
+        ...     [ 0. ,  0. , -1. ,  0.5,  1. ],
+        ... ], preferences_rk=[
+        ...     [1, 2, 3, 0, 4],
+        ...     [1, 2, 4, 0, 3],
+        ...     [3, 0, 4, 2, 1],
+        ...     [4, 0, 2, 1, 3],
+        ...     [4, 3, 1, 0, 2],
+        ... ])
+        >>> rule = RuleBucklin()(profile)
+        >>> rule.is_im_
+        False
         """
         scores_without_v = np.copy(self.scores_)
         for k in range(self.profile_.n_c):
@@ -525,8 +530,9 @@ class RuleBucklin(Rule):
             d_can_be_added_before_last_round = np.logical_and(d_can_be_added, scores_prev + 1 <= self.profile_.n_v / 2)
 
             # We can conclude.
-            self._v_im_for_c[v, c] = (np.sum(d_can_be_added) >= r - 1
-                                      and np.sum(d_can_be_added_before_last_round) >= r - 2)
+            self._v_im_for_c[v, c] = (
+                np.sum(d_can_be_added) >= r - 1 and np.sum(d_can_be_added_before_last_round) >= r - 2
+            )
             if equal_true(self._v_im_for_c[v, c]):
                 self._candidates_im[c] = True
                 self._voters_im[v] = True
@@ -547,27 +553,27 @@ class RuleBucklin(Rule):
 
     def _um_main_work_c_(self, c):
         """
-            >>> profile = Profile(preferences_rk=[
-            ...     [1, 3, 0, 2],
-            ...     [2, 0, 3, 1],
-            ...     [2, 1, 3, 0],
-            ...     [3, 1, 0, 2],
-            ...     [3, 2, 1, 0],
-            ... ])
-            >>> rule = RuleBucklin()(profile)
-            >>> rule.candidates_um_
-            array([0., 0., 1., 1.])
+        >>> profile = Profile(preferences_rk=[
+        ...     [1, 3, 0, 2],
+        ...     [2, 0, 3, 1],
+        ...     [2, 1, 3, 0],
+        ...     [3, 1, 0, 2],
+        ...     [3, 2, 1, 0],
+        ... ])
+        >>> rule = RuleBucklin()(profile)
+        >>> rule.candidates_um_
+        array([0., 0., 1., 1.])
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [1, 2, 0, 3],
-            ...     [1, 3, 2, 0],
-            ...     [2, 0, 3, 1],
-            ...     [2, 1, 3, 0],
-            ...     [3, 2, 0, 1],
-            ... ])
-            >>> rule = RuleBucklin()(profile)
-            >>> rule.candidates_um_
-            array([0., 1., 0., 0.])
+        >>> profile = Profile(preferences_rk=[
+        ...     [1, 2, 0, 3],
+        ...     [1, 3, 2, 0],
+        ...     [2, 0, 3, 1],
+        ...     [2, 1, 3, 0],
+        ...     [3, 2, 0, 1],
+        ... ])
+        >>> rule = RuleBucklin()(profile)
+        >>> rule.candidates_um_
+        array([0., 1., 0., 0.])
         """
         n_m = self.profile_.matrix_duels_ut[c, self.w_]
         scores_r = np.zeros(self.profile_.n_c)
@@ -579,8 +585,10 @@ class RuleBucklin(Rule):
         scores_prev = None
         for r in range(self.profile_.n_c):
             scores_prev = np.copy(scores_r)
-            scores_r += np.bincount(self.profile_.preferences_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), r],
-                                    minlength=self.profile_.n_c)
+            scores_r += np.bincount(
+                self.profile_.preferences_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), r],
+                minlength=self.profile_.n_c,
+            )
             if scores_r[c] > self.profile_.n_v / 2:  # It is the last round
                 if np.argmax(scores_r) != c:
                     # One ``d`` has a better score than ``c``!
@@ -601,83 +609,87 @@ class RuleBucklin(Rule):
         d_can_be_added_before_last_round = np.logical_and(d_can_be_added, scores_prev + n_m <= self.profile_.n_v / 2)
 
         # We can conclude.
-        self._candidates_um[c] = (np.sum(d_can_be_added) >= r
-                                  and np.sum(d_can_be_added_before_last_round) >= r - 1)
+        self._candidates_um[c] = np.sum(d_can_be_added) >= r and np.sum(d_can_be_added_before_last_round) >= r - 1
 
     # %% Ignorant-Coalition Manipulation (ICM)
 
     def _icm_main_work_c_exact_(self, c, complete_mode=True):
         """
-            >>> profile = Profile(preferences_ut=[
-            ...     [ 0. ,  0.5],
-            ...     [-0.5,  0.5],
-            ... ], preferences_rk=[
-            ...     [1, 0],
-            ...     [1, 0],
-            ... ])
-            >>> rule = RuleBucklin()(profile)
-            >>> rule.sufficient_coalition_size_icm_
-            array([2., 0.])
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 0. ,  0.5],
+        ...     [-0.5,  0.5],
+        ... ], preferences_rk=[
+        ...     [1, 0],
+        ...     [1, 0],
+        ... ])
+        >>> rule = RuleBucklin()(profile)
+        >>> rule.sufficient_coalition_size_icm_
+        array([2., 0.])
         """
         # The only question is when we have exactly ``n_v / 2`` manipulators. If the counter-manipulators put ``c``
         # last, then ``c`` cannot be elected (except if there are 2 candidates and ``c == 0``). So exactly ``n_v / 2``
         # manipulators is not enough.
         n_s = self.profile_.n_v - self.profile_.matrix_duels_ut[c, self.w_]
         if self.profile_.n_c == 2 and c == 0:
-            self._update_sufficient(self._sufficient_coalition_size_icm, c, n_s,
-                                    'ICM: Tie-breaking: sufficient_coalition_size_icm = n_s =')
+            self._update_sufficient(
+                self._sufficient_coalition_size_icm, c, n_s, "ICM: Tie-breaking: sufficient_coalition_size_icm = n_s ="
+            )
         else:
-            self._update_necessary(self._necessary_coalition_size_icm, c, n_s + 1,
-                                   'ICM: Tie-breaking: necessary_coalition_size_icm = n_s + 1 =')
+            self._update_necessary(
+                self._necessary_coalition_size_icm,
+                c,
+                n_s + 1,
+                "ICM: Tie-breaking: necessary_coalition_size_icm = n_s + 1 =",
+            )
 
     # %% Coalition Manipulation (CM)
 
     def _cm_main_work_c_exact_(self, c, optimize_bounds):
         """
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 1, 2],
-            ...     [0, 1, 2],
-            ...     [1, 0, 2],
-            ...     [1, 2, 0],
-            ...     [2, 1, 0],
-            ... ])
-            >>> rule = RuleBucklin()(profile)
-            >>> rule.candidates_cm_
-            array([0., 0., 0.])
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [0, 1, 2],
+        ...     [1, 0, 2],
+        ...     [1, 2, 0],
+        ...     [2, 1, 0],
+        ... ])
+        >>> rule = RuleBucklin()(profile)
+        >>> rule.candidates_cm_
+        array([0., 0., 0.])
 
-            >>> profile = Profile(preferences_ut=[
-            ...     [ 1. ,  0. ,  1. ,  0. ],
-            ...     [ 1. ,  0. ,  1. ,  0. ],
-            ...     [ 0. , -1. ,  1. ,  0. ],
-            ...     [-0.5, -1. ,  0. ,  0.5],
-            ... ], preferences_rk=[
-            ...     [2, 0, 1, 3],
-            ...     [2, 0, 3, 1],
-            ...     [2, 3, 0, 1],
-            ...     [3, 2, 0, 1],
-            ... ])
-            >>> rule = RuleBucklin()(profile)
-            >>> rule.necessary_coalition_size_cm_
-            array([2., 2., 0., 3.])
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 1. ,  0. ,  1. ,  0. ],
+        ...     [ 1. ,  0. ,  1. ,  0. ],
+        ...     [ 0. , -1. ,  1. ,  0. ],
+        ...     [-0.5, -1. ,  0. ,  0.5],
+        ... ], preferences_rk=[
+        ...     [2, 0, 1, 3],
+        ...     [2, 0, 3, 1],
+        ...     [2, 3, 0, 1],
+        ...     [3, 2, 0, 1],
+        ... ])
+        >>> rule = RuleBucklin()(profile)
+        >>> rule.necessary_coalition_size_cm_
+        array([2., 2., 0., 3.])
 
-            >>> profile = Profile(preferences_ut=[
-            ...     [ 1. ,  0.5, -1. , -1. ],
-            ...     [ 0. ,  0.5, -0.5, -0.5],
-            ...     [ 0.5, -1. ,  1. ,  0. ],
-            ...     [ 0.5, -0.5,  0. ,  1. ],
-            ...     [ 0. ,  0. ,  0. ,  1. ],
-            ...     [-1. , -1. , -0.5,  1. ],
-            ... ], preferences_rk=[
-            ...     [0, 1, 3, 2],
-            ...     [1, 0, 3, 2],
-            ...     [2, 0, 3, 1],
-            ...     [3, 0, 2, 1],
-            ...     [3, 1, 2, 0],
-            ...     [3, 2, 0, 1],
-            ... ])
-            >>> rule = RuleBucklin()(profile)
-            >>> rule.sufficient_coalition_size_cm_
-            array([0., 6., 5., 3.])
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 1. ,  0.5, -1. , -1. ],
+        ...     [ 0. ,  0.5, -0.5, -0.5],
+        ...     [ 0.5, -1. ,  1. ,  0. ],
+        ...     [ 0.5, -0.5,  0. ,  1. ],
+        ...     [ 0. ,  0. ,  0. ,  1. ],
+        ...     [-1. , -1. , -0.5,  1. ],
+        ... ], preferences_rk=[
+        ...     [0, 1, 3, 2],
+        ...     [1, 0, 3, 2],
+        ...     [2, 0, 3, 1],
+        ...     [3, 0, 2, 1],
+        ...     [3, 1, 2, 0],
+        ...     [3, 2, 0, 1],
+        ... ])
+        >>> rule = RuleBucklin()(profile)
+        >>> rule.sufficient_coalition_size_cm_
+        array([0., 6., 5., 3.])
         """
         # We do not try to find optimal bounds. We just check whether it is possible to manipulate with the number of
         #  manipulators that we have.
@@ -697,8 +709,10 @@ class RuleBucklin(Rule):
         scores_prev = None
         for r in range(self.profile_.n_c):
             scores_prev = np.copy(scores_r)
-            scores_r += np.bincount(self.profile_.preferences_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), r],
-                                    minlength=self.profile_.n_c)
+            scores_r += np.bincount(
+                self.profile_.preferences_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), r],
+                minlength=self.profile_.n_c,
+            )
             if scores_r[c] > self.profile_.n_v / 2:
                 break
 
@@ -712,26 +726,37 @@ class RuleBucklin(Rule):
                 one_d_beats_c_anyway = True
                 break
             votes_can_be_added[d] = min(scores_r[c] - (d < c) - scores_r[d], n_m)
-            votes_can_be_added_before_last_r[d] = min(np.floor(self.profile_.n_v / 2) - scores_prev[d],
-                                                      votes_can_be_added[d])
+            votes_can_be_added_before_last_r[d] = min(
+                np.floor(self.profile_.n_v / 2) - scores_prev[d], votes_can_be_added[d]
+            )
 
-        if (not one_d_beats_c_anyway and sum(votes_can_be_added) >= r * n_m
-                and sum(votes_can_be_added_before_last_r) >= (r - 1) * n_m):
-            self._update_sufficient(self._sufficient_coalition_size_cm, c, n_m,
-                                    'CM: Exact: Manipulation found for n_m manipulators =>\n'
-                                    '    sufficient_coalition_size_cm = n_m =')
+        if (
+            not one_d_beats_c_anyway
+            and sum(votes_can_be_added) >= r * n_m
+            and sum(votes_can_be_added_before_last_r) >= (r - 1) * n_m
+        ):
+            self._update_sufficient(
+                self._sufficient_coalition_size_cm,
+                c,
+                n_m,
+                "CM: Exact: Manipulation found for n_m manipulators =>\n    sufficient_coalition_size_cm = n_m =",
+            )
         else:
-            self._update_necessary(self._necessary_coalition_size_cm, c, n_m + 1,
-                                   'CM: Exact: Manipulation proven impossible for n_m manipulators =>\n'
-                                   '    necessary_coalition_size_cm[c] = n_m + 1 =')
+            self._update_necessary(
+                self._necessary_coalition_size_cm,
+                c,
+                n_m + 1,
+                "CM: Exact: Manipulation proven impossible for n_m manipulators =>\n"
+                "    necessary_coalition_size_cm[c] = n_m + 1 =",
+            )
 
     @cached_property
     def theta_critical_(self):
         """
-            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
-            >>> rule = RuleBucklin()(profile)
-            >>> rule.theta_critical_
-            0.3333333333333333
+        >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
+        >>> rule = RuleBucklin()(profile)
+        >>> rule.theta_critical_
+        0.3333333333333333
         """
         n_c = self.profile_.n_c
         return (n_c - 2) / (2 * n_c - 2)

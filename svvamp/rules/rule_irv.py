@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import itertools
 import numpy as np
 from svvamp.rules.rule import Rule
@@ -309,28 +310,34 @@ class RuleIRV(Rule):
         sufficient_coalition_size_cm =
         [0. 2. 4.]
     """
+
     # Exceptionally, for this voting system, we establish a pointer from the Profile object, so that the
     # manipulation results can be used by Condorcet-IRV.
 
-    full_name = 'Instant-Runoff Voting'
-    abbreviation = 'IRV'
+    full_name = "Instant-Runoff Voting"
+    abbreviation = "IRV"
 
     options_parameters = Rule.options_parameters.copy()
-    options_parameters.update({
-        'um_option': {'allowed': ['fast', 'exact'], 'default': 'fast'},
-        'cm_option': {'allowed': ['fast', 'slow', 'exact'], 'default': 'fast'},
-        'tm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'icm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'fast_algo': {'allowed': ['c_minus_max', 'minus_max', 'hardest_first'], 'default': 'c_minus_max'},
-    })
+    options_parameters.update(
+        {
+            "um_option": {"allowed": ["fast", "exact"], "default": "fast"},
+            "cm_option": {"allowed": ["fast", "slow", "exact"], "default": "fast"},
+            "tm_option": {"allowed": ["exact"], "default": "exact"},
+            "icm_option": {"allowed": ["exact"], "default": "exact"},
+            "fast_algo": {"allowed": ["c_minus_max", "minus_max", "hardest_first"], "default": "c_minus_max"},
+        }
+    )
 
     def __init__(self, **kwargs):
         self._fast_algo = None
         self.eb_ = None
         super().__init__(
-            with_two_candidates_reduces_to_plurality=True, is_based_on_rk=True,
-            precheck_um=False, precheck_icm=False,
-            log_identity="IRV", **kwargs
+            with_two_candidates_reduces_to_plurality=True,
+            is_based_on_rk=True,
+            precheck_um=False,
+            precheck_icm=False,
+            log_identity="IRV",
+            **kwargs,
         )
         self._example_ballots_cm_c = None
         self._example_ballots_cm_w_against = None
@@ -415,9 +422,9 @@ class RuleIRV(Rule):
         """
         # Unplug this irv from the old profile
         if self.profile_ is not None:
-            delattr(self.profile_, 'irv')
+            delattr(self.profile_, "irv")
         # See if new profile has an irv, with the same options
-        if hasattr(profile, 'irv'):
+        if hasattr(profile, "irv"):
             # Save my options
             my_options = self.options
             # Copy all its inner variables into mine
@@ -426,18 +433,18 @@ class RuleIRV(Rule):
             self.update_options(my_options)
         else:
             # 'Usual' behavior
-            self.delete_cache(suffix='_')
+            self.delete_cache(suffix="_")
             self.profile_ = profile
         # Bind this irv with the new profile
         profile.irv = self
         # Grab the exhaustive ballot of the profile (or create it)
         eb_options = {}
-        if self.cm_option in {'slow', 'exact'}:
-            eb_options['cm_option'] = 'exact'
-        if self.im_option == 'exact':
-            eb_options['im_option'] = 'exact'
-        if self.um_option == 'exact':
-            eb_options['um_option'] = 'exact'
+        if self.cm_option in {"slow", "exact"}:
+            eb_options["cm_option"] = "exact"
+        if self.im_option == "exact":
+            eb_options["im_option"] = "exact"
+        if self.um_option == "exact":
+            eb_options["um_option"] = "exact"
         self.eb_ = RuleExhaustiveBallot(precheck_heuristic=self.precheck_heuristic, **eb_options)(self.profile_)
         # Initialize examples of manipulating ballots
         self._example_ballots_cm_c = {c: None for c in range(profile.n_c)}
@@ -448,43 +455,49 @@ class RuleIRV(Rule):
 
     @property
     def fast_algo(self):
-        """String. Algorithm used for CM (resp. UM) when cm_option (resp. um_option) is 'fast'. Mostly for developers.
-        """
+        """String. Algorithm used for CM (resp. UM) when cm_option (resp. um_option) is 'fast'. Mostly for developers."""
         return self._fast_algo
 
     @fast_algo.setter
     def fast_algo(self, value):
         if self._fast_algo == value:
             return
-        if value in self.options_parameters['fast_algo']['allowed']:
+        if value in self.options_parameters["fast_algo"]["allowed"]:
             self.mylogv("Setting fast_algo =", value, 1)
             self._fast_algo = value
-            self.delete_cache(contains='_um_', suffix='_')
-            self.delete_cache(contains='_cm_', suffix='_')
+            self.delete_cache(contains="_um_", suffix="_")
+            self.delete_cache(contains="_cm_", suffix="_")
         else:
             raise ValueError("Unknown value for option fast_algo: " + format(value))
 
     @cached_property
     def log_um_(self):
-        if self.um_option == 'exact':
+        if self.um_option == "exact":
             return "um_option = exact"
         else:
             return "um_option = " + self.um_option + ", fast_algo = " + self.fast_algo
 
     @cached_property
     def log_cm_(self):
-        if self.cm_option == 'exact':
+        if self.cm_option == "exact":
             return "cm_option = exact"
         else:
-            return ("cm_option = " + self.cm_option + ", fast_algo = " + self.fast_algo +
-                    ", " + self.log_icm_ + ", " + self.log_tm_)
+            return (
+                "cm_option = "
+                + self.cm_option
+                + ", fast_algo = "
+                + self.fast_algo
+                + ", "
+                + self.log_icm_
+                + ", "
+                + self.log_tm_
+            )
 
     # %% Counting the ballots
 
     @cached_property
     def ballots_(self):
-        """2d array of integers. ``ballots[v, r]`` is the candidate for which voter ``v`` votes at round ``r``.
-        """
+        """2d array of integers. ``ballots[v, r]`` is the candidate for which voter ``v`` votes at round ``r``."""
         return self.eb_.ballots_
 
     @cached_property
@@ -618,128 +631,131 @@ class RuleIRV(Rule):
 
     def _im_main_work_v_exact_(self, v, c_is_wanted, nb_wanted_undecided, stop_if_true):
         """
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 1, 2],
-            ...     [1, 0, 2],
-            ...     [1, 2, 0],
-            ...     [2, 0, 1],
-            ...     [2, 0, 1],
-            ... ])
-            >>> rule = RuleIRV(im_option='exact')(profile)
-            >>> rule.is_im_
-            True
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [1, 0, 2],
+        ...     [1, 2, 0],
+        ...     [2, 0, 1],
+        ...     [2, 0, 1],
+        ... ])
+        >>> rule = RuleIRV(im_option='exact')(profile)
+        >>> rule.is_im_
+        True
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 1, 2],
-            ...     [0, 2, 1],
-            ...     [1, 2, 0],
-            ...     [1, 2, 0],
-            ...     [2, 0, 1],
-            ... ])
-            >>> rule = RuleIRV(im_option='exact')(profile)
-            >>> rule.is_im_
-            True
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [0, 2, 1],
+        ...     [1, 2, 0],
+        ...     [1, 2, 0],
+        ...     [2, 0, 1],
+        ... ])
+        >>> rule = RuleIRV(im_option='exact')(profile)
+        >>> rule.is_im_
+        True
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 1, 2, 3],
-            ...     [1, 2, 0, 3],
-            ...     [2, 0, 1, 3],
-            ...     [3, 0, 2, 1],
-            ...     [3, 1, 2, 0],
-            ... ])
-            >>> rule = RuleIRV(im_option='exact')(profile)
-            >>> rule.is_im_
-            True
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 1, 2, 3],
+        ...     [1, 2, 0, 3],
+        ...     [2, 0, 1, 3],
+        ...     [3, 0, 2, 1],
+        ...     [3, 1, 2, 0],
+        ... ])
+        >>> rule = RuleIRV(im_option='exact')(profile)
+        >>> rule.is_im_
+        True
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [1, 0, 3, 2],
-            ...     [1, 2, 0, 3],
-            ...     [2, 0, 3, 1],
-            ...     [3, 0, 1, 2],
-            ...     [3, 0, 2, 1],
-            ... ])
-            >>> rule = RuleIRV(im_option='exact')(profile)
-            >>> rule.is_im_
-            True
+        >>> profile = Profile(preferences_rk=[
+        ...     [1, 0, 3, 2],
+        ...     [1, 2, 0, 3],
+        ...     [2, 0, 3, 1],
+        ...     [3, 0, 1, 2],
+        ...     [3, 0, 2, 1],
+        ... ])
+        >>> rule = RuleIRV(im_option='exact')(profile)
+        >>> rule.is_im_
+        True
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 2, 1, 3],
-            ...     [1, 0, 2, 3],
-            ...     [1, 0, 3, 2],
-            ...     [2, 3, 0, 1],
-            ...     [3, 0, 2, 1],
-            ... ])
-            >>> rule = RuleIRV(im_option='exact')(profile)
-            >>> rule.is_im_
-            False
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 2, 1, 3],
+        ...     [1, 0, 2, 3],
+        ...     [1, 0, 3, 2],
+        ...     [2, 3, 0, 1],
+        ...     [3, 0, 2, 1],
+        ... ])
+        >>> rule = RuleIRV(im_option='exact')(profile)
+        >>> rule.is_im_
+        False
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 1, 2],
-            ...     [0, 1, 2],
-            ...     [0, 1, 2],
-            ...     [1, 0, 2],
-            ...     [2, 1, 0],
-            ... ])
-            >>> rule = RuleIRV(im_option='exact')(profile)
-            >>> rule.is_im_
-            False
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [0, 1, 2],
+        ...     [0, 1, 2],
+        ...     [1, 0, 2],
+        ...     [2, 1, 0],
+        ... ])
+        >>> rule = RuleIRV(im_option='exact')(profile)
+        >>> rule.is_im_
+        False
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [1, 0, 2],
-            ...     [1, 2, 0],
-            ...     [1, 2, 0],
-            ...     [1, 2, 0],
-            ...     [1, 2, 0],
-            ... ])
-            >>> rule = RuleIRV(im_option='exact')(profile)
-            >>> rule.is_im_
-            False
+        >>> profile = Profile(preferences_rk=[
+        ...     [1, 0, 2],
+        ...     [1, 2, 0],
+        ...     [1, 2, 0],
+        ...     [1, 2, 0],
+        ...     [1, 2, 0],
+        ... ])
+        >>> rule = RuleIRV(im_option='exact')(profile)
+        >>> rule.is_im_
+        False
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 3, 1, 2],
-            ...     [1, 2, 0, 3],
-            ...     [2, 0, 3, 1],
-            ...     [3, 1, 0, 2],
-            ...     [3, 2, 1, 0],
-            ... ])
-            >>> rule = RuleIRV(im_option='exact')(profile)
-            >>> rule.is_im_
-            True
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 3, 1, 2],
+        ...     [1, 2, 0, 3],
+        ...     [2, 0, 3, 1],
+        ...     [3, 1, 0, 2],
+        ...     [3, 2, 1, 0],
+        ... ])
+        >>> rule = RuleIRV(im_option='exact')(profile)
+        >>> rule.is_im_
+        True
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 2, 3, 1, 4],
-            ...     [1, 2, 0, 4, 3],
-            ...     [3, 2, 1, 4, 0],
-            ...     [4, 2, 0, 3, 1],
-            ...     [4, 2, 1, 3, 0],
-            ... ])
-            >>> rule = RuleIRV(im_option='exact')(profile)
-            >>> rule.is_im_
-            True
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 2, 3, 1, 4],
+        ...     [1, 2, 0, 4, 3],
+        ...     [3, 2, 1, 4, 0],
+        ...     [4, 2, 0, 3, 1],
+        ...     [4, 2, 1, 3, 0],
+        ... ])
+        >>> rule = RuleIRV(im_option='exact')(profile)
+        >>> rule.is_im_
+        True
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 1, 2],
-            ...     [1, 0, 2],
-            ...     [1, 0, 2],
-            ...     [2, 0, 1],
-            ...     [2, 0, 1],
-            ... ])
-            >>> rule = RuleIRV(im_option='exact')(profile)
-            >>> rule.is_im_v_with_candidates_(4)
-            (True, array([1., 0., 0.]))
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [1, 0, 2],
+        ...     [1, 0, 2],
+        ...     [2, 0, 1],
+        ...     [2, 0, 1],
+        ... ])
+        >>> rule = RuleIRV(im_option='exact')(profile)
+        >>> rule.is_im_v_with_candidates_(4)
+        (True, array([1., 0., 0.]))
         """
         self.mylogv("self._v_im_for_c[v, :] =", self._v_im_for_c[v, :], 3)
-        other_voters = (np.array(range(self.profile_.n_v)) != v)
+        other_voters = np.array(range(self.profile_.n_v)) != v
         n_s = self.profile_.n_v - 1
         r = 0
         is_candidate_alive_begin_r = np.zeros((self.profile_.n_c - 1, self.profile_.n_c), dtype=bool)
         is_candidate_alive_begin_r[0, :] = np.ones(self.profile_.n_c)
-        ballot_m_begin_r = np.array(- np.ones(self.profile_.n_c - 1, dtype=int))
+        ballot_m_begin_r = np.array(-np.ones(self.profile_.n_c - 1, dtype=int))
         scores_tot_begin_r = np.zeros((self.profile_.n_c - 1, self.profile_.n_c))
-        scores_tot_begin_r[0, :] = np.sum(np.equal(
-            self.profile_.preferences_borda_rk[other_voters, :],
-            np.max(self.profile_.preferences_borda_rk[other_voters, :], 1)[:, np.newaxis]
-        ), 0)
+        scores_tot_begin_r[0, :] = np.sum(
+            np.equal(
+                self.profile_.preferences_borda_rk[other_voters, :],
+                np.max(self.profile_.preferences_borda_rk[other_voters, :], 1)[:, np.newaxis],
+            ),
+            0,
+        )
         self.mylogv("im_aux_exact: r =", r, 3)
         self.mylogv("im_aux_exact: scores_tot_begin_r[r] =", scores_tot_begin_r[0, :], 3)
         # ``strategy_r[r]`` is False (0) if we keep our ballot, True (1) if we change it to vote for the natural
@@ -750,10 +766,11 @@ class RuleIRV(Rule):
         eliminated_d_r = np.zeros(self.profile_.n_c - 1)
         self.mylogv("im_aux_exact: natural_loser_r[r] =", natural_loser_r[r], 3)
         # If ``w`` has too many votes, then manipulation is not possible.
-        if (scores_tot_begin_r[0, self.w_] + (self.w_ == 0)
-                > n_s + 1 - scores_tot_begin_r[0, self.w_]):  # pragma: no cover
+        if (
+            scores_tot_begin_r[0, self.w_] + (self.w_ == 0) > n_s + 1 - scores_tot_begin_r[0, self.w_]
+        ):  # pragma: no cover
             # TO DO: Investigate whether this case can actually happen.
-            self._reached_uncovered_code('IRV: _im_main_work_v_exact_')
+            self._reached_uncovered_code("IRV: _im_main_work_v_exact_")
             self.mylog("im_aux_exact: Manipulation impossible by this path (w has too many votes)", 3)
             r = -1
         while True:
@@ -814,12 +831,15 @@ class RuleIRV(Rule):
             is_candidate_alive_begin_r[r + 1, d] = False
             self.mylogv("im_aux_exact: is_candidate_alive_begin_r[r+1, :] =", is_candidate_alive_begin_r[r + 1, :], 3)
             scores_tot_begin_r[r + 1, :] = np.full(self.profile_.n_c, np.nan)
-            scores_tot_begin_r[r + 1, is_candidate_alive_begin_r[r + 1, :]] = (
-                np.sum(np.equal(
+            scores_tot_begin_r[r + 1, is_candidate_alive_begin_r[r + 1, :]] = np.sum(
+                np.equal(
                     self.profile_.preferences_borda_rk[other_voters, :][:, is_candidate_alive_begin_r[r + 1, :]],
-                    np.max(self.profile_.preferences_borda_rk[other_voters, :][:, is_candidate_alive_begin_r[r + 1, :]],
-                           1)[:, np.newaxis]
-                ), 0))
+                    np.max(
+                        self.profile_.preferences_borda_rk[other_voters, :][:, is_candidate_alive_begin_r[r + 1, :]], 1
+                    )[:, np.newaxis],
+                ),
+                0,
+            )
             self.mylogv("im_aux_exact: scores_s_begin_r[r+1, :] =", scores_tot_begin_r[r + 1, :], 3)
             if ballot_m_temp == d:
                 ballot_m_begin_r[r + 1] = -1
@@ -838,9 +858,9 @@ class RuleIRV(Rule):
 
             # Update other variables for next round
             strategy_r[r + 1] = 0
-            natural_loser_r[r + 1] = np.where(
-                scores_tot_begin_r[r + 1, :] == np.nanmin(scores_tot_begin_r[r + 1, :])
-            )[0][-1]
+            natural_loser_r[r + 1] = np.where(scores_tot_begin_r[r + 1, :] == np.nanmin(scores_tot_begin_r[r + 1, :]))[
+                0
+            ][-1]
             r += 1
             self.mylogv("im_aux_exact: r =", r, 3)
             self.mylogv("im_aux_exact: natural_loser_r[r] =", natural_loser_r[r], 3)
@@ -968,17 +988,17 @@ class RuleIRV(Rule):
 
     def _um_preliminary_checks_c_(self, c):
         """
-            >>> profile = Profile(preferences_rk=[
-            ...     [2, 0, 1],
-            ...     [2, 1, 0],
-            ...     [0, 2, 1],
-            ...     [1, 2, 0],
-            ... ])
-            >>> rule = RuleIRV(um_option='fast', fast_algo='minus_max', cm_option='slow')(profile)
-            >>> rule.is_um_c_(1)
-            False
+        >>> profile = Profile(preferences_rk=[
+        ...     [2, 0, 1],
+        ...     [2, 1, 0],
+        ...     [0, 2, 1],
+        ...     [1, 2, 0],
+        ... ])
+        >>> rule = RuleIRV(um_option='fast', fast_algo='minus_max', cm_option='slow')(profile)
+        >>> rule.is_um_c_(1)
+        False
         """
-        if self.um_option not in {'fast', 'lazy'} or self.cm_option not in {'fast', 'lazy'}:
+        if self.um_option not in {"fast", "lazy"} or self.cm_option not in {"fast", "lazy"}:
             if (
                 self.w_ == self.profile_.condorcet_winner_rk_ctb
                 and not self.profile_.c_might_be_there_when_cw_is_eliminated_irv_style[c]
@@ -1147,22 +1167,25 @@ class RuleIRV(Rule):
                 is_candidate_alive_temp = np.copy(is_candidate_alive)
                 is_candidate_alive_temp[d] = False
                 scores_s_temp = np.full(self.profile_.n_c, np.nan)
-                scores_s_temp[is_candidate_alive_temp] = np.sum(np.equal(
-                    preferences_borda_s[:, is_candidate_alive_temp],
-                    np.max(preferences_borda_s[:, is_candidate_alive_temp], 1)[:, np.newaxis]
-                ), 0)
+                scores_s_temp[is_candidate_alive_temp] = np.sum(
+                    np.equal(
+                        preferences_borda_s[:, is_candidate_alive_temp],
+                        np.max(preferences_borda_s[:, is_candidate_alive_temp], 1)[:, np.newaxis],
+                    ),
+                    0,
+                )
                 if ballot_m_temp == d:
                     ballot_m_temp = -1
-                ballot_free_temp = (ballot_m_temp == -1)
+                ballot_free_temp = ballot_m_temp == -1
                 scores_tot_temp = np.copy(scores_s_temp)
                 if ballot_m_temp != -1:
                     scores_tot_temp[ballot_m_temp] += n_m
                 if self.fast_algo == "c_minus_max":
                     situation_for_c = scores_s_temp[c] - np.nanmax(scores_tot_temp[candidates != c])
                 elif self.fast_algo == "minus_max":
-                    situation_for_c = - np.nanmax(scores_tot_temp[candidates != c])
+                    situation_for_c = -np.nanmax(scores_tot_temp[candidates != c])
                 elif self.fast_algo == "hardest_first":
-                    situation_for_c = (ballot_m_temp != -1)
+                    situation_for_c = ballot_m_temp != -1
                 else:
                     raise NotImplementedError("Unknown fast algorithm: " + format(self.fast_algo))
                 self.mylogv("um_aux_fast: scores_s_temp =", scores_s_temp, 3)
@@ -1294,11 +1317,11 @@ class RuleIRV(Rule):
         r = 0
         is_candidate_alive_begin_r = np.zeros((self.profile_.n_c - 1, self.profile_.n_c), dtype=bool)
         is_candidate_alive_begin_r[0, :] = np.ones(self.profile_.n_c)
-        ballot_m_begin_r = np.array(- np.ones(self.profile_.n_c - 1, dtype=int))
+        ballot_m_begin_r = np.array(-np.ones(self.profile_.n_c - 1, dtype=int))
         scores_tot_begin_r = np.zeros((self.profile_.n_c - 1, self.profile_.n_c))
-        scores_tot_begin_r[0, :] = np.sum(np.equal(
-            preferences_borda_s, np.max(preferences_borda_s, 1)[:, np.newaxis]
-        ), 0)
+        scores_tot_begin_r[0, :] = np.sum(
+            np.equal(preferences_borda_s, np.max(preferences_borda_s, 1)[:, np.newaxis]), 0
+        )
         self.mylogv("um_aux_exact: r =", r, 3)
         self.mylogv("um_aux_exact: scores_tot_begin_r[r] =", scores_tot_begin_r[0, :], 3)
         # If an opponent has too many votes, then manipulation is not possible.
@@ -1306,7 +1329,7 @@ class RuleIRV(Rule):
         most_serious_opponent = np.where(scores_tot_begin_r[0, :] == max_score)[0][0]
         if max_score + (most_serious_opponent < c) > n_s + n_m - max_score:  # pragma: no cover
             # TO DO: Investigate whether this case can actually happen.
-            self._reached_uncovered_code('IRV: _um_aux_exact')
+            self._reached_uncovered_code("IRV: _um_aux_exact")
             self.mylogv("um_aux_exact: most_serious_opponent =", most_serious_opponent, 3)
             self.mylog("um_aux_exact: Manipulation impossible by this path (an opponent has too many votes)", 3)
             r = -1
@@ -1365,10 +1388,13 @@ class RuleIRV(Rule):
             is_candidate_alive_begin_r[r + 1, d] = False
             self.mylogv("um_aux_exact: is_candidate_alive_begin_r[r+1, :] =", is_candidate_alive_begin_r[r + 1, :], 3)
             scores_tot_begin_r[r + 1, :] = np.full(self.profile_.n_c, np.nan)
-            scores_tot_begin_r[r + 1, is_candidate_alive_begin_r[r + 1, :]] = np.sum(np.equal(
-                preferences_borda_s[:, is_candidate_alive_begin_r[r + 1, :]],
-                np.max(preferences_borda_s[:, is_candidate_alive_begin_r[r + 1, :]], 1)[:, np.newaxis]
-            ), 0)
+            scores_tot_begin_r[r + 1, is_candidate_alive_begin_r[r + 1, :]] = np.sum(
+                np.equal(
+                    preferences_borda_s[:, is_candidate_alive_begin_r[r + 1, :]],
+                    np.max(preferences_borda_s[:, is_candidate_alive_begin_r[r + 1, :]], 1)[:, np.newaxis],
+                ),
+                0,
+            )
             self.mylogv("um_aux_exact: scores_s_begin_r[r+1, :] =", scores_tot_begin_r[r + 1, :], 3)
             if ballot_m_temp == d:
                 ballot_m_begin_r[r + 1] = -1
@@ -1385,48 +1411,49 @@ class RuleIRV(Rule):
             if max_score + (most_serious_opponent < c) > n_s + n_m - max_score:
                 self.mylogv("um_aux_exact: most_serious_opponent =", most_serious_opponent, 3)
                 self.mylog(
-                    "um_aux_exact: Manipulation impossible by this path (an opponent will have too many votes)", 3)
+                    "um_aux_exact: Manipulation impossible by this path (an opponent will have too many votes)", 3
+                )
                 strategy_r[r] += 1
                 continue
 
             # Update other variables for next round
             strategy_r[r + 1] = 0
-            natural_loser_r[r + 1] = np.where(
-                scores_tot_begin_r[r + 1, :] == np.nanmin(scores_tot_begin_r[r + 1, :])
-            )[0][-1]
+            natural_loser_r[r + 1] = np.where(scores_tot_begin_r[r + 1, :] == np.nanmin(scores_tot_begin_r[r + 1, :]))[
+                0
+            ][-1]
             r += 1
             self.mylogv("um_aux_exact: r =", r, 3)
             self.mylogv("um_aux_exact: natural_loser_r[r] =", natural_loser_r[r], 3)
 
     def _um_preliminary_checks_general_subclass_(self):
         """
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 1, 2],
-            ...     [1, 0, 2],
-            ...     [1, 0, 2],
-            ...     [2, 0, 1],
-            ...     [2, 1, 0],
-            ... ])
-            >>> rule = RuleIRV(um_option='exact')(profile)
-            >>> rule.candidates_um_
-            array([0., 0., 0.])
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [1, 0, 2],
+        ...     [1, 0, 2],
+        ...     [2, 0, 1],
+        ...     [2, 1, 0],
+        ... ])
+        >>> rule = RuleIRV(um_option='exact')(profile)
+        >>> rule.candidates_um_
+        array([0., 0., 0.])
 
-            >>> profile = Profile(preferences_ut=[
-            ...     [-0.5, -0.5, -0.5],
-            ...     [-1. ,  0.5, -0.5],
-            ...     [-1. ,  0. , -1. ],
-            ...     [ 0. ,  1. ,  1. ],
-            ...     [ 0. ,  0.5,  0.5],
-            ... ], preferences_rk=[
-            ...     [0, 1, 2],
-            ...     [1, 2, 0],
-            ...     [1, 2, 0],
-            ...     [2, 1, 0],
-            ...     [2, 1, 0],
-            ... ])
-            >>> rule = RuleIRV()(profile)
-            >>> rule.candidates_um_
-            array([0., 0., 0.])
+        >>> profile = Profile(preferences_ut=[
+        ...     [-0.5, -0.5, -0.5],
+        ...     [-1. ,  0.5, -0.5],
+        ...     [-1. ,  0. , -1. ],
+        ...     [ 0. ,  1. ,  1. ],
+        ...     [ 0. ,  0.5,  0.5],
+        ... ], preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [1, 2, 0],
+        ...     [1, 2, 0],
+        ...     [2, 1, 0],
+        ...     [2, 1, 0],
+        ... ])
+        >>> rule = RuleIRV()(profile)
+        >>> rule.candidates_um_
+        array([0., 0., 0.])
         """
         if np.all(np.equal(self._candidates_um, False)):
             return
@@ -1439,11 +1466,13 @@ class RuleIRV(Rule):
                 # Other variables will be updated in ``_um_preliminary_checks_general``.
 
     def _um_main_work_c_(self, c):
-        exact = (self.um_option == "exact")
+        exact = self.um_option == "exact"
         n_m = self.profile_.matrix_duels_ut[c, self.w_]
         manip_found_fast, example_path_fast = self._um_aux_fast(
-            c, n_m,
-            preferences_borda_s=self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :])
+            c,
+            n_m,
+            preferences_borda_s=self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :],
+        )
         self.mylogv("UM: manip_found_fast =", manip_found_fast, 3)
         if manip_found_fast:
             self._candidates_um[c] = True
@@ -1460,8 +1489,10 @@ class RuleIRV(Rule):
             self._candidates_um[c] = False
             return
         manip_found_exact, example_path_exact = self._um_aux_exact(
-            c, n_m,
-            preferences_borda_s=self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :])
+            c,
+            n_m,
+            preferences_borda_s=self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :],
+        )
         self.mylogv("UM: manip_found_exact =", manip_found_exact)
         if manip_found_exact:
             self._candidates_um[c] = True
@@ -1543,9 +1574,10 @@ class RuleIRV(Rule):
             suggested_path = self.example_path_cm_c_(c)
             n_m = self.profile_.matrix_duels_ut[c, self.w_]
             preferences_borda_s = self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :]
-            matrix_duels_temp = (preferences_ut_to_matrix_duels_ut(preferences_borda_s))
+            matrix_duels_temp = preferences_ut_to_matrix_duels_ut(preferences_borda_s)
             self._example_ballots_cm_c[c] = self._example_ballots_cm_c_aux(
-                c, n_m, suggested_path, preferences_borda_s, matrix_duels_temp)
+                c, n_m, suggested_path, preferences_borda_s, matrix_duels_temp
+            )
         return self._example_ballots_cm_c[c]
 
     def example_ballots_cm_w_against_(self, w_other_rule):
@@ -1570,10 +1602,12 @@ class RuleIRV(Rule):
             suggested_path = self.elimination_path_
             n_m = self.profile_.matrix_duels_ut[self.w_, w_other_rule]
             preferences_borda_s = self.profile_.preferences_borda_rk[
-                self.profile_.preferences_ut[:, w_other_rule] >= self.profile_.preferences_ut[:, self.w_], :]
-            matrix_duels_temp = (preferences_ut_to_matrix_duels_ut(preferences_borda_s))
+                self.profile_.preferences_ut[:, w_other_rule] >= self.profile_.preferences_ut[:, self.w_], :
+            ]
+            matrix_duels_temp = preferences_ut_to_matrix_duels_ut(preferences_borda_s)
             self._example_ballots_cm_w_against[w_other_rule] = self._example_ballots_cm_c_aux(
-                self.w_, n_m, suggested_path, preferences_borda_s, matrix_duels_temp)
+                self.w_, n_m, suggested_path, preferences_borda_s, matrix_duels_temp
+            )
         return self._example_ballots_cm_w_against[w_other_rule]
 
     def _example_ballots_cm_c_aux(self, c, n_m, suggested_path, preferences_borda_s, matrix_duels_temp):
@@ -1603,15 +1637,18 @@ class RuleIRV(Rule):
         # And consequences on the majority matrix
         scores_m_begin_r = np.zeros(self.profile_.n_c)  # Score due to manipulators at the beginning of the round
         is_candidate_alive_begin_r = np.ones(self.profile_.n_c, dtype=bool)
-        current_top_v = np.array(- np.ones(n_m))  # -1 means that manipulator v is available
+        current_top_v = np.array(-np.ones(n_m))  # -1 means that manipulator v is available
         candidates_to_put_in_ballot = np.ones((n_m, self.profile_.n_c), dtype=bool)
         for r in range(self.profile_.n_c - 1):
             self.mylogv("cm_aux: r =", r, 3)
             scores_tot_begin_r = np.full(self.profile_.n_c, np.nan)
-            scores_tot_begin_r[is_candidate_alive_begin_r] = np.sum(np.equal(
-                preferences_borda_s[:, is_candidate_alive_begin_r],
-                np.max(preferences_borda_s[:, is_candidate_alive_begin_r], 1)[:, np.newaxis]
-            ), 0)
+            scores_tot_begin_r[is_candidate_alive_begin_r] = np.sum(
+                np.equal(
+                    preferences_borda_s[:, is_candidate_alive_begin_r],
+                    np.max(preferences_borda_s[:, is_candidate_alive_begin_r], 1)[:, np.newaxis],
+                ),
+                0,
+            )
             self.mylogv("cm_aux: scores_s_begin_r =", scores_tot_begin_r, 3)
             self.mylogv("cm_aux: scores_m_begin_r =", scores_m_begin_r, 3)
             scores_tot_begin_r += scores_m_begin_r
@@ -1621,8 +1658,10 @@ class RuleIRV(Rule):
             scores_m_new_r = np.zeros(self.profile_.n_c, dtype=int)
             scores_m_new_r[is_candidate_alive_begin_r] = np.maximum(
                 0,
-                scores_tot_begin_r[d] - scores_tot_begin_r[is_candidate_alive_begin_r]
-                + (candidates[is_candidate_alive_begin_r] > d))
+                scores_tot_begin_r[d]
+                - scores_tot_begin_r[is_candidate_alive_begin_r]
+                + (candidates[is_candidate_alive_begin_r] > d),
+            )
             self.mylogv("cm_aux: scores_m_new_r =", scores_m_new_r, 3)
             # Update variables for next round
             scores_m_begin_r = scores_m_begin_r + scores_m_new_r
@@ -1670,9 +1709,7 @@ class RuleIRV(Rule):
                 return self._example_ballots_cm_c[c]
             csd_penalties = np.zeros(self.profile_.n_c)  # Sum of losses in absolute defeats
             for d in not_yet_ok:
-                csd_penalties[d] = np.sum(np.maximum(
-                    matrix_duels_temp[:, d] - self.profile_.n_v / 2, 0
-                ))
+                csd_penalties[d] = np.sum(np.maximum(matrix_duels_temp[:, d] - self.profile_.n_v / 2, 0))
             max_penalty = np.max(csd_penalties)
             if max_penalty == 0:
                 i_found_a_new_ok = False
@@ -1799,7 +1836,8 @@ class RuleIRV(Rule):
                 # Is it possible to eliminate ``d`` now?
                 scores_m_new = np.zeros(self.profile_.n_c)
                 scores_m_new[is_candidate_alive] = np.maximum(
-                    0, scores_tot[d] - scores_tot[is_candidate_alive] + (candidates[is_candidate_alive] > d))
+                    0, scores_tot[d] - scores_tot[is_candidate_alive] + (candidates[is_candidate_alive] > d)
+                )
                 self.mylogv("cm_aux_fast: scores_m_new =", scores_m_new, 3)
                 scores_m_tot_d = scores_m + scores_m_new
                 n_manip_d = np.sum(scores_m_tot_d)
@@ -1815,17 +1853,20 @@ class RuleIRV(Rule):
                 is_candidate_alive_temp = np.copy(is_candidate_alive)
                 is_candidate_alive_temp[d] = False
                 scores_s_temp = np.full(self.profile_.n_c, np.nan)
-                scores_s_temp[is_candidate_alive_temp] = np.sum(np.equal(
-                    preferences_borda_s[:, is_candidate_alive_temp],
-                    np.max(preferences_borda_s[:, is_candidate_alive_temp], 1)[:, np.newaxis]
-                ), 0)
+                scores_s_temp[is_candidate_alive_temp] = np.sum(
+                    np.equal(
+                        preferences_borda_s[:, is_candidate_alive_temp],
+                        np.max(preferences_borda_s[:, is_candidate_alive_temp], 1)[:, np.newaxis],
+                    ),
+                    0,
+                )
                 scores_m_temp = np.copy(scores_m_tot_d)
                 scores_m_temp[d] = 0
                 scores_tot_temp = scores_s_temp + scores_m_temp
                 if self.fast_algo == "c_minus_max":
                     situation_for_c = scores_s_temp[c] - np.nanmax(scores_tot_temp[candidates != c])
                 elif self.fast_algo == "minus_max":
-                    situation_for_c = - np.nanmax(scores_tot_temp[candidates != c])
+                    situation_for_c = -np.nanmax(scores_tot_temp[candidates != c])
                 elif self.fast_algo == "hardest_first":
                     situation_for_c = n_manip_d
                 else:
@@ -1898,10 +1939,13 @@ class RuleIRV(Rule):
         for r in range(self.profile_.n_c - 1):
             # Sincere scores (eliminated candidates will have nan)
             scores_s = np.full(self.profile_.n_c, np.nan)
-            scores_s[is_candidate_alive] = np.sum(np.equal(
-                preferences_borda_s[:, is_candidate_alive],
-                np.max(preferences_borda_s[:, is_candidate_alive], 1)[:, np.newaxis]
-            ), 0)
+            scores_s[is_candidate_alive] = np.sum(
+                np.equal(
+                    preferences_borda_s[:, is_candidate_alive],
+                    np.max(preferences_borda_s[:, is_candidate_alive], 1)[:, np.newaxis],
+                ),
+                0,
+            )
             # Total scores (eliminated candidates will have nan)
             scores_tot = scores_s + scores_m
             self.mylogv("cm_aux_slow: Round r =", r, 3)
@@ -1912,7 +1956,8 @@ class RuleIRV(Rule):
             d = suggested_path[r]
             scores_m_new = np.zeros(self.profile_.n_c)
             scores_m_new[is_candidate_alive] = np.maximum(
-                0, scores_tot[d] - scores_tot[is_candidate_alive] + (candidates[is_candidate_alive] > d))
+                0, scores_tot[d] - scores_tot[is_candidate_alive] + (candidates[is_candidate_alive] > d)
+            )
             self.mylogv("cm_aux_slow: scores_m_new =", scores_m_new, 3)
             scores_m = scores_m + scores_m_new
             n_manip_r = np.sum(scores_m)
@@ -2022,13 +2067,13 @@ class RuleIRV(Rule):
         n_manip_used_before_r = np.zeros(self.profile_.n_c - 1, dtype=int)
         scores_m_begin_r = np.zeros((self.profile_.n_c - 1, self.profile_.n_c))
         scores_tot_begin_r = np.zeros((self.profile_.n_c - 1, self.profile_.n_c))
-        scores_tot_begin_r[0, :] = np.sum(np.equal(
-            preferences_borda_s, np.max(preferences_borda_s, 1)[:, np.newaxis]
-        ), 0)
+        scores_tot_begin_r[0, :] = np.sum(
+            np.equal(preferences_borda_s, np.max(preferences_borda_s, 1)[:, np.newaxis]), 0
+        )
         # ``suggested_path_r[r]`` is a list with all opponents (``candidates != c``) who are alive at the beginning
         # of ``r``, given in a suggested order of elimination.
-        self.mylogv('cm_aux_exact: suggested_path =', suggested_path, 3)
-        self.mylogv('cm_aux_exact: c =', c, 3)
+        self.mylogv("cm_aux_exact: suggested_path =", suggested_path, 3)
+        self.mylogv("cm_aux_exact: c =", c, 3)
         suggested_path_r = {0: suggested_path[suggested_path != c]}
         # ``index_in_path_r[r]`` is the index of the candidate we eliminate at round ``r`` in the list
         # ``suggested_path_r[r]``.
@@ -2039,7 +2084,7 @@ class RuleIRV(Rule):
         most_serious_opponent = np.where(scores_tot_begin_r[0, :] == max_score)[0][0]
         if max_score + (most_serious_opponent < c) > n_s + n_max_updated - max_score:  # pragma: no cover
             # TO DO: Investigate whether this case can actually happen.
-            self._reached_uncovered_code('IRV: _cm_aux_exact')
+            self._reached_uncovered_code("IRV: _cm_aux_exact")
             self.mylogv("cm_aux_exact: scores_tot_begin_r =", scores_tot_begin_r[0, :], 3)
             self.mylogv("cm_aux_exact: most_serious_opponent =", most_serious_opponent, 3)
             self.mylog("cm_aux_exact: Manipulation impossible by this path (an opponent has too many votes)", 3)
@@ -2067,8 +2112,10 @@ class RuleIRV(Rule):
             scores_m_new_r = np.zeros(self.profile_.n_c)
             scores_m_new_r[is_candidate_alive_begin_r[r, :]] = np.maximum(
                 0,
-                scores_tot_begin_r[r, d] - scores_tot_begin_r[r, is_candidate_alive_begin_r[r, :]]
-                + (candidates[is_candidate_alive_begin_r[r, :]] > d))
+                scores_tot_begin_r[r, d]
+                - scores_tot_begin_r[r, is_candidate_alive_begin_r[r, :]]
+                + (candidates[is_candidate_alive_begin_r[r, :]] > d),
+            )
             scores_m_end_r = scores_m_begin_r[r, :] + scores_m_new_r
             n_manip_r_and_before = max(n_manip_used_before_r[r], np.sum(scores_m_end_r))
             self.mylogv("cm_aux_exact: scores_m_new_r =", scores_m_new_r, 3)
@@ -2090,8 +2137,9 @@ class RuleIRV(Rule):
                 self.mylogv("cm_aux_exact: n_manip_final =", n_manip_final, 3)
                 self.mylogv("cm_aux_exact: example_path =", example_path, 3)
                 if n_manip_final == n_min:
-                    self.mylogv("cm_aux_exact: End of exploration: it is not possible to do better than n_min =",
-                                n_min, 3)
+                    self.mylogv(
+                        "cm_aux_exact: End of exploration: it is not possible to do better than n_min =", n_min, 3
+                    )
                     return n_manip_final, np.array(example_path), False
                 if not optimize_bounds:
                     return n_manip_final, np.array(example_path), True
@@ -2106,11 +2154,13 @@ class RuleIRV(Rule):
             is_candidate_alive_begin_r[r + 1, d] = False
             self.mylogv("cm_aux_exact: is_candidate_alive_begin_r[r+1, :] =", is_candidate_alive_begin_r[r + 1, :], 3)
             scores_tot_begin_r[r + 1, :] = np.full(self.profile_.n_c, np.nan)
-            scores_tot_begin_r[r + 1, is_candidate_alive_begin_r[r + 1, :]] = (
-                np.sum(np.equal(
+            scores_tot_begin_r[r + 1, is_candidate_alive_begin_r[r + 1, :]] = np.sum(
+                np.equal(
                     preferences_borda_s[:, is_candidate_alive_begin_r[r + 1, :]],
-                    np.max(preferences_borda_s[:, is_candidate_alive_begin_r[r + 1, :]], 1)[:, np.newaxis]
-                ), 0))
+                    np.max(preferences_borda_s[:, is_candidate_alive_begin_r[r + 1, :]], 1)[:, np.newaxis],
+                ),
+                0,
+            )
             self.mylogv("cm_aux_exact: scores_s_begin_r[r+1, :] =", scores_tot_begin_r[r + 1, :], 3)
             scores_m_begin_r[r + 1, :] = scores_m_end_r
             scores_m_begin_r[r + 1, d] = 0
@@ -2124,7 +2174,8 @@ class RuleIRV(Rule):
             if max_score + (most_serious_opponent < c) > n_s + n_max_updated - max_score:
                 self.mylogv("cm_aux_exact: most_serious_opponent =", most_serious_opponent, 3)
                 self.mylog(
-                    "cm_aux_exact: Manipulation impossible by this path (an opponent will have too many votes)", 3)
+                    "cm_aux_exact: Manipulation impossible by this path (an opponent will have too many votes)", 3
+                )
                 index_in_path_r[r] += 1
                 continue
 
@@ -2135,7 +2186,7 @@ class RuleIRV(Rule):
             self.mylogv("cm_aux_exact: r =", r, 3)
 
     def _cm_preliminary_checks_general_subclass_(self):
-        if self.cm_option == "slow" or self.cm_option == 'exact':
+        if self.cm_option == "slow" or self.cm_option == "exact":
             # In that case, we check Exhaustive Ballot first
             self.eb_.cm_option = "exact"
             if equal_false(self.eb_.is_cm_):
@@ -2155,17 +2206,24 @@ class RuleIRV(Rule):
         # example of path.
         if self.sufficient_coalition_size_tm_c_(c) <= self._sufficient_coalition_size_cm[c]:
             # The <= is not a typo.
-            self._update_sufficient(self._sufficient_coalition_size_cm, c, self.sufficient_coalition_size_tm_c_(c),
-                                    'CM: Preliminary checks: TM improved => \n    sufficient_coalition_size_cm[c] = ')
-            self.mylogv('CM: Preliminary checks: Update _example_path_cm[c] = _example_path_tm[c] =',
-                        self.example_path_tm_c_(c), 3)
+            self._update_sufficient(
+                self._sufficient_coalition_size_cm,
+                c,
+                self.sufficient_coalition_size_tm_c_(c),
+                "CM: Preliminary checks: TM improved => \n    sufficient_coalition_size_cm[c] = ",
+            )
+            self.mylogv(
+                "CM: Preliminary checks: Update _example_path_cm[c] = _example_path_tm[c] =",
+                self.example_path_tm_c_(c),
+                3,
+            )
             self._example_path_cm[c] = self.example_path_tm_c_(c)
         n_m = self.profile_.matrix_duels_ut[c, self.w_]  # Number of manipulators
         if not optimize_bounds and n_m >= self._sufficient_coalition_size_cm[c]:
             return
         if not optimize_bounds and self._necessary_coalition_size_cm[c] > n_m:  # pragma: no cover
             # TO DO: Investigate whether this case can actually happen.
-            self._reached_uncovered_code('IRV: _cm_preliminary_checks_c_')
+            self._reached_uncovered_code("IRV: _cm_preliminary_checks_c_")
             return
         # Another pretest, based on Exhaustive Ballot
         if self.cm_option == "slow" or self.cm_option == "exact":
@@ -2177,59 +2235,63 @@ class RuleIRV(Rule):
                 # EB.CM is possible for ``c``.
                 self.eb_.is_cm_c_(c)
             # noinspection PyProtectedMember
-            self._update_necessary(self._necessary_coalition_size_cm, c, self.eb_._necessary_coalition_size_cm[c],
-                                   'CM: Preliminary checks: Use EB =>\n'
-                                   '    necessary_coalition_size_cm[c] = EB._necessary_coalition_size_cm[c] =')
+            self._update_necessary(
+                self._necessary_coalition_size_cm,
+                c,
+                self.eb_._necessary_coalition_size_cm[c],
+                "CM: Preliminary checks: Use EB =>\n"
+                "    necessary_coalition_size_cm[c] = EB._necessary_coalition_size_cm[c] =",
+            )
 
     def _cm_main_work_c_(self, c, optimize_bounds):
         """
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 2, 1, 3],
-            ...     [1, 2, 0, 3],
-            ...     [1, 3, 2, 0],
-            ...     [2, 1, 0, 3],
-            ...     [3, 2, 1, 0],
-            ... ])
-            >>> rule = RuleIRV(cm_option='exact')(profile)
-            >>> rule.candidates_cm_
-            array([0., 1., 0., 0.])
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 2, 1, 3],
+        ...     [1, 2, 0, 3],
+        ...     [1, 3, 2, 0],
+        ...     [2, 1, 0, 3],
+        ...     [3, 2, 1, 0],
+        ... ])
+        >>> rule = RuleIRV(cm_option='exact')(profile)
+        >>> rule.candidates_cm_
+        array([0., 1., 0., 0.])
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 1, 2],
-            ...     [0, 2, 1],
-            ...     [1, 0, 2],
-            ...     [1, 0, 2],
-            ...     [2, 0, 1],
-            ... ])
-            >>> rule = RuleIRV(cm_option='exact')(profile)
-            >>> rule.necessary_coalition_size_cm_
-            array([0., 4., 5.])
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [0, 2, 1],
+        ...     [1, 0, 2],
+        ...     [1, 0, 2],
+        ...     [2, 0, 1],
+        ... ])
+        >>> rule = RuleIRV(cm_option='exact')(profile)
+        >>> rule.necessary_coalition_size_cm_
+        array([0., 4., 5.])
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 1, 2],
-            ...     [0, 2, 1],
-            ...     [2, 1, 0],
-            ...     [2, 1, 0],
-            ...     [2, 1, 0],
-            ... ])
-            >>> rule = RuleIRV()(profile)
-            >>> rule.necessary_coalition_size_cm_
-            array([3., 2., 0.])
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [0, 2, 1],
+        ...     [2, 1, 0],
+        ...     [2, 1, 0],
+        ...     [2, 1, 0],
+        ... ])
+        >>> rule = RuleIRV()(profile)
+        >>> rule.necessary_coalition_size_cm_
+        array([3., 2., 0.])
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [1, 0, 2, 3, 4],
-            ...     [2, 0, 1, 3, 4],
-            ...     [2, 1, 3, 4, 0],
-            ...     [3, 0, 4, 1, 2],
-            ...     [4, 1, 3, 0, 2],
-            ... ])
-            >>> rule = RuleIRV(cm_option='slow')(profile)
-            >>> rule.is_cm_
-            nan
+        >>> profile = Profile(preferences_rk=[
+        ...     [1, 0, 2, 3, 4],
+        ...     [2, 0, 1, 3, 4],
+        ...     [2, 1, 3, 4, 0],
+        ...     [3, 0, 4, 1, 2],
+        ...     [4, 1, 3, 0, 2],
+        ... ])
+        >>> rule = RuleIRV(cm_option='slow')(profile)
+        >>> rule.is_cm_
+        nan
         """
-        exact = (self.cm_option == "exact")
-        slow = (self.cm_option == "slow")
-        fast = (self.cm_option == "fast")
+        exact = self.cm_option == "exact"
+        slow = self.cm_option == "slow"
+        fast = self.cm_option == "fast"
         if optimize_bounds and exact:
             n_max = self._sufficient_coalition_size_cm[c] - 1
         else:
@@ -2239,13 +2301,15 @@ class RuleIRV(Rule):
             self.mylog("CM: Fast algorithm will not do better than what we already know", 3)
             return False
         n_manip_fast, example_path_fast = self._cm_aux_fast(
-            c, n_max,
-            preferences_borda_s=self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :])
+            c,
+            n_max,
+            preferences_borda_s=self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :],
+        )
         self.mylogv("CM: n_manip_fast =", n_manip_fast, 3)
         if n_manip_fast < self._sufficient_coalition_size_cm[c]:
             self._sufficient_coalition_size_cm[c] = n_manip_fast
             self._example_path_cm[c] = example_path_fast
-            self.mylogv('CM: Update sufficient_coalition_size_cm[c] = n_manip_fast =', n_manip_fast, 3)
+            self.mylogv("CM: Update sufficient_coalition_size_cm[c] = n_manip_fast =", n_manip_fast, 3)
         if fast:
             # With fast algo, we stop here anyway. It is not a "quick escape" (if we'd try again with
             # ``optimize_bounds``, we would not try better).
@@ -2266,41 +2330,52 @@ class RuleIRV(Rule):
         # EB should always suggest an elimination path. But just as precaution, we use the fact that we know that
         # ``self._example_path_cm[c]`` provides a path (thanks to 'improved' TM).
         if self.eb_.example_path_cm_c_(c) is None:  # pragma: no cover - This should never happen.
-            self._reached_uncovered_code('IRV: _cm_main_work_c_')
+            self._reached_uncovered_code("IRV: _cm_main_work_c_")
             suggested_path = self._example_path_cm[c]
-            self.mylog('***************************************************', 0)
-            self.mylog('CM: WARNING: EB did not provide an elimination path', 0)
-            self.mylog('***************************************************', 0)
-            self.mylogv('CM: Use self._example_path_cm[c] =', suggested_path, 3)
+            self.mylog("***************************************************", 0)
+            self.mylog("CM: WARNING: EB did not provide an elimination path", 0)
+            self.mylog("***************************************************", 0)
+            self.mylogv("CM: Use self._example_path_cm[c] =", suggested_path, 3)
         else:
             suggested_path = self.eb_.example_path_cm_c_(c)
-            self.mylogv('CM: Use eb_.example_path_cm_c_(c) =', suggested_path, 3)
+            self.mylogv("CM: Use eb_.example_path_cm_c_(c) =", suggested_path, 3)
         if slow:
             n_manip_slow = self._cm_aux_slow(
                 suggested_path,
-                preferences_borda_s=self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :]
+                preferences_borda_s=self.profile_.preferences_borda_rk[
+                    np.logical_not(self.v_wants_to_help_c_[:, c]), :
+                ],
             )
             self.mylogv("CM: n_manip_slow =", n_manip_slow, 3)
             if n_manip_slow < self._sufficient_coalition_size_cm[c]:
                 self._sufficient_coalition_size_cm[c] = n_manip_slow
                 self._example_path_cm[c] = suggested_path
-                self.mylogv('CM: Update sufficient_coalition_size_cm[c] = n_manip_slow =')
+                self.mylogv("CM: Update sufficient_coalition_size_cm[c] = n_manip_slow =")
             return False
         else:
             n_manip_exact, example_path_exact, quick_escape = self._cm_aux_exact(
-                    c, n_max_updated, self._necessary_coalition_size_cm[c], optimize_bounds, suggested_path,
-                    preferences_borda_s=self.profile_.preferences_borda_rk[
-                                        np.logical_not(self.v_wants_to_help_c_[:, c]), :]
+                c,
+                n_max_updated,
+                self._necessary_coalition_size_cm[c],
+                optimize_bounds,
+                suggested_path,
+                preferences_borda_s=self.profile_.preferences_borda_rk[
+                    np.logical_not(self.v_wants_to_help_c_[:, c]), :
+                ],
             )
             self.mylogv("CM: n_manip_exact =", n_manip_exact, 3)
             if n_manip_exact < self._sufficient_coalition_size_cm[c]:
                 self._sufficient_coalition_size_cm[c] = n_manip_exact
                 self._example_path_cm[c] = example_path_exact
-                self.mylogv('CM: Update sufficient_coalition_size_cm[c] = n_manip_exact =')
+                self.mylogv("CM: Update sufficient_coalition_size_cm[c] = n_manip_exact =")
             # Update necessary coalition and return
             if optimize_bounds:
-                self._update_necessary(self._necessary_coalition_size_cm, c, self._sufficient_coalition_size_cm[c],
-                                       'CM: Update necessary_coalition_size_cm[c] = sufficient_coalition_size_cm[c] =')
+                self._update_necessary(
+                    self._necessary_coalition_size_cm,
+                    c,
+                    self._sufficient_coalition_size_cm[c],
+                    "CM: Update necessary_coalition_size_cm[c] = sufficient_coalition_size_cm[c] =",
+                )
                 return False
             else:
                 if self.profile_.matrix_duels_ut[c, self.w_] >= self._sufficient_coalition_size_cm[c]:
@@ -2311,16 +2386,19 @@ class RuleIRV(Rule):
                     # We have explored everything with ``n_max = n_m`` but manipulation failed. However, we have not
                     # optimized ``sufficient_size`` (which must be higher than ``n_m``), so it is a quick escape.
                     self._update_necessary(
-                        self._necessary_coalition_size_cm, c, self.profile_.matrix_duels_ut[c, self.w_] + 1,
-                        'CM: Update necessary_coalition_size_cm[c] = n_m + 1 =')
+                        self._necessary_coalition_size_cm,
+                        c,
+                        self.profile_.matrix_duels_ut[c, self.w_] + 1,
+                        "CM: Update necessary_coalition_size_cm[c] = n_m + 1 =",
+                    )
                     return True
 
     @cached_property
     def theta_critical_(self):
         """
-            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
-            >>> rule = RuleIRV()(profile)
-            >>> rule.theta_critical_
-            0
+        >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
+        >>> rule = RuleIRV()(profile)
+        >>> rule.theta_critical_
+        0
         """
         return 0

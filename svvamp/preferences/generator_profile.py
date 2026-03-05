@@ -35,8 +35,7 @@ class GeneratorProfile:
     """
 
     def __init__(self, sort_voters=False):
-        """Store the parameters of the generator.
-        """
+        """Store the parameters of the generator."""
         self.sort_voters = sort_voters
 
     def __call__(self):

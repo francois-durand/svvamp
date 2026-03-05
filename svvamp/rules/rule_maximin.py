@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import numpy as np
 import networkx as nx
 from svvamp.rules.rule import Rule
@@ -302,23 +303,27 @@ class RuleMaximin(Rule):
         [0. 2. 3.]
     """
 
-    full_name = 'Maximin'
-    abbreviation = 'Max'
+    full_name = "Maximin"
+    abbreviation = "Max"
 
     options_parameters = Rule.options_parameters.copy()
-    options_parameters.update({
-        'im_option': {'allowed': ['exact'], 'default': 'exact'},
-        'tm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'um_option': {'allowed': ['exact'], 'default': 'exact'},
-        'icm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'cm_option': {'allowed': ['faster', 'fast', 'exact'], 'default': 'fast'}
-    })
+    options_parameters.update(
+        {
+            "im_option": {"allowed": ["exact"], "default": "exact"},
+            "tm_option": {"allowed": ["exact"], "default": "exact"},
+            "um_option": {"allowed": ["exact"], "default": "exact"},
+            "icm_option": {"allowed": ["exact"], "default": "exact"},
+            "cm_option": {"allowed": ["faster", "fast", "exact"], "default": "fast"},
+        }
+    )
 
     def __init__(self, **kwargs):
         super().__init__(
-            with_two_candidates_reduces_to_plurality=True, is_based_on_rk=True,
+            with_two_candidates_reduces_to_plurality=True,
+            is_based_on_rk=True,
             precheck_icm=False,
-            log_identity="MAXIMIN", **kwargs
+            log_identity="MAXIMIN",
+            **kwargs,
         )
 
     @cached_property
@@ -327,7 +332,7 @@ class RuleMaximin(Rule):
         the diagonal term), i.e. the result of candidate ``c`` for her worst duel.
         """
         self.mylog("Compute scores", 1)
-        return np.add(self.profile_.n_v, - np.max(self.profile_.matrix_duels_rk, 0))
+        return np.add(self.profile_.n_v, -np.max(self.profile_.matrix_duels_rk, 0))
 
     # %% Manipulation criteria of the voting system
 
@@ -390,8 +395,9 @@ class RuleMaximin(Rule):
             self.mylogm("AUX: digraph =", digraph, 3)
             self.mylogv("AUX: strategic_ballot =", strategic_ballot, 3)
             # candidates_not_dangerous = set A in the paper
-            candidates_not_dangerous = np.logical_and(np.logical_not(np.any(digraph, 1)),
-                                                      np.logical_not(strategic_ballot))
+            candidates_not_dangerous = np.logical_and(
+                np.logical_not(np.any(digraph, 1)), np.logical_not(strategic_ballot)
+            )
             self.mylogv("AUX: candidates_not_dangerous =", candidates_not_dangerous, 3)
             if np.any(candidates_not_dangerous):
                 # Transfer these candidates into the stacks
@@ -470,60 +476,60 @@ class RuleMaximin(Rule):
 
     def _im_main_work_v_(self, v, c_is_wanted, nb_wanted_undecided, stop_if_true):
         """
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 2, 1],
-            ...     [0, 2, 1],
-            ...     [1, 0, 2],
-            ...     [1, 0, 2],
-            ...     [2, 0, 1],
-            ... ])
-            >>> rule = RuleMaximin()(profile)
-            >>> rule.is_im_c_with_voters_(2)
-            (False, array([0., 0., 0., 0., 0.]))
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 2, 1],
+        ...     [0, 2, 1],
+        ...     [1, 0, 2],
+        ...     [1, 0, 2],
+        ...     [2, 0, 1],
+        ... ])
+        >>> rule = RuleMaximin()(profile)
+        >>> rule.is_im_c_with_voters_(2)
+        (False, array([0., 0., 0., 0., 0.]))
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 2, 1],
-            ...     [0, 2, 1],
-            ...     [1, 0, 2],
-            ...     [1, 0, 2],
-            ...     [2, 0, 1],
-            ... ])
-            >>> rule = RuleMaximin()(profile)
-            >>> rule.is_im_
-            False
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 2, 1],
+        ...     [0, 2, 1],
+        ...     [1, 0, 2],
+        ...     [1, 0, 2],
+        ...     [2, 0, 1],
+        ... ])
+        >>> rule = RuleMaximin()(profile)
+        >>> rule.is_im_
+        False
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 1, 2],
-            ...     [1, 0, 2],
-            ...     [1, 2, 0],
-            ...     [2, 0, 1],
-            ...     [2, 0, 1],
-            ... ])
-            >>> rule = RuleMaximin()(profile)
-            >>> rule.is_im_
-            True
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [1, 0, 2],
+        ...     [1, 2, 0],
+        ...     [2, 0, 1],
+        ...     [2, 0, 1],
+        ... ])
+        >>> rule = RuleMaximin()(profile)
+        >>> rule.is_im_
+        True
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 1, 2],
-            ...     [0, 1, 2],
-            ...     [1, 2, 0],
-            ...     [2, 1, 0],
-            ...     [2, 1, 0],
-            ... ])
-            >>> rule = RuleMaximin()(profile)
-            >>> rule.is_im_
-            False
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [0, 1, 2],
+        ...     [1, 2, 0],
+        ...     [2, 1, 0],
+        ...     [2, 1, 0],
+        ... ])
+        >>> rule = RuleMaximin()(profile)
+        >>> rule.is_im_
+        False
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 2, 1, 3],
-            ...     [1, 3, 0, 2],
-            ...     [2, 1, 0, 3],
-            ...     [2, 1, 3, 0],
-            ...     [3, 0, 1, 2],
-            ... ])
-            >>> rule = RuleMaximin()(profile)
-            >>> rule.is_im_
-            True
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 2, 1, 3],
+        ...     [1, 3, 0, 2],
+        ...     [2, 1, 0, 3],
+        ...     [2, 1, 3, 0],
+        ...     [3, 0, 1, 2],
+        ... ])
+        >>> rule = RuleMaximin()(profile)
+        >>> rule.is_im_
+        True
         """
         for c in self.losing_candidates_:
             if not c_is_wanted[c]:
@@ -573,7 +579,7 @@ class RuleMaximin(Rule):
                 self.mylog("IM: Manipulation failed...", 3)
 
             # We can conclude.
-            self._v_im_for_c[v, c] = (w_r == c)
+            self._v_im_for_c[v, c] = w_r == c
             if equal_true(self._v_im_for_c[v, c]):
                 self._candidates_im[c] = True
                 self._voters_im[v] = True
@@ -596,29 +602,29 @@ class RuleMaximin(Rule):
 
     def _um_main_work_c_(self, c):
         """
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 1, 2],
-            ...     [1, 0, 2],
-            ...     [1, 2, 0],
-            ...     [2, 0, 1],
-            ...     [2, 0, 1],
-            ... ])
-            >>> rule = RuleMaximin()(profile)
-            >>> rule.candidates_um_
-            array([0., 1., 1.])
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [1, 0, 2],
+        ...     [1, 2, 0],
+        ...     [2, 0, 1],
+        ...     [2, 0, 1],
+        ... ])
+        >>> rule = RuleMaximin()(profile)
+        >>> rule.candidates_um_
+        array([0., 1., 1.])
 
-            >>> profile = Profile(preferences_ut=[
-            ...     [-0.5,  0. , -1. ,  0.5],
-            ...     [ 1. , -1. ,  1. ,  0. ],
-            ...     [ 1. ,  1. ,  1. , -1. ],
-            ... ], preferences_rk=[
-            ...     [3, 1, 0, 2],
-            ...     [2, 0, 3, 1],
-            ...     [1, 2, 0, 3],
-            ... ])
-            >>> rule = RuleMaximin()(profile)
-            >>> rule.is_um_c_(1)
-            True
+        >>> profile = Profile(preferences_ut=[
+        ...     [-0.5,  0. , -1. ,  0.5],
+        ...     [ 1. , -1. ,  1. ,  0. ],
+        ...     [ 1. ,  1. ,  1. , -1. ],
+        ... ], preferences_rk=[
+        ...     [3, 1, 0, 2],
+        ...     [2, 0, 3, 1],
+        ...     [1, 2, 0, 3],
+        ... ])
+        >>> rule = RuleMaximin()(profile)
+        >>> rule.is_um_c_(1)
+        True
         """
         matrix_duels_temp = preferences_ut_to_matrix_duels_ut(
             self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :]
@@ -644,7 +650,7 @@ class RuleMaximin(Rule):
         self._vote_strategically_(matrix_duels_temp, scores_temp, c, n_m)
         w_temp = np.argmax(scores_temp)
         self.mylogv("UM: w_temp =", w_temp, 3)
-        self._candidates_um[c] = (w_temp == c)
+        self._candidates_um[c] = w_temp == c
 
     def sufficient_coalition_size_um_c_(self, c):
         # TODO: put this in cache
@@ -685,57 +691,57 @@ class RuleMaximin(Rule):
 
     def _cm_main_work_c_fast(self, c, optimize_bounds):
         """
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 1, 2],
-            ...     [0, 1, 2],
-            ...     [1, 2, 0],
-            ...     [2, 1, 0],
-            ...     [2, 1, 0],
-            ... ])
-            >>> rule = RuleMaximin()(profile)
-            >>> rule.candidates_cm_
-            array([nan,  0.,  0.])
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [0, 1, 2],
+        ...     [1, 2, 0],
+        ...     [2, 1, 0],
+        ...     [2, 1, 0],
+        ... ])
+        >>> rule = RuleMaximin()(profile)
+        >>> rule.candidates_cm_
+        array([nan,  0.,  0.])
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [2, 1, 0],
-            ...     [0, 2, 1],
-            ...     [1, 2, 0],
-            ...     [2, 0, 1],
-            ... ])
-            >>> rule = RuleMaximin(cm_option='faster')(profile)
-            >>> rule.is_cm_c_with_bounds_(1)
-            (False, 2.0, 3.0)
+        >>> profile = Profile(preferences_rk=[
+        ...     [2, 1, 0],
+        ...     [0, 2, 1],
+        ...     [1, 2, 0],
+        ...     [2, 0, 1],
+        ... ])
+        >>> rule = RuleMaximin(cm_option='faster')(profile)
+        >>> rule.is_cm_c_with_bounds_(1)
+        (False, 2.0, 3.0)
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [1, 2, 0],
-            ...     [0, 2, 1],
-            ...     [2, 0, 1],
-            ...     [2, 0, 1],
-            ... ])
-            >>> rule = RuleMaximin(cm_option='fast')(profile)
-            >>> rule.necessary_coalition_size_cm_
-            array([2., 2., 0.])
+        >>> profile = Profile(preferences_rk=[
+        ...     [1, 2, 0],
+        ...     [0, 2, 1],
+        ...     [2, 0, 1],
+        ...     [2, 0, 1],
+        ... ])
+        >>> rule = RuleMaximin(cm_option='fast')(profile)
+        >>> rule.necessary_coalition_size_cm_
+        array([2., 2., 0.])
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [2, 0, 1],
-            ...     [1, 2, 0],
-            ...     [2, 1, 0],
-            ...     [0, 1, 2],
-            ... ])
-            >>> rule = RuleMaximin(cm_option='faster')(profile)
-            >>> rule.necessary_coalition_size_cm_
-            array([1., 0., 2.])
+        >>> profile = Profile(preferences_rk=[
+        ...     [2, 0, 1],
+        ...     [1, 2, 0],
+        ...     [2, 1, 0],
+        ...     [0, 1, 2],
+        ... ])
+        >>> rule = RuleMaximin(cm_option='faster')(profile)
+        >>> rule.necessary_coalition_size_cm_
+        array([1., 0., 2.])
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [1, 2, 0, 3],
-            ...     [3, 2, 0, 1],
-            ...     [2, 3, 1, 0],
-            ...     [3, 1, 2, 0],
-            ...     [0, 1, 2, 3],
-            ... ])
-            >>> rule = RuleMaximin(cm_option='faster')(profile)
-            >>> rule.is_cm_c_(0)
-            True
+        >>> profile = Profile(preferences_rk=[
+        ...     [1, 2, 0, 3],
+        ...     [3, 2, 0, 1],
+        ...     [2, 3, 1, 0],
+        ...     [3, 1, 2, 0],
+        ...     [0, 1, 2, 3],
+        ... ])
+        >>> rule = RuleMaximin(cm_option='faster')(profile)
+        >>> rule.is_cm_c_(0)
+        True
         """
         matrix_duels_temp = preferences_ut_to_matrix_duels_ut(
             self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :]
@@ -749,15 +755,21 @@ class RuleMaximin(Rule):
         # Easy lower bound: for each manipulator, ``c``'s score can at best increase by one, and ``w_temp``'s score
         # cannot decrease.
         self._update_necessary(
-            self._necessary_coalition_size_cm, c, scores_temp[w_temp] - scores_temp[c] + (c > w_temp),
-            'CM: Update necessary_coalition_size_cm = scores_s[w_s] - scores_s[c] + (c > w_s) =')
+            self._necessary_coalition_size_cm,
+            c,
+            scores_temp[w_temp] - scores_temp[c] + (c > w_temp),
+            "CM: Update necessary_coalition_size_cm = scores_s[w_s] - scores_s[c] + (c > w_s) =",
+        )
         if not optimize_bounds and (self._necessary_coalition_size_cm[c] > self.profile_.matrix_duels_ut[c, self.w_]):
             return True  # is_quick_escape
 
         # Relatively easy upper bound: if we can UM, we can CM.
         self._update_sufficient(
-            self._sufficient_coalition_size_cm, c, self.sufficient_coalition_size_um_c_(c),
-            'CM: Update sufficient_coalition_size_cm = sufficient_coalition_size_um =')
+            self._sufficient_coalition_size_cm,
+            c,
+            self.sufficient_coalition_size_um_c_(c),
+            "CM: Update sufficient_coalition_size_cm = sufficient_coalition_size_um =",
+        )
         if self._sufficient_coalition_size_cm[c] == self._necessary_coalition_size_cm[c]:
             return False  # Not a quick escape, we did all the job!
         if not optimize_bounds and (self.profile_.matrix_duels_ut[c, self.w_] >= self._sufficient_coalition_size_cm[c]):
@@ -765,7 +777,7 @@ class RuleMaximin(Rule):
 
         # If the option is `faster` and if is_cm_c_ is decided, then we can exit here, because we do not want to
         # improve the bounds anymore.
-        if self.cm_option == 'faster':
+        if self.cm_option == "faster":
             if self.profile_.matrix_duels_ut[c, self.w_] >= self._sufficient_coalition_size_cm[c]:
                 return False  # not a quick escape
             if self._necessary_coalition_size_cm[c] > self.profile_.matrix_duels_ut[c, self.w_]:
@@ -777,8 +789,12 @@ class RuleMaximin(Rule):
             n_manipulators_used += 1
             if n_manipulators_used >= self._sufficient_coalition_size_cm[c]:
                 self.mylog("CM: I already know a strategy that works with n_manipulators_used (TM, UM, etc.).")
-                self._update_necessary(self._necessary_coalition_size_cm, c, np.ceil(n_manipulators_used * 3 / 5),
-                                       'CM: Update necessary_coalition_size_cm =')
+                self._update_necessary(
+                    self._necessary_coalition_size_cm,
+                    c,
+                    np.ceil(n_manipulators_used * 3 / 5),
+                    "CM: Update necessary_coalition_size_cm =",
+                )
                 break
             self._vote_strategically_(matrix_duels_temp, scores_temp, c, 1)
             w_temp = np.argmax(scores_temp)
@@ -786,25 +802,30 @@ class RuleMaximin(Rule):
             self.mylogm("CM: matrix_duels_temp =", matrix_duels_temp, 3)
             self.mylogv("CM: scores_temp =", scores_temp, 3)
             self.mylogv("CM: w_temp =", w_temp, 3)
-            self._update_sufficient(self._sufficient_coalition_size_cm, c, n_manipulators_used,
-                                    'CM: Update sufficient_coalition_size_cm =')
+            self._update_sufficient(
+                self._sufficient_coalition_size_cm, c, n_manipulators_used, "CM: Update sufficient_coalition_size_cm ="
+            )
             # For the 3/5 ratio, see Zuckerman et al.
-            self._update_necessary(self._necessary_coalition_size_cm, c, np.ceil(n_manipulators_used * 3 / 5),
-                                   'CM: Update necessary_coalition_size_cm =')
+            self._update_necessary(
+                self._necessary_coalition_size_cm,
+                c,
+                np.ceil(n_manipulators_used * 3 / 5),
+                "CM: Update necessary_coalition_size_cm =",
+            )
         return False
 
     def _cm_main_work_c_(self, c, optimize_bounds):
         """
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 2, 1],
-            ...     [0, 2, 1],
-            ...     [1, 0, 2],
-            ...     [1, 0, 2],
-            ...     [2, 0, 1],
-            ... ])
-            >>> rule = RuleMaximin(cm_option='exact')(profile)
-            >>> rule.candidates_cm_
-            array([0., 0., 0.])
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 2, 1],
+        ...     [0, 2, 1],
+        ...     [1, 0, 2],
+        ...     [1, 0, 2],
+        ...     [2, 0, 1],
+        ... ])
+        >>> rule = RuleMaximin(cm_option='exact')(profile)
+        >>> rule.candidates_cm_
+        array([0., 0., 0.])
         """
         is_quick_escape_fast = self._cm_main_work_c_fast(c, optimize_bounds)
         if not self.cm_option == "exact":
@@ -819,12 +840,12 @@ class RuleMaximin(Rule):
     @cached_property
     def theta_critical_(self):
         """
-            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
-            >>> rule = RuleMaximin()(profile)
-            >>> rule.theta_critical_
-            0.14285714285714285
+        >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
+        >>> rule = RuleMaximin()(profile)
+        >>> rule.theta_critical_
+        0.14285714285714285
         """
-        return 1/7
+        return 1 / 7
 
 
 class StackFamily:
@@ -851,11 +872,10 @@ class StackFamily:
         self.data = dict()
 
     def __repr__(self):
-        return '{' + ', '.join(['%s: %s' % (k, self.data[k]) for k in sorted(self.data.keys())]) + '}'
+        return "{" + ", ".join(["%s: %s" % (k, self.data[k]) for k in sorted(self.data.keys())]) + "}"
 
     def push_front(self, score, candidate):
-        """Push a value to the appropriate stack (given by 'score').
-        """
+        """Push a value to the appropriate stack (given by 'score')."""
         try:
             self.data[score].append(candidate)
         except KeyError:

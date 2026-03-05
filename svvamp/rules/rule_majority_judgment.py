@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import numpy as np
 from math import floor, ceil
 from svvamp.rules.rule import Rule
@@ -334,22 +335,24 @@ class RuleMajorityJudgment(Rule):
         [0. 3. 3.]
     """
 
-    full_name = 'Majority Judgment'
-    abbreviation = 'MJ'
+    full_name = "Majority Judgment"
+    abbreviation = "MJ"
 
     options_parameters = Rule.options_parameters.copy()
-    options_parameters.update({
-        'max_grade': {'allowed': np.isfinite, 'default': 1},
-        'min_grade': {'allowed': np.isfinite, 'default': 0},
-        'step_grade': {'allowed': np.isfinite, 'default': 0},
-        'rescale_grades': {'allowed': type_checker.is_bool, 'default': True},
-        'im_option': {'allowed': ['exact'], 'default': 'exact'},
-        'tm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'um_option': {'allowed': ['exact'], 'default': 'exact'},
-        'icm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'cm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'precheck_heuristic': {'allowed': [False], 'default': False},
-    })
+    options_parameters.update(
+        {
+            "max_grade": {"allowed": np.isfinite, "default": 1},
+            "min_grade": {"allowed": np.isfinite, "default": 0},
+            "step_grade": {"allowed": np.isfinite, "default": 0},
+            "rescale_grades": {"allowed": type_checker.is_bool, "default": True},
+            "im_option": {"allowed": ["exact"], "default": "exact"},
+            "tm_option": {"allowed": ["exact"], "default": "exact"},
+            "um_option": {"allowed": ["exact"], "default": "exact"},
+            "icm_option": {"allowed": ["exact"], "default": "exact"},
+            "cm_option": {"allowed": ["exact"], "default": "exact"},
+            "precheck_heuristic": {"allowed": [False], "default": False},
+        }
+    )
 
     def __init__(self, **kwargs):
         self._min_grade = None
@@ -361,8 +364,11 @@ class RuleMajorityJudgment(Rule):
             # Even if ``rescale_grades = True``, a voter who has the same utility for ``c`` and ``d`` will not vote
             # the same in Majority Judgment and in Plurality.
             is_based_on_rk=False,
-            precheck_um=False, precheck_tm=True, precheck_icm=False,
-            log_identity="MAJORITY_JUDGMENT", **kwargs
+            precheck_um=False,
+            precheck_tm=True,
+            precheck_icm=False,
+            log_identity="MAJORITY_JUDGMENT",
+            **kwargs,
         )
 
     # %% Setting the parameters
@@ -375,10 +381,10 @@ class RuleMajorityJudgment(Rule):
     def min_grade(self, value):
         if self._min_grade == value:
             return
-        if self.options_parameters['min_grade']['allowed'](value):
+        if self.options_parameters["min_grade"]["allowed"](value):
             self.mylogv("Setting min_grade =", value, 1)
             self._min_grade = value
-            self._result_options['min_grade'] = value
+            self._result_options["min_grade"] = value
             self.delete_cache()
         else:
             raise ValueError("Unknown value for min_grade: " + format(value))
@@ -391,10 +397,10 @@ class RuleMajorityJudgment(Rule):
     def max_grade(self, value):
         if self._max_grade == value:
             return
-        if self.options_parameters['max_grade']['allowed'](value):
+        if self.options_parameters["max_grade"]["allowed"](value):
             self.mylogv("Setting max_grade =", value, 1)
             self._max_grade = value
-            self._result_options['max_grade'] = value
+            self._result_options["max_grade"] = value
             self.delete_cache()
         else:
             raise ValueError("Unknown value for max_grade: " + format(value))
@@ -407,10 +413,10 @@ class RuleMajorityJudgment(Rule):
     def step_grade(self, value):
         if self._step_grade == value:
             return
-        if self.options_parameters['step_grade']['allowed'](value):
+        if self.options_parameters["step_grade"]["allowed"](value):
             self.mylogv("Setting step_grade =", value, 1)
             self._step_grade = value
-            self._result_options['step_grade'] = value
+            self._result_options["step_grade"] = value
             self.delete_cache()
         else:
             raise ValueError("Unknown value for step_grade: " + format(value))
@@ -423,10 +429,10 @@ class RuleMajorityJudgment(Rule):
     def rescale_grades(self, value):
         if self._rescale_grades == value:
             return
-        if self.options_parameters['rescale_grades']['allowed'](value):
+        if self.options_parameters["rescale_grades"]["allowed"](value):
             self.mylogv("Setting rescale_grades =", value, 1)
             self._rescale_grades = value
-            self._result_options['rescale_grades'] = value
+            self._result_options["rescale_grades"] = value
             self.delete_cache()
         else:
             raise ValueError("Unknown value for rescale_grades: " + format(value))
@@ -447,11 +453,13 @@ class RuleMajorityJudgment(Rule):
         else:
             i_lowest_rung = floor(self.min_grade / self.step_grade) + 1
             i_highest_rung = ceil(self.max_grade / self.step_grade) - 1
-            return np.concatenate((
-                [self.min_grade],
-                np.array(range(i_lowest_rung, i_highest_rung + 1)) * self.step_grade,
-                [self.max_grade]
-            ))
+            return np.concatenate(
+                (
+                    [self.min_grade],
+                    np.array(range(i_lowest_rung, i_highest_rung + 1)) * self.step_grade,
+                    [self.max_grade],
+                )
+            )
 
     # %% Counting the ballots
 
@@ -499,7 +507,7 @@ class RuleMajorityJudgment(Rule):
                 self.profile_.preferences_ut * (self.max_grade - self.min_grade),
                 delta_util[:, np.newaxis],
                 out=np.zeros(self.profile_.preferences_ut.shape),
-                where=delta_util[:, np.newaxis] != 0
+                where=delta_util[:, np.newaxis] != 0,
             )  # `out` and `where` ensure that when dividing by zero, the result will be zero.
             # Additive renormalization
             middle_grade = (np.max(ballots, axis=1) + np.min(ballots, axis=1)) / 2
@@ -532,7 +540,7 @@ class RuleMajorityJudgment(Rule):
         for c in range(self.profile_.n_c):
             p = np.sum(self.ballots_[:, c] > scores[0, c])
             q = np.sum(self.ballots_[:, c] < scores[0, c])
-            scores[1, c] = - q if q >= p else p
+            scores[1, c] = -q if q >= p else p
         return scores
 
     @cached_property
@@ -585,16 +593,16 @@ class RuleMajorityJudgment(Rule):
 
     def _im_main_work_v_(self, v, c_is_wanted, nb_wanted_undecided, stop_if_true):
         """
-            >>> profile = Profile([
-            ...     [ 1. , -0.5,  0. ],
-            ...     [ 0.5,  1. , -1. ],
-            ...     [-0.5,  0.5, -1. ],
-            ...     [ 1. ,  0. ,  1. ],
-            ...     [-1. , -0.5,  1. ],
-            ... ])
-            >>> rule = RuleMajorityJudgment()(profile)
-            >>> rule.is_im_c_(1)
-            True
+        >>> profile = Profile([
+        ...     [ 1. , -0.5,  0. ],
+        ...     [ 0.5,  1. , -1. ],
+        ...     [-0.5,  0.5, -1. ],
+        ...     [ 1. ,  0. ,  1. ],
+        ...     [-1. , -0.5,  1. ],
+        ... ])
+        >>> rule = RuleMajorityJudgment()(profile)
+        >>> rule.is_im_c_(1)
+        True
         """
         ballots_test = np.copy(self.ballots_)
         ballots_test[v, :] = self.min_grade
@@ -603,7 +611,7 @@ class RuleMajorityJudgment(Rule):
         for c in range(self.profile_.n_c):
             p = np.sum(ballots_test[:, c] > scores_v_is_evil[0, c])
             q = np.sum(ballots_test[:, c] < scores_v_is_evil[0, c])
-            scores_v_is_evil[1, c] = - q if q >= p else p
+            scores_v_is_evil[1, c] = -q if q >= p else p
         w_temp = max(range(self.profile_.n_c), key=lambda d: scores_v_is_evil[:, d].tolist())
 
         ballots_test[v, :] = self.max_grade
@@ -616,9 +624,12 @@ class RuleMajorityJudgment(Rule):
             score_v_is_nice_c[0] = np.median(ballots_test[:, c])
             p = np.sum(ballots_test[:, c] > score_v_is_nice_c[0])
             q = np.sum(ballots_test[:, c] < score_v_is_nice_c[0])
-            score_v_is_nice_c[1] = - q if q >= p else p
-            if ([score_v_is_nice_c[0], score_v_is_nice_c[1], - c]
-                    >= [scores_v_is_evil[0, w_temp], scores_v_is_evil[1, w_temp], - w_temp]):
+            score_v_is_nice_c[1] = -q if q >= p else p
+            if [score_v_is_nice_c[0], score_v_is_nice_c[1], -c] >= [
+                scores_v_is_evil[0, w_temp],
+                scores_v_is_evil[1, w_temp],
+                -w_temp,
+            ]:
                 self._v_im_for_c[v, c] = True
                 self._candidates_im[c] = True
                 self._voters_im[v] = True
@@ -637,25 +648,28 @@ class RuleMajorityJudgment(Rule):
     def _cm_preliminary_checks_c_subclass_(self, c, optimize_bounds):
         if equal_false(self.is_tm_c_(c)):
             self._update_necessary(
-                self._necessary_coalition_size_cm, c, self.profile_.matrix_duels_ut[c, self.w_] + 1,
-                'CM: Preliminary checks: not TM => \n    _necessary_coalition_size_cm[c] = n_m + 1 =')
+                self._necessary_coalition_size_cm,
+                c,
+                self.profile_.matrix_duels_ut[c, self.w_] + 1,
+                "CM: Preliminary checks: not TM => \n    _necessary_coalition_size_cm[c] = n_m + 1 =",
+            )
 
     def _cm_main_work_c_(self, c, optimize_bounds):
         """
-            >>> profile = Profile([
-            ...     [ 1. , -0.5,  0. ],
-            ...     [ 0.5,  1. , -1. ],
-            ...     [-0.5,  0.5, -1. ],
-            ...     [ 1. ,  0. ,  1. ],
-            ...     [-1. , -0.5,  1. ],
-            ... ])
-            >>> rule = RuleMajorityJudgment()(profile)
-            >>> rule.candidates_cm_
-            array([0., 1., 0.])
-            >>> rule.necessary_coalition_size_cm_
-            array([0., 3., 2.])
-            >>> rule.sufficient_coalition_size_cm_
-            array([0., 3., 2.])
+        >>> profile = Profile([
+        ...     [ 1. , -0.5,  0. ],
+        ...     [ 0.5,  1. , -1. ],
+        ...     [-0.5,  0.5, -1. ],
+        ...     [ 1. ,  0. ,  1. ],
+        ...     [-1. , -0.5,  1. ],
+        ... ])
+        >>> rule = RuleMajorityJudgment()(profile)
+        >>> rule.candidates_cm_
+        array([0., 1., 0.])
+        >>> rule.necessary_coalition_size_cm_
+        array([0., 3., 2.])
+        >>> rule.sufficient_coalition_size_cm_
+        array([0., 3., 2.])
         """
         preferences_ut_s = self.profile_.preferences_ut[np.logical_not(self.v_wants_to_help_c_[:, c]), :]
         n_s = self.profile_.n_v - self.profile_.matrix_duels_ut[c, self.w_]
@@ -666,10 +680,7 @@ class RuleMajorityJudgment(Rule):
         # Loop invariant: CM always possible n_m_sup manipulators, impossible for n_m_inf manipulators
         while n_m_sup - n_m_inf > 1:
             n_m = (n_m_inf + n_m_sup) // 2
-            preferences_ut_test = np.concatenate((
-                preferences_ut_s,
-                np.outer(np.ones(n_m), ballot_manip)
-            ))
+            preferences_ut_test = np.concatenate((preferences_ut_s, np.outer(np.ones(n_m), ballot_manip)))
             profile_test = Profile(preferences_ut=preferences_ut_test, sort_voters=False)
             rule_test = self._copy(profile_test)
             winner_test = rule_test.w_
@@ -769,12 +780,12 @@ class RuleMajorityJudgment(Rule):
         for d in range(self.profile_.n_c):
             p = np.sum(ballots_test[:, d] > scores_test[0, d])
             q = np.sum(ballots_test[:, d] < scores_test[0, d])
-            scores_test[1, d] = - q if q >= p else p
-        candidates_by_scores_best_to_worst_test = np.lexsort((
-            np.array(range(self.profile_.n_c))[::-1], scores_test[1, :], scores_test[0, :]
-        ))[::-1]
+            scores_test[1, d] = -q if q >= p else p
+        candidates_by_scores_best_to_worst_test = np.lexsort(
+            (np.array(range(self.profile_.n_c))[::-1], scores_test[1, :], scores_test[0, :])
+        )[::-1]
         w_test = candidates_by_scores_best_to_worst_test[0]
-        self._candidates_tm[c] = (w_test == c)
+        self._candidates_tm[c] = w_test == c
 
     # %% Unison Manipulation (UM)
 
@@ -796,10 +807,10 @@ class RuleMajorityJudgment(Rule):
     @cached_property
     def theta_critical_(self):
         """
-            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
-            >>> rule = RuleMajorityJudgment()(profile)
-            >>> rule.theta_critical_
-            1
+        >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
+        >>> rule = RuleMajorityJudgment()(profile)
+        >>> rule.theta_critical_
+        1
         """
         # This value is conventional.
         return 1

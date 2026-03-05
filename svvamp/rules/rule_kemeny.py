@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import numpy as np
 from svvamp.rules.rule import Rule
 from svvamp.utils.util_cache import cached_property
@@ -304,20 +305,22 @@ class RuleKemeny(Rule):
         [0. 2. 3.]
     """
 
-    full_name = 'Kemeny'
-    abbreviation = 'Kem'
+    full_name = "Kemeny"
+    abbreviation = "Kem"
 
     options_parameters = Rule.options_parameters.copy()
-    options_parameters['icm_option'] = {'allowed': ['exact'], 'default': 'exact'}
-    options_parameters['winner_option'] = {'allowed': ['exact', 'lazy'], 'default': 'exact'}
+    options_parameters["icm_option"] = {"allowed": ["exact"], "default": "exact"}
+    options_parameters["winner_option"] = {"allowed": ["exact", "lazy"], "default": "exact"}
 
-    def __init__(self, winner_option='exact', **kwargs):
+    def __init__(self, winner_option="exact", **kwargs):
         self._winner_option = None
         super().__init__(
-            with_two_candidates_reduces_to_plurality=True, is_based_on_rk=True,
+            with_two_candidates_reduces_to_plurality=True,
+            is_based_on_rk=True,
             precheck_icm=True,
             winner_option=winner_option,
-            log_identity="KEMENY", **kwargs
+            log_identity="KEMENY",
+            **kwargs,
         )
 
     # %% Setting the parameters
@@ -330,10 +333,10 @@ class RuleKemeny(Rule):
     def winner_option(self, value):
         if self._winner_option == value:
             return
-        if value in self.options_parameters['winner_option']['allowed']:
+        if value in self.options_parameters["winner_option"]["allowed"]:
             self.mylogv("Setting winner_option =", value, 1)
             self._winner_option = value
-            self._result_options['winner_option'] = value
+            self._result_options["winner_option"] = value
             self.delete_cache()
         else:
             raise ValueError("Unknown value for winner_option: " + format(value))
@@ -346,8 +349,7 @@ class RuleKemeny(Rule):
 
     @cached_property
     def score_w_(self):
-        """Integer. With our convention, ``scores_w_`` = :attr:`n_c` - 1.
-        """
+        """Integer. With our convention, ``scores_w_`` = :attr:`n_c` - 1."""
         self.mylog("Compute winner's score", 1)
         return self.profile_.n_c - 1
 
@@ -381,20 +383,21 @@ class RuleKemeny(Rule):
         w = best_order[0]
         candidates_by_scores_best_to_worst_first_component.extend(best_order)
         return {
-            'candidates_by_scores_best_to_worst_first_component': candidates_by_scores_best_to_worst_first_component,
-            'w': w}
+            "candidates_by_scores_best_to_worst_first_component": candidates_by_scores_best_to_worst_first_component,
+            "w": w,
+        }
 
     @cached_property
     def w_(self):
         if self.profile_.exists_condorcet_winner_rk_ctb:
             return self.profile_.condorcet_winner_rk_ctb
-        if self.winner_option == 'lazy':
+        if self.winner_option == "lazy":
             return np.nan
-        return self._count_first_component_['w']
+        return self._count_first_component_["w"]
 
     @cached_property
     def _candidates_by_scores_best_to_worst_first_component_(self):
-        return self._count_first_component_['candidates_by_scores_best_to_worst_first_component']
+        return self._count_first_component_["candidates_by_scores_best_to_worst_first_component"]
 
     @cached_property
     def _count_ballots_(self):
@@ -417,14 +420,14 @@ class RuleKemeny(Rule):
             candidates_by_scores_best_to_worst.extend(best_order)
         candidates_by_scores_best_to_worst = np.array(candidates_by_scores_best_to_worst)
         scores = self.profile_.n_c - 1 - np.argsort(candidates_by_scores_best_to_worst)
-        return {'scores': scores, 'candidates_by_scores_best_to_worst': candidates_by_scores_best_to_worst}
+        return {"scores": scores, "candidates_by_scores_best_to_worst": candidates_by_scores_best_to_worst}
 
     @cached_property
     def scores_(self):
         """1d array of integers. By convention, scores are integers from 1 to :attr:`n_c`, with :attr:`n_c` for the
         winner and 1 for the last candidate in Kemeny optimal order.
         """
-        return self._count_ballots_['scores']
+        return self._count_ballots_["scores"]
 
     @cached_property
     def candidates_by_scores_best_to_worst_(self):
@@ -433,7 +436,7 @@ class RuleKemeny(Rule):
         In case several orders are optimal, the first one by lexicographic order is given. This implies that if
         several winners are possible, the one with lowest index is declared the winner.
         """
-        return self._count_ballots_['candidates_by_scores_best_to_worst']
+        return self._count_ballots_["candidates_by_scores_best_to_worst"]
 
     @cached_property
     def meets_condorcet_c_rk_ctb(self):
@@ -469,16 +472,17 @@ class RuleKemeny(Rule):
         m_column_w = matrix_duels_sincere[:, self.w_] - matrix_duels_sincere[self.w_, :] + n_m
         neither_c_nor_w = np.array([j not in {c, self.w_} for j in range(n_c)])
         if m_column_w[c] + np.sum(np.maximum(0, m_column_w[neither_c_nor_w])) < 0:
-            self._update_necessary(self._necessary_coalition_size_cm, c, n_m + 1,
-                                   'CM: Preliminary check: necessary_coalition_size_cm =')
+            self._update_necessary(
+                self._necessary_coalition_size_cm, c, n_m + 1, "CM: Preliminary check: necessary_coalition_size_cm ="
+            )
 
     @cached_property
     def theta_critical_(self):
         """
-            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
-            >>> rule = RuleKemeny()(profile)
-            >>> rule.theta_critical_
-            0.18181818181818182
+        >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
+        >>> rule = RuleKemeny()(profile)
+        >>> rule.theta_critical_
+        0.18181818181818182
         """
         n_c = self.profile_.n_c
         return (n_c - 2) / (4 * n_c - 5)

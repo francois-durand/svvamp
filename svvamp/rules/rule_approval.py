@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import numpy as np
 from svvamp.preferences.profile import Profile
 from svvamp.rules.rule import Rule
@@ -294,30 +295,38 @@ class RuleApproval(Rule):
         [0. 3. 2.]
     """
 
-    full_name = 'Approval Voting'
-    abbreviation = 'AV'
+    full_name = "Approval Voting"
+    abbreviation = "AV"
 
     options_parameters = Rule.options_parameters.copy()
-    options_parameters.update({
-        'approval_threshold': {'allowed': type_checker.is_number, 'default': 0},
-        'approval_comparator': {'allowed': ['>', '>='], 'default': '>'},
-        'im_option': {'allowed': ['exact'], 'default': 'exact'},
-        'tm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'um_option': {'allowed': ['exact'], 'default': 'exact'},
-        'icm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'cm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'precheck_heuristic': {'allowed': [False], 'default': False},
-    })
+    options_parameters.update(
+        {
+            "approval_threshold": {"allowed": type_checker.is_number, "default": 0},
+            "approval_comparator": {"allowed": [">", ">="], "default": ">"},
+            "im_option": {"allowed": ["exact"], "default": "exact"},
+            "tm_option": {"allowed": ["exact"], "default": "exact"},
+            "um_option": {"allowed": ["exact"], "default": "exact"},
+            "icm_option": {"allowed": ["exact"], "default": "exact"},
+            "cm_option": {"allowed": ["exact"], "default": "exact"},
+            "precheck_heuristic": {"allowed": [False], "default": False},
+        }
+    )
 
-    def __init__(self, approval_comparator='>', approval_threshold=0., **kwargs):
+    def __init__(self, approval_comparator=">", approval_threshold=0.0, **kwargs):
         self._approval_threshold = None
         self._approval_comparator = None
         super().__init__(
-            with_two_candidates_reduces_to_plurality=False, is_based_on_rk=False,
-            is_based_on_ut_minus1_1=True, meets_iia=True,
-            precheck_um=False, precheck_tm=False, precheck_icm=False,
-            approval_comparator=approval_comparator, approval_threshold=approval_threshold,
-            log_identity="APPROVAL", **kwargs
+            with_two_candidates_reduces_to_plurality=False,
+            is_based_on_rk=False,
+            is_based_on_ut_minus1_1=True,
+            meets_iia=True,
+            precheck_um=False,
+            precheck_tm=False,
+            precheck_icm=False,
+            approval_comparator=approval_comparator,
+            approval_threshold=approval_threshold,
+            log_identity="APPROVAL",
+            **kwargs,
         )
 
     # %% Setting the parameters
@@ -330,10 +339,10 @@ class RuleApproval(Rule):
     def approval_threshold(self, value):
         if self._approval_threshold == value:
             return
-        if self.options_parameters['approval_threshold']['allowed'](value):
+        if self.options_parameters["approval_threshold"]["allowed"](value):
             self.mylogv("Setting approval_threshold =", value, 1)
             self._approval_threshold = value
-            self._result_options['approval_threshold'] = value
+            self._result_options["approval_threshold"] = value
             self.delete_cache()
         else:
             raise ValueError("Unknown value for approval_threshold: " + format(value))
@@ -346,10 +355,10 @@ class RuleApproval(Rule):
     def approval_comparator(self, value):
         if self._approval_comparator == value:
             return
-        if value in self.options_parameters['approval_comparator']['allowed']:
+        if value in self.options_parameters["approval_comparator"]["allowed"]:
             self.mylogv("Setting approval_comparator =", value, 1)
             self._approval_comparator = value
-            self._result_options['approval_comparator'] = value
+            self._result_options["approval_comparator"] = value
             self.delete_cache()
         else:
             raise ValueError("Unknown option for approval_comparator: " + format(value))
@@ -371,15 +380,14 @@ class RuleApproval(Rule):
         :attr:`approval_comparator`, :attr:`approval_threshold`.
         """
         self.mylog("Compute ballots", 1)
-        if self.approval_comparator == '>':
+        if self.approval_comparator == ">":
             return np.greater(self.profile_.preferences_ut, self.approval_threshold)
         else:
             return np.greater_equal(self.profile_.preferences_ut, self.approval_threshold)
 
     @cached_property
     def scores_(self):
-        """1d array of integers. ``scores_[c]`` is the number of voters who vote for candidate ``c``.
-        """
+        """1d array of integers. ``scores_[c]`` is the number of voters who vote for candidate ``c``."""
         self.mylog("Compute scores", 1)
         return np.sum(self.ballots_, 0)
 
@@ -387,87 +395,87 @@ class RuleApproval(Rule):
 
     def _im_main_work_v_(self, v, c_is_wanted, nb_wanted_undecided, stop_if_true):
         """
-            >>> profile = Profile(preferences_ut=[
-            ...     [ 0. , -0.5, -1. ],
-            ...     [ 1. , -1. ,  0.5],
-            ...     [ 0.5,  0.5, -0.5],
-            ...     [ 0.5,  0. ,  1. ],
-            ...     [-1. , -1. ,  1. ],
-            ... ], preferences_rk=[
-            ...     [0, 1, 2],
-            ...     [0, 2, 1],
-            ...     [1, 0, 2],
-            ...     [2, 0, 1],
-            ...     [2, 1, 0],
-            ... ])
-            >>> rule = RuleApproval()(profile)
-            >>> rule.is_im_c_(2)
-            True
-            >>> rule.v_im_for_c_
-            array([[0., 0., 0.],
-                   [0., 0., 0.],
-                   [0., 0., 0.],
-                   [0., 0., 1.],
-                   [0., 0., 0.]])
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 0. , -0.5, -1. ],
+        ...     [ 1. , -1. ,  0.5],
+        ...     [ 0.5,  0.5, -0.5],
+        ...     [ 0.5,  0. ,  1. ],
+        ...     [-1. , -1. ,  1. ],
+        ... ], preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [0, 2, 1],
+        ...     [1, 0, 2],
+        ...     [2, 0, 1],
+        ...     [2, 1, 0],
+        ... ])
+        >>> rule = RuleApproval()(profile)
+        >>> rule.is_im_c_(2)
+        True
+        >>> rule.v_im_for_c_
+        array([[0., 0., 0.],
+               [0., 0., 0.],
+               [0., 0., 0.],
+               [0., 0., 1.],
+               [0., 0., 0.]])
 
-            >>> profile = Profile(preferences_ut=[
-            ...     [ 1. ,  0.5,  1. ],
-            ...     [ 0. ,  0.5, -1. ],
-            ...     [ 0. ,  1. ,  1. ],
-            ...     [-1. , -1. ,  0.5],
-            ...     [ 0. , -0.5,  0.5],
-            ... ], preferences_rk=[
-            ...     [0, 2, 1],
-            ...     [1, 0, 2],
-            ...     [1, 2, 0],
-            ...     [2, 0, 1],
-            ...     [2, 0, 1],
-            ... ])
-            >>> rule = RuleApproval()(profile)
-            >>> rule.v_im_for_c_
-            array([[0., 0., 0.],
-                   [0., 0., 0.],
-                   [0., 0., 0.],
-                   [0., 0., 0.],
-                   [0., 0., 0.]])
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 1. ,  0.5,  1. ],
+        ...     [ 0. ,  0.5, -1. ],
+        ...     [ 0. ,  1. ,  1. ],
+        ...     [-1. , -1. ,  0.5],
+        ...     [ 0. , -0.5,  0.5],
+        ... ], preferences_rk=[
+        ...     [0, 2, 1],
+        ...     [1, 0, 2],
+        ...     [1, 2, 0],
+        ...     [2, 0, 1],
+        ...     [2, 0, 1],
+        ... ])
+        >>> rule = RuleApproval()(profile)
+        >>> rule.v_im_for_c_
+        array([[0., 0., 0.],
+               [0., 0., 0.],
+               [0., 0., 0.],
+               [0., 0., 0.],
+               [0., 0., 0.]])
 
-            >>> profile = Profile(preferences_ut=[
-            ...     [ 0. , -0.5, -1. ],
-            ...     [ 1. ,  0. ,  1. ],
-            ...     [ 0. ,  1. , -0.5],
-            ...     [-1. ,  0. , -0.5],
-            ...     [-1. ,  1. ,  0. ],
-            ... ], preferences_rk=[
-            ...     [0, 1, 2],
-            ...     [0, 2, 1],
-            ...     [1, 0, 2],
-            ...     [1, 2, 0],
-            ...     [1, 2, 0],
-            ... ])
-            >>> rule = RuleApproval()(profile)
-            >>> rule.v_im_for_c_
-            array([[1., 0., 0.],
-                   [0., 0., 0.],
-                   [0., 0., 0.],
-                   [0., 0., 0.],
-                   [0., 0., 0.]])
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 0. , -0.5, -1. ],
+        ...     [ 1. ,  0. ,  1. ],
+        ...     [ 0. ,  1. , -0.5],
+        ...     [-1. ,  0. , -0.5],
+        ...     [-1. ,  1. ,  0. ],
+        ... ], preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [0, 2, 1],
+        ...     [1, 0, 2],
+        ...     [1, 2, 0],
+        ...     [1, 2, 0],
+        ... ])
+        >>> rule = RuleApproval()(profile)
+        >>> rule.v_im_for_c_
+        array([[1., 0., 0.],
+               [0., 0., 0.],
+               [0., 0., 0.],
+               [0., 0., 0.],
+               [0., 0., 0.]])
 
-            >>> profile = Profile(preferences_ut=[
-            ...     [ 0. , -0.5, -1. ],
-            ...     [ 1. ,  0. ,  1. ],
-            ...     [ 0. ,  1. , -0.5],
-            ...     [-1. ,  0. , -0.5],
-            ...     [-1. ,  1. ,  0. ],
-            ... ], preferences_rk=[
-            ...     [0, 1, 2],
-            ...     [0, 2, 1],
-            ...     [1, 0, 2],
-            ...     [1, 2, 0],
-            ...     [1, 2, 0],
-            ... ])
-            >>> rule = RuleApproval()(profile)
-            >>> rule.is_im_
-            True
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 0. , -0.5, -1. ],
+        ...     [ 1. ,  0. ,  1. ],
+        ...     [ 0. ,  1. , -0.5],
+        ...     [-1. ,  0. , -0.5],
+        ...     [-1. ,  1. ,  0. ],
+        ... ], preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [0, 2, 1],
+        ...     [1, 0, 2],
+        ...     [1, 2, 0],
+        ...     [1, 2, 0],
+        ... ])
+        >>> rule = RuleApproval()(profile)
+        >>> rule.is_im_
+        True
         """
         scores_test = self.scores_ - self.ballots_[v, :]
         w_test = int(np.argmax(scores_test))
@@ -515,7 +523,7 @@ class RuleApproval(Rule):
     def _cm_main_work_c_exact_(self, c, optimize_bounds):
         scores_test = np.sum(self.ballots_[np.logical_not(self.v_wants_to_help_c_[:, c]), :], 0)
         w_test = np.argmax(scores_test)
-        self._sufficient_coalition_size_cm[c] = (scores_test[w_test] - scores_test[c] + (c > w_test))
+        self._sufficient_coalition_size_cm[c] = scores_test[w_test] - scores_test[c] + (c > w_test)
         self._necessary_coalition_size_cm[c] = self._sufficient_coalition_size_cm[c]
 
     # %% Trivial Manipulation (TM)
@@ -551,10 +559,10 @@ class RuleApproval(Rule):
     @cached_property
     def theta_critical_(self):
         """
-            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
-            >>> rule = RuleApproval()(profile)
-            >>> rule.theta_critical_
-            1
+        >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
+        >>> rule = RuleApproval()(profile)
+        >>> rule.theta_critical_
+        1
         """
         # This value is conventional.
         return 1

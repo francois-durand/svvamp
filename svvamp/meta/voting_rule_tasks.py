@@ -155,58 +155,54 @@ class VotingRuleTasks(list):
         super().__init__([])
         for voting_system in voting_systems:
             if inspect.isclass(voting_system):
-                self.append(
-                    (voting_system, {}, copy.deepcopy(study_rule_criteria))
-                )
+                self.append((voting_system, {}, copy.deepcopy(study_rule_criteria)))
             else:
-                self.append(
-                    (voting_system[0], voting_system[1], copy.deepcopy(study_rule_criteria))
-                )
+                self.append((voting_system[0], voting_system[1], copy.deepcopy(study_rule_criteria)))
         self.extend(detailed_tasks)
 
     def __str__(self):
         """
-            >>> voting_rule_tasks = VotingRuleTasks(detailed_tasks=[
-            ...     (
-            ...         RuleIRV,
-            ...         {'cm_option': 'exact', 'um_option': 'exact'},
-            ...         StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,
-            ...                           numerical_criteria=[])
-            ...     ),
-            ...     (
-            ...         RuleCondorcetVtbIRV,
-            ...         {'cm_option': 'very_slow', 'um_option': 'exact'},
-            ...         StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,
-            ...                           numerical_criteria=[])
-            ...     )
-            ... ])
-            >>> print(voting_rule_tasks)
-            VotingRuleTasks with:
-                voting_system: RuleIRV
-                options: {'cm_option': 'exact', 'um_option': 'exact'}
-                StudyRuleCriteria with:
-                    manipulation_criteria:
-                        is_cm_
-                    manipulation_criteria_c: None
-                    result_criteria: None
-                    utility_criteria: None
-                    numerical_criteria: None
-                voting_system: RuleCondorcetVtbIRV
-                options: {'cm_option': 'very_slow', 'um_option': 'exact'}
-                StudyRuleCriteria with:
-                    manipulation_criteria:
-                        is_cm_
-                    manipulation_criteria_c: None
-                    result_criteria: None
-                    utility_criteria: None
-                    numerical_criteria: None
+        >>> voting_rule_tasks = VotingRuleTasks(detailed_tasks=[
+        ...     (
+        ...         RuleIRV,
+        ...         {'cm_option': 'exact', 'um_option': 'exact'},
+        ...         StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,
+        ...                           numerical_criteria=[])
+        ...     ),
+        ...     (
+        ...         RuleCondorcetVtbIRV,
+        ...         {'cm_option': 'very_slow', 'um_option': 'exact'},
+        ...         StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,
+        ...                           numerical_criteria=[])
+        ...     )
+        ... ])
+        >>> print(voting_rule_tasks)
+        VotingRuleTasks with:
+            voting_system: RuleIRV
+            options: {'cm_option': 'exact', 'um_option': 'exact'}
+            StudyRuleCriteria with:
+                manipulation_criteria:
+                    is_cm_
+                manipulation_criteria_c: None
+                result_criteria: None
+                utility_criteria: None
+                numerical_criteria: None
+            voting_system: RuleCondorcetVtbIRV
+            options: {'cm_option': 'very_slow', 'um_option': 'exact'}
+            StudyRuleCriteria with:
+                manipulation_criteria:
+                    is_cm_
+                manipulation_criteria_c: None
+                result_criteria: None
+                utility_criteria: None
+                numerical_criteria: None
         """
         lines = []
-        for (rule_class, options, study_rule_criteria) in self:
-            lines.append(f'voting_system: {rule_class.__name__}')
-            lines.append(f'options: {options}')
+        for rule_class, options, study_rule_criteria in self:
+            lines.append(f"voting_system: {rule_class.__name__}")
+            lines.append(f"options: {options}")
             lines.append(str(study_rule_criteria))
-        return 'VotingRuleTasks with:\n' + indent('\n'.join(lines))
+        return "VotingRuleTasks with:\n" + indent("\n".join(lines))
 
     def remove_rule(self, rule_class):
         """Remove a rule
@@ -490,7 +486,7 @@ class VotingRuleTasks(list):
                     utility_criteria: None
                     numerical_criteria: None
         """
-        for (rc, options, study_rule_criteria) in self:
+        for rc, options, study_rule_criteria in self:
             if rule_class is None or rule_class == rc:
                 study_rule_criteria.remove(criterion)
 
@@ -576,7 +572,7 @@ class VotingRuleTasks(list):
                     utility_criteria: None
                     numerical_criteria: None
         """
-        for (rc, options, study_rule_criteria) in self:
+        for rc, options, study_rule_criteria in self:
             if rule_class is None or rule_class == rc:
                 study_rule_criteria.append_manipulation_criterion(criterion)
 
@@ -662,7 +658,7 @@ class VotingRuleTasks(list):
                     utility_criteria: None
                     numerical_criteria: None
         """
-        for (rc, options, study_rule_criteria) in self:
+        for rc, options, study_rule_criteria in self:
             if rule_class is None or rule_class == rc:
                 study_rule_criteria.append_manipulation_criterion_c(criterion)
 
@@ -748,7 +744,7 @@ class VotingRuleTasks(list):
                     utility_criteria: None
                     numerical_criteria: None
         """
-        for (rc, options, study_rule_criteria) in self:
+        for rc, options, study_rule_criteria in self:
             if rule_class is None or rule_class == rc:
                 study_rule_criteria.append_result_criterion(criterion)
 
@@ -842,7 +838,7 @@ class VotingRuleTasks(list):
                         ('total_utility_w_', <function sum at ...>, 'total_u_sum')
                     numerical_criteria: None
         """
-        for (rc, options, study_rule_criteria) in self:
+        for rc, options, study_rule_criteria in self:
             if rule_class is None or rule_class == rc:
                 study_rule_criteria.append_utility_criterion(criterion, func, name)
 
@@ -928,7 +924,7 @@ class VotingRuleTasks(list):
                     numerical_criteria:
                         nb_candidates_cm_
         """
-        for (rc, options, study_rule_criteria) in self:
+        for rc, options, study_rule_criteria in self:
             if rule_class is None or rule_class == rc:
                 study_rule_criteria.append_numerical_criterion(criterion)
 
@@ -1009,10 +1005,10 @@ class VotingRuleTasks(list):
                     utility_criteria: None
                     numerical_criteria: None
         """
-        for (rc, options, study_rule_criteria) in self:
+        for rc, options, study_rule_criteria in self:
             if rule_class is None or rule_class == rc:
                 if option in options:
-                    del(options[option])
+                    del options[option]
 
     def set_option(self, option, value, rule_class=None):
         """Set an option for one or all voting rules
@@ -1085,7 +1081,7 @@ class VotingRuleTasks(list):
                     utility_criteria: None
                     numerical_criteria: None
         """
-        for (rc, options, study_rule_criteria) in self:
+        for rc, options, study_rule_criteria in self:
             if rule_class is None or rule_class == rc:
                 # print(rule_class)
                 # print('Change option to '+ str(value))
@@ -1125,9 +1121,9 @@ class VotingRuleTasks(list):
             Traceback (most recent call last):
             ValueError: Criterion 'unexpected_criterion' is unknown for RuleIRV.
         """
-        for (rule_class, options, study_rule_criteria) in self:
+        for rule_class, options, study_rule_criteria in self:
             # print(rule_class)
             for option, value in options.items():
                 rule_class.check_option_allowed(option, value)
             study_rule_criteria.check_sanity(rule_class)
-        print('VotingRuleTasks: Sanity check was successful.')
+        print("VotingRuleTasks: Sanity check was successful.")

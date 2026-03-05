@@ -58,17 +58,24 @@ class StudyRuleCriteria:
         that output a pair (inf, sup), for example `nb_candidates_cm_` or `worst_relative_welfare_with_cm_`.
     """
 
-    def __init__(self, manipulation_criteria=None, manipulation_criteria_c=None, manipulation_only=False,
-                 result_criteria=None, utility_criteria=None, numerical_criteria=None):
+    def __init__(
+        self,
+        manipulation_criteria=None,
+        manipulation_criteria_c=None,
+        manipulation_only=False,
+        result_criteria=None,
+        utility_criteria=None,
+        numerical_criteria=None,
+    ):
         # Manipulation criteria
         if manipulation_criteria is None:
             manipulation_criteria = [
-                'is_tm_',
-                'is_um_',
-                'is_icm_',
-                'is_cm_',
-                'is_tm_or_um_',
-                'elects_condorcet_winner_rk_even_with_cm_',
+                "is_tm_",
+                "is_um_",
+                "is_icm_",
+                "is_cm_",
+                "is_tm_or_um_",
+                "elects_condorcet_winner_rk_even_with_cm_",
             ]
         self.manipulation_criteria = manipulation_criteria
         if manipulation_criteria_c is None:
@@ -79,33 +86,33 @@ class StudyRuleCriteria:
             self.result_criteria = []
         elif result_criteria is None:
             self.result_criteria = [
-                'w_is_condorcet_admissible_',
-                'w_is_not_condorcet_admissible_',
-                'w_missed_condorcet_admissible_',
-                'w_is_weak_condorcet_winner_',
-                'w_is_not_weak_condorcet_winner_',
-                'w_missed_weak_condorcet_winner_',
-                'w_is_condorcet_winner_rk_ctb_',
-                'w_is_not_condorcet_winner_rk_ctb_',
-                'w_missed_condorcet_winner_rk_ctb_',
-                'w_is_condorcet_winner_rk_',
-                'w_is_not_condorcet_winner_rk_',
-                'w_missed_condorcet_winner_rk_',
-                'w_is_condorcet_winner_ut_rel_ctb_',
-                'w_is_not_condorcet_winner_ut_rel_ctb_',
-                'w_missed_condorcet_winner_ut_rel_ctb_',
-                'w_is_condorcet_winner_ut_rel_',
-                'w_is_not_condorcet_winner_ut_rel_',
-                'w_missed_condorcet_winner_ut_rel_',
-                'w_is_condorcet_winner_ut_abs_ctb_',
-                'w_is_not_condorcet_winner_ut_abs_ctb_',
-                'w_missed_condorcet_winner_ut_abs_ctb_',
-                'w_is_condorcet_winner_ut_abs_',
-                'w_is_not_condorcet_winner_ut_abs_',
-                'w_missed_condorcet_winner_ut_abs_',
-                'w_is_resistant_condorcet_winner_',
-                'w_is_not_resistant_condorcet_winner_',
-                'w_missed_resistant_condorcet_winner_'
+                "w_is_condorcet_admissible_",
+                "w_is_not_condorcet_admissible_",
+                "w_missed_condorcet_admissible_",
+                "w_is_weak_condorcet_winner_",
+                "w_is_not_weak_condorcet_winner_",
+                "w_missed_weak_condorcet_winner_",
+                "w_is_condorcet_winner_rk_ctb_",
+                "w_is_not_condorcet_winner_rk_ctb_",
+                "w_missed_condorcet_winner_rk_ctb_",
+                "w_is_condorcet_winner_rk_",
+                "w_is_not_condorcet_winner_rk_",
+                "w_missed_condorcet_winner_rk_",
+                "w_is_condorcet_winner_ut_rel_ctb_",
+                "w_is_not_condorcet_winner_ut_rel_ctb_",
+                "w_missed_condorcet_winner_ut_rel_ctb_",
+                "w_is_condorcet_winner_ut_rel_",
+                "w_is_not_condorcet_winner_ut_rel_",
+                "w_missed_condorcet_winner_ut_rel_",
+                "w_is_condorcet_winner_ut_abs_ctb_",
+                "w_is_not_condorcet_winner_ut_abs_ctb_",
+                "w_missed_condorcet_winner_ut_abs_ctb_",
+                "w_is_condorcet_winner_ut_abs_",
+                "w_is_not_condorcet_winner_ut_abs_",
+                "w_missed_condorcet_winner_ut_abs_",
+                "w_is_resistant_condorcet_winner_",
+                "w_is_not_resistant_condorcet_winner_",
+                "w_missed_resistant_condorcet_winner_",
             ]
         else:
             self.result_criteria = result_criteria
@@ -114,75 +121,80 @@ class StudyRuleCriteria:
             self.utility_criteria = []
         elif utility_criteria is None:
             self.utility_criteria = [
-                ('mean_utility_w_', np.max, 'mean_u_max'),
-                ('mean_utility_w_', np.min, 'mean_u_min'),
-                ('mean_utility_w_', np.mean, 'mean_u_mean'),
-                ('mean_utility_w_', np.std, 'mean_u_std'),
-                ('relative_social_welfare_w_', np.mean, 'relative_social_welfare_mean'),
+                ("mean_utility_w_", np.max, "mean_u_max"),
+                ("mean_utility_w_", np.min, "mean_u_min"),
+                ("mean_utility_w_", np.mean, "mean_u_mean"),
+                ("mean_utility_w_", np.std, "mean_u_std"),
+                ("relative_social_welfare_w_", np.mean, "relative_social_welfare_mean"),
             ]
         else:
             self.utility_criteria = utility_criteria
         # Numerical criteria
         if numerical_criteria is None:
             self.numerical_criteria = [
-                'nb_candidates_cm_',
-                'worst_relative_welfare_with_cm_',
-                'cm_power_index_',
+                "nb_candidates_cm_",
+                "worst_relative_welfare_with_cm_",
+                "cm_power_index_",
             ]
         else:
             self.numerical_criteria = numerical_criteria
 
     def __str__(self):
         """
-            >>> study_rule_criteria = StudyRuleCriteria(
-            ...     manipulation_criteria=['is_cm_'],
-            ...     manipulation_criteria_c=['candidates_cm_'],
-            ...     result_criteria=['w_is_condorcet_admissible_', 'w_is_weak_condorcet_winner_'],
-            ...     utility_criteria=[('mean_utility_w_', np.max, 'mean_u_max'),
-            ...                       ('mean_utility_w_', np.min, 'mean_u_min')],
-            ...     numerical_criteria=['nb_candidates_cm_', 'worst_relative_welfare_with_cm_'],
-            ... )
-            >>> print(study_rule_criteria)  # doctest: +NORMALIZE_WHITESPACE +ELLIPSIS
-            StudyRuleCriteria with:
-                manipulation_criteria:
-                    is_cm_
-                manipulation_criteria_c:
-                    candidates_cm_
-                result_criteria:
-                    w_is_condorcet_admissible_
-                    w_is_weak_condorcet_winner_
-                utility_criteria:
-                    ('mean_utility_w_', <function ...max at ...>, 'mean_u_max')
-                    ('mean_utility_w_', <function ...min at ...>, 'mean_u_min')
-                numerical_criteria:
-                    nb_candidates_cm_
-                    worst_relative_welfare_with_cm_
+        >>> study_rule_criteria = StudyRuleCriteria(
+        ...     manipulation_criteria=['is_cm_'],
+        ...     manipulation_criteria_c=['candidates_cm_'],
+        ...     result_criteria=['w_is_condorcet_admissible_', 'w_is_weak_condorcet_winner_'],
+        ...     utility_criteria=[('mean_utility_w_', np.max, 'mean_u_max'),
+        ...                       ('mean_utility_w_', np.min, 'mean_u_min')],
+        ...     numerical_criteria=['nb_candidates_cm_', 'worst_relative_welfare_with_cm_'],
+        ... )
+        >>> print(study_rule_criteria)  # doctest: +NORMALIZE_WHITESPACE +ELLIPSIS
+        StudyRuleCriteria with:
+            manipulation_criteria:
+                is_cm_
+            manipulation_criteria_c:
+                candidates_cm_
+            result_criteria:
+                w_is_condorcet_admissible_
+                w_is_weak_condorcet_winner_
+            utility_criteria:
+                ('mean_utility_w_', <function ...max at ...>, 'mean_u_max')
+                ('mean_utility_w_', <function ...min at ...>, 'mean_u_min')
+            numerical_criteria:
+                nb_candidates_cm_
+                worst_relative_welfare_with_cm_
 
-            >>> study_rule_criteria = StudyRuleCriteria(
-            ...     manipulation_criteria=[],
-            ...     result_criteria=[],
-            ...     utility_criteria=[],
-            ...     numerical_criteria=[],
-            ... )
-            >>> print(study_rule_criteria)  # doctest: +NORMALIZE_WHITESPACE +ELLIPSIS
-            StudyRuleCriteria with:
-                manipulation_criteria: None
-                manipulation_criteria_c: None
-                result_criteria: None
-                utility_criteria: None
-                numerical_criteria: None
+        >>> study_rule_criteria = StudyRuleCriteria(
+        ...     manipulation_criteria=[],
+        ...     result_criteria=[],
+        ...     utility_criteria=[],
+        ...     numerical_criteria=[],
+        ... )
+        >>> print(study_rule_criteria)  # doctest: +NORMALIZE_WHITESPACE +ELLIPSIS
+        StudyRuleCriteria with:
+            manipulation_criteria: None
+            manipulation_criteria_c: None
+            result_criteria: None
+            utility_criteria: None
+            numerical_criteria: None
         """
         # noinspection PyListCreation
         lines = []
-        for name in ['manipulation_criteria', 'manipulation_criteria_c', 'result_criteria',
-                     'utility_criteria', 'numerical_criteria']:
+        for name in [
+            "manipulation_criteria",
+            "manipulation_criteria_c",
+            "result_criteria",
+            "utility_criteria",
+            "numerical_criteria",
+        ]:
             criteria = getattr(self, name)
             if criteria:
-                lines.append(f'{name}:')
-                lines.extend(['    ' + str(criterion) for criterion in criteria])
+                lines.append(f"{name}:")
+                lines.extend(["    " + str(criterion) for criterion in criteria])
             else:
-                lines.append(f'{name}: None')
-        return 'StudyRuleCriteria with:\n' + indent('\n'.join(lines))
+                lines.append(f"{name}: None")
+        return "StudyRuleCriteria with:\n" + indent("\n".join(lines))
 
     def remove(self, criterion):
         """Remove a criterion
@@ -457,10 +469,10 @@ class StudyRuleCriteria:
             if criterion not in dir(rule_class):
                 raise ValueError(f"Criterion '{criterion}' is unknown for {rule_class.__name__}.")
         # Check if utility criteria are legal.
-        for (criterion, func, name) in self.utility_criteria:
+        for criterion, func, name in self.utility_criteria:
             if criterion not in dir(rule_class):
                 raise ValueError(f"Criterion '{criterion}' is unknown for {rule_class.__name__}.")
-            if not hasattr(func, '__call__'):
+            if not hasattr(func, "__call__"):
                 raise TypeError(f"Expected: callable. Got: {repr(func)}.")
         # Check if numerical criteria are legal.
         for criterion in self.numerical_criteria:

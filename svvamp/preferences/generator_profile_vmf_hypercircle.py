@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import numpy as np
 from svvamp.utils.misc import initialize_random_seeds
 from svvamp.utils.von_mises_fisher import profile_vmf_aux
@@ -146,8 +147,17 @@ class GeneratorProfileVMFHypercircle(GeneratorProfile):
             self.vmf_pole = np.array(vmf_pole)
             if self.vmf_pole.ndim == 1:
                 self.vmf_pole = self.vmf_pole[np.newaxis, :]
-        self.log_creation = ['VMFHypercircle', n_c, n_v, 'VMF Concentration', vmf_concentration,
-                             'VMF Probability', vmf_probability, 'VMF Pole', vmf_pole]
+        self.log_creation = [
+            "VMFHypercircle",
+            n_c,
+            n_v,
+            "VMF Concentration",
+            vmf_concentration,
+            "VMF Probability",
+            vmf_probability,
+            "VMF Pole",
+            vmf_pole,
+        ]
         # We have three interesting spaces:
         # Space 1: unit sphere of R^(n_c-1)
         # Space 2: unit sphere of R^n_c orthogonal to [0, ..., 0, 1]
@@ -161,8 +171,7 @@ class GeneratorProfileVMFHypercircle(GeneratorProfile):
         # Project poles on the hyperplane H orthogonal to [1,..., 1] (space 3).
         self.vmf_pole = self.vmf_pole - np.sum(self.vmf_pole, 1)[:, np.newaxis] / self.n_c
         # Send poles to space 2 ~= space 1.
-        pole_parallel = np.outer(np.sum(self.vmf_pole * self.unitary_parallel[np.newaxis, :], 1),
-                                 self.unitary_parallel)
+        pole_parallel = np.outer(np.sum(self.vmf_pole * self.unitary_parallel[np.newaxis, :], 1), self.unitary_parallel)
         self.vmf_pole -= 2 * pole_parallel
         super().__init__(sort_voters=sort_voters)
 
@@ -174,12 +183,16 @@ class GeneratorProfileVMFHypercircle(GeneratorProfile):
         # Use Von-Mises Fisher in space 1 ~= space 2
         preferences_ut = np.zeros((self.n_v, self.n_c))
         for i in range(self.k):
-            preferences_ut[cum_cardinal_i[i]:cum_cardinal_i[i+1], :-1] = profile_vmf_aux(
-                n_c=self.n_c - 1, n_v=cardinal_group_i[i], concentration=self.vmf_concentration[i],
-                pole=self.vmf_pole[i, :-1])
+            preferences_ut[cum_cardinal_i[i] : cum_cardinal_i[i + 1], :-1] = profile_vmf_aux(
+                n_c=self.n_c - 1,
+                n_v=cardinal_group_i[i],
+                concentration=self.vmf_concentration[i],
+                pole=self.vmf_pole[i, :-1],
+            )
         # Now send back to space 3.
-        preferences_parallel = np.outer(np.sum(preferences_ut * self.unitary_parallel[np.newaxis, :], 1),
-                                        self.unitary_parallel)
+        preferences_parallel = np.outer(
+            np.sum(preferences_ut * self.unitary_parallel[np.newaxis, :], 1), self.unitary_parallel
+        )
         preferences_ut -= 2 * preferences_parallel
         # Conclude
         return Profile(preferences_ut=preferences_ut, log_creation=self.log_creation, sort_voters=self.sort_voters)

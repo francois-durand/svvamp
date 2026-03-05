@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import itertools
 import random
 import numpy as np
@@ -27,8 +28,14 @@ from svvamp.utils.util_cache import cached_property, DeleteCacheMixin
 from svvamp.utils import my_log, type_checker
 from svvamp.utils.printing import printm, print_title, print_big_title
 from svvamp.utils.misc import compute_next_subset_with_w, compute_next_borda_clever
-from svvamp.utils.pseudo_bool import pseudo_bool, neginf_to_nan, neginf_to_zero, equal_true, equal_false, \
-    pseudo_bool_not
+from svvamp.utils.pseudo_bool import (
+    pseudo_bool,
+    neginf_to_nan,
+    neginf_to_zero,
+    equal_true,
+    equal_false,
+    pseudo_bool_not,
+)
 from svvamp.preferences.profile import Profile
 from svvamp.preferences.profile_um import ProfileUM
 from svvamp.preferences.profile_subset_candidates import ProfileSubsetCandidates
@@ -176,13 +183,13 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     # Exception: for iia_subset_maximum_size, default option is 2.
 
     options_parameters = {
-        'iia_subset_maximum_size': {'allowed': type_checker.is_number, 'default': 2},
-        'im_option': {'allowed': ['lazy', 'exact'], 'default': 'lazy'},
-        'tm_option': {'allowed': ['lazy', 'exact'], 'default': 'exact'},
-        'um_option': {'allowed': ['lazy', 'exact'], 'default': 'lazy'},
-        'icm_option': {'allowed': ['lazy'], 'default': 'lazy'},
-        'cm_option': {'allowed': ['lazy', 'exact'], 'default': 'lazy'},
-        'precheck_heuristic': {'allowed': type_checker.is_bool, 'default': True},
+        "iia_subset_maximum_size": {"allowed": type_checker.is_number, "default": 2},
+        "im_option": {"allowed": ["lazy", "exact"], "default": "lazy"},
+        "tm_option": {"allowed": ["lazy", "exact"], "default": "exact"},
+        "um_option": {"allowed": ["lazy", "exact"], "default": "lazy"},
+        "icm_option": {"allowed": ["lazy"], "default": "lazy"},
+        "cm_option": {"allowed": ["lazy", "exact"], "default": "lazy"},
+        "precheck_heuristic": {"allowed": type_checker.is_bool, "default": True},
     }
     """dict: Options parameters. It is a dictionary of allowed and default options. Allowed is a minimal check that will
     be performed before launching big simulations, but other checks might be performed when setting the option.
@@ -191,11 +198,18 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     51], default=42)}``.
     """
 
-    def __init__(self,
-                 with_two_candidates_reduces_to_plurality=False, is_based_on_rk=False,
-                 is_based_on_ut_minus1_1=False, meets_iia=False,
-                 precheck_um=True, precheck_tm=True, precheck_icm=True,
-                 log_identity='RULE', **kwargs):
+    def __init__(
+        self,
+        with_two_candidates_reduces_to_plurality=False,
+        is_based_on_rk=False,
+        is_based_on_ut_minus1_1=False,
+        meets_iia=False,
+        precheck_um=True,
+        precheck_tm=True,
+        precheck_icm=True,
+        log_identity="RULE",
+        **kwargs,
+    ):
         # Log
         super().__init__()
         self.log_identity = log_identity
@@ -239,14 +253,14 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         * Otherwise, the default value is used.
         N.B.: validity check on the value are not performed here, but in the setter method for the option.
         """
-        self.mylog('Initialize options', 1)
+        self.mylog("Initialize options", 1)
         for option in self.options_parameters:
             try:
                 setattr(self, option, kwargs.pop(option))
             except KeyError:
-                setattr(self, option, self.options_parameters[option]['default'])
+                setattr(self, option, self.options_parameters[option]["default"])
         if kwargs:
-            raise ValueError('Unknown option:', list(kwargs.keys()).pop())
+            raise ValueError("Unknown option:", list(kwargs.keys()).pop())
 
     @property
     def options(self):
@@ -291,7 +305,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         """
         if option not in cls.options_parameters:
             raise ValueError(f"Option {repr(option)} is unknown for {cls.__name__}.")
-        allowed = cls.options_parameters[option]['allowed']
+        allowed = cls.options_parameters[option]["allowed"]
         this_value_is_allowed = (callable(allowed) and allowed(value)) or (not callable(allowed) and value in allowed)
         if not this_value_is_allowed:
             raise ValueError(f"'{option}' = {repr(value)} is not allowed in {cls.__name__}.")
@@ -299,10 +313,10 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     @classmethod
     def print_options_parameters(cls):
         for k in sorted(cls.options_parameters.keys()):
-            allowed = cls.options_parameters[k]['allowed']
+            allowed = cls.options_parameters[k]["allowed"]
             if callable(allowed):
                 allowed = allowed.__name__
-            default = repr(cls.options_parameters[k]['default'])
+            default = repr(cls.options_parameters[k]["default"])
             print(f"{k}: {allowed}. Default: {default}.")
 
     def log_(self, method_name):
@@ -324,19 +338,19 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             >>> rule.log_('whatever_cm_whatever')
             'cm_option = lazy, um_option = lazy, icm_option = lazy, tm_option = exact'
         """
-        if '_iia_' in method_name:
+        if "_iia_" in method_name:
             return self.log_iia_
-        if '_im_' in method_name:
+        if "_im_" in method_name:
             return self.log_im_
-        if '_icm_' in method_name:
+        if "_icm_" in method_name:
             return self.log_icm_
-        if '_tm_' in method_name:
+        if "_tm_" in method_name:
             return self.log_tm_
-        if '_um_' in method_name:
+        if "_um_" in method_name:
             return self.log_um_
-        if '_cm_' in method_name:
+        if "_cm_" in method_name:
             return self.log_cm_
-        if '_xm_' in method_name:
+        if "_xm_" in method_name:
             return self.log_xm_
 
     def __call__(self, profile):
@@ -345,7 +359,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         ----------
         profile : Profile
         """
-        self.delete_cache(suffix='_')
+        self.delete_cache(suffix="_")
         self.profile_ = profile
         return self
 
@@ -491,8 +505,9 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
 
         Implies: :attr:`~meets_IgnMC_c`.
         """
-        return (self.meets_condorcet_c_ut_abs or self.meets_majority_favorite_c_rk
-                or self.meets_majority_favorite_c_ut_ctb)
+        return (
+            self.meets_condorcet_c_ut_abs or self.meets_majority_favorite_c_rk or self.meets_majority_favorite_c_ut_ctb
+        )
 
     @cached_property
     def meets_ignmc_c(self):
@@ -577,7 +592,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         # the best score wins. If the lowest score wins, then candidates_by_scores_best_to_worst need to be sorted by
         # ascending score...
         self.mylog("Compute candidates_by_scores_best_to_worst", 1)
-        return np.argsort(- self.scores_, kind='mergesort')
+        return np.argsort(-self.scores_, kind="mergesort")
 
     @cached_property
     def v_might_im_for_c_(self):
@@ -704,8 +719,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
 
     @cached_property
     def w_is_condorcet_winner_rk_ctb_(self):
-        """Boolean. True iff the sincere winner :attr:`w_` is a :attr:`~svvamp.Profile.condorcet_winner_rk_ctb`.
-        """
+        """Boolean. True iff the sincere winner :attr:`w_` is a :attr:`~svvamp.Profile.condorcet_winner_rk_ctb`."""
         return self.w_ == self.profile_.condorcet_winner_rk_ctb
 
     @cached_property
@@ -724,8 +738,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
 
     @cached_property
     def w_is_condorcet_winner_rk_(self):
-        """Boolean. True iff the sincere winner :attr:`w_` is a :attr:`~svvamp.Profile.condorcet_winner_rk`.
-        """
+        """Boolean. True iff the sincere winner :attr:`w_` is a :attr:`~svvamp.Profile.condorcet_winner_rk`."""
         return self.w_ == self.profile_.condorcet_winner_rk
 
     @cached_property
@@ -744,8 +757,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
 
     @cached_property
     def w_is_condorcet_winner_ut_rel_ctb_(self):
-        """Boolean. True iff the sincere winner :attr:`w_` is a :attr:`~svvamp.Profile.condorcet_winner_ut_abs_ctb`.
-        """
+        """Boolean. True iff the sincere winner :attr:`w_` is a :attr:`~svvamp.Profile.condorcet_winner_ut_abs_ctb`."""
         return self.w_ == self.profile_.condorcet_winner_ut_rel_ctb
 
     @cached_property
@@ -764,8 +776,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
 
     @cached_property
     def w_is_condorcet_winner_ut_rel_(self):
-        """Boolean. True iff the sincere winner :attr:`w_` is a :attr:`~svvamp.Profile.condorcet_winner_ut_rel`.
-        """
+        """Boolean. True iff the sincere winner :attr:`w_` is a :attr:`~svvamp.Profile.condorcet_winner_ut_rel`."""
         return self.w_ == self.profile_.condorcet_winner_ut_rel
 
     @cached_property
@@ -784,8 +795,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
 
     @cached_property
     def w_is_condorcet_winner_ut_abs_ctb_(self):
-        """Boolean. True iff the sincere winner :attr:`w_` is a :attr:`~svvamp.Profile.condorcet_winner_ut_abs_ctb`.
-        """
+        """Boolean. True iff the sincere winner :attr:`w_` is a :attr:`~svvamp.Profile.condorcet_winner_ut_abs_ctb`."""
         return self.w_ == self.profile_.condorcet_winner_ut_abs_ctb
 
     @cached_property
@@ -804,8 +814,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
 
     @cached_property
     def w_is_condorcet_winner_ut_abs_(self):
-        """Boolean. True iff the sincere winner :attr:`w_` is a :attr:`~svvamp.Profile.condorcet_winner_ut_abs`.
-        """
+        """Boolean. True iff the sincere winner :attr:`w_` is a :attr:`~svvamp.Profile.condorcet_winner_ut_abs`."""
         return self.w_ == self.profile_.condorcet_winner_ut_abs
 
     @cached_property
@@ -824,8 +833,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
 
     @cached_property
     def w_is_resistant_condorcet_winner_(self):
-        """Boolean. True iff the sincere winner :attr:`w_` is a :attr:`~svvamp.Profile.resistant_condorcet_winner`.
-        """
+        """Boolean. True iff the sincere winner :attr:`w_` is a :attr:`~svvamp.Profile.resistant_condorcet_winner`."""
         return self.w_ == self.profile_.resistant_condorcet_winner
 
     @cached_property
@@ -850,7 +858,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         log_depth : int
             Integer from 0 (basic info) to 3 (verbose).
         """
-        print_big_title('Profile Class')
+        print_big_title("Profile Class")
         self.profile_.demo(log_depth=log_depth)
 
     def demo_results_(self, log_depth=1):
@@ -864,7 +872,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         old_log_depth = self.log_depth
         self.log_depth = log_depth
 
-        print_big_title('Election Results')
+        print_big_title("Election Results")
 
         print_title("Results")
         printm("profile_.preferences_ut (reminder) =", self.profile_.preferences_ut)
@@ -950,10 +958,11 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         try:
             self.mylogv("Setting iia_subset_maximum_size =", value, 1)
             self._iia_subset_maximum_size = float(value)
-            self.delete_cache(contains='_iia_', suffix='_')
+            self.delete_cache(contains="_iia_", suffix="_")
         except ValueError:
-            raise ValueError("Unknown value for iia_subset_maximum_size: " + format(value) +
-                             " (number or np.inf expected).")
+            raise ValueError(
+                "Unknown value for iia_subset_maximum_size: " + format(value) + " (number or np.inf expected)."
+            )
 
     @property
     def im_option(self):
@@ -967,10 +976,10 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     def im_option(self, value):
         if self._im_option == value:
             return
-        if value in self.options_parameters['im_option']['allowed']:
+        if value in self.options_parameters["im_option"]["allowed"]:
             self.mylogv("Setting im_option =", value, 1)
             self._im_option = value
-            self.delete_cache(contains='_im_', suffix='_')
+            self.delete_cache(contains="_im_", suffix="_")
         else:
             raise ValueError("Unknown value for im_option: " + format(value))
 
@@ -986,12 +995,12 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     def tm_option(self, value):
         if self._tm_option == value:
             return
-        if value in self.options_parameters['tm_option']['allowed']:
+        if value in self.options_parameters["tm_option"]["allowed"]:
             self.mylogv("Setting tm_option =", value, 1)
             self._tm_option = value
-            self.delete_cache(contains='_tm_', suffix='_')
-            if self.cm_option != 'exact' and self.precheck_tm:
-                self.delete_cache(contains='_cm_', suffix='_')
+            self.delete_cache(contains="_tm_", suffix="_")
+            if self.cm_option != "exact" and self.precheck_tm:
+                self.delete_cache(contains="_cm_", suffix="_")
         else:
             raise ValueError("Unknown value for tm_option: " + format(value))
 
@@ -1007,12 +1016,12 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     def um_option(self, value):
         if self._um_option == value:
             return
-        if value in self.options_parameters['um_option']['allowed']:
+        if value in self.options_parameters["um_option"]["allowed"]:
             self.mylogv("Setting um_option =", value, 1)
             self._um_option = value
-            self.delete_cache(contains='_um_', suffix='_')
-            if self.cm_option != 'exact' and self.precheck_um:
-                self.delete_cache(contains='_cm_', suffix='_')
+            self.delete_cache(contains="_um_", suffix="_")
+            if self.cm_option != "exact" and self.precheck_um:
+                self.delete_cache(contains="_cm_", suffix="_")
         else:
             raise ValueError("Unknown value for um_option: " + format(value))
 
@@ -1028,12 +1037,12 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     def icm_option(self, value):
         if self._icm_option == value:
             return
-        if value in self.options_parameters['icm_option']['allowed']:
+        if value in self.options_parameters["icm_option"]["allowed"]:
             self.mylogv("Setting icm_option =", value, 1)
             self._icm_option = value
-            self.delete_cache(contains='_icm_', suffix='_')
-            if self.cm_option != 'exact' and self.precheck_icm:
-                self.delete_cache(contains='_cm_', suffix='_')
+            self.delete_cache(contains="_icm_", suffix="_")
+            if self.cm_option != "exact" and self.precheck_icm:
+                self.delete_cache(contains="_cm_", suffix="_")
         else:
             raise ValueError("Unknown value for icm_option: " + format(value))
 
@@ -1049,10 +1058,10 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     def cm_option(self, value):
         if self._cm_option == value:
             return
-        if value in self.options_parameters['cm_option']['allowed']:
+        if value in self.options_parameters["cm_option"]["allowed"]:
             self.mylogv("Setting cm_option =", value, 1)
             self._cm_option = value
-            self.delete_cache(contains='_cm_', suffix='_')
+            self.delete_cache(contains="_cm_", suffix="_")
         else:
             raise ValueError("Unknown value for cm_option: " + format(value))
 
@@ -1077,7 +1086,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     @cached_property
     def is_iia_(self):
         """Boolean. Cf. :attr:`is_not_iia`."""
-        return self._compute_iia_['is_iia']
+        return self._compute_iia_["is_iia"]
 
     @cached_property
     def example_winner_iia_(self):
@@ -1085,7 +1094,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         counter-example ``example_subset_iia``. If the election is IIA (or if the algorithm cannot decide), then
         ``example_winner_iia = numpy.nan``.
         """
-        return self._compute_iia_['example_winner_iia']
+        return self._compute_iia_["example_winner_iia"]
 
     @cached_property
     def example_subset_iia_(self):
@@ -1093,7 +1102,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         breaking IIA. ``example_subset_iia[c]`` is ``True`` iff candidate ``c`` belongs to the subset. If the
         election is IIA (or if the algorithm cannot decide), then ``example_subset_iia = numpy.nan``.
         """
-        return self._compute_iia_['example_subset_iia']
+        return self._compute_iia_["example_subset_iia"]
 
     @cached_property
     def _compute_iia_(self):
@@ -1124,13 +1133,18 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             return self._compute_iia_aux_when_guaranteed_("IIA guaranteed: w is a majority favorite.")
         if self.meets_majority_favorite_c_rk and self.profile_.plurality_scores_rk[self.w_] > self.profile_.n_v / 2:
             return self._compute_iia_aux_when_guaranteed_("IIA guaranteed: w is a majority favorite (vtb).")
-        if (self.meets_majority_favorite_c_ut_ctb and self.w_ == 0
-                and self.profile_.plurality_scores_ut[self.w_] >= self.profile_.n_v / 2):
+        if (
+            self.meets_majority_favorite_c_ut_ctb
+            and self.w_ == 0
+            and self.profile_.plurality_scores_ut[self.w_] >= self.profile_.n_v / 2
+        ):
             return self._compute_iia_aux_when_guaranteed_("IIA guaranteed: w is a majority favorite (ctb) (w = 0).")
-        if (self.meets_majority_favorite_c_rk_ctb and self.w_ == 0
-                and self.profile_.plurality_scores_rk[self.w_] >= self.profile_.n_v / 2):
-            return self._compute_iia_aux_when_guaranteed_("IIA guaranteed: w is a majority favorite (vtb, ctb)"
-                                                          "(w = 0).")
+        if (
+            self.meets_majority_favorite_c_rk_ctb
+            and self.w_ == 0
+            and self.profile_.plurality_scores_rk[self.w_] >= self.profile_.n_v / 2
+        ):
+            return self._compute_iia_aux_when_guaranteed_("IIA guaranteed: w is a majority favorite (vtb, ctb)(w = 0).")
         if self.with_two_candidates_reduces_to_plurality:
             if self.w_is_not_condorcet_winner_rk_ctb_:
                 # For subsets of 2 candidates, we use the matrix of victories to gain time.
@@ -1140,8 +1154,11 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
                 example_subset_iia = np.zeros(self.profile_.n_c, dtype=bool)
                 example_subset_iia[self.w_] = True
                 example_subset_iia[example_winner_iia] = True
-                return {'is_iia': is_iia, 'example_subset_iia': example_subset_iia,
-                        'example_winner_iia': example_winner_iia}
+                return {
+                    "is_iia": is_iia,
+                    "example_subset_iia": example_subset_iia,
+                    "example_winner_iia": example_winner_iia,
+                }
             else:
                 self.mylog("IIA: subsets of size 2 are ok because w is a Condorcet winner (rk, ctb).", 2)
                 return self._compute_iia_aux_(subset_minimum_size=3)
@@ -1162,7 +1179,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             A dictionary whose keys are 'is_iia', 'example_subset_iia', 'example_winner_iia'.
         """
         self.mylog(message, 1)
-        return {'is_iia': True, 'example_subset_iia': np.nan, 'example_winner_iia': np.nan}
+        return {"is_iia": True, "example_subset_iia": np.nan, "example_winner_iia": np.nan}
 
     def _compute_iia_aux_(self, subset_minimum_size):
         """Auxiliary function of _compute_iia_: real work.
@@ -1196,15 +1213,15 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
                     example_subset_iia = np.zeros(self.profile_.n_c, dtype=bool)
                     for c in candidates_r:
                         example_subset_iia[c] = True
-                    return {'is_iia': False, 'example_winner_iia': w_r, 'example_subset_iia': example_subset_iia}
+                    return {"is_iia": False, "example_winner_iia": w_r, "example_subset_iia": example_subset_iia}
                 candidates_r = compute_next_subset_with_w(candidates_r, self.profile_.n_c, n_c_reduced, self.w_)
         # We have not found a counter-example...
         if self.iia_subset_maximum_size < self.profile_.n_c - 1:
             self.mylog("IIA: I have found no counter-example, but we have not explored all possibilities", 2)
-            return {'is_iia': np.nan, 'example_winner_iia': np.nan, 'example_subset_iia': np.nan}
+            return {"is_iia": np.nan, "example_winner_iia": np.nan, "example_subset_iia": np.nan}
         else:
             self.mylog("IIA is guaranteed.", 2)
-            return {'is_iia': True, 'example_winner_iia': np.nan, 'example_subset_iia': np.nan}
+            return {"is_iia": True, "example_winner_iia": np.nan, "example_subset_iia": np.nan}
 
     def _compute_winner_of_subset_(self, candidates_r):
         """Compute the winner for a subset of candidates.
@@ -1249,11 +1266,10 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         candidate). This behavior can be redefined in the subclass implementing a specific voting system.
         """
         self.mylog("Compute ordered list of losing candidates", 1)
-        result = np.concatenate((
-            np.array(range(0, self.w_), dtype=int),
-            np.array(range(self.w_ + 1, self.profile_.n_c), dtype=int)
-        ))
-        return result[np.argsort(- self.profile_.matrix_duels_ut[result, self.w_], kind='mergesort')]
+        result = np.concatenate(
+            (np.array(range(0, self.w_), dtype=int), np.array(range(self.w_ + 1, self.profile_.n_c), dtype=int))
+        )
+        return result[np.argsort(-self.profile_.matrix_duels_ut[result, self.w_], kind="mergesort")]
 
     @cached_property
     def c_has_supporters_(self):
@@ -1332,7 +1348,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         """
         _ = self._im_is_initialized_general_
         if np.isneginf(self._is_im):
-            self._compute_im_(mode='is_im_')
+            self._compute_im_(mode="is_im_")
         return pseudo_bool(self._is_im)
 
     def is_im_c_(self, c):
@@ -1350,7 +1366,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         """
         _ = self._im_is_initialized_general_
         if np.isneginf(self._candidates_im[c]):
-            self._compute_im_(mode='is_im_c_', c=c)
+            self._compute_im_(mode="is_im_c_", c=c)
         return pseudo_bool(self._candidates_im[c])
 
     def is_im_c_with_voters_(self, c):
@@ -1368,7 +1384,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         """
         _ = self._im_is_initialized_general_
         if np.isneginf(self._candidates_im[c]) or np.any(np.isneginf(self._v_im_for_c[:, c])):
-            self._compute_im_(mode='is_im_c_with_voters_', c=c)
+            self._compute_im_(mode="is_im_c_with_voters_", c=c)
         return pseudo_bool(self._candidates_im[c]), self._v_im_for_c[:, c]
 
     @cached_property
@@ -1378,7 +1394,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         """
         _ = self._im_is_initialized_general_
         if not self._im_was_computed_with_voters:
-            self._compute_im_(mode='im_with_voters_')
+            self._compute_im_(mode="im_with_voters_")
         return self._voters_im.astype(float)
 
     @cached_property
@@ -1389,7 +1405,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         """
         _ = self._im_is_initialized_general_
         if not self._im_was_computed_with_candidates:
-            self._compute_im_(mode='im_with_candidates_')
+            self._compute_im_(mode="im_with_candidates_")
         return self._candidates_im.astype(float)
 
     @cached_property
@@ -1400,7 +1416,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         """
         _ = self._im_is_initialized_general_
         if not self._im_was_computed_full:
-            self._compute_im_(mode='v_im_for_c_')
+            self._compute_im_(mode="v_im_for_c_")
         return self._v_im_for_c.astype(float)
 
     def is_im_v_(self, v):
@@ -1504,7 +1520,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             self._im_was_computed_with_candidates = True
             self._im_was_computed_with_voters = True
             self._im_was_computed_full = True
-        self.mylogm('_v_im_for_c =', self._v_im_for_c, 3)
+        self.mylogm("_v_im_for_c =", self._v_im_for_c, 3)
 
     def _im_preliminary_checks_general_subclass_(self):
         """Do preliminary checks for IM. Only first time IM is launched.
@@ -1590,19 +1606,17 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         """
         # N.B.: in some subclasses, it is possible to try one method, then another one if the first one fails,
         # etc. In this general class, we will simply do a switch between 'lazy' and 'exact'.
-        getattr(self, '_im_main_work_v_' + self.im_option + '_')(v, c_is_wanted, nb_wanted_undecided, stop_if_true)
+        getattr(self, "_im_main_work_v_" + self.im_option + "_")(v, c_is_wanted, nb_wanted_undecided, stop_if_true)
         # Launch a sub-method like _im_main_work_v_lazy, etc.
 
     # noinspection PyUnusedLocal
     def _im_main_work_v_lazy_(self, v, c_is_wanted, nb_wanted_undecided, stop_if_true):
-        """Do the main work in IM loop for voter v, with option 'lazy'. Cf. :meth:`_im_main_work_v_`.
-        """
+        """Do the main work in IM loop for voter v, with option 'lazy'. Cf. :meth:`_im_main_work_v_`."""
         # When we don't know, we decide that we don't know!
         neginf_to_nan(self._v_im_for_c[v, :])
 
     def _im_main_work_v_exact_(self, v, c_is_wanted, nb_wanted_undecided, stop_if_true):
-        """Do the main work in IM loop for voter v, with option 'exact'. Cf. :meth:`_im_main_work_v_`.
-        """
+        """Do the main work in IM loop for voter v, with option 'exact'. Cf. :meth:`_im_main_work_v_`."""
         if self.is_based_on_rk:
             self._im_main_work_v_exact_rankings_(v, c_is_wanted, nb_wanted_undecided, stop_if_true)
         elif self.is_based_on_ut_minus1_1:  # pragma: no cover
@@ -1642,8 +1656,9 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         # not possible. Next instruction replaces all -Inf with 0.
         neginf_to_zero(self._v_im_for_c[v, :])
 
-    def _im_main_work_v_exact_utilities_minus1_1_(self, v, c_is_wanted,
-                                                  nb_wanted_undecided, stop_if_true):  # pragma: no cover
+    def _im_main_work_v_exact_utilities_minus1_1_(
+        self, v, c_is_wanted, nb_wanted_undecided, stop_if_true
+    ):  # pragma: no cover
         """Do the main work in IM loop for voter v, with option 'exact', for a voting system based only on utilities
         and where it is optimal for a c-manipulator to pretend that ``c`` has utility 1 and other candidates utility 0.
         Cf. :meth:`_im_main_work_v`.
@@ -1688,20 +1703,20 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         self.mylog("Compute IM", 1)
         for v in range(self.profile_.n_v):
             # Prepare work
-            if mode == 'is_im_':
+            if mode == "is_im_":
                 c_is_wanted = np.ones(self.profile_.n_c, dtype=bool)
                 stop_if_true = True
-            elif mode in {'is_im_c_', 'is_im_c_with_voters_'}:
+            elif mode in {"is_im_c_", "is_im_c_with_voters_"}:
                 c_is_wanted = np.zeros(self.profile_.n_c, dtype=bool)
                 c_is_wanted[c] = True
                 stop_if_true = True
-            elif mode == 'im_with_voters_':
+            elif mode == "im_with_voters_":
                 c_is_wanted = np.ones(self.profile_.n_c, dtype=bool)
                 stop_if_true = True
-            elif mode == 'im_with_candidates_':
+            elif mode == "im_with_candidates_":
                 c_is_wanted = np.isneginf(self._candidates_im)
                 stop_if_true = False
-            elif mode == 'v_im_for_c_':
+            elif mode == "v_im_for_c_":
                 c_is_wanted = np.ones(self.profile_.n_c, dtype=bool)
                 stop_if_true = False
             else:  # This should not happen.
@@ -1709,13 +1724,13 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             # Work
             self._compute_im_v_(v, c_is_wanted, stop_if_true)
             # Conclude for v
-            if mode == 'is_im_':
+            if mode == "is_im_":
                 if not np.isneginf(self._is_im):
                     return
-            elif mode == 'is_im_c_':
+            elif mode == "is_im_c_":
                 if not np.isneginf(self._candidates_im[c]):
                     return
-            elif mode == 'im_with_candidates_':
+            elif mode == "im_with_candidates_":
                 if not np.any(np.isneginf(self._candidates_im)):
                     self._im_was_computed_with_candidates = True
                     return
@@ -1881,8 +1896,11 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             self._candidates_tm[:] = False
             self._tm_was_computed_with_candidates = True
             return
-        if (self.meets_majority_favorite_c_ut_ctb and self.w_ == 0
-                and self.profile_.plurality_scores_ut[self.w_] >= self.profile_.n_v / 2):
+        if (
+            self.meets_majority_favorite_c_ut_ctb
+            and self.w_ == 0
+            and self.profile_.plurality_scores_ut[self.w_] >= self.profile_.n_v / 2
+        ):
             self.mylog("TM impossible (w=0 is a majority favorite with candidate tie-breaking).", 2)
             self._is_tm = False
             self._candidates_tm[:] = False
@@ -1894,8 +1912,11 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             self._candidates_tm[:] = False
             self._tm_was_computed_with_candidates = True
             return
-        if (self.meets_majority_favorite_c_rk_ctb and self.w_ == 0
-                and self.profile_.plurality_scores_rk[self.w_] >= self.profile_.n_v / 2):
+        if (
+            self.meets_majority_favorite_c_rk_ctb
+            and self.w_ == 0
+            and self.profile_.plurality_scores_rk[self.w_] >= self.profile_.n_v / 2
+        ):
             self.mylog("TM impossible (w=0 is a majority favorite with voter and candidate tie-breaking).", 2)
             self._is_tm = False
             self._candidates_tm[:] = False
@@ -1984,12 +2005,12 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         pass
 
     def _tm_main_work_c_(self, c):
-        """ Do the main work in TM loop for candidate ``c``. Must decide ``_candidates_tm[c]`` (to True, False or NaN).
+        """Do the main work in TM loop for candidate ``c``. Must decide ``_candidates_tm[c]`` (to True, False or NaN).
         Do not update ``_is_tm``.
         """
         # N.B.: in some subclasses, it is possible to try one method, then another one if the first one fails,
         # etc. In this general class, we will simply do a switch between 'lazy' and 'exact'.
-        getattr(self, '_tm_main_work_c_' + self.tm_option + '_')(c)
+        getattr(self, "_tm_main_work_c_" + self.tm_option + "_")(c)
         # Launch a sub-method like _tm_main_work_c_lazy, etc.
 
     def _tm_main_work_c_lazy_(self, c):
@@ -2019,7 +2040,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         # Manipulators put c on top and w at bottom.
         w_test = self._copy(profile=self._compute_trivial_strategy_ordinal_(c)).w_
         self.mylogv("TM: w_test =", w_test)
-        self._candidates_tm[c] = (w_test == c)
+        self._candidates_tm[c] = w_test == c
 
     def _tm_main_work_c_exact_utilities_minus1_1_(self, c):  # pragma: no cover
         """Do the main work in TM loop for candidate ``c``, with option 'exact', for a voting system based only on
@@ -2035,7 +2056,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         preferences_test[self.v_wants_to_help_c_[:, c], :] = -1
         preferences_test[self.v_wants_to_help_c_[:, c], c] = 1
         w_test = self._copy(profile=Profile(preferences_ut=preferences_test, sort_voters=False)).w_
-        self._candidates_tm[c] = (w_test == c)
+        self._candidates_tm[c] = w_test == c
 
     def _tm_conclude_c_(self, c):
         """Conclude the TM loop for candidate ``c``, according to the value of ``_candidates_tm[c]``.
@@ -2130,8 +2151,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
 
     @cached_property
     def log_um_(self):
-        """String. Parameters used to compute :meth:`is_um_` and related methods.
-        """
+        """String. Parameters used to compute :meth:`is_um_` and related methods."""
         return "um_option = " + self.um_option
 
     @cached_property
@@ -2219,8 +2239,11 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             self._candidates_um[:] = False
             self._um_was_computed_with_candidates = True
             return
-        if (self.meets_majority_favorite_c_ut_ctb and self.w_ == 0
-                and self.profile_.plurality_scores_ut[self.w_] >= self.profile_.n_v / 2):
+        if (
+            self.meets_majority_favorite_c_ut_ctb
+            and self.w_ == 0
+            and self.profile_.plurality_scores_ut[self.w_] >= self.profile_.n_v / 2
+        ):
             self.mylog("UM impossible (w=0 is a majority favorite with candidate tie-breaking).", 2)
             self._is_um = False
             self._candidates_um[:] = False
@@ -2232,8 +2255,11 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             self._candidates_um[:] = False
             self._um_was_computed_with_candidates = True
             return
-        if (self.meets_majority_favorite_c_rk_ctb and self.w_ == 0
-                and self.profile_.plurality_scores_rk[self.w_] >= self.profile_.n_v / 2):
+        if (
+            self.meets_majority_favorite_c_rk_ctb
+            and self.w_ == 0
+            and self.profile_.plurality_scores_rk[self.w_] >= self.profile_.n_v / 2
+        ):
             self.mylog("UM impossible (w=0 is a majority favorite with voter and candidate tie-breaking).", 2)
             self._is_um = False
             self._candidates_um[:] = False
@@ -2311,14 +2337,14 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         Try to decide _candidates_um[c]`` to True or False (instead of -inf). Do not update ``_is_um``.
         """
         n_m = self.profile_.matrix_duels_ut[c, self.w_]  # Number of manipulators
-        n_s = self.profile_.n_v - n_m                    # Number of sincere voters
+        n_s = self.profile_.n_v - n_m  # Number of sincere voters
         # Positive pretest based on the majority favorite criterion
         if self.meets_majority_favorite_c_rk and n_m > self.profile_.n_v / 2:
-            self.mylog('UM: Preliminary checks: n_m > n_v / 2', 3)
+            self.mylog("UM: Preliminary checks: n_m > n_v / 2", 3)
             self._candidates_um[c] = True
             return
         if self.meets_majority_favorite_c_rk_ctb and c == 0 and n_m >= self.profile_.n_v / 2:
-            self.mylog('UM: Preliminary checks: n_m >= n_v / 2 and c == 0', 3)
+            self.mylog("UM: Preliminary checks: n_m >= n_v / 2 and c == 0", 3)
             self._candidates_um[c] = True
             return
         # Negative pretest based on the majority favorite criterion
@@ -2328,34 +2354,34 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             if n_m < 2 * self.profile_.plurality_scores_ut[self.w_] - n_s:  # pragma: no cover
                 # TO DO: Investigate whether this case can actually happen.
                 self._reached_uncovered_code()
-                self.mylog('UM: Preliminary checks: even with n_m manipulators, w stays plurality winner (ut)', 3)
+                self.mylog("UM: Preliminary checks: even with n_m manipulators, w stays plurality winner (ut)", 3)
                 self._candidates_um[c] = False
                 return
         if self.meets_majority_favorite_c_ut_ctb and self.w_ == 0:
             if n_m < 2 * self.profile_.plurality_scores_ut[self.w_] - n_s + 1:  # pragma: no cover
                 # TO DO: Investigate whether this case can actually happen.
                 self._reached_uncovered_code()
-                self.mylog('UM: Preliminary checks: even with n_m manipulators, w stays plurality winner (ut, ctb)', 3)
+                self.mylog("UM: Preliminary checks: even with n_m manipulators, w stays plurality winner (ut, ctb)", 3)
                 self._candidates_um[c] = False
                 return
         if self.meets_majority_favorite_c_rk:
             if n_m < 2 * self.profile_.plurality_scores_rk[self.w_] - n_s:  # pragma: no cover
                 # TO DO: Investigate whether this case can actually happen.
                 self._reached_uncovered_code()
-                self.mylog('UM: Preliminary checks: even with n_m manipulators, w stays plurality winner (rk)', 3)
+                self.mylog("UM: Preliminary checks: even with n_m manipulators, w stays plurality winner (rk)", 3)
                 self._candidates_um[c] = False
                 return
         if self.meets_majority_favorite_c_rk_ctb and self.w_ == 0:
             if n_m < 2 * self.profile_.plurality_scores_rk[self.w_] - n_s + 1:  # pragma: no cover
                 # TO DO: Investigate whether this case can actually happen.
                 self._reached_uncovered_code()
-                self.mylog('UM: Preliminary checks: even with n_m manipulators, w stays plurality winner (rk, ctb)', 3)
+                self.mylog("UM: Preliminary checks: even with n_m manipulators, w stays plurality winner (rk, ctb)", 3)
                 self._candidates_um[c] = False
                 return
         # Pretest based on the same idea as Condorcet resistance
         if self.meets_condorcet_c_ut_abs:
             if n_m < self.profile_.threshold_c_prevents_w_condorcet_ut_abs[c, self.w_]:
-                self.mylog('UM: Preliminary checks: c-manipulators cannot prevent w from being a Condorcet winner', 3)
+                self.mylog("UM: Preliminary checks: c-manipulators cannot prevent w from being a Condorcet winner", 3)
                 self._candidates_um[c] = False
                 return
         # Other pretests
@@ -2369,20 +2395,19 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         pass
 
     def _um_main_work_c_(self, c):
-        """ Do the main work in UM loop for candidate ``c``. Must decide ``_candidates_um[c]`` (to True,
+        """Do the main work in UM loop for candidate ``c``. Must decide ``_candidates_um[c]`` (to True,
         False or NaN). Do not update ``_is_um``.
         """
         # N.B.: in some subclasses, it is possible to try one method, then another one if the first one fails,
         # etc. In this general class, we will simply do a switch between 'lazy' and 'exact'.
-        getattr(self, '_um_main_work_c_' + self.um_option + '_')(c)
+        getattr(self, "_um_main_work_c_" + self.um_option + "_")(c)
         # Launch a sub-method like _um_main_work_c_lazy, etc.
 
     def _um_main_work_c_lazy_(self, c):
         """Do the main work in UM loop for candidate c, with option 'lazy'. Must decide ``_candidates_um[c]`` (to True,
         False or NaN). Do not update ``_is_um``.
         """
-        self._candidates_um[c] = neginf_to_nan(
-            self._candidates_um[c])
+        self._candidates_um[c] = neginf_to_nan(self._candidates_um[c])
 
     def _um_main_work_c_exact_(self, c):
         """Do the main work in UM loop for candidate ``c``, with option 'exact'. Must decide ``_candidates_um[c]`` (to
@@ -2406,7 +2431,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         profile_s = Profile(
             preferences_rk=self.profile_.preferences_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :],
             preferences_borda_rk=self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :],
-            sort_voters=False
+            sort_voters=False,
         )
         base_ballot = [c] + list([i for i in range(self.profile_.n_c) if i != c])  # Put c first for the first try...
         n_m = self.profile_.matrix_duels_ut[c, self.w_]
@@ -2504,8 +2529,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
 
     @cached_property
     def log_icm_(self):
-        """String. Parameters used to compute :meth:`is_icm_` and related methods.
-        """
+        """String. Parameters used to compute :meth:`is_icm_` and related methods."""
         return "icm_option = " + self.icm_option
 
     @cached_property
@@ -2555,8 +2579,11 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         _ = self._icm_is_initialized_general_
         if equal_false(self._bounds_optimized_icm[c]):
             self._compute_icm_c_(c, optimize_bounds=True)
-        return (pseudo_bool(self._candidates_icm[c]), float(self._necessary_coalition_size_icm[c]),
-                float(self._sufficient_coalition_size_icm[c]))
+        return (
+            pseudo_bool(self._candidates_icm[c]),
+            float(self._necessary_coalition_size_icm[c]),
+            float(self._sufficient_coalition_size_icm[c]),
+        )
 
     @cached_property
     def candidates_icm_(self):
@@ -2574,8 +2601,10 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         _ = self._icm_is_initialized_general_
         if not self._icm_was_computed_full:
             self._compute_icm_(with_candidates=True, optimize_bounds=True)
-        return {'necessary_coalition_size_icm': self._necessary_coalition_size_icm.astype(float),
-                'sufficient_coalition_size_icm': self._sufficient_coalition_size_icm.astype(float)}
+        return {
+            "necessary_coalition_size_icm": self._necessary_coalition_size_icm.astype(float),
+            "sufficient_coalition_size_icm": self._sufficient_coalition_size_icm.astype(float),
+        }
 
     @cached_property
     def necessary_coalition_size_icm_(self):
@@ -2597,7 +2626,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         ``numpy.nan`` ( undecided). But it is possible that ``necessary_coalition_size_icm_[c]`` <
         ``sufficient_coalition_size_icm_[c]``.
         """
-        return self._coalition_sizes_icm_['necessary_coalition_size_icm']
+        return self._coalition_sizes_icm_["necessary_coalition_size_icm"]
 
     @cached_property
     def sufficient_coalition_size_icm_(self):
@@ -2605,7 +2634,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         algorithm for :math:`x_c` (see :meth:`necessary_coalition_size_icm_`). For the sincere winner :attr:`w_`,
         we have by convention ``sufficient_coalition_size_icm_[w_] = 0``.
         """
-        return self._coalition_sizes_icm_['sufficient_coalition_size_icm']
+        return self._coalition_sizes_icm_["sufficient_coalition_size_icm"]
 
     @cached_property
     def _icm_is_initialized_general_(self):
@@ -2711,10 +2740,12 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         # Conclude what we can
         # Some log
         n_m = self.profile_.matrix_duels_ut[c, self.w_]
-        self.mylogv("ICM: Preliminary checks: necessary_coalition_size_icm[c] =",
-                    self._necessary_coalition_size_icm[c], 3)
-        self.mylogv("ICM: Preliminary checks: sufficient_coalition_size_icm[c] =",
-                    self._sufficient_coalition_size_icm[c], 3)
+        self.mylogv(
+            "ICM: Preliminary checks: necessary_coalition_size_icm[c] =", self._necessary_coalition_size_icm[c], 3
+        )
+        self.mylogv(
+            "ICM: Preliminary checks: sufficient_coalition_size_icm[c] =", self._sufficient_coalition_size_icm[c], 3
+        )
         self.mylogv("ICM: Preliminary checks: n_m =", n_m, 3)
         # Conclude
         if self._sufficient_coalition_size_icm[c] == self._necessary_coalition_size_icm[c]:
@@ -2747,23 +2778,33 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         n_m = self.profile_.matrix_duels_ut[c, self.w_]  # Number of manipulators
         n_s = self.profile_.n_v - n_m  # Number of sincere voters
         if self.meets_infmc_c_ctb and c != 0:
-            self._update_necessary(self._necessary_coalition_size_icm, c, n_s + 1,
-                                   'ICM: InfMC_c_ctb => necessary_coalition_size_icm[c] = n_s + 1 =')
+            self._update_necessary(
+                self._necessary_coalition_size_icm,
+                c,
+                n_s + 1,
+                "ICM: InfMC_c_ctb => necessary_coalition_size_icm[c] = n_s + 1 =",
+            )
             if not optimize_bounds and self._necessary_coalition_size_icm[c] > n_m:
                 return
         if self.meets_infmc_c:
-            self._update_necessary(self._necessary_coalition_size_icm, c, n_s,
-                                   'ICM: InfMC_c => necessary_coalition_size_icm[c] = n_s =')
+            self._update_necessary(
+                self._necessary_coalition_size_icm, c, n_s, "ICM: InfMC_c => necessary_coalition_size_icm[c] = n_s ="
+            )
             if not optimize_bounds and self._necessary_coalition_size_icm[c] > n_m:
                 return
         if self.meets_ignmc_c_ctb and c == 0:
-            self._update_sufficient(self._sufficient_coalition_size_icm, c, n_s,
-                                    'ICM: IgnMC_c => sufficient_coalition_size_icm[c] = n_s =')
+            self._update_sufficient(
+                self._sufficient_coalition_size_icm, c, n_s, "ICM: IgnMC_c => sufficient_coalition_size_icm[c] = n_s ="
+            )
             if not optimize_bounds and n_m >= self._sufficient_coalition_size_icm[c]:
                 return
         if self.meets_ignmc_c:
-            self._update_sufficient(self._sufficient_coalition_size_icm, c, n_s + 1,
-                                    'ICM: IgnMC_c => sufficient_coalition_size_icm[c] = n_s + 1 =')
+            self._update_sufficient(
+                self._sufficient_coalition_size_icm,
+                c,
+                n_s + 1,
+                "ICM: IgnMC_c => sufficient_coalition_size_icm[c] = n_s + 1 =",
+            )
             if not optimize_bounds and n_m >= self._sufficient_coalition_size_icm[c]:
                 return
         # Other preliminary checks
@@ -2797,7 +2838,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         """
         # N.B.: in some subclasses, it is possible to try one method, then another one if the first one fails,
         # etc. In this general class, we will simply do a switch between 'lazy' and 'exact'.
-        return getattr(self, '_icm_main_work_c_' + self.icm_option + '_')(c, optimize_bounds)
+        return getattr(self, "_icm_main_work_c_" + self.icm_option + "_")(c, optimize_bounds)
         # Launch a sub-method like _icm_main_work_c_lazy_, etc.
 
     # noinspection PyMethodMayBeStatic,PyUnusedLocal
@@ -2883,14 +2924,13 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
     # %% Estimation of CM via empirical theta (XM)
     @cached_property
     def log_xm_(self):
-        """String. Parameters used to compute :meth:`is_xm_` and related methods.
-        """
+        """String. Parameters used to compute :meth:`is_xm_` and related methods."""
         return "xm_option = exact"
 
     @cached_property
     def theta_critical_(self):
         """Critical concentration parameter in the Perturbed Culture model."""
-        raise NotImplementedError(f'Not implemented for class {self.__class__.__name__}.')
+        raise NotImplementedError(f"Not implemented for class {self.__class__.__name__}.")
 
     @cached_property
     def is_xm_(self):
@@ -2909,15 +2949,17 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
 
     @cached_property
     def log_cm_(self):
-        """String. Parameters used to compute :meth:`is_cm_` and related methods.
-        """
-        if self.cm_option == 'exact':
+        """String. Parameters used to compute :meth:`is_cm_` and related methods."""
+        if self.cm_option == "exact":
             return "cm_option = exact"
         else:
-            return ("cm_option = " + self.cm_option +
-                    self.precheck_um * (", " + self.log_um_) +
-                    self.precheck_icm * (", " + self.log_icm_) +
-                    self.precheck_tm * (", " + self.log_tm_))
+            return (
+                "cm_option = "
+                + self.cm_option
+                + self.precheck_um * (", " + self.log_um_)
+                + self.precheck_icm * (", " + self.log_icm_)
+                + self.precheck_tm * (", " + self.log_tm_)
+            )
 
     @cached_property
     def is_cm_(self):
@@ -2966,8 +3008,11 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         _ = self._cm_is_initialized_general_
         if equal_false(self._bounds_optimized_cm[c]):
             self._compute_cm_c_(c, optimize_bounds=True)
-        return (pseudo_bool(self._candidates_cm[c]), float(self._necessary_coalition_size_cm[c]),
-                float(self._sufficient_coalition_size_cm[c]))
+        return (
+            pseudo_bool(self._candidates_cm[c]),
+            float(self._necessary_coalition_size_cm[c]),
+            float(self._sufficient_coalition_size_cm[c]),
+        )
 
     @cached_property
     def candidates_cm_(self):
@@ -2985,8 +3030,10 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         _ = self._cm_is_initialized_general_
         if not self._cm_was_computed_full:
             self._compute_cm_(with_candidates=True, optimize_bounds=True)
-        return {'necessary_coalition_size_cm': self._necessary_coalition_size_cm.astype(float),
-                'sufficient_coalition_size_cm': self._sufficient_coalition_size_cm.astype(float)}
+        return {
+            "necessary_coalition_size_cm": self._necessary_coalition_size_cm.astype(float),
+            "sufficient_coalition_size_cm": self._sufficient_coalition_size_cm.astype(float),
+        }
 
     @cached_property
     def necessary_coalition_size_cm_(self):
@@ -3010,7 +3057,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         ``numpy.nan`` ( undecided). But it is possible that ``necessary_coalition_size_cm_[c]`` <
         ``sufficient_coalition_size_cm_[c]``.
         """
-        return self._coalition_sizes_cm_['necessary_coalition_size_cm']
+        return self._coalition_sizes_cm_["necessary_coalition_size_cm"]
 
     @cached_property
     def sufficient_coalition_size_cm_(self):
@@ -3018,7 +3065,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         algorithm for :math:`x_c` (cf. :attr:`necessary_coalition_size_cm_`). For the sincere winner :attr:`w_`, we
         have by convention ``sufficient_coalition_size_cm_[w_] = 0``.
         """
-        return self._coalition_sizes_cm_['sufficient_coalition_size_cm']
+        return self._coalition_sizes_cm_["sufficient_coalition_size_cm"]
 
     @cached_property
     def _cm_is_initialized_general_(self):
@@ -3072,8 +3119,11 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             self._candidates_cm[:] = False
             self._cm_was_computed_with_candidates = True
             return
-        if (self.meets_majority_favorite_c_ut_ctb and self.w_ == 0 and
-                self.profile_.plurality_scores_ut[self.w_] >= self.profile_.n_v / 2):
+        if (
+            self.meets_majority_favorite_c_ut_ctb
+            and self.w_ == 0
+            and self.profile_.plurality_scores_ut[self.w_] >= self.profile_.n_v / 2
+        ):
             self.mylog("CM impossible (w=0 is a majority favorite with candidate tie-breaking).", 2)
             self._is_cm = False
             self._candidates_cm[:] = False
@@ -3085,8 +3135,11 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             self._candidates_cm[:] = False
             self._cm_was_computed_with_candidates = True
             return
-        if (self.meets_majority_favorite_c_rk_ctb and self.w_ == 0 and
-                self.profile_.plurality_scores_rk[self.w_] >= self.profile_.n_v / 2):
+        if (
+            self.meets_majority_favorite_c_rk_ctb
+            and self.w_ == 0
+            and self.profile_.plurality_scores_rk[self.w_] >= self.profile_.n_v / 2
+        ):
             self.mylog("CM impossible (w=0 is a majority favorite with voter and candidate tie-breaking).", 2)
             self._is_cm = False
             self._candidates_cm[:] = False
@@ -3175,10 +3228,10 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         # Conclude what we can
         # Some log
         n_m = self.profile_.matrix_duels_ut[c, self.w_]
-        self.mylogv("CM: Preliminary checks: necessary_coalition_size_cm[c] =",
-                    self._necessary_coalition_size_cm[c], 3)
-        self.mylogv("CM: Preliminary checks: sufficient_coalition_size_cm[c] =",
-                    self._sufficient_coalition_size_cm[c], 3)
+        self.mylogv("CM: Preliminary checks: necessary_coalition_size_cm[c] =", self._necessary_coalition_size_cm[c], 3)
+        self.mylogv(
+            "CM: Preliminary checks: sufficient_coalition_size_cm[c] =", self._sufficient_coalition_size_cm[c], 3
+        )
         self.mylogv("CM: Preliminary checks: n_m =", n_m, 3)
         # Conclude
         if self._sufficient_coalition_size_cm[c] == self._necessary_coalition_size_cm[c]:
@@ -3211,17 +3264,23 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         n_m = self.profile_.matrix_duels_ut[c, self.w_]  # Number of manipulators
         n_s = self.profile_.n_v - n_m  # Number of sincere voters
         # Pretest based on Informed Majority Coalition Criterion
-        condition = (c == 0 and self.meets_infmc_c_ctb)
+        condition = c == 0 and self.meets_infmc_c_ctb
         if condition:
             self._update_sufficient(
-                self._sufficient_coalition_size_cm, c, n_s,
-                'CM: Preliminary checks: InfMC_c_ctb => \n    sufficient_coalition_size_cm[c] = n_s =')
+                self._sufficient_coalition_size_cm,
+                c,
+                n_s,
+                "CM: Preliminary checks: InfMC_c_ctb => \n    sufficient_coalition_size_cm[c] = n_s =",
+            )
             if not optimize_bounds and n_m >= self._sufficient_coalition_size_cm[c]:
                 return
         if self.meets_infmc_c:
             self._update_sufficient(
-                self._sufficient_coalition_size_cm, c, n_s + 1,
-                r'CM: Preliminary checks: InfMC_c => \n    sufficient_coalition_size_cm[c] = n_s + 1 =')
+                self._sufficient_coalition_size_cm,
+                c,
+                n_s + 1,
+                r"CM: Preliminary checks: InfMC_c => \n    sufficient_coalition_size_cm[c] = n_s + 1 =",
+            )
             if not optimize_bounds and n_m >= self._sufficient_coalition_size_cm[c]:
                 return
         # Pretest based on the majority favorite criterion
@@ -3229,36 +3288,48 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         # Necessary condition: ``n_m >= 2 * plurality_scores_ut[w_] - n_s``.
         if self.meets_majority_favorite_c_rk_ctb and self.w_ == 0:
             self._update_necessary(
-                self._necessary_coalition_size_cm, c, 2 * self.profile_.plurality_scores_rk[self.w_] - n_s + 1,
-                'CM: Preliminary checks: majority_favorite_c_rk_ctb => \n    '
-                'necessary_coalition_size_cm[c] = 2 * plurality_scores_rk[w] - n_s + 1 =')
+                self._necessary_coalition_size_cm,
+                c,
+                2 * self.profile_.plurality_scores_rk[self.w_] - n_s + 1,
+                "CM: Preliminary checks: majority_favorite_c_rk_ctb => \n    "
+                "necessary_coalition_size_cm[c] = 2 * plurality_scores_rk[w] - n_s + 1 =",
+            )
             if not optimize_bounds and self._necessary_coalition_size_cm[c] > n_m:  # pragma: no cover
                 # TO DO: Investigate whether this case can actually happen.
                 self._reached_uncovered_code()
                 return
         if self.meets_majority_favorite_c_rk:
             self._update_necessary(
-                self._necessary_coalition_size_cm, c, 2 * self.profile_.plurality_scores_rk[self.w_] - n_s,
-                'CM: Preliminary checks: majority_favorite_c_rk => \n    '
-                'necessary_coalition_size_cm[c] = 2 * plurality_scores_rk[w] - n_s =')
+                self._necessary_coalition_size_cm,
+                c,
+                2 * self.profile_.plurality_scores_rk[self.w_] - n_s,
+                "CM: Preliminary checks: majority_favorite_c_rk => \n    "
+                "necessary_coalition_size_cm[c] = 2 * plurality_scores_rk[w] - n_s =",
+            )
             if not optimize_bounds and self._necessary_coalition_size_cm[c] > n_m:  # pragma: no cover
                 # TO DO: Investigate whether this case can actually happen.
                 self._reached_uncovered_code()
                 return
         if self.meets_majority_favorite_c_ut_ctb and self.w_ == 0:
             self._update_necessary(
-                self._necessary_coalition_size_cm, c, 2 * self.profile_.plurality_scores_ut[self.w_] - n_s + 1,
-                'CM: Preliminary checks: majority_favorite_c_ut_ctb => \n    '
-                'necessary_coalition_size_cm[c] = 2 * plurality_scores_ut[w] - n_s + 1 =')
+                self._necessary_coalition_size_cm,
+                c,
+                2 * self.profile_.plurality_scores_ut[self.w_] - n_s + 1,
+                "CM: Preliminary checks: majority_favorite_c_ut_ctb => \n    "
+                "necessary_coalition_size_cm[c] = 2 * plurality_scores_ut[w] - n_s + 1 =",
+            )
             if not optimize_bounds and self._necessary_coalition_size_cm[c] > n_m:  # pragma: no cover
                 # TO DO: Investigate whether this case can actually happen.
                 self._reached_uncovered_code()
                 return
         if self.meets_majority_favorite_c_ut:
             self._update_necessary(
-                self._necessary_coalition_size_cm, c, 2 * self.profile_.plurality_scores_ut[self.w_] - n_s,
-                'CM: Preliminary checks: majority_favorite_c_ut => \n    '
-                'necessary_coalition_size_cm[c] = 2 * plurality_scores_ut[w] - n_s =')
+                self._necessary_coalition_size_cm,
+                c,
+                2 * self.profile_.plurality_scores_ut[self.w_] - n_s,
+                "CM: Preliminary checks: majority_favorite_c_ut => \n    "
+                "necessary_coalition_size_cm[c] = 2 * plurality_scores_ut[w] - n_s =",
+            )
             if not optimize_bounds and self._necessary_coalition_size_cm[c] > n_m:  # pragma: no cover
                 # TO DO: Investigate whether this case can actually happen.
                 self._reached_uncovered_code()
@@ -3266,18 +3337,24 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         # Pretest based on the same idea as Condorcet resistance
         if self.meets_condorcet_c_ut_abs:
             self._update_necessary(
-                self._necessary_coalition_size_cm, c, self.profile_.threshold_c_prevents_w_condorcet_ut_abs[c, self.w_],
-                'CM: Preliminary checks: Condorcet_c => \n    '
-                'necessary_coalition_size_cm[c] = threshold_c_prevents_w_Condorcet_ut_abs[c, w] =')
+                self._necessary_coalition_size_cm,
+                c,
+                self.profile_.threshold_c_prevents_w_condorcet_ut_abs[c, self.w_],
+                "CM: Preliminary checks: Condorcet_c => \n    "
+                "necessary_coalition_size_cm[c] = threshold_c_prevents_w_Condorcet_ut_abs[c, w] =",
+            )
             if not optimize_bounds and self._necessary_coalition_size_cm[c] > n_m:
                 return
         # Pretests based on ICM, TM and UM
         if self.precheck_icm:
             _, _, suf_icm_c = self.is_icm_c_with_bounds_(c)
             self._update_sufficient(
-                self._sufficient_coalition_size_cm, c, suf_icm_c,
-                'CM: Preliminary checks: ICM => \n    '
-                'sufficient_coalition_size_cm[c] = sufficient_coalition_size_icm[c] =')
+                self._sufficient_coalition_size_cm,
+                c,
+                suf_icm_c,
+                "CM: Preliminary checks: ICM => \n    "
+                "sufficient_coalition_size_cm[c] = sufficient_coalition_size_icm[c] =",
+            )
             if not optimize_bounds and n_m >= self._sufficient_coalition_size_cm[c]:  # pragma: no cover
                 # TO DO: Investigate whether this case can actually happen.
                 self._reached_uncovered_code()
@@ -3285,9 +3362,11 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         if self.precheck_tm and self._necessary_coalition_size_cm[c] <= n_m < self._sufficient_coalition_size_cm[c]:
             if equal_true(self.is_tm_c_(c)):
                 self._update_sufficient(
-                    self._sufficient_coalition_size_cm, c, n_m,
-                    'CM: Preliminary checks: TM => \n    '
-                    'sufficient_coalition_size_cm[c] = n_m =')
+                    self._sufficient_coalition_size_cm,
+                    c,
+                    n_m,
+                    "CM: Preliminary checks: TM => \n    sufficient_coalition_size_cm[c] = n_m =",
+                )
                 if not optimize_bounds:
                     return
         if self.precheck_um and self._necessary_coalition_size_cm[c] <= n_m < self._sufficient_coalition_size_cm[c]:
@@ -3295,15 +3374,18 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
                 # TO DO: Investigate whether this case can actually happen.
                 self._reached_uncovered_code()
                 self._update_sufficient(
-                    self._sufficient_coalition_size_cm, c, n_m,
-                    'CM: Preliminary checks: UM => \n    '
-                    'sufficient_coalition_size_cm[c] = n_m =')
+                    self._sufficient_coalition_size_cm,
+                    c,
+                    n_m,
+                    "CM: Preliminary checks: UM => \n    sufficient_coalition_size_cm[c] = n_m =",
+                )
                 if not optimize_bounds:
                     return
         # Other preliminary checks
         self._cm_preliminary_checks_c_subclass_(c, optimize_bounds)
-        if not optimize_bounds and (n_m >= self._sufficient_coalition_size_cm[c]
-                                    or self._necessary_coalition_size_cm[c] > n_m):
+        if not optimize_bounds and (
+            n_m >= self._sufficient_coalition_size_cm[c] or self._necessary_coalition_size_cm[c] > n_m
+        ):
             return
         # Try to improve bounds with heuristic
         if self.precheck_heuristic:
@@ -3325,7 +3407,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         profile_s = Profile(
             preferences_rk=self.profile_.preferences_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :],
             preferences_borda_rk=self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :],
-            sort_voters=False
+            sort_voters=False,
         )
         ballot_rk = profile_s.candidates_by_decreasing_borda_score_rk
         ballot_rk = np.array([c] + [d for d in ballot_rk if d != c and d != self.w_] + [self.w_])
@@ -3346,8 +3428,12 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
                     break
             else:
                 n_m_inf = n_m_test
-        self._update_sufficient(self._sufficient_coalition_size_cm, c, n_m_sup,
-                                'CM: Heuristic Dichotomy => sufficient_coalition_size_cm[c] = ')
+        self._update_sufficient(
+            self._sufficient_coalition_size_cm,
+            c,
+            n_m_sup,
+            "CM: Heuristic Dichotomy => sufficient_coalition_size_cm[c] = ",
+        )
 
     def _cm_preliminary_checks_c_subclass_(self, c, optimize_bounds):
         """CM: preliminary checks for challenger ``c``.
@@ -3377,7 +3463,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         """
         # N.B.: in some subclasses, it is possible to try one method, then another one if the first one fails,
         # etc. In this general class, we will simply do a switch between 'lazy' and 'exact'.
-        return getattr(self, '_cm_main_work_c_' + self.cm_option + '_')(c, optimize_bounds)
+        return getattr(self, "_cm_main_work_c_" + self.cm_option + "_")(c, optimize_bounds)
         # Launch a sub-method like _cm_main_work_v_lazy_, etc.
 
     # noinspection PyUnusedLocal,PyMethodMayBeStatic
@@ -3410,22 +3496,28 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         if n_m >= self._sufficient_coalition_size_cm[c]:
             # Idem.
             return
-        preferences_borda_temp = np.concatenate((
-            np.tile(range(self.profile_.n_c), (n_m, 1)),
-            self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :],
-        ))
+        preferences_borda_temp = np.concatenate(
+            (
+                np.tile(range(self.profile_.n_c), (n_m, 1)),
+                self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :],
+            )
+        )
         manipulator_favorite = np.full(n_m, self.profile_.n_c - 1)
         while preferences_borda_temp is not None:
             # self.mylogm('preferences_borda_temp =', preferences_borda_temp, 3)
             w_test = self._copy(profile=Profile(preferences_ut=preferences_borda_temp, sort_voters=False)).w_
             if w_test == c:
-                self._update_sufficient(self._sufficient_coalition_size_cm, c, n_m,
-                                        'CM: Manipulation found by exhaustive test =>\n'
-                                        '    sufficient_coalition_size_cm = n_m =')
+                self._update_sufficient(
+                    self._sufficient_coalition_size_cm,
+                    c,
+                    n_m,
+                    "CM: Manipulation found by exhaustive test =>\n    sufficient_coalition_size_cm = n_m =",
+                )
                 break
-            for i_manipulator in range(n_m-1, -1, -1):
+            for i_manipulator in range(n_m - 1, -1, -1):
                 new_ballot, new_favorite = compute_next_borda_clever(
-                    preferences_borda_temp[i_manipulator, :], manipulator_favorite[i_manipulator], self.profile_.n_c)
+                    preferences_borda_temp[i_manipulator, :], manipulator_favorite[i_manipulator], self.profile_.n_c
+                )
                 # self.mylogv('new_ballot = ', new_ballot)
                 if new_ballot is None:
                     continue
@@ -3435,9 +3527,13 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             else:
                 preferences_borda_temp = None
         else:
-            self._update_necessary(self._necessary_coalition_size_cm, c, n_m + 1,
-                                   'CM: Manipulation proven impossible by exhaustive test =>\n'
-                                   '    necessary_coalition_size_cm[c] = n_m + 1 =')
+            self._update_necessary(
+                self._necessary_coalition_size_cm,
+                c,
+                n_m + 1,
+                "CM: Manipulation proven impossible by exhaustive test =>\n"
+                "    necessary_coalition_size_cm[c] = n_m + 1 =",
+            )
 
     def _cm_conclude_c_(self, c, is_quick_escape):
         """Conclude the CM loop for candidate ``c``.
@@ -3519,12 +3615,10 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         """Worst relative social welfare (sincere winner or candidate who can benefit from CM)."""
         possible_winners = self.candidates_cm_.copy()
         possible_winners[self.w_] = True
-        inf = float(np.min(
-            self.profile_.relative_social_welfare_c[(equal_true(possible_winners)) | np.isnan(possible_winners)]
-        ))
-        sup = float(np.min(
-            self.profile_.relative_social_welfare_c[equal_true(possible_winners)]
-        ))
+        inf = float(
+            np.min(self.profile_.relative_social_welfare_c[(equal_true(possible_winners)) | np.isnan(possible_winners)])
+        )
+        sup = float(np.min(self.profile_.relative_social_welfare_c[equal_true(possible_winners)]))
         return inf, sup
 
     @cached_property
@@ -3604,33 +3698,63 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         # InfMC_c_ctb (False)                ==>                InfMC_c (False)
 
         def display_bool(value):
-            return '(True) ' if equal_true(value) else '(False)'
+            return "(True) " if equal_true(value) else "(False)"
 
-        print('Condorcet_c_ut_rel_ctb ' + display_bool(self.meets_condorcet_c_ut_rel_ctb) +
-              '     ==>     Condorcet_c_ut_rel ' + display_bool(self.meets_condorcet_c_ut_rel))
-        print(' ||                                                               ||')
-        print(' ||     Condorcet_c_rk_ctb ' + display_bool(self.meets_condorcet_c_rk_ctb) +
-              ' ==> Condorcet_c_rk ' + display_bool(self.meets_condorcet_c_rk) + '     ||')
-        print(' ||           ||               ||       ||             ||         ||')
-        print(' V            V                ||       ||             V          V')
-        print('Condorcet_c_ut_abs_ctb ' + display_bool(self.meets_condorcet_c_ut_abs_ctb) +
-              '     ==>     Condorcet_ut_abs_c ' + display_bool(self.meets_condorcet_c_ut_abs))
-        print(' ||                            ||       ||                        ||')
-        print(' ||                            V        V                         ||')
-        print(' ||       maj_fav_c_rk_ctb ' + display_bool(self.meets_majority_favorite_c_rk_ctb) +
-              ' ==> maj_fav_c_rk ' + display_bool(self.meets_majority_favorite_c_rk) + '       ||')
-        print(' ||           ||                                       ||         ||')
-        print(' V            V                                        V          V')
-        print('majority_favorite_c_ut_ctb ' + display_bool(self.meets_majority_favorite_c_ut_ctb) +
-              ' ==> majority_favorite_c_ut ' + display_bool(self.meets_majority_favorite_c_ut))
-        print(' ||                                                               ||')
-        print(' V                                                                V')
-        print('IgnMC_c_ctb ' + display_bool(self.meets_ignmc_c_ctb) +
-              '                ==>                IgnMC_c ' + display_bool(self.meets_ignmc_c))
-        print(' ||                                                               ||')
-        print(' V                                                                V')
-        print('InfMC_c_ctb ' + display_bool(self.meets_infmc_c_ctb) +
-              '                ==>                InfMC_c ' + display_bool(self.meets_infmc_c))
+        print(
+            "Condorcet_c_ut_rel_ctb "
+            + display_bool(self.meets_condorcet_c_ut_rel_ctb)
+            + "     ==>     Condorcet_c_ut_rel "
+            + display_bool(self.meets_condorcet_c_ut_rel)
+        )
+        print(" ||                                                               ||")
+        print(
+            " ||     Condorcet_c_rk_ctb "
+            + display_bool(self.meets_condorcet_c_rk_ctb)
+            + " ==> Condorcet_c_rk "
+            + display_bool(self.meets_condorcet_c_rk)
+            + "     ||"
+        )
+        print(" ||           ||               ||       ||             ||         ||")
+        print(" V            V                ||       ||             V          V")
+        print(
+            "Condorcet_c_ut_abs_ctb "
+            + display_bool(self.meets_condorcet_c_ut_abs_ctb)
+            + "     ==>     Condorcet_ut_abs_c "
+            + display_bool(self.meets_condorcet_c_ut_abs)
+        )
+        print(" ||                            ||       ||                        ||")
+        print(" ||                            V        V                         ||")
+        print(
+            " ||       maj_fav_c_rk_ctb "
+            + display_bool(self.meets_majority_favorite_c_rk_ctb)
+            + " ==> maj_fav_c_rk "
+            + display_bool(self.meets_majority_favorite_c_rk)
+            + "       ||"
+        )
+        print(" ||           ||                                       ||         ||")
+        print(" V            V                                        V          V")
+        print(
+            "majority_favorite_c_ut_ctb "
+            + display_bool(self.meets_majority_favorite_c_ut_ctb)
+            + " ==> majority_favorite_c_ut "
+            + display_bool(self.meets_majority_favorite_c_ut)
+        )
+        print(" ||                                                               ||")
+        print(" V                                                                V")
+        print(
+            "IgnMC_c_ctb "
+            + display_bool(self.meets_ignmc_c_ctb)
+            + "                ==>                IgnMC_c "
+            + display_bool(self.meets_ignmc_c)
+        )
+        print(" ||                                                               ||")
+        print(" V                                                                V")
+        print(
+            "InfMC_c_ctb "
+            + display_bool(self.meets_infmc_c_ctb)
+            + "                ==>                InfMC_c "
+            + display_bool(self.meets_infmc_c)
+        )
 
         print_title("Independence of Irrelevant Alternatives (IIA)")
         print("w (reminder) =", self.w_)
@@ -3666,7 +3790,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         printm("necessary_coalition_size_icm =", self.necessary_coalition_size_icm_)
         printm("sufficient_coalition_size_icm =", self.sufficient_coalition_size_icm_)
 
-        print_title('Coalition Manipulation (CM)')
+        print_title("Coalition Manipulation (CM)")
         print("is_cm =", self.is_cm_)
         print("log_cm:", self.log_cm_)
         printm("candidates_cm =", self.candidates_cm_)
@@ -3675,7 +3799,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
 
         self.log_depth = old_log_depth
 
-    def _reached_uncovered_code(self, additional_message=''):
+    def _reached_uncovered_code(self, additional_message=""):
         """
         Print a log message when some uncovered code is reached.
 
@@ -3687,20 +3811,23 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             This additional message will be printed.
         """
         import inspect
+
         current_frame = inspect.currentframe()
         calling_frame = inspect.getouterframes(current_frame, 2)
         caller_name = calling_frame[1][3]
-        print("You reached a portion of code that is not covered by the tests. If you want to \n"
-              "help SVVAMP's developers, please send an email to fradurand@gmail.com and \n"
-              "copy-paste the following log message.\n")
+        print(
+            "You reached a portion of code that is not covered by the tests. If you want to \n"
+            "help SVVAMP's developers, please send an email to fradurand@gmail.com and \n"
+            "copy-paste the following log message.\n"
+        )
         print(self.__class__.__name__)
         print(caller_name)
         print(additional_message)
         if self.profile_ is not None:
-            print('n_v =', self.profile_.n_v)
-            print('n_c =', self.profile_.n_c)
+            print("n_v =", self.profile_.n_v)
+            print("n_c =", self.profile_.n_c)
             print(self.profile_.to_doctest_string())
-        print('result_options =', self._result_options)
+        print("result_options =", self._result_options)
         print(self.log_iia_)
         print(self.log_im_)
         print(self.log_tm_)
@@ -3708,7 +3835,7 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         print(self.log_icm_)
         print(self.log_cm_)
         if OPTIONS.ERROR_WHEN_UNCOVERED_CODE:
-            raise AssertionError('Uncovered portion of code.')
+            raise AssertionError("Uncovered portion of code.")
 
     def _example_reached_uncovered_code(self):
         """
@@ -3730,8 +3857,8 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             'lazy'
         """
         for option, d in self.options_parameters.items():
-            if isinstance(d['allowed'], list) or isinstance(d['allowed'], set):
-                value = random.choice(d['allowed'])
+            if isinstance(d["allowed"], list) or isinstance(d["allowed"], set):
+                value = random.choice(d["allowed"])
                 setattr(self, option, value)
 
     @staticmethod
@@ -3751,41 +3878,41 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
             'v_im_for_c_'
         """
         instructions = [
-            'is_im_',
-            'is_im_c_(0)',
-            'is_im_c_(1)',
-            'is_im_c_with_voters_(0)',
-            'is_im_c_with_voters_(1)',
-            'voters_im_',
-            'candidates_im_',
-            'v_im_for_c_',
-            'is_im_v_(0)',
-            'is_im_v_(1)',
-            'is_im_v_with_candidates_(0)',
-            'is_im_v_with_candidates_(1)',
-            'is_tm_',
-            'is_tm_c_(0)',
-            'is_tm_c_(1)',
-            'candidates_tm_',
-            'is_um_',
-            'is_um_c_(0)',
-            'is_um_c_(1)',
-            'candidates_um_',
-            'is_icm_',
-            'is_icm_c_(0)',
-            'is_icm_c_(1)',
-            'is_icm_c_with_bounds_(0)',
-            'is_icm_c_with_bounds_(1)',
-            'candidates_icm_',
-            'necessary_coalition_size_icm_',
-            'sufficient_coalition_size_icm_',
-            'is_cm_',
-            'is_cm_c_(0)',
-            'is_cm_c_(1)',
-            'is_cm_c_with_bounds_(0)',
-            'is_cm_c_with_bounds_(1)',
-            'candidates_cm_',
-            'necessary_coalition_size_cm_',
-            'sufficient_coalition_size_cm_',
+            "is_im_",
+            "is_im_c_(0)",
+            "is_im_c_(1)",
+            "is_im_c_with_voters_(0)",
+            "is_im_c_with_voters_(1)",
+            "voters_im_",
+            "candidates_im_",
+            "v_im_for_c_",
+            "is_im_v_(0)",
+            "is_im_v_(1)",
+            "is_im_v_with_candidates_(0)",
+            "is_im_v_with_candidates_(1)",
+            "is_tm_",
+            "is_tm_c_(0)",
+            "is_tm_c_(1)",
+            "candidates_tm_",
+            "is_um_",
+            "is_um_c_(0)",
+            "is_um_c_(1)",
+            "candidates_um_",
+            "is_icm_",
+            "is_icm_c_(0)",
+            "is_icm_c_(1)",
+            "is_icm_c_with_bounds_(0)",
+            "is_icm_c_with_bounds_(1)",
+            "candidates_icm_",
+            "necessary_coalition_size_icm_",
+            "sufficient_coalition_size_icm_",
+            "is_cm_",
+            "is_cm_c_(0)",
+            "is_cm_c_(1)",
+            "is_cm_c_with_bounds_(0)",
+            "is_cm_c_with_bounds_(1)",
+            "candidates_cm_",
+            "necessary_coalition_size_cm_",
+            "sufficient_coalition_size_cm_",
         ]
         return random.choice(instructions)

@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import numpy as np
 from svvamp.preferences.generator_profile import GeneratorProfile
 from svvamp.preferences.profile import Profile
@@ -50,9 +51,12 @@ class GeneratorProfileCubicUniform(GeneratorProfile):
     def __init__(self, n_v, n_c, sort_voters=False):
         self.n_v = n_v
         self.n_c = n_c
-        self.log_creation = ['Cubic uniform', n_c, n_v]
+        self.log_creation = ["Cubic uniform", n_c, n_v]
         super().__init__(sort_voters=sort_voters)
 
     def __call__(self):
-        return Profile(preferences_ut=2 * np.random.rand(self.n_v, self.n_c) - 1, log_creation=self.log_creation,
-                       sort_voters=self.sort_voters)
+        return Profile(
+            preferences_ut=2 * np.random.rand(self.n_v, self.n_c) - 1,
+            log_creation=self.log_creation,
+            sort_voters=self.sort_voters,
+        )

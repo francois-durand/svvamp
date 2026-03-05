@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import numpy as np
 from svvamp.preferences.generator_profile import GeneratorProfile
 from svvamp.preferences.profile import Profile
@@ -72,7 +73,7 @@ class GeneratorProfileUnanimous(GeneratorProfile):
         self.n_v = n_v
         self.n_c = n_c
         self.ranking = ranking
-        self.log_creation = ['Unanimous', n_c, n_v, ranking]
+        self.log_creation = ["Unanimous", n_c, n_v, ranking]
         super().__init__(sort_voters=sort_voters)
 
     def __call__(self):
@@ -81,7 +82,4 @@ class GeneratorProfileUnanimous(GeneratorProfile):
         else:
             ranking = self.ranking
         preferences_rk = np.array([ranking] * self.n_v)
-        return Profile(
-            preferences_rk=preferences_rk,
-            log_creation=self.log_creation, sort_voters=self.sort_voters
-        )
+        return Profile(preferences_rk=preferences_rk, log_creation=self.log_creation, sort_voters=self.sort_voters)

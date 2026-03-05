@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import numpy as np
 from svvamp.rules.rule import Rule
 from svvamp.utils.util_cache import cached_property
@@ -319,21 +320,23 @@ class RuleCopeland(Rule):
         [0. 2. 3.]
     """
 
-    full_name = 'Copeland'
-    abbreviation = 'Cop'
+    full_name = "Copeland"
+    abbreviation = "Cop"
 
     options_parameters = Rule.options_parameters.copy()
-    options_parameters['icm_option'] = {'allowed': ['exact'], 'default': 'exact'}
-    options_parameters['cm_option'] = {'allowed': ['fast', 'exact'], 'default': 'fast'}
-    options_parameters['tie_break_rule'] = {'allowed': ['lexico', 'random'], 'default': 'lexico'}
+    options_parameters["icm_option"] = {"allowed": ["exact"], "default": "exact"}
+    options_parameters["cm_option"] = {"allowed": ["fast", "exact"], "default": "fast"}
+    options_parameters["tie_break_rule"] = {"allowed": ["lexico", "random"], "default": "lexico"}
 
-    def __init__(self, tie_break_rule='lexico', **kwargs):
+    def __init__(self, tie_break_rule="lexico", **kwargs):
         self._tie_break_rule = None
         super().__init__(
-            with_two_candidates_reduces_to_plurality=True, is_based_on_rk=True,
+            with_two_candidates_reduces_to_plurality=True,
+            is_based_on_rk=True,
             precheck_icm=False,
             tie_break_rule=tie_break_rule,
-            log_identity="COPELAND", **kwargs
+            log_identity="COPELAND",
+            **kwargs,
         )
 
     # %% Setting the parameters
@@ -346,10 +349,10 @@ class RuleCopeland(Rule):
     def tie_break_rule(self, value):
         if self._tie_break_rule == value:
             return
-        if value in self.options_parameters['tie_break_rule']['allowed']:
+        if value in self.options_parameters["tie_break_rule"]["allowed"]:
             self.mylogv("Setting tie_break_rule =", value, 1)
             self._tie_break_rule = value
-            self._result_options['tie_break_rule'] = value
+            self._result_options["tie_break_rule"] = value
             self.delete_cache()
         else:
             raise ValueError("Unknown option for tie_break_rule: " + format(value))
@@ -363,14 +366,14 @@ class RuleCopeland(Rule):
         A larger number means a more favored candidate. For example, the lexico tie-break order is represented by
         [n_c - 1, ..., 0], i.e., candidate 0 has a `tie-break strength` of `n_c - 1`, and so on.
         """
-        if self.tie_break_rule == 'lexico':
+        if self.tie_break_rule == "lexico":
             return np.arange(self.profile_.n_c - 1, -1, -1)
         else:
             return np.random.permutation(self.profile_.n_c)
 
     @cached_property
     def scores_(self):
-        if self.tie_break_rule == 'lexico':
+        if self.tie_break_rule == "lexico":
             # Keep the scores more readable when using the lexico tie-break rule.
             return self.profile_.matrix_victories_rk.sum(axis=1)
         else:
@@ -384,7 +387,7 @@ class RuleCopeland(Rule):
 
     @cached_property
     def meets_ignmc_c_ctb(self):
-        if self.tie_break_rule == 'lexico':
+        if self.tie_break_rule == "lexico":
             return True
         else:
             return False
@@ -418,21 +421,23 @@ class RuleCopeland(Rule):
         matrix_duels_s = Profile(preferences_ut=pref_borda_rk_s).matrix_duels_ut
         score_w_lower_bound = (
             np.sum(matrix_duels_s[self.w_, :] > self.profile_.n_v / 2)
-            + .5 * np.sum(matrix_duels_s[self.w_, :] == self.profile_.n_v / 2)
+            + 0.5 * np.sum(matrix_duels_s[self.w_, :] == self.profile_.n_v / 2)
             + self.tie_break_weights_[self.w_] / (2 * self.profile_.n_c)
         )
         score_c_upper_bound = (
-            np.sum(matrix_duels_s[:, c] < self.profile_.n_v / 2) - 1
+            np.sum(matrix_duels_s[:, c] < self.profile_.n_v / 2)
+            - 1
             + np.sum(matrix_duels_s[:, c] == self.profile_.n_v / 2)
             + self.tie_break_weights_[c] / (2 * self.profile_.n_c)
         )
-        self.mylogm('CM: Fast algorithm: matrix_duels_s =', matrix_duels_s, 3)
-        self.mylogv('CM: Fast algorithm: score_w_lower_bound =', score_w_lower_bound, 3)
-        self.mylogv('CM: Fast algorithm: score_c_upper_bound =', score_c_upper_bound, 3)
+        self.mylogm("CM: Fast algorithm: matrix_duels_s =", matrix_duels_s, 3)
+        self.mylogv("CM: Fast algorithm: score_w_lower_bound =", score_w_lower_bound, 3)
+        self.mylogv("CM: Fast algorithm: score_c_upper_bound =", score_c_upper_bound, 3)
         if score_w_lower_bound > score_c_upper_bound:
             n_m = self.profile_.matrix_duels_ut[c, self.w_]
-            self._update_necessary(self._necessary_coalition_size_cm, c, n_m + 1,
-                                   'CM: Fast algorithm: necessary_coalition_size_cm =')
+            self._update_necessary(
+                self._necessary_coalition_size_cm, c, n_m + 1, "CM: Fast algorithm: necessary_coalition_size_cm ="
+            )
 
         # Dedicated algorithm for `n_c = 3`
         if self.profile_.n_c == 3:
@@ -450,25 +455,17 @@ class RuleCopeland(Rule):
             #   * If `self.tie_break_weights_[c] < self.tie_break_weights_[d]`, then `d` must not win against `e`, i.e.
             #   `e` must at least tie with `d`.
             if self.tie_break_weights_[c] > self.tie_break_weights_[d]:
-                sufficient_1_dot_5_victories = max(
-                    matrix_duels_s_antisym[d, c],
-                    matrix_duels_s_antisym[e, c] + 1
-                )
+                sufficient_1_dot_5_victories = max(matrix_duels_s_antisym[d, c], matrix_duels_s_antisym[e, c] + 1)
             else:
                 sufficient_1_dot_5_victories = max(
-                    matrix_duels_s_antisym[d, c],
-                    matrix_duels_s_antisym[e, c] + 1,
-                    matrix_duels_s_antisym[d, e]
+                    matrix_duels_s_antisym[d, c], matrix_duels_s_antisym[e, c] + 1, matrix_duels_s_antisym[d, e]
                 )
             # 1 victory (i.e. against `e`).
             #   * If `self.tie_break_weights_[c] == n_c - 1`, then `e` must win against `d` and the tie-breaking rule
             #   makes `c` win.
             #   * If `self.tie_break_weights_[c] != n_c - 1`, then she cannot win with only 1 victory.
             if self.tie_break_weights_[c] == self.profile_.n_c - 1:
-                sufficient_1_victory = max(
-                    matrix_duels_s_antisym[e, c] + 1,
-                    matrix_duels_s_antisym[d, e] + 1
-                )
+                sufficient_1_victory = max(matrix_duels_s_antisym[e, c] + 1, matrix_duels_s_antisym[d, e] + 1)
             else:
                 sufficient_1_victory = np.inf
             # 2 ties.
@@ -477,36 +474,33 @@ class RuleCopeland(Rule):
             #   * If `self.tie_break_weights_[c] != n_c - 1`, then she cannot win with only 2 ties.
             if self.tie_break_weights_[c] == self.profile_.n_c - 1:
                 sufficient_2_ties = max(
-                    matrix_duels_s_antisym[e, c],
-                    matrix_duels_s_antisym[d, c],
-                    np.abs(matrix_duels_s_antisym[d, e])
+                    matrix_duels_s_antisym[e, c], matrix_duels_s_antisym[d, c], np.abs(matrix_duels_s_antisym[d, e])
                 )
             else:
                 sufficient_2_ties = np.inf
             sufficient = min(
-                sufficient_2_victories,
-                sufficient_1_dot_5_victories,
-                sufficient_1_victory,
-                sufficient_2_ties
+                sufficient_2_victories, sufficient_1_dot_5_victories, sufficient_1_victory, sufficient_2_ties
             )
-            self.mylogv('CM: Fast algorithm: sufficient =', sufficient)
-            self._update_sufficient(self._sufficient_coalition_size_cm, c, sufficient,
-                                    'CM: Fast algorithm: sufficient_coalition_size_cm =')
-            self._update_necessary(self._necessary_coalition_size_cm, c, sufficient,
-                                   'CM: Fast algorithm: necessary_coalition_size_cm =')
+            self.mylogv("CM: Fast algorithm: sufficient =", sufficient)
+            self._update_sufficient(
+                self._sufficient_coalition_size_cm, c, sufficient, "CM: Fast algorithm: sufficient_coalition_size_cm ="
+            )
+            self._update_necessary(
+                self._necessary_coalition_size_cm, c, sufficient, "CM: Fast algorithm: necessary_coalition_size_cm ="
+            )
         return False
 
     def _cm_main_work_c_(self, c, optimize_bounds):
         """
-            >>> profile = Profile(preferences_rk=[
-            ...     [2, 1, 0],
-            ...     [1, 2, 0],
-            ...     [2, 1, 0],
-            ...     [2, 1, 0],
-            ... ])
-            >>> rule = RuleCopeland(cm_option='exact')(profile)
-            >>> rule.is_cm_c_with_bounds_(0)
-            (False, 4.0, 4.0)
+        >>> profile = Profile(preferences_rk=[
+        ...     [2, 1, 0],
+        ...     [1, 2, 0],
+        ...     [2, 1, 0],
+        ...     [2, 1, 0],
+        ... ])
+        >>> rule = RuleCopeland(cm_option='exact')(profile)
+        >>> rule.is_cm_c_with_bounds_(0)
+        (False, 4.0, 4.0)
         """
         is_quick_escape_fast = self._cm_main_work_c_fast_(c, optimize_bounds)
         if not self.cm_option == "exact":
@@ -520,11 +514,11 @@ class RuleCopeland(Rule):
     @cached_property
     def theta_critical_(self):
         """
-            This is only valid for at least 5 candidates.
+        This is only valid for at least 5 candidates.
 
-            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3, 4]])
-            >>> rule = RuleCopeland()(profile)
-            >>> rule.theta_critical_
-            0.25
+        >>> profile = Profile(preferences_rk=[[0, 1, 2, 3, 4]])
+        >>> rule = RuleCopeland()(profile)
+        >>> rule.theta_critical_
+        0.25
         """
-        return 1/4
+        return 1 / 4

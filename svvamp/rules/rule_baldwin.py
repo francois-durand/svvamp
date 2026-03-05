@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import numpy as np
 from svvamp.rules.rule import Rule
 from svvamp.utils.util_cache import cached_property
@@ -291,17 +292,20 @@ class RuleBaldwin(Rule):
         [0. 2. 3.]
     """
 
-    full_name = 'Baldwin'
-    abbreviation = 'Bal'
+    full_name = "Baldwin"
+    abbreviation = "Bal"
 
     options_parameters = Rule.options_parameters.copy()
-    options_parameters['icm_option'] = {'allowed': ['exact'], 'default': 'exact'}
-    options_parameters['cm_option'] = {'allowed': ['fast', 'exact'], 'default': 'fast'}
+    options_parameters["icm_option"] = {"allowed": ["exact"], "default": "exact"}
+    options_parameters["cm_option"] = {"allowed": ["fast", "exact"], "default": "fast"}
 
     def __init__(self, **kwargs):
         super().__init__(
-            with_two_candidates_reduces_to_plurality=True, is_based_on_rk=True,
-            precheck_icm=False, log_identity="BALDWIN", **kwargs
+            with_two_candidates_reduces_to_plurality=True,
+            is_based_on_rk=True,
+            precheck_icm=False,
+            log_identity="BALDWIN",
+            **kwargs,
         )
 
     def _count_ballots_aux_(self):
@@ -330,7 +334,7 @@ class RuleBaldwin(Rule):
             scores_borda_temp -= self.profile_.matrix_duels_rk[:, loser]
             scores_borda_temp[loser] = np.inf
         candidates_by_scores_best_to_worst = np.array(worst_to_best[::-1])
-        return {'scores': scores, 'w': w, 'candidates_by_scores_best_to_worst': candidates_by_scores_best_to_worst}
+        return {"scores": scores, "w": w, "candidates_by_scores_best_to_worst": candidates_by_scores_best_to_worst}
 
     @cached_property
     def _count_ballots_(self):
@@ -341,18 +345,18 @@ class RuleBaldwin(Rule):
         """2d array of integers. ``scores[r, c]`` is the Borda score of candidate ``c`` at elimination round ``r``.
         By convention, if candidate ``c`` does not participate to round ``r``, then ``scores[r, c] = numpy.inf``.
         """
-        return self._count_ballots_['scores']
+        return self._count_ballots_["scores"]
 
     @cached_property
     def w_(self):
-        return self._count_ballots_['w']
+        return self._count_ballots_["w"]
 
     @cached_property
     def candidates_by_scores_best_to_worst_(self):
         """1d array of integers. ``candidates_by_scores_best_to_worst[-r]`` is the candidate eliminated at
         elimination round ``r``. By definition / convention, ``candidates_by_scores_best_to_worst[0]`` = :attr:`w_`.
         """
-        return self._count_ballots_['candidates_by_scores_best_to_worst']
+        return self._count_ballots_["candidates_by_scores_best_to_worst"]
 
     @cached_property
     def meets_condorcet_c_rk_ctb(self):
@@ -432,14 +436,15 @@ class RuleBaldwin(Rule):
         matrix_duels_sincere = profile_sincere.matrix_duels_rk
         row_w = matrix_duels_sincere[self.w_, :]
         optimal_subset = list({c for c in range(n_c) if c != self.w_ and row_w[c] < n_v / 2} | {c})
-        self.mylogv('CM: Further check: optimal_subset =', optimal_subset, 3)
+        self.mylogv("CM: Further check: optimal_subset =", optimal_subset, 3)
         optimal_average_score = row_w[optimal_subset].sum() / len(optimal_subset)
-        self.mylogv('CM: Further check: optimal_average_score =', optimal_average_score, 3)
+        self.mylogv("CM: Further check: optimal_average_score =", optimal_average_score, 3)
         if optimal_average_score > n_v / 2 or (optimal_average_score == n_v / 2 and c > self.w_):
             necessary = n_m + 1
-            self.mylogv('CM: Further check: necessary =', necessary)
-            self._update_necessary(self._necessary_coalition_size_cm, c, necessary,
-                                   'CM: Further check: necessary_coalition_size_cm =')
+            self.mylogv("CM: Further check: necessary =", necessary)
+            self._update_necessary(
+                self._necessary_coalition_size_cm, c, necessary, "CM: Further check: necessary_coalition_size_cm ="
+            )
         # An opportunity to escape before real work
         if self._necessary_coalition_size_cm[c] == self._sufficient_coalition_size_cm[c]:
             return False
@@ -456,13 +461,13 @@ class RuleBaldwin(Rule):
         scores_test = matrix_duels_sincere[:, optimal_subset][optimal_subset, :].sum(axis=1)
         # We add a tie-breaking term [(k-1)/k, (k-2)/k, ..., 0] to ease the computations.
         scores_test = scores_test + (np.array(range(k - 1, -1, -1)) / k)
-        self.mylogv('CM: Fast algorithm: optimal_subset =', optimal_subset, 3)
-        self.mylogv('CM: Fast algorithm: scores_test =', scores_test, 3)
+        self.mylogv("CM: Fast algorithm: optimal_subset =", optimal_subset, 3)
+        self.mylogv("CM: Fast algorithm: scores_test =", scores_test, 3)
         ballots_manipulators_subset = []
         for _ in range(n_m):
             # Balancing ballot: put candidates in the order of their current scores (least point to the most
             # dangerous).
-            candidates_by_decreasing_score = np.argsort(- scores_test, kind='mergesort')
+            candidates_by_decreasing_score = np.argsort(-scores_test, kind="mergesort")
             ballot = np.argsort(candidates_by_decreasing_score)
             # Our priority is to kill w, so we put her at the bottom
             ballot += np.less(ballot, ballot[i_w])
@@ -471,10 +476,10 @@ class RuleBaldwin(Rule):
             if np.all(scores_test[i_w] <= np.array(scores_test)):
                 ballot -= np.greater(ballot, ballot[i_c])
                 ballot[i_c] = k - 1
-            self.mylogv('CM: Fast algorithm: ballot =', ballot, 3)
+            self.mylogv("CM: Fast algorithm: ballot =", ballot, 3)
             # New scores = old scores + ballot.
             scores_test += ballot
-            self.mylogv('CM: Fast algorithm: scores_test =', scores_test, 3)
+            self.mylogv("CM: Fast algorithm: scores_test =", scores_test, 3)
             ballots_manipulators_subset.append(ballot)
         ballots_manipulators = np.zeros((n_m, n_c), dtype=int)
         if n_m >= 1:  # Otherwise, `ballots_manipulators_subset` is empty hence numpy cannot cast the array.
@@ -482,43 +487,45 @@ class RuleBaldwin(Rule):
         ballots_manipulators[:, optimal_subset] += n_c - k
         if k < n_c:
             other_candidates_by_decreasing_score = [
-                cand for cand in np.argsort(- matrix_duels_sincere.sum(axis=1), kind='mergesort')
+                cand
+                for cand in np.argsort(-matrix_duels_sincere.sum(axis=1), kind="mergesort")
                 if cand not in optimal_subset
             ]
             ballots_manipulators[:, other_candidates_by_decreasing_score] = np.arange(n_c - k)[np.newaxis, :]
-        self.mylogv('CM: Fast algorithm: ballots_manipulators =', ballots_manipulators, 3)
+        self.mylogv("CM: Fast algorithm: ballots_manipulators =", ballots_manipulators, 3)
         ballots = np.vstack((ballots_sincere, ballots_manipulators))
         w_test = RuleBaldwin()(profile=Profile(preferences_ut=ballots)).w_
         if w_test == c:
             sufficient = n_m
-            self.mylogv('CM: Fast algorithm: sufficient =', sufficient)
-            self._update_sufficient(self._sufficient_coalition_size_cm, c, sufficient,
-                                    'CM: Fast algorithm: sufficient_coalition_size_cm =')
+            self.mylogv("CM: Fast algorithm: sufficient =", sufficient)
+            self._update_sufficient(
+                self._sufficient_coalition_size_cm, c, sufficient, "CM: Fast algorithm: sufficient_coalition_size_cm ="
+            )
         is_quick_escape = False  # We will not do better if we come back in this method
         return is_quick_escape
 
     def _cm_main_work_c_(self, c, optimize_bounds):
         """
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 1, 2],
-            ...     [0, 2, 1],
-            ...     [0, 2, 1],
-            ...     [0, 2, 1],
-            ...     [2, 0, 1],
-            ... ])
-            >>> rule = RuleBaldwin(cm_option='exact')(profile)
-            >>> rule.candidates_cm_
-            array([0., 0., 0.])
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [0, 2, 1],
+        ...     [0, 2, 1],
+        ...     [0, 2, 1],
+        ...     [2, 0, 1],
+        ... ])
+        >>> rule = RuleBaldwin(cm_option='exact')(profile)
+        >>> rule.candidates_cm_
+        array([0., 0., 0.])
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 1, 2],
-            ...     [1, 2, 0],
-            ...     [2, 1, 0],
-            ...     [1, 2, 0],
-            ... ])
-            >>> rule = RuleBaldwin(cm_option='exact')(profile)
-            >>> rule.sufficient_coalition_size_cm_
-            array([3., 0., 3.])
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [1, 2, 0],
+        ...     [2, 1, 0],
+        ...     [1, 2, 0],
+        ... ])
+        >>> rule = RuleBaldwin(cm_option='exact')(profile)
+        >>> rule.sufficient_coalition_size_cm_
+        array([3., 0., 3.])
         """
         is_quick_escape_fast = self._cm_main_work_c_fast_(c, optimize_bounds)
         if not self.cm_option == "exact":
@@ -532,10 +539,10 @@ class RuleBaldwin(Rule):
     @cached_property
     def theta_critical_(self):
         """
-            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
-            >>> rule = RuleBaldwin()(profile)
-            >>> rule.theta_critical_
-            0.18181818181818182
+        >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
+        >>> rule = RuleBaldwin()(profile)
+        >>> rule.theta_critical_
+        0.18181818181818182
         """
         n_c = self.profile_.n_c
         return (n_c - 2) / (4 * n_c - 5)

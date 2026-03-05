@@ -82,18 +82,20 @@ class ExperimentAnalyzer:
     `experiment_analyzer(base_profile=another_base_profile)`.
     """
 
-    def __init__(self,
-                 base_profile=None,
-                 n_samples=1,
-                 relative_noise=0.,
-                 absolute_noise=0.,
-                 exponential_noise=False,
-                 study_profile_criteria=None,
-                 voting_rule_tasks=None,
-                 output_dir='out',
-                 output_file_suffix='',
-                 log_csv=None,
-                 ping_period=10):
+    def __init__(
+        self,
+        base_profile=None,
+        n_samples=1,
+        relative_noise=0.0,
+        absolute_noise=0.0,
+        exponential_noise=False,
+        study_profile_criteria=None,
+        voting_rule_tasks=None,
+        output_dir="out",
+        output_file_suffix="",
+        log_csv=None,
+        ping_period=10,
+    ):
         # Check sanity (or not)
         if study_profile_criteria:
             study_profile_criteria.check_sanity()
@@ -132,29 +134,41 @@ class ExperimentAnalyzer:
         self.ping_period = None
 
     def _prepare_csv(self):
-        prefix = self.output_dir + '/Results_' + time.strftime('%Y-%m-%d_%H-%M-%S')
-        suffix = '_' + self.output_file_suffix if self.output_file_suffix else ''
-        self.file_d_en = open(f"{prefix}_d_en{suffix}.csv", 'a')
-        self.file_d_fr = open(f"{prefix}_d_fr{suffix}.csv", 'a')
-        self.file_m_en = open(f"{prefix}_m_en{suffix}.csv", 'a')
-        self.file_m_fr = open(f"{prefix}_m_fr{suffix}.csv", 'a')
-        headers_m = pd.DataFrame([
-            'Rule', 'Rule (abbr)', 'Rule (class)',
-            'Criterion', 'Candidate', 'Candidate name',
-            'Algorithm parameters',
-            'Computation time',
-            'Rate (lower bound)',
-            'Rate (upper bound)',
-            'Rate (uncertainty)',
-            'Number of profiles',
-            'V', 'C', 'Culture type',
-            'Culture parameter 1', 'Culture parameter 1 value',
-            'Culture parameter 2', 'Culture parameter 2 value',
-            'Culture parameter 3', 'Culture parameter 3 value',
-            'Culture parameter 4', 'Culture parameter 4 value'
-        ]).T
-        headers_m.to_csv(path_or_buf=self.file_m_en, index=False, header=False, lineterminator='\n')
-        headers_m.to_csv(path_or_buf=self.file_m_fr, index=False, header=False, sep=';', lineterminator='\n')
+        prefix = self.output_dir + "/Results_" + time.strftime("%Y-%m-%d_%H-%M-%S")
+        suffix = "_" + self.output_file_suffix if self.output_file_suffix else ""
+        self.file_d_en = open(f"{prefix}_d_en{suffix}.csv", "a")
+        self.file_d_fr = open(f"{prefix}_d_fr{suffix}.csv", "a")
+        self.file_m_en = open(f"{prefix}_m_en{suffix}.csv", "a")
+        self.file_m_fr = open(f"{prefix}_m_fr{suffix}.csv", "a")
+        headers_m = pd.DataFrame(
+            [
+                "Rule",
+                "Rule (abbr)",
+                "Rule (class)",
+                "Criterion",
+                "Candidate",
+                "Candidate name",
+                "Algorithm parameters",
+                "Computation time",
+                "Rate (lower bound)",
+                "Rate (upper bound)",
+                "Rate (uncertainty)",
+                "Number of profiles",
+                "V",
+                "C",
+                "Culture type",
+                "Culture parameter 1",
+                "Culture parameter 1 value",
+                "Culture parameter 2",
+                "Culture parameter 2 value",
+                "Culture parameter 3",
+                "Culture parameter 3 value",
+                "Culture parameter 4",
+                "Culture parameter 4 value",
+            ]
+        ).T
+        headers_m.to_csv(path_or_buf=self.file_m_en, index=False, header=False, lineterminator="\n")
+        headers_m.to_csv(path_or_buf=self.file_m_fr, index=False, header=False, sep=";", lineterminator="\n")
 
     def _df_to_csv_m(self, df):
         return _df_to_csv(df, file_en=self.file_m_en, file_fr=self.file_m_fr)
@@ -174,7 +188,7 @@ class ExperimentAnalyzer:
         output_dir=None,
         output_file_suffix=None,
         log_csv=None,
-        ping_period=None
+        ping_period=None,
     ):
         # Set the parameters
         self.base_profile = self.default_base_profile if base_profile is None else base_profile
@@ -182,8 +196,9 @@ class ExperimentAnalyzer:
         self.relative_noise = self.default_relative_noise if relative_noise is None else relative_noise
         self.absolute_noise = self.default_absolute_noise if absolute_noise is None else absolute_noise
         self.exponential_noise = self.default_exponential_noise if exponential_noise is None else exponential_noise
-        self.study_profile_criteria = (self.default_study_profile_criteria if study_profile_criteria is None
-                                       else study_profile_criteria)
+        self.study_profile_criteria = (
+            self.default_study_profile_criteria if study_profile_criteria is None else study_profile_criteria
+        )
         self.voting_rule_tasks = self.default_voting_rule_tasks if voting_rule_tasks is None else voting_rule_tasks
         self.output_dir = self.default_output_dir if output_dir is None else output_dir
         self.output_file_suffix = self.default_output_file_suffix if output_file_suffix is None else output_file_suffix
@@ -212,57 +227,48 @@ class ExperimentAnalyzer:
         # - Initialize record for voting systems results
         results_vs_winner = [np.zeros(n_c) for _ in self.voting_rule_tasks]
         results_vs_result_criteria = [
-            [
-                dict(inf=0, sup=0)
-                for _ in study_rule_criteria.result_criteria
-            ]
+            [dict(inf=0, sup=0) for _ in study_rule_criteria.result_criteria]
             for (rule_class, options, study_rule_criteria) in self.voting_rule_tasks
         ]
         results_vs_numerical_criteria = [
-            [
-                dict(inf=0, sup=0, time=0)
-                for _ in study_rule_criteria.numerical_criteria
-            ]
+            [dict(inf=0, sup=0, time=0) for _ in study_rule_criteria.numerical_criteria]
             for (rule_class, options, study_rule_criteria) in self.voting_rule_tasks
         ]
         results_vs_manipulation_criteria = [
-            [
-                dict(inf=0, sup=0, log='', time=0)
-                for _ in study_rule_criteria.manipulation_criteria
-            ]
+            [dict(inf=0, sup=0, log="", time=0) for _ in study_rule_criteria.manipulation_criteria]
             for (rule_class, options, study_rule_criteria) in self.voting_rule_tasks
         ]
         results_vs_manipulation_criteria_c = [
             [
-                dict(inf=np.zeros(n_c), sup=np.zeros(n_c), log='', time=0)
+                dict(inf=np.zeros(n_c), sup=np.zeros(n_c), log="", time=0)
                 for _ in study_rule_criteria.manipulation_criteria_c
             ]
             for (rule_class, options, study_rule_criteria) in self.voting_rule_tasks
         ]
         results_vs_utility_criteria = [
-            [
-                []
-                for _ in study_rule_criteria.utility_criteria
-            ]
+            [[] for _ in study_rule_criteria.utility_criteria]
             for (rule_class, options, study_rule_criteria) in self.voting_rule_tasks
         ]
         self._prepare_csv()
         generator_profile = GeneratorProfileNoise(
-            base_profile=self.base_profile, relative_noise=self.relative_noise, absolute_noise=self.absolute_noise,
-            exponential_noise=self.exponential_noise)
+            base_profile=self.base_profile,
+            relative_noise=self.relative_noise,
+            absolute_noise=self.absolute_noise,
+            exponential_noise=self.exponential_noise,
+        )
         # Heavy lifting
-        print('Compute...')
+        print("Compute...")
         for n_iterations in range(self.n_samples):
             profile = generator_profile()
             # Tests on the profile itself
             for i_criterion, criterion in enumerate(self.study_profile_criteria.boolean_criteria):
                 answer = getattr(profile, criterion)
                 if equal_true(answer):
-                    results_p_boolean_criteria[i_criterion]['inf'] += 1
-                    results_p_boolean_criteria[i_criterion]['sup'] += 1
+                    results_p_boolean_criteria[i_criterion]["inf"] += 1
+                    results_p_boolean_criteria[i_criterion]["sup"] += 1
                 elif np.isnan(answer):  # pragma: no cover
                     # As of now, no Boolean criterion can return `nan`.
-                    results_p_boolean_criteria[i_criterion]['sup'] += 1
+                    results_p_boolean_criteria[i_criterion]["sup"] += 1
             for i_criterion, (criterion, func, name) in enumerate(self.study_profile_criteria.numerical_criteria):
                 answer = getattr(profile, criterion)
                 results_p_numerical_criteria[i_criterion].append(answer)
@@ -288,11 +294,11 @@ class ExperimentAnalyzer:
                 for i_criterion, criterion in enumerate(study_rule_criteria.result_criteria):
                     answer = getattr(election, criterion)
                     if equal_true(answer):
-                        results_vs_result_criteria[i_task][i_criterion]['inf'] += 1
-                        results_vs_result_criteria[i_task][i_criterion]['sup'] += 1
+                        results_vs_result_criteria[i_task][i_criterion]["inf"] += 1
+                        results_vs_result_criteria[i_task][i_criterion]["sup"] += 1
                     elif np.isnan(answer):  # pragma: no cover
                         # As of now, no result criterion can return `nan`.
-                        results_vs_result_criteria[i_task][i_criterion]['sup'] += 1
+                        results_vs_result_criteria[i_task][i_criterion]["sup"] += 1
                 # Utility criteria
                 for i_criterion, (criterion, func, name) in enumerate(study_rule_criteria.utility_criteria):
                     answer = getattr(election, criterion)
@@ -302,71 +308,115 @@ class ExperimentAnalyzer:
                     t1 = time.time()
                     inf, sup = getattr(election, criterion)
                     t2 = time.time()
-                    results_vs_numerical_criteria[i_task][i_criterion]['time'] += t2 - t1
-                    results_vs_numerical_criteria[i_task][i_criterion]['inf'] += inf
-                    results_vs_numerical_criteria[i_task][i_criterion]['sup'] += sup
+                    results_vs_numerical_criteria[i_task][i_criterion]["time"] += t2 - t1
+                    results_vs_numerical_criteria[i_task][i_criterion]["inf"] += inf
+                    results_vs_numerical_criteria[i_task][i_criterion]["sup"] += sup
                 # Manipulation criteria (by candidate)
                 for i_criterion, criterion in enumerate(study_rule_criteria.manipulation_criteria_c):
                     t1 = time.time()
                     answer = getattr(election, criterion)
                     t2 = time.time()
-                    results_vs_manipulation_criteria_c[i_task][i_criterion]['time'] += t2 - t1
-                    results_vs_manipulation_criteria_c[i_task][i_criterion]['inf'] += np.equal(answer, True)
-                    results_vs_manipulation_criteria_c[i_task][i_criterion]['sup'] += np.equal(answer, True)
-                    results_vs_manipulation_criteria_c[i_task][i_criterion]['sup'] += np.isnan(answer)
+                    results_vs_manipulation_criteria_c[i_task][i_criterion]["time"] += t2 - t1
+                    results_vs_manipulation_criteria_c[i_task][i_criterion]["inf"] += np.equal(answer, True)
+                    results_vs_manipulation_criteria_c[i_task][i_criterion]["sup"] += np.equal(answer, True)
+                    results_vs_manipulation_criteria_c[i_task][i_criterion]["sup"] += np.isnan(answer)
                     if n_iterations == 0:
                         log = election.log_(criterion)
-                        results_vs_manipulation_criteria_c[i_task][i_criterion]['log'] += log
+                        results_vs_manipulation_criteria_c[i_task][i_criterion]["log"] += log
                 # Manipulation criteria (Boolean)
                 for i_criterion, criterion in enumerate(study_rule_criteria.manipulation_criteria):
                     t1 = time.time()
                     answer = getattr(election, criterion)
                     t2 = time.time()
-                    results_vs_manipulation_criteria[i_task][i_criterion]['time'] += t2 - t1
+                    results_vs_manipulation_criteria[i_task][i_criterion]["time"] += t2 - t1
                     if equal_true(answer):
-                        results_vs_manipulation_criteria[i_task][i_criterion]['inf'] += 1
-                        results_vs_manipulation_criteria[i_task][i_criterion]['sup'] += 1
+                        results_vs_manipulation_criteria[i_task][i_criterion]["inf"] += 1
+                        results_vs_manipulation_criteria[i_task][i_criterion]["sup"] += 1
                     elif np.isnan(answer):
-                        results_vs_manipulation_criteria[i_task][i_criterion]['sup'] += 1
+                        results_vs_manipulation_criteria[i_task][i_criterion]["sup"] += 1
                     if n_iterations == 0:
                         log = election.log_(criterion)
-                        results_vs_manipulation_criteria[i_task][i_criterion]['log'] += log
+                        results_vs_manipulation_criteria[i_task][i_criterion]["log"] += log
             # Report progression (or not)
             if (n_iterations + 1) % self.ping_period == 0:
-                print(f'{n_iterations + 1} profiles analyzed')
+                print(f"{n_iterations + 1} profiles analyzed")
 
         # Write results in csv
-        print('Write results in csv files...')
+        print("Write results in csv files...")
         # Results on profiles
         for i_criterion, criterion in enumerate(self.study_profile_criteria.boolean_criteria):
-            lower = results_p_boolean_criteria[i_criterion]['inf'] / self.n_samples
-            upper = results_p_boolean_criteria[i_criterion]['sup'] / self.n_samples
+            lower = results_p_boolean_criteria[i_criterion]["inf"] / self.n_samples
+            upper = results_p_boolean_criteria[i_criterion]["sup"] / self.n_samples
             self._df_to_csv_m(
-                ['Profile', '', '', criterion, '', '', '', '', lower, upper, upper - lower, self.n_samples, n_v, n_c]
-                + self.log_csv)
+                ["Profile", "", "", criterion, "", "", "", "", lower, upper, upper - lower, self.n_samples, n_v, n_c]
+                + self.log_csv
+            )
         for i_criterion, (criterion, func, name) in enumerate(self.study_profile_criteria.numerical_criteria):
             answer = func(results_p_numerical_criteria[i_criterion])
-            self._df_to_csv_m(['Profile', '', '', name, '', '', '', '', answer, answer, 0, self.n_samples, n_v, n_c]
-                              + self.log_csv)
+            self._df_to_csv_m(
+                ["Profile", "", "", name, "", "", "", "", answer, answer, 0, self.n_samples, n_v, n_c] + self.log_csv
+            )
         for i_criterion, criterion in enumerate(self.study_profile_criteria.special_candidates_criteria):
             rate = results_p_special_candidates_criteria[i_criterion] / self.n_samples
             for c in range(n_c):
                 self._df_to_csv_m(
-                    ['Profile', '', '', criterion, c, labels_candidates[c], '', '', rate[c], rate[c], 0, self.n_samples,
-                     n_v, n_c]
+                    [
+                        "Profile",
+                        "",
+                        "",
+                        criterion,
+                        c,
+                        labels_candidates[c],
+                        "",
+                        "",
+                        rate[c],
+                        rate[c],
+                        0,
+                        self.n_samples,
+                        n_v,
+                        n_c,
+                    ]
                     + self.log_csv
                 )
             self._df_to_csv_m(
-                ['Profile', '', '', criterion, 'None', 'None', '', '', rate[n_c], rate[n_c], 0, self.n_samples,
-                 n_v, n_c]
+                [
+                    "Profile",
+                    "",
+                    "",
+                    criterion,
+                    "None",
+                    "None",
+                    "",
+                    "",
+                    rate[n_c],
+                    rate[n_c],
+                    0,
+                    self.n_samples,
+                    n_v,
+                    n_c,
+                ]
                 + self.log_csv
             )
         for i_criterion, criterion in enumerate(self.study_profile_criteria.array_criteria):
             aver = results_p_array_criteria[i_criterion] / self.n_samples
             for c in range(n_c):
                 self._df_to_csv_m(
-                    ['Profile', '', '', criterion, c, labels_candidates[c], '', '', aver[c], aver[c], 0, self.n_samples,
-                     n_v, n_c]
+                    [
+                        "Profile",
+                        "",
+                        "",
+                        criterion,
+                        c,
+                        labels_candidates[c],
+                        "",
+                        "",
+                        aver[c],
+                        aver[c],
+                        0,
+                        self.n_samples,
+                        n_v,
+                        n_c,
+                    ]
                     + self.log_csv
                 )
         for i_criterion, criterion in enumerate(self.study_profile_criteria.matrix_criteria):
@@ -379,74 +429,160 @@ class ExperimentAnalyzer:
             for c in range(n_c):
                 self._df_to_csv_m(
                     [
-                        rule_class.full_name, rule_class.abbreviation, rule_class.__name__,
-                        'Winner', c, labels_candidates[c], '', '',
-                        rate_win[c], rate_win[c], 0, self.n_samples, n_v, n_c
+                        rule_class.full_name,
+                        rule_class.abbreviation,
+                        rule_class.__name__,
+                        "Winner",
+                        c,
+                        labels_candidates[c],
+                        "",
+                        "",
+                        rate_win[c],
+                        rate_win[c],
+                        0,
+                        self.n_samples,
+                        n_v,
+                        n_c,
                     ]
                     + self.log_csv
                 )
             # Result criteria
             for i_criterion, criterion in enumerate(study_rule_criteria.result_criteria):
-                lower = results_vs_result_criteria[i_task][i_criterion]['inf'] / self.n_samples
-                upper = results_vs_result_criteria[i_task][i_criterion]['sup'] / self.n_samples
+                lower = results_vs_result_criteria[i_task][i_criterion]["inf"] / self.n_samples
+                upper = results_vs_result_criteria[i_task][i_criterion]["sup"] / self.n_samples
                 self._df_to_csv_m(
-                    [rule_class.full_name, rule_class.abbreviation, rule_class.__name__,
-                     criterion, '', '', '', '', lower, upper, upper - lower, self.n_samples, n_v, n_c]
+                    [
+                        rule_class.full_name,
+                        rule_class.abbreviation,
+                        rule_class.__name__,
+                        criterion,
+                        "",
+                        "",
+                        "",
+                        "",
+                        lower,
+                        upper,
+                        upper - lower,
+                        self.n_samples,
+                        n_v,
+                        n_c,
+                    ]
                     + self.log_csv
                 )
             # Manipulation criteria
             for i_criterion, criterion in enumerate(study_rule_criteria.manipulation_criteria):
-                lower = results_vs_manipulation_criteria[i_task][i_criterion]['inf'] / self.n_samples
-                upper = results_vs_manipulation_criteria[i_task][i_criterion]['sup'] / self.n_samples
-                the_time = results_vs_manipulation_criteria[i_task][i_criterion]['time']
-                the_log = results_vs_manipulation_criteria[i_task][i_criterion]['log']
+                lower = results_vs_manipulation_criteria[i_task][i_criterion]["inf"] / self.n_samples
+                upper = results_vs_manipulation_criteria[i_task][i_criterion]["sup"] / self.n_samples
+                the_time = results_vs_manipulation_criteria[i_task][i_criterion]["time"]
+                the_log = results_vs_manipulation_criteria[i_task][i_criterion]["log"]
                 self._df_to_csv_m(
                     [
-                        rule_class.full_name, rule_class.abbreviation, rule_class.__name__,
-                        criterion, 'any', '', the_log, the_time, lower, upper, upper - lower,
-                        self.n_samples, n_v, n_c
+                        rule_class.full_name,
+                        rule_class.abbreviation,
+                        rule_class.__name__,
+                        criterion,
+                        "any",
+                        "",
+                        the_log,
+                        the_time,
+                        lower,
+                        upper,
+                        upper - lower,
+                        self.n_samples,
+                        n_v,
+                        n_c,
                     ]
                     + self.log_csv
                 )
             for i_criterion, criterion in enumerate(study_rule_criteria.manipulation_criteria_c):
-                lower = results_vs_manipulation_criteria_c[i_task][i_criterion]['inf'] / self.n_samples
-                upper = results_vs_manipulation_criteria_c[i_task][i_criterion]['sup'] / self.n_samples
-                the_time = results_vs_manipulation_criteria_c[i_task][i_criterion]['time']
-                the_log = results_vs_manipulation_criteria_c[i_task][i_criterion]['log']
+                lower = results_vs_manipulation_criteria_c[i_task][i_criterion]["inf"] / self.n_samples
+                upper = results_vs_manipulation_criteria_c[i_task][i_criterion]["sup"] / self.n_samples
+                the_time = results_vs_manipulation_criteria_c[i_task][i_criterion]["time"]
+                the_log = results_vs_manipulation_criteria_c[i_task][i_criterion]["log"]
                 for c in range(n_c):
                     self._df_to_csv_m(
                         [
-                            rule_class.full_name, rule_class.abbreviation, rule_class.__name__,
-                            criterion, c, labels_candidates[c], the_log, '', lower[c], upper[c], upper[c] - lower[c],
-                            self.n_samples, n_v, n_c
+                            rule_class.full_name,
+                            rule_class.abbreviation,
+                            rule_class.__name__,
+                            criterion,
+                            c,
+                            labels_candidates[c],
+                            the_log,
+                            "",
+                            lower[c],
+                            upper[c],
+                            upper[c] - lower[c],
+                            self.n_samples,
+                            n_v,
+                            n_c,
                         ]
                         + self.log_csv
                     )
                 # Indicate the time only once
                 self._df_to_csv_m(
-                    [rule_class.full_name, rule_class.abbreviation, rule_class.__name__,
-                     criterion, 'any', '', the_log, the_time, '', '', '', self.n_samples, n_v, n_c]
+                    [
+                        rule_class.full_name,
+                        rule_class.abbreviation,
+                        rule_class.__name__,
+                        criterion,
+                        "any",
+                        "",
+                        the_log,
+                        the_time,
+                        "",
+                        "",
+                        "",
+                        self.n_samples,
+                        n_v,
+                        n_c,
+                    ]
                     + self.log_csv
                 )
             # Utility criteria
             for i_criterion, (criterion, func, name) in enumerate(study_rule_criteria.utility_criteria):
                 answer = func(results_vs_utility_criteria[i_task][i_criterion])
                 self._df_to_csv_m(
-                    [rule_class.full_name, rule_class.abbreviation, rule_class.__name__,
-                     name, '', '', '', '', answer, answer, 0, self.n_samples, n_v, n_c]
+                    [
+                        rule_class.full_name,
+                        rule_class.abbreviation,
+                        rule_class.__name__,
+                        name,
+                        "",
+                        "",
+                        "",
+                        "",
+                        answer,
+                        answer,
+                        0,
+                        self.n_samples,
+                        n_v,
+                        n_c,
+                    ]
                     + self.log_csv
                 )
             # Numerical criteria
             for i_criterion, criterion in enumerate(study_rule_criteria.numerical_criteria):
-                lower = results_vs_numerical_criteria[i_task][i_criterion]['inf'] / self.n_samples
-                upper = results_vs_numerical_criteria[i_task][i_criterion]['sup'] / self.n_samples
-                the_time = results_vs_numerical_criteria[i_task][i_criterion]['time']
+                lower = results_vs_numerical_criteria[i_task][i_criterion]["inf"] / self.n_samples
+                upper = results_vs_numerical_criteria[i_task][i_criterion]["sup"] / self.n_samples
+                the_time = results_vs_numerical_criteria[i_task][i_criterion]["time"]
                 try:
                     self._df_to_csv_m(
                         [
-                            rule_class.full_name, rule_class.abbreviation, rule_class.__name__,
-                            criterion, 'any', '', '', the_time, lower, upper, upper - lower,
-                            self.n_samples, n_v, n_c
+                            rule_class.full_name,
+                            rule_class.abbreviation,
+                            rule_class.__name__,
+                            criterion,
+                            "any",
+                            "",
+                            "",
+                            the_time,
+                            lower,
+                            upper,
+                            upper - lower,
+                            self.n_samples,
+                            n_v,
+                            n_c,
                         ]
                         + self.log_csv
                     )
@@ -460,7 +596,7 @@ class ExperimentAnalyzer:
         self.file_m_fr.close()
         self.file_d_en.close()
         self.file_d_fr.close()
-        print('Simulation finished')
+        print("Simulation finished")
 
 
 def my_float(x):
@@ -489,7 +625,7 @@ def my_float(x):
         '3.14'
     """
     if isinstance(x, float):
-        return ('%.6f' % x).replace('.', ',')
+        return ("%.6f" % x).replace(".", ",")
     else:
         return x
 
@@ -498,5 +634,5 @@ def _df_to_csv(df, file_en, file_fr):
     df = pd.DataFrame(df)
     if df.shape[1] == 1:
         df = df.T
-    df.to_csv(path_or_buf=file_en, index=False, header=False, lineterminator='\n')
-    df.apply(my_float).to_csv(path_or_buf=file_fr, index=False, header=False, sep=';', lineterminator='\n')
+    df.to_csv(path_or_buf=file_en, index=False, header=False, lineterminator="\n")
+    df.apply(my_float).to_csv(path_or_buf=file_fr, index=False, header=False, sep=";", lineterminator="\n")

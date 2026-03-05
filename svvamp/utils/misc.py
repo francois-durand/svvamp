@@ -28,7 +28,7 @@ def preferences_ut_to_preferences_rk(preferences_ut):
     preferences_ut = np.array(preferences_ut)
     n_v, n_c = preferences_ut.shape
     tiebreaker = np.random.rand(n_v, n_c)
-    return np.array(np.lexsort((tiebreaker, - preferences_ut), 1), dtype=int)
+    return np.array(np.lexsort((tiebreaker, -preferences_ut), 1), dtype=int)
 
 
 def preferences_rk_to_preferences_borda_rk(preferences_rk):
@@ -52,7 +52,7 @@ def preferences_rk_to_preferences_borda_rk(preferences_rk):
     """
     preferences_rk = np.array(preferences_rk)
     _, n_c = preferences_rk.shape
-    return - np.array(np.argsort(preferences_rk, 1), dtype=int) + n_c - 1
+    return -np.array(np.argsort(preferences_rk, 1), dtype=int) + n_c - 1
 
 
 def preferences_ut_to_preferences_borda_ut(preferences_ut):
@@ -79,11 +79,14 @@ def preferences_ut_to_preferences_borda_ut(preferences_ut):
     n_v, n_c = preferences_ut.shape
     preference_borda_ut = np.zeros((n_v, n_c))
     for c in range(n_c):
-        preference_borda_ut[:, c] = np.sum(
-            0.5 * (preferences_ut[:, c][:, np.newaxis] >= preferences_ut)
-            + 0.5 * (preferences_ut[:, c][:, np.newaxis] > preferences_ut),
-            axis=1
-        ) - 0.5
+        preference_borda_ut[:, c] = (
+            np.sum(
+                0.5 * (preferences_ut[:, c][:, np.newaxis] >= preferences_ut)
+                + 0.5 * (preferences_ut[:, c][:, np.newaxis] > preferences_ut),
+                axis=1,
+            )
+            - 0.5
+        )
     return preference_borda_ut
 
 
@@ -158,14 +161,15 @@ def matrix_victories_to_smith_set(matrix_victories):
     # General case
     copeland_decreasing = sorted(copeland_scores, reverse=True)
     candidates_by_copeland_best_worst = sorted(range(n_c), key=copeland_scores.__getitem__, reverse=True)
-    matrix_victories_sorted = (
-        matrix_victories[candidates_by_copeland_best_worst, :][:, candidates_by_copeland_best_worst])
+    matrix_victories_sorted = matrix_victories[candidates_by_copeland_best_worst, :][
+        :, candidates_by_copeland_best_worst
+    ]
     i = 0
     while True:
         while i < n_c - 1 and copeland_decreasing[i] == copeland_decreasing[i + 1]:
             i += 1
-        if np.all(matrix_victories_sorted[0:i + 1, i + 1:] == 1):
-            return sorted(candidates_by_copeland_best_worst[0:i + 1])
+        if np.all(matrix_victories_sorted[0 : i + 1, i + 1 :] == 1):
+            return sorted(candidates_by_copeland_best_worst[0 : i + 1])
         i += 1
 
 
@@ -202,11 +206,11 @@ def is_resistant_condorcet(w, preferences_ut):
     for c in range(n_c):
         if c == w:
             continue
-        v_does_not_prefer_c_to_w = (preferences_ut[:, w] >= preferences_ut[:, c])
+        v_does_not_prefer_c_to_w = preferences_ut[:, w] >= preferences_ut[:, c]
         for d in range(n_c):
             if d == w:
                 continue
-            v_prefers_w_to_d = (preferences_ut[:, w] > preferences_ut[:, d])
+            v_prefers_w_to_d = preferences_ut[:, w] > preferences_ut[:, d]
             if np.sum(np.logical_and(v_does_not_prefer_c_to_w, v_prefers_w_to_d)) <= n_v / 2:
                 return False
     return True
@@ -305,10 +309,12 @@ def compute_next_permutation(prev_permutation, n_c):
             index_replacement = i
             break
     return np.array(
-        prev_permutation[0:index_pivot] + [prev_permutation[index_replacement]]
-        + prev_permutation[n_c - 1:index_replacement:-1]
-        + [prev_permutation[index_pivot]] + prev_permutation[index_replacement-1:index_pivot:-1],
-        dtype=int
+        prev_permutation[0:index_pivot]
+        + [prev_permutation[index_replacement]]
+        + prev_permutation[n_c - 1 : index_replacement : -1]
+        + [prev_permutation[index_pivot]]
+        + prev_permutation[index_replacement - 1 : index_pivot : -1],
+        dtype=int,
     )
 
 
@@ -404,7 +410,7 @@ def strong_connected_components(a):
         True
     """
     condensed = nx.condensation(nx.DiGraph(np.array(a)))
-    return [condensed.nodes[component]['members'] for component in nx.topological_sort(condensed)]
+    return [condensed.nodes[component]["members"] for component in nx.topological_sort(condensed)]
 
 
 def initialize_random_seeds(n=0):
@@ -443,7 +449,7 @@ def indent(s, n_spaces=4):
             First line
             Second line
     """
-    return ' ' * n_spaces + s.replace('\n', '\n    ')
+    return " " * n_spaces + s.replace("\n", "\n    ")
 
 
 def euclidean_distances(voters_positions, candidates_positions):
@@ -482,7 +488,7 @@ def euclidean_distances(voters_positions, candidates_positions):
                [0.6       , 1.04403065, 1.3       , 0.98994949],
                [0.89442719, 1.3892444 , 1.62788206, 0.9486833 ]])
     """
-    return np.sqrt(((voters_positions[:, np.newaxis, :] - candidates_positions[np.newaxis, :, :])**2).sum(axis=2))
+    return np.sqrt(((voters_positions[:, np.newaxis, :] - candidates_positions[np.newaxis, :, :]) ** 2).sum(axis=2))
 
 
 def powerset(lst, min_size=0):

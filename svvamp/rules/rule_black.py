@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import numpy as np
 from svvamp.rules.rule import Rule
 from svvamp.utils.util_cache import cached_property
@@ -307,17 +308,19 @@ class RuleBlack(Rule):
         [0. 2. 3.]
     """
 
-    full_name = 'Black'
-    abbreviation = 'Bla'
+    full_name = "Black"
+    abbreviation = "Bla"
 
     options_parameters = Rule.options_parameters.copy()
-    options_parameters['icm_option'] = {'allowed': ['exact'], 'default': 'exact'}
+    options_parameters["icm_option"] = {"allowed": ["exact"], "default": "exact"}
 
     def __init__(self, **kwargs):
         super().__init__(
-            with_two_candidates_reduces_to_plurality=True, is_based_on_rk=True,
+            with_two_candidates_reduces_to_plurality=True,
+            is_based_on_rk=True,
             precheck_icm=False,
-            log_identity="BLACK", **kwargs
+            log_identity="BLACK",
+            **kwargs,
         )
 
     # %% Count the ballots
@@ -342,11 +345,7 @@ class RuleBlack(Rule):
     @cached_property
     def candidates_by_scores_best_to_worst_(self):
         self.mylog("Compute candidates_by_scores_best_to_worst", 1)
-        return sorted(
-            range(self.profile_.n_c),
-            key=lambda c: list(self.scores_[:, c]),
-            reverse=True
-        )
+        return sorted(range(self.profile_.n_c), key=lambda c: list(self.scores_[:, c]), reverse=True)
 
     # %% Manipulation criteria of the voting system
 
@@ -361,9 +360,9 @@ class RuleBlack(Rule):
     @cached_property
     def theta_critical_(self):
         """
-            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
-            >>> rule = RuleBlack()(profile)
-            >>> rule.theta_critical_
-            0.25
+        >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
+        >>> rule = RuleBlack()(profile)
+        >>> rule.theta_critical_
+        0.25
         """
-        return 1/4
+        return 1 / 4

@@ -6,6 +6,7 @@ import pytest
 
 from svvamp import svvamp
 
+
 @pytest.fixture
 def response():
     """Sample pytest fixture.

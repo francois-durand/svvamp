@@ -98,14 +98,14 @@ def profile_vmf_aux(n_c, n_v, concentration, pole=None):
         _pole = np.random.randn(n_c)
         _pole = _pole / np.sqrt(np.sum(_pole**2))
     else:
-        _pole = np.array(pole) / np.sqrt(np.sum(np.array(pole)**2))
+        _pole = np.array(pole) / np.sqrt(np.sum(np.array(pole) ** 2))
 
     w_store = np.zeros(n_v)
 
     # Step 0 of the algorithm (compute constants)
-    b = (- 2 * concentration + np.sqrt(4 * concentration ** 2 + (n_c - 1) ** 2)) / (n_c - 1)
+    b = (-2 * concentration + np.sqrt(4 * concentration**2 + (n_c - 1) ** 2)) / (n_c - 1)
     x_0 = (1 - b) / (1 + b)
-    c = concentration * x_0 + (n_c - 1) * np.log(1 - x_0 ** 2)
+    c = concentration * x_0 + (n_c - 1) * np.log(1 - x_0**2)
 
     for v in range(n_v):
         while True:
@@ -123,8 +123,9 @@ def profile_vmf_aux(n_c, n_v, concentration, pole=None):
     # Draw vectors_v uniformly on the sphere in `n_c - 1`-space and combine with w_store
     vectors_v = np.random.randn(n_v, n_c - 1)
     vectors_v = vectors_v / np.sqrt(np.sum(vectors_v**2, 1))[:, np.newaxis]
-    preferences_ut = np.concatenate((np.sqrt(1 - w_store**2)[:, np.newaxis] * vectors_v, w_store[:, np.newaxis]),
-                                    axis=1)
+    preferences_ut = np.concatenate(
+        (np.sqrt(1 - w_store**2)[:, np.newaxis] * vectors_v, w_store[:, np.newaxis]), axis=1
+    )
 
     # At this stage (end of Wood's algorithm), we have used a distribution of pole (0, ..., 0, 1). We are going to
     # use a reflection that exchanges this vector with 'pole'.

@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import numpy as np
 from svvamp.utils.util_cache import cached_property, DeleteCacheMixin
 from svvamp.utils import my_log
@@ -37,12 +38,12 @@ class RuleYoung(DeleteCacheMixin, my_log.MyLog):
     Consider that the implementation of `is_cm_` is trustworthy only if voters have no indifference.
     """
 
-    full_name = 'Young'
-    abbreviation = 'You'
+    full_name = "Young"
+    abbreviation = "You"
 
     def __init__(self):
         super().__init__()
-        self.log_identity = 'YOUNG'
+        self.log_identity = "YOUNG"
         # Initialize the computed variables
         self.profile_ = None
 
@@ -52,14 +53,13 @@ class RuleYoung(DeleteCacheMixin, my_log.MyLog):
         ----------
         profile : Profile
         """
-        self.delete_cache(suffix='_')
+        self.delete_cache(suffix="_")
         self.profile_ = profile
         return self
 
     @cached_property
     def w_(self):
-        """Integer (winning candidate).
-        """
+        """Integer (winning candidate)."""
         self.mylog("Compute winner", 1)
         if self.profile_.exists_condorcet_winner_rk:
             return self.profile_.condorcet_winner_rk
@@ -68,26 +68,23 @@ class RuleYoung(DeleteCacheMixin, my_log.MyLog):
 
     @cached_property
     def losing_candidates_(self):
-        """1d of Integers. List of losing candidates, in a decreasing order of (heuristic) dangerousness
-        """
+        """1d of Integers. List of losing candidates, in a decreasing order of (heuristic) dangerousness"""
         self.mylog("Compute ordered list of losing candidates", 1)
         if np.isnan(self.w_):
             # If the winner is not known, we cannot compute the losing candidates.
             return np.isnan
-        result = np.concatenate((
-            np.array(range(0, self.w_), dtype=int),
-            np.array(range(self.w_ + 1, self.profile_.n_c), dtype=int)
-        ))
-        return result[np.argsort(- self.profile_.matrix_duels_ut[result, self.w_], kind='mergesort')]
+        result = np.concatenate(
+            (np.array(range(0, self.w_), dtype=int), np.array(range(self.w_ + 1, self.profile_.n_c), dtype=int))
+        )
+        return result[np.argsort(-self.profile_.matrix_duels_ut[result, self.w_], kind="mergesort")]
 
     # %% Coalition Manipulation (CM)
 
     def log_(self, method_name):
-        """Log corresponding to a particular manipulation method.
-        """
-        if '_cm_' in method_name:
+        """Log corresponding to a particular manipulation method."""
+        if "_cm_" in method_name:
             return "cm_option = fast"
-        elif '_xm_' in method_name:
+        elif "_xm_" in method_name:
             return "xm_option = exact"
         else:
             raise NotImplementedError()
@@ -154,12 +151,13 @@ class RuleYoung(DeleteCacheMixin, my_log.MyLog):
         # that, we will add alpha |d > w| voters (either sincere voters, manipulators, or virtual voters). We must have:
         # |w > d|_sincere > alpha
         # score(w) <= |w > d|_sincere + alpha < 2 |w > d|_sincere <= 2 |w > d|_sincere - 1
-        v_sincere = (self.profile_.preferences_ut[:, self.w_] >= self.profile_.preferences_ut[:, c])
+        v_sincere = self.profile_.preferences_ut[:, self.w_] >= self.profile_.preferences_ut[:, c]
         for d in self.losing_candidates_:
             if d == c:
                 continue
-            v_ranks_w_above_d = (self.profile_.preferences_borda_rk[:, self.w_]
-                                 > self.profile_.preferences_borda_rk[:, d])
+            v_ranks_w_above_d = (
+                self.profile_.preferences_borda_rk[:, self.w_] > self.profile_.preferences_borda_rk[:, d]
+            )
             new_upper_bound = 2 * np.sum(np.logical_and(v_sincere, v_ranks_w_above_d)) - 1
             score_w_cm_upper_bound = min(score_w_cm_upper_bound, new_upper_bound)
         self.mylogv("CM: score_w_cm_upper_bound =", score_w_cm_upper_bound, 1)
@@ -177,8 +175,7 @@ class RuleYoung(DeleteCacheMixin, my_log.MyLog):
         for d in self.losing_candidates_:
             if d == c:
                 continue
-            v_ranks_d_above_c = (self.profile_.preferences_borda_rk[:, d]
-                                 > self.profile_.preferences_borda_rk[:, c])
+            v_ranks_d_above_c = self.profile_.preferences_borda_rk[:, d] > self.profile_.preferences_borda_rk[:, c]
             score_d_upper_bound = 2 * np.sum(np.logical_and(v_sincere, v_ranks_d_above_c)) - 1
             self.mylogv("CM: d =", d, 2)
             self.mylogv("CM: score_d_upper_bound =", score_d_upper_bound, 2)
@@ -196,12 +193,12 @@ class RuleYoung(DeleteCacheMixin, my_log.MyLog):
     @cached_property
     def theta_critical_(self):
         """
-            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
-            >>> rule = RuleYoung()(profile)
-            >>> rule.theta_critical_
-            0.14285714285714285
+        >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
+        >>> rule = RuleYoung()(profile)
+        >>> rule.theta_critical_
+        0.14285714285714285
         """
-        return 1/7
+        return 1 / 7
 
     @cached_property
     def is_xm_(self):

@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import numpy as np
 from svvamp.rules.rule import Rule
 from svvamp.utils.util_cache import cached_property
@@ -295,22 +296,27 @@ class RuleBorda(Rule):
         [0. 2. 3.]
     """
 
-    full_name = 'Borda'
-    abbreviation = 'Bor'
+    full_name = "Borda"
+    abbreviation = "Bor"
 
     options_parameters = Rule.options_parameters.copy()
-    options_parameters.update({
-        'im_option': {'allowed': ['exact'], 'default': 'exact'},
-        'tm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'um_option': {'allowed': ['exact'], 'default': 'exact'},
-        'icm_option': {'allowed': ['fast'], 'default': 'fast'},
-        'cm_option': {'allowed': ['fast', 'exact'], 'default': 'fast'},
-    })
+    options_parameters.update(
+        {
+            "im_option": {"allowed": ["exact"], "default": "exact"},
+            "tm_option": {"allowed": ["exact"], "default": "exact"},
+            "um_option": {"allowed": ["exact"], "default": "exact"},
+            "icm_option": {"allowed": ["fast"], "default": "fast"},
+            "cm_option": {"allowed": ["fast", "exact"], "default": "fast"},
+        }
+    )
 
     def __init__(self, **kwargs):
         super().__init__(
-            with_two_candidates_reduces_to_plurality=True, is_based_on_rk=True,
-            precheck_icm=False, log_identity="BORDA", **kwargs
+            with_two_candidates_reduces_to_plurality=True,
+            is_based_on_rk=True,
+            precheck_icm=False,
+            log_identity="BORDA",
+            **kwargs,
         )
 
     @cached_property
@@ -323,8 +329,7 @@ class RuleBorda(Rule):
 
     @cached_property
     def scores_(self):
-        """1d array of integers. ``scores[c]`` is the total Borda score for candidate ``c``.
-        """
+        """1d array of integers. ``scores[c]`` is the total Borda score for candidate ``c``."""
         self.mylog("Compute scores", 1)
         return self.profile_.borda_score_c_rk
 
@@ -337,39 +342,43 @@ class RuleBorda(Rule):
     @cached_property
     def _compute_iia_(self):
         """
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 1, 2],
-            ...     [1, 0, 2],
-            ...     [1, 2, 0],
-            ...     [2, 0, 1],
-            ...     [2, 0, 1],
-            ... ])
-            >>> rule = RuleBorda()(profile)
-            >>> rule.is_iia_
-            False
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [1, 0, 2],
+        ...     [1, 2, 0],
+        ...     [2, 0, 1],
+        ...     [2, 0, 1],
+        ... ])
+        >>> rule = RuleBorda()(profile)
+        >>> rule.is_iia_
+        False
         """
         self.mylog("Compute IIA", 1)
         # If we remove candidate ``d``, candidate ``c`` loses ``matrix_duels_rk[c, d]`` Borda points and ``w`` loses
         # ``matrix_duels_rk[w, d]``. So, candidate ``c`` gains the difference, when compared to ``w``.
-        impact_removal_d_on_c = np.add(- self.profile_.matrix_duels_rk,
-                                       self.profile_.matrix_duels_rk[self.w_, :][np.newaxis, :])
+        impact_removal_d_on_c = np.add(
+            -self.profile_.matrix_duels_rk, self.profile_.matrix_duels_rk[self.w_, :][np.newaxis, :]
+        )
         impact_removal_d_on_c[np.diag_indices(self.profile_.n_c)] = 0
         impact_removal_d_on_c[:, self.w_] = 0  # Forbidden to remove w
         # For ``c``, any candidate ``d`` s.t. ``impact_removal_d_on_c[c, d] > 0`` is a good choice to remove.
         # ``pseudo_scores[c]`` is ``c``'s score minus ``w``'s score after these removals. After all these removals,
         # it may be that another candidate ``e`` will have a better score than ``c``, but we don't care: the only
         # important thing is to make ``w`` lose.
-        pseudo_scores = (self.scores_ - self.score_w_ + np.sum(np.maximum(impact_removal_d_on_c, 0), 1))
+        pseudo_scores = self.scores_ - self.score_w_ + np.sum(np.maximum(impact_removal_d_on_c, 0), 1)
         self.mylogv("pseudo_scores =", pseudo_scores, 2)
         # If ``pseudo_scores[c] > 0`` for some ``c``, then IIA is broken.
         best_c = np.argmax(pseudo_scores)
         self.mylogv("best_c =", best_c, 2)
         if pseudo_scores[best_c] + (best_c < self.w_) > 0:
             # Since we chose the best ``c``, we know that she is the winner in her optimal subset.
-            return {'is_iia': False, 'example_winner_iia': best_c,
-                    'example_subset_iia': np.logical_not(impact_removal_d_on_c[best_c, :] > 0)}
+            return {
+                "is_iia": False,
+                "example_winner_iia": best_c,
+                "example_subset_iia": np.logical_not(impact_removal_d_on_c[best_c, :] > 0),
+            }
         else:
-            return {'is_iia': True, 'example_winner_iia': np.nan, 'example_subset_iia': np.nan}
+            return {"is_iia": True, "example_winner_iia": np.nan, "example_subset_iia": np.nan}
 
     # %% Individual manipulation (IM)
 
@@ -378,83 +387,83 @@ class RuleBorda(Rule):
         # most ``n_c - 2``. Indeed, c gave at least 1 point of difference to ``c`` vs ``w`` (she strictly prefers ``c``
         # to ``w``), and now she can give  at most ``n_c - 1`` points of difference (with ``c`` on top and ``w`` at
         # the bottom).
-        self.mylogv('Preliminary checks: scores =', self.scores_)
-        self.mylogv('Preliminary checks: scores_w =', self.score_w_)
+        self.mylogv("Preliminary checks: scores =", self.scores_)
+        self.mylogv("Preliminary checks: scores_w =", self.score_w_)
         temp = self.scores_ + self.profile_.n_c - 2 + (np.array(range(self.profile_.n_c)) < self.w_)
-        self.mylogm('Preliminary checks: scores + n_c - 2 + (c < w) =', temp)
+        self.mylogm("Preliminary checks: scores + n_c - 2 + (c < w) =", temp)
         # self.mylogm('Preliminary checks: possible candidates =', temp > self.scores[self.w])
         self._v_im_for_c[:, temp <= self.scores_[self.w_]] = False
 
     def _im_main_work_v_(self, v, c_is_wanted, nb_wanted_undecided, stop_if_true):
         """
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 2, 1],
-            ...     [0, 2, 1],
-            ...     [1, 0, 2],
-            ...     [2, 0, 1],
-            ...     [2, 1, 0],
-            ... ])
-            >>> rule = RuleBorda()(profile)
-            >>> rule.v_im_for_c_
-            array([[0., 0., 0.],
-                   [0., 0., 0.],
-                   [0., 0., 0.],
-                   [0., 0., 1.],
-                   [0., 0., 0.]])
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 2, 1],
+        ...     [0, 2, 1],
+        ...     [1, 0, 2],
+        ...     [2, 0, 1],
+        ...     [2, 1, 0],
+        ... ])
+        >>> rule = RuleBorda()(profile)
+        >>> rule.v_im_for_c_
+        array([[0., 0., 0.],
+               [0., 0., 0.],
+               [0., 0., 0.],
+               [0., 0., 1.],
+               [0., 0., 0.]])
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 2, 1],
-            ...     [0, 2, 1],
-            ...     [1, 2, 0],
-            ...     [1, 2, 0],
-            ...     [2, 0, 1],
-            ... ])
-            >>> rule = RuleBorda()(profile)
-            >>> rule.is_im_c_(0)
-            True
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 2, 1],
+        ...     [0, 2, 1],
+        ...     [1, 2, 0],
+        ...     [1, 2, 0],
+        ...     [2, 0, 1],
+        ... ])
+        >>> rule = RuleBorda()(profile)
+        >>> rule.is_im_c_(0)
+        True
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 1, 2],
-            ...     [0, 2, 1],
-            ...     [2, 0, 1],
-            ...     [2, 0, 1],
-            ...     [2, 1, 0],
-            ... ])
-            >>> rule = RuleBorda()(profile)
-            >>> rule.is_im_c_(0)
-            True
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [0, 2, 1],
+        ...     [2, 0, 1],
+        ...     [2, 0, 1],
+        ...     [2, 1, 0],
+        ... ])
+        >>> rule = RuleBorda()(profile)
+        >>> rule.is_im_c_(0)
+        True
 
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 2, 1],
-            ...     [0, 2, 1],
-            ...     [1, 0, 2],
-            ...     [2, 0, 1],
-            ...     [2, 1, 0],
-            ... ])
-            >>> rule = RuleBorda()(profile)
-            >>> rule.is_im_c_(2)
-            True
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 2, 1],
+        ...     [0, 2, 1],
+        ...     [1, 0, 2],
+        ...     [2, 0, 1],
+        ...     [2, 1, 0],
+        ... ])
+        >>> rule = RuleBorda()(profile)
+        >>> rule.is_im_c_(2)
+        True
         """
         scores_without_v = self.scores_ - self.ballots_[v, :]
-        self.mylogv('scores_without_v =', scores_without_v)
-        candidates_by_decreasing_score = np.argsort(- scores_without_v, kind='mergesort')
+        self.mylogv("scores_without_v =", scores_without_v)
+        candidates_by_decreasing_score = np.argsort(-scores_without_v, kind="mergesort")
         # ``ballot_balance`` is the ballot that ``v`` must give to balance the scores of all candidates the best she
         # can.
         ballot_balance = np.argsort(candidates_by_decreasing_score)
-        self.mylogv('ballot_balance =', ballot_balance, 3)
+        self.mylogv("ballot_balance =", ballot_balance, 3)
         for c in range(self.profile_.n_c):
             if not c_is_wanted[c]:
                 continue
             if not np.isneginf(self._v_im_for_c[v, c]):
                 continue
-            self.mylogv('Candidate c =', c, 3)
+            self.mylogv("Candidate c =", c, 3)
             # Compared to ``ballot_balance``, the candidates that ``v`` was putting better than ``c`` lost 1 point.
             ballot = ballot_balance - np.greater(ballot_balance, ballot_balance[c])
             # Voter v gives the maximal score to c.
             ballot[c] = self.profile_.n_c - 1
-            self.mylogv('ballot =', ballot, 3)
+            self.mylogv("ballot =", ballot, 3)
             w_test = np.argmax(scores_without_v + ballot)
-            self.mylogv('w_test =', w_test, 3)
+            self.mylogv("w_test =", w_test, 3)
             if w_test == c:
                 self._v_im_for_c[v, c] = True
                 self._candidates_im[c] = True
@@ -477,7 +486,7 @@ class RuleBorda(Rule):
 
     def _um_main_work_c_exact_(self, c):
         scores_test = np.sum(self.ballots_[np.logical_not(self.v_wants_to_help_c_[:, c]), :], 0)
-        candidates_by_decreasing_score = np.argsort(-scores_test, kind='mergesort')
+        candidates_by_decreasing_score = np.argsort(-scores_test, kind="mergesort")
         # Balancing ballot: put candidates in the order of their current scores (least point to the most dangerous).
         ballot = np.argsort(candidates_by_decreasing_score)
         # Now put c on top. And modify other Borda scores accordingly on the ballot.
@@ -486,7 +495,7 @@ class RuleBorda(Rule):
         # New scores = old scores + n_manipulators * ballot.
         scores_test += np.multiply(self.profile_.matrix_duels_ut[c, self.w_], ballot)
         w_test = np.argmax(scores_test)
-        self._candidates_um[c] = (w_test == c)
+        self._candidates_um[c] = w_test == c
 
     # %% Ignorant-Coalition Manipulation (ICM)
 
@@ -537,7 +546,7 @@ class RuleBorda(Rule):
         # For ICM, it is sufficient that ``score_total[c] >= score_total[d] + (c == n_c - 1)`` (the tie-breaking rule
         # is against ``c`` only if she is the last candidate). This translates to:
         # ``p >= (n_s (n_c - 1) - 1 + (c == n_c - 1)) / n_c``.
-        sufficient_odd = 1 + 2 * np.ceil((n_s * (n_c - 1) - 1 + (c == n_c-1)) / n_c)
+        sufficient_odd = 1 + 2 * np.ceil((n_s * (n_c - 1) - 1 + (c == n_c - 1)) / n_c)
         self._update_necessary(self._necessary_coalition_size_icm, c, necessary)
         self._update_sufficient(self._sufficient_coalition_size_icm, c, sufficient_even)
         self._update_sufficient(self._sufficient_coalition_size_icm, c, sufficient_odd)
@@ -575,7 +584,7 @@ class RuleBorda(Rule):
         scores_test = np.sum(self.ballots_[np.logical_not(self.v_wants_to_help_c_[:, c]), :], 0)
         # We add a tie-breaking term [(C-1)/C, (C-2)/C, ..., 0] to ease the computations.
         scores_test = scores_test + (np.array(range(self.profile_.n_c - 1, -1, -1)) / self.profile_.n_c)
-        self.mylogv('CM: Further check: scores_test =', scores_test, 3)
+        self.mylogv("CM: Further check: scores_test =", scores_test, 3)
 
         # A family of necessary conditions
         # For ``k`` in ``{1, ..., n_c - 1}``, let us note ``mean_k`` the mean of the ``k`` highest scores among other
@@ -589,11 +598,12 @@ class RuleBorda(Rule):
         for k in range(1, self.profile_.n_c):
             cum_sum += increasing_scores[-k]
             necessary = np.ceil(2 * (cum_sum / k - scores_test[c]) / (2 * self.profile_.n_c - k - 1))
-            self.mylogv('CM: Further check: k =', k)
-            self.mylogv('CM: Further check: cum_sum =', cum_sum)
-            self.mylogv('CM: Further check: necessary =', necessary)
-            self._update_necessary(self._necessary_coalition_size_cm, c, necessary,
-                                   'CM: Further check: necessary_coalition_size_cm =')
+            self.mylogv("CM: Further check: k =", k)
+            self.mylogv("CM: Further check: cum_sum =", cum_sum)
+            self.mylogv("CM: Further check: necessary =", necessary)
+            self._update_necessary(
+                self._necessary_coalition_size_cm, c, necessary, "CM: Further check: necessary_coalition_size_cm ="
+            )
         # An opportunity to escape before real work
         if self._necessary_coalition_size_cm[c] == self._sufficient_coalition_size_cm[c]:
             return False
@@ -603,44 +613,52 @@ class RuleBorda(Rule):
 
         # Now, the real work
         n_m = 0
-        self.mylogv('CM: Fast algorithm: scores_test =', scores_test, 3)
+        self.mylogv("CM: Fast algorithm: scores_test =", scores_test, 3)
         while True:
             n_m += 1
             # Balancing ballot: put candidates in the order of their current scores (least point to the most
             # dangerous).
-            candidates_by_decreasing_score = np.argsort(- scores_test, kind='mergesort')
+            candidates_by_decreasing_score = np.argsort(-scores_test, kind="mergesort")
             ballot = np.argsort(candidates_by_decreasing_score)
             # Now put ``c`` on top. And modify other Borda scores accordingly on the ballot.
             ballot -= np.greater(ballot, ballot[c])
             ballot[c] = self.profile_.n_c - 1
-            self.mylogv('CM: Fast algorithm: ballot =', ballot, 3)
+            self.mylogv("CM: Fast algorithm: ballot =", ballot, 3)
             # New scores = old scores + ballot.
             scores_test += ballot
-            self.mylogv('CM: Fast algorithm: scores_test =', scores_test, 3)
+            self.mylogv("CM: Fast algorithm: scores_test =", scores_test, 3)
             w_test = np.argmax(scores_test)
             if w_test == c:
                 sufficient = n_m
-                self.mylogv('CM: Fast algorithm: sufficient =', sufficient)
-                self._update_sufficient(self._sufficient_coalition_size_cm, c, sufficient,
-                                        'CM: Fast algorithm: sufficient_coalition_size_cm =')
+                self.mylogv("CM: Fast algorithm: sufficient =", sufficient)
+                self._update_sufficient(
+                    self._sufficient_coalition_size_cm,
+                    c,
+                    sufficient,
+                    "CM: Fast algorithm: sufficient_coalition_size_cm =",
+                )
                 # From Zuckerman et al.: the algorithm is optimal up to 1 voter. But since we do not have the same
                 # tie-breaking rule, it makes 2 voters.
-                self._update_necessary(self._necessary_coalition_size_cm, c, sufficient - 2,
-                                       'CM: Fast algorithm: necessary_coalition_size_cm =')
+                self._update_necessary(
+                    self._necessary_coalition_size_cm,
+                    c,
+                    sufficient - 2,
+                    "CM: Fast algorithm: necessary_coalition_size_cm =",
+                )
                 break
 
     def _cm_main_work_c_(self, c, optimize_bounds):
         """
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 1, 2],
-            ...     [0, 2, 1],
-            ...     [0, 2, 1],
-            ...     [0, 2, 1],
-            ...     [2, 0, 1],
-            ... ])
-            >>> rule = RuleBorda(cm_option='exact')(profile)
-            >>> rule.candidates_cm_
-            array([0., 0., 0.])
+        >>> profile = Profile(preferences_rk=[
+        ...     [0, 1, 2],
+        ...     [0, 2, 1],
+        ...     [0, 2, 1],
+        ...     [0, 2, 1],
+        ...     [2, 0, 1],
+        ... ])
+        >>> rule = RuleBorda(cm_option='exact')(profile)
+        >>> rule.candidates_cm_
+        array([0., 0., 0.])
         """
         is_quick_escape_fast = self._cm_main_work_c_fast_(c, optimize_bounds)
         if not self.cm_option == "exact":
@@ -654,10 +672,10 @@ class RuleBorda(Rule):
     @cached_property
     def theta_critical_(self):
         """
-            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
-            >>> rule = RuleBorda()(profile)
-            >>> rule.theta_critical_
-            0.4
+        >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
+        >>> rule = RuleBorda()(profile)
+        >>> rule.theta_critical_
+        0.4
         """
         n_c = self.profile_.n_c
         return (n_c - 2) / (n_c + 1)

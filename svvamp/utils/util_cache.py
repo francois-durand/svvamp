@@ -36,6 +36,7 @@ def _cache(f):
                 # Cache does not even exist
                 args[0]._cached_properties = {name: value}
             return value
+
     _f.__doc__ = f.__doc__
     return _f
 
@@ -87,7 +88,7 @@ class DeleteCacheMixin:
     """
 
     # noinspection PyAttributeOutsideInit
-    def delete_cache(self, contains='', suffix='') -> None:
+    def delete_cache(self, contains="", suffix="") -> None:
         """Delete the cache (possibly only for some selected variables).
 
         Parameters
@@ -97,9 +98,9 @@ class DeleteCacheMixin:
         suffix : str
             If specified, only the cached variables whose name finishes with this string will be removed from the cache.
         """
-        if not hasattr(self, '_cached_properties'):
+        if not hasattr(self, "_cached_properties"):
             return
-        if contains == '' and suffix == '':
+        if contains == "" and suffix == "":
             self._cached_properties = dict()
             return
         # noinspection PyUnresolvedReferences
@@ -112,7 +113,7 @@ class DeleteCacheMixin:
         self._cached_properties = cached_properties_new
 
 
-def property_deleting_cache(hidden_variable_name, doc=''):
+def property_deleting_cache(hidden_variable_name, doc=""):
     """Define a property that deletes the cache when set or deleted.
 
     Parameters

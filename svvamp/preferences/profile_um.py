@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import numpy as np
 from svvamp.utils.util_cache import cached_property
 from svvamp.preferences.profile import Profile
@@ -106,7 +107,7 @@ class ProfileUM(Profile):
         else:
             self._ballot_borda_rk_input = np.array(ballot_borda_rk)
         if ballot_ut is None and ballot_rk is None and ballot_borda_rk is None:
-            raise ValueError('Please provide at least ballot_ut, ballot_rk or ballot_borda_rk.')
+            raise ValueError("Please provide at least ballot_ut, ballot_rk or ballot_borda_rk.")
         super().__init__(preferences_ut=None, preferences_borda_rk=None, sort_voters=False)
 
     # %% Basic stuff
@@ -160,15 +161,14 @@ class ProfileUM(Profile):
         if self._ballot_borda_rk_input is not None:
             return np.array(sorted(range(self.n_c), key=self._ballot_borda_rk_input.__getitem__, reverse=True))
         # if self._ballot_ut_input is not None:
-        raise ValueError('You should not rely on the implicit conversion from utility to ranking '
-                         'to compute UM.')
+        raise ValueError("You should not rely on the implicit conversion from utility to ranking to compute UM.")
 
     @cached_property
     def ballot_borda_rk(self):
         if self._ballot_borda_rk_input is not None:
             return self._ballot_borda_rk_input
         else:
-            return - np.array(np.argsort(self._ballot_rk_input), dtype=int) + self.n_c - 1
+            return -np.array(np.argsort(self._ballot_rk_input), dtype=int) + self.n_c - 1
 
     @cached_property
     def ballot_ut(self):
@@ -188,33 +188,28 @@ class ProfileUM(Profile):
             >>> profile_um.ballot_borda_ut
             array([0.5, 2. , 0.5])
         """
-        return np.array([
-            np.sum(0.5 * (self.ballot_ut[c] >= self.ballot_ut) + 0.5 * (self.ballot_ut[c] > self.ballot_ut)) - 0.5
-            for c in range(self.n_c)
-        ])
+        return np.array(
+            [
+                np.sum(0.5 * (self.ballot_ut[c] >= self.ballot_ut) + 0.5 * (self.ballot_ut[c] > self.ballot_ut)) - 0.5
+                for c in range(self.n_c)
+            ]
+        )
 
     # %% Preferences
 
     @cached_property
     def preferences_ut(self):
-        return np.concatenate((
-            self.profile_s.preferences_ut,
-            np.outer(np.ones(self.n_m, dtype=int), self.ballot_ut)
-        ))
+        return np.concatenate((self.profile_s.preferences_ut, np.outer(np.ones(self.n_m, dtype=int), self.ballot_ut)))
 
     @cached_property
     def preferences_borda_rk(self):
-        return np.concatenate((
-            self.profile_s.preferences_borda_rk,
-            np.outer(np.ones(self.n_m, dtype=int), self.ballot_borda_rk)
-        ))
+        return np.concatenate(
+            (self.profile_s.preferences_borda_rk, np.outer(np.ones(self.n_m, dtype=int), self.ballot_borda_rk))
+        )
 
     @cached_property
     def preferences_rk(self):
-        return np.concatenate((
-            self.profile_s.preferences_rk,
-            np.outer(np.ones(self.n_m, dtype=int), self.ballot_rk)
-        ))
+        return np.concatenate((self.profile_s.preferences_rk, np.outer(np.ones(self.n_m, dtype=int), self.ballot_rk)))
 
     @cached_property
     def preferences_borda_ut(self):
@@ -230,25 +225,22 @@ class ProfileUM(Profile):
                    [0.5, 2. , 0.5],
                    [0.5, 2. , 0.5]])
         """
-        return np.concatenate((
-            self.profile_s.preferences_borda_ut,
-            np.outer(np.ones(self.n_m, dtype=int), self.ballot_borda_ut)
-        ))
+        return np.concatenate(
+            (self.profile_s.preferences_borda_ut, np.outer(np.ones(self.n_m, dtype=int), self.ballot_borda_ut))
+        )
 
     # %% Matrix of duels
 
     @cached_property
     def matrix_duels_ut(self):
-        return (
-            self.profile_s.matrix_duels_ut
-            + self.n_m * (self.ballot_ut[:, np.newaxis] > self.ballot_ut[np.newaxis, :])
+        return self.profile_s.matrix_duels_ut + self.n_m * (
+            self.ballot_ut[:, np.newaxis] > self.ballot_ut[np.newaxis, :]
         )
 
     @cached_property
     def matrix_duels_rk(self):
-        return (
-            self.profile_s.matrix_duels_rk
-            + self.n_m * (self.ballot_borda_rk[:, np.newaxis] > self.ballot_borda_rk[np.newaxis, :])
+        return self.profile_s.matrix_duels_rk + self.n_m * (
+            self.ballot_borda_rk[:, np.newaxis] > self.ballot_borda_rk[np.newaxis, :]
         )
 
     @cached_property

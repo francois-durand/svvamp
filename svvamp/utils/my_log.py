@@ -24,7 +24,7 @@ This file is part of SVVAMP.
 class MyLog:
     """Object that can send simple log messages."""
 
-    def __init__(self, log_identity='MYLOG', log_depth=0):
+    def __init__(self, log_identity="MYLOG", log_depth=0):
         self.log_depth = log_depth
         """Level of depth"""
 

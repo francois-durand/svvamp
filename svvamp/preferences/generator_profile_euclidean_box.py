@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import numpy as np
 from svvamp.preferences.generator_profile import GeneratorProfile
 from svvamp.preferences.profile import Profile
@@ -67,14 +68,24 @@ class GeneratorProfileEuclideanBox(GeneratorProfile):
         self.box_dimensions = np.array(box_dimensions)
         self.n_dim = len(self.box_dimensions)
         self.shift = np.zeros(self.n_dim) if shift is None else np.array(shift)
-        self.log_creation = ['Euclidean box', self.n_c, self.n_v, 'Box dimensions', self.box_dimensions,
-                             'Shift', self.shift, 'Number of dimensions', self.n_dim]
+        self.log_creation = [
+            "Euclidean box",
+            self.n_c,
+            self.n_v,
+            "Box dimensions",
+            self.box_dimensions,
+            "Shift",
+            self.shift,
+            "Number of dimensions",
+            self.n_dim,
+        ]
         super().__init__(sort_voters=sort_voters)
 
     def __call__(self):
         voters_positions = np.random.rand(self.n_v, self.n_dim) * self.box_dimensions
         candidates_positions = self.shift + np.random.rand(self.n_c, self.n_dim) * self.box_dimensions
-        preferences_utilities = - euclidean_distances(voters_positions, candidates_positions)
+        preferences_utilities = -euclidean_distances(voters_positions, candidates_positions)
         preferences_utilities -= np.average(preferences_utilities)
-        return Profile(preferences_ut=preferences_utilities, log_creation=self.log_creation,
-                       sort_voters=self.sort_voters)
+        return Profile(
+            preferences_ut=preferences_utilities, log_creation=self.log_creation, sort_voters=self.sort_voters
+        )

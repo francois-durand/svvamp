@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 from collections import Counter
 from math import factorial
 
@@ -61,18 +62,19 @@ class GeneratorProfileIanc(GeneratorProfile):
     def __init__(self, n_v, n_c, sort_voters=False):
         self.n_v = n_v
         self.n_c = n_c
-        self.log_creation = ['IANC', n_c, n_v]
+        self.log_creation = ["IANC", n_c, n_v]
         super().__init__(sort_voters=sort_voters)
         self.pairs_lam_mu, self.probabilities = _pairs_lam_mu_and_probabilities(n=self.n_v, m=self.n_c)
 
     def __call__(self):
         preferences_rk = _random_profile(
-            n=self.n_v, m=self.n_c,
-            pairs_lam_mu=self.pairs_lam_mu, probabilities=self.probabilities,
-            shuffle_voters=not self.sort_voters
+            n=self.n_v,
+            m=self.n_c,
+            pairs_lam_mu=self.pairs_lam_mu,
+            probabilities=self.probabilities,
+            shuffle_voters=not self.sort_voters,
         )
-        return Profile(preferences_rk=preferences_rk, log_creation=self.log_creation,
-                       sort_voters=self.sort_voters)
+        return Profile(preferences_rk=preferences_rk, log_creation=self.log_creation, sort_voters=self.sort_voters)
 
 
 def _z_partition(lam: list):
@@ -104,10 +106,14 @@ def _z_partition(lam: list):
         >>> factorial(7) // _z_partition([3, 2, 2])
         210
     """
-    return int(np.prod([
-        (cycle_length ** n_occurrences) * factorial(n_occurrences)
-        for cycle_length, n_occurrences in Counter(lam).items()
-    ]))
+    return int(
+        np.prod(
+            [
+                (cycle_length**n_occurrences) * factorial(n_occurrences)
+                for cycle_length, n_occurrences in Counter(lam).items()
+            ]
+        )
+    )
 
 
 def _enumerate_partitions(n: int):
@@ -152,12 +158,12 @@ def _enumerate_partitions(n: int):
         while x <= y:
             a[k] = x
             a[ell] = y
-            yield a[:k + 2]
+            yield a[: k + 2]
             x += 1
             y -= 1
         a[k] = x + y
         y = x + y - 1
-        yield a[:k + 1]
+        yield a[: k + 1]
 
 
 def lcm(*args):
@@ -226,15 +232,11 @@ def _pairs_lam_mu_and_probabilities(n: int, m: int):
         array([0.33333333, 0.5       , 0.16666667])
     """
     pairs_lam_mu = [
-        (lam, mu)
-        for lam in _enumerate_partitions(n)
-        for mu in _enumerate_partitions(m)
-        if gcd(*lam) % lcm(*mu) == 0
+        (lam, mu) for lam in _enumerate_partitions(n) for mu in _enumerate_partitions(m) if gcd(*lam) % lcm(*mu) == 0
     ]
-    probabilities = np.array([
-        factorial(m) ** len(lam) / (_z_partition(lam) * _z_partition(mu))
-        for (lam, mu) in pairs_lam_mu
-    ])
+    probabilities = np.array(
+        [factorial(m) ** len(lam) / (_z_partition(lam) * _z_partition(mu)) for (lam, mu) in pairs_lam_mu]
+    )
     probabilities /= np.sum(probabilities)
     return pairs_lam_mu, probabilities
 
@@ -291,10 +293,9 @@ def _canonical_permutation(lam):
     as specified by the cycle type `lam`.
     """
     cum = np.concatenate(([0], np.cumsum(lam)))
-    return np.concatenate([
-        np.concatenate((np.arange(start + 1, end), [start]))
-        for start, end in zip(cum[:-1], cum[1:])
-    ])
+    return np.concatenate(
+        [np.concatenate((np.arange(start + 1, end), [start])) for start, end in zip(cum[:-1], cum[1:])]
+    )
 
 
 def _add_voter_cycle(profile, size_voter_cycle, tau, ranking_first_voter):

@@ -19,6 +19,7 @@ This file is part of SVVAMP.
     You should have received a copy of the GNU General Public License
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import numpy as np
 from math import floor, ceil
 from svvamp.rules.rule import Rule
@@ -334,22 +335,24 @@ class RuleSTAR(Rule):
         [0. 3. 3.]
     """
 
-    full_name = 'Scoring Then Automatic Runoff'
-    abbreviation = 'Sta'
+    full_name = "Scoring Then Automatic Runoff"
+    abbreviation = "Sta"
 
     options_parameters = Rule.options_parameters.copy()
-    options_parameters.update({
-        'max_grade': {'allowed': np.isfinite, 'default': 1},
-        'min_grade': {'allowed': np.isfinite, 'default': 0},
-        'step_grade': {'allowed': np.isfinite, 'default': 0},
-        'rescale_grades': {'allowed': type_checker.is_bool, 'default': True},
-        'im_option': {'allowed': ['exact'], 'default': 'exact'},
-        'tm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'um_option': {'allowed': ['exact'], 'default': 'exact'},
-        'icm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'cm_option': {'allowed': ['exact'], 'default': 'exact'},
-        'precheck_heuristic': {'allowed': [False], 'default': False},
-    })
+    options_parameters.update(
+        {
+            "max_grade": {"allowed": np.isfinite, "default": 1},
+            "min_grade": {"allowed": np.isfinite, "default": 0},
+            "step_grade": {"allowed": np.isfinite, "default": 0},
+            "rescale_grades": {"allowed": type_checker.is_bool, "default": True},
+            "im_option": {"allowed": ["exact"], "default": "exact"},
+            "tm_option": {"allowed": ["exact"], "default": "exact"},
+            "um_option": {"allowed": ["exact"], "default": "exact"},
+            "icm_option": {"allowed": ["exact"], "default": "exact"},
+            "cm_option": {"allowed": ["exact"], "default": "exact"},
+            "precheck_heuristic": {"allowed": [False], "default": False},
+        }
+    )
 
     def __init__(self, **kwargs):
         self._min_grade = None
@@ -361,8 +364,11 @@ class RuleSTAR(Rule):
             # # Even if ``rescale_grades = True``, a voter who has the same utility for ``c`` and ``d`` will not vote
             # # the same in STAR and in Plurality.
             is_based_on_rk=False,
-            precheck_um=False, precheck_tm=False, precheck_icm=False,
-            log_identity="STAR", **kwargs
+            precheck_um=False,
+            precheck_tm=False,
+            precheck_icm=False,
+            log_identity="STAR",
+            **kwargs,
         )
 
     # %% Setting the parameters
@@ -375,10 +381,10 @@ class RuleSTAR(Rule):
     def min_grade(self, value):
         if self._min_grade == value:
             return
-        if self.options_parameters['min_grade']['allowed'](value):
+        if self.options_parameters["min_grade"]["allowed"](value):
             self.mylogv("Setting min_grade =", value, 1)
             self._min_grade = value
-            self._result_options['min_grade'] = value
+            self._result_options["min_grade"] = value
             self.delete_cache()
         else:
             raise ValueError("Unknown value for min_grade: " + format(value))
@@ -391,10 +397,10 @@ class RuleSTAR(Rule):
     def max_grade(self, value):
         if self._max_grade == value:
             return
-        if self.options_parameters['max_grade']['allowed'](value):
+        if self.options_parameters["max_grade"]["allowed"](value):
             self.mylogv("Setting max_grade =", value, 1)
             self._max_grade = value
-            self._result_options['max_grade'] = value
+            self._result_options["max_grade"] = value
             self.delete_cache()
         else:
             raise ValueError("Unknown value for max_grade: " + format(value))
@@ -407,10 +413,10 @@ class RuleSTAR(Rule):
     def step_grade(self, value):
         if self._step_grade == value:
             return
-        if self.options_parameters['step_grade']['allowed'](value):
+        if self.options_parameters["step_grade"]["allowed"](value):
             self.mylogv("Setting step_grade =", value, 1)
             self._step_grade = value
-            self._result_options['step_grade'] = value
+            self._result_options["step_grade"] = value
             self.delete_cache()
         else:
             raise ValueError("Unknown value for step_grade: " + format(value))
@@ -423,10 +429,10 @@ class RuleSTAR(Rule):
     def rescale_grades(self, value):
         if self._rescale_grades == value:
             return
-        if self.options_parameters['rescale_grades']['allowed'](value):
+        if self.options_parameters["rescale_grades"]["allowed"](value):
             self.mylogv("Setting rescale_grades =", value, 1)
             self._rescale_grades = value
-            self._result_options['rescale_grades'] = value
+            self._result_options["rescale_grades"] = value
             self.delete_cache()
         else:
             raise ValueError("Unknown value for rescale_grades: " + format(value))
@@ -447,11 +453,13 @@ class RuleSTAR(Rule):
         else:
             i_lowest_rung = floor(self.min_grade / self.step_grade) + 1
             i_highest_rung = ceil(self.max_grade / self.step_grade) - 1
-            return np.concatenate((
-                [self.min_grade],
-                np.array(range(i_lowest_rung, i_highest_rung + 1)) * self.step_grade,
-                [self.max_grade]
-            ))
+            return np.concatenate(
+                (
+                    [self.min_grade],
+                    np.array(range(i_lowest_rung, i_highest_rung + 1)) * self.step_grade,
+                    [self.max_grade],
+                )
+            )
 
     @cached_property
     def second_best_grade(self):
@@ -521,7 +529,7 @@ class RuleSTAR(Rule):
                 self.profile_.preferences_ut * (self.max_grade - self.min_grade),
                 delta_util[:, np.newaxis],
                 out=np.zeros(self.profile_.preferences_ut.shape),
-                where=delta_util[:, np.newaxis] != 0
+                where=delta_util[:, np.newaxis] != 0,
             )  # `out` and `where` ensure that when dividing by zero, the result will be zero.
             # Additive renormalization
             middle_grade = (np.max(ballots, axis=1) + np.min(ballots, axis=1)) / 2
@@ -551,19 +559,23 @@ class RuleSTAR(Rule):
         scores_second_round[c] = np.sum(self.ballots_[:, c] > self.ballots_[:, d])
         scores_second_round[d] = np.sum(self.ballots_[:, d] > self.ballots_[:, c])
         w = c if scores_second_round[c] > scores_second_round[d] else d
-        return {'w': w, 'selected_one': c, 'selected_two': d,
-                'scores': np.array([scores_first_round, scores_second_round])}
+        return {
+            "w": w,
+            "selected_one": c,
+            "selected_two": d,
+            "scores": np.array([scores_first_round, scores_second_round]),
+        }
 
     @cached_property
     def w_(self):
-        return self._count_ballots_['w']
+        return self._count_ballots_["w"]
 
     @cached_property
     def scores_(self):
         """2d array of numbers. ``scores_[0, c]`` is the total grade of candidate ``c``. ``scores_[1, c]`` the number
         of voters who vote for ``c`` during the second round (and 0 if ``c`` is not selected for the second round).
         """
-        return self._count_ballots_['scores']
+        return self._count_ballots_["scores"]
 
     @cached_property
     def scores_average_(self):
@@ -584,10 +596,7 @@ class RuleSTAR(Rule):
             array([[0.7 , 0.3 , 0.55],
                    [3.  , 0.  , 2.  ]])
         """
-        return np.array([
-            self.scores_[0, :] / self.profile_.n_v,
-            self.scores_[1, :]
-        ])
+        return np.array([self.scores_[0, :] / self.profile_.n_v, self.scores_[1, :]])
 
     @cached_property
     def candidates_by_scores_best_to_worst_(self):
@@ -596,7 +605,7 @@ class RuleSTAR(Rule):
         at first round.
         """
         self.mylog("Count candidates_by_scores_best_to_worst", 1)
-        return np.argsort(- np.max(self.scores_, 0))
+        return np.argsort(-np.max(self.scores_, 0))
 
     # %% Manipulation criteria of the voting system
 
@@ -608,51 +617,51 @@ class RuleSTAR(Rule):
 
     def _im_main_work_v_(self, v, c_is_wanted, nb_wanted_undecided, stop_if_true):
         """
-            >>> profile = Profile(preferences_ut=[
-            ...     [ 1. , -0.5,  0. ],
-            ...     [-0.5,  1. ,  0.5],
-            ...     [ 0. ,  0.5,  0.5],
-            ...     [-1. ,  1. ,  1. ],
-            ... ])
-            >>> rule = RuleSTAR()(profile)
-            >>> rule.is_im_c_with_voters_(1)
-            (True, array([0., 1., 0., 0.]))
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 1. , -0.5,  0. ],
+        ...     [-0.5,  1. ,  0.5],
+        ...     [ 0. ,  0.5,  0.5],
+        ...     [-1. ,  1. ,  1. ],
+        ... ])
+        >>> rule = RuleSTAR()(profile)
+        >>> rule.is_im_c_with_voters_(1)
+        (True, array([0., 1., 0., 0.]))
 
-            >>> profile = Profile(preferences_ut=[
-            ...     [ 0.5, -1. , -1. ],
-            ...     [ 0.5, -1. ,  0.5],
-            ...     [ 1. ,  1. ,  0.5],
-            ...     [ 0. , -1. ,  1. ],
-            ... ])
-            >>> rule = RuleSTAR()(profile)
-            >>> rule.is_im_
-            False
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 0.5, -1. , -1. ],
+        ...     [ 0.5, -1. ,  0.5],
+        ...     [ 1. ,  1. ,  0.5],
+        ...     [ 0. , -1. ,  1. ],
+        ... ])
+        >>> rule = RuleSTAR()(profile)
+        >>> rule.is_im_
+        False
 
-            >>> profile = Profile(preferences_ut=[
-            ...     [ 0. ,  0.5, -1. ],
-            ...     [-1. , -1. ,  1. ],
-            ...     [ 1. ,  0. , -1. ],
-            ...     [-0.5,  0. ,  0.5],
-            ... ])
-            >>> rule = RuleSTAR()(profile)
-            >>> rule.is_im_
-            True
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 0. ,  0.5, -1. ],
+        ...     [-1. , -1. ,  1. ],
+        ...     [ 1. ,  0. , -1. ],
+        ...     [-0.5,  0. ,  0.5],
+        ... ])
+        >>> rule = RuleSTAR()(profile)
+        >>> rule.is_im_
+        True
 
-            >>> profile = Profile(preferences_ut=[
-            ...     [ 1., .9,  0. ],
-            ...     [ 1., .9,  0. ],
-            ...     [ 1., .9,  0. ],
-            ...     [ .9, 0.,  1. ],
-            ... ])
-            >>> rule = RuleSTAR()(profile)
-            >>> rule.max_grade
-            1
-            >>> rule.min_grade
-            0
-            >>> rule.rescale_grades
-            True
-            >>> rule.is_im_c_(2)
-            False
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 1., .9,  0. ],
+        ...     [ 1., .9,  0. ],
+        ...     [ 1., .9,  0. ],
+        ...     [ .9, 0.,  1. ],
+        ... ])
+        >>> rule = RuleSTAR()(profile)
+        >>> rule.max_grade
+        1
+        >>> rule.min_grade
+        0
+        >>> rule.rescale_grades
+        True
+        >>> rule.is_im_c_(2)
+        False
 
         """
         other_voters = np.ones(self.profile_.n_v, dtype=bool)
@@ -676,9 +685,8 @@ class RuleSTAR(Rule):
             # Case 2: c not in {s1, s2} ==> since c can do better than s2, c can go to second round.
             # => Anyway, c might go to second round.
             n_m_needed_second_round_against_d = np.maximum(
-                matrix_duels_without_v[:, c] - matrix_duels_without_v[c, :]
-                + (np.array(range(self.profile_.n_c)) < c),
-                0
+                matrix_duels_without_v[:, c] - matrix_duels_without_v[c, :] + (np.array(range(self.profile_.n_c)) < c),
+                0,
             )
             n_m_needed_second_round_against_d[c] = -42  # Fake value meaning essentially neither 0 nor 1
             manipulation_found = False
@@ -690,8 +698,9 @@ class RuleSTAR(Rule):
                 scores_first_round[c] += self.max_grade - self.min_grade
                 scores_first_round[d] += self.max_grade - self.min_grade
                 selected_one = np.argmax(scores_first_round)
-                selected_two = np.argmax([-np.inf if i == selected_one else s
-                                          for i, s in enumerate(scores_first_round)])
+                selected_two = np.argmax(
+                    [-np.inf if i == selected_one else s for i, s in enumerate(scores_first_round)]
+                )
                 if {selected_one, selected_two} == {c, d}:
                     manipulation_found = True
             if not manipulation_found:
@@ -703,14 +712,19 @@ class RuleSTAR(Rule):
                     scores_first_round[c] += self.max_grade - self.min_grade
                     scores_first_round[d] += self.second_best_grade - self.min_grade  # - epsilon if step_grade == 0
                     selected_one = np.argmax(scores_first_round)
-                    selected_two = np.argmax([-np.inf if i == selected_one else s
-                                              for i, s in enumerate(scores_first_round)])
+                    selected_two = np.argmax(
+                        [-np.inf if i == selected_one else s for i, s in enumerate(scores_first_round)]
+                    )
                     if {selected_one, selected_two} == {c, d}:
                         manipulation_found = True
                     # ... but there is an exception:
                     if self.step_grade == 0 and scores_first_round[d] == scores_first_round[selected_two]:
-                        selected_three = np.argmax([-np.inf if i in {selected_one, selected_two} else s
-                                                    for i, s in enumerate(scores_first_round)])
+                        selected_three = np.argmax(
+                            [
+                                -np.inf if i in {selected_one, selected_two} else s
+                                for i, s in enumerate(scores_first_round)
+                            ]
+                        )
                         if scores_first_round[selected_three] == scores_first_round[d]:
                             manipulation_found = False
             if manipulation_found:
@@ -731,25 +745,25 @@ class RuleSTAR(Rule):
 
     def _cm_main_work_c_(self, c, optimize_bounds):
         """
-            >>> profile = Profile(preferences_ut=[
-            ...     [ 0.5,  0.5,  0. ],
-            ...     [-0.5, -0.5,  0. ],
-            ...     [-1. , -1. , -1. ],
-            ...     [ 0. , -1. , -1. ],
-            ... ])
-            >>> rule = RuleSTAR()(profile)
-            >>> rule.is_cm_c_with_bounds_(1)
-            (False, 2.0, 2.0)
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 0.5,  0.5,  0. ],
+        ...     [-0.5, -0.5,  0. ],
+        ...     [-1. , -1. , -1. ],
+        ...     [ 0. , -1. , -1. ],
+        ... ])
+        >>> rule = RuleSTAR()(profile)
+        >>> rule.is_cm_c_with_bounds_(1)
+        (False, 2.0, 2.0)
 
-            >>> profile = Profile(preferences_ut=[
-            ...     [-1. ,  0. ],
-            ...     [-1. ,  1. ],
-            ...     [-0.5,  0.5],
-            ...     [ 0.5,  1. ],
-            ... ])
-            >>> rule = RuleSTAR()(profile)
-            >>> rule.necessary_coalition_size_cm_
-            array([4., 0.])
+        >>> profile = Profile(preferences_ut=[
+        ...     [-1. ,  0. ],
+        ...     [-1. ,  1. ],
+        ...     [-0.5,  0.5],
+        ...     [ 0.5,  1. ],
+        ... ])
+        >>> rule = RuleSTAR()(profile)
+        >>> rule.necessary_coalition_size_cm_
+        array([4., 0.])
         """
         ballots_s = self.ballots_[np.logical_not(self.v_wants_to_help_c_[:, c]), :]
         scores_first_round_s = np.sum(ballots_s, 0)
@@ -766,8 +780,9 @@ class RuleSTAR(Rule):
             scores_first_round[c] += n_2 * self.max_grade
             scores_first_round[d] += n_2 * self.second_best_grade  # Exactly if step_grade > 0, minus epsilon if == 0
             if self.profile_.n_c == 2:
-                self._update_sufficient(self._sufficient_coalition_size_cm, c, n_2,
-                                        'CM: Update sufficient_coalition_size_cm[c] = n_m =')
+                self._update_sufficient(
+                    self._sufficient_coalition_size_cm, c, n_2, "CM: Update sufficient_coalition_size_cm[c] = n_m ="
+                )
                 continue
             # How many additional manipulators to win the first round?
             score_c = scores_first_round[c]
@@ -788,8 +803,9 @@ class RuleSTAR(Rule):
                 n_d = ceil(n_d_not_rounded)
             n_1 = max(n_c, n_d, 0)
             # Total number of manipulators
-            self._update_sufficient(self._sufficient_coalition_size_cm, c, n_1 + n_2,
-                                    'CM: Update sufficient_coalition_size_cm[c] = n_m =')
+            self._update_sufficient(
+                self._sufficient_coalition_size_cm, c, n_1 + n_2, "CM: Update sufficient_coalition_size_cm[c] = n_m ="
+            )
         # Final conclusion: we know that this algorithm is exact.
         self._necessary_coalition_size_cm[c] = self._sufficient_coalition_size_cm[c]
 
@@ -801,63 +817,63 @@ class RuleSTAR(Rule):
         preferences_test[self.v_wants_to_help_c_[:, c], :] = self.min_grade
         preferences_test[self.v_wants_to_help_c_[:, c], c] = self.max_grade
         w_test = self._copy(profile=Profile(preferences_ut=preferences_test, sort_voters=False)).w_
-        self._candidates_tm[c] = (w_test == c)
+        self._candidates_tm[c] = w_test == c
 
     # %% Unison Manipulation (UM)
 
     def _um_main_work_c_(self, c):
         """
-            >>> profile = Profile(preferences_ut=[
-            ...     [ 1. , -0.5,  1. ],
-            ...     [-1. ,  1. ,  1. ],
-            ...     [-1. ,  0. ,  1. ],
-            ...     [ 0.5,  0.5,  0. ],
-            ... ])
-            >>> rule = RuleSTAR()(profile)
-            >>> rule.candidates_um_
-            array([0., 0., 0.])
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 1. , -0.5,  1. ],
+        ...     [-1. ,  1. ,  1. ],
+        ...     [-1. ,  0. ,  1. ],
+        ...     [ 0.5,  0.5,  0. ],
+        ... ])
+        >>> rule = RuleSTAR()(profile)
+        >>> rule.candidates_um_
+        array([0., 0., 0.])
 
-            >>> profile = Profile(preferences_ut=[
-            ...     [ 0.5,  1. , -0.5],
-            ...     [ 0.5,  0. , -0.5],
-            ...     [ 0. ,  1. ,  1. ],
-            ...     [ 1. ,  0. ,  0.5],
-            ... ])
-            >>> rule = RuleSTAR()(profile)
-            >>> rule.candidates_um_
-            array([1., 0., 0.])
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 0.5,  1. , -0.5],
+        ...     [ 0.5,  0. , -0.5],
+        ...     [ 0. ,  1. ,  1. ],
+        ...     [ 1. ,  0. ,  0.5],
+        ... ])
+        >>> rule = RuleSTAR()(profile)
+        >>> rule.candidates_um_
+        array([1., 0., 0.])
 
-            >>> profile = Profile(preferences_ut=[
-            ...     [ 0.5,  0.5, -0.5],
-            ...     [-0.5,  1. , -1. ],
-            ...     [-0.5, -1. ,  0. ],
-            ...     [-1. ,  1. , -0.5],
-            ... ])
-            >>> rule = RuleSTAR()(profile)
-            >>> rule.candidates_um_
-            array([0., 0., 0.])
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 0.5,  0.5, -0.5],
+        ...     [-0.5,  1. , -1. ],
+        ...     [-0.5, -1. ,  0. ],
+        ...     [-1. ,  1. , -0.5],
+        ... ])
+        >>> rule = RuleSTAR()(profile)
+        >>> rule.candidates_um_
+        array([0., 0., 0.])
 
-            >>> profile = Profile(preferences_ut=[
-            ...     [ 0. ,  1. ],
-            ...     [-0.5,  1. ],
-            ...     [ 1. ,  0.5],
-            ...     [ 0.5,  0. ],
-            ... ])
-            >>> rule = RuleSTAR()(profile)
-            >>> rule.candidates_um_
-            array([1., 0.])
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 0. ,  1. ],
+        ...     [-0.5,  1. ],
+        ...     [ 1. ,  0.5],
+        ...     [ 0.5,  0. ],
+        ... ])
+        >>> rule = RuleSTAR()(profile)
+        >>> rule.candidates_um_
+        array([1., 0.])
 
-            >>> profile = Profile(preferences_ut=[
-            ...     [ 1. ,  0. ],
-            ...     [-1. ,  0.5],
-            ...     [ 0. ,  0.5],
-            ...     [ 0. , -1. ],
-            ...     [ 0.5,  1. ],
-            ...     [-0.5,  0. ],
-            ... ])
-            >>> rule = RuleSTAR()(profile)
-            >>> rule.candidates_um_
-            array([0., 0.])
+        >>> profile = Profile(preferences_ut=[
+        ...     [ 1. ,  0. ],
+        ...     [-1. ,  0.5],
+        ...     [ 0. ,  0.5],
+        ...     [ 0. , -1. ],
+        ...     [ 0.5,  1. ],
+        ...     [-0.5,  0. ],
+        ... ])
+        >>> rule = RuleSTAR()(profile)
+        >>> rule.candidates_um_
+        array([0., 0.])
         """
         n_m = self.profile_.matrix_duels_ut[c, self.w_]
         ballots_s = self.ballots_[np.logical_not(self.v_wants_to_help_c_[:, c]), :]
@@ -897,12 +913,12 @@ class RuleSTAR(Rule):
             # N.B.: the following "if" clause is the main difference with CM algorithm.
             if n_2 > 0:
                 # Due to UM, all manipulators need to put second-best grade to `d`.
-                n_d_not_rounded = np.around((score_challenger - score_d) / (self.second_best_grade - self.min_grade),
-                                            12)
+                n_d_not_rounded = np.around(
+                    (score_challenger - score_d) / (self.second_best_grade - self.min_grade), 12
+                )
             else:
                 # No constraint on `d`'s grade, so we can use max_grade.
-                n_d_not_rounded = np.around((score_challenger - score_d) / (self.max_grade - self.min_grade),
-                                            12)
+                n_d_not_rounded = np.around((score_challenger - score_d) / (self.max_grade - self.min_grade), 12)
             if n_d_not_rounded % 1 == 0 and ((self.step_grade == 0 and n_2 > 0) or d > best_challenger):
                 n_d = n_d_not_rounded + 1
             else:
@@ -920,10 +936,10 @@ class RuleSTAR(Rule):
     @cached_property
     def theta_critical_(self):
         """
-            >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
-            >>> rule = RuleSTAR()(profile)
-            >>> rule.theta_critical_
-            1
+        >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
+        >>> rule = RuleSTAR()(profile)
+        >>> rule.theta_critical_
+        1
         """
         # This value is conventional.
         return 1
