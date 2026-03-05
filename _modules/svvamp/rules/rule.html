@@ -798,7 +798,9 @@ document.write(`
         <span class="k">if</span> <span class="s1">&#39;_um_&#39;</span> <span class="ow">in</span> <span class="n">method_name</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_um_</span>
         <span class="k">if</span> <span class="s1">&#39;_cm_&#39;</span> <span class="ow">in</span> <span class="n">method_name</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_cm_</span></div>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_cm_</span>
+        <span class="k">if</span> <span class="s1">&#39;_xm_&#39;</span> <span class="ow">in</span> <span class="n">method_name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_xm_</span></div>
 
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">profile</span><span class="p">):</span>
@@ -3371,6 +3373,31 @@ document.write(`
             <span class="k">return</span>
         <span class="n">is_quick_escape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_icm_main_work_c_</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_icm_conclude_c</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">is_quick_escape</span><span class="p">)</span>
+
+    <span class="c1"># %% Estimation of CM via empirical theta (XM)</span>
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">log_xm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;String. Parameters used to compute :meth:`is_xm_` and related methods.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;xm_option = exact&quot;</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">theta_critical_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Critical concentration parameter in the Perturbed Culture model.&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Not implemented for class </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_xm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;XM. [Beta feature]&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">theta_empirical</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">theta_critical_</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;XM: Theta &gt; theta_c, so XM is False&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">theta_empirical</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">theta_critical_</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;XM: Theta &lt; theta_c, so XM is True&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;XM: Theta == theta_c, so XM is unknown&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
 
     <span class="c1"># %% Coalition Manipulation (CM)</span>
 

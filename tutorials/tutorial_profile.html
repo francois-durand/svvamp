@@ -502,7 +502,7 @@ document.write(`
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;svvamp.preferences.generator_profile_spheroid.GeneratorProfileSpheroid at 0x21b46c98770&gt;
+&lt;svvamp.preferences.generator_profile_spheroid.GeneratorProfileSpheroid at 0x27af8244170&gt;
 </pre></div></div>
 </div>
 <p>Use the generator to create a random profile:</p>
@@ -590,15 +590,15 @@ document.write(`
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-array([[2, 3, 1, 0, 4],
-       [4, 2, 0, 3, 1],
-       [4, 2, 0, 3, 1],
-       [1, 2, 0, 4, 3],
-       [4, 3, 0, 2, 1],
-       [3, 1, 2, 4, 0],
-       [1, 2, 3, 4, 0],
-       [3, 2, 1, 4, 0],
-       [4, 2, 0, 1, 3]])
+array([[0, 4, 2, 1, 3],
+       [2, 0, 3, 4, 1],
+       [1, 3, 0, 4, 2],
+       [3, 4, 0, 2, 1],
+       [1, 3, 0, 4, 2],
+       [4, 2, 3, 0, 1],
+       [3, 0, 1, 2, 4],
+       [3, 4, 1, 0, 2],
+       [0, 3, 2, 4, 1]])
 </pre></div></div>
 </div>
 <p>Voters’ utilities for the candidates:</p>
@@ -616,15 +616,15 @@ array([[2, 3, 1, 0, 4],
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-array([[-0.44458068,  0.14553558,  0.68052773,  0.16357809, -0.5397144 ],
-       [ 0.0268188 , -0.67982384,  0.25992916, -0.19772748,  0.65609525],
-       [-0.40017529, -0.78147922, -0.2535415 , -0.40465215,  0.03351569],
-       [ 0.14343979,  0.50952062,  0.36903622, -0.76264855,  0.04464546],
-       [-0.23395736, -0.71376382, -0.63007483, -0.19696857,  0.0037754 ],
-       [-0.23303553,  0.46519408,  0.45194157,  0.70715693,  0.15800885],
-       [-0.77027357,  0.45199658,  0.40743494,  0.17577499,  0.0740111 ],
-       [-0.65635213,  0.20304854,  0.45371884,  0.54194463,  0.1685479 ],
-       [ 0.0364911 , -0.59018254,  0.19841761, -0.74973679,  0.22108407]])
+array([[ 0.27850815, -0.28669485, -0.22244491, -0.84581486,  0.2745082 ],
+       [ 0.20483466, -0.76955375,  0.48285449,  0.12511632, -0.34209243],
+       [ 0.10182242,  0.69341051, -0.31735312,  0.62107686, -0.14954792],
+       [ 0.39364056, -0.07883268,  0.13936726,  0.64137693,  0.63878394],
+       [ 0.18832192,  0.87431586, -0.05090841,  0.44387678,  0.0220992 ],
+       [-0.27510627, -0.72888585,  0.34813102, -0.18660524,  0.48685237],
+       [ 0.59273353,  0.27459674,  0.23258561,  0.71828012,  0.05693147],
+       [ 0.03186397,  0.34120599, -0.2585684 ,  0.75864952,  0.4900576 ],
+       [ 0.84416513, -0.4321969 , -0.09895003,  0.0351225 , -0.29927643]])
 </pre></div></div>
 </div>
 <p>Plot the restriction of the population to 3 candidates, for example [0, 2, 3] (Alice, Catherine and Dave), in the utility space:</p>
@@ -674,7 +674,7 @@ array([[-0.44458068,  0.14553558,  0.68052773,  0.16357809, -0.5397144 ],
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-array([0, 2, 1, 2, 4])
+array([2, 2, 1, 3, 1])
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -691,7 +691,7 @@ array([0, 2, 1, 2, 4])
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-array([11., 16., 25., 18., 20.])
+array([22., 13., 13., 25., 17.])
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -708,7 +708,7 @@ array([11., 16., 25., 18., 20.])
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-array([-2.53162488, -0.98995401,  1.93738974, -0.72327889,  0.8199693 ])
+array([ 2.36078407, -0.11263493,  0.25471352,  2.31107892,  1.178316  ])
 </pre></div></div>
 </div>
 <p>Matrix of duels (weighted majority graph) and matrix of victories (unweighted majority graph):</p>
@@ -726,11 +726,11 @@ array([-2.53162488, -0.98995401,  1.93738974, -0.72327889,  0.8199693 ])
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-array([[0, 4, 1, 4, 2],
-       [5, 0, 3, 3, 5],
-       [8, 6, 0, 6, 5],
-       [5, 6, 3, 0, 4],
-       [7, 4, 4, 5, 0]])
+array([[0, 6, 7, 3, 6],
+       [3, 0, 4, 3, 3],
+       [2, 5, 0, 3, 3],
+       [6, 6, 6, 0, 7],
+       [3, 6, 6, 2, 0]])
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -747,11 +747,11 @@ array([[0, 4, 1, 4, 2],
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-array([[0., 0., 0., 0., 0.],
-       [1., 0., 0., 0., 1.],
-       [1., 1., 0., 1., 1.],
-       [1., 1., 0., 0., 0.],
-       [1., 0., 0., 1., 0.]])
+array([[0., 1., 1., 0., 1.],
+       [0., 0., 0., 0., 0.],
+       [0., 1., 0., 0., 0.],
+       [1., 1., 1., 0., 1.],
+       [0., 1., 1., 0., 0.]])
 </pre></div></div>
 </div>
 <p>Condorcet winner:</p>
@@ -769,7 +769,7 @@ array([[0., 0., 0., 0., 0.],
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-2
+3
 </pre></div></div>
 </div>
 <p>By convention, if there is no Condorcet winner, then SVVAMP returns nan (not a number).</p>

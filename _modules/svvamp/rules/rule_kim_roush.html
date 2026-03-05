@@ -898,7 +898,18 @@ document.write(`
             <span class="k">if</span> <span class="n">min_vetos_except_w</span> <span class="o">==</span> <span class="n">max_vetos_except_w</span><span class="p">:</span>
                 <span class="n">n_m_necessary</span> <span class="o">=</span> <span class="n">n_vetos_s</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">-</span> <span class="n">n_vetos_s</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_necessary</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_m_necessary</span><span class="p">,</span>
-                               <span class="s1">&#39;CM: w must lose =&gt; necessary_coalition_size_cm[c] = &#39;</span><span class="p">)</span></div>
+                               <span class="s1">&#39;CM: w must lose =&gt; necessary_coalition_size_cm[c] = &#39;</span><span class="p">)</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">theta_critical_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 1, 2, 3]])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleKimRoush()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.theta_critical_</span>
+<span class="sd">            0.5</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">n_c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">n_c</span></div>
 
 </pre></div>
 

@@ -1084,12 +1084,23 @@ document.write(`
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">candidates_um_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates_cm_</span></div>
-
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates_cm_</span>
 
     <span class="c1"># %% Ignorant-Coalition Manipulation (ICM)</span>
 
     <span class="c1"># Since Range Voting meets IgnMC_c_ctb, the general methods are exact.</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">theta_critical_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 1, 2, 3]])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleRangeVoting()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.theta_critical_</span>
+<span class="sd">            1</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># This value is conventional.</span>
+        <span class="k">return</span> <span class="mi">1</span></div>
+
 </pre></div>
 
                 </article>

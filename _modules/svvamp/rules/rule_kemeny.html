@@ -484,6 +484,14 @@ document.write(`
 <span class="k">class</span><span class="w"> </span><span class="nc">RuleKemeny</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Kemeny method.</span>
 
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    winner_option : str</span>
+<span class="sd">        &#39;exact&#39; or &#39;lazy&#39;. Default: &#39;exact&#39;. If `winner_option` is &#39;exact&#39;, then the winner is computed as usual.</span>
+<span class="sd">         If `winner_option` is &#39;lazy&#39;, then the winner is computed only in the obvious case where there is a Condorcet</span>
+<span class="sd">         winner; note that if there is no Condorcet-admissible candidate, it is however possible to decide ``is_cm_``</span>
+<span class="sd">         automatically to True.</span>
+
 <span class="sd">    Options</span>
 <span class="sd">    -------</span>
 <span class="sd">        &gt;&gt;&gt; RuleKemeny.print_options_parameters()</span>
@@ -494,6 +502,7 @@ document.write(`
 <span class="sd">        precheck_heuristic: is_bool. Default: True.</span>
 <span class="sd">        tm_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;exact&#39;.</span>
 <span class="sd">        um_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="sd">        winner_option: [&#39;exact&#39;, &#39;lazy&#39;]. Default: &#39;exact&#39;.</span>
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
@@ -755,13 +764,36 @@ document.write(`
 
     <span class="n">options_parameters</span> <span class="o">=</span> <span class="n">Rule</span><span class="o">.</span><span class="n">options_parameters</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">options_parameters</span><span class="p">[</span><span class="s1">&#39;icm_option&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">}</span>
+    <span class="n">options_parameters</span><span class="p">[</span><span class="s1">&#39;winner_option&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">,</span> <span class="s1">&#39;lazy&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">}</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">winner_option</span><span class="o">=</span><span class="s1">&#39;exact&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_winner_option</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">with_two_candidates_reduces_to_plurality</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">is_based_on_rk</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">precheck_icm</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">winner_option</span><span class="o">=</span><span class="n">winner_option</span><span class="p">,</span>
             <span class="n">log_identity</span><span class="o">=</span><span class="s2">&quot;KEMENY&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
         <span class="p">)</span>
+
+    <span class="c1"># %% Setting the parameters</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">winner_option</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_winner_option</span>
+
+    <span class="nd">@winner_option</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">winner_option</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_winner_option</span> <span class="o">==</span> <span class="n">value</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">options_parameters</span><span class="p">[</span><span class="s1">&#39;winner_option&#39;</span><span class="p">][</span><span class="s1">&#39;allowed&#39;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;Setting winner_option =&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_winner_option</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_result_options</span><span class="p">[</span><span class="s1">&#39;winner_option&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">delete_cache</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown value for winner_option: &quot;</span> <span class="o">+</span> <span class="nb">format</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+
+    <span class="c1"># %% Election results</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_strong_connected_components_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -809,6 +841,10 @@ document.write(`
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">w_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">exists_condorcet_winner_rk_ctb</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">condorcet_winner_rk_ctb</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">winner_option</span> <span class="o">==</span> <span class="s1">&#39;lazy&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_first_component_</span><span class="p">[</span><span class="s1">&#39;w&#39;</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
@@ -860,6 +896,13 @@ document.write(`
 
     <span class="c1"># %% Coalition Manipulation (CM)</span>
 
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_cm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">exists_condorcet_admissible</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;There no Condorcet-admissible candidate, so coalition manipulation is possible.&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">is_cm_</span>
+
     <span class="k">def</span><span class="w"> </span><span class="nf">_cm_preliminary_checks_c_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
         <span class="c1"># We want a Kemeny order like r = c &gt; j_1 &gt; ... &gt; j_k &gt; w &gt; j_{k+1} &gt; ... j_{n_c - 2}.</span>
         <span class="c1"># In particular, this order must be at least as good as putting w on top with:</span>
@@ -867,11 +910,11 @@ document.write(`
         <span class="c1">#   * score(r) - score(r&#39;) &gt;= 0</span>
         <span class="c1">#   * [W(c, w) + W(j_1, w) + ... + W(j_k, w)] - [W(w, c) + W(w, j_1) + ... + W(w, j_k)] &gt;= 0</span>
         <span class="c1">#   * A(c, w) + A(j_1, w) + ... + A(j_k, w) &gt;= 0  (where A is the antisymmetric matrix of duels)</span>
-        <span class="c1">#   * A_s(c, w) + n_m + (A(j_1, w) + n_m) + ... + (A(j_k, w) + n_m) &gt;= 0</span>
+        <span class="c1">#   * A_s(c, w) + n_m + (A_s(j_1, w) + n_m) + ... + (A_s(j_k, w) + n_m) &gt;= 0</span>
         <span class="c1"># It must only be true for a well-chosen subset {j_1, \ldots, j_k}, which is true iff it holds for the most</span>
-        <span class="c1"># favorable subset where each (A(j, w) + n_m) is positive. So:</span>
-        <span class="c1">#   * A_s(c, w) + n_m + \sum_{j != c, w} max(0, A(j, w) + n_m)) &gt;= 0.</span>
-        <span class="c1">#   * M(c, w) + \sum_{j != c, w} max(O, M(j, w)) &gt;= 0, where M = A + n_m.</span>
+        <span class="c1"># favorable subset where each (A_s(j, w) + n_m) is positive. So:</span>
+        <span class="c1">#   * A_s(c, w) + n_m + \sum_{j != c, w} max(0, A_s(j, w) + n_m)) &gt;= 0.</span>
+        <span class="c1">#   * M(c, w) + \sum_{j != c, w} max(O, M(j, w)) &gt;= 0, where M = A_s + n_m.</span>
         <span class="n">n_c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span>
         <span class="n">n_m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_ut</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span>
         <span class="n">profile_sincere</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span>
@@ -882,7 +925,18 @@ document.write(`
         <span class="n">neither_c_nor_w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">j</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">}</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_c</span><span class="p">)])</span>
         <span class="k">if</span> <span class="n">m_column_w</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">m_column_w</span><span class="p">[</span><span class="n">neither_c_nor_w</span><span class="p">]))</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_update_necessary</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
-                                   <span class="s1">&#39;CM: Preliminary check: necessary_coalition_size_cm =&#39;</span><span class="p">)</span></div>
+                                   <span class="s1">&#39;CM: Preliminary check: necessary_coalition_size_cm =&#39;</span><span class="p">)</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">theta_critical_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 1, 2, 3]])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleKemeny()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.theta_critical_</span>
+<span class="sd">            0.18181818181818182</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">n_c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">n_c</span> <span class="o">-</span> <span class="mi">5</span><span class="p">)</span></div>
 
 </pre></div>
 

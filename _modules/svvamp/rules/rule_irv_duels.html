@@ -472,10 +472,11 @@ document.write(`
 <span class="sd">    You should have received a copy of the GNU General Public License</span>
 <span class="sd">    along with SVVAMP.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">product</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.rules.rule</span><span class="w"> </span><span class="kn">import</span> <span class="n">Rule</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.utils.util_cache</span><span class="w"> </span><span class="kn">import</span> <span class="n">cached_property</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.utils.misc</span><span class="w"> </span><span class="kn">import</span> <span class="n">preferences_ut_to_matrix_duels_ut</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.utils.misc</span><span class="w"> </span><span class="kn">import</span> <span class="n">preferences_ut_to_matrix_duels_ut</span><span class="p">,</span> <span class="n">powerset</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.preferences.profile</span><span class="w"> </span><span class="kn">import</span> <span class="n">Profile</span>
 
 
@@ -487,7 +488,7 @@ document.write(`
 <span class="sd">    Options</span>
 <span class="sd">    -------</span>
 <span class="sd">        &gt;&gt;&gt; RuleIRVDuels.print_options_parameters()</span>
-<span class="sd">        cm_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="sd">        cm_option: [&#39;lazy&#39;, &#39;slow&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
 <span class="sd">        icm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
 <span class="sd">        iia_subset_maximum_size: is_number. Default: 2.</span>
 <span class="sd">        im_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
@@ -511,6 +512,13 @@ document.write(`
 <span class="sd">    We thank Laurent Viennot for the idea of this voting system.</span>
 
 <span class="sd">    * :meth:`is_cm_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
+
+<span class="sd">        * :attr:`cm_option` = ``&#39;lazy&#39;``: Non-exact algorithms from superclass :class:`Rule`.Can prove</span>
+<span class="sd">          CM but unable to decide non-CM (except in rare obvious cases).</span>
+<span class="sd">        * :attr:`cm_option` = ``&#39;slow&#39;``: Non-polynomial heuristic (:math:`2^{n_c}`). Quite efficient to prove CM</span>
+<span class="sd">          or non-CM.</span>
+<span class="sd">        * :attr:`cm_option` = ``&#39;exact&#39;``: Exact algorithm (:math:`(n_c!)^2`, ouch!).</span>
+
 <span class="sd">    * :meth:`is_icm_`: Exact in polynomial time.</span>
 <span class="sd">    * :meth:`is_im_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.</span>
 <span class="sd">    * :meth:`~svvamp.Election.not_iia`: Exact in polynomial time.</span>
@@ -757,12 +765,12 @@ document.write(`
 <span class="sd">        [0. 2. 3.]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">full_name</span> <span class="o">=</span> <span class="s1">&#39;IRV-Duels&#39;</span>
-    <span class="n">abbreviation</span> <span class="o">=</span> <span class="s1">&#39;IRVD&#39;</span>
+    <span class="n">full_name</span> <span class="o">=</span> <span class="s1">&#39;Viennot&#39;</span>
+    <span class="n">abbreviation</span> <span class="o">=</span> <span class="s1">&#39;Vie&#39;</span>
 
     <span class="n">options_parameters</span> <span class="o">=</span> <span class="n">Rule</span><span class="o">.</span><span class="n">options_parameters</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">options_parameters</span><span class="p">[</span><span class="s1">&#39;icm_option&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">}</span>
-    <span class="n">options_parameters</span><span class="p">[</span><span class="s1">&#39;cm_option&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;lazy&#39;</span><span class="p">,</span> <span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;lazy&#39;</span><span class="p">}</span>
+    <span class="n">options_parameters</span><span class="p">[</span><span class="s1">&#39;cm_option&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;lazy&#39;</span><span class="p">,</span> <span class="s1">&#39;slow&#39;</span><span class="p">,</span> <span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;lazy&#39;</span><span class="p">}</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
@@ -859,6 +867,54 @@ document.write(`
         <span class="k">return</span> <span class="kc">True</span>
 
     <span class="c1"># %% Coalition Manipulation (CM)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_cm_aux_slow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">,</span> <span class="n">preferences_borda_s</span><span class="p">,</span> <span class="n">matrix_duels_s</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;&#39;Slow&#39; algorithm used for CM. Try to prove non-CM.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        c : int</span>
+<span class="sd">            Candidate for which we want to manipulate.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># The d&#39;s are the candidates (!= c, w) who can defeat `w` in a pairwise comparison (after manipulation).</span>
+        <span class="c1"># The e&#39;s are the candidates (!= c, w) who cannot.</span>
+        <span class="n">n_v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span>
+        <span class="n">n_c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span>
+        <span class="n">n_m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_ut</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span>  <span class="c1"># Number of manipulators</span>
+        <span class="n">d_can_defeat_w</span> <span class="o">=</span> <span class="p">(</span><span class="n">matrix_duels_s</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">,</span> <span class="p">:]</span> <span class="o">&lt;</span> <span class="n">n_v</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span>
+                <span class="p">(</span><span class="n">matrix_duels_s</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">,</span> <span class="p">:]</span> <span class="o">==</span> <span class="n">n_v</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_c</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">))</span>
+        <span class="n">e_cannot_defeat_w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="n">d_can_defeat_w</span><span class="p">)</span>
+        <span class="n">d_can_defeat_w</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">d_can_defeat_w</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">e_cannot_defeat_w</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">all_ds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">d_can_defeat_w</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">all_es</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">e_cannot_defeat_w</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">n_m_sufficient_to_beat_w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+        <span class="k">for</span> <span class="n">ds</span><span class="p">,</span> <span class="n">es</span> <span class="ow">in</span> <span class="n">product</span><span class="p">(</span><span class="n">powerset</span><span class="p">(</span><span class="n">all_ds</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">powerset</span><span class="p">(</span><span class="n">all_es</span><span class="p">)):</span>
+            <span class="n">subset_candidates</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span> <span class="o">|</span> <span class="nb">set</span><span class="p">(</span><span class="n">es</span><span class="p">)</span> <span class="o">|</span> <span class="p">{</span><span class="n">c</span><span class="p">}</span> <span class="o">|</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">}</span>
+            <span class="n">candidate_is_absent</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">subset_candidates</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_c</span><span class="p">)]</span>
+            <span class="n">pref_copy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">preferences_borda_s</span><span class="p">)</span>
+            <span class="n">pref_copy</span><span class="p">[:,</span> <span class="n">candidate_is_absent</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="n">ballots_s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">pref_copy</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">scores_s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">ballots_s</span><span class="p">,</span> <span class="n">minlength</span><span class="o">=</span><span class="n">n_c</span><span class="p">)</span>
+            <span class="n">the_d</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">scores_s</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">ds</span><span class="p">)][::</span><span class="o">-</span><span class="mi">1</span><span class="p">])]</span>  <span class="c1"># The easiest d to select along with w_</span>
+            <span class="k">if</span> <span class="n">scores_s</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">scores_s</span><span class="p">[</span><span class="n">the_d</span><span class="p">]</span> <span class="ow">or</span> <span class="p">(</span><span class="n">scores_s</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span> <span class="o">==</span> <span class="n">scores_s</span><span class="p">[</span><span class="n">the_d</span><span class="p">]</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span> <span class="o">&lt;</span> <span class="n">the_d</span><span class="p">):</span>
+                <span class="n">score_to_beat</span> <span class="o">=</span> <span class="n">scores_s</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span>
+                <span class="n">candidate_to_beat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">score_to_beat</span> <span class="o">=</span> <span class="n">scores_s</span><span class="p">[</span><span class="n">the_d</span><span class="p">]</span>
+                <span class="n">candidate_to_beat</span> <span class="o">=</span> <span class="n">the_d</span>
+            <span class="n">score_needed</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_c</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">candidate_to_beat</span><span class="p">)</span> <span class="o">+</span> <span class="n">score_to_beat</span>
+            <span class="n">n_m_beat_w_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">score_needed</span> <span class="o">-</span> <span class="n">scores_s</span><span class="p">,</span> <span class="mi">0</span><span class="p">)[</span><span class="nb">list</span><span class="p">(</span><span class="n">subset_candidates</span> <span class="o">-</span> <span class="p">{</span><span class="n">the_d</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">})])</span>
+            <span class="k">if</span> <span class="n">n_m_beat_w_new</span> <span class="o">&lt;</span> <span class="n">n_m_sufficient_to_beat_w</span><span class="p">:</span>
+                <span class="n">n_m_sufficient_to_beat_w</span> <span class="o">=</span> <span class="n">n_m_beat_w_new</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">optimize_bounds</span> <span class="ow">and</span> <span class="n">n_m_sufficient_to_beat_w</span> <span class="o">&lt;=</span> <span class="n">n_m</span><span class="p">:</span>
+                    <span class="c1"># We failed to prove non-CM. This is a quick escape.</span>
+                    <span class="k">return</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_necessary</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_m_sufficient_to_beat_w</span><span class="p">,</span>
+            <span class="s1">&#39;CM: Update necessary_coalition_size_cm[c] = &#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_cm_aux_exact</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_max</span><span class="p">,</span> <span class="n">n_min</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">,</span> <span class="n">preferences_borda_s</span><span class="p">,</span> <span class="n">matrix_duels_s</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Exact algorithm used for CM.</span>
@@ -1138,15 +1194,26 @@ document.write(`
 <span class="sd">            &gt;&gt;&gt; rule.is_cm_c_(0)</span>
 <span class="sd">            False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span> <span class="o">==</span> <span class="s2">&quot;exact&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span> <span class="o">==</span> <span class="s2">&quot;lazy&quot;</span><span class="p">:</span>
             <span class="c1"># With &#39;lazy&#39; option, we stop here anyway.</span>
             <span class="k">return</span> <span class="kc">False</span>
-        <span class="c1"># From this point, we have necessarily the &#39;exact&#39; option.</span>
+
+        <span class="c1"># From this point, we have the &#39;slow&#39; or the &#39;exact&#39; option.</span>
         <span class="n">n_m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_ut</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span>
-        <span class="n">n_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">optimize_bounds</span> <span class="k">else</span> <span class="n">n_m</span>
-        <span class="n">n_min</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
         <span class="n">preferences_borda_s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_wants_to_help_c_</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]),</span> <span class="p">:]</span>
         <span class="n">matrix_duels_s</span> <span class="o">=</span> <span class="n">preferences_ut_to_matrix_duels_ut</span><span class="p">(</span><span class="n">preferences_borda_s</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span> <span class="o">==</span> <span class="s1">&#39;slow&#39;</span><span class="p">:</span>
+            <span class="n">quick_escape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cm_aux_slow</span><span class="p">(</span>
+                <span class="n">c</span><span class="o">=</span><span class="n">c</span><span class="p">,</span>
+                <span class="n">optimize_bounds</span><span class="o">=</span><span class="n">optimize_bounds</span><span class="p">,</span>
+                <span class="n">preferences_borda_s</span><span class="o">=</span><span class="n">preferences_borda_s</span><span class="p">,</span>
+                <span class="n">matrix_duels_s</span><span class="o">=</span><span class="n">matrix_duels_s</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="n">quick_escape</span>
+
+        <span class="c1"># From this point, we necessarily have the &#39;exact&#39; option.</span>
+        <span class="n">n_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">optimize_bounds</span> <span class="k">else</span> <span class="n">n_m</span>
+        <span class="n">n_min</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
         <span class="n">n_manip_exact</span><span class="p">,</span> <span class="n">example_path_losers</span><span class="p">,</span> <span class="n">example_path_winners</span><span class="p">,</span> <span class="n">quick_escape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cm_aux_exact</span><span class="p">(</span>
             <span class="n">c</span><span class="o">=</span><span class="n">c</span><span class="p">,</span>
             <span class="n">n_max</span><span class="o">=</span><span class="n">n_max</span><span class="p">,</span>
@@ -1168,7 +1235,17 @@ document.write(`
                 <span class="bp">self</span><span class="o">.</span><span class="n">_update_necessary</span><span class="p">(</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
                     <span class="s1">&#39;CM: Update necessary_coalition_size_cm[c] = n_m + 1 =&#39;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">quick_escape</span></div>
+        <span class="k">return</span> <span class="n">quick_escape</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">theta_critical_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 1, 2, 3]])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleIRVDuels()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.theta_critical_</span>
+<span class="sd">            0.14285714285714285</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="o">/</span><span class="mi">7</span></div>
 
 </pre></div>
 

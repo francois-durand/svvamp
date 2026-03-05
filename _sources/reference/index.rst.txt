@@ -30,6 +30,7 @@ Generators of Profiles
    preferences/generator_profile_perturbed_culture
    preferences/generator_profile_spheroid
    preferences/generator_profile_unanimous
+   preferences/generator_profile_uniform_few_rankings
    preferences/generator_profile_vmf_hypercircle
    preferences/generator_profile_vmf_hypersphere
 
@@ -60,6 +61,7 @@ Voting Rules
    rules/rule_condorcet_vtb_irv
    rules/rule_coombs
    rules/rule_copeland
+   rules/rule_dodgson
    rules/rule_exhaustive_ballot
    rules/rule_icrv
    rules/rule_irv
@@ -84,6 +86,7 @@ Voting Rules
    rules/rule_two_round
    rules/rule_veto
    rules/rule_woodall
+   rules/rule_young
 
 Meta
 ----

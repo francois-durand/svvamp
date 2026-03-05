@@ -790,7 +790,7 @@ document.write(`
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">full_name</span> <span class="o">=</span> <span class="s1">&#39;Scoring Then Automatic Runoff&#39;</span>
-    <span class="n">abbreviation</span> <span class="o">=</span> <span class="s1">&#39;STAR&#39;</span>
+    <span class="n">abbreviation</span> <span class="o">=</span> <span class="s1">&#39;Sta&#39;</span>
 
     <span class="n">options_parameters</span> <span class="o">=</span> <span class="n">Rule</span><span class="o">.</span><span class="n">options_parameters</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">options_parameters</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
@@ -1366,12 +1366,23 @@ document.write(`
             <span class="c1"># Total number of manipulators</span>
             <span class="k">if</span> <span class="n">n_1</span> <span class="o">+</span> <span class="n">n_2</span> <span class="o">&lt;=</span> <span class="n">n_m</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_um</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
-                <span class="k">return</span></div>
-
+                <span class="k">return</span>
 
     <span class="c1"># %% Ignorant-Coalition Manipulation (ICM)</span>
 
     <span class="c1"># Since STAR meets IgnMC_c_ctb, the general methods are exact.</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">theta_critical_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 1, 2, 3]])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleSTAR()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.theta_critical_</span>
+<span class="sd">            1</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># This value is conventional.</span>
+        <span class="k">return</span> <span class="mi">1</span></div>
+
 </pre></div>
 
                 </article>

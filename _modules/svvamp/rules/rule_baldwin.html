@@ -982,7 +982,18 @@ document.write(`
         <span class="c1"># From this point, we have necessarily the &#39;exact&#39; option (which is, in fact, only an exhaustive exploration</span>
         <span class="c1"># with = ``n_m`` manipulators).</span>
         <span class="n">is_quick_escape_exact</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cm_main_work_c_exact_</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">is_quick_escape_fast</span> <span class="ow">or</span> <span class="n">is_quick_escape_exact</span></div>
+        <span class="k">return</span> <span class="n">is_quick_escape_fast</span> <span class="ow">or</span> <span class="n">is_quick_escape_exact</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">theta_critical_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 1, 2, 3]])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleBaldwin()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.theta_critical_</span>
+<span class="sd">            0.18181818181818182</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">n_c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">n_c</span> <span class="o">-</span> <span class="mi">5</span><span class="p">)</span></div>
 
 </pre></div>
 

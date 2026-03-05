@@ -455,9 +455,55 @@ document.write(`
                   
   <section id="history">
 <h1>History<a class="headerlink" href="#history" title="Link to this heading">#</a></h1>
+<section id="recent-changes-not-released-yet">
+<h2>Recent changes (not released yet)<a class="headerlink" href="#recent-changes-not-released-yet" title="Link to this heading">#</a></h2>
+<p>Profiles:</p>
+<ul class="simple">
+<li><p>In <code class="docutils literal notranslate"><span class="pre">Profile</span></code>:</p>
+<ul>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">size_bicoalition</span></code>: Size of the bicoalition <code class="docutils literal notranslate"><span class="pre">(c,</span> <span class="pre">d)</span></code> for a Condorcet winner <code class="docutils literal notranslate"><span class="pre">w</span></code> when it exists, that is, the number of voters who do not prefer <code class="docutils literal notranslate"><span class="pre">c</span></code> over <code class="docutils literal notranslate"><span class="pre">w</span></code> and who rank <code class="docutils literal notranslate"><span class="pre">w</span></code> above <code class="docutils literal notranslate"><span class="pre">d</span></code>.</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">pair_safe_condorcet_winner</span></code>, <code class="docutils literal notranslate"><span class="pre">exists_pair_safe_condorcet_winner</span></code>, <code class="docutils literal notranslate"><span class="pre">not_exists_pair_safe_condorcet_winner</span></code>.</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">set_safe_condorcet_winner</span></code>, <code class="docutils literal notranslate"><span class="pre">exists_set_safe_condorcet_winner</span></code>, <code class="docutils literal notranslate"><span class="pre">not_exists_set_safe_condorcet_winner</span></code>.</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">theta_empirical</span></code> (beta feature).</p></li>
+</ul>
+</li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">GeneratorProfileUniformFewRankings</span></code>: Profile generator drawing rankings uniformly in a random subset of all possible rankings.</p></li>
+<li><p>In <code class="docutils literal notranslate"><span class="pre">GeneratorProfileNoise</span></code>, add option <code class="docutils literal notranslate"><span class="pre">exponential_noise</span></code>: If True, the noise for each candidate follows an exponential distribution whose parameter is proportional to its plurality score in the base profile (Bradley-Terry style noise).</p></li>
+<li><p>Update the import module for PrefLib profiles in order to be compatible with the latest version of PrefLib.</p></li>
+</ul>
+<p>Rules:</p>
+<ul class="simple">
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">RuleDodgson</span></code> and <code class="docutils literal notranslate"><span class="pre">RuleYoung</span></code>.</p></li>
+<li><p>Improve CM algorithms for <code class="docutils literal notranslate"><span class="pre">RuleCSD</span></code> (Simplified Dodgson), <code class="docutils literal notranslate"><span class="pre">RuleCopeland</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleIRVDuels</span></code> (Viennot rule), and <code class="docutils literal notranslate"><span class="pre">RuleSlater</span></code>.</p></li>
+<li><p>In <code class="docutils literal notranslate"><span class="pre">RuleCopeland</span></code> and <code class="docutils literal notranslate"><span class="pre">RuleSlater</span></code>, add option <code class="docutils literal notranslate"><span class="pre">tie_break_rule</span></code>.</p></li>
+<li><p>In <code class="docutils literal notranslate"><span class="pre">RuleKemeny</span></code> and <code class="docutils literal notranslate"><span class="pre">RuleSlater</span></code>, add option <code class="docutils literal notranslate"><span class="pre">winner_option</span></code> (<code class="docutils literal notranslate"><span class="pre">exact</span></code> or <code class="docutils literal notranslate"><span class="pre">lazy</span></code>) to speed up computation.</p></li>
+<li><p>Rename the <code class="docutils literal notranslate"><span class="pre">full</span> <span class="pre">name</span></code> and <code class="docutils literal notranslate"><span class="pre">abbreviation</span></code> attributes of several rules.</p></li>
+<li><p>In <code class="docutils literal notranslate"><span class="pre">Rule</span></code>, add <code class="docutils literal notranslate"><span class="pre">is_xm_</span></code> and <code class="docutils literal notranslate"><span class="pre">theta_critical_</span></code> (beta features).</p></li>
+</ul>
+<p>Meta:</p>
+<ul class="simple">
+<li><p>In <code class="docutils literal notranslate"><span class="pre">ExperimentCompiler</span></code>:</p>
+<ul>
+<li><p>Add option <code class="docutils literal notranslate"><span class="pre">ignore_rules_abbr</span></code>: List of rules to ignore (given as abbreviations).</p></li>
+<li><p>In <code class="docutils literal notranslate"><span class="pre">rate_bar_plot</span></code> (and related methods), add options to restrict the plot to certain numbers of candidates (<code class="docutils literal notranslate"><span class="pre">n_c_equal</span></code>, <code class="docutils literal notranslate"><span class="pre">n_c_ge</span></code>, <code class="docutils literal notranslate"><span class="pre">n_c_le</span></code>).</p></li>
+<li><p>In <code class="docutils literal notranslate"><span class="pre">rate_bar_plot</span></code> (and related methods), add options to control the colors (<code class="docutils literal notranslate"><span class="pre">f_rule_label</span></code>, <code class="docutils literal notranslate"><span class="pre">f_rule_value_used_for_color</span></code>, <code class="docutils literal notranslate"><span class="pre">d_rule_color</span></code>, <code class="docutils literal notranslate"><span class="pre">d_bound_color</span></code>).</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">nb_candidates_rate_line_plot</span></code>: Line plot representing a rate as a function of the number of candidates.</p></li>
+<li><p>In <code class="docutils literal notranslate"><span class="pre">my_tikzplotlib_save</span></code>, add options to pimp the tikz output (<code class="docutils literal notranslate"><span class="pre">d_old_new</span></code>, <code class="docutils literal notranslate"><span class="pre">transform_string</span></code>).</p></li>
+<li><p>In <code class="docutils literal notranslate"><span class="pre">my_tikzplotlib_save</span></code>, add option <code class="docutils literal notranslate"><span class="pre">with_prefix</span></code>: Whether the prefix is used in the file name.</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">line</span></code> to factorize the code of <code class="docutils literal notranslate"><span class="pre">rcw_line</span></code>, <code class="docutils literal notranslate"><span class="pre">sscw_line</span></code>, etc.</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">cm_xm_rate_bar_plot</span></code> (beta feature).</p></li>
+</ul>
+</li>
+</ul>
+<p>Bug fixes:</p>
+<ul class="simple">
+<li><p>In <code class="docutils literal notranslate"><span class="pre">Profile</span></code>, fix bug to compute <code class="docutils literal notranslate"><span class="pre">n_v</span></code> and <code class="docutils literal notranslate"><span class="pre">n_c</span></code> when the profile is initialized with <code class="docutils literal notranslate"><span class="pre">preferences_borda_rk</span></code>.</p></li>
+<li><p>In <code class="docutils literal notranslate"><span class="pre">RuleBucklin</span></code>, fix bug in the CM algorithm.</p></li>
+</ul>
+<p>Conversion to <code class="docutils literal notranslate"><span class="pre">uv</span></code> instead of <code class="docutils literal notranslate"><span class="pre">poetry</span></code> for packaging.</p>
 </section>
 <section id="accelerations-and-bug-fixes">
-<h1>0.12.0 (2025-02-19): Accelerations and Bug Fixes<a class="headerlink" href="#accelerations-and-bug-fixes" title="Link to this heading">#</a></h1>
+<h2>0.12.0 (2025-02-19): Accelerations and Bug Fixes<a class="headerlink" href="#accelerations-and-bug-fixes" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>In <code class="docutils literal notranslate"><span class="pre">Rule</span></code> and its subclasses, add option <code class="docutils literal notranslate"><span class="pre">precheck_heuristic</span></code> (heuristic precheck before computing CM). In
 earlier versions of SVVAMP, this precheck was automatically activated for all rules. However, this heuristic is
@@ -466,6 +512,7 @@ costly. Hence, for rules where computing CM exactly is cheap, it is now deactiva
 <li><p>Rename “IRV-immune candidate” to “super Condorcet winner”.</p></li>
 <li><p>Fix bug in <code class="docutils literal notranslate"><span class="pre">Profile.exists_super_condorcet_winner</span></code>.</p></li>
 </ul>
+</section>
 <section id="conversion-to-poetry">
 <h2>0.11.0 (2024-10-18): Conversion to Poetry<a class="headerlink" href="#conversion-to-poetry" title="Link to this heading">#</a></h2>
 <ul class="simple">
@@ -884,8 +931,8 @@ diamond inheritance. Rename most classes, properties and methods.</p></li>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">History</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#accelerations-and-bug-fixes">0.12.0 (2025-02-19): Accelerations and Bug Fixes</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recent-changes-not-released-yet">Recent changes (not released yet)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#accelerations-and-bug-fixes">0.12.0 (2025-02-19): Accelerations and Bug Fixes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conversion-to-poetry">0.11.0 (2024-10-18): Conversion to Poetry</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-profile-generators-voting-rules-and-cm-algorithms">0.10.0 (2023-09-29): New profile generators, voting rules and CM algorithms</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compatibility-issues">0.9.1 (2022-03-24): Compatibility issues</a></li>
@@ -924,9 +971,6 @@ diamond inheritance. Rename most classes, properties and methods.</p></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp-s-core-features">0.0.2 (2015-02-16): SVVAMP’s Core Features</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#first-release">0.0.1 (2015-02-14): First Release</a></li>
 </ul>
-</li>
-</ul>
-
   </nav></div>
 
   <div class="sidebar-secondary-item">

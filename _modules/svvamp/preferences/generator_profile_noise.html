@@ -490,6 +490,9 @@ document.write(`
 <span class="sd">        The relative noise.</span>
 <span class="sd">    absolute_noise : number</span>
 <span class="sd">        The absolute noise</span>
+<span class="sd">    exponential_noise : bool</span>
+<span class="sd">        If True, the noise for each candidate follows an exponential distribution whose parameter is proportional</span>
+<span class="sd">        to its plurality score in the base profile. If False, the noise is uniform.</span>
 <span class="sd">    sort_voters : bool</span>
 <span class="sd">        This argument is passed to :class:`Profile`.</span>
 
@@ -499,6 +502,10 @@ document.write(`
 <span class="sd">    between the lowest and the highest utility. Then to each ``preferences_ut[v, c]``, a random noise is added which</span>
 <span class="sd">    is drawn independently and uniformly in the interval ``[- total_noise, total_noise]``.</span>
 
+<span class="sd">    If `exponential_noise` is True, the noise added to each candidate `c` for each voter `v` is drawn independently</span>
+<span class="sd">    from an exponential distribution with scale parameter proportional to the plurality score of `c` in the base</span>
+<span class="sd">    profile.</span>
+
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">        &gt;&gt;&gt; generator = GeneratorProfileNoise(base_profile=Profile(preferences_ut=[[5, 1, 2], [4, 10, 1]]),</span>
@@ -506,28 +513,49 @@ document.write(`
 <span class="sd">        &gt;&gt;&gt; profile = generator()</span>
 <span class="sd">        &gt;&gt;&gt; profile.preferences_rk.shape</span>
 <span class="sd">        (2, 3)</span>
+
+<span class="sd">    With an exponential noise:</span>
+
+<span class="sd">        &gt;&gt;&gt; generator = GeneratorProfileNoise(base_profile=Profile(preferences_ut=[[5, 1, 2], [4, 10, 1]]),</span>
+<span class="sd">        ...                                   absolute_noise=.1, exponential_noise=True)</span>
+<span class="sd">        &gt;&gt;&gt; profile = generator()</span>
+<span class="sd">        &gt;&gt;&gt; profile.preferences_rk.shape</span>
+<span class="sd">        (2, 3)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base_profile</span><span class="p">,</span> <span class="n">relative_noise</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">absolute_noise</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">sort_voters</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base_profile</span><span class="p">,</span> <span class="n">relative_noise</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">absolute_noise</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">exponential_noise</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">sort_voters</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">base_profile</span> <span class="o">=</span> <span class="n">base_profile</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">base_ut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_profile</span><span class="o">.</span><span class="n">preferences_ut</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_v</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_profile</span><span class="o">.</span><span class="n">n_v</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_profile</span><span class="o">.</span><span class="n">n_c</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">relative_noise</span> <span class="o">=</span> <span class="n">relative_noise</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">absolute_noise</span> <span class="o">=</span> <span class="n">absolute_noise</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exponential_noise</span> <span class="o">=</span> <span class="n">exponential_noise</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sort_voters</span> <span class="o">=</span> <span class="n">sort_voters</span>
         <span class="c1"># Total noise</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">total_noise</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">absolute_noise</span>
         <span class="k">if</span> <span class="n">relative_noise</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">amplitude</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_ut</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_ut</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">total_noise</span> <span class="o">+=</span> <span class="n">relative_noise</span> <span class="o">*</span> <span class="n">amplitude</span>
+        <span class="c1"># Scales of the exponential noise (if relevant)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scales_exponential</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">exponential_noise</span><span class="p">:</span>
+            <span class="n">plurality_scores</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_profile</span><span class="o">.</span><span class="n">plurality_scores_ut</span>
+            <span class="n">eps</span> <span class="o">=</span> <span class="mf">1e-8</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scales_exponential</span> <span class="o">=</span> <span class="p">(</span><span class="n">plurality_scores</span> <span class="o">/</span> <span class="n">plurality_scores</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">+</span> <span class="n">eps</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log_creation</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Noise Adder&#39;</span><span class="p">,</span> <span class="s1">&#39;Base profile&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">base_profile</span><span class="p">),</span>
-                             <span class="s1">&#39;Relative noise&#39;</span><span class="p">,</span> <span class="n">relative_noise</span><span class="p">,</span> <span class="s1">&#39;Absolute noise&#39;</span><span class="p">,</span> <span class="n">absolute_noise</span><span class="p">]</span>
+                             <span class="s1">&#39;Relative noise&#39;</span><span class="p">,</span> <span class="n">relative_noise</span><span class="p">,</span> <span class="s1">&#39;Absolute noise&#39;</span><span class="p">,</span> <span class="n">absolute_noise</span><span class="p">,</span>
+                             <span class="s1">&#39;Exponential noise&#39;</span><span class="p">,</span> <span class="n">exponential_noise</span><span class="p">]</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">sort_voters</span><span class="o">=</span><span class="n">sort_voters</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">preferences_ut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_ut</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_noise</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">preferences_ut</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_noise</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_v</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_c</span><span class="p">))</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">exponential_noise</span><span class="p">:</span>
+                <span class="n">noise</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">exponential</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">scales_exponential</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_v</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_c</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>  <span class="c1"># Uniform noise</span>
+                <span class="n">noise</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_v</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_c</span><span class="p">))</span>
+            <span class="n">preferences_ut</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_noise</span> <span class="o">*</span> <span class="n">noise</span>
         <span class="k">return</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="n">preferences_ut</span><span class="p">,</span> <span class="n">log_creation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">log_creation</span><span class="p">,</span>
                        <span class="n">labels_candidates</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">base_profile</span><span class="o">.</span><span class="n">labels_candidates</span><span class="p">,</span> <span class="n">sort_voters</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sort_voters</span><span class="p">)</span></div>
 

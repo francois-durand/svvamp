@@ -479,6 +479,7 @@ document.write(`
 <span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.meta.study_rule_criteria</span><span class="w"> </span><span class="kn">import</span> <span class="n">StudyRuleCriteria</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.rules.all_rule_classes</span><span class="w"> </span><span class="kn">import</span> <span class="n">ALL_RULE_CLASSES</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.rules.rule_approval</span><span class="w"> </span><span class="kn">import</span> <span class="n">RuleApproval</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.rules.rule_dodgson</span><span class="w"> </span><span class="kn">import</span> <span class="n">RuleDodgson</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.rules.rule_plurality</span><span class="w"> </span><span class="kn">import</span> <span class="n">RulePlurality</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.rules.rule_ranked_pairs</span><span class="w"> </span><span class="kn">import</span> <span class="n">RuleRankedPairs</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.rules.rule_schulze</span><span class="w"> </span><span class="kn">import</span> <span class="n">RuleSchulze</span>
@@ -486,6 +487,7 @@ document.write(`
 <span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.rules.rule_irv</span><span class="w"> </span><span class="kn">import</span> <span class="n">RuleIRV</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.rules.rule_condorcet_vtb_irv</span><span class="w"> </span><span class="kn">import</span> <span class="n">RuleCondorcetVtbIRV</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.rules.rule_icrv</span><span class="w"> </span><span class="kn">import</span> <span class="n">RuleICRV</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.rules.rule_young</span><span class="w"> </span><span class="kn">import</span> <span class="n">RuleYoung</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.utils.misc</span><span class="w"> </span><span class="kn">import</span> <span class="n">indent</span>
 
 
@@ -1589,6 +1591,8 @@ document.write(`
 <span class="sd">        Confirm that a configuration is sound:</span>
 
 <span class="sd">            &gt;&gt;&gt; voting_rule_tasks = VotingRuleTasks()</span>
+<span class="sd">            &gt;&gt;&gt; voting_rule_tasks.remove_rule(RuleDodgson)</span>
+<span class="sd">            &gt;&gt;&gt; voting_rule_tasks.remove_rule(RuleYoung)</span>
 <span class="sd">            &gt;&gt;&gt; voting_rule_tasks.check_sanity()</span>
 <span class="sd">            VotingRuleTasks: Sanity check was successful.</span>
 

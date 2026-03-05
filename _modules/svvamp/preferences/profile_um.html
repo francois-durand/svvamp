@@ -708,6 +708,15 @@ document.write(`
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">plurality_scores_rk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;List: plurality scores, relying on &#39;rk&#39; preferences.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt;&gt;&gt; profile_s = Profile(preferences_ut=[[1., .5, 0.], [.5, 1., 0.]])</span>
+<span class="sd">            &gt;&gt;&gt; profile_um = ProfileUM(profile_s=profile_s, n_m=2, ballot_rk=[1, 2, 0])</span>
+<span class="sd">            &gt;&gt;&gt; profile_um.plurality_scores_rk</span>
+<span class="sd">            array([1., 3., 0.])</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">plurality_scores_rk</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_c</span><span class="p">)</span>
         <span class="n">plurality_scores_rk</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ballot_rk</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_m</span>
         <span class="n">plurality_scores_rk</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_s</span><span class="o">.</span><span class="n">plurality_scores_rk</span>

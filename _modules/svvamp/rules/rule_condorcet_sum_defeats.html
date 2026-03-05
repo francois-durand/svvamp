@@ -756,8 +756,8 @@ document.write(`
 <span class="sd">        [0. 2. 3.]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">full_name</span> <span class="o">=</span> <span class="s1">&#39;Condorcet Sum Defeats&#39;</span>
-    <span class="n">abbreviation</span> <span class="o">=</span> <span class="s1">&#39;CSD&#39;</span>
+    <span class="n">full_name</span> <span class="o">=</span> <span class="s1">&#39;Simplified Dodgson&#39;</span>
+    <span class="n">abbreviation</span> <span class="o">=</span> <span class="s1">&#39;SD&#39;</span>
 
     <span class="n">options_parameters</span> <span class="o">=</span> <span class="n">Rule</span><span class="o">.</span><span class="n">options_parameters</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
@@ -791,7 +791,50 @@ document.write(`
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">meets_infmc_c_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="kc">True</span></div>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_cm_preliminary_checks_general_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do preliminary checks for CM. Only first time CM is launched.</span>
+
+<span class="sd">        Can update ``_is_cm`` to True or False (instead of -inf).</span>
+
+<span class="sd">        * If ``_is_cm`` becomes True, it is not necessary to update a specific ``_candidates_cm[c]``.</span>
+<span class="sd">        * If ``_is_cm`` becomes False, then all ``_candidates_cm[c]`` must become False. And it is recommended that</span>
+<span class="sd">        ``_cm_was_computed_with_candidates`` becomes True.</span>
+
+<span class="sd">        For ``_sufficient_coalition_size_cm`` and ``_necessary_coalition_size_cm``, it is not recommended to do</span>
+<span class="sd">        better here.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        An example with a Set-Safe Condorcet Winner who is not a Resistant Condorcet Winner:</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=(</span>
+<span class="sd">            ...     [[0, 1, 2, 3, 4]] * 40</span>
+<span class="sd">            ...     + [[1, 0, 2, 3, 4]] * 36</span>
+<span class="sd">            ...     + [[2, 3, 0, 1, 4]] * 12</span>
+<span class="sd">            ...     + [[2, 4, 0, 1, 3]] * 12</span>
+<span class="sd">            ... ))</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleCondorcetSumDefeats()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.is_cm_</span>
+<span class="sd">            False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">exists_set_safe_condorcet_winner</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;CM impossible (w is a Set-Safe Condorcet winner)&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_is_cm</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_cm</span><span class="p">[:]</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cm_was_computed_with_candidates</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">theta_critical_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 1, 2, 3]])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleCondorcetSumDefeats()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.theta_critical_</span>
+<span class="sd">            0.18181818181818182</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">n_c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">n_c</span> <span class="o">-</span> <span class="mi">5</span><span class="p">)</span></div>
 
 </pre></div>
 

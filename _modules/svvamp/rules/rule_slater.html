@@ -484,6 +484,19 @@ document.write(`
 <span class="k">class</span><span class="w"> </span><span class="nc">RuleSlater</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Slater method.</span>
 
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    winner_option : str</span>
+<span class="sd">        &#39;exact&#39; or &#39;lazy&#39;. Default: &#39;exact&#39;. If `winner_option` is &#39;exact&#39;, then the winner is computed as usual.</span>
+<span class="sd">         If `winner_option` is &#39;lazy&#39;, then the winner is computed only in the obvious case where there is a Condorcet</span>
+<span class="sd">         winner; note that if there is no Condorcet-admissible candidate, it is however possible to decide ``is_cm_``</span>
+<span class="sd">         automatically to True.</span>
+<span class="sd">    tie_break_rule : str</span>
+<span class="sd">        &#39;lexico&#39; of &#39;random&#39;. Default: &#39;lexico&#39;. If `tie_break_rule` is &#39;lexico&#39;, then the candidate with the lowest</span>
+<span class="sd">        index is selected in case of a tie (usual behavior of SVVAMP for the other voting rules). If `tie_break_rule`</span>
+<span class="sd">        is `random`, then each time a profile is loaded, a tie-break order over the candidates is drawn at random.</span>
+<span class="sd">        This tie-break is used for the result of the sincere election, but also in case of manipulation.</span>
+
 <span class="sd">    Options</span>
 <span class="sd">    -------</span>
 <span class="sd">        &gt;&gt;&gt; RuleSlater.print_options_parameters()</span>
@@ -492,8 +505,10 @@ document.write(`
 <span class="sd">        iia_subset_maximum_size: is_number. Default: 2.</span>
 <span class="sd">        im_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
 <span class="sd">        precheck_heuristic: is_bool. Default: True.</span>
+<span class="sd">        tie_break_rule: [&#39;lexico&#39;, &#39;random&#39;]. Default: &#39;lexico&#39;.</span>
 <span class="sd">        tm_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;exact&#39;.</span>
 <span class="sd">        um_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="sd">        winner_option: [&#39;exact&#39;, &#39;lazy&#39;]. Default: &#39;exact&#39;.</span>
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
@@ -719,12 +734,12 @@ document.write(`
 <span class="sd">        ***********************************</span>
 <span class="sd">        *   Coalition Manipulation (CM)   *</span>
 <span class="sd">        ***********************************</span>
-<span class="sd">        is_cm = nan</span>
+<span class="sd">        is_cm = False</span>
 <span class="sd">        log_cm: cm_option = lazy, um_option = lazy, icm_option = exact, tm_option = exact</span>
 <span class="sd">        candidates_cm =</span>
-<span class="sd">        [ 0.  0. nan]</span>
+<span class="sd">        [0. 0. 0.]</span>
 <span class="sd">        necessary_coalition_size_cm =</span>
-<span class="sd">        [0. 1. 2.]</span>
+<span class="sd">        [0. 1. 3.]</span>
 <span class="sd">        sufficient_coalition_size_cm =</span>
 <span class="sd">        [0. 2. 3.]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -734,13 +749,67 @@ document.write(`
 
     <span class="n">options_parameters</span> <span class="o">=</span> <span class="n">Rule</span><span class="o">.</span><span class="n">options_parameters</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">options_parameters</span><span class="p">[</span><span class="s1">&#39;icm_option&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">}</span>
+    <span class="n">options_parameters</span><span class="p">[</span><span class="s1">&#39;tie_break_rule&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;lexico&#39;</span><span class="p">,</span> <span class="s1">&#39;random&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;lexico&#39;</span><span class="p">}</span>
+    <span class="n">options_parameters</span><span class="p">[</span><span class="s1">&#39;winner_option&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">,</span> <span class="s1">&#39;lazy&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">}</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tie_break_rule</span><span class="o">=</span><span class="s1">&#39;lexico&#39;</span><span class="p">,</span> <span class="n">winner_option</span><span class="o">=</span><span class="s1">&#39;exact&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tie_break_rule</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_winner_option</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">with_two_candidates_reduces_to_plurality</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">is_based_on_rk</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">precheck_icm</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">tie_break_rule</span><span class="o">=</span><span class="n">tie_break_rule</span><span class="p">,</span>
+            <span class="n">winner_option</span><span class="o">=</span><span class="n">winner_option</span><span class="p">,</span>
             <span class="n">log_identity</span><span class="o">=</span><span class="s2">&quot;SLATER&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
         <span class="p">)</span>
+
+    <span class="c1"># %% Setting the parameters</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">winner_option</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_winner_option</span>
+
+    <span class="nd">@winner_option</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">winner_option</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_winner_option</span> <span class="o">==</span> <span class="n">value</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">options_parameters</span><span class="p">[</span><span class="s1">&#39;winner_option&#39;</span><span class="p">][</span><span class="s1">&#39;allowed&#39;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;Setting winner_option =&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_winner_option</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_result_options</span><span class="p">[</span><span class="s1">&#39;winner_option&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">delete_cache</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown value for winner_option: &quot;</span> <span class="o">+</span> <span class="nb">format</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">tie_break_rule</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tie_break_rule</span>
+
+    <span class="nd">@tie_break_rule</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">tie_break_rule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tie_break_rule</span> <span class="o">==</span> <span class="n">value</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">options_parameters</span><span class="p">[</span><span class="s1">&#39;tie_break_rule&#39;</span><span class="p">][</span><span class="s1">&#39;allowed&#39;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;Setting tie_break_rule =&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_tie_break_rule</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_result_options</span><span class="p">[</span><span class="s1">&#39;tie_break_rule&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">delete_cache</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown option for tie_break_rule: &quot;</span> <span class="o">+</span> <span class="nb">format</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+
+    <span class="c1"># %% Election results</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">tie_break_weights_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of integers. Tie-break weights over the candidates.</span>
+
+<span class="sd">        A larger number means a more favored candidate. For example, the lexico tie-break order is represented by</span>
+<span class="sd">        [n_c - 1, ..., 0], i.e., candidate 0 has a `tie-break strength` of `n_c - 1`, and so on.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tie_break_rule</span> <span class="o">==</span> <span class="s1">&#39;lexico&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_strong_connected_components_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -776,7 +845,15 @@ document.write(`
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;order =&quot;</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="n">score</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_victories_rk</span><span class="p">[:,</span> <span class="n">order</span><span class="p">][</span><span class="n">order</span><span class="p">,</span> <span class="p">:][</span><span class="n">np</span><span class="o">.</span><span class="n">triu_indices</span><span class="p">(</span><span class="n">size_component</span><span class="p">)])</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;score =&quot;</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">score</span> <span class="o">&gt;</span> <span class="n">best_score</span><span class="p">:</span>
+            <span class="n">found_better_order</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">score</span> <span class="o">&gt;</span> <span class="n">best_score</span>
+                <span class="ow">or</span> <span class="p">(</span>
+                    <span class="n">score</span> <span class="o">==</span> <span class="n">best_score</span>
+                    <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">tie_break_rule</span> <span class="o">==</span> <span class="s1">&#39;random&#39;</span>
+                    <span class="ow">and</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tie_break_weights_</span><span class="p">[</span><span class="n">order</span><span class="p">])</span> <span class="o">&gt;</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tie_break_weights_</span><span class="p">[</span><span class="n">best_order</span><span class="p">])</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">found_better_order</span><span class="p">:</span>
                 <span class="n">best_order</span><span class="p">,</span> <span class="n">best_score</span> <span class="o">=</span> <span class="n">order</span><span class="p">,</span> <span class="n">score</span>
             <span class="n">order</span> <span class="o">=</span> <span class="n">compute_next_permutation</span><span class="p">(</span><span class="n">order</span><span class="p">,</span> <span class="n">size_component</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;best_order =&quot;</span><span class="p">,</span> <span class="n">best_order</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
@@ -788,6 +865,10 @@ document.write(`
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">w_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">exists_condorcet_winner_rk_ctb</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">condorcet_winner_rk_ctb</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">winner_option</span> <span class="o">==</span> <span class="s1">&#39;lazy&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_first_component_</span><span class="p">[</span><span class="s1">&#39;w&#39;</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
@@ -808,7 +889,15 @@ document.write(`
                 <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;order =&quot;</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
                 <span class="n">score</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_victories_rk</span><span class="p">[:,</span> <span class="n">order</span><span class="p">][</span><span class="n">order</span><span class="p">,</span> <span class="p">:][</span><span class="n">np</span><span class="o">.</span><span class="n">triu_indices</span><span class="p">(</span><span class="n">size_component</span><span class="p">)])</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;score =&quot;</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">score</span> <span class="o">&gt;</span> <span class="n">best_score</span><span class="p">:</span>
+                <span class="n">found_better_order</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">score</span> <span class="o">&gt;</span> <span class="n">best_score</span>
+                    <span class="ow">or</span> <span class="p">(</span>
+                        <span class="n">score</span> <span class="o">==</span> <span class="n">best_score</span>
+                        <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">tie_break_rule</span> <span class="o">==</span> <span class="s1">&#39;random&#39;</span>
+                        <span class="ow">and</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tie_break_weights_</span><span class="p">[</span><span class="n">order</span><span class="p">])</span> <span class="o">&gt;</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tie_break_weights_</span><span class="p">[</span><span class="n">best_order</span><span class="p">])</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+                <span class="k">if</span> <span class="n">found_better_order</span><span class="p">:</span>
                     <span class="n">best_order</span><span class="p">,</span> <span class="n">best_score</span> <span class="o">=</span> <span class="n">order</span><span class="p">,</span> <span class="n">score</span>
                 <span class="n">order</span> <span class="o">=</span> <span class="n">compute_next_permutation</span><span class="p">(</span><span class="n">order</span><span class="p">,</span> <span class="n">size_component</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;best_order =&quot;</span><span class="p">,</span> <span class="n">best_order</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
@@ -839,12 +928,53 @@ document.write(`
 
     <span class="c1"># %% Coalition Manipulation (CM)</span>
 
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_cm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">exists_condorcet_admissible</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;There no Condorcet-admissible candidate, so coalition manipulation is possible.&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">is_cm_</span>
+
     <span class="c1"># noinspection PyMethodMayBeStatic,PyUnusedLocal</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_cm_main_work_c_fast_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Do the main work in CM loop for candidate ``c``.</span>
 
 <span class="sd">        * Try to improve bounds ``_sufficient_coalition_size_cm[c]`` and ``_necessary_coalition_size_cm[c]``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Necessary condition for CM: For certain (d_1, ..., d_k), the order `c &gt; d_1 &gt; ... &gt; d_k &gt; w` must</span>
+        <span class="c1"># have a better score than `w &gt; c &gt; d_1 &gt; ... &gt; d_k`. Denoting `M` the matrix of victories (after manipulation)</span>
+        <span class="c1"># and `A` the corresponding antisymmetric matrix, it means that `s = A[c, w] + \sum A[d_i, w] &gt;= 0`, and it must</span>
+        <span class="c1"># be a strict inequality if the tie-break favors `w` over `c`.</span>
+        <span class="n">pref_borda_rk_s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_wants_to_help_c_</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]),</span> <span class="p">:]</span>
+        <span class="n">matrix_duels_s</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="n">pref_borda_rk_s</span><span class="p">)</span><span class="o">.</span><span class="n">matrix_duels_ut</span>
+        <span class="n">a_c_w_best_case</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_victories_rk</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_victories_rk</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span>
+        <span class="n">n_defeats_w_best_case</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">matrix_duels_s</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">,</span> <span class="p">:]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">a_c_w_best_case</span> <span class="o">+</span> <span class="n">n_defeats_w_best_case</span>
+        <span class="n">tie_breaks_favors_c_over_w</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tie_break_weights_</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">tie_break_weights_</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylogm</span><span class="p">(</span><span class="s1">&#39;CM: Fast algorithm: matrix_duels_s =&#39;</span><span class="p">,</span> <span class="n">matrix_duels_s</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s1">&#39;CM: Fast algorithm: a_c_w_best_case =&#39;</span><span class="p">,</span> <span class="n">a_c_w_best_case</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s1">&#39;CM: Fast algorithm: n_defeats_w_best_case =&#39;</span><span class="p">,</span> <span class="n">n_defeats_w_best_case</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">s</span> <span class="o">+</span> <span class="n">tie_breaks_favors_c_over_w</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">n_m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_ut</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_necessary</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                                   <span class="s1">&#39;CM: Fast algorithm: necessary_coalition_size_cm =&#39;</span><span class="p">)</span>
+            <span class="c1"># No need to continue, the second condition would not improve this bound.</span>
+            <span class="c1"># But this is not a quick escape, since we wouldn&#39;t do better if we came in this method again.</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Second necessary condition. The order `c &gt; d_1 &gt; ... &gt; d_k &gt; w` must have a better score than</span>
+        <span class="c1"># `d_1 &gt; ... &gt; d_k &gt; w &gt; c`. With the same notations as above, it means that</span>
+        <span class="c1"># `s = A[c, w] + \sum A[c, d_i] &gt;= 0`, and it must be a strict inequality if the tie-break favors `d_1` over</span>
+        <span class="c1"># `c`. We do not know d_1 (and we don&#39;t want to bother), but we know that the tie-break might help `c` only</span>
+        <span class="c1"># if `c` is not last in the tie-break order.</span>
+        <span class="n">n_victories_c_best_case</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">matrix_duels_s</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">a_c_w_best_case</span> <span class="o">+</span> <span class="n">n_victories_c_best_case</span>
+        <span class="n">tie_break_might_help_c</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tie_break_weights_</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s1">&#39;CM: Fast algorithm: n_victories_c_best_case =&#39;</span><span class="p">,</span> <span class="n">n_victories_c_best_case</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">s</span> <span class="o">+</span> <span class="n">tie_break_might_help_c</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">n_m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_ut</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_necessary</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                                   <span class="s1">&#39;CM: Fast algorithm: necessary_coalition_size_cm =&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_cm_main_work_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
@@ -868,7 +998,19 @@ document.write(`
         <span class="c1"># From this point, we have necessarily the &#39;exact&#39; option (which is, in fact, only an exhaustive exploration</span>
         <span class="c1"># with = ``n_m`` manipulators).</span>
         <span class="n">is_quick_escape_exact</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cm_main_work_c_exact_</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">is_quick_escape_fast</span> <span class="ow">or</span> <span class="n">is_quick_escape_exact</span></div>
+        <span class="k">return</span> <span class="n">is_quick_escape_fast</span> <span class="ow">or</span> <span class="n">is_quick_escape_exact</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">theta_critical_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            This is only valid for at least 4 candidates.</span>
+
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 1, 2, 3]])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleSlater()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.theta_critical_</span>
+<span class="sd">            0.25</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="o">/</span><span class="mi">4</span></div>
 
 </pre></div>
 

@@ -1056,8 +1056,8 @@ document.write(`
         <span class="n">d_can_be_added_before_last_round</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">d_can_be_added</span><span class="p">,</span> <span class="n">scores_prev</span> <span class="o">+</span> <span class="n">n_m</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
 
         <span class="c1"># We can conclude.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_um</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">d_can_be_added</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">r</span> <span class="o">-</span> <span class="mi">1</span>
-                                  <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">d_can_be_added_before_last_round</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">r</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_um</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">d_can_be_added</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">r</span>
+                                  <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">d_can_be_added_before_last_round</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">r</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
 
     <span class="c1"># %% Ignorant-Coalition Manipulation (ICM)</span>
 
@@ -1098,7 +1098,7 @@ document.write(`
 <span class="sd">            ... ])</span>
 <span class="sd">            &gt;&gt;&gt; rule = RuleBucklin()(profile)</span>
 <span class="sd">            &gt;&gt;&gt; rule.candidates_cm_</span>
-<span class="sd">            array([1., 0., 0.])</span>
+<span class="sd">            array([0., 0., 0.])</span>
 
 <span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
 <span class="sd">            ...     [ 1. ,  0. ,  1. ,  0. ],</span>
@@ -1170,15 +1170,26 @@ document.write(`
             <span class="n">votes_can_be_added_before_last_r</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">scores_prev</span><span class="p">[</span><span class="n">d</span><span class="p">],</span>
                                                       <span class="n">votes_can_be_added</span><span class="p">[</span><span class="n">d</span><span class="p">])</span>
 
-        <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">one_d_beats_c_anyway</span> <span class="ow">and</span> <span class="nb">sum</span><span class="p">(</span><span class="n">votes_can_be_added</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="n">r</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">n_m</span>
-                <span class="ow">and</span> <span class="nb">sum</span><span class="p">(</span><span class="n">votes_can_be_added_before_last_r</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="n">r</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">n_m</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">one_d_beats_c_anyway</span> <span class="ow">and</span> <span class="nb">sum</span><span class="p">(</span><span class="n">votes_can_be_added</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">n_m</span>
+                <span class="ow">and</span> <span class="nb">sum</span><span class="p">(</span><span class="n">votes_can_be_added_before_last_r</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="n">r</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">n_m</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_update_sufficient</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_m</span><span class="p">,</span>
                                     <span class="s1">&#39;CM: Exact: Manipulation found for n_m manipulators =&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
                                     <span class="s1">&#39;    sufficient_coalition_size_cm = n_m =&#39;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_update_necessary</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
                                    <span class="s1">&#39;CM: Exact: Manipulation proven impossible for n_m manipulators =&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
-                                   <span class="s1">&#39;    necessary_coalition_size_cm[c] = n_m + 1 =&#39;</span><span class="p">)</span></div>
+                                   <span class="s1">&#39;    necessary_coalition_size_cm[c] = n_m + 1 =&#39;</span><span class="p">)</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">theta_critical_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 1, 2, 3]])</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleBucklin()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule.theta_critical_</span>
+<span class="sd">            0.3333333333333333</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">n_c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">n_c</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span></div>
 
 </pre></div>
 

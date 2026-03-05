@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>&lt;no title&gt; &#8212; SVVAMP 0.12.0 documentation</title>
+    <title>Profile &#8212; SVVAMP 0.12.0 documentation</title>
   
   
   
@@ -44,7 +44,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'reference/preferences/profile';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="&lt;no title&gt;" href="profile_from_file.html" />
+    <link rel="next" title="ProfileFromFile" href="profile_from_file.html" />
     <link rel="prev" title="Reference" href="../index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -413,79 +413,82 @@ document.write(`
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">Profile</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="profile_from_file.html"><code class="docutils literal notranslate"><span class="pre">ProfileFromFile</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="profile_subset_candidates.html"><code class="docutils literal notranslate"><span class="pre">ProfileSubsetCandidates</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="profile_um.html"><code class="docutils literal notranslate"><span class="pre">ProfileUM</span></code></a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Profile</a></li>
+<li class="toctree-l1"><a class="reference internal" href="profile_from_file.html">ProfileFromFile</a></li>
+<li class="toctree-l1"><a class="reference internal" href="profile_subset_candidates.html">ProfileSubsetCandidates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="profile_um.html">ProfileUM</a></li>
 </ul>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="generator_profile.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfile</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="generator_profile_cubic_uniform.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileCubicUniform</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="generator_profile_euclidean_box.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileEuclideanBox</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="generator_profile_gaussian_well.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileGaussianWell</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="generator_profile_ianc.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileIanc</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="generator_profile_ic.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileIc</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="generator_profile_ladder.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileLadder</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="generator_profile_noise.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileNoise</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="generator_profile_noised_file.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileNoisedFile</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="generator_profile_perturbed_culture.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfilePerturbedCulture</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="generator_profile_spheroid.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileSpheroid</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="generator_profile_unanimous.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileUnanimous</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="generator_profile_vmf_hypercircle.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileVMFHypercircle</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="generator_profile_vmf_hypersphere.html"><code class="docutils literal notranslate"><span class="pre">GeneratorProfileVMFHypersphere</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="generator_profile.html">GeneratorProfile</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generator_profile_cubic_uniform.html">GeneratorProfileCubicUniform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generator_profile_euclidean_box.html">GeneratorProfileEuclideanBox</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generator_profile_gaussian_well.html">GeneratorProfileGaussianWell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generator_profile_ianc.html">GeneratorProfileIanc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generator_profile_ic.html">GeneratorProfileIc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generator_profile_ladder.html">GeneratorProfileLadder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generator_profile_noise.html">GeneratorProfileNoise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generator_profile_noised_file.html">GeneratorProfileNoisedFile</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generator_profile_perturbed_culture.html">GeneratorProfilePerturbedCulture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generator_profile_spheroid.html">GeneratorProfileSpheroid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generator_profile_unanimous.html">GeneratorProfileUnanimous</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generator_profile_uniform_few_rankings.html">GeneratorProfileUniformFewRankings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generator_profile_vmf_hypercircle.html">GeneratorProfileVMFHypercircle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generator_profile_vmf_hypersphere.html">GeneratorProfileVMFHypersphere</a></li>
 </ul>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="plurality_elimination_engine.html"><code class="docutils literal notranslate"><span class="pre">PluralityEliminationEngine</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="plurality_elimination_engine_profile.html"><code class="docutils literal notranslate"><span class="pre">PluralityEliminationEngineProfile</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="plurality_elimination_engine_profile_um.html"><code class="docutils literal notranslate"><span class="pre">PluralityEliminationEngineProfileUM</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="plurality_elimination_engine.html">PluralityEliminationEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plurality_elimination_engine_profile.html">PluralityEliminationEngineProfile</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plurality_elimination_engine_profile_um.html">PluralityEliminationEngineProfileUM</a></li>
 </ul>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../rules/rule.html"><code class="docutils literal notranslate"><span class="pre">Rule</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../rules/rule_approval.html"><code class="docutils literal notranslate"><span class="pre">RuleApproval</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../rules/rule_baldwin.html"><code class="docutils literal notranslate"><span class="pre">RuleBaldwin</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../rules/rule_black.html"><code class="docutils literal notranslate"><span class="pre">RuleBlack</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../rules/rule_borda.html"><code class="docutils literal notranslate"><span class="pre">RuleBorda</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../rules/rule_bucklin.html"><code class="docutils literal notranslate"><span class="pre">RuleBucklin</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../rules/rule_condorcet_abs_irv.html"><code class="docutils literal notranslate"><span class="pre">RuleCondorcetAbsIRV</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../rules/rule_condorcet_sum_defeats.html"><code class="docutils literal notranslate"><span class="pre">RuleCondorcetSumDefeats</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../rules/rule_condorcet_vtb_irv.html"><code class="docutils literal notranslate"><span class="pre">RuleCondorcetVtbIRV</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../rules/rule_coombs.html"><code class="docutils literal notranslate"><span class="pre">RuleCoombs</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../rules/rule_copeland.html"><code class="docutils literal notranslate"><span class="pre">RuleCopeland</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../rules/rule_exhaustive_ballot.html"><code class="docutils literal notranslate"><span class="pre">RuleExhaustiveBallot</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../rules/rule_icrv.html"><code class="docutils literal notranslate"><span class="pre">RuleICRV</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../rules/rule_irv.html"><code class="docutils literal notranslate"><span class="pre">RuleIRV</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../rules/rule_irv_average.html"><code class="docutils literal notranslate"><span class="pre">RuleIRVAverage</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../rules/rule_irv_duels.html"><code class="docutils literal notranslate"><span class="pre">RuleIRVDuels</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../rules/rule_iterated_bucklin.html"><code class="docutils literal notranslate"><span class="pre">RuleIteratedBucklin</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../rules/rule_k_approval.html"><code class="docutils literal notranslate"><span class="pre">RuleKApproval</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../rules/rule_kemeny.html"><code class="docutils literal notranslate"><span class="pre">RuleKemeny</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../rules/rule_kim_roush.html"><code class="docutils literal notranslate"><span class="pre">RuleKimRoush</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../rules/rule_majority_judgment.html"><code class="docutils literal notranslate"><span class="pre">RuleMajorityJudgment</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../rules/rule_maximin.html"><code class="docutils literal notranslate"><span class="pre">RuleMaximin</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../rules/rule_nanson.html"><code class="docutils literal notranslate"><span class="pre">RuleNanson</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../rules/rule_plurality.html"><code class="docutils literal notranslate"><span class="pre">RulePlurality</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../rules/rule_range_voting.html"><code class="docutils literal notranslate"><span class="pre">RuleRangeVoting</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../rules/rule_ranked_pairs.html"><code class="docutils literal notranslate"><span class="pre">RuleRankedPairs</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../rules/rule_schulze.html"><code class="docutils literal notranslate"><span class="pre">RuleSchulze</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../rules/rule_slater.html"><code class="docutils literal notranslate"><span class="pre">RuleSlater</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../rules/rule_smith_irv.html"><code class="docutils literal notranslate"><span class="pre">RuleSmithIRV</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../rules/rule_split_cycle.html"><code class="docutils literal notranslate"><span class="pre">RuleSplitCycle</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../rules/rule_star.html"><code class="docutils literal notranslate"><span class="pre">RuleSTAR</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../rules/rule_tideman.html"><code class="docutils literal notranslate"><span class="pre">RuleTideman</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../rules/rule_two_round.html"><code class="docutils literal notranslate"><span class="pre">RuleTwoRound</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../rules/rule_veto.html"><code class="docutils literal notranslate"><span class="pre">RuleVeto</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../rules/rule_woodall.html"><code class="docutils literal notranslate"><span class="pre">RuleWoodall</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule.html">Rule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_approval.html">RuleApproval</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_baldwin.html">RuleBaldwin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_black.html">RuleBlack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_borda.html">RuleBorda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_bucklin.html">RuleBucklin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_condorcet_abs_irv.html">RuleCondorcetAbsIRV</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_condorcet_sum_defeats.html">RuleCondorcetSumDefeats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_condorcet_vtb_irv.html">RuleCondorcetVtbIRV</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_coombs.html">RuleCoombs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_copeland.html">RuleCopeland</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_dodgson.html">RuleDodgson</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_exhaustive_ballot.html">RuleExhaustiveBallot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_icrv.html">RuleICRV</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_irv.html">RuleIRV</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_irv_average.html">RuleIRVAverage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_irv_duels.html">RuleIRVDuels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_iterated_bucklin.html">RuleIteratedBucklin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_k_approval.html">RuleKApproval</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_kemeny.html">RuleKemeny</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_kim_roush.html">RuleKimRoush</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_majority_judgment.html">RuleMajorityJudgment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_maximin.html">RuleMaximin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_nanson.html">RuleNanson</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_plurality.html">RulePlurality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_range_voting.html">RuleRangeVoting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_ranked_pairs.html">RuleRankedPairs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_schulze.html">RuleSchulze</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_slater.html">RuleSlater</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_smith_irv.html">RuleSmithIRV</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_split_cycle.html">RuleSplitCycle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_star.html">RuleSTAR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_tideman.html">RuleTideman</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_two_round.html">RuleTwoRound</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_veto.html">RuleVeto</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_woodall.html">RuleWoodall</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_young.html">RuleYoung</a></li>
 </ul>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../meta/study_profile_criteria.html"><code class="docutils literal notranslate"><span class="pre">StudyProfileCriteria</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../meta/study_rule_criteria.html"><code class="docutils literal notranslate"><span class="pre">StudyRuleCriteria</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../meta/voting_rule_tasks.html"><code class="docutils literal notranslate"><span class="pre">VotingRuleTasks</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../meta/experiment_analyzer.html"><code class="docutils literal notranslate"><span class="pre">ExperimentAnalyzer</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../meta/experiments_compiler.html"><code class="docutils literal notranslate"><span class="pre">ExperimentsCompiler</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meta/study_profile_criteria.html">StudyProfileCriteria</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meta/study_rule_criteria.html">StudyRuleCriteria</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meta/voting_rule_tasks.html">VotingRuleTasks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meta/experiment_analyzer.html">ExperimentAnalyzer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meta/experiments_compiler.html">ExperimentsCompiler</a></li>
 </ul>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../utils/my_log.html"><code class="docutils literal notranslate"><span class="pre">MyLog</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../utils/initialize_random_seeds.html"><code class="docutils literal notranslate"><span class="pre">initialize_random_seeds()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../utils/my_log.html">MyLog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../utils/initialize_random_seeds.html">initialize_random_seeds</a></li>
 </ul>
 </div>
 </nav></div>
@@ -526,7 +529,7 @@ document.write(`
     
     <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Reference</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page">&lt;no title&gt;</li>
+    <li class="breadcrumb-item active" aria-current="page">Profile</li>
   </ul>
 </nav>
 </div>
@@ -543,20 +546,22 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <dl class="py class">
+  <section id="profile">
+<h1>Profile<a class="headerlink" href="#profile" title="Link to this heading">#</a></h1>
+<dl class="py class">
 <dt class="sig sig-object py" id="svvamp.Profile">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">svvamp.</span></span><span class="sig-name descname"><span class="pre">Profile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preferences_ut</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preferences_rk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preferences_borda_rk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_creation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels_candidates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_voters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/preferences/profile.html#Profile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.Profile" title="Link to this definition">#</a></dt>
 <dd><p>Create a profile of voters with preferences over some candidates.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>preferences_ut</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em> (or </em><em>2d ndarray</em><em>)</em>) – 2d array of floats. <code class="docutils literal notranslate"><span class="pre">preferences_ut[v,</span> <span class="pre">c]</span></code> is the utility of candidate <code class="docutils literal notranslate"><span class="pre">c</span></code> as seen by voter <code class="docutils literal notranslate"><span class="pre">v</span></code>.</p></li>
-<li><p><strong>preferences_rk</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em> (or </em><em>2d ndarray</em><em>)</em>) – 2d array of integers. <code class="docutils literal notranslate"><span class="pre">preferences_rk[v,</span> <span class="pre">k]</span></code> is the candidate at rank <code class="docutils literal notranslate"><span class="pre">k</span></code> for voter <code class="docutils literal notranslate"><span class="pre">v</span></code>.</p></li>
-<li><p><strong>preferences_borda_rk</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em> (or </em><em>2d ndarray</em><em>)</em>) – 2d array of integers. <code class="docutils literal notranslate"><span class="pre">preferences_borda_rk[v,</span> <span class="pre">c]</span></code> gains 1 point for each candidate <code class="docutils literal notranslate"><span class="pre">d</span></code> such that
+<li><p><strong>preferences_ut</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em> (or </em><em>2d ndarray</em><em>)</em>) – 2d array of floats. <code class="docutils literal notranslate"><span class="pre">preferences_ut[v,</span> <span class="pre">c]</span></code> is the utility of candidate <code class="docutils literal notranslate"><span class="pre">c</span></code> as seen by voter <code class="docutils literal notranslate"><span class="pre">v</span></code>.</p></li>
+<li><p><strong>preferences_rk</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em> (or </em><em>2d ndarray</em><em>)</em>) – 2d array of integers. <code class="docutils literal notranslate"><span class="pre">preferences_rk[v,</span> <span class="pre">k]</span></code> is the candidate at rank <code class="docutils literal notranslate"><span class="pre">k</span></code> for voter <code class="docutils literal notranslate"><span class="pre">v</span></code>.</p></li>
+<li><p><strong>preferences_borda_rk</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em> (or </em><em>2d ndarray</em><em>)</em>) – 2d array of integers. <code class="docutils literal notranslate"><span class="pre">preferences_borda_rk[v,</span> <span class="pre">c]</span></code> gains 1 point for each candidate <code class="docutils literal notranslate"><span class="pre">d</span></code> such that
 voter <code class="docutils literal notranslate"><span class="pre">v</span></code> ranks <code class="docutils literal notranslate"><span class="pre">c</span></code> before <code class="docutils literal notranslate"><span class="pre">d</span></code>. So, these Borda scores are between <code class="docutils literal notranslate"><span class="pre">0</span></code> and <code class="docutils literal notranslate"><span class="pre">C</span> <span class="pre">-</span> <span class="pre">1</span></code>.</p></li>
-<li><p><strong>log_creation</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><em>object</em></a>) – Any type (string, list…). Some comments.</p></li>
-<li><p><strong>labels_candidates</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Names of the candidates.</p></li>
-<li><p><strong>sort_voters</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If True, then when the profile is created, voters are immediately sorted, first by their
+<li><p><strong>log_creation</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><em>object</em></a>) – Any type (string, list…). Some comments.</p></li>
+<li><p><strong>labels_candidates</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Names of the candidates.</p></li>
+<li><p><strong>sort_voters</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If True, then when the profile is created, voters are immediately sorted, first by their
 strict order of preference (their row in <code class="xref py py-attr docutils literal notranslate"><span class="pre">preferences_rk</span></code>), then by their weak
 order of preference (their row in <code class="xref py py-attr docutils literal notranslate"><span class="pre">preferences_borda_ut</span></code>). Note that two voters
 having the same strict order may have different weak orders, and vice versa. The objective of this
@@ -923,7 +928,7 @@ there is no such candidate, then <code class="docutils literal notranslate"><spa
 <dd><p>Demonstrate the methods of <code class="xref py py-class docutils literal notranslate"><span class="pre">Population</span></code> class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>log_depth</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Integer from 0 (basic info) to 3 (verbose).</p>
+<dd class="field-odd"><p><strong>log_depth</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Integer from 0 (basic info) to 3 (verbose).</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -1476,6 +1481,19 @@ with <code class="docutils literal notranslate"><span class="pre">n_c</span> <sp
 </dd></dl>
 
 <dl class="py property">
+<dt class="sig sig-object py" id="svvamp.Profile.exists_pair_safe_condorcet_winner">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">exists_pair_safe_condorcet_winner</span></span><a class="headerlink" href="#svvamp.Profile.exists_pair_safe_condorcet_winner" title="Link to this definition">#</a></dt>
+<dd><p>Boolean (<code class="docutils literal notranslate"><span class="pre">True</span></code> iff there is a <code class="xref py py-attr docutils literal notranslate"><span class="pre">pair_safe_condorcet_winner</span></code>).</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">svvamp</span><span class="w"> </span><span class="kn">import</span> <span class="n">Profile</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_rk</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">exists_pair_safe_condorcet_winner</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="svvamp.Profile.exists_resistant_condorcet_winner">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">exists_resistant_condorcet_winner</span></span><a class="headerlink" href="#svvamp.Profile.exists_resistant_condorcet_winner" title="Link to this definition">#</a></dt>
 <dd><p>Boolean (<code class="docutils literal notranslate"><span class="pre">True</span></code> iff there is a <code class="xref py py-attr docutils literal notranslate"><span class="pre">resistant_condorcet_winner</span></code>).</p>
@@ -1483,6 +1501,19 @@ with <code class="docutils literal notranslate"><span class="pre">n_c</span> <sp
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">svvamp</span><span class="w"> </span><span class="kn">import</span> <span class="n">Profile</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_rk</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">exists_resistant_condorcet_winner</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.Profile.exists_set_safe_condorcet_winner">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">exists_set_safe_condorcet_winner</span></span><a class="headerlink" href="#svvamp.Profile.exists_set_safe_condorcet_winner" title="Link to this definition">#</a></dt>
+<dd><p>Boolean (<code class="docutils literal notranslate"><span class="pre">True</span></code> iff there is a <code class="xref py py-attr docutils literal notranslate"><span class="pre">set_safe_condorcet_winner</span></code>).</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">svvamp</span><span class="w"> </span><span class="kn">import</span> <span class="n">Profile</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_rk</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">exists_set_safe_condorcet_winner</span>
 <span class="go">True</span>
 </pre></div>
 </div>
@@ -1940,7 +1971,7 @@ with tie-breaks on candidates.</p>
 <dd><p>Number of candidates.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1951,7 +1982,7 @@ with tie-breaks on candidates.</p>
 <dd><p>Number of voters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2238,6 +2269,19 @@ of <cite>c</cite>.</p>
 </dd></dl>
 
 <dl class="py property">
+<dt class="sig sig-object py" id="svvamp.Profile.not_exists_pair_safe_condorcet_winner">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">not_exists_pair_safe_condorcet_winner</span></span><a class="headerlink" href="#svvamp.Profile.not_exists_pair_safe_condorcet_winner" title="Link to this definition">#</a></dt>
+<dd><p>Boolean (<code class="docutils literal notranslate"><span class="pre">True</span></code> iff there is no <code class="xref py py-attr docutils literal notranslate"><span class="pre">pair_safe_condorcet_winner</span></code>).</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">svvamp</span><span class="w"> </span><span class="kn">import</span> <span class="n">Profile</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_rk</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">not_exists_pair_safe_condorcet_winner</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="svvamp.Profile.not_exists_resistant_condorcet_winner">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">not_exists_resistant_condorcet_winner</span></span><a class="headerlink" href="#svvamp.Profile.not_exists_resistant_condorcet_winner" title="Link to this definition">#</a></dt>
 <dd><p>Boolean (<code class="docutils literal notranslate"><span class="pre">True</span></code> iff there is no <code class="xref py py-attr docutils literal notranslate"><span class="pre">resistant_condorcet_winner</span></code>).</p>
@@ -2245,6 +2289,19 @@ of <cite>c</cite>.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">svvamp</span><span class="w"> </span><span class="kn">import</span> <span class="n">Profile</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_rk</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">not_exists_resistant_condorcet_winner</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.Profile.not_exists_set_safe_condorcet_winner">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">not_exists_set_safe_condorcet_winner</span></span><a class="headerlink" href="#svvamp.Profile.not_exists_set_safe_condorcet_winner" title="Link to this definition">#</a></dt>
+<dd><p>Boolean (<code class="docutils literal notranslate"><span class="pre">True</span></code> iff there is no <code class="xref py py-attr docutils literal notranslate"><span class="pre">set_safe_condorcet_winner</span></code>).</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">svvamp</span><span class="w"> </span><span class="kn">import</span> <span class="n">Profile</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_rk</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">not_exists_set_safe_condorcet_winner</span>
 <span class="go">False</span>
 </pre></div>
 </div>
@@ -2263,6 +2320,33 @@ of <cite>c</cite>.</p>
 </div>
 </dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.Profile.pair_safe_condorcet_winner">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pair_safe_condorcet_winner</span></span><a class="headerlink" href="#svvamp.Profile.pair_safe_condorcet_winner" title="Link to this definition">#</a></dt>
+<dd><p>Integer or <code class="docutils literal notranslate"><span class="pre">NaN</span></code>. Pair-Safe Condorcet Winner (PSCW). If there is no such candidate, then <code class="docutils literal notranslate"><span class="pre">NaN</span></code>.</p>
+<p>In a purely ordinal setting without indifference, a candidate <cite>w</cite> is the pair-safe Condorcet winner (PSCW)
+iff for any pair (c, d) of other candidates, we have <cite>|w &gt; c and w &gt; d| &gt; |c &gt; w|</cite>. In other words, the
+manipulators in favor of <cite>c</cite> cannot make it so that the duel (w, d) has a worse score than the duel (c, w).</p>
+<p>In the general case, the condition is <cite>| w &gt;=_ut c and w &gt;_rk d| &gt; |c &gt;_rk w|</cite>.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">svvamp</span><span class="w"> </span><span class="kn">import</span> <span class="n">Profile</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_rk</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">pair_safe_condorcet_winner</span>
+<span class="go">0</span>
+</pre></div>
+</div>
+<p>No PSCW:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_rk</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">pair_safe_condorcet_winner</span>
+<span class="go">nan</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-attr docutils literal notranslate"><span class="pre">exists_pair_safe_condorcet_winner</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">not_exists_pair_safe_condorcet_winner</span></code></p>
+</div>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="svvamp.Profile.plot3">
 <span class="sig-name descname"><span class="pre">plot3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">indexes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/preferences/profile.html#Profile.plot3"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.Profile.plot3" title="Link to this definition">#</a></dt>
@@ -2270,9 +2354,9 @@ of <cite>c</cite>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>indexes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – List of 3 candidates. If None, defaults to [0, 1, 2].</p></li>
-<li><p><strong>normalize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Cf. below.</p></li>
-<li><p><strong>use_labels</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, then <code class="xref py py-attr docutils literal notranslate"><span class="pre">labels_candidates</span></code> is used to label
+<li><p><strong>indexes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – List of 3 candidates. If None, defaults to [0, 1, 2].</p></li>
+<li><p><strong>normalize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Cf. below.</p></li>
+<li><p><strong>use_labels</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, then <code class="xref py py-attr docutils literal notranslate"><span class="pre">labels_candidates</span></code> is used to label
 the plot. Otherwise, candidates are simply represented by their index.</p></li>
 </ul>
 </dd>
@@ -2312,9 +2396,9 @@ is normalized before plotting so that its Euclidean norm is equal to 1.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>indexes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – List of 4 candidates. If None, defaults to [0, 1, 2, 3].</p></li>
-<li><p><strong>normalize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Cf. below.</p></li>
-<li><p><strong>use_labels</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, then <code class="xref py py-attr docutils literal notranslate"><span class="pre">labels_candidates</span></code> is used to label
+<li><p><strong>indexes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – List of 4 candidates. If None, defaults to [0, 1, 2, 3].</p></li>
+<li><p><strong>normalize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Cf. below.</p></li>
+<li><p><strong>use_labels</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, then <code class="xref py py-attr docutils literal notranslate"><span class="pre">labels_candidates</span></code> is used to label
 the plot. Otherwise, candidates are simply represented by their index.</p></li>
 </ul>
 </dd>
@@ -2468,6 +2552,64 @@ majority of voters who simultaneously:</p>
 </dd></dl>
 
 <dl class="py property">
+<dt class="sig sig-object py" id="svvamp.Profile.set_safe_condorcet_winner">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_safe_condorcet_winner</span></span><a class="headerlink" href="#svvamp.Profile.set_safe_condorcet_winner" title="Link to this definition">#</a></dt>
+<dd><p>Integer or <code class="docutils literal notranslate"><span class="pre">NaN</span></code>. Set-Safe Condorcet Winner (SSCW). If there is no such candidate, then <code class="docutils literal notranslate"><span class="pre">NaN</span></code>.</p>
+<p>A candidate <cite>w</cite> is the set-safe Condorcet winner (SSCW) iff for any other candidate <cite>c</cite>, the manipulators in
+favor of <cite>c</cite> cannot make it so that in a subset S of the candidates containing both <cite>c</cite> and <cite>w</cite>, candidate
+<cite>w</cite> has a Borda score less than or equal to the average Borda score. If we consider antisymmetric Borda scores
+(counting +1 each time a candidate is below, and -1 each time a candidate is above), then it means that
+the manipulators cannot make it so that <cite>w</cite> has a Borda score less than or equal to zero in a subset of
+candidates containing both <cite>c</cite> and <cite>w</cite>.</p>
+<p>It can be shown that it is equivalent to say that for each candidate <cite>c</cite>, we have that:</p>
+<div class="math notranslate nohighlight">
+\[| w &gt;_{rk} c| - n_v / 2 + \sum_{d \neq w, c} \min(0, | w \geq_{ut} c \text{ and } w &gt;_{rk} d | - n_v / 2) &gt; 0.\]</div>
+<p>Considering the subsets with only one other candidate <cite>d</cite>, we deduce that a Set-Safe Condorcet winner (SSCW) is
+also a Pair-Safe Condorcet winner (PSCW). Considering the subsets with no other candidate <cite>d</cite>, we deduce
+that an SSCW is a Condorcet winner (rk).</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">svvamp</span><span class="w"> </span><span class="kn">import</span> <span class="n">Profile</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_rk</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">set_safe_condorcet_winner</span>
+<span class="go">0</span>
+</pre></div>
+</div>
+<p>No SSCW:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_rk</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">set_safe_condorcet_winner</span>
+<span class="go">nan</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-attr docutils literal notranslate"><span class="pre">exists_set_safe_condorcet_winner</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">not_exists_set_safe_condorcet_winner</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.Profile.size_bicoalition">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">size_bicoalition</span></span><a class="headerlink" href="#svvamp.Profile.size_bicoalition" title="Link to this definition">#</a></dt>
+<dd><p>Size of the bicoalition.</p>
+<p>If there is no Condorcet winner (rk ctb), then return np.nan. If there is a Condorcet winner (rk ctb), then
+size_bicoalition[c, d] is the size of the bicoalition (c, d) (cf. below). This notion is used for the notions
+of pair-safe Condorcet winner and set-safe Condorcet winner.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>If there is no <a class="reference internal" href="#svvamp.Profile.condorcet_winner_rk" title="svvamp.Profile.condorcet_winner_rk"><code class="xref py py-attr docutils literal notranslate"><span class="pre">condorcet_winner_rk</span></code></a>, then return np.nan.
+If there is a <a class="reference internal" href="#svvamp.Profile.condorcet_winner_rk" title="svvamp.Profile.condorcet_winner_rk"><code class="xref py py-attr docutils literal notranslate"><span class="pre">condorcet_winner_rk</span></code></a>, denoted w, then return a 2D array of shape (n_c, n_c) where the
+value at position (c, d) is the size of the bicoalition (c, d), i.e., the number of voters who do not
+prefer <cite>c</cite> to <cite>w</cite> in the sense of utilities (i.e., who would stay sincere in the context of a manipulation
+for <cite>c</cite>) and who prefer <cite>w</cite> to <cite>d</cite> in the sense of rankings. In particular <cite>size_bicoalition[c, c]</cite> is the
+number of voters who rank <cite>c</cite> before <cite>w</cite>.  By convention (and in accordance with the general definition),
+all coefficients of the row <cite>w</cite> and the column <cite>w</cite> are set to 0.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>ndarray or np.nan</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="svvamp.Profile.smith_set_rk">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">smith_set_rk</span></span><a class="headerlink" href="#svvamp.Profile.smith_set_rk" title="Link to this definition">#</a></dt>
 <dd><p>List. Smith set computed from <code class="xref py py-attr docutils literal notranslate"><span class="pre">matrix_victories_rk</span></code>.</p>
@@ -2546,6 +2688,12 @@ majority of voters who simultaneously:</p>
 </dd></dl>
 
 <dl class="py property">
+<dt class="sig sig-object py" id="svvamp.Profile.theta_empirical">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">theta_empirical</span></span><a class="headerlink" href="#svvamp.Profile.theta_empirical" title="Link to this definition">#</a></dt>
+<dd><p>Empirical concentration parameter (in the Perturbed Culture model). [Beta feature]</p>
+</dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="svvamp.Profile.threshold_c_prevents_w_condorcet_ut_abs">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">threshold_c_prevents_w_condorcet_ut_abs</span></span><a class="headerlink" href="#svvamp.Profile.threshold_c_prevents_w_condorcet_ut_abs" title="Link to this definition">#</a></dt>
 <dd><p>2d array of integers. Threshold for <code class="docutils literal notranslate"><span class="pre">c</span></code>-manipulators to prevent <code class="docutils literal notranslate"><span class="pre">w</span></code> from being a Condorcet winner (in
@@ -2591,15 +2739,15 @@ In that case, threshold is set to 0 instead.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ut</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to print <cite>preferences_ut</cite>.</p></li>
-<li><p><strong>rk</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to print <cite>preferences_rk</cite>.</p></li>
+<li><p><strong>ut</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to print <cite>preferences_ut</cite>.</p></li>
+<li><p><strong>rk</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to print <cite>preferences_rk</cite>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A string that can be copied-pasted to make a doctest.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -2718,6 +2866,7 @@ winner, i.e. iff no candidate <code class="docutils literal notranslate"><span c
 
 </dd></dl>
 
+</section>
 
 
                 </article>
@@ -2743,7 +2892,7 @@ winner, i.e. iff no candidate <code class="docutils literal notranslate"><span c
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">&lt;no title&gt;</p>
+        <p class="prev-next-title">ProfileFromFile</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -2763,108 +2912,119 @@ winner, i.e. iff no candidate <code class="docutils literal notranslate"><span c
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.borda_score_c_rk"><code class="docutils literal notranslate"><span class="pre">Profile.borda_score_c_rk</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.borda_score_c_ut"><code class="docutils literal notranslate"><span class="pre">Profile.borda_score_c_ut</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.c_might_be_there_when_cw_is_eliminated_irv_style"><code class="docutils literal notranslate"><span class="pre">Profile.c_might_be_there_when_cw_is_eliminated_irv_style</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.candidates_by_decreasing_borda_score_rk"><code class="docutils literal notranslate"><span class="pre">Profile.candidates_by_decreasing_borda_score_rk</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.candidates_by_decreasing_borda_score_ut"><code class="docutils literal notranslate"><span class="pre">Profile.candidates_by_decreasing_borda_score_ut</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.condorcet_admissible_candidates"><code class="docutils literal notranslate"><span class="pre">Profile.condorcet_admissible_candidates</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.condorcet_winner_rk"><code class="docutils literal notranslate"><span class="pre">Profile.condorcet_winner_rk</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.condorcet_winner_rk_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.condorcet_winner_rk_ctb</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.condorcet_winner_ut_abs"><code class="docutils literal notranslate"><span class="pre">Profile.condorcet_winner_ut_abs</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.condorcet_winner_ut_abs_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.condorcet_winner_ut_abs_ctb</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.condorcet_winner_ut_rel"><code class="docutils literal notranslate"><span class="pre">Profile.condorcet_winner_ut_rel</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.condorcet_winner_ut_rel_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.condorcet_winner_ut_rel_ctb</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.decreasing_borda_scores_rk"><code class="docutils literal notranslate"><span class="pre">Profile.decreasing_borda_scores_rk</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.decreasing_borda_scores_ut"><code class="docutils literal notranslate"><span class="pre">Profile.decreasing_borda_scores_ut</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.demo"><code class="docutils literal notranslate"><span class="pre">Profile.demo()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_condorcet_admissible"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_admissible</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_condorcet_order_rk"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_order_rk</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_condorcet_order_rk_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_order_rk_ctb</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_condorcet_order_ut_abs"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_order_ut_abs</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_condorcet_order_ut_abs_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_order_ut_abs_ctb</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_condorcet_order_ut_rel"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_order_ut_rel</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_condorcet_order_ut_rel_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_order_ut_rel_ctb</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_condorcet_winner_rk"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_winner_rk</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_condorcet_winner_rk_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_winner_rk_ctb</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_condorcet_winner_ut_abs"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_winner_ut_abs</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_condorcet_winner_ut_abs_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_winner_ut_abs_ctb</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_condorcet_winner_ut_rel"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_winner_ut_rel</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_condorcet_winner_ut_rel_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_winner_ut_rel_ctb</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_majority_favorite_rk"><code class="docutils literal notranslate"><span class="pre">Profile.exists_majority_favorite_rk</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_majority_favorite_rk_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.exists_majority_favorite_rk_ctb</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_majority_favorite_ut"><code class="docutils literal notranslate"><span class="pre">Profile.exists_majority_favorite_ut</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_majority_favorite_ut_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.exists_majority_favorite_ut_ctb</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_resistant_condorcet_winner"><code class="docutils literal notranslate"><span class="pre">Profile.exists_resistant_condorcet_winner</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_super_condorcet_winner"><code class="docutils literal notranslate"><span class="pre">Profile.exists_super_condorcet_winner</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_weak_condorcet_winner"><code class="docutils literal notranslate"><span class="pre">Profile.exists_weak_condorcet_winner</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.labels_candidates"><code class="docutils literal notranslate"><span class="pre">Profile.labels_candidates</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.majority_favorite_rk"><code class="docutils literal notranslate"><span class="pre">Profile.majority_favorite_rk</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.majority_favorite_rk_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.majority_favorite_rk_ctb</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.majority_favorite_ut"><code class="docutils literal notranslate"><span class="pre">Profile.majority_favorite_ut</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.majority_favorite_ut_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.majority_favorite_ut_ctb</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.matrix_duels_rk"><code class="docutils literal notranslate"><span class="pre">Profile.matrix_duels_rk</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.matrix_duels_ut"><code class="docutils literal notranslate"><span class="pre">Profile.matrix_duels_ut</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.matrix_victories_rk"><code class="docutils literal notranslate"><span class="pre">Profile.matrix_victories_rk</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.matrix_victories_rk_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.matrix_victories_rk_ctb</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.matrix_victories_ut_abs"><code class="docutils literal notranslate"><span class="pre">Profile.matrix_victories_ut_abs</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.matrix_victories_ut_abs_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.matrix_victories_ut_abs_ctb</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.matrix_victories_ut_rel"><code class="docutils literal notranslate"><span class="pre">Profile.matrix_victories_ut_rel</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.matrix_victories_ut_rel_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.matrix_victories_ut_rel_ctb</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.mean_utility_c"><code class="docutils literal notranslate"><span class="pre">Profile.mean_utility_c</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.mean_utility_max"><code class="docutils literal notranslate"><span class="pre">Profile.mean_utility_max</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.mean_utility_mean"><code class="docutils literal notranslate"><span class="pre">Profile.mean_utility_mean</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.mean_utility_min"><code class="docutils literal notranslate"><span class="pre">Profile.mean_utility_min</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.mean_utility_std"><code class="docutils literal notranslate"><span class="pre">Profile.mean_utility_std</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.n_c"><code class="docutils literal notranslate"><span class="pre">Profile.n_c</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.n_v"><code class="docutils literal notranslate"><span class="pre">Profile.n_v</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.nb_condorcet_admissible"><code class="docutils literal notranslate"><span class="pre">Profile.nb_condorcet_admissible</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.nb_weak_condorcet_winners"><code class="docutils literal notranslate"><span class="pre">Profile.nb_weak_condorcet_winners</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.necessary_coalition_size_to_break_irv_immunity"><code class="docutils literal notranslate"><span class="pre">Profile.necessary_coalition_size_to_break_irv_immunity</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_condorcet_admissible"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_admissible</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_condorcet_order_rk"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_order_rk</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_condorcet_order_rk_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_order_rk_ctb</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_condorcet_order_ut_abs"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_order_ut_abs</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_condorcet_order_ut_abs_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_order_ut_abs_ctb</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_condorcet_order_ut_rel"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_order_ut_rel</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_condorcet_order_ut_rel_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_order_ut_rel_ctb</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_condorcet_winner_rk"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_winner_rk</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_condorcet_winner_rk_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_winner_rk_ctb</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_condorcet_winner_ut_abs"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_winner_ut_abs</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_condorcet_winner_ut_abs_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_winner_ut_abs_ctb</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_condorcet_winner_ut_rel"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_winner_ut_rel</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_condorcet_winner_ut_rel_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_winner_ut_rel_ctb</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_majority_favorite_rk"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_majority_favorite_rk</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_majority_favorite_rk_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_majority_favorite_rk_ctb</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_majority_favorite_ut"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_majority_favorite_ut</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_majority_favorite_ut_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_majority_favorite_ut_ctb</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_resistant_condorcet_winner"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_resistant_condorcet_winner</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_weak_condorcet_winner"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_weak_condorcet_winner</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.plot3"><code class="docutils literal notranslate"><span class="pre">Profile.plot3()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.plot4"><code class="docutils literal notranslate"><span class="pre">Profile.plot4()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.plurality_scores_rk"><code class="docutils literal notranslate"><span class="pre">Profile.plurality_scores_rk</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.plurality_scores_ut"><code class="docutils literal notranslate"><span class="pre">Profile.plurality_scores_ut</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.preferences_borda_rk"><code class="docutils literal notranslate"><span class="pre">Profile.preferences_borda_rk</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.preferences_borda_ut"><code class="docutils literal notranslate"><span class="pre">Profile.preferences_borda_ut</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.preferences_rk"><code class="docutils literal notranslate"><span class="pre">Profile.preferences_rk</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.preferences_ut"><code class="docutils literal notranslate"><span class="pre">Profile.preferences_ut</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.relative_social_welfare_c"><code class="docutils literal notranslate"><span class="pre">Profile.relative_social_welfare_c</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.resistant_condorcet_winner"><code class="docutils literal notranslate"><span class="pre">Profile.resistant_condorcet_winner</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.smith_set_rk"><code class="docutils literal notranslate"><span class="pre">Profile.smith_set_rk</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.smith_set_rk_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.smith_set_rk_ctb</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.smith_set_ut_abs"><code class="docutils literal notranslate"><span class="pre">Profile.smith_set_ut_abs</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.smith_set_ut_abs_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.smith_set_ut_abs_ctb</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.smith_set_ut_rel"><code class="docutils literal notranslate"><span class="pre">Profile.smith_set_ut_rel</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.smith_set_ut_rel_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.smith_set_ut_rel_ctb</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.threshold_c_prevents_w_condorcet_ut_abs"><code class="docutils literal notranslate"><span class="pre">Profile.threshold_c_prevents_w_condorcet_ut_abs</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.to_doctest_string"><code class="docutils literal notranslate"><span class="pre">Profile.to_doctest_string()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.total_utility_c"><code class="docutils literal notranslate"><span class="pre">Profile.total_utility_c</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.total_utility_max"><code class="docutils literal notranslate"><span class="pre">Profile.total_utility_max</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.total_utility_mean"><code class="docutils literal notranslate"><span class="pre">Profile.total_utility_mean</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.total_utility_min"><code class="docutils literal notranslate"><span class="pre">Profile.total_utility_min</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.total_utility_std"><code class="docutils literal notranslate"><span class="pre">Profile.total_utility_std</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.v_has_same_ordinal_preferences_as_previous_voter"><code class="docutils literal notranslate"><span class="pre">Profile.v_has_same_ordinal_preferences_as_previous_voter</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.weak_condorcet_winners"><code class="docutils literal notranslate"><span class="pre">Profile.weak_condorcet_winners</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile"><code class="docutils literal notranslate"><span class="pre">Profile</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.borda_score_c_rk"><code class="docutils literal notranslate"><span class="pre">Profile.borda_score_c_rk</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.borda_score_c_ut"><code class="docutils literal notranslate"><span class="pre">Profile.borda_score_c_ut</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.c_might_be_there_when_cw_is_eliminated_irv_style"><code class="docutils literal notranslate"><span class="pre">Profile.c_might_be_there_when_cw_is_eliminated_irv_style</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.candidates_by_decreasing_borda_score_rk"><code class="docutils literal notranslate"><span class="pre">Profile.candidates_by_decreasing_borda_score_rk</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.candidates_by_decreasing_borda_score_ut"><code class="docutils literal notranslate"><span class="pre">Profile.candidates_by_decreasing_borda_score_ut</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.condorcet_admissible_candidates"><code class="docutils literal notranslate"><span class="pre">Profile.condorcet_admissible_candidates</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.condorcet_winner_rk"><code class="docutils literal notranslate"><span class="pre">Profile.condorcet_winner_rk</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.condorcet_winner_rk_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.condorcet_winner_rk_ctb</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.condorcet_winner_ut_abs"><code class="docutils literal notranslate"><span class="pre">Profile.condorcet_winner_ut_abs</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.condorcet_winner_ut_abs_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.condorcet_winner_ut_abs_ctb</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.condorcet_winner_ut_rel"><code class="docutils literal notranslate"><span class="pre">Profile.condorcet_winner_ut_rel</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.condorcet_winner_ut_rel_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.condorcet_winner_ut_rel_ctb</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.decreasing_borda_scores_rk"><code class="docutils literal notranslate"><span class="pre">Profile.decreasing_borda_scores_rk</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.decreasing_borda_scores_ut"><code class="docutils literal notranslate"><span class="pre">Profile.decreasing_borda_scores_ut</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.demo"><code class="docutils literal notranslate"><span class="pre">Profile.demo()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_condorcet_admissible"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_admissible</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_condorcet_order_rk"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_order_rk</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_condorcet_order_rk_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_order_rk_ctb</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_condorcet_order_ut_abs"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_order_ut_abs</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_condorcet_order_ut_abs_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_order_ut_abs_ctb</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_condorcet_order_ut_rel"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_order_ut_rel</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_condorcet_order_ut_rel_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_order_ut_rel_ctb</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_condorcet_winner_rk"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_winner_rk</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_condorcet_winner_rk_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_winner_rk_ctb</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_condorcet_winner_ut_abs"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_winner_ut_abs</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_condorcet_winner_ut_abs_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_winner_ut_abs_ctb</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_condorcet_winner_ut_rel"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_winner_ut_rel</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_condorcet_winner_ut_rel_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.exists_condorcet_winner_ut_rel_ctb</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_majority_favorite_rk"><code class="docutils literal notranslate"><span class="pre">Profile.exists_majority_favorite_rk</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_majority_favorite_rk_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.exists_majority_favorite_rk_ctb</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_majority_favorite_ut"><code class="docutils literal notranslate"><span class="pre">Profile.exists_majority_favorite_ut</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_majority_favorite_ut_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.exists_majority_favorite_ut_ctb</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_pair_safe_condorcet_winner"><code class="docutils literal notranslate"><span class="pre">Profile.exists_pair_safe_condorcet_winner</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_resistant_condorcet_winner"><code class="docutils literal notranslate"><span class="pre">Profile.exists_resistant_condorcet_winner</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_set_safe_condorcet_winner"><code class="docutils literal notranslate"><span class="pre">Profile.exists_set_safe_condorcet_winner</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_super_condorcet_winner"><code class="docutils literal notranslate"><span class="pre">Profile.exists_super_condorcet_winner</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.exists_weak_condorcet_winner"><code class="docutils literal notranslate"><span class="pre">Profile.exists_weak_condorcet_winner</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.labels_candidates"><code class="docutils literal notranslate"><span class="pre">Profile.labels_candidates</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.majority_favorite_rk"><code class="docutils literal notranslate"><span class="pre">Profile.majority_favorite_rk</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.majority_favorite_rk_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.majority_favorite_rk_ctb</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.majority_favorite_ut"><code class="docutils literal notranslate"><span class="pre">Profile.majority_favorite_ut</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.majority_favorite_ut_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.majority_favorite_ut_ctb</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.matrix_duels_rk"><code class="docutils literal notranslate"><span class="pre">Profile.matrix_duels_rk</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.matrix_duels_ut"><code class="docutils literal notranslate"><span class="pre">Profile.matrix_duels_ut</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.matrix_victories_rk"><code class="docutils literal notranslate"><span class="pre">Profile.matrix_victories_rk</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.matrix_victories_rk_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.matrix_victories_rk_ctb</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.matrix_victories_ut_abs"><code class="docutils literal notranslate"><span class="pre">Profile.matrix_victories_ut_abs</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.matrix_victories_ut_abs_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.matrix_victories_ut_abs_ctb</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.matrix_victories_ut_rel"><code class="docutils literal notranslate"><span class="pre">Profile.matrix_victories_ut_rel</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.matrix_victories_ut_rel_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.matrix_victories_ut_rel_ctb</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.mean_utility_c"><code class="docutils literal notranslate"><span class="pre">Profile.mean_utility_c</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.mean_utility_max"><code class="docutils literal notranslate"><span class="pre">Profile.mean_utility_max</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.mean_utility_mean"><code class="docutils literal notranslate"><span class="pre">Profile.mean_utility_mean</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.mean_utility_min"><code class="docutils literal notranslate"><span class="pre">Profile.mean_utility_min</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.mean_utility_std"><code class="docutils literal notranslate"><span class="pre">Profile.mean_utility_std</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.n_c"><code class="docutils literal notranslate"><span class="pre">Profile.n_c</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.n_v"><code class="docutils literal notranslate"><span class="pre">Profile.n_v</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.nb_condorcet_admissible"><code class="docutils literal notranslate"><span class="pre">Profile.nb_condorcet_admissible</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.nb_weak_condorcet_winners"><code class="docutils literal notranslate"><span class="pre">Profile.nb_weak_condorcet_winners</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.necessary_coalition_size_to_break_irv_immunity"><code class="docutils literal notranslate"><span class="pre">Profile.necessary_coalition_size_to_break_irv_immunity</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_condorcet_admissible"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_admissible</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_condorcet_order_rk"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_order_rk</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_condorcet_order_rk_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_order_rk_ctb</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_condorcet_order_ut_abs"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_order_ut_abs</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_condorcet_order_ut_abs_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_order_ut_abs_ctb</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_condorcet_order_ut_rel"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_order_ut_rel</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_condorcet_order_ut_rel_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_order_ut_rel_ctb</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_condorcet_winner_rk"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_winner_rk</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_condorcet_winner_rk_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_winner_rk_ctb</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_condorcet_winner_ut_abs"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_winner_ut_abs</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_condorcet_winner_ut_abs_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_winner_ut_abs_ctb</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_condorcet_winner_ut_rel"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_winner_ut_rel</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_condorcet_winner_ut_rel_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_condorcet_winner_ut_rel_ctb</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_majority_favorite_rk"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_majority_favorite_rk</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_majority_favorite_rk_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_majority_favorite_rk_ctb</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_majority_favorite_ut"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_majority_favorite_ut</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_majority_favorite_ut_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_majority_favorite_ut_ctb</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_pair_safe_condorcet_winner"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_pair_safe_condorcet_winner</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_resistant_condorcet_winner"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_resistant_condorcet_winner</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_set_safe_condorcet_winner"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_set_safe_condorcet_winner</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.not_exists_weak_condorcet_winner"><code class="docutils literal notranslate"><span class="pre">Profile.not_exists_weak_condorcet_winner</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.pair_safe_condorcet_winner"><code class="docutils literal notranslate"><span class="pre">Profile.pair_safe_condorcet_winner</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.plot3"><code class="docutils literal notranslate"><span class="pre">Profile.plot3()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.plot4"><code class="docutils literal notranslate"><span class="pre">Profile.plot4()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.plurality_scores_rk"><code class="docutils literal notranslate"><span class="pre">Profile.plurality_scores_rk</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.plurality_scores_ut"><code class="docutils literal notranslate"><span class="pre">Profile.plurality_scores_ut</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.preferences_borda_rk"><code class="docutils literal notranslate"><span class="pre">Profile.preferences_borda_rk</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.preferences_borda_ut"><code class="docutils literal notranslate"><span class="pre">Profile.preferences_borda_ut</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.preferences_rk"><code class="docutils literal notranslate"><span class="pre">Profile.preferences_rk</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.preferences_ut"><code class="docutils literal notranslate"><span class="pre">Profile.preferences_ut</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.relative_social_welfare_c"><code class="docutils literal notranslate"><span class="pre">Profile.relative_social_welfare_c</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.resistant_condorcet_winner"><code class="docutils literal notranslate"><span class="pre">Profile.resistant_condorcet_winner</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.set_safe_condorcet_winner"><code class="docutils literal notranslate"><span class="pre">Profile.set_safe_condorcet_winner</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.size_bicoalition"><code class="docutils literal notranslate"><span class="pre">Profile.size_bicoalition</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.smith_set_rk"><code class="docutils literal notranslate"><span class="pre">Profile.smith_set_rk</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.smith_set_rk_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.smith_set_rk_ctb</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.smith_set_ut_abs"><code class="docutils literal notranslate"><span class="pre">Profile.smith_set_ut_abs</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.smith_set_ut_abs_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.smith_set_ut_abs_ctb</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.smith_set_ut_rel"><code class="docutils literal notranslate"><span class="pre">Profile.smith_set_ut_rel</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.smith_set_ut_rel_ctb"><code class="docutils literal notranslate"><span class="pre">Profile.smith_set_ut_rel_ctb</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.theta_empirical"><code class="docutils literal notranslate"><span class="pre">Profile.theta_empirical</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.threshold_c_prevents_w_condorcet_ut_abs"><code class="docutils literal notranslate"><span class="pre">Profile.threshold_c_prevents_w_condorcet_ut_abs</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.to_doctest_string"><code class="docutils literal notranslate"><span class="pre">Profile.to_doctest_string()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.total_utility_c"><code class="docutils literal notranslate"><span class="pre">Profile.total_utility_c</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.total_utility_max"><code class="docutils literal notranslate"><span class="pre">Profile.total_utility_max</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.total_utility_mean"><code class="docutils literal notranslate"><span class="pre">Profile.total_utility_mean</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.total_utility_min"><code class="docutils literal notranslate"><span class="pre">Profile.total_utility_min</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.total_utility_std"><code class="docutils literal notranslate"><span class="pre">Profile.total_utility_std</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.v_has_same_ordinal_preferences_as_previous_voter"><code class="docutils literal notranslate"><span class="pre">Profile.v_has_same_ordinal_preferences_as_previous_voter</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.Profile.weak_condorcet_winners"><code class="docutils literal notranslate"><span class="pre">Profile.weak_condorcet_winners</span></code></a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
