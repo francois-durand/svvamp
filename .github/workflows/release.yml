@@ -31,7 +31,7 @@ jobs:
 
       - name: Export tag
         id: vars
-        run: echo tag=${GITHUB_REF#refs/*/} >> $GITHUB_OUTPUT
+        run: echo tag=${GITHUB_REF#refs/*/v} >> $GITHUB_OUTPUT
 
       - name: Set version from tag
         run: |
