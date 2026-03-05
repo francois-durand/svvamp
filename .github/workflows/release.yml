@@ -29,14 +29,16 @@ jobs:
         run: |
           uv pip install build twine
 
-      - name: Export tag
+      - name: Check version matches tag
         id: vars
         run: echo tag=${GITHUB_REF#refs/*/v} >> $GITHUB_OUTPUT
 
-      - name: Set version from tag
+      - name: Assert version
         run: |
-          uv pip install bump-my-version
-          uv run bump-my-version set-version "${{ steps.vars.outputs.tag }}" --no-commit --no-tag
+          uv run python -c "import tomllib; d=tomllib.load(open('pyproject.toml','rb')); print(d['project']['version'])" > version.txt
+          echo "pyproject version: $(cat version.txt)"
+          echo "tag: ${{ steps.vars.outputs.tag }}"
+          test "$(cat version.txt)" = "${{ steps.vars.outputs.tag }}"
 
       - name: Build
         run: uv run python -m build
