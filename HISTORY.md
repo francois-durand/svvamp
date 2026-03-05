@@ -1,6 +1,6 @@
 # History
 
-## Recent changes (not released yet)
+## 0.13.0 (2026-03-05): New voting rules, improved CM algorithms, and new Condorcet notions
 
 Profiles:
 
