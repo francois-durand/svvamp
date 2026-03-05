@@ -505,11 +505,19 @@ document.write(`
 <section id="get-started">
 <h1>Get Started<a class="headerlink" href="#get-started" title="Link to this heading">#</a></h1>
 <p>Ready to contribute? Here’s how to set up <strong>svvamp</strong> for local development.</p>
+<section id="fork-the-repository">
+<h2>1. Fork the repository<a class="headerlink" href="#fork-the-repository" title="Link to this heading">#</a></h2>
 <p>Fork the repository on GitHub.</p>
+</section>
+<section id="clone-your-fork">
+<h2>2. Clone your fork<a class="headerlink" href="#clone-your-fork" title="Link to this heading">#</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>git@github.com:your_name_here/svvamp.git
 <span class="nb">cd</span><span class="w"> </span>svvamp
 </pre></div>
 </div>
+</section>
+<section id="create-the-development-environment">
+<h2>3. Create the development environment<a class="headerlink" href="#create-the-development-environment" title="Link to this heading">#</a></h2>
 <p>This project uses <strong>uv</strong> to manage environments and dependencies.</p>
 <p>Create a virtual environment:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>venv
@@ -519,11 +527,15 @@ document.write(`
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[dev]&quot;</span>
 </pre></div>
 </div>
+</section>
+<section id="create-a-branch">
+<h2>4. Create a branch<a class="headerlink" href="#create-a-branch" title="Link to this heading">#</a></h2>
 <p>Create a branch for your contribution:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>name-of-your-bugfix-or-feature
 </pre></div>
 </div>
 <p>Now you can make your changes locally.</p>
+</section>
 </section>
 <hr class="docutils" />
 <section id="running-tests">
@@ -640,7 +652,13 @@ uv<span class="w"> </span>run<span class="w"> </span>sphinx-build<span class="w"
 </li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#get-started">Get Started</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#get-started">Get Started</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fork-the-repository">1. Fork the repository</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clone-your-fork">2. Clone your fork</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-the-development-environment">3. Create the development environment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-branch">4. Create a branch</a></li>
+</ul>
+</li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#running-tests">Running Tests</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#code-quality">Code Quality</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pull-request-guidelines">Pull Request Guidelines</a></li>
