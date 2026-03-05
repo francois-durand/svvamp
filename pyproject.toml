@@ -1,43 +1,45 @@
-[tool.poetry]
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
 name = "svvamp"
 version = "0.12.0"
 description = "Simulator of Various Voting Algorithms in Manipulating Populations"
-authors = ["François Durand <fradurand@gmail.com>"]
-repository = "https://github.com/francois-durand/svvamp"
-documentation = "https://francois-durand.github.io/svvamp"
 readme = "README.md"
-packages = [
-  {include = "svvamp"}
+requires-python = ">=3.10"
+authors = [{ name = "François Durand", email = "fradurand@gmail.com" }]
+dependencies = [
+  "numpy>=2.2.3,<3",
+  "networkx>=3.4.2,<4",
+  "pandas>=2.2.3,<3",
+  "matplotlib>=3.10.0,<4",
+  "tikzplotlib>=0.10.1,<0.11",
 ]
 
-[tool.poetry.dependencies]
-python = ">=3.10,<4.0"
-numpy = "^2.2.3"
-networkx = "^3.4.2"
-pandas = "^2.2.3"
-matplotlib = "^3.10.0"
-tikzplotlib = "^0.10.1"
+[project.urls]
+Repository = "https://github.com/francois-durand/svvamp"
+Documentation = "https://francois-durand.github.io/svvamp"
 
+[project.optional-dependencies]
+dev = [
+  "pytest>=7.4.4,<8",
+  "pytest-cov>=4.1.0,<5",
+  "mypy>=1.15.0,<2",
+  "pre-commit>=3.8.0,<4",
+  "bump-my-version>=0.21",
+  "build>=1.2",
+]
+docs = [
+  "sphinx>=7.4.7,<8",
+  "ipython>=8.32.0,<9",
+  "nbsphinx>=0.9.3,<0.10",
+  "sphinx-mdinclude>=0.5.3,<0.6",
+  "pydata-sphinx-theme>=0.14.3,<0.15",
+]
 
-[tool.poetry.group.dev.dependencies]
-pytest = "^7.4.4"
-pytest-cov = "^4.1.0"
-mypy = "^1.15.0"
-pre-commit = "^3.8.0"
-tox = "^4.24.1"
-
-[tool.poetry.group.docs.dependencies]
-sphinx = "^7.4.7"
-ipython = "^8.32.0"
-nbsphinx = "^0.9.3"
-sphinx-mdinclude = "^0.5.3"
-pydata-sphinx-theme = "^0.14.3"
-
-
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+[tool.hatch.build.targets.wheel]
+packages = ["svvamp"]
 
 [tool.black]
 line-length = 120
@@ -59,41 +61,24 @@ target-version = "py37"
 line-length = 120
 fix = true
 select = [
-    # flake8-2020
     "YTT",
-    # flake8-bandit
     "S",
-    # flake8-bugbear
     "B",
-    # flake8-builtins
     "A",
-    # flake8-comprehensions
     "C4",
-    # flake8-debugger
     "T10",
-    # flake8-simplify
     "SIM",
-    # isort
     "I",
-    # mccabe
     "C90",
-    # pycodestyle
     "E", "W",
-    # pyflakes
     "F",
-    # pygrep-hooks
     "PGH",
-    # pyupgrade
     "UP",
-    # ruff
     "RUF",
-    # tryceratops
     "TRY",
 ]
 ignore = [
-    # LineTooLong
     "E501",
-    # DoNotAssignLambda
     "E731",
 ]
 
@@ -118,23 +103,17 @@ directory = "cov"
 [tool.pytest.ini_options]
 addopts = "--doctest-modules --cov --cov-config=pyproject.toml --cov-report xml --cov-report html --showlocals --capture=no --exitfirst --failed-first"
 
-[tool.tox]
-legacy_tox_ini = """
-[tox]
-skipsdist = true
+[tool.bumpversion]
+current_version = "0.12.0"
+commit = true
+tag = true
 
-[gh-actions]
-python =
-    3.10: py310
-    3.11: py311
-    3.12: py312
+[[tool.bumpversion.files]]
+filename = "pyproject.toml"
+search = 'version = "{current_version}"'
+replace = 'version = "{new_version}"'
 
-[testenv]
-passenv = PYTHON_VERSION
-allowlist_externals = poetry
-commands =
-    poetry install -v
-    pytest
-"""
-
-[tool.poetry_bumpversion.file."svvamp/__init__.py"]
+[[tool.bumpversion.files]]
+filename = "svvamp/__init__.py"
+search = '__version__ = "{current_version}"'
+replace = '__version__ = "{new_version}"'

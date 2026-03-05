@@ -1,0 +1,52 @@
+% This file was created with tikzplotlib v0.10.1.
+\begin{tikzpicture}
+
+\definecolor{darkgrey176}{RGB}{176,176,176}
+\definecolor{steelblue31119180}{RGB}{31,119,180}
+
+\begin{axis}[
+height=\axisHeight,
+log basis x={10},
+minor xtick={1200,1400,1600,1800,2000,2200,2400,2600},
+minor xticklabels={
+  $\mathdefault{1.2\times10^{3}}$,
+  $\mathdefault{1.4\times10^{3}}$,
+  $\mathdefault{1.6\times10^{3}}$,
+  $\mathdefault{1.8\times10^{3}}$,
+  $\mathdefault{2\times10^{3}}$,
+  $\mathdefault{2.2\times10^{3}}$,
+  $\mathdefault{2.4\times10^{3}}$,
+  $\mathdefault{2.6\times10^{3}}$
+},
+tick align=outside,
+tick pos=left,
+width=\axisWidth,
+x grid style={darkgrey176},
+xlabel={Number of voters $V$},
+xmin=1000, xmax=2516.43534284919,
+xmode=log,
+xtick style={color=black},
+xtick={10,100,1000,10000,100000},
+xticklabels={
+  $\mathdefault{10^{1}}$,
+  $\mathdefault{10^{2}}$,
+  $\mathdefault{10^{3}}$,
+  $\mathdefault{10^{4}}$,
+  $\mathdefault{10^{5}}$
+},
+y grid style={darkgrey176},
+ylabel={Number of candidates $C$},
+ymajorgrids,
+ymin=2.835, ymax=3.165,
+ytick={3},
+ytick style={color=black}
+]
+\addplot [draw=steelblue31119180, fill=steelblue31119180, mark=*, only marks]
+table{%
+x  y
+2310 3
+417 3
+};
+\end{axis}
+
+\end{tikzpicture}

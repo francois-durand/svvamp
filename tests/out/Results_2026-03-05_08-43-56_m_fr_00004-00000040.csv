@@ -1,0 +1,215 @@
+Rule;Rule (abbr);Rule (class);Criterion;Candidate;Candidate name;Algorithm parameters;Computation time;Rate (lower bound);Rate (upper bound);Rate (uncertainty);Number of profiles;V;C;Culture type;Culture parameter 1;Culture parameter 1 value;Culture parameter 2;Culture parameter 2 value;Culture parameter 3;Culture parameter 3 value;Culture parameter 4;Culture parameter 4 value
+Profile;;;exists_condorcet_admissible;;;;;1.0;1.0;0.0;1;2310;3
+Profile;;;exists_weak_condorcet_winner;;;;;1.0;1.0;0.0;1;2310;3
+Profile;;;exists_condorcet_winner_rk_ctb;;;;;1.0;1.0;0.0;1;2310;3
+Profile;;;exists_condorcet_winner_rk;;;;;1.0;1.0;0.0;1;2310;3
+Profile;;;exists_condorcet_winner_ut_rel_ctb;;;;;1.0;1.0;0.0;1;2310;3
+Profile;;;exists_condorcet_winner_ut_rel;;;;;1.0;1.0;0.0;1;2310;3
+Profile;;;exists_condorcet_winner_ut_abs_ctb;;;;;1.0;1.0;0.0;1;2310;3
+Profile;;;exists_condorcet_winner_ut_abs;;;;;1.0;1.0;0.0;1;2310;3
+Profile;;;exists_resistant_condorcet_winner;;;;;1.0;1.0;0.0;1;2310;3
+Profile;;;exists_condorcet_order_rk_ctb;;;;;1.0;1.0;0.0;1;2310;3
+Profile;;;exists_condorcet_order_rk;;;;;1.0;1.0;0.0;1;2310;3
+Profile;;;exists_condorcet_order_ut_rel_ctb;;;;;1.0;1.0;0.0;1;2310;3
+Profile;;;exists_condorcet_order_ut_rel;;;;;1.0;1.0;0.0;1;2310;3
+Profile;;;exists_condorcet_order_ut_abs_ctb;;;;;1.0;1.0;0.0;1;2310;3
+Profile;;;exists_condorcet_order_ut_abs;;;;;1.0;1.0;0.0;1;2310;3
+Profile;;;exists_majority_favorite_rk_ctb;;;;;1.0;1.0;0.0;1;2310;3
+Profile;;;exists_majority_favorite_rk;;;;;1.0;1.0;0.0;1;2310;3
+Profile;;;exists_majority_favorite_ut_ctb;;;;;1.0;1.0;0.0;1;2310;3
+Profile;;;exists_majority_favorite_ut;;;;;1.0;1.0;0.0;1;2310;3
+Profile;;;exists_super_condorcet_winner;;;;;1.0;1.0;0.0;1;2310;3
+Profile;;;exists_pair_safe_condorcet_winner;;;;;1.0;1.0;0.0;1;2310;3
+Profile;;;exists_set_safe_condorcet_winner;;;;;1.0;1.0;0.0;1;2310;3
+Profile;;;not_exists_condorcet_admissible;;;;;0.0;0.0;0.0;1;2310;3
+Profile;;;not_exists_weak_condorcet_winner;;;;;0.0;0.0;0.0;1;2310;3
+Profile;;;not_exists_condorcet_winner_rk_ctb;;;;;0.0;0.0;0.0;1;2310;3
+Profile;;;not_exists_condorcet_winner_rk;;;;;0.0;0.0;0.0;1;2310;3
+Profile;;;not_exists_condorcet_winner_ut_rel_ctb;;;;;0.0;0.0;0.0;1;2310;3
+Profile;;;not_exists_condorcet_winner_ut_rel;;;;;0.0;0.0;0.0;1;2310;3
+Profile;;;not_exists_condorcet_winner_ut_abs_ctb;;;;;0.0;0.0;0.0;1;2310;3
+Profile;;;not_exists_condorcet_winner_ut_abs;;;;;0.0;0.0;0.0;1;2310;3
+Profile;;;not_exists_resistant_condorcet_winner;;;;;0.0;0.0;0.0;1;2310;3
+Profile;;;not_exists_condorcet_order_rk_ctb;;;;;0.0;0.0;0.0;1;2310;3
+Profile;;;not_exists_condorcet_order_rk;;;;;0.0;0.0;0.0;1;2310;3
+Profile;;;not_exists_condorcet_order_ut_rel_ctb;;;;;0.0;0.0;0.0;1;2310;3
+Profile;;;not_exists_condorcet_order_ut_rel;;;;;0.0;0.0;0.0;1;2310;3
+Profile;;;not_exists_condorcet_order_ut_abs_ctb;;;;;0.0;0.0;0.0;1;2310;3
+Profile;;;not_exists_condorcet_order_ut_abs;;;;;0.0;0.0;0.0;1;2310;3
+Profile;;;not_exists_majority_favorite_rk_ctb;;;;;0.0;0.0;0.0;1;2310;3
+Profile;;;not_exists_majority_favorite_rk;;;;;0.0;0.0;0.0;1;2310;3
+Profile;;;not_exists_majority_favorite_ut_ctb;;;;;0.0;0.0;0.0;1;2310;3
+Profile;;;not_exists_majority_favorite_ut;;;;;0.0;0.0;0.0;1;2310;3
+Profile;;;mean_u_min_min;;;;;-0.2645021645021645;-0.2645021645021645;0;1;2310;3
+Profile;;;mean_u_min_max;;;;;-0.2645021645021645;-0.2645021645021645;0;1;2310;3
+Profile;;;mean_u_min_mean;;;;;-0.2645021645021645;-0.2645021645021645;0;1;2310;3
+Profile;;;mean_u_min_std;;;;;0.0;0.0;0;1;2310;3
+Profile;;;mean_u_max_min;;;;;0.4316017316017316;0.4316017316017316;0;1;2310;3
+Profile;;;mean_u_max_max;;;;;0.4316017316017316;0.4316017316017316;0;1;2310;3
+Profile;;;mean_u_max_mean;;;;;0.4316017316017316;0.4316017316017316;0;1;2310;3
+Profile;;;mean_u_max_std;;;;;0.0;0.0;0;1;2310;3
+Profile;;;mean_u_mean_min;;;;;-1.850371707708594e-17;-1.850371707708594e-17;0;1;2310;3
+Profile;;;mean_u_mean_max;;;;;-1.850371707708594e-17;-1.850371707708594e-17;0;1;2310;3
+Profile;;;mean_u_mean_mean;;;;;-1.850371707708594e-17;-1.850371707708594e-17;0;1;2310;3
+Profile;;;mean_u_mean_std;;;;;0.0;0.0;0;1;2310;3
+Profile;;;nb_condorcet_admissible_mean;;;;;1.0;1.0;0;1;2310;3
+Profile;;;nb_weak_condorcet_winners_mean;;;;;1.0;1.0;0;1;2310;3
+Profile;;;condorcet_winner_rk_ctb;0;Jaws;;;1.0;1.0;0;1;2310;3
+Profile;;;condorcet_winner_rk_ctb;1;I;;;0.0;0.0;0;1;2310;3
+Profile;;;condorcet_winner_rk_ctb;2;Four Rooms;;;0.0;0.0;0;1;2310;3
+Profile;;;condorcet_winner_rk_ctb;None;None;;;0.0;0.0;0;1;2310;3
+Profile;;;condorcet_winner_rk;0;Jaws;;;1.0;1.0;0;1;2310;3
+Profile;;;condorcet_winner_rk;1;I;;;0.0;0.0;0;1;2310;3
+Profile;;;condorcet_winner_rk;2;Four Rooms;;;0.0;0.0;0;1;2310;3
+Profile;;;condorcet_winner_rk;None;None;;;0.0;0.0;0;1;2310;3
+Profile;;;condorcet_winner_ut_rel_ctb;0;Jaws;;;1.0;1.0;0;1;2310;3
+Profile;;;condorcet_winner_ut_rel_ctb;1;I;;;0.0;0.0;0;1;2310;3
+Profile;;;condorcet_winner_ut_rel_ctb;2;Four Rooms;;;0.0;0.0;0;1;2310;3
+Profile;;;condorcet_winner_ut_rel_ctb;None;None;;;0.0;0.0;0;1;2310;3
+Profile;;;condorcet_winner_ut_rel;0;Jaws;;;1.0;1.0;0;1;2310;3
+Profile;;;condorcet_winner_ut_rel;1;I;;;0.0;0.0;0;1;2310;3
+Profile;;;condorcet_winner_ut_rel;2;Four Rooms;;;0.0;0.0;0;1;2310;3
+Profile;;;condorcet_winner_ut_rel;None;None;;;0.0;0.0;0;1;2310;3
+Profile;;;condorcet_winner_ut_abs_ctb;0;Jaws;;;1.0;1.0;0;1;2310;3
+Profile;;;condorcet_winner_ut_abs_ctb;1;I;;;0.0;0.0;0;1;2310;3
+Profile;;;condorcet_winner_ut_abs_ctb;2;Four Rooms;;;0.0;0.0;0;1;2310;3
+Profile;;;condorcet_winner_ut_abs_ctb;None;None;;;0.0;0.0;0;1;2310;3
+Profile;;;condorcet_winner_ut_abs;0;Jaws;;;1.0;1.0;0;1;2310;3
+Profile;;;condorcet_winner_ut_abs;1;I;;;0.0;0.0;0;1;2310;3
+Profile;;;condorcet_winner_ut_abs;2;Four Rooms;;;0.0;0.0;0;1;2310;3
+Profile;;;condorcet_winner_ut_abs;None;None;;;0.0;0.0;0;1;2310;3
+Profile;;;resistant_condorcet_winner;0;Jaws;;;1.0;1.0;0;1;2310;3
+Profile;;;resistant_condorcet_winner;1;I;;;0.0;0.0;0;1;2310;3
+Profile;;;resistant_condorcet_winner;2;Four Rooms;;;0.0;0.0;0;1;2310;3
+Profile;;;resistant_condorcet_winner;None;None;;;0.0;0.0;0;1;2310;3
+Profile;;;majority_favorite_rk_ctb;0;Jaws;;;1.0;1.0;0;1;2310;3
+Profile;;;majority_favorite_rk_ctb;1;I;;;0.0;0.0;0;1;2310;3
+Profile;;;majority_favorite_rk_ctb;2;Four Rooms;;;0.0;0.0;0;1;2310;3
+Profile;;;majority_favorite_rk_ctb;None;None;;;0.0;0.0;0;1;2310;3
+Profile;;;majority_favorite_rk;0;Jaws;;;1.0;1.0;0;1;2310;3
+Profile;;;majority_favorite_rk;1;I;;;0.0;0.0;0;1;2310;3
+Profile;;;majority_favorite_rk;2;Four Rooms;;;0.0;0.0;0;1;2310;3
+Profile;;;majority_favorite_rk;None;None;;;0.0;0.0;0;1;2310;3
+Profile;;;majority_favorite_ut_ctb;0;Jaws;;;1.0;1.0;0;1;2310;3
+Profile;;;majority_favorite_ut_ctb;1;I;;;0.0;0.0;0;1;2310;3
+Profile;;;majority_favorite_ut_ctb;2;Four Rooms;;;0.0;0.0;0;1;2310;3
+Profile;;;majority_favorite_ut_ctb;None;None;;;0.0;0.0;0;1;2310;3
+Profile;;;majority_favorite_ut;0;Jaws;;;1.0;1.0;0;1;2310;3
+Profile;;;majority_favorite_ut;1;I;;;0.0;0.0;0;1;2310;3
+Profile;;;majority_favorite_ut;2;Four Rooms;;;0.0;0.0;0;1;2310;3
+Profile;;;majority_favorite_ut;None;None;;;0.0;0.0;0;1;2310;3
+Profile;;;plurality_scores_rk;0;Jaws;;;1354.0;1354.0;0;1;2310;3
+Profile;;;plurality_scores_rk;1;I;;;466.0;466.0;0;1;2310;3
+Profile;;;plurality_scores_rk;2;Four Rooms;;;490.0;490.0;0;1;2310;3
+Profile;;;plurality_scores_ut;0;Jaws;;;1354.0;1354.0;0;1;2310;3
+Profile;;;plurality_scores_ut;1;I;;;466.0;466.0;0;1;2310;3
+Profile;;;plurality_scores_ut;2;Four Rooms;;;490.0;490.0;0;1;2310;3
+Profile;;;condorcet_admissible_candidates;0;Jaws;;;1.0;1.0;0;1;2310;3
+Profile;;;condorcet_admissible_candidates;1;I;;;0.0;0.0;0;1;2310;3
+Profile;;;condorcet_admissible_candidates;2;Four Rooms;;;0.0;0.0;0;1;2310;3
+Profile;;;weak_condorcet_winners;0;Jaws;;;1.0;1.0;0;1;2310;3
+Profile;;;weak_condorcet_winners;1;I;;;0.0;0.0;0;1;2310;3
+Profile;;;weak_condorcet_winners;2;Four Rooms;;;0.0;0.0;0;1;2310;3
+Profile;;;borda_score_c_rk;0;Jaws;;;3307.0;3307.0;0;1;2310;3
+Profile;;;borda_score_c_rk;1;I;;;1924.0;1924.0;0;1;2310;3
+Profile;;;borda_score_c_rk;2;Four Rooms;;;1699.0;1699.0;0;1;2310;3
+Profile;;;borda_score_c_ut;0;Jaws;;;3307.0;3307.0;0;1;2310;3
+Profile;;;borda_score_c_ut;1;I;;;1924.0;1924.0;0;1;2310;3
+Profile;;;borda_score_c_ut;2;Four Rooms;;;1699.0;1699.0;0;1;2310;3
+Profile;;;total_utility_c;0;Jaws;;;997.0;997.0;0;1;2310;3
+Profile;;;total_utility_c;1;I;;;-386.0;-386.0;0;1;2310;3
+Profile;;;total_utility_c;2;Four Rooms;;;-611.0;-611.0;0;1;2310;3
+Profile;;;mean_utility_c;0;Jaws;;;0.4316017316017316;0.4316017316017316;0;1;2310;3
+Profile;;;mean_utility_c;1;I;;;-0.1670995670995671;-0.1670995670995671;0;1;2310;3
+Profile;;;mean_utility_c;2;Four Rooms;;;-0.2645021645021645;-0.2645021645021645;0;1;2310;3
+Profile;;;relative_social_welfare_c;0;Jaws;;;1.0;1.0;0;1;2310;3
+Profile;;;relative_social_welfare_c;1;I;;;0.13992537313432835;0.13992537313432835;0;1;2310;3
+Profile;;;relative_social_welfare_c;2;Four Rooms;;;0.0;0.0;0;1;2310;3
+Plurality;Plu;RulePlurality;Winner;0;Jaws;;;1.0;1.0;0;1;2310;3
+Plurality;Plu;RulePlurality;Winner;1;I;;;0.0;0.0;0;1;2310;3
+Plurality;Plu;RulePlurality;Winner;2;Four Rooms;;;0.0;0.0;0;1;2310;3
+Plurality;Plu;RulePlurality;w_is_condorcet_admissible_;;;;;1.0;1.0;0.0;1;2310;3
+Plurality;Plu;RulePlurality;w_is_not_condorcet_admissible_;;;;;0.0;0.0;0.0;1;2310;3
+Plurality;Plu;RulePlurality;w_missed_condorcet_admissible_;;;;;0.0;0.0;0.0;1;2310;3
+Plurality;Plu;RulePlurality;w_is_weak_condorcet_winner_;;;;;1.0;1.0;0.0;1;2310;3
+Plurality;Plu;RulePlurality;w_is_not_weak_condorcet_winner_;;;;;0.0;0.0;0.0;1;2310;3
+Plurality;Plu;RulePlurality;w_missed_weak_condorcet_winner_;;;;;0.0;0.0;0.0;1;2310;3
+Plurality;Plu;RulePlurality;w_is_condorcet_winner_rk_ctb_;;;;;1.0;1.0;0.0;1;2310;3
+Plurality;Plu;RulePlurality;w_is_not_condorcet_winner_rk_ctb_;;;;;0.0;0.0;0.0;1;2310;3
+Plurality;Plu;RulePlurality;w_missed_condorcet_winner_rk_ctb_;;;;;0.0;0.0;0.0;1;2310;3
+Plurality;Plu;RulePlurality;w_is_condorcet_winner_rk_;;;;;1.0;1.0;0.0;1;2310;3
+Plurality;Plu;RulePlurality;w_is_not_condorcet_winner_rk_;;;;;0.0;0.0;0.0;1;2310;3
+Plurality;Plu;RulePlurality;w_missed_condorcet_winner_rk_;;;;;0.0;0.0;0.0;1;2310;3
+Plurality;Plu;RulePlurality;w_is_condorcet_winner_ut_rel_ctb_;;;;;1.0;1.0;0.0;1;2310;3
+Plurality;Plu;RulePlurality;w_is_not_condorcet_winner_ut_rel_ctb_;;;;;0.0;0.0;0.0;1;2310;3
+Plurality;Plu;RulePlurality;w_missed_condorcet_winner_ut_rel_ctb_;;;;;0.0;0.0;0.0;1;2310;3
+Plurality;Plu;RulePlurality;w_is_condorcet_winner_ut_rel_;;;;;1.0;1.0;0.0;1;2310;3
+Plurality;Plu;RulePlurality;w_is_not_condorcet_winner_ut_rel_;;;;;0.0;0.0;0.0;1;2310;3
+Plurality;Plu;RulePlurality;w_missed_condorcet_winner_ut_rel_;;;;;0.0;0.0;0.0;1;2310;3
+Plurality;Plu;RulePlurality;w_is_condorcet_winner_ut_abs_ctb_;;;;;1.0;1.0;0.0;1;2310;3
+Plurality;Plu;RulePlurality;w_is_not_condorcet_winner_ut_abs_ctb_;;;;;0.0;0.0;0.0;1;2310;3
+Plurality;Plu;RulePlurality;w_missed_condorcet_winner_ut_abs_ctb_;;;;;0.0;0.0;0.0;1;2310;3
+Plurality;Plu;RulePlurality;w_is_condorcet_winner_ut_abs_;;;;;1.0;1.0;0.0;1;2310;3
+Plurality;Plu;RulePlurality;w_is_not_condorcet_winner_ut_abs_;;;;;0.0;0.0;0.0;1;2310;3
+Plurality;Plu;RulePlurality;w_missed_condorcet_winner_ut_abs_;;;;;0.0;0.0;0.0;1;2310;3
+Plurality;Plu;RulePlurality;w_is_resistant_condorcet_winner_;;;;;1.0;1.0;0.0;1;2310;3
+Plurality;Plu;RulePlurality;w_is_not_resistant_condorcet_winner_;;;;;0.0;0.0;0.0;1;2310;3
+Plurality;Plu;RulePlurality;w_missed_resistant_condorcet_winner_;;;;;0.0;0.0;0.0;1;2310;3
+Plurality;Plu;RulePlurality;is_tm_;any;;tm_option = exact;0.0;0.0;0.0;0.0;1;2310;3
+Plurality;Plu;RulePlurality;is_um_;any;;um_option = exact;0.0;0.0;0.0;0.0;1;2310;3
+Plurality;Plu;RulePlurality;is_icm_;any;;icm_option = exact;0.0;0.0;0.0;0.0;1;2310;3
+Plurality;Plu;RulePlurality;is_cm_;any;;cm_option = exact;0.0;0.0;0.0;0.0;1;2310;3
+Plurality;Plu;RulePlurality;is_tm_or_um_;any;;tm_option = exact;0.0;0.0;0.0;0.0;1;2310;3
+Plurality;Plu;RulePlurality;elects_condorcet_winner_rk_even_with_cm_;any;;cm_option = exact;0.0;1.0;1.0;0.0;1;2310;3
+Plurality;Plu;RulePlurality;mean_u_max;;;;;0.4316017316017316;0.4316017316017316;0;1;2310;3
+Plurality;Plu;RulePlurality;mean_u_min;;;;;0.4316017316017316;0.4316017316017316;0;1;2310;3
+Plurality;Plu;RulePlurality;mean_u_mean;;;;;0.4316017316017316;0.4316017316017316;0;1;2310;3
+Plurality;Plu;RulePlurality;mean_u_std;;;;;0.0;0.0;0;1;2310;3
+Plurality;Plu;RulePlurality;relative_social_welfare_mean;;;;;1.0;1.0;0;1;2310;3
+Plurality;Plu;RulePlurality;nb_candidates_cm_;any;;;0.0;0.0;0.0;0.0;1;2310;3
+Plurality;Plu;RulePlurality;worst_relative_welfare_with_cm_;any;;;0.0;1.0;1.0;0.0;1;2310;3
+Plurality;Plu;RulePlurality;cm_power_index_;any;;;0.0;1.2324723247232472;1.2324723247232472;0.0;1;2310;3
+Range Voting;RV;RuleRangeVoting;Winner;0;Jaws;;;1.0;1.0;0;1;2310;3
+Range Voting;RV;RuleRangeVoting;Winner;1;I;;;0.0;0.0;0;1;2310;3
+Range Voting;RV;RuleRangeVoting;Winner;2;Four Rooms;;;0.0;0.0;0;1;2310;3
+Range Voting;RV;RuleRangeVoting;w_is_condorcet_admissible_;;;;;1.0;1.0;0.0;1;2310;3
+Range Voting;RV;RuleRangeVoting;w_is_not_condorcet_admissible_;;;;;0.0;0.0;0.0;1;2310;3
+Range Voting;RV;RuleRangeVoting;w_missed_condorcet_admissible_;;;;;0.0;0.0;0.0;1;2310;3
+Range Voting;RV;RuleRangeVoting;w_is_weak_condorcet_winner_;;;;;1.0;1.0;0.0;1;2310;3
+Range Voting;RV;RuleRangeVoting;w_is_not_weak_condorcet_winner_;;;;;0.0;0.0;0.0;1;2310;3
+Range Voting;RV;RuleRangeVoting;w_missed_weak_condorcet_winner_;;;;;0.0;0.0;0.0;1;2310;3
+Range Voting;RV;RuleRangeVoting;w_is_condorcet_winner_rk_ctb_;;;;;1.0;1.0;0.0;1;2310;3
+Range Voting;RV;RuleRangeVoting;w_is_not_condorcet_winner_rk_ctb_;;;;;0.0;0.0;0.0;1;2310;3
+Range Voting;RV;RuleRangeVoting;w_missed_condorcet_winner_rk_ctb_;;;;;0.0;0.0;0.0;1;2310;3
+Range Voting;RV;RuleRangeVoting;w_is_condorcet_winner_rk_;;;;;1.0;1.0;0.0;1;2310;3
+Range Voting;RV;RuleRangeVoting;w_is_not_condorcet_winner_rk_;;;;;0.0;0.0;0.0;1;2310;3
+Range Voting;RV;RuleRangeVoting;w_missed_condorcet_winner_rk_;;;;;0.0;0.0;0.0;1;2310;3
+Range Voting;RV;RuleRangeVoting;w_is_condorcet_winner_ut_rel_ctb_;;;;;1.0;1.0;0.0;1;2310;3
+Range Voting;RV;RuleRangeVoting;w_is_not_condorcet_winner_ut_rel_ctb_;;;;;0.0;0.0;0.0;1;2310;3
+Range Voting;RV;RuleRangeVoting;w_missed_condorcet_winner_ut_rel_ctb_;;;;;0.0;0.0;0.0;1;2310;3
+Range Voting;RV;RuleRangeVoting;w_is_condorcet_winner_ut_rel_;;;;;1.0;1.0;0.0;1;2310;3
+Range Voting;RV;RuleRangeVoting;w_is_not_condorcet_winner_ut_rel_;;;;;0.0;0.0;0.0;1;2310;3
+Range Voting;RV;RuleRangeVoting;w_missed_condorcet_winner_ut_rel_;;;;;0.0;0.0;0.0;1;2310;3
+Range Voting;RV;RuleRangeVoting;w_is_condorcet_winner_ut_abs_ctb_;;;;;1.0;1.0;0.0;1;2310;3
+Range Voting;RV;RuleRangeVoting;w_is_not_condorcet_winner_ut_abs_ctb_;;;;;0.0;0.0;0.0;1;2310;3
+Range Voting;RV;RuleRangeVoting;w_missed_condorcet_winner_ut_abs_ctb_;;;;;0.0;0.0;0.0;1;2310;3
+Range Voting;RV;RuleRangeVoting;w_is_condorcet_winner_ut_abs_;;;;;1.0;1.0;0.0;1;2310;3
+Range Voting;RV;RuleRangeVoting;w_is_not_condorcet_winner_ut_abs_;;;;;0.0;0.0;0.0;1;2310;3
+Range Voting;RV;RuleRangeVoting;w_missed_condorcet_winner_ut_abs_;;;;;0.0;0.0;0.0;1;2310;3
+Range Voting;RV;RuleRangeVoting;w_is_resistant_condorcet_winner_;;;;;1.0;1.0;0.0;1;2310;3
+Range Voting;RV;RuleRangeVoting;w_is_not_resistant_condorcet_winner_;;;;;0.0;0.0;0.0;1;2310;3
+Range Voting;RV;RuleRangeVoting;w_missed_resistant_condorcet_winner_;;;;;0.0;0.0;0.0;1;2310;3
+Range Voting;RV;RuleRangeVoting;is_tm_;any;;tm_option = exact;0.0;0.0;0.0;0.0;1;2310;3
+Range Voting;RV;RuleRangeVoting;is_um_;any;;um_option = exact;0.0;0.0;0.0;0.0;1;2310;3
+Range Voting;RV;RuleRangeVoting;is_icm_;any;;icm_option = exact;0.0010023117065429688;0.0;0.0;0.0;1;2310;3
+Range Voting;RV;RuleRangeVoting;is_cm_;any;;cm_option = exact;0.0;0.0;0.0;0.0;1;2310;3
+Range Voting;RV;RuleRangeVoting;is_tm_or_um_;any;;tm_option = exact;0.0;0.0;0.0;0.0;1;2310;3
+Range Voting;RV;RuleRangeVoting;elects_condorcet_winner_rk_even_with_cm_;any;;cm_option = exact;0.0;1.0;1.0;0.0;1;2310;3
+Range Voting;RV;RuleRangeVoting;mean_u_max;;;;;0.4316017316017316;0.4316017316017316;0;1;2310;3
+Range Voting;RV;RuleRangeVoting;mean_u_min;;;;;0.4316017316017316;0.4316017316017316;0;1;2310;3
+Range Voting;RV;RuleRangeVoting;mean_u_mean;;;;;0.4316017316017316;0.4316017316017316;0;1;2310;3
+Range Voting;RV;RuleRangeVoting;mean_u_std;;;;;0.0;0.0;0;1;2310;3
+Range Voting;RV;RuleRangeVoting;relative_social_welfare_mean;;;;;1.0;1.0;0;1;2310;3
+Range Voting;RV;RuleRangeVoting;nb_candidates_cm_;any;;;0.0;0.0;0.0;0.0;1;2310;3
+Range Voting;RV;RuleRangeVoting;worst_relative_welfare_with_cm_;any;;;0.0;1.0;1.0;0.0;1;2310;3
+Range Voting;RV;RuleRangeVoting;cm_power_index_;any;;;0.0;1.4827898550724639;1.4827898550724639;0.0;1;2310;3

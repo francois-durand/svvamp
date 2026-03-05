@@ -39,6 +39,8 @@ Bug fixes:
 * In ``Profile``, fix bug to compute ``n_v`` and ``n_c`` when the profile is initialized with ``preferences_borda_rk``.
 * In ``RuleBucklin``, fix bug in the CM algorithm.
 
+Conversion to `uv` instead of `poetry` for packaging.
+
 ## 0.12.0 (2025-02-19): Accelerations and Bug Fixes
 
 * In ``Rule`` and its subclasses, add option ``precheck_heuristic`` (heuristic precheck before computing CM). In

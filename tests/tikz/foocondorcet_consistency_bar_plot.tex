@@ -1,0 +1,68 @@
+% This file was created with tikzplotlib v0.10.1.
+\begin{tikzpicture}
+
+\definecolor{darkgrey176}{RGB}{176,176,176}
+\definecolor{darkorange25512714}{RGB}{255,127,14}
+\definecolor{lightgrey204}{RGB}{204,204,204}
+\definecolor{purple}{RGB}{128,0,128}
+\definecolor{steelblue31119180}{RGB}{31,119,180}
+
+\begin{axis}[
+height=\axisHeight,
+legend cell align={left},
+legend style={
+  fill opacity=1,
+  draw opacity=1,
+  text opacity=1,
+  at={(0.03,0.97)},
+  anchor=north west,
+  draw=lightgrey204
+},
+tick align=outside,
+tick pos=left,
+width=\axisWidth,
+x grid style={darkgrey176},
+xmin=-1, xmax=2,
+xtick style={color=black},
+xtick={0,1},
+xticklabels={RV,Plu},
+xtick={0, 1},
+xticklabels = {RV, Plu},
+y grid style={darkgrey176},
+ylabel={Condorcet violation rate},
+ymajorgrids,
+ymin=0, ymax=1.05,
+ytick={0.0, 0.1, 0.2, 0.30000000000000004, 0.4, 0.5, 0.6000000000000001, 0.7000000000000001, 0.8, 0.9, 1.0},
+ytick style={color=black}
+]
+\path [draw=purple, semithick, dash pattern=on 5.55pt off 2.4pt]
+(axis cs:-1,0)
+--(axis cs:2,0);
+
+\draw[draw=none,fill=steelblue31119180] (axis cs:-0.35,0) rectangle (axis cs:0,0);
+\addlegendimage{ybar,ybar legend,draw=none,fill=steelblue31119180}
+\addlegendentry{Sincere}
+
+\draw[draw=none,fill=steelblue31119180] (axis cs:0.65,0) rectangle (axis cs:1,0);
+\draw[draw=none,fill=darkorange25512714] (axis cs:2.77555756156289e-17,0) rectangle (axis cs:0.35,0);
+\addlegendimage{ybar,ybar legend,draw=none,fill=darkorange25512714}
+\addlegendentry{With CM}
+
+\draw[draw=none,fill=darkorange25512714] (axis cs:1,0) rectangle (axis cs:1.35,0);
+\path [draw=black, semithick]
+(axis cs:0.175,0)
+--(axis cs:0.175,0);
+
+\path [draw=black, semithick]
+(axis cs:1.175,0)
+--(axis cs:1.175,0);
+
+\draw (axis cs:-0.5,-0.01) node[
+  scale=1.0,
+  anchor=south west,
+  text=purple,
+  rotate=0.0
+]{RCW bound};
+\end{axis}
+
+\end{tikzpicture}

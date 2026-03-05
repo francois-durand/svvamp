@@ -3,27 +3,43 @@ name: release-main
 on:
   release:
     types: [published]
-    branches: [master]
 
 jobs:
-
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
     steps:
       - name: Check out
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Set up the environment
-        uses: ./.github/actions/setup-poetry-env
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v1
+
+      - name: Install build tools
+        run: |
+          uv pip install build twine
 
       - name: Export tag
         id: vars
         run: echo tag=${GITHUB_REF#refs/*/} >> $GITHUB_OUTPUT
 
-      - name: Build and publish
+      - name: Set version from tag
         run: |
-          source .venv/bin/activate
-          poetry version ${{ steps.vars.outputs.tag }}
-          poetry build
-          poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
-          poetry publish
+          uv pip install bump-my-version
+          bump-my-version set-version "${{ steps.vars.outputs.tag }}" --no-commit --no-tag
+
+      - name: Build
+        run: uv run python -m build
+
+      - name: Publish to PyPI
+        env:
+          TWINE_USERNAME: "__token__"
+          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+        run: uv run twine upload dist/*
