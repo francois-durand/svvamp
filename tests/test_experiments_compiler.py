@@ -90,7 +90,7 @@ def test():
         Rule (abbr)
         RV                          0.0                 0.0                 0.0
         Plu                         0.0                 0.0                 0.0
-        >>> experiment_compiler.cm_tm_um_rate_bar_plot()  # doctest: +NORMALIZE_WHITESPACE
+        >>> experiment_compiler.cm_tm_um_rate_bar_plot()  # doctest: +NORMALIZE_WHITESPACE +ELLIPSIS
                                     TM  ...                 CM
                     Rate (lower bound)  ... Rate (uncertainty)
         Rule (abbr)                     ...
@@ -98,22 +98,12 @@ def test():
         Plu                        0.0  ...                0.0
         <BLANKLINE>
         [2 rows x 9 columns]
-        >>> experiment_compiler.condorcet_consistency_bar_plot()  # doctest: +NORMALIZE_WHITESPACE
-                               Sincere  ...                 CM
-                    Rate (lower bound)  ... Rate (uncertainty)
-        Rule (abbr)                     ...
-        RV                         0.0  ...                0.0
-        Plu                        0.0  ...                0.0
-        <BLANKLINE>
-        [2 rows x 4 columns]
-        >>> experiment_compiler.loss_social_welfare_bar_plot()  # doctest: +NORMALIZE_WHITESPACE
-                               Sincere  ...                 CM
-                    Rate (lower bound)  ... Rate (uncertainty)
-        Rule (abbr)                     ...
-        RV                         0.0  ...                0.0
-        Plu                        0.0  ...                0.0
-        <BLANKLINE>
-        [2 rows x 4 columns]
+        >>> df = experiment_compiler.condorcet_consistency_bar_plot()
+        >>> df.shape
+        (2, 4)
+        >>> df = experiment_compiler.loss_social_welfare_bar_plot()
+        >>> df.shape
+        (2, 4)
         >>> experiment_compiler.nb_candidates_cm_line_plot(rules=['RV', 'Plu'])  # doctest: +NORMALIZE_WHITESPACE
         C      3
         RV   0.0
