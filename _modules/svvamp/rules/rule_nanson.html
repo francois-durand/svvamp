@@ -444,6 +444,7 @@
 <span class="sd">    You should have received a copy of the GNU General Public License</span>
 <span class="sd">    along with SVVAMP.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <span class="sd">&quot;&quot;&quot;</span>
+
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.rules.rule</span><span class="w"> </span><span class="kn">import</span> <span class="n">Rule</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.utils.util_cache</span><span class="w"> </span><span class="kn">import</span> <span class="n">cached_property</span>
@@ -720,18 +721,20 @@
 <span class="sd">        [0. 2. 3.]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">full_name</span> <span class="o">=</span> <span class="s1">&#39;Nanson&#39;</span>
-    <span class="n">abbreviation</span> <span class="o">=</span> <span class="s1">&#39;Nan&#39;</span>
+    <span class="n">full_name</span> <span class="o">=</span> <span class="s2">&quot;Nanson&quot;</span>
+    <span class="n">abbreviation</span> <span class="o">=</span> <span class="s2">&quot;Nan&quot;</span>
 
     <span class="n">options_parameters</span> <span class="o">=</span> <span class="n">Rule</span><span class="o">.</span><span class="n">options_parameters</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">options_parameters</span><span class="p">[</span><span class="s1">&#39;icm_option&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">}</span>
-    <span class="n">options_parameters</span><span class="p">[</span><span class="s1">&#39;cm_option&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;fast&#39;</span><span class="p">,</span> <span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;fast&#39;</span><span class="p">}</span>
+    <span class="n">options_parameters</span><span class="p">[</span><span class="s2">&quot;icm_option&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;exact&quot;</span><span class="p">],</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;exact&quot;</span><span class="p">}</span>
+    <span class="n">options_parameters</span><span class="p">[</span><span class="s2">&quot;cm_option&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;fast&quot;</span><span class="p">,</span> <span class="s2">&quot;exact&quot;</span><span class="p">],</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;fast&quot;</span><span class="p">}</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="n">with_two_candidates_reduces_to_plurality</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">is_based_on_rk</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">with_two_candidates_reduces_to_plurality</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">is_based_on_rk</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">precheck_icm</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-            <span class="n">log_identity</span><span class="o">=</span><span class="s2">&quot;NANSON&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+            <span class="n">log_identity</span><span class="o">=</span><span class="s2">&quot;NANSON&quot;</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
         <span class="p">)</span>
 
     <span class="nd">@cached_property</span>
@@ -766,23 +769,24 @@
             <span class="n">borda_for_next_round</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">borda_temp</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
             <span class="n">borda_average_for_next_round</span> <span class="o">=</span> <span class="n">borda_average</span>
             <span class="k">while</span> <span class="n">least_borda</span> <span class="o">&lt;</span> <span class="n">borda_average</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">least_borda</span> <span class="o">+</span> <span class="p">(</span><span class="n">nb_candidates_alive</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">borda_average</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">least_borda</span> <span class="o">+</span> <span class="p">(</span><span class="n">nb_candidates_alive</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">borda_average</span><span class="p">:</span>
                     <span class="n">one_v_might_be_pivotal</span> <span class="o">=</span> <span class="kc">True</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;One voter might be pivotal&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
                 <span class="n">losing_candidates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">borda_temp</span> <span class="o">==</span> <span class="n">least_borda</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
                 <span class="n">candidates_worst_to_best</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">losing_candidates</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;losing_candidates[::-1] =&quot;</span><span class="p">,</span> <span class="n">losing_candidates</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
                 <span class="c1"># self.mylogv(&quot;candidates_worst_to_best =&quot;, candidates_worst_to_best, 2)</span>
-                <span class="n">borda_average_for_next_round</span> <span class="o">-=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">losing_candidates</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="n">borda_average_for_next_round</span> <span class="o">-=</span> <span class="nb">len</span><span class="p">(</span><span class="n">losing_candidates</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span> <span class="o">/</span> <span class="mi">2</span>
                 <span class="n">borda_for_next_round</span><span class="p">[</span><span class="n">losing_candidates</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
                 <span class="n">borda_for_next_round</span> <span class="o">=</span> <span class="n">borda_for_next_round</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_rk</span><span class="p">[:,</span> <span class="n">losing_candidates</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_rk</span><span class="p">[:,</span> <span class="n">losing_candidates</span><span class="p">],</span> <span class="mi">1</span>
+                <span class="p">)</span>
                 <span class="n">borda_temp</span><span class="p">[</span><span class="n">losing_candidates</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
                 <span class="n">least_borda</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">borda_temp</span><span class="p">)</span>
                 <span class="c1"># self.mylogv(&quot;borda_temp =&quot;, borda_temp, 2)</span>
                 <span class="c1"># self.mylogv(&quot;least_borda =&quot;, least_borda, 2)</span>
                 <span class="c1"># self.mylogv(&quot;borda_average =&quot;, borda_average, 2)</span>
-            <span class="k">if</span> <span class="n">least_borda</span> <span class="o">-</span> <span class="p">(</span><span class="n">nb_candidates_alive</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">borda_average</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">least_borda</span> <span class="o">-</span> <span class="p">(</span><span class="n">nb_candidates_alive</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">borda_average</span><span class="p">:</span>
                 <span class="n">one_v_might_be_pivotal</span> <span class="o">=</span> <span class="kc">True</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;One voter might be pivotal&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
             <span class="n">borda_temp</span> <span class="o">=</span> <span class="n">borda_for_next_round</span>
@@ -790,8 +794,12 @@
         <span class="n">candidates_by_scores_best_to_worst</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">candidates_worst_to_best</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
         <span class="n">w</span> <span class="o">=</span> <span class="n">candidates_by_scores_best_to_worst</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">scores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;scores&#39;</span><span class="p">:</span> <span class="n">scores</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">:</span> <span class="n">w</span><span class="p">,</span> <span class="s1">&#39;candidates_by_scores_best_to_worst&#39;</span><span class="p">:</span> <span class="n">candidates_by_scores_best_to_worst</span><span class="p">,</span>
-                <span class="s1">&#39;one_v_might_be_pivotal&#39;</span><span class="p">:</span> <span class="n">one_v_might_be_pivotal</span><span class="p">}</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;scores&quot;</span><span class="p">:</span> <span class="n">scores</span><span class="p">,</span>
+            <span class="s2">&quot;w&quot;</span><span class="p">:</span> <span class="n">w</span><span class="p">,</span>
+            <span class="s2">&quot;candidates_by_scores_best_to_worst&quot;</span><span class="p">:</span> <span class="n">candidates_by_scores_best_to_worst</span><span class="p">,</span>
+            <span class="s2">&quot;one_v_might_be_pivotal&quot;</span><span class="p">:</span> <span class="n">one_v_might_be_pivotal</span><span class="p">,</span>
+        <span class="p">}</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">scores_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -799,11 +807,11 @@
 
 <span class="sd">        By convention, if candidate ``c`` does not participate to round ``r``, then ``scores[r, c] = numpy.inf``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s1">&#39;scores&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s2">&quot;scores&quot;</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">w_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s1">&#39;w&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s2">&quot;w&quot;</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">candidates_by_scores_best_to_worst_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -811,11 +819,11 @@
 <span class="sd">        candidates are eliminated during the same round, they are sorted by Borda score at that round and,</span>
 <span class="sd">        in case of a tie, by their index (highest indexes are eliminated first).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s1">&#39;candidates_by_scores_best_to_worst&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s2">&quot;candidates_by_scores_best_to_worst&quot;</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">v_might_im_for_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s1">&#39;one_v_might_be_pivotal&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s2">&quot;one_v_might_be_pivotal&quot;</span><span class="p">])</span>
 
     <span class="c1"># %% Manipulation criteria of the voting system</span>
 
@@ -860,14 +868,15 @@
         <span class="n">matrix_duels_sincere</span> <span class="o">=</span> <span class="n">profile_sincere</span><span class="o">.</span><span class="n">matrix_duels_rk</span>
         <span class="n">row_w</span> <span class="o">=</span> <span class="n">matrix_duels_sincere</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">,</span> <span class="p">:]</span>
         <span class="n">optimal_subset</span> <span class="o">=</span> <span class="nb">list</span><span class="p">({</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_c</span><span class="p">)</span> <span class="k">if</span> <span class="n">c</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span> <span class="ow">and</span> <span class="n">row_w</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">n_v</span> <span class="o">/</span> <span class="mi">2</span><span class="p">}</span> <span class="o">|</span> <span class="p">{</span><span class="n">c</span><span class="p">})</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s1">&#39;CM: Further check: optimal_subset =&#39;</span><span class="p">,</span> <span class="n">optimal_subset</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;CM: Further check: optimal_subset =&quot;</span><span class="p">,</span> <span class="n">optimal_subset</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
         <span class="n">optimal_average_score</span> <span class="o">=</span> <span class="n">row_w</span><span class="p">[</span><span class="n">optimal_subset</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">optimal_subset</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s1">&#39;CM: Further check: optimal_average_score =&#39;</span><span class="p">,</span> <span class="n">optimal_average_score</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;CM: Further check: optimal_average_score =&quot;</span><span class="p">,</span> <span class="n">optimal_average_score</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">optimal_average_score</span> <span class="o">&gt;</span> <span class="n">n_v</span> <span class="o">/</span> <span class="mi">2</span> <span class="ow">or</span> <span class="p">(</span><span class="n">optimal_average_score</span> <span class="o">==</span> <span class="n">n_v</span> <span class="o">/</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">c</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">):</span>
             <span class="n">necessary</span> <span class="o">=</span> <span class="n">n_m</span> <span class="o">+</span> <span class="mi">1</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s1">&#39;CM: Further check: necessary =&#39;</span><span class="p">,</span> <span class="n">necessary</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_update_necessary</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">necessary</span><span class="p">,</span>
-                                   <span class="s1">&#39;CM: Further check: necessary_coalition_size_cm =&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;CM: Further check: necessary =&quot;</span><span class="p">,</span> <span class="n">necessary</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_necessary</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">necessary</span><span class="p">,</span> <span class="s2">&quot;CM: Further check: necessary_coalition_size_cm =&quot;</span>
+            <span class="p">)</span>
         <span class="c1"># An opportunity to escape before real work</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]:</span>
             <span class="k">return</span> <span class="kc">False</span>
@@ -884,13 +893,13 @@
         <span class="n">scores_test</span> <span class="o">=</span> <span class="n">matrix_duels_sincere</span><span class="p">[:,</span> <span class="n">optimal_subset</span><span class="p">][</span><span class="n">optimal_subset</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="c1"># We add a tie-breaking term [(k-1)/k, (k-2)/k, ..., 0] to ease the computations.</span>
         <span class="n">scores_test</span> <span class="o">=</span> <span class="n">scores_test</span> <span class="o">+</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="n">k</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s1">&#39;CM: Fast algorithm: optimal_subset =&#39;</span><span class="p">,</span> <span class="n">optimal_subset</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s1">&#39;CM: Fast algorithm: scores_test =&#39;</span><span class="p">,</span> <span class="n">scores_test</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;CM: Fast algorithm: optimal_subset =&quot;</span><span class="p">,</span> <span class="n">optimal_subset</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;CM: Fast algorithm: scores_test =&quot;</span><span class="p">,</span> <span class="n">scores_test</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
         <span class="n">ballots_manipulators_subset</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_m</span><span class="p">):</span>
             <span class="c1"># Balancing ballot: put candidates in the order of their current scores (least point to the most</span>
             <span class="c1"># dangerous).</span>
-            <span class="n">candidates_by_decreasing_score</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="o">-</span> <span class="n">scores_test</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;mergesort&#39;</span><span class="p">)</span>
+            <span class="n">candidates_by_decreasing_score</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="o">-</span><span class="n">scores_test</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;mergesort&quot;</span><span class="p">)</span>
             <span class="n">ballot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">candidates_by_decreasing_score</span><span class="p">)</span>
             <span class="c1"># Our priority is to kill w, so we put her at the bottom</span>
             <span class="n">ballot</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">less</span><span class="p">(</span><span class="n">ballot</span><span class="p">,</span> <span class="n">ballot</span><span class="p">[</span><span class="n">i_w</span><span class="p">])</span>
@@ -898,10 +907,10 @@
             <span class="c1"># We want to save c, so we put her on top</span>
             <span class="n">ballot</span> <span class="o">-=</span> <span class="n">np</span><span class="o">.</span><span class="n">greater</span><span class="p">(</span><span class="n">ballot</span><span class="p">,</span> <span class="n">ballot</span><span class="p">[</span><span class="n">i_c</span><span class="p">])</span>
             <span class="n">ballot</span><span class="p">[</span><span class="n">i_c</span><span class="p">]</span> <span class="o">=</span> <span class="n">k</span> <span class="o">-</span> <span class="mi">1</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s1">&#39;CM: Fast algorithm: ballot =&#39;</span><span class="p">,</span> <span class="n">ballot</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;CM: Fast algorithm: ballot =&quot;</span><span class="p">,</span> <span class="n">ballot</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="c1"># New scores = old scores + ballot.</span>
             <span class="n">scores_test</span> <span class="o">+=</span> <span class="n">ballot</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s1">&#39;CM: Fast algorithm: scores_test =&#39;</span><span class="p">,</span> <span class="n">scores_test</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;CM: Fast algorithm: scores_test =&quot;</span><span class="p">,</span> <span class="n">scores_test</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="n">ballots_manipulators_subset</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ballot</span><span class="p">)</span>
         <span class="n">ballots_manipulators</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_m</span><span class="p">,</span> <span class="n">n_c</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">n_m</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># Otherwise, `ballots_manipulators_subset` is empty hence numpy cannot cast the array.</span>
@@ -909,33 +918,35 @@
         <span class="n">ballots_manipulators</span><span class="p">[:,</span> <span class="n">optimal_subset</span><span class="p">]</span> <span class="o">+=</span> <span class="n">n_c</span> <span class="o">-</span> <span class="n">k</span>
         <span class="k">if</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">n_c</span><span class="p">:</span>
             <span class="n">other_candidates_by_decreasing_score</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="n">cand</span> <span class="k">for</span> <span class="n">cand</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="o">-</span> <span class="n">matrix_duels_sincere</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;mergesort&#39;</span><span class="p">)</span>
+                <span class="n">cand</span>
+                <span class="k">for</span> <span class="n">cand</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="o">-</span><span class="n">matrix_duels_sincere</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;mergesort&quot;</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">cand</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">optimal_subset</span>
             <span class="p">]</span>
             <span class="n">ballots_manipulators</span><span class="p">[:,</span> <span class="n">other_candidates_by_decreasing_score</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_c</span> <span class="o">-</span> <span class="n">k</span><span class="p">)[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s1">&#39;CM: Fast algorithm: ballots_manipulators =&#39;</span><span class="p">,</span> <span class="n">ballots_manipulators</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;CM: Fast algorithm: ballots_manipulators =&quot;</span><span class="p">,</span> <span class="n">ballots_manipulators</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
         <span class="n">ballots</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">ballots_sincere</span><span class="p">,</span> <span class="n">ballots_manipulators</span><span class="p">))</span>
         <span class="n">w_test</span> <span class="o">=</span> <span class="n">RuleNanson</span><span class="p">()(</span><span class="n">profile</span><span class="o">=</span><span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="n">ballots</span><span class="p">))</span><span class="o">.</span><span class="n">w_</span>
         <span class="k">if</span> <span class="n">w_test</span> <span class="o">==</span> <span class="n">c</span><span class="p">:</span>
             <span class="n">sufficient</span> <span class="o">=</span> <span class="n">n_m</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s1">&#39;CM: Fast algorithm: sufficient =&#39;</span><span class="p">,</span> <span class="n">sufficient</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_update_sufficient</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">sufficient</span><span class="p">,</span>
-                                    <span class="s1">&#39;CM: Fast algorithm: sufficient_coalition_size_cm =&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;CM: Fast algorithm: sufficient =&quot;</span><span class="p">,</span> <span class="n">sufficient</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_sufficient</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">sufficient</span><span class="p">,</span> <span class="s2">&quot;CM: Fast algorithm: sufficient_coalition_size_cm =&quot;</span>
+            <span class="p">)</span>
         <span class="n">is_quick_escape</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># We will not do better if we come back in this method</span>
         <span class="k">return</span> <span class="n">is_quick_escape</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_cm_main_work_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
-<span class="sd">            ...     [0, 1, 2],</span>
-<span class="sd">            ...     [0, 2, 1],</span>
-<span class="sd">            ...     [0, 2, 1],</span>
-<span class="sd">            ...     [0, 2, 1],</span>
-<span class="sd">            ...     [2, 0, 1],</span>
-<span class="sd">            ... ])</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleNanson(cm_option=&#39;exact&#39;)(profile)</span>
-<span class="sd">            &gt;&gt;&gt; rule.candidates_cm_</span>
-<span class="sd">            array([0., 0., 0.])</span>
+<span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
+<span class="sd">        ...     [0, 1, 2],</span>
+<span class="sd">        ...     [0, 2, 1],</span>
+<span class="sd">        ...     [0, 2, 1],</span>
+<span class="sd">        ...     [0, 2, 1],</span>
+<span class="sd">        ...     [2, 0, 1],</span>
+<span class="sd">        ... ])</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleNanson(cm_option=&#39;exact&#39;)(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule.candidates_cm_</span>
+<span class="sd">        array([0., 0., 0.])</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">is_quick_escape_fast</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cm_main_work_c_fast_</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span> <span class="o">==</span> <span class="s2">&quot;exact&quot;</span><span class="p">:</span>
@@ -949,10 +960,10 @@
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">theta_critical_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 1, 2, 3]])</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleNanson()(profile)</span>
-<span class="sd">            &gt;&gt;&gt; rule.theta_critical_</span>
-<span class="sd">            0.18181818181818182</span>
+<span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 1, 2, 3]])</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleNanson()(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule.theta_critical_</span>
+<span class="sd">        0.18181818181818182</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">n_c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">n_c</span> <span class="o">-</span> <span class="mi">5</span><span class="p">)</span></div>

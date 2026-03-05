@@ -444,6 +444,7 @@
 <span class="sd">    You should have received a copy of the GNU General Public License</span>
 <span class="sd">    along with SVVAMP.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <span class="sd">&quot;&quot;&quot;</span>
+
 <span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">floor</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
@@ -466,12 +467,12 @@
 <span class="sd">    Consider that the implementation of `is_cm_` is trustworthy only if voters have no indifference.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">full_name</span> <span class="o">=</span> <span class="s1">&#39;Dodgson&#39;</span>
-    <span class="n">abbreviation</span> <span class="o">=</span> <span class="s1">&#39;Dod&#39;</span>
+    <span class="n">full_name</span> <span class="o">=</span> <span class="s2">&quot;Dodgson&quot;</span>
+    <span class="n">abbreviation</span> <span class="o">=</span> <span class="s2">&quot;Dod&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">log_identity</span> <span class="o">=</span> <span class="s1">&#39;DODGSON&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_identity</span> <span class="o">=</span> <span class="s2">&quot;DODGSON&quot;</span>
         <span class="c1"># Initialize the computed variables</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span> <span class="o">=</span> <span class="kc">None</span>
 
@@ -481,14 +482,13 @@
 <span class="sd">        ----------</span>
 <span class="sd">        profile : Profile</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">delete_cache</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;_&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">delete_cache</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span> <span class="o">=</span> <span class="n">profile</span>
         <span class="k">return</span> <span class="bp">self</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">w_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Integer (winning candidate).</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Integer (winning candidate).&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Compute winner&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">exists_condorcet_winner_rk</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">condorcet_winner_rk</span>
@@ -497,26 +497,23 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">losing_candidates_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d of Integers. List of losing candidates, in a decreasing order of (heuristic) dangerousness</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d of Integers. List of losing candidates, in a decreasing order of (heuristic) dangerousness&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Compute ordered list of losing candidates&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">):</span>
             <span class="c1"># If the winner is not known, we cannot compute the losing candidates.</span>
             <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">),</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">w_</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-        <span class="p">))</span>
-        <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_ut</span><span class="p">[</span><span class="n">result</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">],</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;mergesort&#39;</span><span class="p">)]</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">w_</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">))</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_ut</span><span class="p">[</span><span class="n">result</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">],</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;mergesort&quot;</span><span class="p">)]</span>
 
     <span class="c1"># %% Coalition Manipulation (CM)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">log_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method_name</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Log corresponding to a particular manipulation method.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="s1">&#39;_cm_&#39;</span> <span class="ow">in</span> <span class="n">method_name</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Log corresponding to a particular manipulation method.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="s2">&quot;_cm_&quot;</span> <span class="ow">in</span> <span class="n">method_name</span><span class="p">:</span>
             <span class="k">return</span> <span class="s2">&quot;cm_option = fast&quot;</span>
-        <span class="k">elif</span> <span class="s1">&#39;_xm_&#39;</span> <span class="ow">in</span> <span class="n">method_name</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s2">&quot;_xm_&quot;</span> <span class="ow">in</span> <span class="n">method_name</span><span class="p">:</span>
             <span class="k">return</span> <span class="s2">&quot;xm_option = exact&quot;</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
@@ -572,7 +569,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;CM: Compute _is_cm_for_c_ for c =&quot;</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">strict_majority</span> <span class="o">=</span> <span class="n">floor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
         <span class="n">strict_minority</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span> <span class="o">-</span> <span class="n">strict_majority</span>
-        <span class="n">v_sincere</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_ut</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_ut</span><span class="p">[:,</span> <span class="n">c</span><span class="p">])</span>
+        <span class="n">v_sincere</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_ut</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_ut</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]</span>
 
         <span class="c1"># First, we try to prove that manipulation is impossible by showing that the penalty of `c` will necessarily</span>
         <span class="c1"># be higher than the one of `w` (typical case of CM failure).</span>
@@ -583,10 +580,11 @@
         <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">losing_candidates_</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">d</span> <span class="o">==</span> <span class="n">c</span><span class="p">:</span>
                 <span class="k">continue</span>
-            <span class="n">n_voters_who_are_sincere_and_rank_d_above_c</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span>
-                <span class="n">v_sincere</span><span class="p">,</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[:,</span> <span class="n">d</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]</span>
-            <span class="p">))</span>
+            <span class="n">n_voters_who_are_sincere_and_rank_d_above_c</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span>
+                    <span class="n">v_sincere</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[:,</span> <span class="n">d</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
             <span class="k">if</span> <span class="n">n_voters_who_are_sincere_and_rank_d_above_c</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">strict_minority</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;CM: c does not win against d =&quot;</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
                 <span class="n">c_does_not_win_against_some_d</span> <span class="o">=</span> <span class="kc">True</span>
@@ -694,10 +692,10 @@
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">theta_critical_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 1, 2, 3]])</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleDodgson()(profile)</span>
-<span class="sd">            &gt;&gt;&gt; rule.theta_critical_</span>
-<span class="sd">            0.18181818181818182</span>
+<span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 1, 2, 3]])</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleDodgson()(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule.theta_critical_</span>
+<span class="sd">        0.18181818181818182</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">n_c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">n_c</span> <span class="o">-</span> <span class="mi">5</span><span class="p">)</span>

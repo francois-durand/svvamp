@@ -493,166 +493,174 @@
 <span class="sd">    to calculate the mean over the profiles. The result will be called &#39;total_u_mean_mean&#39;.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">boolean_criteria</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">numerical_criteria</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">special_candidates_criteria</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">array_criteria</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">matrix_criteria</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">boolean_criteria</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">numerical_criteria</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">special_candidates_criteria</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">array_criteria</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">matrix_criteria</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="k">if</span> <span class="n">boolean_criteria</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">boolean_criteria</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="s1">&#39;exists_condorcet_admissible&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;exists_weak_condorcet_winner&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;exists_condorcet_winner_rk_ctb&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;exists_condorcet_winner_rk&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;exists_condorcet_winner_ut_rel_ctb&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;exists_condorcet_winner_ut_rel&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;exists_condorcet_winner_ut_abs_ctb&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;exists_condorcet_winner_ut_abs&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;exists_resistant_condorcet_winner&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;exists_condorcet_order_rk_ctb&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;exists_condorcet_order_rk&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;exists_condorcet_order_ut_rel_ctb&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;exists_condorcet_order_ut_rel&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;exists_condorcet_order_ut_abs_ctb&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;exists_condorcet_order_ut_abs&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;exists_majority_favorite_rk_ctb&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;exists_majority_favorite_rk&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;exists_majority_favorite_ut_ctb&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;exists_majority_favorite_ut&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;exists_super_condorcet_winner&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;exists_pair_safe_condorcet_winner&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;exists_set_safe_condorcet_winner&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;not_exists_condorcet_admissible&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;not_exists_weak_condorcet_winner&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;not_exists_condorcet_winner_rk_ctb&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;not_exists_condorcet_winner_rk&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;not_exists_condorcet_winner_ut_rel_ctb&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;not_exists_condorcet_winner_ut_rel&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;not_exists_condorcet_winner_ut_abs_ctb&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;not_exists_condorcet_winner_ut_abs&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;not_exists_resistant_condorcet_winner&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;not_exists_condorcet_order_rk_ctb&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;not_exists_condorcet_order_rk&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;not_exists_condorcet_order_ut_rel_ctb&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;not_exists_condorcet_order_ut_rel&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;not_exists_condorcet_order_ut_abs_ctb&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;not_exists_condorcet_order_ut_abs&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;not_exists_majority_favorite_rk_ctb&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;not_exists_majority_favorite_rk&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;not_exists_majority_favorite_ut_ctb&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;not_exists_majority_favorite_ut&#39;</span><span class="p">,</span>
+                <span class="s2">&quot;exists_condorcet_admissible&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;exists_weak_condorcet_winner&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;exists_condorcet_winner_rk_ctb&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;exists_condorcet_winner_rk&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;exists_condorcet_winner_ut_rel_ctb&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;exists_condorcet_winner_ut_rel&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;exists_condorcet_winner_ut_abs_ctb&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;exists_condorcet_winner_ut_abs&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;exists_resistant_condorcet_winner&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;exists_condorcet_order_rk_ctb&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;exists_condorcet_order_rk&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;exists_condorcet_order_ut_rel_ctb&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;exists_condorcet_order_ut_rel&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;exists_condorcet_order_ut_abs_ctb&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;exists_condorcet_order_ut_abs&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;exists_majority_favorite_rk_ctb&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;exists_majority_favorite_rk&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;exists_majority_favorite_ut_ctb&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;exists_majority_favorite_ut&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;exists_super_condorcet_winner&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;exists_pair_safe_condorcet_winner&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;exists_set_safe_condorcet_winner&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;not_exists_condorcet_admissible&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;not_exists_weak_condorcet_winner&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;not_exists_condorcet_winner_rk_ctb&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;not_exists_condorcet_winner_rk&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;not_exists_condorcet_winner_ut_rel_ctb&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;not_exists_condorcet_winner_ut_rel&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;not_exists_condorcet_winner_ut_abs_ctb&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;not_exists_condorcet_winner_ut_abs&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;not_exists_resistant_condorcet_winner&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;not_exists_condorcet_order_rk_ctb&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;not_exists_condorcet_order_rk&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;not_exists_condorcet_order_ut_rel_ctb&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;not_exists_condorcet_order_ut_rel&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;not_exists_condorcet_order_ut_abs_ctb&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;not_exists_condorcet_order_ut_abs&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;not_exists_majority_favorite_rk_ctb&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;not_exists_majority_favorite_rk&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;not_exists_majority_favorite_ut_ctb&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;not_exists_majority_favorite_ut&quot;</span><span class="p">,</span>
             <span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">boolean_criteria</span> <span class="o">=</span> <span class="n">boolean_criteria</span>
         <span class="k">if</span> <span class="n">numerical_criteria</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">numerical_criteria</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="p">(</span><span class="s1">&#39;mean_utility_min&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="s1">&#39;mean_u_min_min&#39;</span><span class="p">),</span>
-                <span class="p">(</span><span class="s1">&#39;mean_utility_min&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="s1">&#39;mean_u_min_max&#39;</span><span class="p">),</span>
-                <span class="p">(</span><span class="s1">&#39;mean_utility_min&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="s1">&#39;mean_u_min_mean&#39;</span><span class="p">),</span>
-                <span class="p">(</span><span class="s1">&#39;mean_utility_min&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">,</span> <span class="s1">&#39;mean_u_min_std&#39;</span><span class="p">),</span>
-                <span class="p">(</span><span class="s1">&#39;mean_utility_max&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="s1">&#39;mean_u_max_min&#39;</span><span class="p">),</span>
-                <span class="p">(</span><span class="s1">&#39;mean_utility_max&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="s1">&#39;mean_u_max_max&#39;</span><span class="p">),</span>
-                <span class="p">(</span><span class="s1">&#39;mean_utility_max&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="s1">&#39;mean_u_max_mean&#39;</span><span class="p">),</span>
-                <span class="p">(</span><span class="s1">&#39;mean_utility_max&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">,</span> <span class="s1">&#39;mean_u_max_std&#39;</span><span class="p">),</span>
-                <span class="p">(</span><span class="s1">&#39;mean_utility_mean&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="s1">&#39;mean_u_mean_min&#39;</span><span class="p">),</span>
-                <span class="p">(</span><span class="s1">&#39;mean_utility_mean&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="s1">&#39;mean_u_mean_max&#39;</span><span class="p">),</span>
-                <span class="p">(</span><span class="s1">&#39;mean_utility_mean&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="s1">&#39;mean_u_mean_mean&#39;</span><span class="p">),</span>
-                <span class="p">(</span><span class="s1">&#39;mean_utility_mean&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">,</span> <span class="s1">&#39;mean_u_mean_std&#39;</span><span class="p">),</span>
-                <span class="p">(</span><span class="s1">&#39;nb_condorcet_admissible&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span>
-                 <span class="s1">&#39;nb_condorcet_admissible_mean&#39;</span><span class="p">),</span>
-                <span class="p">(</span><span class="s1">&#39;nb_weak_condorcet_winners&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span>
-                 <span class="s1">&#39;nb_weak_condorcet_winners_mean&#39;</span><span class="p">)</span>
+                <span class="p">(</span><span class="s2">&quot;mean_utility_min&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="s2">&quot;mean_u_min_min&quot;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;mean_utility_min&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="s2">&quot;mean_u_min_max&quot;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;mean_utility_min&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="s2">&quot;mean_u_min_mean&quot;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;mean_utility_min&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">,</span> <span class="s2">&quot;mean_u_min_std&quot;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;mean_utility_max&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="s2">&quot;mean_u_max_min&quot;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;mean_utility_max&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="s2">&quot;mean_u_max_max&quot;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;mean_utility_max&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="s2">&quot;mean_u_max_mean&quot;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;mean_utility_max&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">,</span> <span class="s2">&quot;mean_u_max_std&quot;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;mean_utility_mean&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="s2">&quot;mean_u_mean_min&quot;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;mean_utility_mean&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="s2">&quot;mean_u_mean_max&quot;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;mean_utility_mean&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="s2">&quot;mean_u_mean_mean&quot;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;mean_utility_mean&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">,</span> <span class="s2">&quot;mean_u_mean_std&quot;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;nb_condorcet_admissible&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="s2">&quot;nb_condorcet_admissible_mean&quot;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;nb_weak_condorcet_winners&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="s2">&quot;nb_weak_condorcet_winners_mean&quot;</span><span class="p">),</span>
             <span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">numerical_criteria</span> <span class="o">=</span> <span class="n">numerical_criteria</span>
         <span class="k">if</span> <span class="n">special_candidates_criteria</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">special_candidates_criteria</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="s1">&#39;condorcet_winner_rk_ctb&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;condorcet_winner_rk&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;condorcet_winner_ut_rel_ctb&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;condorcet_winner_ut_rel&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;condorcet_winner_ut_abs_ctb&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;condorcet_winner_ut_abs&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;resistant_condorcet_winner&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;majority_favorite_rk_ctb&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;majority_favorite_rk&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;majority_favorite_ut_ctb&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;majority_favorite_ut&#39;</span><span class="p">,</span>
+                <span class="s2">&quot;condorcet_winner_rk_ctb&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;condorcet_winner_rk&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;condorcet_winner_ut_rel_ctb&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;condorcet_winner_ut_rel&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;condorcet_winner_ut_abs_ctb&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;condorcet_winner_ut_abs&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;resistant_condorcet_winner&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;majority_favorite_rk_ctb&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;majority_favorite_rk&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;majority_favorite_ut_ctb&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;majority_favorite_ut&quot;</span><span class="p">,</span>
             <span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">special_candidates_criteria</span> <span class="o">=</span> <span class="n">special_candidates_criteria</span>
         <span class="k">if</span> <span class="n">array_criteria</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">array_criteria</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="s1">&#39;plurality_scores_rk&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;plurality_scores_ut&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;condorcet_admissible_candidates&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;weak_condorcet_winners&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;borda_score_c_rk&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;borda_score_c_ut&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;total_utility_c&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;mean_utility_c&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;relative_social_welfare_c&#39;</span><span class="p">,</span>
+                <span class="s2">&quot;plurality_scores_rk&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;plurality_scores_ut&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;condorcet_admissible_candidates&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;weak_condorcet_winners&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;borda_score_c_rk&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;borda_score_c_ut&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;total_utility_c&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;mean_utility_c&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;relative_social_welfare_c&quot;</span><span class="p">,</span>
             <span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">array_criteria</span> <span class="o">=</span> <span class="n">array_criteria</span>
         <span class="k">if</span> <span class="n">matrix_criteria</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">matrix_criteria</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="s1">&#39;preferences_ut&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;preferences_borda_rk&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;preferences_borda_ut&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;matrix_duels_ut&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;matrix_duels_rk&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;matrix_victories_ut_abs&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;matrix_victories_ut_abs_ctb&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;matrix_victories_ut_rel&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;matrix_victories_ut_rel_ctb&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;matrix_victories_rk&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;matrix_victories_rk_ctb&#39;</span>
+                <span class="s2">&quot;preferences_ut&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;preferences_borda_rk&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;preferences_borda_ut&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;matrix_duels_ut&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;matrix_duels_rk&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;matrix_victories_ut_abs&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;matrix_victories_ut_abs_ctb&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;matrix_victories_ut_rel&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;matrix_victories_ut_rel_ctb&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;matrix_victories_rk&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;matrix_victories_rk_ctb&quot;</span><span class="p">,</span>
             <span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">matrix_criteria</span> <span class="o">=</span> <span class="n">matrix_criteria</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            &gt;&gt;&gt; study_profile_criteria = StudyProfileCriteria(</span>
-<span class="sd">            ...     boolean_criteria=[&#39;exists_condorcet_winner_rk&#39;],</span>
-<span class="sd">            ...     numerical_criteria=[(&#39;mean_utility_min&#39;, np.min, &#39;mean_u_min_min&#39;)],</span>
-<span class="sd">            ...     special_candidates_criteria=[&#39;condorcet_winner_rk&#39;],</span>
-<span class="sd">            ...     array_criteria=[&#39;total_utility_c&#39;],</span>
-<span class="sd">            ...     matrix_criteria=[&#39;matrix_duels_rk&#39;]</span>
-<span class="sd">            ... )</span>
-<span class="sd">            &gt;&gt;&gt; print(study_profile_criteria)  # doctest: +ELLIPSIS</span>
-<span class="sd">            StudyProfileCriteria with:</span>
-<span class="sd">                boolean_criteria:</span>
-<span class="sd">                    exists_condorcet_winner_rk</span>
-<span class="sd">                numerical_criteria:</span>
-<span class="sd">                    (&#39;mean_utility_min&#39;, &lt;function ...min at ...&gt;, &#39;mean_u_min_min&#39;)</span>
-<span class="sd">                special_candidates_criteria:</span>
-<span class="sd">                    condorcet_winner_rk</span>
-<span class="sd">                array_criteria:</span>
-<span class="sd">                    total_utility_c</span>
-<span class="sd">                matrix_criteria:</span>
-<span class="sd">                    matrix_duels_rk</span>
+<span class="sd">        &gt;&gt;&gt; study_profile_criteria = StudyProfileCriteria(</span>
+<span class="sd">        ...     boolean_criteria=[&#39;exists_condorcet_winner_rk&#39;],</span>
+<span class="sd">        ...     numerical_criteria=[(&#39;mean_utility_min&#39;, np.min, &#39;mean_u_min_min&#39;)],</span>
+<span class="sd">        ...     special_candidates_criteria=[&#39;condorcet_winner_rk&#39;],</span>
+<span class="sd">        ...     array_criteria=[&#39;total_utility_c&#39;],</span>
+<span class="sd">        ...     matrix_criteria=[&#39;matrix_duels_rk&#39;]</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; print(study_profile_criteria)  # doctest: +ELLIPSIS</span>
+<span class="sd">        StudyProfileCriteria with:</span>
+<span class="sd">            boolean_criteria:</span>
+<span class="sd">                exists_condorcet_winner_rk</span>
+<span class="sd">            numerical_criteria:</span>
+<span class="sd">                (&#39;mean_utility_min&#39;, &lt;function ...min at ...&gt;, &#39;mean_u_min_min&#39;)</span>
+<span class="sd">            special_candidates_criteria:</span>
+<span class="sd">                condorcet_winner_rk</span>
+<span class="sd">            array_criteria:</span>
+<span class="sd">                total_utility_c</span>
+<span class="sd">            matrix_criteria:</span>
+<span class="sd">                matrix_duels_rk</span>
 
-<span class="sd">            &gt;&gt;&gt; study_profile_criteria = StudyProfileCriteria(</span>
-<span class="sd">            ...     boolean_criteria=[],</span>
-<span class="sd">            ...     numerical_criteria=[],</span>
-<span class="sd">            ...     special_candidates_criteria=[],</span>
-<span class="sd">            ...     array_criteria=[],</span>
-<span class="sd">            ...     matrix_criteria=[]</span>
-<span class="sd">            ... )</span>
-<span class="sd">            &gt;&gt;&gt; print(study_profile_criteria)</span>
-<span class="sd">            StudyProfileCriteria with:</span>
-<span class="sd">                boolean_criteria: None</span>
-<span class="sd">                numerical_criteria: None</span>
-<span class="sd">                special_candidates_criteria: None</span>
-<span class="sd">                array_criteria: None</span>
-<span class="sd">                matrix_criteria: None</span>
+<span class="sd">        &gt;&gt;&gt; study_profile_criteria = StudyProfileCriteria(</span>
+<span class="sd">        ...     boolean_criteria=[],</span>
+<span class="sd">        ...     numerical_criteria=[],</span>
+<span class="sd">        ...     special_candidates_criteria=[],</span>
+<span class="sd">        ...     array_criteria=[],</span>
+<span class="sd">        ...     matrix_criteria=[]</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; print(study_profile_criteria)</span>
+<span class="sd">        StudyProfileCriteria with:</span>
+<span class="sd">            boolean_criteria: None</span>
+<span class="sd">            numerical_criteria: None</span>
+<span class="sd">            special_candidates_criteria: None</span>
+<span class="sd">            array_criteria: None</span>
+<span class="sd">            matrix_criteria: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># noinspection PyListCreation</span>
         <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;boolean_criteria&#39;</span><span class="p">,</span> <span class="s1">&#39;numerical_criteria&#39;</span><span class="p">,</span> <span class="s1">&#39;special_candidates_criteria&#39;</span><span class="p">,</span>
-                     <span class="s1">&#39;array_criteria&#39;</span><span class="p">,</span> <span class="s1">&#39;matrix_criteria&#39;</span><span class="p">]:</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span>
+            <span class="s2">&quot;boolean_criteria&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;numerical_criteria&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;special_candidates_criteria&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;array_criteria&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;matrix_criteria&quot;</span><span class="p">,</span>
+        <span class="p">]:</span>
             <span class="n">criteria</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">criteria</span><span class="p">:</span>
-                <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">:&#39;</span><span class="p">)</span>
-                <span class="n">lines</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s1">&#39;    &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">criterion</span><span class="p">)</span> <span class="k">for</span> <span class="n">criterion</span> <span class="ow">in</span> <span class="n">criteria</span><span class="p">])</span>
+                <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+                <span class="n">lines</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;    &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">criterion</span><span class="p">)</span> <span class="k">for</span> <span class="n">criterion</span> <span class="ow">in</span> <span class="n">criteria</span><span class="p">])</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">: None&#39;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="s1">&#39;StudyProfileCriteria with:</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">indent</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">))</span>
+                <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">: None&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;StudyProfileCriteria with:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">indent</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">))</span>
 
 <div class="viewcode-block" id="StudyProfileCriteria.check_sanity">
 <a class="viewcode-back" href="../../../reference/meta/study_profile_criteria.html#svvamp.StudyProfileCriteria.check_sanity">[docs]</a>
@@ -698,16 +706,17 @@
 <span class="sd">            Traceback (most recent call last):</span>
 <span class="sd">            TypeError: Expected: callable. Got: &#39;this_is_not_callable&#39;.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">criterion</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">boolean_criteria</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">special_candidates_criteria</span><span class="p">,</span>
-                                         <span class="bp">self</span><span class="o">.</span><span class="n">array_criteria</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix_criteria</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">criterion</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">boolean_criteria</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">special_candidates_criteria</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">array_criteria</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix_criteria</span>
+        <span class="p">):</span>
             <span class="k">if</span> <span class="n">criterion</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">Profile</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Attribute </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">criterion</span><span class="p">)</span><span class="si">}</span><span class="s2"> is unknown for Profile.&quot;</span><span class="p">)</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">criterion</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">numerical_criteria</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">numerical_criteria</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">criterion</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">Profile</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Attribute </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">criterion</span><span class="p">)</span><span class="si">}</span><span class="s2"> is unknown for Profile.&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">callable</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected: callable. Got: </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">func</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;StudyProfileCriteria: Sanity check was successful.&#39;</span><span class="p">)</span></div>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;StudyProfileCriteria: Sanity check was successful.&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="StudyProfileCriteria.remove">
@@ -761,8 +770,12 @@
 <span class="sd">                matrix_criteria: None</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">criteria</span> <span class="ow">in</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">boolean_criteria</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">special_candidates_criteria</span><span class="p">,</span>
-                         <span class="bp">self</span><span class="o">.</span><span class="n">array_criteria</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix_criteria</span><span class="p">]:</span>
+        <span class="k">for</span> <span class="n">criteria</span> <span class="ow">in</span> <span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">boolean_criteria</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">special_candidates_criteria</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">array_criteria</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">matrix_criteria</span><span class="p">,</span>
+        <span class="p">]:</span>
             <span class="n">criteria</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">criteria</span> <span class="k">if</span> <span class="n">c</span> <span class="o">!=</span> <span class="n">criterion</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">numerical_criteria</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">numerical_criteria</span> <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">!=</span> <span class="n">criterion</span><span class="p">]</span></div>
 
@@ -872,8 +885,7 @@
 <span class="sd">                matrix_criteria: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">numerical_criteria</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">new_name</span><span class="p">)</span> <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="n">old_name</span> <span class="k">else</span> <span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
-            <span class="k">for</span> <span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">numerical_criteria</span>
+            <span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">new_name</span><span class="p">)</span> <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="n">old_name</span> <span class="k">else</span> <span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">numerical_criteria</span>
         <span class="p">]</span></div>
 
 

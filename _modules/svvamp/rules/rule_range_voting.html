@@ -444,6 +444,7 @@
 <span class="sd">    You should have received a copy of the GNU General Public License</span>
 <span class="sd">    along with SVVAMP.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <span class="sd">&quot;&quot;&quot;</span>
+
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">floor</span><span class="p">,</span> <span class="n">ceil</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.rules.rule</span><span class="w"> </span><span class="kn">import</span> <span class="n">Rule</span>
@@ -747,22 +748,24 @@
 <span class="sd">        [0. 3. 3.]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">full_name</span> <span class="o">=</span> <span class="s1">&#39;Range Voting&#39;</span>
-    <span class="n">abbreviation</span> <span class="o">=</span> <span class="s1">&#39;RV&#39;</span>
+    <span class="n">full_name</span> <span class="o">=</span> <span class="s2">&quot;Range Voting&quot;</span>
+    <span class="n">abbreviation</span> <span class="o">=</span> <span class="s2">&quot;RV&quot;</span>
 
     <span class="n">options_parameters</span> <span class="o">=</span> <span class="n">Rule</span><span class="o">.</span><span class="n">options_parameters</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">options_parameters</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
-        <span class="s1">&#39;max_grade&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
-        <span class="s1">&#39;min_grade&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
-        <span class="s1">&#39;step_grade&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
-        <span class="s1">&#39;rescale_grades&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="n">type_checker</span><span class="o">.</span><span class="n">is_bool</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
-        <span class="s1">&#39;im_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">},</span>
-        <span class="s1">&#39;tm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">},</span>
-        <span class="s1">&#39;um_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">},</span>
-        <span class="s1">&#39;icm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">},</span>
-        <span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">},</span>
-        <span class="s1">&#39;precheck_heuristic&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="kc">False</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
-    <span class="p">})</span>
+    <span class="n">options_parameters</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;max_grade&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">,</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+            <span class="s2">&quot;min_grade&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">,</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+            <span class="s2">&quot;step_grade&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">,</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+            <span class="s2">&quot;rescale_grades&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="n">type_checker</span><span class="o">.</span><span class="n">is_bool</span><span class="p">,</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+            <span class="s2">&quot;im_option&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;exact&quot;</span><span class="p">],</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;exact&quot;</span><span class="p">},</span>
+            <span class="s2">&quot;tm_option&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;exact&quot;</span><span class="p">],</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;exact&quot;</span><span class="p">},</span>
+            <span class="s2">&quot;um_option&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;exact&quot;</span><span class="p">],</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;exact&quot;</span><span class="p">},</span>
+            <span class="s2">&quot;icm_option&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;exact&quot;</span><span class="p">],</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;exact&quot;</span><span class="p">},</span>
+            <span class="s2">&quot;cm_option&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;exact&quot;</span><span class="p">],</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;exact&quot;</span><span class="p">},</span>
+            <span class="s2">&quot;precheck_heuristic&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="kc">False</span><span class="p">],</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_min_grade</span> <span class="o">=</span> <span class="kc">None</span>
@@ -774,8 +777,11 @@
             <span class="c1"># # Even if ``rescale_grades = True``, a voter who has the same utility for ``c`` and ``d`` will not vote</span>
             <span class="c1"># # the same in Range Voting and in Plurality.</span>
             <span class="n">is_based_on_rk</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-            <span class="n">precheck_um</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">precheck_tm</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">precheck_icm</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-            <span class="n">log_identity</span><span class="o">=</span><span class="s2">&quot;RANGE_VOTING&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+            <span class="n">precheck_um</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">precheck_tm</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">precheck_icm</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">log_identity</span><span class="o">=</span><span class="s2">&quot;RANGE_VOTING&quot;</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
         <span class="p">)</span>
 
     <span class="c1"># %% Setting the parameters</span>
@@ -788,10 +794,10 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">min_grade</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_min_grade</span> <span class="o">==</span> <span class="n">value</span><span class="p">:</span>
             <span class="k">return</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options_parameters</span><span class="p">[</span><span class="s1">&#39;min_grade&#39;</span><span class="p">][</span><span class="s1">&#39;allowed&#39;</span><span class="p">](</span><span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options_parameters</span><span class="p">[</span><span class="s2">&quot;min_grade&quot;</span><span class="p">][</span><span class="s2">&quot;allowed&quot;</span><span class="p">](</span><span class="n">value</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;Setting min_grade =&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_min_grade</span> <span class="o">=</span> <span class="n">value</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_result_options</span><span class="p">[</span><span class="s1">&#39;min_grade&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_result_options</span><span class="p">[</span><span class="s2">&quot;min_grade&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">delete_cache</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown value for min_grade: &quot;</span> <span class="o">+</span> <span class="nb">format</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
@@ -804,10 +810,10 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">max_grade</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_grade</span> <span class="o">==</span> <span class="n">value</span><span class="p">:</span>
             <span class="k">return</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options_parameters</span><span class="p">[</span><span class="s1">&#39;max_grade&#39;</span><span class="p">][</span><span class="s1">&#39;allowed&#39;</span><span class="p">](</span><span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options_parameters</span><span class="p">[</span><span class="s2">&quot;max_grade&quot;</span><span class="p">][</span><span class="s2">&quot;allowed&quot;</span><span class="p">](</span><span class="n">value</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;Setting max_grade =&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_max_grade</span> <span class="o">=</span> <span class="n">value</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_result_options</span><span class="p">[</span><span class="s1">&#39;max_grade&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_result_options</span><span class="p">[</span><span class="s2">&quot;max_grade&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">delete_cache</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown value for max_grade: &quot;</span> <span class="o">+</span> <span class="nb">format</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
@@ -820,10 +826,10 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">step_grade</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_step_grade</span> <span class="o">==</span> <span class="n">value</span><span class="p">:</span>
             <span class="k">return</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options_parameters</span><span class="p">[</span><span class="s1">&#39;step_grade&#39;</span><span class="p">][</span><span class="s1">&#39;allowed&#39;</span><span class="p">](</span><span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options_parameters</span><span class="p">[</span><span class="s2">&quot;step_grade&quot;</span><span class="p">][</span><span class="s2">&quot;allowed&quot;</span><span class="p">](</span><span class="n">value</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;Setting step_grade =&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_step_grade</span> <span class="o">=</span> <span class="n">value</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_result_options</span><span class="p">[</span><span class="s1">&#39;step_grade&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_result_options</span><span class="p">[</span><span class="s2">&quot;step_grade&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">delete_cache</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown value for step_grade: &quot;</span> <span class="o">+</span> <span class="nb">format</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
@@ -836,10 +842,10 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">rescale_grades</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rescale_grades</span> <span class="o">==</span> <span class="n">value</span><span class="p">:</span>
             <span class="k">return</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options_parameters</span><span class="p">[</span><span class="s1">&#39;rescale_grades&#39;</span><span class="p">][</span><span class="s1">&#39;allowed&#39;</span><span class="p">](</span><span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options_parameters</span><span class="p">[</span><span class="s2">&quot;rescale_grades&quot;</span><span class="p">][</span><span class="s2">&quot;allowed&quot;</span><span class="p">](</span><span class="n">value</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;Setting rescale_grades =&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_rescale_grades</span> <span class="o">=</span> <span class="n">value</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_result_options</span><span class="p">[</span><span class="s1">&#39;rescale_grades&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_result_options</span><span class="p">[</span><span class="s2">&quot;rescale_grades&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">delete_cache</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown value for rescale_grades: &quot;</span> <span class="o">+</span> <span class="nb">format</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
@@ -860,11 +866,13 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">i_lowest_rung</span> <span class="o">=</span> <span class="n">floor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_grade</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_grade</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
             <span class="n">i_highest_rung</span> <span class="o">=</span> <span class="n">ceil</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_grade</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_grade</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
-            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span>
-                <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">min_grade</span><span class="p">],</span>
-                <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">i_lowest_rung</span><span class="p">,</span> <span class="n">i_highest_rung</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_grade</span><span class="p">,</span>
-                <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">max_grade</span><span class="p">]</span>
-            <span class="p">))</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+                <span class="p">(</span>
+                    <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">min_grade</span><span class="p">],</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">i_lowest_rung</span><span class="p">,</span> <span class="n">i_highest_rung</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_grade</span><span class="p">,</span>
+                    <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">max_grade</span><span class="p">],</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
 
     <span class="c1"># %% Counting the ballots</span>
 
@@ -912,7 +920,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_ut</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_grade</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_grade</span><span class="p">),</span>
                 <span class="n">delta_util</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
                 <span class="n">out</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_ut</span><span class="o">.</span><span class="n">shape</span><span class="p">),</span>
-                <span class="n">where</span><span class="o">=</span><span class="n">delta_util</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span>
+                <span class="n">where</span><span class="o">=</span><span class="n">delta_util</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">,</span>
             <span class="p">)</span>  <span class="c1"># `out` and `where` ensure that when dividing by zero, the result will be zero.</span>
             <span class="c1"># Additive renormalization</span>
             <span class="n">middle_grade</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">ballots</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">ballots</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="mi">2</span>
@@ -932,8 +940,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">scores_sum_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of floats. ``scores_sum_[c]`` is the total grade of candidate ``c``.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of floats. ``scores_sum_[c]`` is the total grade of candidate ``c``.&quot;&quot;&quot;</span>
         <span class="c1"># Note for developers: this is used internally for manipulation computations. Compared to the average grade,</span>
         <span class="c1"># this limits problems of float approximation, especially for IM method.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Compute scores_sum_&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
@@ -941,8 +948,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">scores_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of floats. ``scores_[c]`` is the average grade of candidate ``c``.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of floats. ``scores_[c]`` is the average grade of candidate ``c``.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">around</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scores_sum_</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
 
     <span class="c1"># %% Manipulation criteria of the voting system</span>
@@ -973,27 +979,27 @@
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_im_main_work_v_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">c_is_wanted</span><span class="p">,</span> <span class="n">nb_wanted_undecided</span><span class="p">,</span> <span class="n">stop_if_true</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            &gt;&gt;&gt; profile = Profile([</span>
-<span class="sd">            ...     [ 1. , -0.5,  0. ],</span>
-<span class="sd">            ...     [ 0.5,  1. , -1. ],</span>
-<span class="sd">            ...     [-0.5,  0.5, -1. ],</span>
-<span class="sd">            ...     [ 1. ,  0. ,  1. ],</span>
-<span class="sd">            ...     [-1. , -0.5,  1. ],</span>
-<span class="sd">            ... ])</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleRangeVoting()(profile)</span>
-<span class="sd">            &gt;&gt;&gt; rule.is_im_c_(1)</span>
-<span class="sd">            False</span>
+<span class="sd">        &gt;&gt;&gt; profile = Profile([</span>
+<span class="sd">        ...     [ 1. , -0.5,  0. ],</span>
+<span class="sd">        ...     [ 0.5,  1. , -1. ],</span>
+<span class="sd">        ...     [-0.5,  0.5, -1. ],</span>
+<span class="sd">        ...     [ 1. ,  0. ,  1. ],</span>
+<span class="sd">        ...     [-1. , -0.5,  1. ],</span>
+<span class="sd">        ... ])</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleRangeVoting()(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule.is_im_c_(1)</span>
+<span class="sd">        False</span>
 
-<span class="sd">            &gt;&gt;&gt; profile = Profile([</span>
-<span class="sd">            ...     [ 1. , -1. ,  1. ],</span>
-<span class="sd">            ...     [ 1. , -1. ,  0.5],</span>
-<span class="sd">            ...     [-0.5,  1. ,  0.5],</span>
-<span class="sd">            ...     [-1. ,  0. , -0.5],</span>
-<span class="sd">            ...     [-1. ,  0.5, -0.5],</span>
-<span class="sd">            ... ])</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleRangeVoting()(profile)</span>
-<span class="sd">            &gt;&gt;&gt; rule.is_im_c_(1)</span>
-<span class="sd">            True</span>
+<span class="sd">        &gt;&gt;&gt; profile = Profile([</span>
+<span class="sd">        ...     [ 1. , -1. ,  1. ],</span>
+<span class="sd">        ...     [ 1. , -1. ,  0.5],</span>
+<span class="sd">        ...     [-0.5,  1. ,  0.5],</span>
+<span class="sd">        ...     [-1. ,  0. , -0.5],</span>
+<span class="sd">        ...     [-1. ,  0.5, -0.5],</span>
+<span class="sd">        ... ])</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleRangeVoting()(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule.is_im_c_(1)</span>
+<span class="sd">        True</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">scores_without_v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scores_sum_</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">ballots_</span><span class="p">[</span><span class="n">v</span><span class="p">,</span> <span class="p">:]</span>
         <span class="n">w_without_v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">around</span><span class="p">(</span><span class="n">scores_without_v</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
@@ -1023,8 +1029,9 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">_cm_main_work_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
         <span class="n">scores_temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ballots_</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_wants_to_help_c_</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]),</span> <span class="p">:],</span> <span class="mi">0</span><span class="p">)</span>
         <span class="n">w_temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">around</span><span class="p">(</span><span class="n">scores_temp</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
-        <span class="n">sufficient_not_rounded</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">around</span><span class="p">((</span><span class="n">scores_temp</span><span class="p">[</span><span class="n">w_temp</span><span class="p">]</span> <span class="o">-</span> <span class="n">scores_temp</span><span class="p">[</span><span class="n">c</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_grade</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_grade</span><span class="p">),</span>
-                                           <span class="mi">12</span><span class="p">)</span>
+        <span class="n">sufficient_not_rounded</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">around</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">scores_temp</span><span class="p">[</span><span class="n">w_temp</span><span class="p">]</span> <span class="o">-</span> <span class="n">scores_temp</span><span class="p">[</span><span class="n">c</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_grade</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_grade</span><span class="p">),</span> <span class="mi">12</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;sufficient_not_rounded =&quot;</span><span class="p">,</span> <span class="n">sufficient_not_rounded</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">sufficient_not_rounded</span> <span class="o">%</span> <span class="mi">1</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">c</span> <span class="o">&gt;</span> <span class="n">w_temp</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">sufficient_not_rounded</span> <span class="o">+</span> <span class="mi">1</span>
@@ -1065,10 +1072,10 @@
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">theta_critical_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 1, 2, 3]])</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleRangeVoting()(profile)</span>
-<span class="sd">            &gt;&gt;&gt; rule.theta_critical_</span>
-<span class="sd">            1</span>
+<span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 1, 2, 3]])</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleRangeVoting()(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule.theta_critical_</span>
+<span class="sd">        1</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># This value is conventional.</span>
         <span class="k">return</span> <span class="mi">1</span></div>

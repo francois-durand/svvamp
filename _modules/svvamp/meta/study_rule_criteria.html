@@ -485,17 +485,24 @@
 <span class="sd">        that output a pair (inf, sup), for example `nb_candidates_cm_` or `worst_relative_welfare_with_cm_`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">manipulation_criteria</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">manipulation_criteria_c</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">manipulation_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                 <span class="n">result_criteria</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">utility_criteria</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">numerical_criteria</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">manipulation_criteria</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">manipulation_criteria_c</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">manipulation_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">result_criteria</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">utility_criteria</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">numerical_criteria</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="c1"># Manipulation criteria</span>
         <span class="k">if</span> <span class="n">manipulation_criteria</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">manipulation_criteria</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="s1">&#39;is_tm_&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;is_um_&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;is_icm_&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;is_cm_&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;is_tm_or_um_&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;elects_condorcet_winner_rk_even_with_cm_&#39;</span><span class="p">,</span>
+                <span class="s2">&quot;is_tm_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;is_um_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;is_icm_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;is_cm_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;is_tm_or_um_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;elects_condorcet_winner_rk_even_with_cm_&quot;</span><span class="p">,</span>
             <span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">manipulation_criteria</span> <span class="o">=</span> <span class="n">manipulation_criteria</span>
         <span class="k">if</span> <span class="n">manipulation_criteria_c</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -506,33 +513,33 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">result_criteria</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">elif</span> <span class="n">result_criteria</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">result_criteria</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="s1">&#39;w_is_condorcet_admissible_&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;w_is_not_condorcet_admissible_&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;w_missed_condorcet_admissible_&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;w_is_weak_condorcet_winner_&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;w_is_not_weak_condorcet_winner_&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;w_missed_weak_condorcet_winner_&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;w_is_condorcet_winner_rk_ctb_&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;w_is_not_condorcet_winner_rk_ctb_&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;w_missed_condorcet_winner_rk_ctb_&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;w_is_condorcet_winner_rk_&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;w_is_not_condorcet_winner_rk_&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;w_missed_condorcet_winner_rk_&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;w_is_condorcet_winner_ut_rel_ctb_&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;w_is_not_condorcet_winner_ut_rel_ctb_&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;w_missed_condorcet_winner_ut_rel_ctb_&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;w_is_condorcet_winner_ut_rel_&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;w_is_not_condorcet_winner_ut_rel_&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;w_missed_condorcet_winner_ut_rel_&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;w_is_condorcet_winner_ut_abs_ctb_&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;w_is_not_condorcet_winner_ut_abs_ctb_&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;w_missed_condorcet_winner_ut_abs_ctb_&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;w_is_condorcet_winner_ut_abs_&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;w_is_not_condorcet_winner_ut_abs_&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;w_missed_condorcet_winner_ut_abs_&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;w_is_resistant_condorcet_winner_&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;w_is_not_resistant_condorcet_winner_&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;w_missed_resistant_condorcet_winner_&#39;</span>
+                <span class="s2">&quot;w_is_condorcet_admissible_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;w_is_not_condorcet_admissible_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;w_missed_condorcet_admissible_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;w_is_weak_condorcet_winner_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;w_is_not_weak_condorcet_winner_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;w_missed_weak_condorcet_winner_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;w_is_condorcet_winner_rk_ctb_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;w_is_not_condorcet_winner_rk_ctb_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;w_missed_condorcet_winner_rk_ctb_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;w_is_condorcet_winner_rk_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;w_is_not_condorcet_winner_rk_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;w_missed_condorcet_winner_rk_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;w_is_condorcet_winner_ut_rel_ctb_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;w_is_not_condorcet_winner_ut_rel_ctb_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;w_missed_condorcet_winner_ut_rel_ctb_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;w_is_condorcet_winner_ut_rel_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;w_is_not_condorcet_winner_ut_rel_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;w_missed_condorcet_winner_ut_rel_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;w_is_condorcet_winner_ut_abs_ctb_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;w_is_not_condorcet_winner_ut_abs_ctb_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;w_missed_condorcet_winner_ut_abs_ctb_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;w_is_condorcet_winner_ut_abs_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;w_is_not_condorcet_winner_ut_abs_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;w_missed_condorcet_winner_ut_abs_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;w_is_resistant_condorcet_winner_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;w_is_not_resistant_condorcet_winner_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;w_missed_resistant_condorcet_winner_&quot;</span><span class="p">,</span>
             <span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">result_criteria</span> <span class="o">=</span> <span class="n">result_criteria</span>
@@ -541,75 +548,80 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">utility_criteria</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">elif</span> <span class="n">utility_criteria</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">utility_criteria</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="p">(</span><span class="s1">&#39;mean_utility_w_&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="s1">&#39;mean_u_max&#39;</span><span class="p">),</span>
-                <span class="p">(</span><span class="s1">&#39;mean_utility_w_&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="s1">&#39;mean_u_min&#39;</span><span class="p">),</span>
-                <span class="p">(</span><span class="s1">&#39;mean_utility_w_&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="s1">&#39;mean_u_mean&#39;</span><span class="p">),</span>
-                <span class="p">(</span><span class="s1">&#39;mean_utility_w_&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">,</span> <span class="s1">&#39;mean_u_std&#39;</span><span class="p">),</span>
-                <span class="p">(</span><span class="s1">&#39;relative_social_welfare_w_&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="s1">&#39;relative_social_welfare_mean&#39;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;mean_utility_w_&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="s2">&quot;mean_u_max&quot;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;mean_utility_w_&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="s2">&quot;mean_u_min&quot;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;mean_utility_w_&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="s2">&quot;mean_u_mean&quot;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;mean_utility_w_&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">,</span> <span class="s2">&quot;mean_u_std&quot;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;relative_social_welfare_w_&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="s2">&quot;relative_social_welfare_mean&quot;</span><span class="p">),</span>
             <span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">utility_criteria</span> <span class="o">=</span> <span class="n">utility_criteria</span>
         <span class="c1"># Numerical criteria</span>
         <span class="k">if</span> <span class="n">numerical_criteria</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">numerical_criteria</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="s1">&#39;nb_candidates_cm_&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;worst_relative_welfare_with_cm_&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;cm_power_index_&#39;</span><span class="p">,</span>
+                <span class="s2">&quot;nb_candidates_cm_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;worst_relative_welfare_with_cm_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;cm_power_index_&quot;</span><span class="p">,</span>
             <span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">numerical_criteria</span> <span class="o">=</span> <span class="n">numerical_criteria</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            &gt;&gt;&gt; study_rule_criteria = StudyRuleCriteria(</span>
-<span class="sd">            ...     manipulation_criteria=[&#39;is_cm_&#39;],</span>
-<span class="sd">            ...     manipulation_criteria_c=[&#39;candidates_cm_&#39;],</span>
-<span class="sd">            ...     result_criteria=[&#39;w_is_condorcet_admissible_&#39;, &#39;w_is_weak_condorcet_winner_&#39;],</span>
-<span class="sd">            ...     utility_criteria=[(&#39;mean_utility_w_&#39;, np.max, &#39;mean_u_max&#39;),</span>
-<span class="sd">            ...                       (&#39;mean_utility_w_&#39;, np.min, &#39;mean_u_min&#39;)],</span>
-<span class="sd">            ...     numerical_criteria=[&#39;nb_candidates_cm_&#39;, &#39;worst_relative_welfare_with_cm_&#39;],</span>
-<span class="sd">            ... )</span>
-<span class="sd">            &gt;&gt;&gt; print(study_rule_criteria)  # doctest: +NORMALIZE_WHITESPACE +ELLIPSIS</span>
-<span class="sd">            StudyRuleCriteria with:</span>
-<span class="sd">                manipulation_criteria:</span>
-<span class="sd">                    is_cm_</span>
-<span class="sd">                manipulation_criteria_c:</span>
-<span class="sd">                    candidates_cm_</span>
-<span class="sd">                result_criteria:</span>
-<span class="sd">                    w_is_condorcet_admissible_</span>
-<span class="sd">                    w_is_weak_condorcet_winner_</span>
-<span class="sd">                utility_criteria:</span>
-<span class="sd">                    (&#39;mean_utility_w_&#39;, &lt;function ...max at ...&gt;, &#39;mean_u_max&#39;)</span>
-<span class="sd">                    (&#39;mean_utility_w_&#39;, &lt;function ...min at ...&gt;, &#39;mean_u_min&#39;)</span>
-<span class="sd">                numerical_criteria:</span>
-<span class="sd">                    nb_candidates_cm_</span>
-<span class="sd">                    worst_relative_welfare_with_cm_</span>
+<span class="sd">        &gt;&gt;&gt; study_rule_criteria = StudyRuleCriteria(</span>
+<span class="sd">        ...     manipulation_criteria=[&#39;is_cm_&#39;],</span>
+<span class="sd">        ...     manipulation_criteria_c=[&#39;candidates_cm_&#39;],</span>
+<span class="sd">        ...     result_criteria=[&#39;w_is_condorcet_admissible_&#39;, &#39;w_is_weak_condorcet_winner_&#39;],</span>
+<span class="sd">        ...     utility_criteria=[(&#39;mean_utility_w_&#39;, np.max, &#39;mean_u_max&#39;),</span>
+<span class="sd">        ...                       (&#39;mean_utility_w_&#39;, np.min, &#39;mean_u_min&#39;)],</span>
+<span class="sd">        ...     numerical_criteria=[&#39;nb_candidates_cm_&#39;, &#39;worst_relative_welfare_with_cm_&#39;],</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; print(study_rule_criteria)  # doctest: +NORMALIZE_WHITESPACE +ELLIPSIS</span>
+<span class="sd">        StudyRuleCriteria with:</span>
+<span class="sd">            manipulation_criteria:</span>
+<span class="sd">                is_cm_</span>
+<span class="sd">            manipulation_criteria_c:</span>
+<span class="sd">                candidates_cm_</span>
+<span class="sd">            result_criteria:</span>
+<span class="sd">                w_is_condorcet_admissible_</span>
+<span class="sd">                w_is_weak_condorcet_winner_</span>
+<span class="sd">            utility_criteria:</span>
+<span class="sd">                (&#39;mean_utility_w_&#39;, &lt;function ...max at ...&gt;, &#39;mean_u_max&#39;)</span>
+<span class="sd">                (&#39;mean_utility_w_&#39;, &lt;function ...min at ...&gt;, &#39;mean_u_min&#39;)</span>
+<span class="sd">            numerical_criteria:</span>
+<span class="sd">                nb_candidates_cm_</span>
+<span class="sd">                worst_relative_welfare_with_cm_</span>
 
-<span class="sd">            &gt;&gt;&gt; study_rule_criteria = StudyRuleCriteria(</span>
-<span class="sd">            ...     manipulation_criteria=[],</span>
-<span class="sd">            ...     result_criteria=[],</span>
-<span class="sd">            ...     utility_criteria=[],</span>
-<span class="sd">            ...     numerical_criteria=[],</span>
-<span class="sd">            ... )</span>
-<span class="sd">            &gt;&gt;&gt; print(study_rule_criteria)  # doctest: +NORMALIZE_WHITESPACE +ELLIPSIS</span>
-<span class="sd">            StudyRuleCriteria with:</span>
-<span class="sd">                manipulation_criteria: None</span>
-<span class="sd">                manipulation_criteria_c: None</span>
-<span class="sd">                result_criteria: None</span>
-<span class="sd">                utility_criteria: None</span>
-<span class="sd">                numerical_criteria: None</span>
+<span class="sd">        &gt;&gt;&gt; study_rule_criteria = StudyRuleCriteria(</span>
+<span class="sd">        ...     manipulation_criteria=[],</span>
+<span class="sd">        ...     result_criteria=[],</span>
+<span class="sd">        ...     utility_criteria=[],</span>
+<span class="sd">        ...     numerical_criteria=[],</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; print(study_rule_criteria)  # doctest: +NORMALIZE_WHITESPACE +ELLIPSIS</span>
+<span class="sd">        StudyRuleCriteria with:</span>
+<span class="sd">            manipulation_criteria: None</span>
+<span class="sd">            manipulation_criteria_c: None</span>
+<span class="sd">            result_criteria: None</span>
+<span class="sd">            utility_criteria: None</span>
+<span class="sd">            numerical_criteria: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># noinspection PyListCreation</span>
         <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;manipulation_criteria&#39;</span><span class="p">,</span> <span class="s1">&#39;manipulation_criteria_c&#39;</span><span class="p">,</span> <span class="s1">&#39;result_criteria&#39;</span><span class="p">,</span>
-                     <span class="s1">&#39;utility_criteria&#39;</span><span class="p">,</span> <span class="s1">&#39;numerical_criteria&#39;</span><span class="p">]:</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span>
+            <span class="s2">&quot;manipulation_criteria&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;manipulation_criteria_c&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;result_criteria&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;utility_criteria&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;numerical_criteria&quot;</span><span class="p">,</span>
+        <span class="p">]:</span>
             <span class="n">criteria</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">criteria</span><span class="p">:</span>
-                <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">:&#39;</span><span class="p">)</span>
-                <span class="n">lines</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s1">&#39;    &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">criterion</span><span class="p">)</span> <span class="k">for</span> <span class="n">criterion</span> <span class="ow">in</span> <span class="n">criteria</span><span class="p">])</span>
+                <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+                <span class="n">lines</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;    &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">criterion</span><span class="p">)</span> <span class="k">for</span> <span class="n">criterion</span> <span class="ow">in</span> <span class="n">criteria</span><span class="p">])</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">: None&#39;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="s1">&#39;StudyRuleCriteria with:</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">indent</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">))</span>
+                <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">: None&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;StudyRuleCriteria with:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">indent</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">))</span>
 
 <div class="viewcode-block" id="StudyRuleCriteria.remove">
 <a class="viewcode-back" href="../../../reference/meta/study_rule_criteria.html#svvamp.StudyRuleCriteria.remove">[docs]</a>
@@ -904,10 +916,10 @@
             <span class="k">if</span> <span class="n">criterion</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">rule_class</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Criterion &#39;</span><span class="si">{</span><span class="n">criterion</span><span class="si">}</span><span class="s2">&#39; is unknown for </span><span class="si">{</span><span class="n">rule_class</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
         <span class="c1"># Check if utility criteria are legal.</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">criterion</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">utility_criteria</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">utility_criteria</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">criterion</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">rule_class</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Criterion &#39;</span><span class="si">{</span><span class="n">criterion</span><span class="si">}</span><span class="s2">&#39; is unknown for </span><span class="si">{</span><span class="n">rule_class</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="s1">&#39;__call__&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="s2">&quot;__call__&quot;</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected: callable. Got: </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">func</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
         <span class="c1"># Check if numerical criteria are legal.</span>
         <span class="k">for</span> <span class="n">criterion</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">numerical_criteria</span><span class="p">:</span>

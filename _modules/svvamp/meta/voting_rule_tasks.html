@@ -582,58 +582,54 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">([])</span>
         <span class="k">for</span> <span class="n">voting_system</span> <span class="ow">in</span> <span class="n">voting_systems</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isclass</span><span class="p">(</span><span class="n">voting_system</span><span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                    <span class="p">(</span><span class="n">voting_system</span><span class="p">,</span> <span class="p">{},</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">study_rule_criteria</span><span class="p">))</span>
-                <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">voting_system</span><span class="p">,</span> <span class="p">{},</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">study_rule_criteria</span><span class="p">)))</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                    <span class="p">(</span><span class="n">voting_system</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">voting_system</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">study_rule_criteria</span><span class="p">))</span>
-                <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">voting_system</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">voting_system</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">study_rule_criteria</span><span class="p">)))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">detailed_tasks</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            &gt;&gt;&gt; voting_rule_tasks = VotingRuleTasks(detailed_tasks=[</span>
-<span class="sd">            ...     (</span>
-<span class="sd">            ...         RuleIRV,</span>
-<span class="sd">            ...         {&#39;cm_option&#39;: &#39;exact&#39;, &#39;um_option&#39;: &#39;exact&#39;},</span>
-<span class="sd">            ...         StudyRuleCriteria(manipulation_criteria=[&#39;is_cm_&#39;], manipulation_only=True,</span>
-<span class="sd">            ...                           numerical_criteria=[])</span>
-<span class="sd">            ...     ),</span>
-<span class="sd">            ...     (</span>
-<span class="sd">            ...         RuleCondorcetVtbIRV,</span>
-<span class="sd">            ...         {&#39;cm_option&#39;: &#39;very_slow&#39;, &#39;um_option&#39;: &#39;exact&#39;},</span>
-<span class="sd">            ...         StudyRuleCriteria(manipulation_criteria=[&#39;is_cm_&#39;], manipulation_only=True,</span>
-<span class="sd">            ...                           numerical_criteria=[])</span>
-<span class="sd">            ...     )</span>
-<span class="sd">            ... ])</span>
-<span class="sd">            &gt;&gt;&gt; print(voting_rule_tasks)</span>
-<span class="sd">            VotingRuleTasks with:</span>
-<span class="sd">                voting_system: RuleIRV</span>
-<span class="sd">                options: {&#39;cm_option&#39;: &#39;exact&#39;, &#39;um_option&#39;: &#39;exact&#39;}</span>
-<span class="sd">                StudyRuleCriteria with:</span>
-<span class="sd">                    manipulation_criteria:</span>
-<span class="sd">                        is_cm_</span>
-<span class="sd">                    manipulation_criteria_c: None</span>
-<span class="sd">                    result_criteria: None</span>
-<span class="sd">                    utility_criteria: None</span>
-<span class="sd">                    numerical_criteria: None</span>
-<span class="sd">                voting_system: RuleCondorcetVtbIRV</span>
-<span class="sd">                options: {&#39;cm_option&#39;: &#39;very_slow&#39;, &#39;um_option&#39;: &#39;exact&#39;}</span>
-<span class="sd">                StudyRuleCriteria with:</span>
-<span class="sd">                    manipulation_criteria:</span>
-<span class="sd">                        is_cm_</span>
-<span class="sd">                    manipulation_criteria_c: None</span>
-<span class="sd">                    result_criteria: None</span>
-<span class="sd">                    utility_criteria: None</span>
-<span class="sd">                    numerical_criteria: None</span>
+<span class="sd">        &gt;&gt;&gt; voting_rule_tasks = VotingRuleTasks(detailed_tasks=[</span>
+<span class="sd">        ...     (</span>
+<span class="sd">        ...         RuleIRV,</span>
+<span class="sd">        ...         {&#39;cm_option&#39;: &#39;exact&#39;, &#39;um_option&#39;: &#39;exact&#39;},</span>
+<span class="sd">        ...         StudyRuleCriteria(manipulation_criteria=[&#39;is_cm_&#39;], manipulation_only=True,</span>
+<span class="sd">        ...                           numerical_criteria=[])</span>
+<span class="sd">        ...     ),</span>
+<span class="sd">        ...     (</span>
+<span class="sd">        ...         RuleCondorcetVtbIRV,</span>
+<span class="sd">        ...         {&#39;cm_option&#39;: &#39;very_slow&#39;, &#39;um_option&#39;: &#39;exact&#39;},</span>
+<span class="sd">        ...         StudyRuleCriteria(manipulation_criteria=[&#39;is_cm_&#39;], manipulation_only=True,</span>
+<span class="sd">        ...                           numerical_criteria=[])</span>
+<span class="sd">        ...     )</span>
+<span class="sd">        ... ])</span>
+<span class="sd">        &gt;&gt;&gt; print(voting_rule_tasks)</span>
+<span class="sd">        VotingRuleTasks with:</span>
+<span class="sd">            voting_system: RuleIRV</span>
+<span class="sd">            options: {&#39;cm_option&#39;: &#39;exact&#39;, &#39;um_option&#39;: &#39;exact&#39;}</span>
+<span class="sd">            StudyRuleCriteria with:</span>
+<span class="sd">                manipulation_criteria:</span>
+<span class="sd">                    is_cm_</span>
+<span class="sd">                manipulation_criteria_c: None</span>
+<span class="sd">                result_criteria: None</span>
+<span class="sd">                utility_criteria: None</span>
+<span class="sd">                numerical_criteria: None</span>
+<span class="sd">            voting_system: RuleCondorcetVtbIRV</span>
+<span class="sd">            options: {&#39;cm_option&#39;: &#39;very_slow&#39;, &#39;um_option&#39;: &#39;exact&#39;}</span>
+<span class="sd">            StudyRuleCriteria with:</span>
+<span class="sd">                manipulation_criteria:</span>
+<span class="sd">                    is_cm_</span>
+<span class="sd">                manipulation_criteria_c: None</span>
+<span class="sd">                result_criteria: None</span>
+<span class="sd">                utility_criteria: None</span>
+<span class="sd">                numerical_criteria: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">rule_class</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
-            <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;voting_system: </span><span class="si">{</span><span class="n">rule_class</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-            <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;options: </span><span class="si">{</span><span class="n">options</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">rule_class</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;voting_system: </span><span class="si">{</span><span class="n">rule_class</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;options: </span><span class="si">{</span><span class="n">options</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">study_rule_criteria</span><span class="p">))</span>
-        <span class="k">return</span> <span class="s1">&#39;VotingRuleTasks with:</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">indent</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">))</span>
+        <span class="k">return</span> <span class="s2">&quot;VotingRuleTasks with:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">indent</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">))</span>
 
 <div class="viewcode-block" id="VotingRuleTasks.remove_rule">
 <a class="viewcode-back" href="../../../reference/meta/voting_rule_tasks.html#svvamp.VotingRuleTasks.remove_rule">[docs]</a>
@@ -928,7 +924,7 @@
 <span class="sd">                    utility_criteria: None</span>
 <span class="sd">                    numerical_criteria: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">rc</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">rule_class</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">rule_class</span> <span class="o">==</span> <span class="n">rc</span><span class="p">:</span>
                 <span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">criterion</span><span class="p">)</span></div>
 
@@ -1017,7 +1013,7 @@
 <span class="sd">                    utility_criteria: None</span>
 <span class="sd">                    numerical_criteria: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">rc</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">rule_class</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">rule_class</span> <span class="o">==</span> <span class="n">rc</span><span class="p">:</span>
                 <span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">append_manipulation_criterion</span><span class="p">(</span><span class="n">criterion</span><span class="p">)</span></div>
 
@@ -1106,7 +1102,7 @@
 <span class="sd">                    utility_criteria: None</span>
 <span class="sd">                    numerical_criteria: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">rc</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">rule_class</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">rule_class</span> <span class="o">==</span> <span class="n">rc</span><span class="p">:</span>
                 <span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">append_manipulation_criterion_c</span><span class="p">(</span><span class="n">criterion</span><span class="p">)</span></div>
 
@@ -1195,7 +1191,7 @@
 <span class="sd">                    utility_criteria: None</span>
 <span class="sd">                    numerical_criteria: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">rc</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">rule_class</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">rule_class</span> <span class="o">==</span> <span class="n">rc</span><span class="p">:</span>
                 <span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">append_result_criterion</span><span class="p">(</span><span class="n">criterion</span><span class="p">)</span></div>
 
@@ -1292,7 +1288,7 @@
 <span class="sd">                        (&#39;total_utility_w_&#39;, &lt;function sum at ...&gt;, &#39;total_u_sum&#39;)</span>
 <span class="sd">                    numerical_criteria: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">rc</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">rule_class</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">rule_class</span> <span class="o">==</span> <span class="n">rc</span><span class="p">:</span>
                 <span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">append_utility_criterion</span><span class="p">(</span><span class="n">criterion</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span></div>
 
@@ -1381,7 +1377,7 @@
 <span class="sd">                    numerical_criteria:</span>
 <span class="sd">                        nb_candidates_cm_</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">rc</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">rule_class</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">rule_class</span> <span class="o">==</span> <span class="n">rc</span><span class="p">:</span>
                 <span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">append_numerical_criterion</span><span class="p">(</span><span class="n">criterion</span><span class="p">)</span></div>
 
@@ -1465,10 +1461,10 @@
 <span class="sd">                    utility_criteria: None</span>
 <span class="sd">                    numerical_criteria: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">rc</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">rule_class</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">rule_class</span> <span class="o">==</span> <span class="n">rc</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
-                    <span class="k">del</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="n">option</span><span class="p">])</span></div>
+                    <span class="k">del</span> <span class="n">options</span><span class="p">[</span><span class="n">option</span><span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="VotingRuleTasks.set_option">
@@ -1544,7 +1540,7 @@
 <span class="sd">                    utility_criteria: None</span>
 <span class="sd">                    numerical_criteria: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">rc</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">rule_class</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">rule_class</span> <span class="o">==</span> <span class="n">rc</span><span class="p">:</span>
                 <span class="c1"># print(rule_class)</span>
                 <span class="c1"># print(&#39;Change option to &#39;+ str(value))</span>
@@ -1587,12 +1583,12 @@
 <span class="sd">            Traceback (most recent call last):</span>
 <span class="sd">            ValueError: Criterion &#39;unexpected_criterion&#39; is unknown for RuleIRV.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">rule_class</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">rule_class</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="c1"># print(rule_class)</span>
             <span class="k">for</span> <span class="n">option</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="n">rule_class</span><span class="o">.</span><span class="n">check_option_allowed</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
             <span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">check_sanity</span><span class="p">(</span><span class="n">rule_class</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;VotingRuleTasks: Sanity check was successful.&#39;</span><span class="p">)</span></div>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;VotingRuleTasks: Sanity check was successful.&quot;</span><span class="p">)</span></div>
 </div>
 
 </pre></div>

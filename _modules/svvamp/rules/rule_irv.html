@@ -444,6 +444,7 @@
 <span class="sd">    You should have received a copy of the GNU General Public License</span>
 <span class="sd">    along with SVVAMP.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <span class="sd">&quot;&quot;&quot;</span>
+
 <span class="kn">import</span><span class="w"> </span><span class="nn">itertools</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.rules.rule</span><span class="w"> </span><span class="kn">import</span> <span class="n">Rule</span>
@@ -736,28 +737,34 @@
 <span class="sd">        sufficient_coalition_size_cm =</span>
 <span class="sd">        [0. 2. 4.]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="c1"># Exceptionally, for this voting system, we establish a pointer from the Profile object, so that the</span>
     <span class="c1"># manipulation results can be used by Condorcet-IRV.</span>
 
-    <span class="n">full_name</span> <span class="o">=</span> <span class="s1">&#39;Instant-Runoff Voting&#39;</span>
-    <span class="n">abbreviation</span> <span class="o">=</span> <span class="s1">&#39;IRV&#39;</span>
+    <span class="n">full_name</span> <span class="o">=</span> <span class="s2">&quot;Instant-Runoff Voting&quot;</span>
+    <span class="n">abbreviation</span> <span class="o">=</span> <span class="s2">&quot;IRV&quot;</span>
 
     <span class="n">options_parameters</span> <span class="o">=</span> <span class="n">Rule</span><span class="o">.</span><span class="n">options_parameters</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">options_parameters</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
-        <span class="s1">&#39;um_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;fast&#39;</span><span class="p">,</span> <span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;fast&#39;</span><span class="p">},</span>
-        <span class="s1">&#39;cm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;fast&#39;</span><span class="p">,</span> <span class="s1">&#39;slow&#39;</span><span class="p">,</span> <span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;fast&#39;</span><span class="p">},</span>
-        <span class="s1">&#39;tm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">},</span>
-        <span class="s1">&#39;icm_option&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;exact&#39;</span><span class="p">},</span>
-        <span class="s1">&#39;fast_algo&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;c_minus_max&#39;</span><span class="p">,</span> <span class="s1">&#39;minus_max&#39;</span><span class="p">,</span> <span class="s1">&#39;hardest_first&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;c_minus_max&#39;</span><span class="p">},</span>
-    <span class="p">})</span>
+    <span class="n">options_parameters</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;um_option&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;fast&quot;</span><span class="p">,</span> <span class="s2">&quot;exact&quot;</span><span class="p">],</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;fast&quot;</span><span class="p">},</span>
+            <span class="s2">&quot;cm_option&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;fast&quot;</span><span class="p">,</span> <span class="s2">&quot;slow&quot;</span><span class="p">,</span> <span class="s2">&quot;exact&quot;</span><span class="p">],</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;fast&quot;</span><span class="p">},</span>
+            <span class="s2">&quot;tm_option&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;exact&quot;</span><span class="p">],</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;exact&quot;</span><span class="p">},</span>
+            <span class="s2">&quot;icm_option&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;exact&quot;</span><span class="p">],</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;exact&quot;</span><span class="p">},</span>
+            <span class="s2">&quot;fast_algo&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;c_minus_max&quot;</span><span class="p">,</span> <span class="s2">&quot;minus_max&quot;</span><span class="p">,</span> <span class="s2">&quot;hardest_first&quot;</span><span class="p">],</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;c_minus_max&quot;</span><span class="p">},</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_fast_algo</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="n">with_two_candidates_reduces_to_plurality</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">is_based_on_rk</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">precheck_um</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">precheck_icm</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-            <span class="n">log_identity</span><span class="o">=</span><span class="s2">&quot;IRV&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+            <span class="n">with_two_candidates_reduces_to_plurality</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">is_based_on_rk</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">precheck_um</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">precheck_icm</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">log_identity</span><span class="o">=</span><span class="s2">&quot;IRV&quot;</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_example_ballots_cm_c</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_example_ballots_cm_w_against</span> <span class="o">=</span> <span class="kc">None</span>
@@ -842,9 +849,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Unplug this irv from the old profile</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="nb">delattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="p">,</span> <span class="s1">&#39;irv&#39;</span><span class="p">)</span>
+            <span class="nb">delattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="p">,</span> <span class="s2">&quot;irv&quot;</span><span class="p">)</span>
         <span class="c1"># See if new profile has an irv, with the same options</span>
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="s1">&#39;irv&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="s2">&quot;irv&quot;</span><span class="p">):</span>
             <span class="c1"># Save my options</span>
             <span class="n">my_options</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span>
             <span class="c1"># Copy all its inner variables into mine</span>
@@ -853,18 +860,18 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">update_options</span><span class="p">(</span><span class="n">my_options</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># &#39;Usual&#39; behavior</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">delete_cache</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;_&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">delete_cache</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span> <span class="o">=</span> <span class="n">profile</span>
         <span class="c1"># Bind this irv with the new profile</span>
         <span class="n">profile</span><span class="o">.</span><span class="n">irv</span> <span class="o">=</span> <span class="bp">self</span>
         <span class="c1"># Grab the exhaustive ballot of the profile (or create it)</span>
         <span class="n">eb_options</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;slow&#39;</span><span class="p">,</span> <span class="s1">&#39;exact&#39;</span><span class="p">}:</span>
-            <span class="n">eb_options</span><span class="p">[</span><span class="s1">&#39;cm_option&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;exact&#39;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">im_option</span> <span class="o">==</span> <span class="s1">&#39;exact&#39;</span><span class="p">:</span>
-            <span class="n">eb_options</span><span class="p">[</span><span class="s1">&#39;im_option&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;exact&#39;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">um_option</span> <span class="o">==</span> <span class="s1">&#39;exact&#39;</span><span class="p">:</span>
-            <span class="n">eb_options</span><span class="p">[</span><span class="s1">&#39;um_option&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;exact&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;slow&quot;</span><span class="p">,</span> <span class="s2">&quot;exact&quot;</span><span class="p">}:</span>
+            <span class="n">eb_options</span><span class="p">[</span><span class="s2">&quot;cm_option&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;exact&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">im_option</span> <span class="o">==</span> <span class="s2">&quot;exact&quot;</span><span class="p">:</span>
+            <span class="n">eb_options</span><span class="p">[</span><span class="s2">&quot;im_option&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;exact&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">um_option</span> <span class="o">==</span> <span class="s2">&quot;exact&quot;</span><span class="p">:</span>
+            <span class="n">eb_options</span><span class="p">[</span><span class="s2">&quot;um_option&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;exact&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span> <span class="o">=</span> <span class="n">RuleExhaustiveBallot</span><span class="p">(</span><span class="n">precheck_heuristic</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">precheck_heuristic</span><span class="p">,</span> <span class="o">**</span><span class="n">eb_options</span><span class="p">)(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="p">)</span>
         <span class="c1"># Initialize examples of manipulating ballots</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_example_ballots_cm_c</span> <span class="o">=</span> <span class="p">{</span><span class="n">c</span><span class="p">:</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">profile</span><span class="o">.</span><span class="n">n_c</span><span class="p">)}</span>
@@ -875,43 +882,49 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">fast_algo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;String. Algorithm used for CM (resp. UM) when cm_option (resp. um_option) is &#39;fast&#39;. Mostly for developers.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;String. Algorithm used for CM (resp. UM) when cm_option (resp. um_option) is &#39;fast&#39;. Mostly for developers.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fast_algo</span>
 
     <span class="nd">@fast_algo</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">fast_algo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fast_algo</span> <span class="o">==</span> <span class="n">value</span><span class="p">:</span>
             <span class="k">return</span>
-        <span class="k">if</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">options_parameters</span><span class="p">[</span><span class="s1">&#39;fast_algo&#39;</span><span class="p">][</span><span class="s1">&#39;allowed&#39;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">options_parameters</span><span class="p">[</span><span class="s2">&quot;fast_algo&quot;</span><span class="p">][</span><span class="s2">&quot;allowed&quot;</span><span class="p">]:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;Setting fast_algo =&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_fast_algo</span> <span class="o">=</span> <span class="n">value</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">delete_cache</span><span class="p">(</span><span class="n">contains</span><span class="o">=</span><span class="s1">&#39;_um_&#39;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;_&#39;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">delete_cache</span><span class="p">(</span><span class="n">contains</span><span class="o">=</span><span class="s1">&#39;_cm_&#39;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;_&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">delete_cache</span><span class="p">(</span><span class="n">contains</span><span class="o">=</span><span class="s2">&quot;_um_&quot;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">delete_cache</span><span class="p">(</span><span class="n">contains</span><span class="o">=</span><span class="s2">&quot;_cm_&quot;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown value for option fast_algo: &quot;</span> <span class="o">+</span> <span class="nb">format</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">log_um_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">um_option</span> <span class="o">==</span> <span class="s1">&#39;exact&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">um_option</span> <span class="o">==</span> <span class="s2">&quot;exact&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="s2">&quot;um_option = exact&quot;</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="s2">&quot;um_option = &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">um_option</span> <span class="o">+</span> <span class="s2">&quot;, fast_algo = &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">fast_algo</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">log_cm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span> <span class="o">==</span> <span class="s1">&#39;exact&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span> <span class="o">==</span> <span class="s2">&quot;exact&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="s2">&quot;cm_option = exact&quot;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;cm_option = &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span> <span class="o">+</span> <span class="s2">&quot;, fast_algo = &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">fast_algo</span> <span class="o">+</span>
-                    <span class="s2">&quot;, &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_icm_</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_tm_</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">(</span>
+                <span class="s2">&quot;cm_option = &quot;</span>
+                <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span>
+                <span class="o">+</span> <span class="s2">&quot;, fast_algo = &quot;</span>
+                <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">fast_algo</span>
+                <span class="o">+</span> <span class="s2">&quot;, &quot;</span>
+                <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_icm_</span>
+                <span class="o">+</span> <span class="s2">&quot;, &quot;</span>
+                <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_tm_</span>
+            <span class="p">)</span>
 
     <span class="c1"># %% Counting the ballots</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">ballots_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;2d array of integers. ``ballots[v, r]`` is the candidate for which voter ``v`` votes at round ``r``.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;2d array of integers. ``ballots[v, r]`` is the candidate for which voter ``v`` votes at round ``r``.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">ballots_</span>
 
     <span class="nd">@cached_property</span>
@@ -1045,128 +1058,131 @@
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_im_main_work_v_exact_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">c_is_wanted</span><span class="p">,</span> <span class="n">nb_wanted_undecided</span><span class="p">,</span> <span class="n">stop_if_true</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
-<span class="sd">            ...     [0, 1, 2],</span>
-<span class="sd">            ...     [1, 0, 2],</span>
-<span class="sd">            ...     [1, 2, 0],</span>
-<span class="sd">            ...     [2, 0, 1],</span>
-<span class="sd">            ...     [2, 0, 1],</span>
-<span class="sd">            ... ])</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleIRV(im_option=&#39;exact&#39;)(profile)</span>
-<span class="sd">            &gt;&gt;&gt; rule.is_im_</span>
-<span class="sd">            True</span>
+<span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
+<span class="sd">        ...     [0, 1, 2],</span>
+<span class="sd">        ...     [1, 0, 2],</span>
+<span class="sd">        ...     [1, 2, 0],</span>
+<span class="sd">        ...     [2, 0, 1],</span>
+<span class="sd">        ...     [2, 0, 1],</span>
+<span class="sd">        ... ])</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleIRV(im_option=&#39;exact&#39;)(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule.is_im_</span>
+<span class="sd">        True</span>
 
-<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
-<span class="sd">            ...     [0, 1, 2],</span>
-<span class="sd">            ...     [0, 2, 1],</span>
-<span class="sd">            ...     [1, 2, 0],</span>
-<span class="sd">            ...     [1, 2, 0],</span>
-<span class="sd">            ...     [2, 0, 1],</span>
-<span class="sd">            ... ])</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleIRV(im_option=&#39;exact&#39;)(profile)</span>
-<span class="sd">            &gt;&gt;&gt; rule.is_im_</span>
-<span class="sd">            True</span>
+<span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
+<span class="sd">        ...     [0, 1, 2],</span>
+<span class="sd">        ...     [0, 2, 1],</span>
+<span class="sd">        ...     [1, 2, 0],</span>
+<span class="sd">        ...     [1, 2, 0],</span>
+<span class="sd">        ...     [2, 0, 1],</span>
+<span class="sd">        ... ])</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleIRV(im_option=&#39;exact&#39;)(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule.is_im_</span>
+<span class="sd">        True</span>
 
-<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
-<span class="sd">            ...     [0, 1, 2, 3],</span>
-<span class="sd">            ...     [1, 2, 0, 3],</span>
-<span class="sd">            ...     [2, 0, 1, 3],</span>
-<span class="sd">            ...     [3, 0, 2, 1],</span>
-<span class="sd">            ...     [3, 1, 2, 0],</span>
-<span class="sd">            ... ])</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleIRV(im_option=&#39;exact&#39;)(profile)</span>
-<span class="sd">            &gt;&gt;&gt; rule.is_im_</span>
-<span class="sd">            True</span>
+<span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
+<span class="sd">        ...     [0, 1, 2, 3],</span>
+<span class="sd">        ...     [1, 2, 0, 3],</span>
+<span class="sd">        ...     [2, 0, 1, 3],</span>
+<span class="sd">        ...     [3, 0, 2, 1],</span>
+<span class="sd">        ...     [3, 1, 2, 0],</span>
+<span class="sd">        ... ])</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleIRV(im_option=&#39;exact&#39;)(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule.is_im_</span>
+<span class="sd">        True</span>
 
-<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
-<span class="sd">            ...     [1, 0, 3, 2],</span>
-<span class="sd">            ...     [1, 2, 0, 3],</span>
-<span class="sd">            ...     [2, 0, 3, 1],</span>
-<span class="sd">            ...     [3, 0, 1, 2],</span>
-<span class="sd">            ...     [3, 0, 2, 1],</span>
-<span class="sd">            ... ])</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleIRV(im_option=&#39;exact&#39;)(profile)</span>
-<span class="sd">            &gt;&gt;&gt; rule.is_im_</span>
-<span class="sd">            True</span>
+<span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
+<span class="sd">        ...     [1, 0, 3, 2],</span>
+<span class="sd">        ...     [1, 2, 0, 3],</span>
+<span class="sd">        ...     [2, 0, 3, 1],</span>
+<span class="sd">        ...     [3, 0, 1, 2],</span>
+<span class="sd">        ...     [3, 0, 2, 1],</span>
+<span class="sd">        ... ])</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleIRV(im_option=&#39;exact&#39;)(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule.is_im_</span>
+<span class="sd">        True</span>
 
-<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
-<span class="sd">            ...     [0, 2, 1, 3],</span>
-<span class="sd">            ...     [1, 0, 2, 3],</span>
-<span class="sd">            ...     [1, 0, 3, 2],</span>
-<span class="sd">            ...     [2, 3, 0, 1],</span>
-<span class="sd">            ...     [3, 0, 2, 1],</span>
-<span class="sd">            ... ])</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleIRV(im_option=&#39;exact&#39;)(profile)</span>
-<span class="sd">            &gt;&gt;&gt; rule.is_im_</span>
-<span class="sd">            False</span>
+<span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
+<span class="sd">        ...     [0, 2, 1, 3],</span>
+<span class="sd">        ...     [1, 0, 2, 3],</span>
+<span class="sd">        ...     [1, 0, 3, 2],</span>
+<span class="sd">        ...     [2, 3, 0, 1],</span>
+<span class="sd">        ...     [3, 0, 2, 1],</span>
+<span class="sd">        ... ])</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleIRV(im_option=&#39;exact&#39;)(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule.is_im_</span>
+<span class="sd">        False</span>
 
-<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
-<span class="sd">            ...     [0, 1, 2],</span>
-<span class="sd">            ...     [0, 1, 2],</span>
-<span class="sd">            ...     [0, 1, 2],</span>
-<span class="sd">            ...     [1, 0, 2],</span>
-<span class="sd">            ...     [2, 1, 0],</span>
-<span class="sd">            ... ])</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleIRV(im_option=&#39;exact&#39;)(profile)</span>
-<span class="sd">            &gt;&gt;&gt; rule.is_im_</span>
-<span class="sd">            False</span>
+<span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
+<span class="sd">        ...     [0, 1, 2],</span>
+<span class="sd">        ...     [0, 1, 2],</span>
+<span class="sd">        ...     [0, 1, 2],</span>
+<span class="sd">        ...     [1, 0, 2],</span>
+<span class="sd">        ...     [2, 1, 0],</span>
+<span class="sd">        ... ])</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleIRV(im_option=&#39;exact&#39;)(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule.is_im_</span>
+<span class="sd">        False</span>
 
-<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
-<span class="sd">            ...     [1, 0, 2],</span>
-<span class="sd">            ...     [1, 2, 0],</span>
-<span class="sd">            ...     [1, 2, 0],</span>
-<span class="sd">            ...     [1, 2, 0],</span>
-<span class="sd">            ...     [1, 2, 0],</span>
-<span class="sd">            ... ])</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleIRV(im_option=&#39;exact&#39;)(profile)</span>
-<span class="sd">            &gt;&gt;&gt; rule.is_im_</span>
-<span class="sd">            False</span>
+<span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
+<span class="sd">        ...     [1, 0, 2],</span>
+<span class="sd">        ...     [1, 2, 0],</span>
+<span class="sd">        ...     [1, 2, 0],</span>
+<span class="sd">        ...     [1, 2, 0],</span>
+<span class="sd">        ...     [1, 2, 0],</span>
+<span class="sd">        ... ])</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleIRV(im_option=&#39;exact&#39;)(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule.is_im_</span>
+<span class="sd">        False</span>
 
-<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
-<span class="sd">            ...     [0, 3, 1, 2],</span>
-<span class="sd">            ...     [1, 2, 0, 3],</span>
-<span class="sd">            ...     [2, 0, 3, 1],</span>
-<span class="sd">            ...     [3, 1, 0, 2],</span>
-<span class="sd">            ...     [3, 2, 1, 0],</span>
-<span class="sd">            ... ])</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleIRV(im_option=&#39;exact&#39;)(profile)</span>
-<span class="sd">            &gt;&gt;&gt; rule.is_im_</span>
-<span class="sd">            True</span>
+<span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
+<span class="sd">        ...     [0, 3, 1, 2],</span>
+<span class="sd">        ...     [1, 2, 0, 3],</span>
+<span class="sd">        ...     [2, 0, 3, 1],</span>
+<span class="sd">        ...     [3, 1, 0, 2],</span>
+<span class="sd">        ...     [3, 2, 1, 0],</span>
+<span class="sd">        ... ])</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleIRV(im_option=&#39;exact&#39;)(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule.is_im_</span>
+<span class="sd">        True</span>
 
-<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
-<span class="sd">            ...     [0, 2, 3, 1, 4],</span>
-<span class="sd">            ...     [1, 2, 0, 4, 3],</span>
-<span class="sd">            ...     [3, 2, 1, 4, 0],</span>
-<span class="sd">            ...     [4, 2, 0, 3, 1],</span>
-<span class="sd">            ...     [4, 2, 1, 3, 0],</span>
-<span class="sd">            ... ])</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleIRV(im_option=&#39;exact&#39;)(profile)</span>
-<span class="sd">            &gt;&gt;&gt; rule.is_im_</span>
-<span class="sd">            True</span>
+<span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
+<span class="sd">        ...     [0, 2, 3, 1, 4],</span>
+<span class="sd">        ...     [1, 2, 0, 4, 3],</span>
+<span class="sd">        ...     [3, 2, 1, 4, 0],</span>
+<span class="sd">        ...     [4, 2, 0, 3, 1],</span>
+<span class="sd">        ...     [4, 2, 1, 3, 0],</span>
+<span class="sd">        ... ])</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleIRV(im_option=&#39;exact&#39;)(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule.is_im_</span>
+<span class="sd">        True</span>
 
-<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
-<span class="sd">            ...     [0, 1, 2],</span>
-<span class="sd">            ...     [1, 0, 2],</span>
-<span class="sd">            ...     [1, 0, 2],</span>
-<span class="sd">            ...     [2, 0, 1],</span>
-<span class="sd">            ...     [2, 0, 1],</span>
-<span class="sd">            ... ])</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleIRV(im_option=&#39;exact&#39;)(profile)</span>
-<span class="sd">            &gt;&gt;&gt; rule.is_im_v_with_candidates_(4)</span>
-<span class="sd">            (True, array([1., 0., 0.]))</span>
+<span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
+<span class="sd">        ...     [0, 1, 2],</span>
+<span class="sd">        ...     [1, 0, 2],</span>
+<span class="sd">        ...     [1, 0, 2],</span>
+<span class="sd">        ...     [2, 0, 1],</span>
+<span class="sd">        ...     [2, 0, 1],</span>
+<span class="sd">        ... ])</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleIRV(im_option=&#39;exact&#39;)(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule.is_im_v_with_candidates_(4)</span>
+<span class="sd">        (True, array([1., 0., 0.]))</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;self._v_im_for_c[v, :] =&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_v_im_for_c</span><span class="p">[</span><span class="n">v</span><span class="p">,</span> <span class="p">:],</span> <span class="mi">3</span><span class="p">)</span>
-        <span class="n">other_voters</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span><span class="p">))</span> <span class="o">!=</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">other_voters</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span><span class="p">))</span> <span class="o">!=</span> <span class="n">v</span>
         <span class="n">n_s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span> <span class="o">-</span> <span class="mi">1</span>
         <span class="n">r</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">is_candidate_alive_begin_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
         <span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">)</span>
-        <span class="n">ballot_m_begin_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">))</span>
+        <span class="n">ballot_m_begin_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">))</span>
         <span class="n">scores_tot_begin_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">))</span>
-        <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[</span><span class="n">other_voters</span><span class="p">,</span> <span class="p">:],</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[</span><span class="n">other_voters</span><span class="p">,</span> <span class="p">:],</span> <span class="mi">1</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
-        <span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[</span><span class="n">other_voters</span><span class="p">,</span> <span class="p">:],</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[</span><span class="n">other_voters</span><span class="p">,</span> <span class="p">:],</span> <span class="mi">1</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
+            <span class="p">),</span>
+            <span class="mi">0</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;im_aux_exact: r =&quot;</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;im_aux_exact: scores_tot_begin_r[r] =&quot;</span><span class="p">,</span> <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="mi">3</span><span class="p">)</span>
         <span class="c1"># ``strategy_r[r]`` is False (0) if we keep our ballot, True (1) if we change it to vote for the natural</span>
@@ -1177,10 +1193,11 @@
         <span class="n">eliminated_d_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;im_aux_exact: natural_loser_r[r] =&quot;</span><span class="p">,</span> <span class="n">natural_loser_r</span><span class="p">[</span><span class="n">r</span><span class="p">],</span> <span class="mi">3</span><span class="p">)</span>
         <span class="c1"># If ``w`` has too many votes, then manipulation is not possible.</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">w_</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
-                <span class="o">&gt;</span> <span class="n">n_s</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]):</span>  <span class="c1"># pragma: no cover</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">w_</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">n_s</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span>
+        <span class="p">):</span>  <span class="c1"># pragma: no cover</span>
             <span class="c1"># TO DO: Investigate whether this case can actually happen.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_reached_uncovered_code</span><span class="p">(</span><span class="s1">&#39;IRV: _im_main_work_v_exact_&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_reached_uncovered_code</span><span class="p">(</span><span class="s2">&quot;IRV: _im_main_work_v_exact_&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;im_aux_exact: Manipulation impossible by this path (w has too many votes)&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="n">r</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
@@ -1241,12 +1258,15 @@
             <span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">d</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;im_aux_exact: is_candidate_alive_begin_r[r+1, :] =&quot;</span><span class="p">,</span> <span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:],</span> <span class="mi">3</span><span class="p">)</span>
             <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
-            <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]]</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span>
+            <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[</span><span class="n">other_voters</span><span class="p">,</span> <span class="p">:][:,</span> <span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]],</span>
-                    <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[</span><span class="n">other_voters</span><span class="p">,</span> <span class="p">:][:,</span> <span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]],</span>
-                           <span class="mi">1</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
-                <span class="p">),</span> <span class="mi">0</span><span class="p">))</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[</span><span class="n">other_voters</span><span class="p">,</span> <span class="p">:][:,</span> <span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]],</span> <span class="mi">1</span>
+                    <span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
+                <span class="p">),</span>
+                <span class="mi">0</span><span class="p">,</span>
+            <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;im_aux_exact: scores_s_begin_r[r+1, :] =&quot;</span><span class="p">,</span> <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:],</span> <span class="mi">3</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">ballot_m_temp</span> <span class="o">==</span> <span class="n">d</span><span class="p">:</span>
                 <span class="n">ballot_m_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
@@ -1265,9 +1285,9 @@
 
             <span class="c1"># Update other variables for next round</span>
             <span class="n">strategy_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-            <span class="n">natural_loser_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
-                <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:])</span>
-            <span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">natural_loser_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]))[</span>
+                <span class="mi">0</span>
+            <span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
             <span class="n">r</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;im_aux_exact: r =&quot;</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;im_aux_exact: natural_loser_r[r] =&quot;</span><span class="p">,</span> <span class="n">natural_loser_r</span><span class="p">[</span><span class="n">r</span><span class="p">],</span> <span class="mi">3</span><span class="p">)</span>
@@ -1395,17 +1415,17 @@
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_um_preliminary_checks_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
-<span class="sd">            ...     [2, 0, 1],</span>
-<span class="sd">            ...     [2, 1, 0],</span>
-<span class="sd">            ...     [0, 2, 1],</span>
-<span class="sd">            ...     [1, 2, 0],</span>
-<span class="sd">            ... ])</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleIRV(um_option=&#39;fast&#39;, fast_algo=&#39;minus_max&#39;, cm_option=&#39;slow&#39;)(profile)</span>
-<span class="sd">            &gt;&gt;&gt; rule.is_um_c_(1)</span>
-<span class="sd">            False</span>
+<span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
+<span class="sd">        ...     [2, 0, 1],</span>
+<span class="sd">        ...     [2, 1, 0],</span>
+<span class="sd">        ...     [0, 2, 1],</span>
+<span class="sd">        ...     [1, 2, 0],</span>
+<span class="sd">        ... ])</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleIRV(um_option=&#39;fast&#39;, fast_algo=&#39;minus_max&#39;, cm_option=&#39;slow&#39;)(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule.is_um_c_(1)</span>
+<span class="sd">        False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">um_option</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;fast&#39;</span><span class="p">,</span> <span class="s1">&#39;lazy&#39;</span><span class="p">}</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;fast&#39;</span><span class="p">,</span> <span class="s1">&#39;lazy&#39;</span><span class="p">}:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">um_option</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;fast&quot;</span><span class="p">,</span> <span class="s2">&quot;lazy&quot;</span><span class="p">}</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;fast&quot;</span><span class="p">,</span> <span class="s2">&quot;lazy&quot;</span><span class="p">}:</span>
             <span class="k">if</span> <span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">w_</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">condorcet_winner_rk_ctb</span>
                 <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">c_might_be_there_when_cw_is_eliminated_irv_style</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
@@ -1574,22 +1594,25 @@
                 <span class="n">is_candidate_alive_temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">is_candidate_alive</span><span class="p">)</span>
                 <span class="n">is_candidate_alive_temp</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
                 <span class="n">scores_s_temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
-                <span class="n">scores_s_temp</span><span class="p">[</span><span class="n">is_candidate_alive_temp</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span>
-                    <span class="n">preferences_borda_s</span><span class="p">[:,</span> <span class="n">is_candidate_alive_temp</span><span class="p">],</span>
-                    <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">preferences_borda_s</span><span class="p">[:,</span> <span class="n">is_candidate_alive_temp</span><span class="p">],</span> <span class="mi">1</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
-                <span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="n">scores_s_temp</span><span class="p">[</span><span class="n">is_candidate_alive_temp</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span>
+                        <span class="n">preferences_borda_s</span><span class="p">[:,</span> <span class="n">is_candidate_alive_temp</span><span class="p">],</span>
+                        <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">preferences_borda_s</span><span class="p">[:,</span> <span class="n">is_candidate_alive_temp</span><span class="p">],</span> <span class="mi">1</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
+                    <span class="p">),</span>
+                    <span class="mi">0</span><span class="p">,</span>
+                <span class="p">)</span>
                 <span class="k">if</span> <span class="n">ballot_m_temp</span> <span class="o">==</span> <span class="n">d</span><span class="p">:</span>
                     <span class="n">ballot_m_temp</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-                <span class="n">ballot_free_temp</span> <span class="o">=</span> <span class="p">(</span><span class="n">ballot_m_temp</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">ballot_free_temp</span> <span class="o">=</span> <span class="n">ballot_m_temp</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span>
                 <span class="n">scores_tot_temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">scores_s_temp</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">ballot_m_temp</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
                     <span class="n">scores_tot_temp</span><span class="p">[</span><span class="n">ballot_m_temp</span><span class="p">]</span> <span class="o">+=</span> <span class="n">n_m</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fast_algo</span> <span class="o">==</span> <span class="s2">&quot;c_minus_max&quot;</span><span class="p">:</span>
                     <span class="n">situation_for_c</span> <span class="o">=</span> <span class="n">scores_s_temp</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">scores_tot_temp</span><span class="p">[</span><span class="n">candidates</span> <span class="o">!=</span> <span class="n">c</span><span class="p">])</span>
                 <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">fast_algo</span> <span class="o">==</span> <span class="s2">&quot;minus_max&quot;</span><span class="p">:</span>
-                    <span class="n">situation_for_c</span> <span class="o">=</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">scores_tot_temp</span><span class="p">[</span><span class="n">candidates</span> <span class="o">!=</span> <span class="n">c</span><span class="p">])</span>
+                    <span class="n">situation_for_c</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">scores_tot_temp</span><span class="p">[</span><span class="n">candidates</span> <span class="o">!=</span> <span class="n">c</span><span class="p">])</span>
                 <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">fast_algo</span> <span class="o">==</span> <span class="s2">&quot;hardest_first&quot;</span><span class="p">:</span>
-                    <span class="n">situation_for_c</span> <span class="o">=</span> <span class="p">(</span><span class="n">ballot_m_temp</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="n">situation_for_c</span> <span class="o">=</span> <span class="n">ballot_m_temp</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Unknown fast algorithm: &quot;</span> <span class="o">+</span> <span class="nb">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fast_algo</span><span class="p">))</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;um_aux_fast: scores_s_temp =&quot;</span><span class="p">,</span> <span class="n">scores_s_temp</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
@@ -1721,11 +1744,11 @@
         <span class="n">r</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">is_candidate_alive_begin_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
         <span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">)</span>
-        <span class="n">ballot_m_begin_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">))</span>
+        <span class="n">ballot_m_begin_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">))</span>
         <span class="n">scores_tot_begin_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">))</span>
-        <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span>
-            <span class="n">preferences_borda_s</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">preferences_borda_s</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
-        <span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">preferences_borda_s</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">preferences_borda_s</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]),</span> <span class="mi">0</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;um_aux_exact: r =&quot;</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;um_aux_exact: scores_tot_begin_r[r] =&quot;</span><span class="p">,</span> <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="mi">3</span><span class="p">)</span>
         <span class="c1"># If an opponent has too many votes, then manipulation is not possible.</span>
@@ -1733,7 +1756,7 @@
         <span class="n">most_serious_opponent</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">==</span> <span class="n">max_score</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">max_score</span> <span class="o">+</span> <span class="p">(</span><span class="n">most_serious_opponent</span> <span class="o">&lt;</span> <span class="n">c</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">n_s</span> <span class="o">+</span> <span class="n">n_m</span> <span class="o">-</span> <span class="n">max_score</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
             <span class="c1"># TO DO: Investigate whether this case can actually happen.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_reached_uncovered_code</span><span class="p">(</span><span class="s1">&#39;IRV: _um_aux_exact&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_reached_uncovered_code</span><span class="p">(</span><span class="s2">&quot;IRV: _um_aux_exact&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;um_aux_exact: most_serious_opponent =&quot;</span><span class="p">,</span> <span class="n">most_serious_opponent</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;um_aux_exact: Manipulation impossible by this path (an opponent has too many votes)&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="n">r</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
@@ -1792,10 +1815,13 @@
             <span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">d</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;um_aux_exact: is_candidate_alive_begin_r[r+1, :] =&quot;</span><span class="p">,</span> <span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:],</span> <span class="mi">3</span><span class="p">)</span>
             <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
-            <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span>
-                <span class="n">preferences_borda_s</span><span class="p">[:,</span> <span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]],</span>
-                <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">preferences_borda_s</span><span class="p">[:,</span> <span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]],</span> <span class="mi">1</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
-            <span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span>
+                    <span class="n">preferences_borda_s</span><span class="p">[:,</span> <span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]],</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">preferences_borda_s</span><span class="p">[:,</span> <span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]],</span> <span class="mi">1</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
+                <span class="p">),</span>
+                <span class="mi">0</span><span class="p">,</span>
+            <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;um_aux_exact: scores_s_begin_r[r+1, :] =&quot;</span><span class="p">,</span> <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:],</span> <span class="mi">3</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">ballot_m_temp</span> <span class="o">==</span> <span class="n">d</span><span class="p">:</span>
                 <span class="n">ballot_m_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
@@ -1812,48 +1838,49 @@
             <span class="k">if</span> <span class="n">max_score</span> <span class="o">+</span> <span class="p">(</span><span class="n">most_serious_opponent</span> <span class="o">&lt;</span> <span class="n">c</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">n_s</span> <span class="o">+</span> <span class="n">n_m</span> <span class="o">-</span> <span class="n">max_score</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;um_aux_exact: most_serious_opponent =&quot;</span><span class="p">,</span> <span class="n">most_serious_opponent</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span>
-                    <span class="s2">&quot;um_aux_exact: Manipulation impossible by this path (an opponent will have too many votes)&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+                    <span class="s2">&quot;um_aux_exact: Manipulation impossible by this path (an opponent will have too many votes)&quot;</span><span class="p">,</span> <span class="mi">3</span>
+                <span class="p">)</span>
                 <span class="n">strategy_r</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
                 <span class="k">continue</span>
 
             <span class="c1"># Update other variables for next round</span>
             <span class="n">strategy_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-            <span class="n">natural_loser_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
-                <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:])</span>
-            <span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">natural_loser_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]))[</span>
+                <span class="mi">0</span>
+            <span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
             <span class="n">r</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;um_aux_exact: r =&quot;</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;um_aux_exact: natural_loser_r[r] =&quot;</span><span class="p">,</span> <span class="n">natural_loser_r</span><span class="p">[</span><span class="n">r</span><span class="p">],</span> <span class="mi">3</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_um_preliminary_checks_general_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
-<span class="sd">            ...     [0, 1, 2],</span>
-<span class="sd">            ...     [1, 0, 2],</span>
-<span class="sd">            ...     [1, 0, 2],</span>
-<span class="sd">            ...     [2, 0, 1],</span>
-<span class="sd">            ...     [2, 1, 0],</span>
-<span class="sd">            ... ])</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleIRV(um_option=&#39;exact&#39;)(profile)</span>
-<span class="sd">            &gt;&gt;&gt; rule.candidates_um_</span>
-<span class="sd">            array([0., 0., 0.])</span>
+<span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
+<span class="sd">        ...     [0, 1, 2],</span>
+<span class="sd">        ...     [1, 0, 2],</span>
+<span class="sd">        ...     [1, 0, 2],</span>
+<span class="sd">        ...     [2, 0, 1],</span>
+<span class="sd">        ...     [2, 1, 0],</span>
+<span class="sd">        ... ])</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleIRV(um_option=&#39;exact&#39;)(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule.candidates_um_</span>
+<span class="sd">        array([0., 0., 0.])</span>
 
-<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
-<span class="sd">            ...     [-0.5, -0.5, -0.5],</span>
-<span class="sd">            ...     [-1. ,  0.5, -0.5],</span>
-<span class="sd">            ...     [-1. ,  0. , -1. ],</span>
-<span class="sd">            ...     [ 0. ,  1. ,  1. ],</span>
-<span class="sd">            ...     [ 0. ,  0.5,  0.5],</span>
-<span class="sd">            ... ], preferences_rk=[</span>
-<span class="sd">            ...     [0, 1, 2],</span>
-<span class="sd">            ...     [1, 2, 0],</span>
-<span class="sd">            ...     [1, 2, 0],</span>
-<span class="sd">            ...     [2, 1, 0],</span>
-<span class="sd">            ...     [2, 1, 0],</span>
-<span class="sd">            ... ])</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleIRV()(profile)</span>
-<span class="sd">            &gt;&gt;&gt; rule.candidates_um_</span>
-<span class="sd">            array([0., 0., 0.])</span>
+<span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
+<span class="sd">        ...     [-0.5, -0.5, -0.5],</span>
+<span class="sd">        ...     [-1. ,  0.5, -0.5],</span>
+<span class="sd">        ...     [-1. ,  0. , -1. ],</span>
+<span class="sd">        ...     [ 0. ,  1. ,  1. ],</span>
+<span class="sd">        ...     [ 0. ,  0.5,  0.5],</span>
+<span class="sd">        ... ], preferences_rk=[</span>
+<span class="sd">        ...     [0, 1, 2],</span>
+<span class="sd">        ...     [1, 2, 0],</span>
+<span class="sd">        ...     [1, 2, 0],</span>
+<span class="sd">        ...     [2, 1, 0],</span>
+<span class="sd">        ...     [2, 1, 0],</span>
+<span class="sd">        ... ])</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleIRV()(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule.candidates_um_</span>
+<span class="sd">        array([0., 0., 0.])</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_candidates_um</span><span class="p">,</span> <span class="kc">False</span><span class="p">)):</span>
             <span class="k">return</span>
@@ -1866,11 +1893,13 @@
                 <span class="c1"># Other variables will be updated in ``_um_preliminary_checks_general``.</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_um_main_work_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
-        <span class="n">exact</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">um_option</span> <span class="o">==</span> <span class="s2">&quot;exact&quot;</span><span class="p">)</span>
+        <span class="n">exact</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">um_option</span> <span class="o">==</span> <span class="s2">&quot;exact&quot;</span>
         <span class="n">n_m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_ut</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span>
         <span class="n">manip_found_fast</span><span class="p">,</span> <span class="n">example_path_fast</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_um_aux_fast</span><span class="p">(</span>
-            <span class="n">c</span><span class="p">,</span> <span class="n">n_m</span><span class="p">,</span>
-            <span class="n">preferences_borda_s</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_wants_to_help_c_</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]),</span> <span class="p">:])</span>
+            <span class="n">c</span><span class="p">,</span>
+            <span class="n">n_m</span><span class="p">,</span>
+            <span class="n">preferences_borda_s</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_wants_to_help_c_</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]),</span> <span class="p">:],</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;UM: manip_found_fast =&quot;</span><span class="p">,</span> <span class="n">manip_found_fast</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">manip_found_fast</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_um</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
@@ -1887,8 +1916,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_um</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="k">return</span>
         <span class="n">manip_found_exact</span><span class="p">,</span> <span class="n">example_path_exact</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_um_aux_exact</span><span class="p">(</span>
-            <span class="n">c</span><span class="p">,</span> <span class="n">n_m</span><span class="p">,</span>
-            <span class="n">preferences_borda_s</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_wants_to_help_c_</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]),</span> <span class="p">:])</span>
+            <span class="n">c</span><span class="p">,</span>
+            <span class="n">n_m</span><span class="p">,</span>
+            <span class="n">preferences_borda_s</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_wants_to_help_c_</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]),</span> <span class="p">:],</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;UM: manip_found_exact =&quot;</span><span class="p">,</span> <span class="n">manip_found_exact</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">manip_found_exact</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_um</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
@@ -1970,9 +2001,10 @@
             <span class="n">suggested_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">example_path_cm_c_</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
             <span class="n">n_m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_ut</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span>
             <span class="n">preferences_borda_s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_wants_to_help_c_</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]),</span> <span class="p">:]</span>
-            <span class="n">matrix_duels_temp</span> <span class="o">=</span> <span class="p">(</span><span class="n">preferences_ut_to_matrix_duels_ut</span><span class="p">(</span><span class="n">preferences_borda_s</span><span class="p">))</span>
+            <span class="n">matrix_duels_temp</span> <span class="o">=</span> <span class="n">preferences_ut_to_matrix_duels_ut</span><span class="p">(</span><span class="n">preferences_borda_s</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_example_ballots_cm_c</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_example_ballots_cm_c_aux</span><span class="p">(</span>
-                <span class="n">c</span><span class="p">,</span> <span class="n">n_m</span><span class="p">,</span> <span class="n">suggested_path</span><span class="p">,</span> <span class="n">preferences_borda_s</span><span class="p">,</span> <span class="n">matrix_duels_temp</span><span class="p">)</span>
+                <span class="n">c</span><span class="p">,</span> <span class="n">n_m</span><span class="p">,</span> <span class="n">suggested_path</span><span class="p">,</span> <span class="n">preferences_borda_s</span><span class="p">,</span> <span class="n">matrix_duels_temp</span>
+            <span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_example_ballots_cm_c</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">example_ballots_cm_w_against_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">w_other_rule</span><span class="p">):</span>
@@ -1997,10 +2029,12 @@
             <span class="n">suggested_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">elimination_path_</span>
             <span class="n">n_m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_ut</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">,</span> <span class="n">w_other_rule</span><span class="p">]</span>
             <span class="n">preferences_borda_s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_ut</span><span class="p">[:,</span> <span class="n">w_other_rule</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_ut</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">],</span> <span class="p">:]</span>
-            <span class="n">matrix_duels_temp</span> <span class="o">=</span> <span class="p">(</span><span class="n">preferences_ut_to_matrix_duels_ut</span><span class="p">(</span><span class="n">preferences_borda_s</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_ut</span><span class="p">[:,</span> <span class="n">w_other_rule</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_ut</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">],</span> <span class="p">:</span>
+            <span class="p">]</span>
+            <span class="n">matrix_duels_temp</span> <span class="o">=</span> <span class="n">preferences_ut_to_matrix_duels_ut</span><span class="p">(</span><span class="n">preferences_borda_s</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_example_ballots_cm_w_against</span><span class="p">[</span><span class="n">w_other_rule</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_example_ballots_cm_c_aux</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">,</span> <span class="n">n_m</span><span class="p">,</span> <span class="n">suggested_path</span><span class="p">,</span> <span class="n">preferences_borda_s</span><span class="p">,</span> <span class="n">matrix_duels_temp</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">,</span> <span class="n">n_m</span><span class="p">,</span> <span class="n">suggested_path</span><span class="p">,</span> <span class="n">preferences_borda_s</span><span class="p">,</span> <span class="n">matrix_duels_temp</span>
+            <span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_example_ballots_cm_w_against</span><span class="p">[</span><span class="n">w_other_rule</span><span class="p">]</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_example_ballots_cm_c_aux</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_m</span><span class="p">,</span> <span class="n">suggested_path</span><span class="p">,</span> <span class="n">preferences_borda_s</span><span class="p">,</span> <span class="n">matrix_duels_temp</span><span class="p">):</span>
@@ -2030,15 +2064,18 @@
         <span class="c1"># And consequences on the majority matrix</span>
         <span class="n">scores_m_begin_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">)</span>  <span class="c1"># Score due to manipulators at the beginning of the round</span>
         <span class="n">is_candidate_alive_begin_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
-        <span class="n">current_top_v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n_m</span><span class="p">))</span>  <span class="c1"># -1 means that manipulator v is available</span>
+        <span class="n">current_top_v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n_m</span><span class="p">))</span>  <span class="c1"># -1 means that manipulator v is available</span>
         <span class="n">candidates_to_put_in_ballot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">n_m</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux: r =&quot;</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="n">scores_tot_begin_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
-            <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">is_candidate_alive_begin_r</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span>
-                <span class="n">preferences_borda_s</span><span class="p">[:,</span> <span class="n">is_candidate_alive_begin_r</span><span class="p">],</span>
-                <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">preferences_borda_s</span><span class="p">[:,</span> <span class="n">is_candidate_alive_begin_r</span><span class="p">],</span> <span class="mi">1</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
-            <span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">is_candidate_alive_begin_r</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span>
+                    <span class="n">preferences_borda_s</span><span class="p">[:,</span> <span class="n">is_candidate_alive_begin_r</span><span class="p">],</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">preferences_borda_s</span><span class="p">[:,</span> <span class="n">is_candidate_alive_begin_r</span><span class="p">],</span> <span class="mi">1</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
+                <span class="p">),</span>
+                <span class="mi">0</span><span class="p">,</span>
+            <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux: scores_s_begin_r =&quot;</span><span class="p">,</span> <span class="n">scores_tot_begin_r</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux: scores_m_begin_r =&quot;</span><span class="p">,</span> <span class="n">scores_m_begin_r</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="n">scores_tot_begin_r</span> <span class="o">+=</span> <span class="n">scores_m_begin_r</span>
@@ -2048,8 +2085,10 @@
             <span class="n">scores_m_new_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
             <span class="n">scores_m_new_r</span><span class="p">[</span><span class="n">is_candidate_alive_begin_r</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span>
                 <span class="mi">0</span><span class="p">,</span>
-                <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">-</span> <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">is_candidate_alive_begin_r</span><span class="p">]</span>
-                <span class="o">+</span> <span class="p">(</span><span class="n">candidates</span><span class="p">[</span><span class="n">is_candidate_alive_begin_r</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">d</span><span class="p">))</span>
+                <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">d</span><span class="p">]</span>
+                <span class="o">-</span> <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">is_candidate_alive_begin_r</span><span class="p">]</span>
+                <span class="o">+</span> <span class="p">(</span><span class="n">candidates</span><span class="p">[</span><span class="n">is_candidate_alive_begin_r</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">d</span><span class="p">),</span>
+            <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux: scores_m_new_r =&quot;</span><span class="p">,</span> <span class="n">scores_m_new_r</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="c1"># Update variables for next round</span>
             <span class="n">scores_m_begin_r</span> <span class="o">=</span> <span class="n">scores_m_begin_r</span> <span class="o">+</span> <span class="n">scores_m_new_r</span>
@@ -2097,9 +2136,7 @@
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_example_ballots_cm_c</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
             <span class="n">csd_penalties</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">)</span>  <span class="c1"># Sum of losses in absolute defeats</span>
             <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">not_yet_ok</span><span class="p">:</span>
-                <span class="n">csd_penalties</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span>
-                    <span class="n">matrix_duels_temp</span><span class="p">[:,</span> <span class="n">d</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span>
-                <span class="p">))</span>
+                <span class="n">csd_penalties</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">matrix_duels_temp</span><span class="p">[:,</span> <span class="n">d</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
             <span class="n">max_penalty</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">csd_penalties</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">max_penalty</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">i_found_a_new_ok</span> <span class="o">=</span> <span class="kc">False</span>
@@ -2226,7 +2263,8 @@
                 <span class="c1"># Is it possible to eliminate ``d`` now?</span>
                 <span class="n">scores_m_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">)</span>
                 <span class="n">scores_m_new</span><span class="p">[</span><span class="n">is_candidate_alive</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span>
-                    <span class="mi">0</span><span class="p">,</span> <span class="n">scores_tot</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">-</span> <span class="n">scores_tot</span><span class="p">[</span><span class="n">is_candidate_alive</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">candidates</span><span class="p">[</span><span class="n">is_candidate_alive</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">d</span><span class="p">))</span>
+                    <span class="mi">0</span><span class="p">,</span> <span class="n">scores_tot</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">-</span> <span class="n">scores_tot</span><span class="p">[</span><span class="n">is_candidate_alive</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">candidates</span><span class="p">[</span><span class="n">is_candidate_alive</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">d</span><span class="p">)</span>
+                <span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_fast: scores_m_new =&quot;</span><span class="p">,</span> <span class="n">scores_m_new</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
                 <span class="n">scores_m_tot_d</span> <span class="o">=</span> <span class="n">scores_m</span> <span class="o">+</span> <span class="n">scores_m_new</span>
                 <span class="n">n_manip_d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">scores_m_tot_d</span><span class="p">)</span>
@@ -2242,17 +2280,20 @@
                 <span class="n">is_candidate_alive_temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">is_candidate_alive</span><span class="p">)</span>
                 <span class="n">is_candidate_alive_temp</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
                 <span class="n">scores_s_temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
-                <span class="n">scores_s_temp</span><span class="p">[</span><span class="n">is_candidate_alive_temp</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span>
-                    <span class="n">preferences_borda_s</span><span class="p">[:,</span> <span class="n">is_candidate_alive_temp</span><span class="p">],</span>
-                    <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">preferences_borda_s</span><span class="p">[:,</span> <span class="n">is_candidate_alive_temp</span><span class="p">],</span> <span class="mi">1</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
-                <span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="n">scores_s_temp</span><span class="p">[</span><span class="n">is_candidate_alive_temp</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span>
+                        <span class="n">preferences_borda_s</span><span class="p">[:,</span> <span class="n">is_candidate_alive_temp</span><span class="p">],</span>
+                        <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">preferences_borda_s</span><span class="p">[:,</span> <span class="n">is_candidate_alive_temp</span><span class="p">],</span> <span class="mi">1</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
+                    <span class="p">),</span>
+                    <span class="mi">0</span><span class="p">,</span>
+                <span class="p">)</span>
                 <span class="n">scores_m_temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">scores_m_tot_d</span><span class="p">)</span>
                 <span class="n">scores_m_temp</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
                 <span class="n">scores_tot_temp</span> <span class="o">=</span> <span class="n">scores_s_temp</span> <span class="o">+</span> <span class="n">scores_m_temp</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fast_algo</span> <span class="o">==</span> <span class="s2">&quot;c_minus_max&quot;</span><span class="p">:</span>
                     <span class="n">situation_for_c</span> <span class="o">=</span> <span class="n">scores_s_temp</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">scores_tot_temp</span><span class="p">[</span><span class="n">candidates</span> <span class="o">!=</span> <span class="n">c</span><span class="p">])</span>
                 <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">fast_algo</span> <span class="o">==</span> <span class="s2">&quot;minus_max&quot;</span><span class="p">:</span>
-                    <span class="n">situation_for_c</span> <span class="o">=</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">scores_tot_temp</span><span class="p">[</span><span class="n">candidates</span> <span class="o">!=</span> <span class="n">c</span><span class="p">])</span>
+                    <span class="n">situation_for_c</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">scores_tot_temp</span><span class="p">[</span><span class="n">candidates</span> <span class="o">!=</span> <span class="n">c</span><span class="p">])</span>
                 <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">fast_algo</span> <span class="o">==</span> <span class="s2">&quot;hardest_first&quot;</span><span class="p">:</span>
                     <span class="n">situation_for_c</span> <span class="o">=</span> <span class="n">n_manip_d</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -2325,10 +2366,13 @@
         <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
             <span class="c1"># Sincere scores (eliminated candidates will have nan)</span>
             <span class="n">scores_s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
-            <span class="n">scores_s</span><span class="p">[</span><span class="n">is_candidate_alive</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span>
-                <span class="n">preferences_borda_s</span><span class="p">[:,</span> <span class="n">is_candidate_alive</span><span class="p">],</span>
-                <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">preferences_borda_s</span><span class="p">[:,</span> <span class="n">is_candidate_alive</span><span class="p">],</span> <span class="mi">1</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
-            <span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">scores_s</span><span class="p">[</span><span class="n">is_candidate_alive</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span>
+                    <span class="n">preferences_borda_s</span><span class="p">[:,</span> <span class="n">is_candidate_alive</span><span class="p">],</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">preferences_borda_s</span><span class="p">[:,</span> <span class="n">is_candidate_alive</span><span class="p">],</span> <span class="mi">1</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
+                <span class="p">),</span>
+                <span class="mi">0</span><span class="p">,</span>
+            <span class="p">)</span>
             <span class="c1"># Total scores (eliminated candidates will have nan)</span>
             <span class="n">scores_tot</span> <span class="o">=</span> <span class="n">scores_s</span> <span class="o">+</span> <span class="n">scores_m</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_slow: Round r =&quot;</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
@@ -2339,7 +2383,8 @@
             <span class="n">d</span> <span class="o">=</span> <span class="n">suggested_path</span><span class="p">[</span><span class="n">r</span><span class="p">]</span>
             <span class="n">scores_m_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">)</span>
             <span class="n">scores_m_new</span><span class="p">[</span><span class="n">is_candidate_alive</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span>
-                <span class="mi">0</span><span class="p">,</span> <span class="n">scores_tot</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">-</span> <span class="n">scores_tot</span><span class="p">[</span><span class="n">is_candidate_alive</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">candidates</span><span class="p">[</span><span class="n">is_candidate_alive</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">d</span><span class="p">))</span>
+                <span class="mi">0</span><span class="p">,</span> <span class="n">scores_tot</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">-</span> <span class="n">scores_tot</span><span class="p">[</span><span class="n">is_candidate_alive</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">candidates</span><span class="p">[</span><span class="n">is_candidate_alive</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">d</span><span class="p">)</span>
+            <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_slow: scores_m_new =&quot;</span><span class="p">,</span> <span class="n">scores_m_new</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="n">scores_m</span> <span class="o">=</span> <span class="n">scores_m</span> <span class="o">+</span> <span class="n">scores_m_new</span>
             <span class="n">n_manip_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">scores_m</span><span class="p">)</span>
@@ -2449,13 +2494,13 @@
         <span class="n">n_manip_used_before_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
         <span class="n">scores_m_begin_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">))</span>
         <span class="n">scores_tot_begin_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">))</span>
-        <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span>
-            <span class="n">preferences_borda_s</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">preferences_borda_s</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
-        <span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">preferences_borda_s</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">preferences_borda_s</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]),</span> <span class="mi">0</span>
+        <span class="p">)</span>
         <span class="c1"># ``suggested_path_r[r]`` is a list with all opponents (``candidates != c``) who are alive at the beginning</span>
         <span class="c1"># of ``r``, given in a suggested order of elimination.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s1">&#39;cm_aux_exact: suggested_path =&#39;</span><span class="p">,</span> <span class="n">suggested_path</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s1">&#39;cm_aux_exact: c =&#39;</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: suggested_path =&quot;</span><span class="p">,</span> <span class="n">suggested_path</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: c =&quot;</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
         <span class="n">suggested_path_r</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="n">suggested_path</span><span class="p">[</span><span class="n">suggested_path</span> <span class="o">!=</span> <span class="n">c</span><span class="p">]}</span>
         <span class="c1"># ``index_in_path_r[r]`` is the index of the candidate we eliminate at round ``r`` in the list</span>
         <span class="c1"># ``suggested_path_r[r]``.</span>
@@ -2466,7 +2511,7 @@
         <span class="n">most_serious_opponent</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">==</span> <span class="n">max_score</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">max_score</span> <span class="o">+</span> <span class="p">(</span><span class="n">most_serious_opponent</span> <span class="o">&lt;</span> <span class="n">c</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">n_s</span> <span class="o">+</span> <span class="n">n_max_updated</span> <span class="o">-</span> <span class="n">max_score</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
             <span class="c1"># TO DO: Investigate whether this case can actually happen.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_reached_uncovered_code</span><span class="p">(</span><span class="s1">&#39;IRV: _cm_aux_exact&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_reached_uncovered_code</span><span class="p">(</span><span class="s2">&quot;IRV: _cm_aux_exact&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: scores_tot_begin_r =&quot;</span><span class="p">,</span> <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="mi">3</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: most_serious_opponent =&quot;</span><span class="p">,</span> <span class="n">most_serious_opponent</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: Manipulation impossible by this path (an opponent has too many votes)&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
@@ -2494,8 +2539,10 @@
             <span class="n">scores_m_new_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">)</span>
             <span class="n">scores_m_new_r</span><span class="p">[</span><span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="p">:]]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span>
                 <span class="mi">0</span><span class="p">,</span>
-                <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="n">d</span><span class="p">]</span> <span class="o">-</span> <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="p">:]]</span>
-                <span class="o">+</span> <span class="p">(</span><span class="n">candidates</span><span class="p">[</span><span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="p">:]]</span> <span class="o">&gt;</span> <span class="n">d</span><span class="p">))</span>
+                <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="n">d</span><span class="p">]</span>
+                <span class="o">-</span> <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="p">:]]</span>
+                <span class="o">+</span> <span class="p">(</span><span class="n">candidates</span><span class="p">[</span><span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="p">:]]</span> <span class="o">&gt;</span> <span class="n">d</span><span class="p">),</span>
+            <span class="p">)</span>
             <span class="n">scores_m_end_r</span> <span class="o">=</span> <span class="n">scores_m_begin_r</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="p">:]</span> <span class="o">+</span> <span class="n">scores_m_new_r</span>
             <span class="n">n_manip_r_and_before</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">n_manip_used_before_r</span><span class="p">[</span><span class="n">r</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">scores_m_end_r</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: scores_m_new_r =&quot;</span><span class="p">,</span> <span class="n">scores_m_new_r</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
@@ -2517,8 +2564,9 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: n_manip_final =&quot;</span><span class="p">,</span> <span class="n">n_manip_final</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: example_path =&quot;</span><span class="p">,</span> <span class="n">example_path</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">n_manip_final</span> <span class="o">==</span> <span class="n">n_min</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: End of exploration: it is not possible to do better than n_min =&quot;</span><span class="p">,</span>
-                                <span class="n">n_min</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span>
+                        <span class="s2">&quot;cm_aux_exact: End of exploration: it is not possible to do better than n_min =&quot;</span><span class="p">,</span> <span class="n">n_min</span><span class="p">,</span> <span class="mi">3</span>
+                    <span class="p">)</span>
                     <span class="k">return</span> <span class="n">n_manip_final</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">example_path</span><span class="p">),</span> <span class="kc">False</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">optimize_bounds</span><span class="p">:</span>
                     <span class="k">return</span> <span class="n">n_manip_final</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">example_path</span><span class="p">),</span> <span class="kc">True</span>
@@ -2533,11 +2581,13 @@
             <span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">d</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: is_candidate_alive_begin_r[r+1, :] =&quot;</span><span class="p">,</span> <span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:],</span> <span class="mi">3</span><span class="p">)</span>
             <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
-            <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]]</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span>
+            <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span>
                     <span class="n">preferences_borda_s</span><span class="p">[:,</span> <span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]],</span>
-                    <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">preferences_borda_s</span><span class="p">[:,</span> <span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]],</span> <span class="mi">1</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
-                <span class="p">),</span> <span class="mi">0</span><span class="p">))</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">preferences_borda_s</span><span class="p">[:,</span> <span class="n">is_candidate_alive_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]],</span> <span class="mi">1</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
+                <span class="p">),</span>
+                <span class="mi">0</span><span class="p">,</span>
+            <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: scores_s_begin_r[r+1, :] =&quot;</span><span class="p">,</span> <span class="n">scores_tot_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:],</span> <span class="mi">3</span><span class="p">)</span>
             <span class="n">scores_m_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">scores_m_end_r</span>
             <span class="n">scores_m_begin_r</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">d</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
@@ -2551,7 +2601,8 @@
             <span class="k">if</span> <span class="n">max_score</span> <span class="o">+</span> <span class="p">(</span><span class="n">most_serious_opponent</span> <span class="o">&lt;</span> <span class="n">c</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">n_s</span> <span class="o">+</span> <span class="n">n_max_updated</span> <span class="o">-</span> <span class="n">max_score</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: most_serious_opponent =&quot;</span><span class="p">,</span> <span class="n">most_serious_opponent</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span>
-                    <span class="s2">&quot;cm_aux_exact: Manipulation impossible by this path (an opponent will have too many votes)&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+                    <span class="s2">&quot;cm_aux_exact: Manipulation impossible by this path (an opponent will have too many votes)&quot;</span><span class="p">,</span> <span class="mi">3</span>
+                <span class="p">)</span>
                 <span class="n">index_in_path_r</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
                 <span class="k">continue</span>
 
@@ -2562,7 +2613,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;cm_aux_exact: r =&quot;</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_cm_preliminary_checks_general_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span> <span class="o">==</span> <span class="s2">&quot;slow&quot;</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span> <span class="o">==</span> <span class="s1">&#39;exact&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span> <span class="o">==</span> <span class="s2">&quot;slow&quot;</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span> <span class="o">==</span> <span class="s2">&quot;exact&quot;</span><span class="p">:</span>
             <span class="c1"># In that case, we check Exhaustive Ballot first</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">cm_option</span> <span class="o">=</span> <span class="s2">&quot;exact&quot;</span>
             <span class="k">if</span> <span class="n">equal_false</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">is_cm_</span><span class="p">):</span>
@@ -2582,17 +2633,24 @@
         <span class="c1"># example of path.</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sufficient_coalition_size_tm_c_</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]:</span>
             <span class="c1"># The &lt;= is not a typo.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_update_sufficient</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sufficient_coalition_size_tm_c_</span><span class="p">(</span><span class="n">c</span><span class="p">),</span>
-                                    <span class="s1">&#39;CM: Preliminary checks: TM improved =&gt; </span><span class="se">\n</span><span class="s1">    sufficient_coalition_size_cm[c] = &#39;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s1">&#39;CM: Preliminary checks: Update _example_path_cm[c] = _example_path_tm[c] =&#39;</span><span class="p">,</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">example_path_tm_c_</span><span class="p">(</span><span class="n">c</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_sufficient</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">,</span>
+                <span class="n">c</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sufficient_coalition_size_tm_c_</span><span class="p">(</span><span class="n">c</span><span class="p">),</span>
+                <span class="s2">&quot;CM: Preliminary checks: TM improved =&gt; </span><span class="se">\n</span><span class="s2">    sufficient_coalition_size_cm[c] = &quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span>
+                <span class="s2">&quot;CM: Preliminary checks: Update _example_path_cm[c] = _example_path_tm[c] =&quot;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">example_path_tm_c_</span><span class="p">(</span><span class="n">c</span><span class="p">),</span>
+                <span class="mi">3</span><span class="p">,</span>
+            <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_example_path_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">example_path_tm_c_</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
         <span class="n">n_m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_ut</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span>  <span class="c1"># Number of manipulators</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">optimize_bounds</span> <span class="ow">and</span> <span class="n">n_m</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]:</span>
             <span class="k">return</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">optimize_bounds</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">n_m</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
             <span class="c1"># TO DO: Investigate whether this case can actually happen.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_reached_uncovered_code</span><span class="p">(</span><span class="s1">&#39;IRV: _cm_preliminary_checks_c_&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_reached_uncovered_code</span><span class="p">(</span><span class="s2">&quot;IRV: _cm_preliminary_checks_c_&quot;</span><span class="p">)</span>
             <span class="k">return</span>
         <span class="c1"># Another pretest, based on Exhaustive Ballot</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span> <span class="o">==</span> <span class="s2">&quot;slow&quot;</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span> <span class="o">==</span> <span class="s2">&quot;exact&quot;</span><span class="p">:</span>
@@ -2604,59 +2662,63 @@
                 <span class="c1"># EB.CM is possible for ``c``.</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">is_cm_c_</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
             <span class="c1"># noinspection PyProtectedMember</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_update_necessary</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">],</span>
-                                   <span class="s1">&#39;CM: Preliminary checks: Use EB =&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
-                                   <span class="s1">&#39;    necessary_coalition_size_cm[c] = EB._necessary_coalition_size_cm[c] =&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_necessary</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">,</span>
+                <span class="n">c</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">],</span>
+                <span class="s2">&quot;CM: Preliminary checks: Use EB =&gt;</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="s2">&quot;    necessary_coalition_size_cm[c] = EB._necessary_coalition_size_cm[c] =&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_cm_main_work_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
-<span class="sd">            ...     [0, 2, 1, 3],</span>
-<span class="sd">            ...     [1, 2, 0, 3],</span>
-<span class="sd">            ...     [1, 3, 2, 0],</span>
-<span class="sd">            ...     [2, 1, 0, 3],</span>
-<span class="sd">            ...     [3, 2, 1, 0],</span>
-<span class="sd">            ... ])</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleIRV(cm_option=&#39;exact&#39;)(profile)</span>
-<span class="sd">            &gt;&gt;&gt; rule.candidates_cm_</span>
-<span class="sd">            array([0., 1., 0., 0.])</span>
+<span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
+<span class="sd">        ...     [0, 2, 1, 3],</span>
+<span class="sd">        ...     [1, 2, 0, 3],</span>
+<span class="sd">        ...     [1, 3, 2, 0],</span>
+<span class="sd">        ...     [2, 1, 0, 3],</span>
+<span class="sd">        ...     [3, 2, 1, 0],</span>
+<span class="sd">        ... ])</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleIRV(cm_option=&#39;exact&#39;)(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule.candidates_cm_</span>
+<span class="sd">        array([0., 1., 0., 0.])</span>
 
-<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
-<span class="sd">            ...     [0, 1, 2],</span>
-<span class="sd">            ...     [0, 2, 1],</span>
-<span class="sd">            ...     [1, 0, 2],</span>
-<span class="sd">            ...     [1, 0, 2],</span>
-<span class="sd">            ...     [2, 0, 1],</span>
-<span class="sd">            ... ])</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleIRV(cm_option=&#39;exact&#39;)(profile)</span>
-<span class="sd">            &gt;&gt;&gt; rule.necessary_coalition_size_cm_</span>
-<span class="sd">            array([0., 4., 5.])</span>
+<span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
+<span class="sd">        ...     [0, 1, 2],</span>
+<span class="sd">        ...     [0, 2, 1],</span>
+<span class="sd">        ...     [1, 0, 2],</span>
+<span class="sd">        ...     [1, 0, 2],</span>
+<span class="sd">        ...     [2, 0, 1],</span>
+<span class="sd">        ... ])</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleIRV(cm_option=&#39;exact&#39;)(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule.necessary_coalition_size_cm_</span>
+<span class="sd">        array([0., 4., 5.])</span>
 
-<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
-<span class="sd">            ...     [0, 1, 2],</span>
-<span class="sd">            ...     [0, 2, 1],</span>
-<span class="sd">            ...     [2, 1, 0],</span>
-<span class="sd">            ...     [2, 1, 0],</span>
-<span class="sd">            ...     [2, 1, 0],</span>
-<span class="sd">            ... ])</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleIRV()(profile)</span>
-<span class="sd">            &gt;&gt;&gt; rule.necessary_coalition_size_cm_</span>
-<span class="sd">            array([3., 2., 0.])</span>
+<span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
+<span class="sd">        ...     [0, 1, 2],</span>
+<span class="sd">        ...     [0, 2, 1],</span>
+<span class="sd">        ...     [2, 1, 0],</span>
+<span class="sd">        ...     [2, 1, 0],</span>
+<span class="sd">        ...     [2, 1, 0],</span>
+<span class="sd">        ... ])</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleIRV()(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule.necessary_coalition_size_cm_</span>
+<span class="sd">        array([3., 2., 0.])</span>
 
-<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
-<span class="sd">            ...     [1, 0, 2, 3, 4],</span>
-<span class="sd">            ...     [2, 0, 1, 3, 4],</span>
-<span class="sd">            ...     [2, 1, 3, 4, 0],</span>
-<span class="sd">            ...     [3, 0, 4, 1, 2],</span>
-<span class="sd">            ...     [4, 1, 3, 0, 2],</span>
-<span class="sd">            ... ])</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleIRV(cm_option=&#39;slow&#39;)(profile)</span>
-<span class="sd">            &gt;&gt;&gt; rule.is_cm_</span>
-<span class="sd">            nan</span>
+<span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
+<span class="sd">        ...     [1, 0, 2, 3, 4],</span>
+<span class="sd">        ...     [2, 0, 1, 3, 4],</span>
+<span class="sd">        ...     [2, 1, 3, 4, 0],</span>
+<span class="sd">        ...     [3, 0, 4, 1, 2],</span>
+<span class="sd">        ...     [4, 1, 3, 0, 2],</span>
+<span class="sd">        ... ])</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleIRV(cm_option=&#39;slow&#39;)(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule.is_cm_</span>
+<span class="sd">        nan</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">exact</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span> <span class="o">==</span> <span class="s2">&quot;exact&quot;</span><span class="p">)</span>
-        <span class="n">slow</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span> <span class="o">==</span> <span class="s2">&quot;slow&quot;</span><span class="p">)</span>
-        <span class="n">fast</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span> <span class="o">==</span> <span class="s2">&quot;fast&quot;</span><span class="p">)</span>
+        <span class="n">exact</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span> <span class="o">==</span> <span class="s2">&quot;exact&quot;</span>
+        <span class="n">slow</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span> <span class="o">==</span> <span class="s2">&quot;slow&quot;</span>
+        <span class="n">fast</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cm_option</span> <span class="o">==</span> <span class="s2">&quot;fast&quot;</span>
         <span class="k">if</span> <span class="n">optimize_bounds</span> <span class="ow">and</span> <span class="n">exact</span><span class="p">:</span>
             <span class="n">n_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span>
         <span class="k">else</span><span class="p">:</span>
@@ -2666,13 +2728,15 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;CM: Fast algorithm will not do better than what we already know&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="n">n_manip_fast</span><span class="p">,</span> <span class="n">example_path_fast</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cm_aux_fast</span><span class="p">(</span>
-            <span class="n">c</span><span class="p">,</span> <span class="n">n_max</span><span class="p">,</span>
-            <span class="n">preferences_borda_s</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_wants_to_help_c_</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]),</span> <span class="p">:])</span>
+            <span class="n">c</span><span class="p">,</span>
+            <span class="n">n_max</span><span class="p">,</span>
+            <span class="n">preferences_borda_s</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_wants_to_help_c_</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]),</span> <span class="p">:],</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;CM: n_manip_fast =&quot;</span><span class="p">,</span> <span class="n">n_manip_fast</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">n_manip_fast</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">n_manip_fast</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_example_path_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">example_path_fast</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s1">&#39;CM: Update sufficient_coalition_size_cm[c] = n_manip_fast =&#39;</span><span class="p">,</span> <span class="n">n_manip_fast</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;CM: Update sufficient_coalition_size_cm[c] = n_manip_fast =&quot;</span><span class="p">,</span> <span class="n">n_manip_fast</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">fast</span><span class="p">:</span>
             <span class="c1"># With fast algo, we stop here anyway. It is not a &quot;quick escape&quot; (if we&#39;d try again with</span>
             <span class="c1"># ``optimize_bounds``, we would not try better).</span>
@@ -2693,41 +2757,52 @@
         <span class="c1"># EB should always suggest an elimination path. But just as precaution, we use the fact that we know that</span>
         <span class="c1"># ``self._example_path_cm[c]`` provides a path (thanks to &#39;improved&#39; TM).</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">example_path_cm_c_</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># pragma: no cover - This should never happen.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_reached_uncovered_code</span><span class="p">(</span><span class="s1">&#39;IRV: _cm_main_work_c_&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_reached_uncovered_code</span><span class="p">(</span><span class="s2">&quot;IRV: _cm_main_work_c_&quot;</span><span class="p">)</span>
             <span class="n">suggested_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_example_path_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s1">&#39;***************************************************&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s1">&#39;CM: WARNING: EB did not provide an elimination path&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s1">&#39;***************************************************&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s1">&#39;CM: Use self._example_path_cm[c] =&#39;</span><span class="p">,</span> <span class="n">suggested_path</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;***************************************************&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;CM: WARNING: EB did not provide an elimination path&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;***************************************************&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;CM: Use self._example_path_cm[c] =&quot;</span><span class="p">,</span> <span class="n">suggested_path</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">suggested_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eb_</span><span class="o">.</span><span class="n">example_path_cm_c_</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s1">&#39;CM: Use eb_.example_path_cm_c_(c) =&#39;</span><span class="p">,</span> <span class="n">suggested_path</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;CM: Use eb_.example_path_cm_c_(c) =&quot;</span><span class="p">,</span> <span class="n">suggested_path</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">slow</span><span class="p">:</span>
             <span class="n">n_manip_slow</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cm_aux_slow</span><span class="p">(</span>
                 <span class="n">suggested_path</span><span class="p">,</span>
-                <span class="n">preferences_borda_s</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_wants_to_help_c_</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]),</span> <span class="p">:]</span>
+                <span class="n">preferences_borda_s</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_wants_to_help_c_</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]),</span> <span class="p">:</span>
+                <span class="p">],</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;CM: n_manip_slow =&quot;</span><span class="p">,</span> <span class="n">n_manip_slow</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">n_manip_slow</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">n_manip_slow</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_example_path_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">suggested_path</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s1">&#39;CM: Update sufficient_coalition_size_cm[c] = n_manip_slow =&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;CM: Update sufficient_coalition_size_cm[c] = n_manip_slow =&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">n_manip_exact</span><span class="p">,</span> <span class="n">example_path_exact</span><span class="p">,</span> <span class="n">quick_escape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cm_aux_exact</span><span class="p">(</span>
-                    <span class="n">c</span><span class="p">,</span> <span class="n">n_max_updated</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="n">optimize_bounds</span><span class="p">,</span> <span class="n">suggested_path</span><span class="p">,</span>
-                    <span class="n">preferences_borda_s</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[</span>
-                                        <span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_wants_to_help_c_</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]),</span> <span class="p">:]</span>
+                <span class="n">c</span><span class="p">,</span>
+                <span class="n">n_max_updated</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">],</span>
+                <span class="n">optimize_bounds</span><span class="p">,</span>
+                <span class="n">suggested_path</span><span class="p">,</span>
+                <span class="n">preferences_borda_s</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_wants_to_help_c_</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]),</span> <span class="p">:</span>
+                <span class="p">],</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;CM: n_manip_exact =&quot;</span><span class="p">,</span> <span class="n">n_manip_exact</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">n_manip_exact</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">n_manip_exact</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_example_path_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">example_path_exact</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s1">&#39;CM: Update sufficient_coalition_size_cm[c] = n_manip_exact =&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;CM: Update sufficient_coalition_size_cm[c] = n_manip_exact =&quot;</span><span class="p">)</span>
             <span class="c1"># Update necessary coalition and return</span>
             <span class="k">if</span> <span class="n">optimize_bounds</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_update_necessary</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">],</span>
-                                       <span class="s1">&#39;CM: Update necessary_coalition_size_cm[c] = sufficient_coalition_size_cm[c] =&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_update_necessary</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">,</span>
+                    <span class="n">c</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">],</span>
+                    <span class="s2">&quot;CM: Update necessary_coalition_size_cm[c] = sufficient_coalition_size_cm[c] =&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
                 <span class="k">return</span> <span class="kc">False</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_ut</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]:</span>
@@ -2738,17 +2813,20 @@
                     <span class="c1"># We have explored everything with ``n_max = n_m`` but manipulation failed. However, we have not</span>
                     <span class="c1"># optimized ``sufficient_size`` (which must be higher than ``n_m``), so it is a quick escape.</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_update_necessary</span><span class="p">(</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_ut</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
-                        <span class="s1">&#39;CM: Update necessary_coalition_size_cm[c] = n_m + 1 =&#39;</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">,</span>
+                        <span class="n">c</span><span class="p">,</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_ut</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                        <span class="s2">&quot;CM: Update necessary_coalition_size_cm[c] = n_m + 1 =&quot;</span><span class="p">,</span>
+                    <span class="p">)</span>
                     <span class="k">return</span> <span class="kc">True</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">theta_critical_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 1, 2, 3]])</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleIRV()(profile)</span>
-<span class="sd">            &gt;&gt;&gt; rule.theta_critical_</span>
-<span class="sd">            0</span>
+<span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 1, 2, 3]])</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleIRV()(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule.theta_critical_</span>
+<span class="sd">        0</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="mi">0</span></div>
 

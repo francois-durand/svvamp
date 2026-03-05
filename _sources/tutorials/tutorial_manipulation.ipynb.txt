@@ -289,7 +289,7 @@
     }
    ],
    "source": [
-    "rule.cm_option = 'exact'\n",
+    "rule.cm_option = \"exact\"\n",
     "rule.is_cm_"
    ]
   },
@@ -329,7 +329,7 @@
     }
    ],
    "source": [
-    "rule = svvamp.RuleIRV(cm_option='exact')\n",
+    "rule = svvamp.RuleIRV(cm_option=\"exact\")\n",
     "rule(profile)"
    ]
   },
@@ -351,7 +351,7 @@
    },
    "outputs": [],
    "source": [
-    "rule = svvamp.RuleIRV(cm_option='exact')(profile)"
+    "rule = svvamp.RuleIRV(cm_option=\"exact\")(profile)"
    ]
   },
   {
@@ -624,7 +624,7 @@
     }
    ],
    "source": [
-    "rule.im_option = 'exact'\n",
+    "rule.im_option = \"exact\"\n",
     "rule.is_im_"
    ]
   },
@@ -708,6 +708,7 @@
    "outputs": [],
    "source": [
     "import numpy as np\n",
+    "\n",
     "rule.iia_subset_maximum_size = np.inf"
    ]
   },
