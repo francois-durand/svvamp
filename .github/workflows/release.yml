@@ -35,8 +35,8 @@ jobs:
 
       - name: Set version from tag
         run: |
-          uv sync --all-extras
-          uv run bump-my-version set-version ${{ steps.vars.outputs.tag }}
+          uv pip install bump-my-version
+          uv run bump-my-version set-version "${{ steps.vars.outputs.tag }}" --no-commit --no-tag
 
       - name: Build
         run: uv run python -m build
