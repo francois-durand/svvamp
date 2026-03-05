@@ -1,5 +1,44 @@
 # History
 
+## Recent changes (not released yet)
+
+Profiles:
+
+* In ``Profile``:
+  * Add ``size_bicoalition``: Size of the bicoalition ``(c, d)`` for a Condorcet winner ``w`` when it exists, that is, the number of voters who do not prefer `c` over `w` and who rank `w` above `d`.
+  * Add ``pair_safe_condorcet_winner``, ``exists_pair_safe_condorcet_winner``, ``not_exists_pair_safe_condorcet_winner``.
+  * Add ``set_safe_condorcet_winner``, ``exists_set_safe_condorcet_winner``, ``not_exists_set_safe_condorcet_winner``.
+  * Add ``theta_empirical`` (beta feature).
+* Add ``GeneratorProfileUniformFewRankings``: Profile generator drawing rankings uniformly in a random subset of all possible rankings.
+* In ``GeneratorProfileNoise``, add option ``exponential_noise``: If True, the noise for each candidate follows an exponential distribution whose parameter is proportional to its plurality score in the base profile (Bradley-Terry style noise).
+* Update the import module for PrefLib profiles in order to be compatible with the latest version of PrefLib.
+
+Rules:
+
+* Add ``RuleDodgson`` and ``RuleYoung``.
+* Improve CM algorithms for ``RuleCSD`` (Simplified Dodgson), ``RuleCopeland``, ``RuleIRVDuels`` (Viennot rule), and ``RuleSlater``.
+* In ``RuleCopeland`` and ``RuleSlater``, add option ``tie_break_rule``.
+* In ``RuleKemeny`` and ``RuleSlater``, add option ``winner_option `` (``exact`` or ``lazy``) to speed up computation.
+* Rename the ``full name`` and ``abbreviation`` attributes of several rules.
+* In ``Rule``, add ``is_xm_`` and ``theta_critical_`` (beta features).
+
+Meta:
+
+* In ``ExperimentCompiler``:
+  * Add option ``ignore_rules_abbr``: List of rules to ignore (given as abbreviations).
+  * In ``rate_bar_plot`` (and related methods), add options to restrict the plot to certain numbers of candidates (``n_c_equal``, ``n_c_ge``, ``n_c_le``).
+  * In ``rate_bar_plot`` (and related methods), add options to control the colors (``f_rule_label``, ``f_rule_value_used_for_color``, ``d_rule_color``, ``d_bound_color``).
+  * Add ``nb_candidates_rate_line_plot``: Line plot representing a rate as a function of the number of candidates.
+  * In ``my_tikzplotlib_save``, add options to pimp the tikz output (``d_old_new``, ``transform_string``).
+  * In ``my_tikzplotlib_save``, add option ``with_prefix``: Whether the prefix is used in the file name.
+  * Add ``line`` to factorize the code of ``rcw_line``, ``sscw_line``, etc.
+  * Add ``cm_xm_rate_bar_plot`` (beta feature).
+
+Bug fixes:
+
+* In ``Profile``, fix bug to compute ``n_v`` and ``n_c`` when the profile is initialized with ``preferences_borda_rk``.
+* In ``RuleBucklin``, fix bug in the CM algorithm.
+
 ## 0.12.0 (2025-02-19): Accelerations and Bug Fixes
 
 * In ``Rule`` and its subclasses, add option ``precheck_heuristic`` (heuristic precheck before computing CM). In
