@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>svvamp.rules.rule_two_round &#8212; SVVAMP 0.13.0 documentation</title>
+    <title>svvamp.rules.rule_plurality_with_runoff &#8212; SVVAMP 0.14.0 documentation</title>
   
   
   
@@ -37,16 +37,16 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=1019fba8"></script>
+    <script src="../../../_static/documentation_options.js?v=9e420a66"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/svvamp/rules/rule_two_round';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/svvamp/rules/rule_plurality_with_runoff';</script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.13.0" />
+  <meta name="docsearch:version" content="0.14.0" />
   </head>
   
   
@@ -108,7 +108,7 @@
   
   
   
-    <p class="title logo__title">SVVAMP 0.13.0 documentation</p>
+    <p class="title logo__title">SVVAMP 0.14.0 documentation</p>
   
 </a></div>
     
@@ -405,7 +405,7 @@
     
     <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">svvamp.rules.rule_two_round</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">svvamp.rules.rule_plurality_with_runoff</span></li>
   </ul>
 </nav>
 </div>
@@ -422,7 +422,7 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <h1>Source code for svvamp.rules.rule_two_round</h1><div class="highlight"><pre>
+  <h1>Source code for svvamp.rules.rule_plurality_with_runoff</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Created on 11 dec. 2018, 13:39</span>
@@ -451,14 +451,14 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.preferences.profile</span><span class="w"> </span><span class="kn">import</span> <span class="n">Profile</span>
 
 
-<div class="viewcode-block" id="RuleTwoRound">
-<a class="viewcode-back" href="../../../reference/rules/rule_two_round.html#svvamp.RuleTwoRound">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">RuleTwoRound</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Two Round System.</span>
+<div class="viewcode-block" id="RulePluralityWithRunoff">
+<a class="viewcode-back" href="../../../reference/rules/rule_plurality_with_runoff.html#svvamp.RulePluralityWithRunoff">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">RulePluralityWithRunoff</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plurality with runoff.</span>
 
 <span class="sd">    Options</span>
 <span class="sd">    -------</span>
-<span class="sd">        &gt;&gt;&gt; RuleTwoRound.print_options_parameters()</span>
+<span class="sd">        &gt;&gt;&gt; RulePluralityWithRunoff.print_options_parameters()</span>
 <span class="sd">        cm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
 <span class="sd">        icm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
 <span class="sd">        iia_subset_maximum_size: is_number. Default: 2.</span>
@@ -491,7 +491,7 @@
 <span class="sd">        ...     [2, 0, 1],</span>
 <span class="sd">        ...     [2, 1, 0],</span>
 <span class="sd">        ... ])</span>
-<span class="sd">        &gt;&gt;&gt; rule = RuleTwoRound()(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule = RulePluralityWithRunoff()(profile)</span>
 <span class="sd">        &gt;&gt;&gt; rule.demo_results_(log_depth=0)  # doctest: +NORMALIZE_WHITESPACE</span>
 <span class="sd">        &lt;BLANKLINE&gt;</span>
 <span class="sd">        ************************</span>
@@ -729,7 +729,7 @@
             <span class="n">precheck_um</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
             <span class="n">precheck_icm</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
             <span class="n">precheck_tm</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-            <span class="n">log_identity</span><span class="o">=</span><span class="s2">&quot;TWO_ROUND&quot;</span><span class="p">,</span>
+            <span class="n">log_identity</span><span class="o">=</span><span class="s2">&quot;PLURALITY_WITH_RUNOFF&quot;</span><span class="p">,</span>
             <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
         <span class="p">)</span>
 
@@ -807,7 +807,8 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">_compute_im_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute IM: is_im, candidates_im, _voters_im and v_im_for_c.</span>
 
-<span class="sd">        For Two Round, since calculation is not so expensive, we compute everything, even if complete_mode = False.</span>
+<span class="sd">        For Plurality with Runoff, since calculation is not so expensive, we compute everything, even if</span>
+<span class="sd">        complete_mode = False.</span>
 
 <span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
 <span class="sd">            ...     [0, 1, 2],</span>
@@ -816,7 +817,7 @@
 <span class="sd">            ...     [2, 0, 1],</span>
 <span class="sd">            ...     [2, 0, 1],</span>
 <span class="sd">            ... ])</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleTwoRound()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule = RulePluralityWithRunoff()(profile)</span>
 <span class="sd">            &gt;&gt;&gt; rule.is_im_v_(0)</span>
 <span class="sd">            False</span>
 <span class="sd">            &gt;&gt;&gt; rule.v_im_for_c_</span>
@@ -833,7 +834,7 @@
 <span class="sd">            ...     [1, 2, 0],</span>
 <span class="sd">            ...     [1, 2, 0],</span>
 <span class="sd">            ... ])</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleTwoRound()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule = RulePluralityWithRunoff()(profile)</span>
 <span class="sd">            &gt;&gt;&gt; rule.v_im_for_c_</span>
 <span class="sd">            array([[0., 0., 0.],</span>
 <span class="sd">                   [0., 0., 0.],</span>
@@ -848,7 +849,7 @@
 <span class="sd">            ...     [1, 2, 0],</span>
 <span class="sd">            ...     [2, 0, 1],</span>
 <span class="sd">            ... ])</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleTwoRound()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule = RulePluralityWithRunoff()(profile)</span>
 <span class="sd">            &gt;&gt;&gt; rule.v_im_for_c_</span>
 <span class="sd">            array([[0., 0., 0.],</span>
 <span class="sd">                   [0., 0., 0.],</span>
@@ -945,7 +946,7 @@
 <span class="sd">        ...     [1, 0, 2],</span>
 <span class="sd">        ...     [2, 0, 1],</span>
 <span class="sd">        ... ])</span>
-<span class="sd">        &gt;&gt;&gt; rule = RuleTwoRound()(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule = RulePluralityWithRunoff()(profile)</span>
 <span class="sd">        &gt;&gt;&gt; rule.candidates_um_</span>
 <span class="sd">        array([0., 0., 0.])</span>
 
@@ -956,7 +957,7 @@
 <span class="sd">        ...     [2, 1, 0, 3],</span>
 <span class="sd">        ...     [3, 1, 2, 0],</span>
 <span class="sd">        ... ])</span>
-<span class="sd">        &gt;&gt;&gt; rule = RuleTwoRound()(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule = RulePluralityWithRunoff()(profile)</span>
 <span class="sd">        &gt;&gt;&gt; rule.candidates_um_</span>
 <span class="sd">        array([0., 0., 1., 0.])</span>
 
@@ -975,7 +976,7 @@
 <span class="sd">        ...     [2, 1, 3, 0],</span>
 <span class="sd">        ...     [3, 1, 0, 2],</span>
 <span class="sd">        ... ])</span>
-<span class="sd">        &gt;&gt;&gt; rule = RuleTwoRound()(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule = RulePluralityWithRunoff()(profile)</span>
 <span class="sd">        &gt;&gt;&gt; rule.candidates_um_</span>
 <span class="sd">        array([1., 0., 0., 1.])</span>
 
@@ -994,7 +995,7 @@
 <span class="sd">        ...     [3, 2, 0, 4, 1],</span>
 <span class="sd">        ...     [4, 2, 0, 3, 1],</span>
 <span class="sd">        ... ])</span>
-<span class="sd">        &gt;&gt;&gt; rule = RuleTwoRound()(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule = RulePluralityWithRunoff()(profile)</span>
 <span class="sd">        &gt;&gt;&gt; rule.candidates_um_</span>
 <span class="sd">        array([0., 0., 1., 0., 0.])</span>
 
@@ -1015,7 +1016,7 @@
 <span class="sd">        ...     [6, 3, 4, 2, 0, 1, 5],</span>
 <span class="sd">        ...     [6, 5, 4, 3, 1, 2, 0],</span>
 <span class="sd">        ... ])</span>
-<span class="sd">        &gt;&gt;&gt; rule = RuleTwoRound()(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule = RulePluralityWithRunoff()(profile)</span>
 <span class="sd">        &gt;&gt;&gt; rule.candidates_um_</span>
 <span class="sd">        array([0., 0., 0., 0., 1., 0., 0.])</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1086,7 +1087,7 @@
 <span class="sd">            ...     [2, 1, 0],</span>
 <span class="sd">            ...     [2, 1, 0],</span>
 <span class="sd">            ... ])</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleTwoRound()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule = RulePluralityWithRunoff()(profile)</span>
 <span class="sd">            &gt;&gt;&gt; rule.candidates_cm_</span>
 <span class="sd">            array([0., 1., 0.])</span>
 
@@ -1105,7 +1106,7 @@
 <span class="sd">            ...     [1, 0],</span>
 <span class="sd">            ...     [1, 0],</span>
 <span class="sd">            ... ])</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleTwoRound()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule = RulePluralityWithRunoff()(profile)</span>
 <span class="sd">            &gt;&gt;&gt; rule.is_cm_c_with_bounds_(0)</span>
 <span class="sd">            (False, 3.0, 3.0)</span>
 
@@ -1122,7 +1123,7 @@
 <span class="sd">            ...     [1, 0],</span>
 <span class="sd">            ...     [0, 1],</span>
 <span class="sd">            ... ])</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleTwoRound()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule = RulePluralityWithRunoff()(profile)</span>
 <span class="sd">            &gt;&gt;&gt; _ = rule._cm_is_initialized_general_</span>
 <span class="sd">            &gt;&gt;&gt; rule._cm_main_work_c_(c=1, optimize_bounds=True)</span>
 <span class="sd">            &gt;&gt;&gt; float(rule._sufficient_coalition_size_cm[1])</span>
@@ -1145,7 +1146,7 @@
 <span class="sd">            ...     [1, 2, 0],</span>
 <span class="sd">            ...     [2, 0, 1],</span>
 <span class="sd">            ... ])</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleTwoRound()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule = RulePluralityWithRunoff()(profile)</span>
 <span class="sd">            &gt;&gt;&gt; _ = rule._cm_is_initialized_general_</span>
 <span class="sd">            &gt;&gt;&gt; rule._cm_main_work_c_(c=0, optimize_bounds=True)</span>
 <span class="sd">            &gt;&gt;&gt; float(rule._sufficient_coalition_size_cm[0])</span>
@@ -1192,7 +1193,7 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">theta_critical_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 1, 2, 3]])</span>
-<span class="sd">        &gt;&gt;&gt; rule = RuleTwoRound()(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule = RulePluralityWithRunoff()(profile)</span>
 <span class="sd">        &gt;&gt;&gt; rule.theta_critical_</span>
 <span class="sd">        0.058823529411764705</span>
 <span class="sd">        &quot;&quot;&quot;</span>

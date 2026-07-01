@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>svvamp.rules.rule_icrv &#8212; SVVAMP 0.13.0 documentation</title>
+    <title>svvamp.rules.rule_benham &#8212; SVVAMP 0.14.0 documentation</title>
   
   
   
@@ -37,16 +37,16 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=1019fba8"></script>
+    <script src="../../../_static/documentation_options.js?v=9e420a66"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/svvamp/rules/rule_icrv';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/svvamp/rules/rule_benham';</script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.13.0" />
+  <meta name="docsearch:version" content="0.14.0" />
   </head>
   
   
@@ -108,7 +108,7 @@
   
   
   
-    <p class="title logo__title">SVVAMP 0.13.0 documentation</p>
+    <p class="title logo__title">SVVAMP 0.14.0 documentation</p>
   
 </a></div>
     
@@ -405,7 +405,7 @@
     
     <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">svvamp.rules.rule_icrv</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">svvamp.rules.rule_benham</span></li>
   </ul>
 </nav>
 </div>
@@ -422,7 +422,7 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <h1>Source code for svvamp.rules.rule_icrv</h1><div class="highlight"><pre>
+  <h1>Source code for svvamp.rules.rule_benham</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Created on 7 dec. 2018, 15:01</span>
@@ -454,14 +454,14 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.utils.misc</span><span class="w"> </span><span class="kn">import</span> <span class="n">preferences_ut_to_matrix_duels_ut</span>
 
 
-<div class="viewcode-block" id="RuleICRV">
-<a class="viewcode-back" href="../../../reference/rules/rule_icrv.html#svvamp.RuleICRV">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">RuleICRV</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Instant-Condorcet Runoff Voting (ICRV), also known as Benham rule.</span>
+<div class="viewcode-block" id="RuleBenham">
+<a class="viewcode-back" href="../../../reference/rules/rule_benham.html#svvamp.RuleBenham">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">RuleBenham</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Benham rule (Instant-Condorcet Runoff Voting).</span>
 
 <span class="sd">    Options</span>
 <span class="sd">    -------</span>
-<span class="sd">        &gt;&gt;&gt; RuleICRV.print_options_parameters()</span>
+<span class="sd">        &gt;&gt;&gt; RuleBenham.print_options_parameters()</span>
 <span class="sd">        cm_option: [&#39;fast&#39;, &#39;slow&#39;, &#39;very_slow&#39;, &#39;exact&#39;]. Default: &#39;fast&#39;.</span>
 <span class="sd">        icm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
 <span class="sd">        iia_subset_maximum_size: is_number. Default: 2.</span>
@@ -508,7 +508,7 @@
 
 <span class="sd">    See Also</span>
 <span class="sd">    --------</span>
-<span class="sd">    :class:`RuleExhaustiveBallot`, :class:`RuleIRV`, :class:`RuleIRVDuels`, :class:`RuleCondorcetAbsIRV`,</span>
+<span class="sd">    :class:`RuleExhaustiveBallot`, :class:`RuleIRV`, :class:`RuleViennot`, :class:`RuleCondorcetAbsIRV`,</span>
 <span class="sd">    :class:`RuleCondorcetVtbIRV`.</span>
 
 <span class="sd">    Examples</span>
@@ -526,7 +526,7 @@
 <span class="sd">        ...     [2, 0, 1],</span>
 <span class="sd">        ...     [2, 1, 0],</span>
 <span class="sd">        ... ])</span>
-<span class="sd">        &gt;&gt;&gt; rule = RuleICRV()(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleBenham()(profile)</span>
 <span class="sd">        &gt;&gt;&gt; rule.demo_results_(log_depth=0)  # doctest: +NORMALIZE_WHITESPACE</span>
 <span class="sd">        &lt;BLANKLINE&gt;</span>
 <span class="sd">        ************************</span>
@@ -756,17 +756,17 @@
             <span class="n">with_two_candidates_reduces_to_plurality</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">is_based_on_rk</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">precheck_icm</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-            <span class="n">log_identity</span><span class="o">=</span><span class="s2">&quot;ICRV&quot;</span><span class="p">,</span>
+            <span class="n">log_identity</span><span class="o">=</span><span class="s2">&quot;BENHAM&quot;</span><span class="p">,</span>
             <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
         <span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">profile</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        &gt;&gt;&gt; my_profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])</span>
-<span class="sd">        &gt;&gt;&gt; rule = RuleICRV(cm_option=&#39;slow&#39;)(my_profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleBenham(cm_option=&#39;slow&#39;)(my_profile)</span>
 <span class="sd">        &gt;&gt;&gt; rule.irv_.cm_option</span>
 <span class="sd">        &#39;slow&#39;</span>
-<span class="sd">        &gt;&gt;&gt; rule = RuleICRV(cm_option=&#39;exact&#39;)(my_profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleBenham(cm_option=&#39;exact&#39;)(my_profile)</span>
 <span class="sd">        &gt;&gt;&gt; rule.irv_.cm_option</span>
 <span class="sd">        &#39;exact&#39;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -874,7 +874,7 @@
 <span class="sd">            ...     [1, 2, 0, 3],</span>
 <span class="sd">            ...     [2, 0, 1, 3],</span>
 <span class="sd">            ... ])</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleICRV()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleBenham()(profile)</span>
 <span class="sd">            &gt;&gt;&gt; rule.scores_</span>
 <span class="sd">            array([[ 2.,  2.,  2.,  0.],</span>
 <span class="sd">                   [ 1.,  1.,  1.,  0.],</span>
@@ -915,7 +915,7 @@
 <span class="sd">        ...     [1, 2, 0],</span>
 <span class="sd">        ...     [2, 1, 0],</span>
 <span class="sd">        ... ])</span>
-<span class="sd">        &gt;&gt;&gt; rule = RuleICRV(um_option=&#39;exact&#39;)(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleBenham(um_option=&#39;exact&#39;)(profile)</span>
 <span class="sd">        &gt;&gt;&gt; rule.is_um_c_(0)</span>
 <span class="sd">        False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -941,7 +941,7 @@
 <span class="sd">            ...     [1, 3, 0, 2],</span>
 <span class="sd">            ...     [3, 2, 0, 1],</span>
 <span class="sd">            ... ])</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleICRV()(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleBenham()(profile)</span>
 <span class="sd">            &gt;&gt;&gt; rule.losing_candidates_</span>
 <span class="sd">            array([2, 1, 0])</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -980,7 +980,7 @@
 <span class="sd">            ...     [1, 0, 2],</span>
 <span class="sd">            ...     [2, 1, 0],</span>
 <span class="sd">            ... ])</span>
-<span class="sd">            &gt;&gt;&gt; rule = RuleICRV(cm_option=&#39;slow&#39;)(profile)</span>
+<span class="sd">            &gt;&gt;&gt; rule = RuleBenham(cm_option=&#39;slow&#39;)(profile)</span>
 <span class="sd">            &gt;&gt;&gt; rule.sufficient_coalition_size_cm_</span>
 <span class="sd">            array([4., 0., 3.])</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1008,7 +1008,7 @@
 <span class="sd">        ...     [3, 1, 0, 2],</span>
 <span class="sd">        ...     [1, 0, 2, 3],</span>
 <span class="sd">        ... ])</span>
-<span class="sd">        &gt;&gt;&gt; rule = RuleICRV()(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleBenham()(profile)</span>
 <span class="sd">        &gt;&gt;&gt; rule.necessary_coalition_size_cm_</span>
 <span class="sd">        array([1., 0., 1., 1.])</span>
 
@@ -1027,7 +1027,7 @@
 <span class="sd">        ...     [1, 2, 3, 0],</span>
 <span class="sd">        ...     [1, 3, 2, 0],</span>
 <span class="sd">        ... ])</span>
-<span class="sd">        &gt;&gt;&gt; rule = RuleICRV()(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleBenham()(profile)</span>
 <span class="sd">        &gt;&gt;&gt; rule.is_cm_c_with_bounds_(0)</span>
 <span class="sd">        (False, 2.0, 2.0)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1052,7 +1052,7 @@
 <span class="sd">        ...     [0, 3, 1, 2],</span>
 <span class="sd">        ...     [2, 3, 0, 1],</span>
 <span class="sd">        ... ])</span>
-<span class="sd">        &gt;&gt;&gt; rule = RuleICRV(cm_option=&#39;fast&#39;)(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleBenham(cm_option=&#39;fast&#39;)(profile)</span>
 <span class="sd">        &gt;&gt;&gt; rule.is_cm_</span>
 <span class="sd">        nan</span>
 
@@ -1065,7 +1065,7 @@
 <span class="sd">        ...     [2, 0, 3, 1],</span>
 <span class="sd">        ...     [3, 0, 2, 1],</span>
 <span class="sd">        ... ])</span>
-<span class="sd">        &gt;&gt;&gt; rule = RuleICRV(cm_option=&#39;fast&#39;)(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleBenham(cm_option=&#39;fast&#39;)(profile)</span>
 <span class="sd">        &gt;&gt;&gt; rule.is_cm_c_with_bounds_(1)</span>
 <span class="sd">        (False, 1.0, 1.0)</span>
 
@@ -1078,7 +1078,7 @@
 <span class="sd">        ...     [3, 0, 1, 2],</span>
 <span class="sd">        ...     [2, 3, 1, 0],</span>
 <span class="sd">        ... ])</span>
-<span class="sd">        &gt;&gt;&gt; rule = RuleICRV(cm_option=&#39;fast&#39;)(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleBenham(cm_option=&#39;fast&#39;)(profile)</span>
 <span class="sd">        &gt;&gt;&gt; rule.sufficient_coalition_size_cm_</span>
 <span class="sd">        array([1., 1., 3., 0.])</span>
 
@@ -1095,7 +1095,7 @@
 <span class="sd">        ...     [1, 2, 3, 0],</span>
 <span class="sd">        ...     [3, 2, 0, 1],</span>
 <span class="sd">        ... ])</span>
-<span class="sd">        &gt;&gt;&gt; rule = RuleICRV(cm_option=&#39;fast&#39;)(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleBenham(cm_option=&#39;fast&#39;)(profile)</span>
 <span class="sd">        &gt;&gt;&gt; rule.necessary_coalition_size_cm_</span>
 <span class="sd">        array([1., 2., 0., 2.])</span>
 
@@ -1105,7 +1105,7 @@
 <span class="sd">        ...     [0, 2, 1],</span>
 <span class="sd">        ...     [1, 2, 0],</span>
 <span class="sd">        ... ])</span>
-<span class="sd">        &gt;&gt;&gt; rule = RuleICRV(cm_option=&#39;very_slow&#39;)(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleBenham(cm_option=&#39;very_slow&#39;)(profile)</span>
 <span class="sd">        &gt;&gt;&gt; rule.necessary_coalition_size_cm_</span>
 <span class="sd">        array([0., 3., 3.])</span>
 
@@ -1115,7 +1115,7 @@
 <span class="sd">        ...     [2, 1, 0],</span>
 <span class="sd">        ...     [0, 1, 2],</span>
 <span class="sd">        ... ])</span>
-<span class="sd">        &gt;&gt;&gt; rule = RuleICRV(cm_option=&#39;exact&#39;)(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleBenham(cm_option=&#39;exact&#39;)(profile)</span>
 <span class="sd">        &gt;&gt;&gt; rule.sufficient_coalition_size_cm_</span>
 <span class="sd">        array([0., 3., 4.])</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1217,7 +1217,7 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">theta_critical_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 1, 2, 3]])</span>
-<span class="sd">        &gt;&gt;&gt; rule = RuleICRV()(profile)</span>
+<span class="sd">        &gt;&gt;&gt; rule = RuleBenham()(profile)</span>
 <span class="sd">        &gt;&gt;&gt; rule.theta_critical_</span>
 <span class="sd">        0</span>
 <span class="sd">        &quot;&quot;&quot;</span>

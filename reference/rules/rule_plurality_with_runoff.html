@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>RuleICRV &#8212; SVVAMP 0.13.0 documentation</title>
+    <title>RulePluralityWithRunoff &#8212; SVVAMP 0.14.0 documentation</title>
   
   
   
@@ -38,20 +38,18 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=1019fba8"></script>
+    <script src="../../_static/documentation_options.js?v=9e420a66"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/rules/rule_icrv';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/rules/rule_plurality_with_runoff';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="RuleIRV" href="rule_irv.html" />
-    <link rel="prev" title="RuleExhaustiveBallot" href="rule_exhaustive_ballot.html" />
+    <link rel="next" title="RuleRangeVoting" href="rule_range_voting.html" />
+    <link rel="prev" title="RulePlurality" href="rule_plurality.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.13.0" />
+  <meta name="docsearch:version" content="0.14.0" />
   </head>
   
   
@@ -113,7 +111,7 @@
   
   
   
-    <p class="title logo__title">SVVAMP 0.13.0 documentation</p>
+    <p class="title logo__title">SVVAMP 0.14.0 documentation</p>
   
 </a></div>
     
@@ -411,20 +409,18 @@
 <li class="toctree-l1"><a class="reference internal" href="rule.html">Rule</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_approval.html">RuleApproval</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_baldwin.html">RuleBaldwin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rule_benham.html">RuleBenham</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_black.html">RuleBlack</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_borda.html">RuleBorda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_bucklin.html">RuleBucklin</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_condorcet_abs_irv.html">RuleCondorcetAbsIRV</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rule_condorcet_sum_defeats.html">RuleCondorcetSumDefeats</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_condorcet_vtb_irv.html">RuleCondorcetVtbIRV</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_coombs.html">RuleCoombs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_copeland.html">RuleCopeland</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_dodgson.html">RuleDodgson</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_exhaustive_ballot.html">RuleExhaustiveBallot</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">RuleICRV</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_irv.html">RuleIRV</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_irv_average.html">RuleIRVAverage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rule_irv_duels.html">RuleIRVDuels</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_iterated_bucklin.html">RuleIteratedBucklin</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_k_approval.html">RuleKApproval</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_kemeny.html">RuleKemeny</a></li>
@@ -433,16 +429,18 @@
 <li class="toctree-l1"><a class="reference internal" href="rule_maximin.html">RuleMaximin</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_nanson.html">RuleNanson</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_plurality.html">RulePlurality</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">RulePluralityWithRunoff</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_range_voting.html">RuleRangeVoting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_ranked_pairs.html">RuleRankedPairs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_schulze.html">RuleSchulze</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rule_simplified_dodgson.html">RuleSimplifiedDodgson</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_slater.html">RuleSlater</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_smith_irv.html">RuleSmithIRV</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_split_cycle.html">RuleSplitCycle</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_star.html">RuleSTAR</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_tideman.html">RuleTideman</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rule_two_round.html">RuleTwoRound</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_veto.html">RuleVeto</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rule_viennot.html">RuleViennot</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_woodall.html">RuleWoodall</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_young.html">RuleYoung</a></li>
 </ul>
@@ -499,7 +497,7 @@
     
     <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Reference</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">RuleICRV</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">RulePluralityWithRunoff</span></li>
   </ul>
 </nav>
 </div>
@@ -516,63 +514,32 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="ruleicrv">
-<h1>RuleICRV<a class="headerlink" href="#ruleicrv" title="Link to this heading">#</a></h1>
+  <section id="rulepluralitywithrunoff">
+<h1>RulePluralityWithRunoff<a class="headerlink" href="#rulepluralitywithrunoff" title="Link to this heading">#</a></h1>
 <dl class="py class">
-<dt class="sig sig-object py" id="svvamp.RuleICRV">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">svvamp.</span></span><span class="sig-name descname"><span class="pre">RuleICRV</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/rules/rule_icrv.html#RuleICRV"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.RuleICRV" title="Link to this definition">#</a></dt>
-<dd><p>Instant-Condorcet Runoff Voting (ICRV), also known as Benham rule.</p>
+<dt class="sig sig-object py" id="svvamp.RulePluralityWithRunoff">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">svvamp.</span></span><span class="sig-name descname"><span class="pre">RulePluralityWithRunoff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/svvamp/rules/rule_plurality_with_runoff.html#RulePluralityWithRunoff"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#svvamp.RulePluralityWithRunoff" title="Link to this definition">#</a></dt>
+<dd><p>Plurality with runoff.</p>
 <section id="options">
 <h2>Options<a class="headerlink" href="#options" title="Link to this heading">#</a></h2>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">RuleICRV</span><span class="o">.</span><span class="n">print_options_parameters</span><span class="p">()</span>
-<span class="go">cm_option: [&#39;fast&#39;, &#39;slow&#39;, &#39;very_slow&#39;, &#39;exact&#39;]. Default: &#39;fast&#39;.</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">RulePluralityWithRunoff</span><span class="o">.</span><span class="n">print_options_parameters</span><span class="p">()</span>
+<span class="go">cm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
 <span class="go">icm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
 <span class="go">iia_subset_maximum_size: is_number. Default: 2.</span>
-<span class="go">im_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
-<span class="go">precheck_heuristic: is_bool. Default: True.</span>
-<span class="go">tm_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;exact&#39;.</span>
-<span class="go">um_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="go">im_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="go">precheck_heuristic: [False]. Default: False.</span>
+<span class="go">tm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="go">um_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
 </pre></div>
 </div>
 <p class="rubric">Notes</p>
-<p>Principle: eliminate candidates as in IRV; stop as soon as there is a Condorcet winner.</p>
+<p>Two rounds are actually held, which means that manipulators can change their vote between the first and second
+round. Hence for <code class="xref py py-attr docutils literal notranslate"><span class="pre">n_c</span></code> = 3, this voting system is equivalent to <a class="reference internal" href="rule_exhaustive_ballot.html#svvamp.RuleExhaustiveBallot" title="svvamp.RuleExhaustiveBallot"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleExhaustiveBallot</span></code></a> (not
+<a class="reference internal" href="rule_irv.html#svvamp.RuleIRV" title="svvamp.RuleIRV"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleIRV</span></code></a>). In case of a tie, candidates with lowest index are privileged.</p>
 <ul class="simple">
-<li><p>Even round <code class="docutils literal notranslate"><span class="pre">r</span></code> (including round 0): if a candidate <code class="docutils literal notranslate"><span class="pre">w</span></code> has only victories against all other non-eliminated
-candidates (i.e. is a Condorcet winner in this subset, in the sense of <code class="xref py py-attr docutils literal notranslate"><span class="pre">matrix_victories_rk</span></code>), then <code class="docutils literal notranslate"><span class="pre">w</span></code>
-is declared the winner.</p></li>
-<li><p>Odd round <code class="docutils literal notranslate"><span class="pre">r</span></code>: the candidate who is ranked first (among non-eliminated candidates) by least voters is
-eliminated, like in <a class="reference internal" href="rule_irv.html#svvamp.RuleIRV" title="svvamp.RuleIRV"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleIRV</span></code></a>.</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_iia_()</span></code>: Non-polynomial or non-exact algorithms from superclass <a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_cm_()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">is_icm_()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">is_im_()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">is_tm_()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">is_um_()</span></code>: Exact in polynomial time.</p></li>
 </ul>
-<p>This method meets the Condorcet criterion.</p>
-<ul>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_cm_()</span></code>:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'fast'</span></code>: Rely on <a class="reference internal" href="rule_irv.html#svvamp.RuleIRV" title="svvamp.RuleIRV"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleIRV</span></code></a>’s fast algorithm. Polynomial heuristic. Can prove
-CM but unable to decide non-CM (except in rare obvious cases).</p></li>
-<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'slow'</span></code>: Rely on <a class="reference internal" href="rule_exhaustive_ballot.html#svvamp.RuleExhaustiveBallot" title="svvamp.RuleExhaustiveBallot"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleExhaustiveBallot</span></code></a>’s exact algorithm. Non-polynomial
-heuristic (<span class="math notranslate nohighlight">\(2^{n_c}\)</span>). Quite efficient to prove CM or non-CM.</p></li>
-<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'very_slow'</span></code>: Rely on <a class="reference internal" href="rule_irv.html#svvamp.RuleIRV" title="svvamp.RuleIRV"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleIRV</span></code></a>’s exact algorithm. Non-polynomial
-heuristic (<span class="math notranslate nohighlight">\(n_c!\)</span>). Very efficient to prove CM or non-CM.</p></li>
-<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'exact'</span></code>: Non-polynomial algorithm from superclass <a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
-</ul>
-<p>Each algorithm above exploits the faster ones. For example, if <code class="xref py py-attr docutils literal notranslate"><span class="pre">cm_option</span></code> = <code class="docutils literal notranslate"><span class="pre">'very_slow'</span></code>,
-SVVAMP tries the fast algorithm first, then the slow one, then the ‘very slow’ one. As soon as it reaches
-a decision, computation stops.</p>
-</div></blockquote>
-</li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_icm_()</span></code>: Exact in polynomial time.</p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_im_()</span></code>: Non-polynomial or non-exact algorithms from superclass <a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">not_iia()</span></code>: Exact in polynomial time.</p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_tm_()</span></code>: Exact in polynomial time.</p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_um_()</span></code>: Non-polynomial or non-exact algorithms from superclass <a class="reference internal" href="rule.html#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>.</p></li>
-</ul>
-<p class="rubric">References</p>
-<p>‘Four Condorcet-Hare Hybrid Methods for Single-Winner Elections’, James Green-Armytage, 2011.</p>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<p><a class="reference internal" href="rule_exhaustive_ballot.html#svvamp.RuleExhaustiveBallot" title="svvamp.RuleExhaustiveBallot"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleExhaustiveBallot</span></code></a>, <a class="reference internal" href="rule_irv.html#svvamp.RuleIRV" title="svvamp.RuleIRV"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleIRV</span></code></a>, <a class="reference internal" href="rule_irv_duels.html#svvamp.RuleIRVDuels" title="svvamp.RuleIRVDuels"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleIRVDuels</span></code></a>, <a class="reference internal" href="rule_condorcet_abs_irv.html#svvamp.RuleCondorcetAbsIRV" title="svvamp.RuleCondorcetAbsIRV"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleCondorcetAbsIRV</span></code></a>, <a class="reference internal" href="rule_condorcet_vtb_irv.html#svvamp.RuleCondorcetVtbIRV" title="svvamp.RuleCondorcetVtbIRV"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleCondorcetVtbIRV</span></code></a></p>
-</div>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="o">=</span><span class="p">[</span>
 <span class="gp">... </span>    <span class="p">[</span> <span class="mf">0.</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.</span> <span class="p">],</span>
@@ -587,7 +554,7 @@ a decision, computation stops.</p>
 <span class="gp">... </span>    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
 <span class="gp">... </span>    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
 <span class="gp">... </span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span> <span class="o">=</span> <span class="n">RuleICRV</span><span class="p">()(</span><span class="n">profile</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span> <span class="o">=</span> <span class="n">RulePluralityWithRunoff</span><span class="p">()(</span><span class="n">profile</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span><span class="o">.</span><span class="n">demo_results_</span><span class="p">(</span><span class="n">log_depth</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
 <span class="go">************************</span>
@@ -612,19 +579,21 @@ a decision, computation stops.</p>
 <span class="go"> [2 0 1]</span>
 <span class="go"> [2 1 0]]</span>
 <span class="go">ballots =</span>
-<span class="go">[[0 1 2]</span>
-<span class="go"> [0 2 1]</span>
-<span class="go"> [1 0 2]</span>
-<span class="go"> [2 0 1]</span>
-<span class="go"> [2 1 0]]</span>
+<span class="go">[[0 0]</span>
+<span class="go"> [0 0]</span>
+<span class="go"> [1 0]</span>
+<span class="go"> [2 2]</span>
+<span class="go"> [2 2]]</span>
 <span class="go">scores =</span>
-<span class="go">[[2. 0. 1.]]</span>
+<span class="go">[[2. 1. 2.]</span>
+<span class="go"> [3. 0. 2.]]</span>
 <span class="go">candidates_by_scores_best_to_worst</span>
 <span class="go">[0 2 1]</span>
 <span class="go">scores_best_to_worst</span>
-<span class="go">[[2. 1. 0.]]</span>
+<span class="go">[[2. 2. 1.]</span>
+<span class="go"> [3. 2. 0.]]</span>
 <span class="go">w = 0</span>
-<span class="go">score_w = [2.]</span>
+<span class="go">score_w = [2. 3.]</span>
 <span class="go">total_utility_w = 1.0</span>
 
 <span class="go">*********************************</span>
@@ -709,10 +678,10 @@ a decision, computation stops.</p>
 <span class="go">****************************************************</span>
 <span class="go">Condorcet_c_ut_rel_ctb (False)     ==&gt;     Condorcet_c_ut_rel (False)</span>
 <span class="go"> ||                                                               ||</span>
-<span class="go"> ||     Condorcet_c_rk_ctb (False) ==&gt; Condorcet_c_rk (True)      ||</span>
+<span class="go"> ||     Condorcet_c_rk_ctb (False) ==&gt; Condorcet_c_rk (False)     ||</span>
 <span class="go"> ||           ||               ||       ||             ||         ||</span>
 <span class="go"> V            V                ||       ||             V          V</span>
-<span class="go">Condorcet_c_ut_abs_ctb (False)     ==&gt;     Condorcet_ut_abs_c (True)</span>
+<span class="go">Condorcet_c_ut_abs_ctb (False)     ==&gt;     Condorcet_ut_abs_c (False)</span>
 <span class="go"> ||                            ||       ||                        ||</span>
 <span class="go"> ||                            V        V                         ||</span>
 <span class="go"> ||       maj_fav_c_rk_ctb (True)  ==&gt; maj_fav_c_rk (True)        ||</span>
@@ -755,10 +724,10 @@ a decision, computation stops.</p>
 <span class="go">************************************</span>
 <span class="go">*   Individual Manipulation (IM)   *</span>
 <span class="go">************************************</span>
-<span class="go">is_im = nan</span>
-<span class="go">log_im: im_option = lazy</span>
+<span class="go">is_im = False</span>
+<span class="go">log_im: im_option = exact</span>
 <span class="go">candidates_im =</span>
-<span class="go">[ 0.  0. nan]</span>
+<span class="go">[0. 0. 0.]</span>
 
 <span class="go">*********************************</span>
 <span class="go">*   Trivial Manipulation (TM)   *</span>
@@ -771,10 +740,10 @@ a decision, computation stops.</p>
 <span class="go">********************************</span>
 <span class="go">*   Unison Manipulation (UM)   *</span>
 <span class="go">********************************</span>
-<span class="go">is_um = nan</span>
-<span class="go">log_um: um_option = lazy</span>
+<span class="go">is_um = False</span>
+<span class="go">log_um: um_option = exact</span>
 <span class="go">candidates_um =</span>
-<span class="go">[ 0.  0. nan]</span>
+<span class="go">[0. 0. 0.]</span>
 
 <span class="go">*********************************************</span>
 <span class="go">*   Ignorant-Coalition Manipulation (ICM)   *</span>
@@ -791,55 +760,55 @@ a decision, computation stops.</p>
 <span class="go">***********************************</span>
 <span class="go">*   Coalition Manipulation (CM)   *</span>
 <span class="go">***********************************</span>
-<span class="go">is_cm = nan</span>
-<span class="go">log_cm: cm_option = fast, um_option = lazy, tm_option = exact</span>
+<span class="go">is_cm = False</span>
+<span class="go">log_cm: cm_option = exact</span>
 <span class="go">candidates_cm =</span>
-<span class="go">[ 0.  0. nan]</span>
+<span class="go">[0. 0. 0.]</span>
 <span class="go">necessary_coalition_size_cm =</span>
-<span class="go">[0. 1. 2.]</span>
+<span class="go">[0. 2. 4.]</span>
 <span class="go">sufficient_coalition_size_cm =</span>
 <span class="go">[0. 2. 4.]</span>
 </pre></div>
 </div>
 <dl class="py property">
-<dt class="sig sig-object py" id="svvamp.RuleICRV.candidates_by_scores_best_to_worst_">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">candidates_by_scores_best_to_worst_</span></span><a class="headerlink" href="#svvamp.RuleICRV.candidates_by_scores_best_to_worst_" title="Link to this definition">#</a></dt>
-<dd><p>1d array of integers.</p>
-<p>Candidates that are not eliminated at the moment a Condorcet winner is detected are sorted by their number of
-victories in <code class="xref py py-attr docutils literal notranslate"><span class="pre">matrix_victories_rk</span></code> (restricted to candidates that are not eliminated at that time).</p>
-<p>Other candidates are sorted in the reverse order of their IRV elimination.</p>
+<dt class="sig sig-object py" id="svvamp.RulePluralityWithRunoff.ballots_">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ballots_</span></span><a class="headerlink" href="#svvamp.RulePluralityWithRunoff.ballots_" title="Link to this definition">#</a></dt>
+<dd><p>2d array of integers. <code class="docutils literal notranslate"><span class="pre">ballots[v,</span> <span class="pre">r]</span></code> is the candidate for which voter <code class="docutils literal notranslate"><span class="pre">v</span></code> votes at round <code class="docutils literal notranslate"><span class="pre">r</span></code>,
+where <code class="docutils literal notranslate"><span class="pre">r</span></code> = 0 (first round) or <code class="docutils literal notranslate"><span class="pre">r</span></code> = 1 (second round).</p>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="svvamp.RuleICRV.scores_">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">scores_</span></span><a class="headerlink" href="#svvamp.RuleICRV.scores_" title="Link to this definition">#</a></dt>
-<dd><p>2d array.</p>
-<p>For even rounds <code class="docutils literal notranslate"><span class="pre">r</span></code> (including round 0), <code class="docutils literal notranslate"><span class="pre">scores[r,</span> <span class="pre">c]</span></code> is the number of victories for <code class="docutils literal notranslate"><span class="pre">c</span></code> in
-<code class="xref py py-attr docutils literal notranslate"><span class="pre">matrix_victories_rk</span></code> (restricted to non-eliminated candidates). Ties count for 0.5.</p>
-<p>For odd rounds <code class="docutils literal notranslate"><span class="pre">r</span></code>, <code class="docutils literal notranslate"><span class="pre">scores[r,</span> <span class="pre">c]</span></code> is the number of voters who rank <code class="docutils literal notranslate"><span class="pre">c</span></code> first (among non-eliminated
-candidates).</p>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_rk</span><span class="o">=</span><span class="p">[</span>
-<span class="gp">... </span>    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
-<span class="gp">... </span>    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
-<span class="gp">... </span>    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
-<span class="gp">... </span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span> <span class="o">=</span> <span class="n">RuleICRV</span><span class="p">()(</span><span class="n">profile</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span><span class="o">.</span><span class="n">scores_</span>
-<span class="go">array([[ 2.,  2.,  2.,  0.],</span>
-<span class="go">       [ 1.,  1.,  1.,  0.],</span>
-<span class="go">       [ 1.,  1.,  1., nan],</span>
-<span class="go">       [ 1.,  1.,  1., nan],</span>
-<span class="go">       [ 1.,  0., nan, nan]])</span>
-</pre></div>
-</div>
+<dt class="sig sig-object py" id="svvamp.RulePluralityWithRunoff.candidates_by_scores_best_to_worst_">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">candidates_by_scores_best_to_worst_</span></span><a class="headerlink" href="#svvamp.RulePluralityWithRunoff.candidates_by_scores_best_to_worst_" title="Link to this definition">#</a></dt>
+<dd><p>1d array of integers. <code class="docutils literal notranslate"><span class="pre">candidates_by_scores_best_to_worst[k]</span></code> is the candidate with <code class="docutils literal notranslate"><span class="pre">k</span></code>-th
+best score. Finalists are sorted by their score at second round. Other candidates are sorted by their score
+at first round.</p>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="svvamp.RuleICRV.w_">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">w_</span></span><a class="headerlink" href="#svvamp.RuleICRV.w_" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="svvamp.RulePluralityWithRunoff.scores_">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">scores_</span></span><a class="headerlink" href="#svvamp.RulePluralityWithRunoff.scores_" title="Link to this definition">#</a></dt>
+<dd><p>2d array. <code class="docutils literal notranslate"><span class="pre">scores[r,</span> <span class="pre">c]</span></code> is the number of voters who vote for candidate <code class="docutils literal notranslate"><span class="pre">c</span></code> at round <code class="docutils literal notranslate"><span class="pre">r</span></code>,
+where <code class="docutils literal notranslate"><span class="pre">r</span></code> = 0 (first round) or <code class="docutils literal notranslate"><span class="pre">r</span></code> = 1 (second round).</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.RulePluralityWithRunoff.selected_one_">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">selected_one_</span></span><a class="headerlink" href="#svvamp.RulePluralityWithRunoff.selected_one_" title="Link to this definition">#</a></dt>
+<dd><p>Integer. The candidate with highest score at first round.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.RulePluralityWithRunoff.selected_two_">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">selected_two_</span></span><a class="headerlink" href="#svvamp.RulePluralityWithRunoff.selected_two_" title="Link to this definition">#</a></dt>
+<dd><p>Integer. The candidate with second highest score at first round.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="svvamp.RulePluralityWithRunoff.w_">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">w_</span></span><a class="headerlink" href="#svvamp.RulePluralityWithRunoff.w_" title="Link to this definition">#</a></dt>
 <dd><p>Integer (winning candidate).</p>
-<p>Default behavior: the candidate with highest value in vector <a class="reference internal" href="#svvamp.RuleICRV.scores_" title="svvamp.RuleICRV.scores_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">scores_</span></code></a> is declared the winner. In case
+<p>Default behavior: the candidate with highest value in vector <a class="reference internal" href="#svvamp.RulePluralityWithRunoff.scores_" title="svvamp.RulePluralityWithRunoff.scores_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">scores_</span></code></a> is declared the winner. In case
 of a tie, the tied candidate with lowest index wins.</p>
 </dd></dl>
 
@@ -859,20 +828,20 @@ of a tie, the tied candidate with lowest index wins.</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="rule_exhaustive_ballot.html"
+       href="rule_plurality.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">RuleExhaustiveBallot</p>
+        <p class="prev-next-title">RulePlurality</p>
       </div>
     </a>
     <a class="right-next"
-       href="rule_irv.html"
+       href="rule_range_voting.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">RuleIRV</p>
+        <p class="prev-next-title">RuleRangeVoting</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -895,10 +864,13 @@ of a tie, the tied candidate with lowest index wins.</p>
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.RuleICRV"><code class="docutils literal notranslate"><span class="pre">RuleICRV</span></code></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.RuleICRV.candidates_by_scores_best_to_worst_"><code class="docutils literal notranslate"><span class="pre">RuleICRV.candidates_by_scores_best_to_worst_</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.RuleICRV.scores_"><code class="docutils literal notranslate"><span class="pre">RuleICRV.scores_</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.RuleICRV.w_"><code class="docutils literal notranslate"><span class="pre">RuleICRV.w_</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.RulePluralityWithRunoff"><code class="docutils literal notranslate"><span class="pre">RulePluralityWithRunoff</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.RulePluralityWithRunoff.ballots_"><code class="docutils literal notranslate"><span class="pre">RulePluralityWithRunoff.ballots_</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.RulePluralityWithRunoff.candidates_by_scores_best_to_worst_"><code class="docutils literal notranslate"><span class="pre">RulePluralityWithRunoff.candidates_by_scores_best_to_worst_</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.RulePluralityWithRunoff.scores_"><code class="docutils literal notranslate"><span class="pre">RulePluralityWithRunoff.scores_</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.RulePluralityWithRunoff.selected_one_"><code class="docutils literal notranslate"><span class="pre">RulePluralityWithRunoff.selected_one_</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.RulePluralityWithRunoff.selected_two_"><code class="docutils literal notranslate"><span class="pre">RulePluralityWithRunoff.selected_two_</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svvamp.RulePluralityWithRunoff.w_"><code class="docutils literal notranslate"><span class="pre">RulePluralityWithRunoff.w_</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -908,7 +880,7 @@ of a tie, the tied candidate with lowest index wins.</p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../../_sources/reference/rules/rule_icrv.rst.txt"
+      <li><a href="../../_sources/reference/rules/rule_plurality_with_runoff.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div></div>

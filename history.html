@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>History &#8212; SVVAMP 0.13.0 documentation</title>
+    <title>History &#8212; SVVAMP 0.14.0 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=1019fba8"></script>
+    <script src="_static/documentation_options.js?v=9e420a66"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -48,7 +48,7 @@
     <link rel="prev" title="Credits" href="authors.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.13.0" />
+  <meta name="docsearch:version" content="0.14.0" />
   </head>
   
   
@@ -110,7 +110,7 @@
   
   
   
-    <p class="title logo__title">SVVAMP 0.13.0 documentation</p>
+    <p class="title logo__title">SVVAMP 0.14.0 documentation</p>
   
 </a></div>
     
@@ -434,6 +434,16 @@
                   
   <section id="history">
 <h1>History<a class="headerlink" href="#history" title="Link to this heading">#</a></h1>
+<section id="rename-voting-rules">
+<h2>0.14.0 (2026-07-01): Rename voting rules<a class="headerlink" href="#rename-voting-rules" title="Link to this heading">#</a></h2>
+<p>Rules:</p>
+<ul class="simple">
+<li><p>Rename <code class="docutils literal notranslate"><span class="pre">RuleTwoRound</span></code> to <code class="docutils literal notranslate"><span class="pre">RulePluralityWithRunoff</span></code>.</p></li>
+<li><p>Rename <code class="docutils literal notranslate"><span class="pre">RuleCondorcetSumDefeats</span></code> to <code class="docutils literal notranslate"><span class="pre">RuleSimplifiedDodgson</span></code>.</p></li>
+<li><p>Rename <code class="docutils literal notranslate"><span class="pre">RuleICRV</span></code> to <code class="docutils literal notranslate"><span class="pre">RuleBenham</span></code>.</p></li>
+<li><p>Rename <code class="docutils literal notranslate"><span class="pre">RuleIRVDuels</span></code> to <code class="docutils literal notranslate"><span class="pre">RuleViennot</span></code>.</p></li>
+</ul>
+</section>
 <section id="new-voting-rules-improved-cm-algorithms-and-new-condorcet-notions">
 <h2>0.13.0 (2026-03-05): New voting rules, improved CM algorithms, and new Condorcet notions<a class="headerlink" href="#new-voting-rules-improved-cm-algorithms-and-new-condorcet-notions" title="Link to this heading">#</a></h2>
 <p>Profiles:</p>
@@ -453,7 +463,7 @@
 <p>Rules:</p>
 <ul class="simple">
 <li><p>Add <code class="docutils literal notranslate"><span class="pre">RuleDodgson</span></code> and <code class="docutils literal notranslate"><span class="pre">RuleYoung</span></code>.</p></li>
-<li><p>Improve CM algorithms for <code class="docutils literal notranslate"><span class="pre">RuleCSD</span></code> (Simplified Dodgson), <code class="docutils literal notranslate"><span class="pre">RuleCopeland</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleIRVDuels</span></code> (Viennot rule), and <code class="docutils literal notranslate"><span class="pre">RuleSlater</span></code>.</p></li>
+<li><p>Improve CM algorithms for <code class="docutils literal notranslate"><span class="pre">RuleCSD</span></code> (Simplified Dodgson), <code class="docutils literal notranslate"><span class="pre">RuleCopeland</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleViennot</span></code> (Viennot rule), and <code class="docutils literal notranslate"><span class="pre">RuleSlater</span></code>.</p></li>
 <li><p>In <code class="docutils literal notranslate"><span class="pre">RuleCopeland</span></code> and <code class="docutils literal notranslate"><span class="pre">RuleSlater</span></code>, add option <code class="docutils literal notranslate"><span class="pre">tie_break_rule</span></code>.</p></li>
 <li><p>In <code class="docutils literal notranslate"><span class="pre">RuleKemeny</span></code> and <code class="docutils literal notranslate"><span class="pre">RuleSlater</span></code>, add option <code class="docutils literal notranslate"><span class="pre">winner_option</span></code> (<code class="docutils literal notranslate"><span class="pre">exact</span></code> or <code class="docutils literal notranslate"><span class="pre">lazy</span></code>) to speed up computation.</p></li>
 <li><p>Rename the <code class="docutils literal notranslate"><span class="pre">full</span> <span class="pre">name</span></code> and <code class="docutils literal notranslate"><span class="pre">abbreviation</span></code> attributes of several rules.</p></li>
@@ -507,7 +517,7 @@ costly. Hence, for rules where computing CM exactly is cheap, it is now deactiva
 <li><p>Add <code class="docutils literal notranslate"><span class="pre">GeneratorProfileUnanimous</span></code>: Profile generator with identical voters.</p></li>
 <li><p>Add <code class="docutils literal notranslate"><span class="pre">RuleKApproval</span></code>: k-Approval.</p></li>
 <li><p>Add <code class="docutils literal notranslate"><span class="pre">RuleSlater</span></code>: Slater method.</p></li>
-<li><p>Improve CM algorithms for <code class="docutils literal notranslate"><span class="pre">RuleBaldwin</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleCopeland</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleIRVDuels</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleKemeny</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleKimRoush</span></code>,
+<li><p>Improve CM algorithms for <code class="docutils literal notranslate"><span class="pre">RuleBaldwin</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleCopeland</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleViennot</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleKemeny</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleKimRoush</span></code>,
 <code class="docutils literal notranslate"><span class="pre">RuleNanson</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleRankedPairs</span></code>, and <code class="docutils literal notranslate"><span class="pre">RuleSplitCycle</span></code>.</p></li>
 </ul>
 </section>
@@ -539,14 +549,14 @@ properly.</p></li>
 <li><p>Add <code class="docutils literal notranslate"><span class="pre">Profile.necessary_coalition_size_to_break_irv_immunity</span></code>: necessary coalition size to break IRV immunity (for
 each candidate different from the IRV-immune candidate, if one exists).</p></li>
 <li><p>Use this notion to improve the bound <code class="docutils literal notranslate"><span class="pre">necessary_coalition_size_cm_</span></code> for <code class="docutils literal notranslate"><span class="pre">RuleCondorcetAbsIRV</span></code>,
-<code class="docutils literal notranslate"><span class="pre">RuleCondorcetVtbIRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleExhaustiveBallot</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleICRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleIRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleIRVAverage</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleSmithIRV</span></code>,
+<code class="docutils literal notranslate"><span class="pre">RuleCondorcetVtbIRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleExhaustiveBallot</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleBenham</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleIRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleIRVAverage</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleSmithIRV</span></code>,
 <code class="docutils literal notranslate"><span class="pre">RuleTideman</span></code> and <code class="docutils literal notranslate"><span class="pre">RuleWoodall</span></code>.</p></li>
 </ul>
 </section>
 <section id="use-irv-immune-candidate-for-um">
 <h2>0.8.1 (2021-07-29): Use IRV-immune candidate for UM<a class="headerlink" href="#use-irv-immune-candidate-for-um" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">RuleCondorcetAbsIRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleCondorcetVtbIRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleExhaustiveBallot</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleICRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleIRV</span></code>,
+<li><p><code class="docutils literal notranslate"><span class="pre">RuleCondorcetAbsIRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleCondorcetVtbIRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleExhaustiveBallot</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleBenham</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleIRV</span></code>,
 <code class="docutils literal notranslate"><span class="pre">RuleIRVAverage</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleSmithIRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleTideman</span></code> and <code class="docutils literal notranslate"><span class="pre">RuleWoodall</span></code>: add a precheck for UM based on the
 notion of IRV-immune candidate.</p></li>
 </ul>
@@ -562,7 +572,7 @@ related rules), <code class="docutils literal notranslate"><span class="pre">w</
 round where the Condorcet winner is eliminated, IRV-style. In IRV (and most related rules), this condition is
 necessary to be able to cast CM in favor of <code class="docutils literal notranslate"><span class="pre">c</span></code>.</p></li>
 <li><p>Use the above mentioned notions to improve the CM algorithm of <code class="docutils literal notranslate"><span class="pre">RuleCondorcetAbsIRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleCondorcetVtbIRV</span></code>,
-<code class="docutils literal notranslate"><span class="pre">RuleExhaustiveBallot</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleICRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleIRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleIRVAverage</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleSmithIRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleTideman</span></code> and
+<code class="docutils literal notranslate"><span class="pre">RuleExhaustiveBallot</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleBenham</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleIRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleIRVAverage</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleSmithIRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleTideman</span></code> and
 <code class="docutils literal notranslate"><span class="pre">RuleWoodall</span></code>.</p></li>
 <li><p>Add a UM precheck before CM in <code class="docutils literal notranslate"><span class="pre">RuleSmithIRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleTideman</span></code> and <code class="docutils literal notranslate"><span class="pre">RuleWoodall</span></code>.</p></li>
 </ul>
@@ -598,14 +608,14 @@ then we can conclude that Condorcet-IRV is not CM, and in particular not UM.</p>
 <ul class="simple">
 <li><p>Add <code class="docutils literal notranslate"><span class="pre">PluralityEliminationEngine</span></code> and its subclasses, <code class="docutils literal notranslate"><span class="pre">PluralityEliminationEngineProfile</span></code> and
 <code class="docutils literal notranslate"><span class="pre">PluralityEliminationEngineProfileUM</span></code>. This is used to speed up the computation of the winner for
-<code class="docutils literal notranslate"><span class="pre">RuleExhaustiveBallot</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleICRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleIRVAverage</span></code>, <code class="docutils literal notranslate"><span class="pre">IRVDuels</span></code> and <code class="docutils literal notranslate"><span class="pre">RuleTideman</span></code>.</p></li>
+<code class="docutils literal notranslate"><span class="pre">RuleExhaustiveBallot</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleBenham</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleIRVAverage</span></code>, <code class="docutils literal notranslate"><span class="pre">IRVDuels</span></code> and <code class="docutils literal notranslate"><span class="pre">RuleTideman</span></code>.</p></li>
 </ul>
 </section>
 <section id="accelerate-exhaustive-ballot-and-some-related-rules">
 <h2>0.6.9 (2021-07-28): Accelerate Exhaustive Ballot and some related rules<a class="headerlink" href="#accelerate-exhaustive-ballot-and-some-related-rules" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Accelerate the computation of the winner for <code class="docutils literal notranslate"><span class="pre">RuleCondorcetAbsIRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleCondorcetVtbIRV</span></code>,
-<code class="docutils literal notranslate"><span class="pre">RuleExhaustiveBallot</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleICRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleIRVAverage</span></code> and <code class="docutils literal notranslate"><span class="pre">RuleTideman</span></code>. This is especially useful
+<code class="docutils literal notranslate"><span class="pre">RuleExhaustiveBallot</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleBenham</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleIRVAverage</span></code> and <code class="docutils literal notranslate"><span class="pre">RuleTideman</span></code>. This is especially useful
 to accelerate some manipulation methods, such as TM, UM, IM or IIA.</p></li>
 </ul>
 </section>
@@ -624,7 +634,7 @@ now False by default.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Rule</span></code>: accelerate exact IM, UM and CM (generic exact algorithms for ranking-based rules).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">RuleBaldwin</span></code>: accelerate counting the ballot and computing the winner (especially useful for exact UM).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">RuleSTAR</span></code>: accelerate TM.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">RuleICRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleIRVAverage</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleSmithIRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleTideman</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleWoodall</span></code>: accelerate CM.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RuleBenham</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleIRVAverage</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleSmithIRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleTideman</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleWoodall</span></code>: accelerate CM.</p></li>
 <li><p>Improve the management of options in <code class="docutils literal notranslate"><span class="pre">RuleExhaustiveBallot</span></code> and <code class="docutils literal notranslate"><span class="pre">RuleIRV</span></code>. In some (common) cases, it accelerates
 the computation of related voting rules (<code class="docutils literal notranslate"><span class="pre">RuleCondorcetAbsIRV</span></code>, etc).</p></li>
 </ul>
@@ -778,7 +788,7 @@ allowed grades.</p></li>
 <ul class="simple">
 <li><p>New CM algorithms for Smith-IRV-like rules:</p>
 <ul>
-<li><p>New CM algorithms for <code class="docutils literal notranslate"><span class="pre">RuleICRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleSmithIRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleTideman</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleWoodall</span></code> and <code class="docutils literal notranslate"><span class="pre">RuleIRVAverage</span></code>.</p></li>
+<li><p>New CM algorithms for <code class="docutils literal notranslate"><span class="pre">RuleBenham</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleSmithIRV</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleTideman</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleWoodall</span></code> and <code class="docutils literal notranslate"><span class="pre">RuleIRVAverage</span></code>.</p></li>
 <li><p>Add <code class="docutils literal notranslate"><span class="pre">RuleIRV.example_ballots_cm_c_</span></code> and <code class="docutils literal notranslate"><span class="pre">RuleIRV.example_ballots_cm_w_against_</span></code>: examples of manipulating ballots
 (used as heuristic to manipulate Smith-IRV and similar rules).</p></li>
 <li><p>In <code class="docutils literal notranslate"><span class="pre">RuleCondorcetAbsIRV</span></code> and <code class="docutils literal notranslate"><span class="pre">RuleCondorcetVtbIRV</span></code>, the former option <code class="docutils literal notranslate"><span class="pre">almost_exact</span></code> is renamed to
@@ -913,6 +923,7 @@ diamond inheritance. Rename most classes, properties and methods.</p></li>
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rename-voting-rules">0.14.0 (2026-07-01): Rename voting rules</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-voting-rules-improved-cm-algorithms-and-new-condorcet-notions">0.13.0 (2026-03-05): New voting rules, improved CM algorithms, and new Condorcet notions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#accelerations-and-bug-fixes">0.12.0 (2025-02-19): Accelerations and Bug Fixes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conversion-to-poetry">0.11.0 (2024-10-18): Conversion to Poetry</a></li>

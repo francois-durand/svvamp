@@ -1,5 +1,5 @@
-RuleICRV
-========
+RuleBenham
+==========
 
-.. autoclass:: svvamp.RuleICRV
+.. autoclass:: svvamp.RuleBenham
    :members: scores_, candidates_by_scores_best_to_worst_, w_
