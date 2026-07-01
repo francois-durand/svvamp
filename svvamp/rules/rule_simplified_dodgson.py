@@ -26,12 +26,12 @@ from svvamp.utils.util_cache import cached_property
 from svvamp.preferences.profile import Profile
 
 
-class RuleCondorcetSumDefeats(Rule):
-    """Condorcet with sum of defeats.
+class RuleSimplifiedDodgson(Rule):
+    """Simplified Dodgson.
 
     Options
     -------
-        >>> RuleCondorcetSumDefeats.print_options_parameters()
+        >>> RuleSimplifiedDodgson.print_options_parameters()
         cm_option: ['lazy', 'exact']. Default: 'lazy'.
         icm_option: ['lazy']. Default: 'lazy'.
         iia_subset_maximum_size: is_number. Default: 2.
@@ -88,7 +88,7 @@ class RuleCondorcetSumDefeats(Rule):
         ...     [2, 0, 1],
         ...     [2, 1, 0],
         ... ])
-        >>> rule = RuleCondorcetSumDefeats()(profile)
+        >>> rule = RuleSimplifiedDodgson()(profile)
         >>> rule.demo_results_(log_depth=0)  # doctest: +NORMALIZE_WHITESPACE
         <BLANKLINE>
         ************************
@@ -312,7 +312,7 @@ class RuleCondorcetSumDefeats(Rule):
             with_two_candidates_reduces_to_plurality=True,
             is_based_on_rk=True,
             precheck_icm=False,
-            log_identity="CONDORCET_SUM_DEFEATS",
+            log_identity="SIMPLIFIED_DODGSON",
             **kwargs,
         )
 
@@ -366,7 +366,7 @@ class RuleCondorcetSumDefeats(Rule):
             ...     + [[2, 3, 0, 1, 4]] * 12
             ...     + [[2, 4, 0, 1, 3]] * 12
             ... ))
-            >>> rule = RuleCondorcetSumDefeats()(profile)
+            >>> rule = RuleSimplifiedDodgson()(profile)
             >>> rule.is_cm_
             False
         """
@@ -380,7 +380,7 @@ class RuleCondorcetSumDefeats(Rule):
     def theta_critical_(self):
         """
         >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
-        >>> rule = RuleCondorcetSumDefeats()(profile)
+        >>> rule = RuleSimplifiedDodgson()(profile)
         >>> rule.theta_critical_
         0.18181818181818182
         """

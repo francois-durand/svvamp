@@ -16,7 +16,7 @@ Profiles:
 Rules:
 
 * Add ``RuleDodgson`` and ``RuleYoung``.
-* Improve CM algorithms for ``RuleCSD`` (Simplified Dodgson), ``RuleCopeland``, ``RuleIRVDuels`` (Viennot rule), and ``RuleSlater``.
+* Improve CM algorithms for ``RuleCSD`` (Simplified Dodgson), ``RuleCopeland``, ``RuleViennot`` (Viennot rule), and ``RuleSlater``.
 * In ``RuleCopeland`` and ``RuleSlater``, add option ``tie_break_rule``.
 * In ``RuleKemeny`` and ``RuleSlater``, add option ``winner_option `` (``exact`` or ``lazy``) to speed up computation.
 * Rename the ``full name`` and ``abbreviation`` attributes of several rules.
@@ -62,7 +62,7 @@ Conversion to `uv` instead of `poetry` for packaging.
 * Add ``GeneratorProfileUnanimous``: Profile generator with identical voters.
 * Add ``RuleKApproval``: k-Approval.
 * Add ``RuleSlater``: Slater method.
-* Improve CM algorithms for ``RuleBaldwin``, ``RuleCopeland``, ``RuleIRVDuels``, ``RuleKemeny``, ``RuleKimRoush``,
+* Improve CM algorithms for ``RuleBaldwin``, ``RuleCopeland``, ``RuleViennot``, ``RuleKemeny``, ``RuleKimRoush``,
   ``RuleNanson``, ``RuleRankedPairs``, and ``RuleSplitCycle``.
 
 ## 0.9.1 (2022-03-24): Compatibility issues
@@ -86,12 +86,12 @@ Conversion to `uv` instead of `poetry` for packaging.
 * Add ``Profile.necessary_coalition_size_to_break_irv_immunity``: necessary coalition size to break IRV immunity (for
   each candidate different from the IRV-immune candidate, if one exists).
 * Use this notion to improve the bound ``necessary_coalition_size_cm_`` for ``RuleCondorcetAbsIRV``,
-  ``RuleCondorcetVtbIRV``, ``RuleExhaustiveBallot``, ``RuleICRV``, ``RuleIRV``, ``RuleIRVAverage``, ``RuleSmithIRV``,
+  ``RuleCondorcetVtbIRV``, ``RuleExhaustiveBallot``, ``RuleBenham``, ``RuleIRV``, ``RuleIRVAverage``, ``RuleSmithIRV``,
   ``RuleTideman`` and ``RuleWoodall``.
 
 ## 0.8.1 (2021-07-29): Use IRV-immune candidate for UM
 
-* ``RuleCondorcetAbsIRV``, ``RuleCondorcetVtbIRV``, ``RuleExhaustiveBallot``, ``RuleICRV``, ``RuleIRV``,
+* ``RuleCondorcetAbsIRV``, ``RuleCondorcetVtbIRV``, ``RuleExhaustiveBallot``, ``RuleBenham``, ``RuleIRV``,
   ``RuleIRVAverage``, ``RuleSmithIRV``, ``RuleTideman`` and ``RuleWoodall``: add a precheck for UM based on the
   notion of IRV-immune candidate.
 
@@ -105,7 +105,7 @@ Conversion to `uv` instead of `poetry` for packaging.
   round where the Condorcet winner is eliminated, IRV-style. In IRV (and most related rules), this condition is
   necessary to be able to cast CM in favor of `c`.
 * Use the above mentioned notions to improve the CM algorithm of ``RuleCondorcetAbsIRV``, ``RuleCondorcetVtbIRV``,
-  ``RuleExhaustiveBallot``, ``RuleICRV``, ``RuleIRV``, ``RuleIRVAverage``, ``RuleSmithIRV``, ``RuleTideman`` and
+  ``RuleExhaustiveBallot``, ``RuleBenham``, ``RuleIRV``, ``RuleIRVAverage``, ``RuleSmithIRV``, ``RuleTideman`` and
   ``RuleWoodall``.
 * Add a UM precheck before CM in ``RuleSmithIRV``, ``RuleTideman`` and ``RuleWoodall``.
 
@@ -133,12 +133,12 @@ Conversion to `uv` instead of `poetry` for packaging.
 
 * Add ``PluralityEliminationEngine`` and its subclasses, ``PluralityEliminationEngineProfile`` and
   ``PluralityEliminationEngineProfileUM``. This is used to speed up the computation of the winner for
-  ``RuleExhaustiveBallot``, ``RuleICRV``, ``RuleIRVAverage``, ``IRVDuels`` and ``RuleTideman``.
+  ``RuleExhaustiveBallot``, ``RuleBenham``, ``RuleIRVAverage``, ``IRVDuels`` and ``RuleTideman``.
 
 ## 0.6.9 (2021-07-28): Accelerate Exhaustive Ballot and some related rules
 
 * Accelerate the computation of the winner for ``RuleCondorcetAbsIRV``, ``RuleCondorcetVtbIRV``,
-  ``RuleExhaustiveBallot``, ``RuleICRV``, ``RuleIRVAverage`` and ``RuleTideman``. This is especially useful
+  ``RuleExhaustiveBallot``, ``RuleBenham``, ``RuleIRVAverage`` and ``RuleTideman``. This is especially useful
   to accelerate some manipulation methods, such as TM, UM, IM or IIA.
 
 ## 0.6.8 (2021-07-27): Accelerate Exhaustive Ballot and some related rules
@@ -153,7 +153,7 @@ Conversion to `uv` instead of `poetry` for packaging.
 * ``Rule``: accelerate exact IM, UM and CM (generic exact algorithms for ranking-based rules).
 * ``RuleBaldwin``: accelerate counting the ballot and computing the winner (especially useful for exact UM).
 * ``RuleSTAR``: accelerate TM.
-* ``RuleICRV``, ``RuleIRVAverage``, ``RuleSmithIRV``, ``RuleTideman``, ``RuleWoodall``: accelerate CM.
+* ``RuleBenham``, ``RuleIRVAverage``, ``RuleSmithIRV``, ``RuleTideman``, ``RuleWoodall``: accelerate CM.
 * Improve the management of options in ``RuleExhaustiveBallot`` and ``RuleIRV``. In some (common) cases, it accelerates
   the computation of related voting rules (``RuleCondorcetAbsIRV``, etc).
 
@@ -274,7 +274,7 @@ Conversion to `uv` instead of `poetry` for packaging.
 
 * New CM algorithms for Smith-IRV-like rules:
 
-  * New CM algorithms for ``RuleICRV``, ``RuleSmithIRV``, ``RuleTideman``, ``RuleWoodall`` and ``RuleIRVAverage``.
+  * New CM algorithms for ``RuleBenham``, ``RuleSmithIRV``, ``RuleTideman``, ``RuleWoodall`` and ``RuleIRVAverage``.
   * Add ``RuleIRV.example_ballots_cm_c_`` and ``RuleIRV.example_ballots_cm_w_against_``: examples of manipulating ballots
     (used as heuristic to manipulate Smith-IRV and similar rules).
   * In ``RuleCondorcetAbsIRV`` and ``RuleCondorcetVtbIRV``, the former option ``almost_exact`` is renamed to

@@ -12,11 +12,11 @@ from svvamp import (
     RuleRankedPairs,
     RuleBorda,
     RuleSchulze,
-    RuleIRVDuels,
+    RuleViennot,
     RuleRangeVoting,
     RuleKemeny,
-    RuleICRV,
-    RuleCondorcetSumDefeats,
+    RuleBenham,
+    RuleSimplifiedDodgson,
     OPTIONS,
 )
 
@@ -653,7 +653,7 @@ def test_compute_im():
     ...     [3, 1, 0, 2],
     ...     [3, 2, 0, 1],
     ... ])
-    >>> rule = RuleCondorcetSumDefeats(im_option='exact')(profile)
+    >>> rule = RuleSimplifiedDodgson(im_option='exact')(profile)
     >>> rule.candidates_im_
     array([1., 0., 0., 0.])
     """
@@ -723,7 +723,7 @@ def test_tm_preliminary_checks_general():
     ...     [0, 1],
     ...     [1, 0],
     ... ])
-    >>> rule = RuleIRVDuels()(profile)
+    >>> rule = RuleViennot()(profile)
     >>> rule.candidates_tm_
     array([0., 0.])
     """
@@ -832,7 +832,7 @@ def test_um_preliminary_checks_general():
     ...     [2, 0, 3, 1],
     ...     [3, 0, 1, 2],
     ... ])
-    >>> rule = RuleICRV()(profile)
+    >>> rule = RuleBenham()(profile)
     >>> rule.is_um_
     False
     """
@@ -1081,7 +1081,7 @@ def test_cm_preliminary_checks_general():
     ...     [1, 0, 2],
     ...     [1, 2, 0],
     ... ])
-    >>> rule = RuleIRVDuels()(profile)
+    >>> rule = RuleViennot()(profile)
     >>> rule.is_cm_
     False
     """

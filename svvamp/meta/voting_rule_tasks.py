@@ -33,7 +33,7 @@ from svvamp.rules.rule_schulze import RuleSchulze
 from svvamp.rules.rule_exhaustive_ballot import RuleExhaustiveBallot
 from svvamp.rules.rule_irv import RuleIRV
 from svvamp.rules.rule_condorcet_vtb_irv import RuleCondorcetVtbIRV
-from svvamp.rules.rule_icrv import RuleICRV
+from svvamp.rules.rule_benham import RuleBenham
 from svvamp.rules.rule_young import RuleYoung
 from svvamp.utils.misc import indent
 
@@ -355,7 +355,7 @@ class VotingRuleTasks(list):
             ...                                           numerical_criteria=[])
             ... )
             >>> voting_rule_tasks_2 = VotingRuleTasks(
-            ...     voting_systems=[RuleICRV, RuleCondorcetVtbIRV],
+            ...     voting_systems=[RuleBenham, RuleCondorcetVtbIRV],
             ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_um_'], manipulation_only=True,
             ...                                           numerical_criteria=[])
             ... )
@@ -380,7 +380,7 @@ class VotingRuleTasks(list):
                     result_criteria: None
                     utility_criteria: None
                     numerical_criteria: None
-                voting_system: RuleICRV
+                voting_system: RuleBenham
                 options: {}
                 StudyRuleCriteria with:
                     manipulation_criteria:

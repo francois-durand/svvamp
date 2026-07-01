@@ -1,4 +1,4 @@
-from svvamp import RuleIRVDuels
+from svvamp import RuleViennot
 from svvamp import Profile
 
 
@@ -9,7 +9,7 @@ def test_loser_equals_selected_two():
     ...     [0, 2, 1],
     ...     [1, 0, 1],
     ... ])
-    >>> rule = RuleIRVDuels()(profile)
+    >>> rule = RuleViennot()(profile)
     >>> rule.w_
     0
     """

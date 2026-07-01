@@ -29,12 +29,12 @@ from svvamp.utils.pseudo_bool import equal_true
 from svvamp.utils.misc import preferences_ut_to_matrix_duels_ut
 
 
-class RuleICRV(Rule):
-    """Instant-Condorcet Runoff Voting (ICRV), also known as Benham rule.
+class RuleBenham(Rule):
+    """Benham rule (Instant-Condorcet Runoff Voting).
 
     Options
     -------
-        >>> RuleICRV.print_options_parameters()
+        >>> RuleBenham.print_options_parameters()
         cm_option: ['fast', 'slow', 'very_slow', 'exact']. Default: 'fast'.
         icm_option: ['exact']. Default: 'exact'.
         iia_subset_maximum_size: is_number. Default: 2.
@@ -81,7 +81,7 @@ class RuleICRV(Rule):
 
     See Also
     --------
-    :class:`RuleExhaustiveBallot`, :class:`RuleIRV`, :class:`RuleIRVDuels`, :class:`RuleCondorcetAbsIRV`,
+    :class:`RuleExhaustiveBallot`, :class:`RuleIRV`, :class:`RuleViennot`, :class:`RuleCondorcetAbsIRV`,
     :class:`RuleCondorcetVtbIRV`.
 
     Examples
@@ -99,7 +99,7 @@ class RuleICRV(Rule):
         ...     [2, 0, 1],
         ...     [2, 1, 0],
         ... ])
-        >>> rule = RuleICRV()(profile)
+        >>> rule = RuleBenham()(profile)
         >>> rule.demo_results_(log_depth=0)  # doctest: +NORMALIZE_WHITESPACE
         <BLANKLINE>
         ************************
@@ -329,17 +329,17 @@ class RuleICRV(Rule):
             with_two_candidates_reduces_to_plurality=True,
             is_based_on_rk=True,
             precheck_icm=False,
-            log_identity="ICRV",
+            log_identity="BENHAM",
             **kwargs,
         )
 
     def __call__(self, profile):
         """
         >>> my_profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2]])
-        >>> rule = RuleICRV(cm_option='slow')(my_profile)
+        >>> rule = RuleBenham(cm_option='slow')(my_profile)
         >>> rule.irv_.cm_option
         'slow'
-        >>> rule = RuleICRV(cm_option='exact')(my_profile)
+        >>> rule = RuleBenham(cm_option='exact')(my_profile)
         >>> rule.irv_.cm_option
         'exact'
         """
@@ -447,7 +447,7 @@ class RuleICRV(Rule):
             ...     [1, 2, 0, 3],
             ...     [2, 0, 1, 3],
             ... ])
-            >>> rule = RuleICRV()(profile)
+            >>> rule = RuleBenham()(profile)
             >>> rule.scores_
             array([[ 2.,  2.,  2.,  0.],
                    [ 1.,  1.,  1.,  0.],
@@ -488,7 +488,7 @@ class RuleICRV(Rule):
         ...     [1, 2, 0],
         ...     [2, 1, 0],
         ... ])
-        >>> rule = RuleICRV(um_option='exact')(profile)
+        >>> rule = RuleBenham(um_option='exact')(profile)
         >>> rule.is_um_c_(0)
         False
         """
@@ -514,7 +514,7 @@ class RuleICRV(Rule):
             ...     [1, 3, 0, 2],
             ...     [3, 2, 0, 1],
             ... ])
-            >>> rule = RuleICRV()(profile)
+            >>> rule = RuleBenham()(profile)
             >>> rule.losing_candidates_
             array([2, 1, 0])
         """
@@ -553,7 +553,7 @@ class RuleICRV(Rule):
             ...     [1, 0, 2],
             ...     [2, 1, 0],
             ... ])
-            >>> rule = RuleICRV(cm_option='slow')(profile)
+            >>> rule = RuleBenham(cm_option='slow')(profile)
             >>> rule.sufficient_coalition_size_cm_
             array([4., 0., 3.])
         """
@@ -581,7 +581,7 @@ class RuleICRV(Rule):
         ...     [3, 1, 0, 2],
         ...     [1, 0, 2, 3],
         ... ])
-        >>> rule = RuleICRV()(profile)
+        >>> rule = RuleBenham()(profile)
         >>> rule.necessary_coalition_size_cm_
         array([1., 0., 1., 1.])
 
@@ -600,7 +600,7 @@ class RuleICRV(Rule):
         ...     [1, 2, 3, 0],
         ...     [1, 3, 2, 0],
         ... ])
-        >>> rule = RuleICRV()(profile)
+        >>> rule = RuleBenham()(profile)
         >>> rule.is_cm_c_with_bounds_(0)
         (False, 2.0, 2.0)
         """
@@ -625,7 +625,7 @@ class RuleICRV(Rule):
         ...     [0, 3, 1, 2],
         ...     [2, 3, 0, 1],
         ... ])
-        >>> rule = RuleICRV(cm_option='fast')(profile)
+        >>> rule = RuleBenham(cm_option='fast')(profile)
         >>> rule.is_cm_
         nan
 
@@ -638,7 +638,7 @@ class RuleICRV(Rule):
         ...     [2, 0, 3, 1],
         ...     [3, 0, 2, 1],
         ... ])
-        >>> rule = RuleICRV(cm_option='fast')(profile)
+        >>> rule = RuleBenham(cm_option='fast')(profile)
         >>> rule.is_cm_c_with_bounds_(1)
         (False, 1.0, 1.0)
 
@@ -651,7 +651,7 @@ class RuleICRV(Rule):
         ...     [3, 0, 1, 2],
         ...     [2, 3, 1, 0],
         ... ])
-        >>> rule = RuleICRV(cm_option='fast')(profile)
+        >>> rule = RuleBenham(cm_option='fast')(profile)
         >>> rule.sufficient_coalition_size_cm_
         array([1., 1., 3., 0.])
 
@@ -668,7 +668,7 @@ class RuleICRV(Rule):
         ...     [1, 2, 3, 0],
         ...     [3, 2, 0, 1],
         ... ])
-        >>> rule = RuleICRV(cm_option='fast')(profile)
+        >>> rule = RuleBenham(cm_option='fast')(profile)
         >>> rule.necessary_coalition_size_cm_
         array([1., 2., 0., 2.])
 
@@ -678,7 +678,7 @@ class RuleICRV(Rule):
         ...     [0, 2, 1],
         ...     [1, 2, 0],
         ... ])
-        >>> rule = RuleICRV(cm_option='very_slow')(profile)
+        >>> rule = RuleBenham(cm_option='very_slow')(profile)
         >>> rule.necessary_coalition_size_cm_
         array([0., 3., 3.])
 
@@ -688,7 +688,7 @@ class RuleICRV(Rule):
         ...     [2, 1, 0],
         ...     [0, 1, 2],
         ... ])
-        >>> rule = RuleICRV(cm_option='exact')(profile)
+        >>> rule = RuleBenham(cm_option='exact')(profile)
         >>> rule.sufficient_coalition_size_cm_
         array([0., 3., 4.])
         """
@@ -790,7 +790,7 @@ class RuleICRV(Rule):
     def theta_critical_(self):
         """
         >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
-        >>> rule = RuleICRV()(profile)
+        >>> rule = RuleBenham()(profile)
         >>> rule.theta_critical_
         0
         """

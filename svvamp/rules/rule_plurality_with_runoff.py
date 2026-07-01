@@ -26,12 +26,12 @@ from svvamp.utils.util_cache import cached_property
 from svvamp.preferences.profile import Profile
 
 
-class RuleTwoRound(Rule):
-    """Two Round System.
+class RulePluralityWithRunoff(Rule):
+    """Plurality with runoff.
 
     Options
     -------
-        >>> RuleTwoRound.print_options_parameters()
+        >>> RulePluralityWithRunoff.print_options_parameters()
         cm_option: ['exact']. Default: 'exact'.
         icm_option: ['exact']. Default: 'exact'.
         iia_subset_maximum_size: is_number. Default: 2.
@@ -64,7 +64,7 @@ class RuleTwoRound(Rule):
         ...     [2, 0, 1],
         ...     [2, 1, 0],
         ... ])
-        >>> rule = RuleTwoRound()(profile)
+        >>> rule = RulePluralityWithRunoff()(profile)
         >>> rule.demo_results_(log_depth=0)  # doctest: +NORMALIZE_WHITESPACE
         <BLANKLINE>
         ************************
@@ -302,7 +302,7 @@ class RuleTwoRound(Rule):
             precheck_um=False,
             precheck_icm=False,
             precheck_tm=False,
-            log_identity="TWO_ROUND",
+            log_identity="PLURALITY_WITH_RUNOFF",
             **kwargs,
         )
 
@@ -380,7 +380,8 @@ class RuleTwoRound(Rule):
     def _compute_im_(self, mode, c=None):
         """Compute IM: is_im, candidates_im, _voters_im and v_im_for_c.
 
-        For Two Round, since calculation is not so expensive, we compute everything, even if complete_mode = False.
+        For Plurality with Runoff, since calculation is not so expensive, we compute everything, even if
+        complete_mode = False.
 
             >>> profile = Profile(preferences_rk=[
             ...     [0, 1, 2],
@@ -389,7 +390,7 @@ class RuleTwoRound(Rule):
             ...     [2, 0, 1],
             ...     [2, 0, 1],
             ... ])
-            >>> rule = RuleTwoRound()(profile)
+            >>> rule = RulePluralityWithRunoff()(profile)
             >>> rule.is_im_v_(0)
             False
             >>> rule.v_im_for_c_
@@ -406,7 +407,7 @@ class RuleTwoRound(Rule):
             ...     [1, 2, 0],
             ...     [1, 2, 0],
             ... ])
-            >>> rule = RuleTwoRound()(profile)
+            >>> rule = RulePluralityWithRunoff()(profile)
             >>> rule.v_im_for_c_
             array([[0., 0., 0.],
                    [0., 0., 0.],
@@ -421,7 +422,7 @@ class RuleTwoRound(Rule):
             ...     [1, 2, 0],
             ...     [2, 0, 1],
             ... ])
-            >>> rule = RuleTwoRound()(profile)
+            >>> rule = RulePluralityWithRunoff()(profile)
             >>> rule.v_im_for_c_
             array([[0., 0., 0.],
                    [0., 0., 0.],
@@ -518,7 +519,7 @@ class RuleTwoRound(Rule):
         ...     [1, 0, 2],
         ...     [2, 0, 1],
         ... ])
-        >>> rule = RuleTwoRound()(profile)
+        >>> rule = RulePluralityWithRunoff()(profile)
         >>> rule.candidates_um_
         array([0., 0., 0.])
 
@@ -529,7 +530,7 @@ class RuleTwoRound(Rule):
         ...     [2, 1, 0, 3],
         ...     [3, 1, 2, 0],
         ... ])
-        >>> rule = RuleTwoRound()(profile)
+        >>> rule = RulePluralityWithRunoff()(profile)
         >>> rule.candidates_um_
         array([0., 0., 1., 0.])
 
@@ -548,7 +549,7 @@ class RuleTwoRound(Rule):
         ...     [2, 1, 3, 0],
         ...     [3, 1, 0, 2],
         ... ])
-        >>> rule = RuleTwoRound()(profile)
+        >>> rule = RulePluralityWithRunoff()(profile)
         >>> rule.candidates_um_
         array([1., 0., 0., 1.])
 
@@ -567,7 +568,7 @@ class RuleTwoRound(Rule):
         ...     [3, 2, 0, 4, 1],
         ...     [4, 2, 0, 3, 1],
         ... ])
-        >>> rule = RuleTwoRound()(profile)
+        >>> rule = RulePluralityWithRunoff()(profile)
         >>> rule.candidates_um_
         array([0., 0., 1., 0., 0.])
 
@@ -588,7 +589,7 @@ class RuleTwoRound(Rule):
         ...     [6, 3, 4, 2, 0, 1, 5],
         ...     [6, 5, 4, 3, 1, 2, 0],
         ... ])
-        >>> rule = RuleTwoRound()(profile)
+        >>> rule = RulePluralityWithRunoff()(profile)
         >>> rule.candidates_um_
         array([0., 0., 0., 0., 1., 0., 0.])
         """
@@ -659,7 +660,7 @@ class RuleTwoRound(Rule):
             ...     [2, 1, 0],
             ...     [2, 1, 0],
             ... ])
-            >>> rule = RuleTwoRound()(profile)
+            >>> rule = RulePluralityWithRunoff()(profile)
             >>> rule.candidates_cm_
             array([0., 1., 0.])
 
@@ -678,7 +679,7 @@ class RuleTwoRound(Rule):
             ...     [1, 0],
             ...     [1, 0],
             ... ])
-            >>> rule = RuleTwoRound()(profile)
+            >>> rule = RulePluralityWithRunoff()(profile)
             >>> rule.is_cm_c_with_bounds_(0)
             (False, 3.0, 3.0)
 
@@ -695,7 +696,7 @@ class RuleTwoRound(Rule):
             ...     [1, 0],
             ...     [0, 1],
             ... ])
-            >>> rule = RuleTwoRound()(profile)
+            >>> rule = RulePluralityWithRunoff()(profile)
             >>> _ = rule._cm_is_initialized_general_
             >>> rule._cm_main_work_c_(c=1, optimize_bounds=True)
             >>> float(rule._sufficient_coalition_size_cm[1])
@@ -718,7 +719,7 @@ class RuleTwoRound(Rule):
             ...     [1, 2, 0],
             ...     [2, 0, 1],
             ... ])
-            >>> rule = RuleTwoRound()(profile)
+            >>> rule = RulePluralityWithRunoff()(profile)
             >>> _ = rule._cm_is_initialized_general_
             >>> rule._cm_main_work_c_(c=0, optimize_bounds=True)
             >>> float(rule._sufficient_coalition_size_cm[0])
@@ -765,7 +766,7 @@ class RuleTwoRound(Rule):
     def theta_critical_(self):
         """
         >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
-        >>> rule = RuleTwoRound()(profile)
+        >>> rule = RulePluralityWithRunoff()(profile)
         >>> rule.theta_critical_
         0.058823529411764705
         """

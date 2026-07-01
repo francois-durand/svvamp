@@ -28,12 +28,12 @@ from svvamp.utils.misc import preferences_ut_to_matrix_duels_ut, powerset
 from svvamp.preferences.profile import Profile
 
 
-class RuleIRVDuels(Rule):
-    """IRV with elimination duels. Also known as Viennot rule.
+class RuleViennot(Rule):
+    """Viennot rule (IRV with elimination duels).
 
     Options
     -------
-        >>> RuleIRVDuels.print_options_parameters()
+        >>> RuleViennot.print_options_parameters()
         cm_option: ['lazy', 'slow', 'exact']. Default: 'lazy'.
         icm_option: ['exact']. Default: 'exact'.
         iia_subset_maximum_size: is_number. Default: 2.
@@ -73,7 +73,7 @@ class RuleIRVDuels(Rule):
 
     See Also
     --------
-    :class:`RuleExhaustiveBallot`, :class:`RuleIRV`, :class:`RuleICRV`, :class:`RuleCondorcetAbsIRV`,
+    :class:`RuleExhaustiveBallot`, :class:`RuleIRV`, :class:`RuleBenham`, :class:`RuleCondorcetAbsIRV`,
     :class:`RuleCondorcetVtbIRV`.
 
     Examples
@@ -91,7 +91,7 @@ class RuleIRVDuels(Rule):
         ...     [2, 0, 1],
         ...     [2, 1, 0],
         ... ])
-        >>> rule = RuleIRVDuels()(profile)
+        >>> rule = RuleViennot()(profile)
         >>> rule.demo_results_(log_depth=0)  # doctest: +NORMALIZE_WHITESPACE
         <BLANKLINE>
         ************************
@@ -323,7 +323,7 @@ class RuleIRVDuels(Rule):
             with_two_candidates_reduces_to_plurality=True,
             is_based_on_rk=True,
             precheck_icm=False,
-            log_identity="IRV_DUELS",
+            log_identity="VIENNOT",
             **kwargs,
         )
 
@@ -337,7 +337,7 @@ class RuleIRVDuels(Rule):
         ...     [0, 2, 1],
         ...     [1, 2, 0],
         ... ])
-        >>> rule = RuleIRVDuels()(profile)
+        >>> rule = RuleViennot()(profile)
         >>> rule.scores_
         array([[ 2.,  1.,  0.],
                [nan,  1.,  2.],
@@ -519,7 +519,7 @@ class RuleIRVDuels(Rule):
             ...     [2, 1, 0],
             ...     [1, 0, 2],
             ... ])
-            >>> rule = RuleIRVDuels(cm_option='exact')(profile)
+            >>> rule = RuleViennot(cm_option='exact')(profile)
             >>> rule.sufficient_coalition_size_cm_
             array([2., 0., 3.])
 
@@ -529,7 +529,7 @@ class RuleIRVDuels(Rule):
             ...     [0, 1, 2],
             ...     [1, 2, 0],
             ... ])
-            >>> rule = RuleIRVDuels(cm_option='exact')(profile)
+            >>> rule = RuleViennot(cm_option='exact')(profile)
             >>> rule.sufficient_coalition_size_cm_
             array([2., 2., 0.])
 
@@ -539,7 +539,7 @@ class RuleIRVDuels(Rule):
             ...     [2, 0, 1],
             ...     [2, 0, 1],
             ... ])
-            >>> rule = RuleIRVDuels(cm_option='exact')(profile)
+            >>> rule = RuleViennot(cm_option='exact')(profile)
             >>> rule.is_cm_c_with_bounds_(1)
             (False, 2.0, 2.0)
 
@@ -558,7 +558,7 @@ class RuleIRVDuels(Rule):
             ...     [2, 1, 3, 0],
             ...     [0, 2, 1, 3],
             ... ])
-            >>> rule = RuleIRVDuels(cm_option='exact')(profile)
+            >>> rule = RuleViennot(cm_option='exact')(profile)
             >>> rule.is_cm_c_(1)
             True
         """
@@ -740,7 +740,7 @@ class RuleIRVDuels(Rule):
         ...     [0, 2, 1],
         ...     [2, 0, 1],
         ... ])
-        >>> rule = RuleIRVDuels(cm_option='exact')(profile)
+        >>> rule = RuleViennot(cm_option='exact')(profile)
         >>> rule.necessary_coalition_size_cm_
         array([0., 3., 3.])
 
@@ -750,7 +750,7 @@ class RuleIRVDuels(Rule):
         ...     [0, 2, 1],
         ...     [2, 1, 0],
         ... ])
-        >>> rule = RuleIRVDuels(cm_option='exact')(profile)
+        >>> rule = RuleViennot(cm_option='exact')(profile)
         >>> rule.is_cm_c_(0)
         False
         """
@@ -809,7 +809,7 @@ class RuleIRVDuels(Rule):
     def theta_critical_(self):
         """
         >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
-        >>> rule = RuleIRVDuels()(profile)
+        >>> rule = RuleViennot()(profile)
         >>> rule.theta_critical_
         0.14285714285714285
         """

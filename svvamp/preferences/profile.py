@@ -3185,3 +3185,17 @@ class Profile(my_log.MyLog):
         best_plurality_score_normalized = np.max(self.plurality_scores_rk) / self.n_v
         s = best_plurality_score_normalized
         return (s * self.n_c - 1) / (self.n_c - 1)
+
+    @cached_property
+    def rate_of_equivalence_classes(self):
+        """
+        Float. Rate of equivalence classes in the preferences of voters.
+
+        For one voter, this rate is ``(number of equivalence classes - 1) / (number of candidates - 1)``. For the
+        profile, this rate is the average of this rate over voters.
+        """
+        rate_per_voter = np.zeros(self.n_v)
+        for v in range(self.n_v):
+            n_equivalence_classes = len(set(self.preferences_ut[v, :]))
+            rate_per_voter[v] = (n_equivalence_classes - 1) / (self.n_c - 1)
+        return np.mean(rate_per_voter)
