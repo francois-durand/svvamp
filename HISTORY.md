@@ -1,5 +1,14 @@
 # History
 
+## 0.14.0 (2026-07-01): Rename voting rules
+
+Rules:
+
+* Rename ``RuleTwoRound`` to ``RulePluralityWithRunoff``.
+* Rename ``RuleCondorcetSumDefeats`` to ``RuleSimplifiedDodgson``.
+* Rename ``RuleICRV`` to ``RuleBenham``.
+* Rename ``RuleIRVDuels`` to ``RuleViennot``.
+
 ## 0.13.0 (2026-03-05): New voting rules, improved CM algorithms, and new Condorcet notions
 
 Profiles:
