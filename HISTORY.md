@@ -1,5 +1,15 @@
 # History
 
+## 0.15.0 (unreleased): Minimal Condorcet-consistent rules
+
+Rules:
+
+* Add ``RuleCondorcetConstant``, ``RuleCondorcetDuel`` and ``RuleCondorcetDictatorship``: elect the Condorcet winner
+  if she exists; otherwise, elect candidate 0, the winner of the duel between candidates 0 and 1, or the favorite
+  candidate of voter 0, respectively. Their CM algorithms (options ``fast`` and ``exact``) rely on the new function
+  ``svvamp.utils.prevent_condorcet_winner.prevent_condorcet_winner``, which decides whether a coalition can prevent
+  any other candidate from being a Condorcet winner.
+
 ## 0.14.0 (2026-07-01): Rename voting rules
 
 Rules:

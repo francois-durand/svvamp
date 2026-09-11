@@ -58,6 +58,9 @@ Voting Rules
    rules/rule_borda
    rules/rule_bucklin
    rules/rule_condorcet_abs_irv
+   rules/rule_condorcet_constant
+   rules/rule_condorcet_dictatorship
+   rules/rule_condorcet_duel
    rules/rule_condorcet_vtb_irv
    rules/rule_coombs
    rules/rule_copeland

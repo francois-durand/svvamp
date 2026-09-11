@@ -4,6 +4,9 @@ from svvamp.rules.rule_baldwin import RuleBaldwin
 from svvamp.rules.rule_black import RuleBlack
 from svvamp.rules.rule_borda import RuleBorda
 from svvamp.rules.rule_bucklin import RuleBucklin
+from svvamp.rules.rule_condorcet_constant import RuleCondorcetConstant
+from svvamp.rules.rule_condorcet_dictatorship import RuleCondorcetDictatorship
+from svvamp.rules.rule_condorcet_duel import RuleCondorcetDuel
 from svvamp.rules.rule_simplified_dodgson import RuleSimplifiedDodgson
 from svvamp.rules.rule_coombs import RuleCoombs
 from svvamp.rules.rule_copeland import RuleCopeland
@@ -44,6 +47,9 @@ ALL_RULE_CLASSES = [
     RuleBlack,
     RuleBorda,
     RuleBucklin,
+    RuleCondorcetConstant,
+    RuleCondorcetDictatorship,
+    RuleCondorcetDuel,
     RuleSimplifiedDodgson,
     RuleCoombs,
     RuleCopeland,
