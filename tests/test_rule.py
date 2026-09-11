@@ -1144,6 +1144,29 @@ def test_reached_uncovered_code():
     pass
 
 
+def test_reached_uncovered_code_printed_once(capsys):
+    """The message is printed the first time only (for a given rule class and method), and not at all if
+    ``OPTIONS.PRINT_UNCOVERED_CODE`` is False."""
+    old_error, old_print = OPTIONS.ERROR_WHEN_UNCOVERED_CODE, OPTIONS.PRINT_UNCOVERED_CODE
+    key = ("RuleVeto", "_example_reached_uncovered_code", "")
+    try:
+        OPTIONS.ERROR_WHEN_UNCOVERED_CODE = False
+        OPTIONS.PRINT_UNCOVERED_CODE = True
+        Rule._uncovered_code_already_reported.discard(key)
+        profile = Profile(preferences_rk=[[0, 1, 2], [1, 0, 2]])
+        rule = RuleVeto()(profile)
+        rule._example_reached_uncovered_code()
+        assert "not covered by the tests" in capsys.readouterr().out
+        rule._example_reached_uncovered_code()
+        assert capsys.readouterr().out == ""
+        OPTIONS.PRINT_UNCOVERED_CODE = False
+        Rule._uncovered_code_already_reported.discard(key)
+        rule._example_reached_uncovered_code()
+        assert capsys.readouterr().out == ""
+    finally:
+        OPTIONS.ERROR_WHEN_UNCOVERED_CODE, OPTIONS.PRINT_UNCOVERED_CODE = old_error, old_print
+
+
 def test_is_im_c_with_voters():
     """
     >>> profile = Profile(preferences_ut=[

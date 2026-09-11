@@ -9,6 +9,16 @@ Rules:
   candidate of voter 0, respectively. Their CM algorithms (options ``fast`` and ``exact``) rely on the new function
   ``svvamp.utils.prevent_condorcet_winner.prevent_condorcet_winner``, which decides whether a coalition can prevent
   any other candidate from being a Condorcet winner.
+* Improve the CM algorithms of ``RuleBenham``, ``RuleSmithIRV`` and ``RuleTideman``: when ``RuleIRV`` finds a
+  manipulation, the manipulators' ballots are also rebuilt from the elimination path (new function
+  ``svvamp.utils.ballots_from_elimination_path.ballots_from_elimination_path``): the top of the ballots follows the
+  path until the sincere winner is eliminated, and the rest is filled with ``c``, the other surviving candidates,
+  the sincere winner, then the eliminated candidates. This decides many cases that were previously undecided.
+
+Miscellaneous:
+
+* ``Rule._reached_uncovered_code`` now prints its message only once per rule class and method, and the new option
+  ``OPTIONS.PRINT_UNCOVERED_CODE`` allows to silence it.
 
 ## 0.14.0 (2026-07-01): Rename voting rules
 

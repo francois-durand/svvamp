@@ -3799,11 +3799,20 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
 
         self.log_depth = old_log_depth
 
+    _uncovered_code_already_reported = set()
+    """set: The uncovered portions of code that have already been reported, as tuples (name of the rule class, name
+    of the method, additional message)."""
+
     def _reached_uncovered_code(self, additional_message=""):
         """
         Print a log message when some uncovered code is reached.
 
         We should call this method each time a portion of code is not covered by the tests.
+
+        The message is printed only if ``OPTIONS.PRINT_UNCOVERED_CODE`` is True, and only the first time that this
+        portion of code is reached (for a given rule class, method and additional message), so that a large
+        simulation is not flooded with messages. If ``OPTIONS.ERROR_WHEN_UNCOVERED_CODE`` is True, an AssertionError
+        is raised (each time).
 
         Parameters
         ----------
@@ -3815,25 +3824,28 @@ class Rule(DeleteCacheMixin, my_log.MyLog):
         current_frame = inspect.currentframe()
         calling_frame = inspect.getouterframes(current_frame, 2)
         caller_name = calling_frame[1][3]
-        print(
-            "You reached a portion of code that is not covered by the tests. If you want to \n"
-            "help SVVAMP's developers, please send an email to fradurand@gmail.com and \n"
-            "copy-paste the following log message.\n"
-        )
-        print(self.__class__.__name__)
-        print(caller_name)
-        print(additional_message)
-        if self.profile_ is not None:
-            print("n_v =", self.profile_.n_v)
-            print("n_c =", self.profile_.n_c)
-            print(self.profile_.to_doctest_string())
-        print("result_options =", self._result_options)
-        print(self.log_iia_)
-        print(self.log_im_)
-        print(self.log_tm_)
-        print(self.log_um_)
-        print(self.log_icm_)
-        print(self.log_cm_)
+        key = (self.__class__.__name__, caller_name, additional_message)
+        if OPTIONS.PRINT_UNCOVERED_CODE and key not in Rule._uncovered_code_already_reported:
+            Rule._uncovered_code_already_reported.add(key)
+            print(
+                "You reached a portion of code that is not covered by the tests. If you want to \n"
+                "help SVVAMP's developers, please send an email to fradurand@gmail.com and \n"
+                "copy-paste the following log message.\n"
+            )
+            print(self.__class__.__name__)
+            print(caller_name)
+            print(additional_message)
+            if self.profile_ is not None:
+                print("n_v =", self.profile_.n_v)
+                print("n_c =", self.profile_.n_c)
+                print(self.profile_.to_doctest_string())
+            print("result_options =", self._result_options)
+            print(self.log_iia_)
+            print(self.log_im_)
+            print(self.log_tm_)
+            print(self.log_um_)
+            print(self.log_icm_)
+            print(self.log_cm_)
         if OPTIONS.ERROR_WHEN_UNCOVERED_CODE:
             raise AssertionError("Uncovered portion of code.")
 

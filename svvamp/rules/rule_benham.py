@@ -26,6 +26,7 @@ from svvamp.rules.rule_irv import RuleIRV
 from svvamp.utils.util_cache import cached_property
 from svvamp.preferences.profile import Profile
 from svvamp.utils.pseudo_bool import equal_true
+from svvamp.utils.ballots_from_elimination_path import ballots_from_elimination_path
 from svvamp.utils.misc import preferences_ut_to_matrix_duels_ut
 
 
@@ -67,7 +68,10 @@ class RuleBenham(Rule):
 
         Each algorithm above exploits the faster ones. For example, if :attr:`cm_option` = ``'very_slow'``,
         SVVAMP tries the fast algorithm first, then the slow one, then the 'very slow' one. As soon as it reaches
-        a decision, computation stops.
+        a decision, computation stops. With all options, when :class:`RuleIRV` finds a manipulation, SVVAMP tries
+        the ballots found by :class:`RuleIRV`, then ballots built from the elimination path found by
+        :class:`RuleIRV` (cf. :func:`~svvamp.utils.ballots_from_elimination_path.ballots_from_elimination_path`):
+        this heuristic can prove CM but not non-CM.
 
     * :meth:`is_icm_`: Exact in polynomial time.
     * :meth:`is_im_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
@@ -610,6 +614,50 @@ class RuleBenham(Rule):
         winner_test = self.__class__()(profile_test).w_
         return winner_test == c
 
+    def _cm_try_elimination_paths_(self, c, suggested_paths, n_m, preferences_borda_s, preferences_rk_s):
+        """Try to manipulate with ballots built from IRV elimination paths.
+
+        Parameters
+        ----------
+        c : int
+            Candidate for which we want to manipulate.
+        suggested_paths : list
+            A list of IRV elimination paths (cf.
+            :func:`~svvamp.utils.ballots_from_elimination_path.ballots_from_elimination_path`).
+        n_m : int
+            Number of manipulators.
+        preferences_borda_s : ndarray
+            Borda scores of the sincere voters.
+        preferences_rk_s : ndarray
+            Rankings of the sincere voters.
+
+        Returns
+        -------
+        bool
+            True iff a manipulation was found. In that case, ``_sufficient_coalition_size_cm[c]`` is updated.
+
+        Notes
+        -----
+        This heuristic can only prove that CM is possible (the ballots are checked by computing the actual winner),
+        never that it is impossible.
+        """
+        for suggested_path in suggested_paths:
+            for block_until in ("reach_s", "eliminate_w"):
+                ballots_m = ballots_from_elimination_path(
+                    preferences_borda_s, suggested_path, c, self.w_, n_m, block_until=block_until
+                )
+                if ballots_m is None:
+                    continue
+                self.mylogm("CM: ballots from elimination path =", ballots_m, 3)
+                manipulation_found = self._cm_aux_(c, ballots_m, preferences_rk_s)
+                self.mylogv("CM: manipulation_found =", manipulation_found, 3)
+                if manipulation_found:
+                    self._update_sufficient(
+                        self._sufficient_coalition_size_cm, c, n_m, "CM: Update sufficient_coalition_size_cm[c] = n_m ="
+                    )
+                    return True
+        return False
+
     def _cm_main_work_c_(self, c, optimize_bounds):
         """
         >>> profile = Profile(preferences_ut=[
@@ -691,6 +739,21 @@ class RuleBenham(Rule):
         >>> rule = RuleBenham(cm_option='exact')(profile)
         >>> rule.sufficient_coalition_size_cm_
         array([0., 3., 4.])
+
+        A case where :class:`RuleIRV` with bounds suggests another elimination path than :class:`RuleIRV` without
+        bounds (for candidate 2):
+
+        >>> profile = Profile(preferences_rk=[
+        ...     [2, 1, 0, 3], [3, 1, 2, 0], [2, 1, 0, 3], [3, 1, 2, 0],
+        ...     [2, 0, 1, 3], [1, 3, 2, 0], [3, 1, 2, 0], [1, 3, 0, 2],
+        ...     [1, 2, 0, 3], [3, 1, 0, 2], [2, 1, 0, 3], [2, 3, 1, 0],
+        ...     [3, 0, 1, 2], [2, 1, 3, 0], [0, 1, 2, 3], [3, 0, 2, 1],
+        ...     [3, 2, 0, 1], [1, 2, 0, 3], [1, 3, 2, 0], [2, 0, 1, 3],
+        ...     [0, 1, 2, 3], [0, 3, 2, 1], [3, 2, 0, 1],
+        ... ])
+        >>> rule = RuleBenham(cm_option='very_slow')(profile)
+        >>> rule.candidates_cm_
+        array([nan,  0.,  1.,  1.])
         """
         n_m = self.profile_.matrix_duels_ut[c, self.w_]
         n_s = self.profile_.n_v - n_m
@@ -752,9 +815,9 @@ class RuleBenham(Rule):
                 self.mylogv("CM: suggested_path =", suggested_path_two, 3)
                 if np.array_equal(suggested_path_one, suggested_path_two):
                     self.mylog("CM: Same suggested path as before, skip computation")
-                else:  # pragma: no cover
-                    # TO DO: Investigate whether this case can actually happen.
-                    self._reached_uncovered_code()
+                    suggested_paths = [suggested_path_one]
+                else:
+                    # This happens (rarely): IRV with bounds may find another elimination path.
                     ballots_m = self.irv_.example_ballots_cm_c_(c)
                     manipulation_found = self._cm_aux_(c, ballots_m, preferences_rk_s)
                     self.mylogv("CM: manipulation_found =", manipulation_found, 3)
@@ -767,6 +830,11 @@ class RuleBenham(Rule):
                         )
                         # We will not do better with any algorithm (even the brute force algo).
                         return False
+                    suggested_paths = [suggested_path_one, suggested_path_two]
+                # Use the ballots built from the elimination paths
+                if self._cm_try_elimination_paths_(c, suggested_paths, n_m, preferences_borda_s, preferences_rk_s):
+                    # We will not do better with any algorithm (even the brute force algo).
+                    return False
         else:  # self.w_ != self.irv_.w_:
             if c == self.irv_.w_:
                 self.mylog("CM: c == self.irv_.w != self._w", 3)
@@ -779,6 +847,10 @@ class RuleBenham(Rule):
                     self._update_sufficient(
                         self._sufficient_coalition_size_cm, c, n_m, "CM: Update sufficient_coalition_size_cm[c] = n_m ="
                     )
+                    # We will not do better with any algorithm (even the brute force algo).
+                    return
+                # Use the ballots built from the elimination path
+                if self._cm_try_elimination_paths_(c, [suggested_path], n_m, preferences_borda_s, preferences_rk_s):
                     # We will not do better with any algorithm (even the brute force algo).
                     return
             else:

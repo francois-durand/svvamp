@@ -11,7 +11,7 @@ import numpy as np
 from svvamp import Profile
 
 
-def candidates_cm_brute_force(rule_class, profile):
+def candidates_cm_brute_force(rule_class, profile, n_m_max=None):
     """Decide CM for each candidate by trying all possible ballots of the manipulators.
 
     Parameters
@@ -19,12 +19,14 @@ def candidates_cm_brute_force(rule_class, profile):
     rule_class : class
         A subclass of :class:`svvamp.Rule`, based on strict rankings.
     profile : Profile
+    n_m_max : int or None
+        If given, candidates with more manipulators than this are skipped (to bound the computation time).
 
     Returns
     -------
     ndarray
         ``candidates_cm[c]`` is 1. if the voters who prefer ``c`` to the sincere winner can make ``c`` win, 0.
-        otherwise.
+        otherwise. ``nan`` for skipped candidates.
     """
     rule = rule_class()(profile)
     w = rule.w_
@@ -35,6 +37,9 @@ def candidates_cm_brute_force(rule_class, profile):
             continue
         manipulators = np.where(rule.v_wants_to_help_c_[:, c])[0]
         if manipulators.shape[0] == 0:
+            continue
+        if n_m_max is not None and manipulators.shape[0] > n_m_max:
+            candidates_cm[c] = np.nan
             continue
         rankings = list(itertools.permutations(range(n_c)))
         for ballots in itertools.product(rankings, repeat=manipulators.shape[0]):
@@ -69,7 +74,7 @@ def random_profiles(n_profiles, n_v_max=6, n_c_max=4, seed=0):
         yield Profile(preferences_rk=preferences_rk)
 
 
-def check_cm_against_brute_force(rule_class, n_profiles=60, n_v_max=6, n_c_max=4, seed=0, **rule_options):
+def check_cm_against_brute_force(rule_class, n_profiles=60, n_v_max=6, n_c_max=4, seed=0, n_m_max=None, **rule_options):
     """Check that the CM algorithm of a rule agrees with the brute force on random profiles.
 
     Parameters
@@ -79,6 +84,8 @@ def check_cm_against_brute_force(rule_class, n_profiles=60, n_v_max=6, n_c_max=4
     n_v_max : int
     n_c_max : int
     seed : int
+    n_m_max : int or None
+        Cf. :func:`candidates_cm_brute_force`.
     rule_options
         Options passed to the rule (typically ``cm_option``).
 
@@ -94,10 +101,12 @@ def check_cm_against_brute_force(rule_class, n_profiles=60, n_v_max=6, n_c_max=4
     """
     n_undecided = 0
     for profile in random_profiles(n_profiles, n_v_max=n_v_max, n_c_max=n_c_max, seed=seed):
-        expected = candidates_cm_brute_force(rule_class, profile)
+        expected = candidates_cm_brute_force(rule_class, profile, n_m_max=n_m_max)
         rule = rule_class(**rule_options)(profile)
         found = rule.candidates_cm_
         for c in range(profile.n_c):
+            if np.isnan(expected[c]):
+                continue
             if np.isnan(found[c]):
                 n_undecided += 1
             elif found[c] != expected[c]:
