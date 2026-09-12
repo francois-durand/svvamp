@@ -75,10 +75,6 @@ class RuleCondorcetDictatorship(Rule):
     * :meth:`is_tm_`: Exact in polynomial time.
     * :meth:`is_um_`: Exact in polynomial time.
 
-    References
-    ----------
-    'Limit CM rate of classical voting rules', François Durand et al., 2026.
-
     See Also
     --------
     :class:`RuleCondorcetConstant`, :class:`RuleCondorcetDuel`, :class:`RuleCondorcetVtbIRV`.
@@ -817,6 +813,6 @@ class RuleCondorcetDictatorship(Rule):
         >>> profile = Profile(preferences_rk=[[0, 1, 2, 3]])
         >>> rule = RuleCondorcetDictatorship()(profile)
         >>> rule.theta_critical_
-        0
+        nan
         """
-        return 0
+        return np.nan

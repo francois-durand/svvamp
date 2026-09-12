@@ -70,10 +70,6 @@ class RuleCondorcetDuel(Rule):
     * :meth:`is_tm_`: Exact in polynomial time.
     * :meth:`is_um_`: Exact in polynomial time.
 
-    References
-    ----------
-    'Limit CM rate of classical voting rules', François Durand et al., 2026.
-
     See Also
     --------
     :class:`RuleCondorcetConstant`, :class:`RuleCondorcetDictatorship`, :class:`RuleCondorcetVtbIRV`.
