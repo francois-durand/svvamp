@@ -42,14 +42,14 @@ class RuleCondorcetConstant(Rule):
         im_option: ['lazy', 'exact']. Default: 'lazy'.
         precheck_heuristic: is_bool. Default: True.
         tm_option: ['exact']. Default: 'exact'.
-        um_option: ['lazy', 'exact']. Default: 'lazy'.
+        um_option: ['exact']. Default: 'exact'.
 
     Notes
     -----
     Each voter must provide a strict total order. If there is a Condorcet winner (in the sense of
     :attr:`matrix_victories_rk`), then she is elected. Otherwise, candidate 0 is elected.
 
-    This rule is a minimal Condorcet-consistent rule: it meets the Condorcet criterion but is not neutral.
+    This rule is a very simple Condorcet-consistent rule: it meets the Condorcet criterion but is not neutral.
 
     * :meth:`is_cm_`:
 
@@ -63,11 +63,9 @@ class RuleCondorcetConstant(Rule):
 
     * :meth:`is_icm_`: Exact in polynomial time.
     * :meth:`is_im_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
-    * :meth:`is_iia`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`. If
-      :attr:`iia_subset_maximum_size` = 2, it runs in polynomial time and is exact up to ties (which can occur only if
-      :attr:`n_v` is even).
+    * :meth:`is_iia`: Exact in polynomial time.
     * :meth:`is_tm_`: Exact in polynomial time.
-    * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
+    * :meth:`is_um_`: Exact in polynomial time.
 
     References
     ----------
@@ -124,14 +122,14 @@ class RuleCondorcetConstant(Rule):
          [2 1 0]]
         scores =
         [[1. 0. 0.]
-         [2. 1. 0.]]
+         [1. 0. 0.]]
         candidates_by_scores_best_to_worst
         [0 1 2]
         scores_best_to_worst
         [[1. 0. 0.]
-         [2. 1. 0.]]
+         [1. 0. 0.]]
         w = 0
-        score_w = [1. 2.]
+        score_w = [1. 1.]
         total_utility_w = 1.0
         <BLANKLINE>
         *********************************
@@ -278,10 +276,10 @@ class RuleCondorcetConstant(Rule):
         ********************************
         *   Unison Manipulation (UM)   *
         ********************************
-        is_um = nan
-        log_um: um_option = lazy
+        is_um = False
+        log_um: um_option = exact
         candidates_um =
-        [ 0.  0. nan]
+        [0. 0. 0.]
         <BLANKLINE>
         *********************************************
         *   Ignorant-Coalition Manipulation (ICM)   *
@@ -299,7 +297,7 @@ class RuleCondorcetConstant(Rule):
         *   Coalition Manipulation (CM)   *
         ***********************************
         is_cm = False
-        log_cm: cm_option = fast, um_option = lazy, tm_option = exact
+        log_cm: cm_option = fast, um_option = exact, tm_option = exact
         candidates_cm =
         [0. 0. 0.]
         necessary_coalition_size_cm =
@@ -317,6 +315,7 @@ class RuleCondorcetConstant(Rule):
             "cm_option": {"allowed": ["fast", "exact"], "default": "fast"},
             "tm_option": {"allowed": ["exact"], "default": "exact"},
             "icm_option": {"allowed": ["exact"], "default": "exact"},
+            "um_option": {"allowed": ["exact"], "default": "exact"},
         }
     )
 
@@ -345,8 +344,8 @@ class RuleCondorcetConstant(Rule):
 
             * ``scores[0, c]`` is 1 if ``c`` is the Condorcet winner (in the sense of :attr:`matrix_victories_rk`),
               0 otherwise.
-            * ``scores[1, c]`` is the score of ``c`` in the fallback rule, i.e. ``n_c - 1 - c``: candidate 0 has the
-              best score, then candidate 1, etc.
+            * ``scores[1, c]`` is the score of ``c`` in the fallback rule: 1 for candidate 0 and 0 for the other
+              candidates.
 
         Examples
         --------
@@ -354,19 +353,20 @@ class RuleCondorcetConstant(Rule):
             >>> rule = RuleCondorcetConstant()(profile)
             >>> rule.scores_
             array([[0., 0., 0.],
-                   [2., 1., 0.]])
+                   [1., 0., 0.]])
         """
         self.mylog("Compute scores", 1)
         scores_condorcet = np.zeros(self.profile_.n_c)
         if self.profile_.exists_condorcet_winner_rk:
             scores_condorcet[self.profile_.condorcet_winner_rk] = 1
-        scores_fallback = np.arange(self.profile_.n_c - 1, -1, -1, dtype=float)
+        scores_fallback = np.zeros(self.profile_.n_c)
+        scores_fallback[0] = 1
         return np.array([scores_condorcet, scores_fallback])
 
     @cached_property
     def candidates_by_scores_best_to_worst_(self):
         """1d array of integers. Candidates are sorted lexicographically by :attr:`scores_`, i.e. the Condorcet winner
-        first if she exists, then by increasing index.
+        first if she exists, then candidate 0, then the other candidates by increasing index.
 
         Examples
         --------
@@ -393,6 +393,54 @@ class RuleCondorcetConstant(Rule):
     def meets_condorcet_c_rk(self):
         return True
 
+    # %% Independence of Irrelevant Alternatives (IIA)
+
+    @cached_property
+    def _compute_iia_(self):
+        """Compute IIA (exact and polynomial).
+
+        If there is a Condorcet winner, she wins in any subset of candidates containing her: IIA. Otherwise,
+        candidate 0 wins. If she has a defeat against some candidate ``c``, then ``c`` wins in the subset
+        ``{0, c}``: not IIA. If she has no defeat (only victories and ties), then in any subset containing her, no
+        other candidate is a Condorcet winner, so she wins: IIA.
+
+        Examples
+        --------
+        Candidate 0 wins by the fallback rule but is beaten by candidate 2, who wins in the subset ``{0, 2}``:
+
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [1, 2, 0], [2, 0, 1]])
+            >>> rule = RuleCondorcetConstant()(profile)
+            >>> rule.w_
+            0
+            >>> rule.is_iia_
+            False
+            >>> rule.example_winner_iia_
+            2
+            >>> rule.example_subset_iia_
+            array([ True, False,  True])
+
+        Candidate 0 wins by the fallback rule and has only ties and victories: she wins in any subset.
+
+            >>> profile = Profile(preferences_rk=[[0, 1, 2], [0, 1, 2], [1, 2, 0], [2, 1, 0]])
+            >>> rule = RuleCondorcetConstant()(profile)
+            >>> rule.w_
+            0
+            >>> rule.is_iia_
+            True
+        """
+        self.mylog("Compute IIA", 1)
+        if self.w_is_condorcet_winner_rk_:
+            return self._compute_iia_aux_when_guaranteed_("IIA guaranteed: w is a Condorcet winner (vtb).")
+        winners_against_0 = np.where(self.profile_.matrix_victories_rk[:, 0] == 1)[0]
+        if winners_against_0.shape[0] == 0:
+            return self._compute_iia_aux_when_guaranteed_("IIA guaranteed: candidate 0 has no defeat.")
+        self.mylog("IIA failure found: candidate 0 has a defeat.", 2)
+        example_winner_iia = int(winners_against_0[0])
+        example_subset_iia = np.zeros(self.profile_.n_c, dtype=bool)
+        example_subset_iia[0] = True
+        example_subset_iia[example_winner_iia] = True
+        return {"is_iia": False, "example_winner_iia": example_winner_iia, "example_subset_iia": example_subset_iia}
+
     # %% Individual manipulation (IM)
 
     # Use the general methods from class Rule.
@@ -403,13 +451,76 @@ class RuleCondorcetConstant(Rule):
 
     # %% Unison manipulation (UM)
 
-    # Use the general methods from class Rule.
+    def _um_main_work_c_exact_rankings_(self, c):
+        """Do the main work in UM loop for candidate ``c``, with option 'exact'.
+
+        Since all manipulators rank ``c`` first, ``c`` wins iff she becomes a Condorcet winner, or if there is no
+        Condorcet winner and ``c`` wins the fallback rule. With identical ballots, the latter is decided exactly and
+        in polynomial time by :func:`~svvamp.utils.prevent_condorcet_winner.prevent_condorcet_winner`.
+
+        Examples
+        --------
+        Candidate 2 is the Condorcet winner. The two supporters of candidate 0 can make her win, but only with
+        different ballots: one of them must rank 1 before 2 (so that 2 is not a Condorcet winner anymore) and the other
+        one must rank 2 before 1 (so that 1 is not a Condorcet winner). Hence CM is possible but not UM.
+
+            >>> profile = Profile(preferences_rk=[
+            ...     [0, 2, 1],
+            ...     [0, 2, 1],
+            ...     [1, 2, 0],
+            ...     [1, 2, 0],
+            ...     [2, 1, 0],
+            ...     [2, 1, 0],
+            ... ])
+            >>> rule = RuleCondorcetConstant()(profile)
+            >>> rule.w_
+            2
+            >>> rule.candidates_cm_
+            array([1., 0., 0.])
+            >>> rule.candidates_um_
+            array([0., 0., 0.])
+        """
+        n_m = self.profile_.matrix_duels_ut[c, self.w_]
+        n_s = self.profile_.n_v - n_m
+        d_neq_c = np.array(range(self.profile_.n_c)) != c
+        preferences_borda_s = self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :]
+        matrix_duels_s = preferences_ut_to_matrix_duels_ut(preferences_borda_s)
+        n_manip_becomes_cond = int(np.maximum(n_s + 1 - 2 * np.min(matrix_duels_s[c, d_neq_c]), 0))
+        if n_m >= n_manip_becomes_cond:
+            self.mylog("UM: c becomes a Condorcet winner", 3)
+            self._candidates_um[c] = True
+            return
+        if not self._cm_fallback_elects_c_(c, n_m):
+            self.mylog("UM: c cannot win the fallback rule", 3)
+            self._candidates_um[c] = False
+            return
+        result, ballots_m = prevent_condorcet_winner(matrix_duels_s, c, n_m, unison=True)
+        self.mylogv("UM: prevent_condorcet_winner (unison) =", result, 3)
+        if result and not self._cm_check_ballots_(c, ballots_m):  # pragma: no cover
+            raise AssertionError("Uh-oh!")
+        self._candidates_um[c] = result
 
     # %% Ignorant-Coalition Manipulation (ICM)
 
     # Use the general methods from class Rule. Since the rule meets IgnMC_c_ctb, they are exact.
 
     # %% Coalition Manipulation (CM)
+
+    def _cm_fallback_can_elect_c_(self, c):
+        """Whether ``c`` can win the fallback rule with some number of manipulators.
+
+        Parameters
+        ----------
+        c : int
+            Candidate for which we want to manipulate.
+
+        Returns
+        -------
+        bool
+            True iff ``c`` is elected by the fallback rule (for some number of manipulators). If not, then ``c`` can
+            only win by becoming a Condorcet winner.
+        """
+        return c == 0
 
     def _cm_fallback_elects_c_(self, c, n_m):
         """Whether ``c`` wins the fallback rule, assuming there is no Condorcet winner.
@@ -573,6 +684,14 @@ class RuleCondorcetConstant(Rule):
             min(n_manip_becomes_cond, n_manip_prevent_cond),
             "CM: Update necessary_coalition_size_cm[c] = min(n_manip_becomes_cond, n_manip_prevent_cond) =",
         )
+        if not self._cm_fallback_can_elect_c_(c):
+            # ``c`` can only win by becoming a Condorcet winner.
+            self._update_necessary(
+                self._necessary_coalition_size_cm,
+                c,
+                n_manip_becomes_cond,
+                "CM: Update necessary_coalition_size_cm[c] = n_manip_becomes_cond =",
+            )
         if not optimize_bounds and self._necessary_coalition_size_cm[c] > n_m:
             return True
         # Decide with the actual number of manipulators

@@ -182,7 +182,7 @@ def _reachable_from(is_source, is_arc):
     return order, parent
 
 
-def prevent_condorcet_winner(matrix_duels_s, c, n_m, exact=True):
+def prevent_condorcet_winner(matrix_duels_s, c, n_m, exact=True, unison=False):
     """Decide whether manipulators can prevent any candidate other than ``c`` from being a Condorcet winner.
 
     Parameters
@@ -197,6 +197,9 @@ def prevent_condorcet_winner(matrix_duels_s, c, n_m, exact=True):
     exact : bool
         If True, use an exact algorithm (whose cost may be exponential in the number of candidates). If False, use
         a polynomial algorithm which may fail to decide.
+    unison : bool
+        If True, all manipulators must cast the same ballot (unison manipulation). In that case, the algorithm is
+        exact and polynomial, whatever the value of ``exact``.
 
     Returns
     -------
@@ -228,6 +231,8 @@ def prevent_condorcet_winner(matrix_duels_s, c, n_m, exact=True):
       the kill costs along the cycle is at most ``(L - 1) * n_m``. Conversely, the trees hanging on a realizable
       cycle can be placed after it in the ballots. Hence there is a solution iff every member of the core is
       reachable, in the digraph, from a realizable cycle.
+    * With ``unison=True``, all manipulators cast the same ballot, so the killers cannot form a cycle: the
+      manipulation is possible iff the core is empty.
     * With ``exact=True``, realizable cycles are searched by dynamic programming over the subsets of the core (cost
       exponential in the size of the core). With ``exact=False``, only cycles of length at most 3 are searched: if
       it is not enough to reach all the core, the algorithm concludes False when some member of the core is not
@@ -268,6 +273,12 @@ def prevent_condorcet_winner(matrix_duels_s, c, n_m, exact=True):
         >>> ballots
         array([[0, 1, 2],
                [0, 2, 1]])
+
+    Hence it is impossible in unison:
+
+        >>> result, ballots = prevent_condorcet_winner(matrix_duels_s, c=0, n_m=2, unison=True)
+        >>> result
+        False
 
     The same situation with an odd number of voters (``n_v = 7``): a tie is impossible, so candidates 1 and 2
     cannot kill each other:
@@ -316,6 +327,8 @@ def prevent_condorcet_winner(matrix_duels_s, c, n_m, exact=True):
     if not core:
         ballot = [c, *placed_order]
         return True, np.tile(ballot, (n_m, 1))
+    if unison:
+        return False, None
     # Digraph on the core: ``weights[i, j] = n_m - cost`` if ``core[i]`` can kill ``core[j]``, -1 otherwise.
     n_core = len(core)
     costs_core = costs[np.ix_(core, core)]

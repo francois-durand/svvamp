@@ -1,5 +1,5 @@
 from svvamp import RuleCondorcetDuel, Profile
-from tests.cm_brute_force import check_cm_against_brute_force
+from tests.cm_brute_force import check_cm_against_brute_force, check_um_against_brute_force
 
 
 def test_cm_fast():
@@ -49,5 +49,13 @@ def test_cm_exact():
 def test_cm_against_brute_force():
     """The CM algorithms never contradict the brute force (which keeps each voter at her position in the profile)."""
     check_cm_against_brute_force(RuleCondorcetDuel, n_profiles=15, n_v_max=5, n_c_max=4, seed=0, cm_option="fast")
-    n_undecided = check_cm_against_brute_force(RuleCondorcetDuel, n_profiles=15, n_v_max=5, n_c_max=4, seed=0, cm_option="exact")
+    n_undecided = check_cm_against_brute_force(
+        RuleCondorcetDuel, n_profiles=15, n_v_max=5, n_c_max=4, seed=0, cm_option="exact"
+    )
+    assert n_undecided == 0
+
+
+def test_um_against_brute_force():
+    """The UM algorithm never contradicts the brute force (which keeps each voter at her position in the profile)."""
+    n_undecided = check_um_against_brute_force(RuleCondorcetDuel, n_profiles=60, n_v_max=7, n_c_max=4, seed=1)
     assert n_undecided == 0

@@ -115,3 +115,77 @@ def check_cm_against_brute_force(rule_class, n_profiles=60, n_v_max=6, n_c_max=4
                     f"{profile.to_doctest_string()}"
                 )
     return n_undecided
+
+
+def candidates_um_brute_force(rule_class, profile):
+    """Decide UM for each candidate by trying all possible (common) ballots of the manipulators.
+
+    Parameters
+    ----------
+    rule_class : class
+        A subclass of :class:`svvamp.Rule`, based on strict rankings.
+    profile : Profile
+
+    Returns
+    -------
+    ndarray
+        ``candidates_um[c]`` is 1. if the voters who prefer ``c`` to the sincere winner can make ``c`` win by casting
+        the same ballot, 0. otherwise.
+    """
+    rule = rule_class()(profile)
+    w = rule.w_
+    n_c = profile.n_c
+    candidates_um = np.zeros(n_c)
+    for c in range(n_c):
+        if c == w:
+            continue
+        manipulators = np.where(rule.v_wants_to_help_c_[:, c])[0]
+        if manipulators.shape[0] == 0:
+            continue
+        for ballot in itertools.permutations(range(n_c)):
+            preferences_rk = np.copy(profile.preferences_rk)
+            preferences_rk[manipulators, :] = ballot
+            w_test = rule_class()(Profile(preferences_rk=preferences_rk, sort_voters=False)).w_
+            if w_test == c:
+                candidates_um[c] = 1.0
+                break
+    return candidates_um
+
+
+def check_um_against_brute_force(rule_class, n_profiles=60, n_v_max=6, n_c_max=4, seed=0, **rule_options):
+    """Check that the UM algorithm of a rule agrees with the brute force on random profiles.
+
+    Parameters
+    ----------
+    rule_class : class
+    n_profiles : int
+    n_v_max : int
+    n_c_max : int
+    seed : int
+    rule_options
+        Options passed to the rule (typically ``um_option``).
+
+    Returns
+    -------
+    n_undecided : int
+        Number of (profile, candidate) pairs where the rule could not decide.
+
+    Raises
+    ------
+    AssertionError
+        If the rule decides UM to True (resp. False) for a candidate whereas the brute force says False (resp. True).
+    """
+    n_undecided = 0
+    for profile in random_profiles(n_profiles, n_v_max=n_v_max, n_c_max=n_c_max, seed=seed):
+        expected = candidates_um_brute_force(rule_class, profile)
+        rule = rule_class(**rule_options)(profile)
+        found = rule.candidates_um_
+        for c in range(profile.n_c):
+            if np.isnan(found[c]):
+                n_undecided += 1
+            elif found[c] != expected[c]:
+                raise AssertionError(
+                    f"{rule_class.__name__}, c = {c}: found {found[c]}, expected {expected[c]}.\n"
+                    f"{profile.to_doctest_string()}"
+                )
+    return n_undecided

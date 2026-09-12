@@ -20,8 +20,6 @@ This file is part of SVVAMP.
     along with SVVAMP.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import itertools
-
 import numpy as np
 
 from svvamp.preferences.profile import Profile
@@ -44,7 +42,7 @@ class RuleCondorcetDictatorship(Rule):
         im_option: ['lazy', 'exact']. Default: 'lazy'.
         precheck_heuristic: is_bool. Default: True.
         tm_option: ['exact']. Default: 'exact'.
-        um_option: ['lazy', 'exact']. Default: 'lazy'.
+        um_option: ['exact']. Default: 'exact'.
 
     Notes
     -----
@@ -52,7 +50,7 @@ class RuleCondorcetDictatorship(Rule):
     :attr:`matrix_victories_rk`), then she is elected. Otherwise, the candidate ranked first by voter 0 (the
     *dictator*) is elected.
 
-    This rule is a minimal Condorcet-consistent rule: it meets the Condorcet criterion but is not anonymous. As a
+    This rule is a very simple Condorcet-consistent rule: it meets the Condorcet criterion but is not anonymous. As a
     consequence, it does not meet the criteria "with candidate tie-breaking" (e.g. if half of the voters rank
     candidate 0 first, she does not necessarily win). Contrary to the other rules of SVVAMP, the position of each
     voter in the profile matters. In particular, for the manipulation problems where a coalition of a given size is
@@ -77,7 +75,7 @@ class RuleCondorcetDictatorship(Rule):
       :attr:`iia_subset_maximum_size` = 2, it runs in polynomial time and is exact up to ties (which can occur only if
       :attr:`n_v` is even).
     * :meth:`is_tm_`: Exact in polynomial time.
-    * :meth:`is_um_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
+    * :meth:`is_um_`: Exact in polynomial time.
 
     References
     ----------
@@ -288,10 +286,10 @@ class RuleCondorcetDictatorship(Rule):
         ********************************
         *   Unison Manipulation (UM)   *
         ********************************
-        is_um = nan
-        log_um: um_option = lazy
+        is_um = False
+        log_um: um_option = exact
         candidates_um =
-        [ 0.  0. nan]
+        [0. 0. 0.]
         <BLANKLINE>
         *********************************************
         *   Ignorant-Coalition Manipulation (ICM)   *
@@ -309,7 +307,7 @@ class RuleCondorcetDictatorship(Rule):
         *   Coalition Manipulation (CM)   *
         ***********************************
         is_cm = False
-        log_cm: cm_option = fast, um_option = lazy, tm_option = exact
+        log_cm: cm_option = fast, um_option = exact, tm_option = exact
         candidates_cm =
         [0. 0. 0.]
         necessary_coalition_size_cm =
@@ -327,6 +325,7 @@ class RuleCondorcetDictatorship(Rule):
             "cm_option": {"allowed": ["fast", "exact"], "default": "fast"},
             "tm_option": {"allowed": ["exact"], "default": "exact"},
             "icm_option": {"allowed": ["exact"], "default": "exact"},
+            "um_option": {"allowed": ["exact"], "default": "exact"},
         }
     )
 
@@ -414,53 +413,52 @@ class RuleCondorcetDictatorship(Rule):
     def _um_main_work_c_exact_rankings_(self, c):
         """Do the main work in UM loop for candidate ``c``, with option 'exact'.
 
-        Contrary to the general method from class :class:`Rule`, the ballots of the manipulators are modified in
-        place, so the positions of the voters are preserved.
+        Since all manipulators rank ``c`` first, ``c`` wins iff she becomes a Condorcet winner, or if there is no
+        Condorcet winner and ``c`` wins the fallback rule. With identical ballots, the latter is decided exactly and
+        in polynomial time by :func:`~svvamp.utils.prevent_condorcet_winner.prevent_condorcet_winner`.
 
         Examples
         --------
-        Voter 0 prefers 1 to the sincere winner 0, so she is a manipulator. With her accomplice, they can prevent 0
-        from being a Condorcet winner by ranking 2 before 0, and then voter 0 (the dictator) elects candidate 1:
+        Candidate 2 is the Condorcet winner. The two supporters of candidate 0 (including the dictator) can make her
+        win, but only with different ballots: one of them must rank 1 before 2 (so that 2 is not a Condorcet winner
+        anymore) and the other one must rank 2 before 1 (so that 1 is not a Condorcet winner). Hence CM is possible
+        but not UM.
 
             >>> profile = Profile(preferences_rk=[
-            ...     [1, 0, 2],
-            ...     [1, 0, 2],
-            ...     [0, 1, 2],
             ...     [0, 2, 1],
-            ...     [2, 0, 1],
+            ...     [0, 2, 1],
+            ...     [1, 2, 0],
+            ...     [1, 2, 0],
+            ...     [2, 1, 0],
+            ...     [2, 1, 0],
             ... ])
-            >>> rule = RuleCondorcetDictatorship(um_option='exact')(profile)
+            >>> rule = RuleCondorcetDictatorship()(profile)
             >>> rule.w_
-            0
-            >>> rule.candidates_um_
-            array([0., 1., 0.])
-
-        The same profile, except that the dictator is now a sincere voter: candidate 1 cannot be elected.
-
-            >>> profile = Profile(preferences_rk=[
-            ...     [0, 1, 2],
-            ...     [1, 0, 2],
-            ...     [1, 0, 2],
-            ...     [0, 2, 1],
-            ...     [2, 0, 1],
-            ... ])
-            >>> rule = RuleCondorcetDictatorship(um_option='exact')(profile)
+            2
+            >>> rule.candidates_cm_
+            array([1., 0., 0.])
             >>> rule.candidates_um_
             array([0., 0., 0.])
         """
-        is_manipulator = self.v_wants_to_help_c_[:, c]
-        base_ballot = [c, *[i for i in range(self.profile_.n_c) if i != c]]  # Put c first for the first try...
-        for ballot in itertools.permutations(base_ballot):
-            self.mylogv("UM: Ballot =", ballot, 3)
-            preferences_rk_test = np.copy(self.profile_.preferences_rk)
-            preferences_rk_test[is_manipulator, :] = ballot
-            w_test = self._copy(profile=Profile(preferences_rk=preferences_rk_test, sort_voters=False)).w_
-            self.mylogv("UM: w_test =", w_test, 3)
-            if w_test == c:
-                self._candidates_um[c] = True
-                return
-        else:
+        n_m = self.profile_.matrix_duels_ut[c, self.w_]
+        n_s = self.profile_.n_v - n_m
+        d_neq_c = np.array(range(self.profile_.n_c)) != c
+        preferences_borda_s = self.profile_.preferences_borda_rk[np.logical_not(self.v_wants_to_help_c_[:, c]), :]
+        matrix_duels_s = preferences_ut_to_matrix_duels_ut(preferences_borda_s)
+        n_manip_becomes_cond = int(np.maximum(n_s + 1 - 2 * np.min(matrix_duels_s[c, d_neq_c]), 0))
+        if n_m >= n_manip_becomes_cond:
+            self.mylog("UM: c becomes a Condorcet winner", 3)
+            self._candidates_um[c] = True
+            return
+        if not self._cm_fallback_elects_c_(c, n_m):
+            self.mylog("UM: c cannot win the fallback rule", 3)
             self._candidates_um[c] = False
+            return
+        result, ballots_m = prevent_condorcet_winner(matrix_duels_s, c, n_m, unison=True)
+        self.mylogv("UM: prevent_condorcet_winner (unison) =", result, 3)
+        if result and not self._cm_check_ballots_(c, ballots_m):  # pragma: no cover
+            raise AssertionError("Uh-oh!")
+        self._candidates_um[c] = result
 
     # %% Ignorant-Coalition Manipulation (ICM)
 
@@ -539,6 +537,23 @@ class RuleCondorcetDictatorship(Rule):
         valid for this rule: this method does nothing.
         """
         pass
+
+    def _cm_fallback_can_elect_c_(self, c):
+        """Whether ``c`` can win the fallback rule with some number of manipulators.
+
+        Parameters
+        ----------
+        c : int
+            Candidate for which we want to manipulate.
+
+        Returns
+        -------
+        bool
+            True iff ``c`` is elected by the fallback rule (for some number of manipulators), i.e. iff the dictator
+            prefers ``c`` to ``w`` (she is then the first manipulator) or ranks ``c`` first. If not, then ``c`` can
+            only win by becoming a Condorcet winner.
+        """
+        return bool(self.v_wants_to_help_c_[0, c]) or self.profile_.preferences_rk[0, 0] == c
 
     def _cm_fallback_elects_c_(self, c, n_m):
         """Whether ``c`` wins the fallback rule, assuming there is no Condorcet winner.
@@ -702,6 +717,14 @@ class RuleCondorcetDictatorship(Rule):
             min(n_manip_becomes_cond, n_manip_prevent_cond),
             "CM: Update necessary_coalition_size_cm[c] = min(n_manip_becomes_cond, n_manip_prevent_cond) =",
         )
+        if not self._cm_fallback_can_elect_c_(c):
+            # ``c`` can only win by becoming a Condorcet winner.
+            self._update_necessary(
+                self._necessary_coalition_size_cm,
+                c,
+                n_manip_becomes_cond,
+                "CM: Update necessary_coalition_size_cm[c] = n_manip_becomes_cond =",
+            )
         if not optimize_bounds and self._necessary_coalition_size_cm[c] > n_m:
             return True
         # Decide with the actual number of manipulators
