@@ -1,7 +1,11 @@
-"""Brute-force coalitional manipulation, used to cross-check the CM algorithms of some voting rules.
+"""Brute-force manipulation, used to cross-check the CM and UM algorithms of some voting rules.
 
 Contrary to the exhaustive algorithm of :class:`svvamp.Rule`, this brute force keeps each voter at her position in
 the profile, which matters for non-anonymous rules such as :class:`svvamp.RuleCondorcetDictatorship`.
+
+Limitations: the rule must be based on strict rankings (the manipulators' ballots are enumerated as rankings). The
+options of the rule that affect the result of the election (such as ``alpha`` for a hypothetical alpha-Copeland) must
+be passed in ``rule_options``: they are transmitted to the virtual elections through :attr:`svvamp.Rule._copy`.
 """
 
 import itertools
@@ -11,7 +15,7 @@ import numpy as np
 from svvamp import Profile
 
 
-def candidates_cm_brute_force(rule_class, profile, n_m_max=None):
+def candidates_cm_brute_force(rule_class, profile, n_m_max=None, **rule_options):
     """Decide CM for each candidate by trying all possible ballots of the manipulators.
 
     Parameters
@@ -21,6 +25,8 @@ def candidates_cm_brute_force(rule_class, profile, n_m_max=None):
     profile : Profile
     n_m_max : int or None
         If given, candidates with more manipulators than this are skipped (to bound the computation time).
+    rule_options
+        Options passed to the rule (cf. the module docstring).
 
     Returns
     -------
@@ -28,7 +34,7 @@ def candidates_cm_brute_force(rule_class, profile, n_m_max=None):
         ``candidates_cm[c]`` is 1. if the voters who prefer ``c`` to the sincere winner can make ``c`` win, 0.
         otherwise. ``nan`` for skipped candidates.
     """
-    rule = rule_class()(profile)
+    rule = rule_class(**rule_options)(profile)
     w = rule.w_
     n_c = profile.n_c
     candidates_cm = np.zeros(n_c)
@@ -45,7 +51,7 @@ def candidates_cm_brute_force(rule_class, profile, n_m_max=None):
         for ballots in itertools.product(rankings, repeat=manipulators.shape[0]):
             preferences_rk = np.copy(profile.preferences_rk)
             preferences_rk[manipulators, :] = np.array(ballots)
-            w_test = rule_class()(Profile(preferences_rk=preferences_rk, sort_voters=False)).w_
+            w_test = rule._copy(profile=Profile(preferences_rk=preferences_rk, sort_voters=False)).w_
             if w_test == c:
                 candidates_cm[c] = 1.0
                 break
@@ -101,7 +107,7 @@ def check_cm_against_brute_force(rule_class, n_profiles=60, n_v_max=6, n_c_max=4
     """
     n_undecided = 0
     for profile in random_profiles(n_profiles, n_v_max=n_v_max, n_c_max=n_c_max, seed=seed):
-        expected = candidates_cm_brute_force(rule_class, profile, n_m_max=n_m_max)
+        expected = candidates_cm_brute_force(rule_class, profile, n_m_max=n_m_max, **rule_options)
         rule = rule_class(**rule_options)(profile)
         found = rule.candidates_cm_
         for c in range(profile.n_c):
@@ -117,7 +123,7 @@ def check_cm_against_brute_force(rule_class, n_profiles=60, n_v_max=6, n_c_max=4
     return n_undecided
 
 
-def candidates_um_brute_force(rule_class, profile):
+def candidates_um_brute_force(rule_class, profile, **rule_options):
     """Decide UM for each candidate by trying all possible (common) ballots of the manipulators.
 
     Parameters
@@ -125,6 +131,8 @@ def candidates_um_brute_force(rule_class, profile):
     rule_class : class
         A subclass of :class:`svvamp.Rule`, based on strict rankings.
     profile : Profile
+    rule_options
+        Options passed to the rule (cf. the module docstring).
 
     Returns
     -------
@@ -132,7 +140,7 @@ def candidates_um_brute_force(rule_class, profile):
         ``candidates_um[c]`` is 1. if the voters who prefer ``c`` to the sincere winner can make ``c`` win by casting
         the same ballot, 0. otherwise.
     """
-    rule = rule_class()(profile)
+    rule = rule_class(**rule_options)(profile)
     w = rule.w_
     n_c = profile.n_c
     candidates_um = np.zeros(n_c)
@@ -145,7 +153,7 @@ def candidates_um_brute_force(rule_class, profile):
         for ballot in itertools.permutations(range(n_c)):
             preferences_rk = np.copy(profile.preferences_rk)
             preferences_rk[manipulators, :] = ballot
-            w_test = rule_class()(Profile(preferences_rk=preferences_rk, sort_voters=False)).w_
+            w_test = rule._copy(profile=Profile(preferences_rk=preferences_rk, sort_voters=False)).w_
             if w_test == c:
                 candidates_um[c] = 1.0
                 break
@@ -177,7 +185,7 @@ def check_um_against_brute_force(rule_class, n_profiles=60, n_v_max=6, n_c_max=4
     """
     n_undecided = 0
     for profile in random_profiles(n_profiles, n_v_max=n_v_max, n_c_max=n_c_max, seed=seed):
-        expected = candidates_um_brute_force(rule_class, profile)
+        expected = candidates_um_brute_force(rule_class, profile, **rule_options)
         rule = rule_class(**rule_options)(profile)
         found = rule.candidates_um_
         for c in range(profile.n_c):
