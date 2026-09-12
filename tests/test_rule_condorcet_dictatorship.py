@@ -1,4 +1,6 @@
-from svvamp import RuleCondorcetDictatorship, Profile
+import numpy as np
+
+from svvamp import Profile, Rule, RuleCondorcetDictatorship
 from tests.cm_brute_force import check_cm_against_brute_force, check_um_against_brute_force
 
 
@@ -61,3 +63,16 @@ def test_um_against_brute_force():
     """The UM algorithm never contradicts the brute force (which keeps each voter at her position in the profile)."""
     n_undecided = check_um_against_brute_force(RuleCondorcetDictatorship, n_profiles=60, n_v_max=7, n_c_max=4, seed=1)
     assert n_undecided == 0
+
+
+def test_iia_against_brute_force():
+    """The IIA algorithm agrees with the exhaustive algorithm of the superclass on random profiles."""
+    from tests.cm_brute_force import random_profiles
+
+    for profile in random_profiles(100, n_v_max=7, n_c_max=4, seed=2):
+        rule_exhaustive = RuleCondorcetDictatorship(iia_subset_maximum_size=profile.n_c - 1)(profile)
+        # noinspection PyUnresolvedReferences
+        expected = Rule.__dict__["_compute_iia_"].fget(rule_exhaustive)["is_iia"]
+        found = RuleCondorcetDictatorship()(profile).is_iia_
+        assert not np.isnan(expected)
+        assert found == expected, profile.to_doctest_string()

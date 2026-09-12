@@ -9,7 +9,8 @@ Rules:
   candidate of voter 0, respectively. Their CM algorithms (options ``fast`` and ``exact``) rely on the new function
   ``svvamp.utils.prevent_condorcet_winner.prevent_condorcet_winner``, which decides whether a coalition can prevent
   any other candidate from being a Condorcet winner. Their UM algorithm is exact and polynomial (same function, with
-  identical ballots). For ``RuleCondorcetConstant``, IIA is also decided exactly in polynomial time.
+  identical ballots). For ``RuleCondorcetConstant`` and ``RuleCondorcetDictatorship``, IIA is also decided exactly in
+  polynomial time.
 * Improve the CM algorithms of ``RuleBenham``, ``RuleSmithIRV`` and ``RuleTideman``: when ``RuleIRV`` finds a
   manipulation, the manipulators' ballots are also rebuilt from the elimination path (new function
   ``svvamp.utils.ballots_from_elimination_path.ballots_from_elimination_path``): the top of the ballots follows the

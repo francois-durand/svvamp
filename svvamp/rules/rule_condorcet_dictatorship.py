@@ -71,9 +71,7 @@ class RuleCondorcetDictatorship(Rule):
 
     * :meth:`is_icm_`: Exact in polynomial time.
     * :meth:`is_im_`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`.
-    * :meth:`is_iia`: Non-polynomial or non-exact algorithms from superclass :class:`Rule`. If
-      :attr:`iia_subset_maximum_size` = 2, it runs in polynomial time and is exact up to ties (which can occur only if
-      :attr:`n_v` is even).
+    * :meth:`is_iia`: Exact in polynomial time.
     * :meth:`is_tm_`: Exact in polynomial time.
     * :meth:`is_um_`: Exact in polynomial time.
 
@@ -397,6 +395,55 @@ class RuleCondorcetDictatorship(Rule):
     @cached_property
     def meets_condorcet_c_rk(self):
         return True
+
+    # %% Independence of Irrelevant Alternatives (IIA)
+
+    @cached_property
+    def _compute_iia_(self):
+        """Compute IIA (exact and polynomial).
+
+        If there is a Condorcet winner, she wins in any subset of candidates containing her: IIA. Otherwise, the
+        favorite candidate ``w`` of the dictator wins. If she has a defeat against some candidate ``c``, then ``c``
+        wins in the subset ``{w, c}``: not IIA. If she has no defeat (only victories and ties), then in any subset
+        containing her, no other candidate is a Condorcet winner, and she is still the favorite candidate of the
+        dictator, so she wins: IIA.
+
+        Examples
+        --------
+        Candidate 1 wins by the fallback rule but is beaten by candidate 2, who wins in the subset ``{1, 2}``:
+
+            >>> profile = Profile(preferences_rk=[[1, 0, 2], [2, 1, 0], [0, 2, 1]])
+            >>> rule = RuleCondorcetDictatorship()(profile)
+            >>> rule.w_
+            1
+            >>> rule.is_iia_
+            False
+            >>> rule.example_winner_iia_
+            2
+            >>> rule.example_subset_iia_
+            array([False,  True,  True])
+
+        Candidate 1 wins by the fallback rule and has only ties and victories: she wins in any subset.
+
+            >>> profile = Profile(preferences_rk=[[1, 0, 2], [1, 0, 2], [0, 2, 1], [2, 0, 1]])
+            >>> rule = RuleCondorcetDictatorship()(profile)
+            >>> rule.w_
+            1
+            >>> rule.is_iia_
+            True
+        """
+        self.mylog("Compute IIA", 1)
+        if self.w_is_condorcet_winner_rk_:
+            return self._compute_iia_aux_when_guaranteed_("IIA guaranteed: w is a Condorcet winner (vtb).")
+        winners_against_w = np.where(self.profile_.matrix_victories_rk[:, self.w_] == 1)[0]
+        if winners_against_w.shape[0] == 0:
+            return self._compute_iia_aux_when_guaranteed_("IIA guaranteed: w has no defeat.")
+        self.mylog("IIA failure found: w has a defeat.", 2)
+        example_winner_iia = int(winners_against_w[0])
+        example_subset_iia = np.zeros(self.profile_.n_c, dtype=bool)
+        example_subset_iia[self.w_] = True
+        example_subset_iia[example_winner_iia] = True
+        return {"is_iia": False, "example_winner_iia": example_winner_iia, "example_subset_iia": example_subset_iia}
 
     # %% Individual manipulation (IM)
 
