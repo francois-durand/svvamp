@@ -3,9 +3,10 @@
 Contrary to the exhaustive algorithm of :class:`svvamp.Rule`, this brute force keeps each voter at her position in
 the profile, which matters for non-anonymous rules such as :class:`svvamp.RuleCondorcetDictatorship`.
 
-Limitations: the rule must be based on strict rankings (the manipulators' ballots are enumerated as rankings). The
-options of the rule that affect the result of the election (such as ``alpha`` for a hypothetical alpha-Copeland) must
-be passed in ``rule_options``: they are transmitted to the virtual elections through :attr:`svvamp.Rule._copy`.
+Limitations: the rule must be based on strict rankings (the manipulators' ballots are enumerated as rankings), which
+is checked with :attr:`svvamp.Rule.is_based_on_rk`. The options of the rule that affect the result of the election
+(such as ``tie_break_rule`` for :class:`svvamp.RuleCopeland`) must be passed in ``rule_options``: they are transmitted
+to the virtual elections through :attr:`svvamp.Rule._copy`.
 """
 
 import itertools
@@ -35,6 +36,8 @@ def candidates_cm_brute_force(rule_class, profile, n_m_max=None, **rule_options)
         otherwise. ``nan`` for skipped candidates.
     """
     rule = rule_class(**rule_options)(profile)
+    if not rule.is_based_on_rk:
+        raise ValueError(f"{rule_class.__name__} is not based on strict rankings.")
     w = rule.w_
     n_c = profile.n_c
     candidates_cm = np.zeros(n_c)
@@ -141,6 +144,8 @@ def candidates_um_brute_force(rule_class, profile, **rule_options):
         the same ballot, 0. otherwise.
     """
     rule = rule_class(**rule_options)(profile)
+    if not rule.is_based_on_rk:
+        raise ValueError(f"{rule_class.__name__} is not based on strict rankings.")
     w = rule.w_
     n_c = profile.n_c
     candidates_um = np.zeros(n_c)
