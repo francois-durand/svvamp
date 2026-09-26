@@ -1,6 +1,6 @@
 # History
 
-## 0.15.0 (unreleased): Minimal Condorcet-consistent rules
+## 0.15.0 (2026-09-26): Simple Condorcet-consistent rules and better CM algorithms for Condorcet-IRV hybrids
 
 Rules:
 
