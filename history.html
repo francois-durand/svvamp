@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>History &#8212; SVVAMP 0.15.1 documentation</title>
+    <title>History &#8212; SVVAMP 0.15.2 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=4befc426"></script>
+    <script src="_static/documentation_options.js?v=7c174e4c"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -48,7 +48,7 @@
     <link rel="prev" title="Credits" href="authors.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.15.1" />
+  <meta name="docsearch:version" content="0.15.2" />
   </head>
   
   
@@ -110,7 +110,7 @@
   
   
   
-    <p class="title logo__title">SVVAMP 0.15.1 documentation</p>
+    <p class="title logo__title">SVVAMP 0.15.2 documentation</p>
   
 </a></div>
     
@@ -434,6 +434,13 @@
                   
   <section id="history">
 <h1>History<a class="headerlink" href="#history" title="Link to this heading">#</a></h1>
+<section id="fix-the-release-workflow-again">
+<h2>0.15.2 (2026-09-26): Fix the release workflow (again)<a class="headerlink" href="#fix-the-release-workflow-again" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>The GitHub workflow publishing the package on PyPI now installs a recent version of <code class="docutils literal notranslate"><span class="pre">uv</span></code> (the 0.15.1 release
+failed on PyPI because the old version had no <code class="docutils literal notranslate"><span class="pre">uv</span> <span class="pre">build</span></code> command). No change in the package itself.</p></li>
+</ul>
+</section>
 <section id="fix-the-release-workflow">
 <h2>0.15.1 (2026-09-26): Fix the release workflow<a class="headerlink" href="#fix-the-release-workflow" title="Link to this heading">#</a></h2>
 <ul class="simple">
@@ -953,6 +960,7 @@ diamond inheritance. Rename most classes, properties and methods.</p></li>
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fix-the-release-workflow-again">0.15.2 (2026-09-26): Fix the release workflow (again)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fix-the-release-workflow">0.15.1 (2026-09-26): Fix the release workflow</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-condorcet-consistent-rules-and-better-cm-algorithms-for-condorcet-irv-hybrids">0.15.0 (2026-09-26): Simple Condorcet-consistent rules and better CM algorithms for Condorcet-IRV hybrids</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rename-voting-rules">0.14.0 (2026-07-01): Rename voting rules</a></li>
