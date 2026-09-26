@@ -1,5 +1,10 @@
 # History
 
+## 0.15.1 (2026-09-26): Fix the release workflow
+
+* The GitHub workflow publishing the package on PyPI now uses ``uv build`` and ``uv publish`` (the 0.15.0 release
+  failed on PyPI). No change in the package itself.
+
 ## 0.15.0 (2026-09-26): Simple Condorcet-consistent rules and better CM algorithms for Condorcet-IRV hybrids
 
 Rules:

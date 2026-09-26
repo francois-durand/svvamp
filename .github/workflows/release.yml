@@ -22,29 +22,21 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v1
 
-      - name: Create virtual environment
-        run: uv venv
-
-      - name: Install build tools
-        run: |
-          uv pip install build twine
-
       - name: Check version matches tag
         id: vars
         run: echo tag=${GITHUB_REF#refs/*/v} >> $GITHUB_OUTPUT
 
       - name: Assert version
         run: |
-          uv run python -c "import tomllib; d=tomllib.load(open('pyproject.toml','rb')); print(d['project']['version'])" > version.txt
+          python -c "import tomllib; d=tomllib.load(open('pyproject.toml','rb')); print(d['project']['version'])" > version.txt
           echo "pyproject version: $(cat version.txt)"
           echo "tag: ${{ steps.vars.outputs.tag }}"
           test "$(cat version.txt)" = "${{ steps.vars.outputs.tag }}"
 
+      # ``uv build`` and ``uv publish`` do not use the project's virtual environment, so they do not conflict with the
+      # versions pinned in uv.lock (contrary to ``uv run python -m build`` and ``uv run twine``).
       - name: Build
-        run: uv run python -m build
+        run: uv build
 
       - name: Publish to PyPI
-        env:
-          TWINE_USERNAME: "__token__"
-          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
-        run: uv run twine upload dist/*
+        run: uv publish --token ${{ secrets.PYPI_TOKEN }}
