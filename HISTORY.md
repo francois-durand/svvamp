@@ -1,5 +1,10 @@
 # History
 
+## 0.15.2 (2026-09-26): Fix the release workflow (again)
+
+* The GitHub workflow publishing the package on PyPI now installs a recent version of ``uv`` (the 0.15.1 release
+  failed on PyPI because the old version had no ``uv build`` command). No change in the package itself.
+
 ## 0.15.1 (2026-09-26): Fix the release workflow
 
 * The GitHub workflow publishing the package on PyPI now uses ``uv build`` and ``uv publish`` (the 0.15.0 release

@@ -19,8 +19,11 @@ jobs:
         with:
           python-version: "3.11"
 
+      # A recent version of the action is needed: v1 installs an old uv without ``uv build`` and ``uv publish``.
       - name: Install uv
-        uses: astral-sh/setup-uv@v1
+        uses: astral-sh/setup-uv@v7
+        with:
+          version: "latest"
 
       - name: Check version matches tag
         id: vars
