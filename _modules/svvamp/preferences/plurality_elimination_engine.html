@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>svvamp.preferences.plurality_elimination_engine &#8212; SVVAMP 0.14.0 documentation</title>
+    <title>svvamp.preferences.plurality_elimination_engine &#8212; SVVAMP 0.15.0 documentation</title>
   
   
   
@@ -37,7 +37,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=9e420a66"></script>
+    <script src="../../../_static/documentation_options.js?v=ef97403f"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -46,7 +46,7 @@
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.14.0" />
+  <meta name="docsearch:version" content="0.15.0" />
   </head>
   
   
@@ -108,7 +108,7 @@
   
   
   
-    <p class="title logo__title">SVVAMP 0.14.0 documentation</p>
+    <p class="title logo__title">SVVAMP 0.15.0 documentation</p>
   
 </a></div>
     
@@ -429,7 +429,7 @@
 <div class="viewcode-block" id="PluralityEliminationEngine">
 <a class="viewcode-back" href="../../../reference/preferences/plurality_elimination_engine.html#svvamp.PluralityEliminationEngine">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">PluralityEliminationEngine</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    An engine that eliminates candidates and updates the plurality scores.</span>
 
 <span class="sd">    This class is used internally by SVVAMP. It is not intended for the end user.</span>
@@ -438,26 +438,26 @@
 <span class="sd">    ----------</span>
 <span class="sd">    profile: Profile</span>
 <span class="sd">        The profile.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">profile</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">profile</span> <span class="o">=</span> <span class="n">profile</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">is_alive</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">profile</span><span class="o">.</span><span class="n">n_c</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;ndarray: True iff the candidate is still alive.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""ndarray: True iff the candidate is still alive."""</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">loser</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;int: The latest eliminated candidate (None at initialization).&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""int: The latest eliminated candidate (None at initialization)."""</span>
 
 <div class="viewcode-block" id="PluralityEliminationEngine.eliminate_candidate">
 <a class="viewcode-back" href="../../../reference/preferences/plurality_elimination_engine.html#svvamp.PluralityEliminationEngine.eliminate_candidate">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">eliminate_candidate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loser</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Eliminate one candidate.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        loser: int</span>
 <span class="sd">            The candidate to eliminate.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">loser</span> <span class="o">=</span> <span class="n">loser</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">is_alive</span><span class="p">[</span><span class="n">loser</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span></div>
 
@@ -465,40 +465,40 @@
 <div class="viewcode-block" id="PluralityEliminationEngine.update_scores">
 <a class="viewcode-back" href="../../../reference/preferences/plurality_elimination_engine.html#svvamp.PluralityEliminationEngine.update_scores">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">update_scores</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Update the plurality scores.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
 
 <div class="viewcode-block" id="PluralityEliminationEngine.eliminate_candidate_and_update_scores">
 <a class="viewcode-back" href="../../../reference/preferences/plurality_elimination_engine.html#svvamp.PluralityEliminationEngine.eliminate_candidate_and_update_scores">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">eliminate_candidate_and_update_scores</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loser</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Eliminate a candidate and update the plurality scores.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        loser: int</span>
 <span class="sd">            The candidate to eliminate.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">eliminate_candidate</span><span class="p">(</span><span class="n">loser</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_scores</span><span class="p">()</span></div>
 
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">scores</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;ndarray: The current plurality scores.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""ndarray: The current plurality scores."""</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">candidates_alive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;ndarray: List of alive candidates.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""ndarray: List of alive candidates."""</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">is_alive</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">nb_candidates_alive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;int: Number of alive candidates.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""int: Number of alive candidates."""</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">is_alive</span><span class="p">)</span></div>
 
 </pre></div>

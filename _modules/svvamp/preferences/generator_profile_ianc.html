@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>svvamp.preferences.generator_profile_ianc &#8212; SVVAMP 0.14.0 documentation</title>
+    <title>svvamp.preferences.generator_profile_ianc &#8212; SVVAMP 0.15.0 documentation</title>
   
   
   
@@ -37,7 +37,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=9e420a66"></script>
+    <script src="../../../_static/documentation_options.js?v=ef97403f"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -46,7 +46,7 @@
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.14.0" />
+  <meta name="docsearch:version" content="0.15.0" />
   </head>
   
   
@@ -108,7 +108,7 @@
   
   
   
-    <p class="title logo__title">SVVAMP 0.14.0 documentation</p>
+    <p class="title logo__title">SVVAMP 0.15.0 documentation</p>
   
 </a></div>
     
@@ -424,7 +424,7 @@
                   
   <h1>Source code for svvamp.preferences.generator_profile_ianc</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 <span class="sd">Created on mar. 24, 2022, 6:48</span>
 <span class="sd">Copyright François Durand 2022</span>
 <span class="sd">fradurand@gmail.com</span>
@@ -443,7 +443,7 @@
 
 <span class="sd">    You should have received a copy of the GNU General Public License</span>
 <span class="sd">    along with SVVAMP.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">factorial</span>
@@ -457,7 +457,7 @@
 <div class="viewcode-block" id="GeneratorProfileIanc">
 <a class="viewcode-back" href="../../../reference/preferences/generator_profile_ianc.html#svvamp.GeneratorProfileIanc">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">GeneratorProfileIanc</span><span class="p">(</span><span class="n">GeneratorProfile</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Profile generator: Impartial, Anonymous and Neutral Culture.</span>
+<span class="w">    </span><span class="sd">"""Profile generator: Impartial, Anonymous and Neutral Culture.</span>
 
 <span class="sd">    Cf. Eğecioğlu, Ömer &amp; Giritligil, Ayça E. (2013). The impartial, anonymous,</span>
 <span class="sd">    and neutral culture model: a probability model for sampling public</span>
@@ -484,12 +484,12 @@
 <span class="sd">        &gt;&gt;&gt; profile = generator()</span>
 <span class="sd">        &gt;&gt;&gt; profile.preferences_rk.shape</span>
 <span class="sd">        (10, 3)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_v</span><span class="p">,</span> <span class="n">n_c</span><span class="p">,</span> <span class="n">sort_voters</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_v</span> <span class="o">=</span> <span class="n">n_v</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_c</span> <span class="o">=</span> <span class="n">n_c</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">log_creation</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;IANC&quot;</span><span class="p">,</span> <span class="n">n_c</span><span class="p">,</span> <span class="n">n_v</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_creation</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"IANC"</span><span class="p">,</span> <span class="n">n_c</span><span class="p">,</span> <span class="n">n_v</span><span class="p">]</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">sort_voters</span><span class="o">=</span><span class="n">sort_voters</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pairs_lam_mu</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">probabilities</span> <span class="o">=</span> <span class="n">_pairs_lam_mu_and_probabilities</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_v</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_c</span><span class="p">)</span>
 
@@ -506,7 +506,7 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_z_partition</span><span class="p">(</span><span class="n">lam</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Number `z` associated to a cycle type, i.e. to a partition of an integer.</span>
+<span class="w">    </span><span class="sd">"""Number `z` associated to a cycle type, i.e. to a partition of an integer.</span>
 
 <span class="sd">    Defined by Eğecioğlu &amp; Giritligil (2013), equation (4).</span>
 
@@ -533,7 +533,7 @@
 
 <span class="sd">        &gt;&gt;&gt; factorial(7) // _z_partition([3, 2, 2])</span>
 <span class="sd">        210</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="nb">int</span><span class="p">(</span>
         <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span>
             <span class="p">[</span>
@@ -545,7 +545,7 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_enumerate_partitions</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Enumerate the partitions of an integer.</span>
+<span class="w">    </span><span class="sd">"""Enumerate the partitions of an integer.</span>
 
 <span class="sd">    This is the function `accel_asc` from https://jeromekelleher.net/generating-integer-partitions.html.</span>
 
@@ -571,7 +571,7 @@
 <span class="sd">        [1, 3]</span>
 <span class="sd">        [2, 2]</span>
 <span class="sd">        [4]</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
     <span class="n">k</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span>
@@ -595,7 +595,7 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">lcm</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Least common multiple.</span>
+<span class="w">    </span><span class="sd">"""Least common multiple.</span>
 
 <span class="sd">    Built-in in the math module from Python 3.9. We add it here to be compatible with older versions.</span>
 
@@ -603,13 +603,13 @@
 <span class="sd">    --------</span>
 <span class="sd">        &gt;&gt;&gt; lcm(3, 12, 20)</span>
 <span class="sd">        60</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="c1"># noinspection PyUnresolvedReferences</span>
     <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">lcm</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">gcd</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Least common multiple.</span>
+<span class="w">    </span><span class="sd">"""Least common multiple.</span>
 
 <span class="sd">    The version of the math module accepts more than 2 arguments since Python 3.9.</span>
 <span class="sd">    We add it here to be compatible with older versions.</span>
@@ -618,14 +618,14 @@
 <span class="sd">    --------</span>
 <span class="sd">        &gt;&gt;&gt; gcd(9, 12, 21)</span>
 <span class="sd">        3</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="c1"># noinspection PyUnresolvedReferences</span>
     <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">gcd</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_pairs_lam_mu_and_probabilities</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
     <span class="c1"># noinspection PyShadowingNames</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pairs (lambda, mu) and their probabilities.</span>
+<span class="w">    </span><span class="sd">"""Pairs (lambda, mu) and their probabilities.</span>
 
 <span class="sd">    Cf. Eğecioğlu &amp; Giritligil (2013), Theorem 1.</span>
 
@@ -658,7 +658,7 @@
 <span class="sd">        [([1, 1, 1], [1, 1]), ([1, 2], [1, 1]), ([3], [1, 1])]</span>
 <span class="sd">        &gt;&gt;&gt; probabilities</span>
 <span class="sd">        array([0.33333333, 0.5       , 0.16666667])</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">pairs_lam_mu</span> <span class="o">=</span> <span class="p">[</span>
         <span class="p">(</span><span class="n">lam</span><span class="p">,</span> <span class="n">mu</span><span class="p">)</span> <span class="k">for</span> <span class="n">lam</span> <span class="ow">in</span> <span class="n">_enumerate_partitions</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">mu</span> <span class="ow">in</span> <span class="n">_enumerate_partitions</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="k">if</span> <span class="n">gcd</span><span class="p">(</span><span class="o">*</span><span class="n">lam</span><span class="p">)</span> <span class="o">%</span> <span class="n">lcm</span><span class="p">(</span><span class="o">*</span><span class="n">mu</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
     <span class="p">]</span>
@@ -671,7 +671,7 @@
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_random_pair_lam_mu</span><span class="p">(</span><span class="n">pairs_lam_mu</span><span class="p">,</span> <span class="n">probabilities</span><span class="p">):</span>
     <span class="c1"># noinspection PyShadowingNames</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Random pair (lambda, mu).</span>
+<span class="w">    </span><span class="sd">"""Random pair (lambda, mu).</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -693,13 +693,13 @@
 <span class="sd">        &gt;&gt;&gt; pairs_lam_mu, probabilities = _pairs_lam_mu_and_probabilities(n=3, m=3)</span>
 <span class="sd">        &gt;&gt;&gt; _random_pair_lam_mu(pairs_lam_mu, probabilities)</span>
 <span class="sd">        ([1, 1, 1], [1, 1, 1])</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">random_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">probabilities</span><span class="p">),</span> <span class="n">p</span><span class="o">=</span><span class="n">probabilities</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">pairs_lam_mu</span><span class="p">[</span><span class="n">random_index</span><span class="p">]</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_canonical_permutation</span><span class="p">(</span><span class="n">lam</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Canonical permutation associated to a cycle type, i.e. a partition of `n`.</span>
+<span class="w">    </span><span class="sd">"""Canonical permutation associated to a cycle type, i.e. a partition of `n`.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -719,7 +719,7 @@
 
 <span class="sd">    The 3 first elements are cycled, then the 3 next ones, then the 5 next ones, then the 6 next ones,</span>
 <span class="sd">    as specified by the cycle type `lam`.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">cum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(([</span><span class="mi">0</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">lam</span><span class="p">)))</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
         <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">end</span><span class="p">),</span> <span class="p">[</span><span class="n">start</span><span class="p">]))</span> <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">cum</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">cum</span><span class="p">[</span><span class="mi">1</span><span class="p">:])]</span>
@@ -728,7 +728,7 @@
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_add_voter_cycle</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">size_voter_cycle</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">ranking_first_voter</span><span class="p">):</span>
     <span class="c1"># noinspection PyShadowingNames</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add a &quot;voter cycle&quot; to a profile.</span>
+<span class="w">    </span><span class="sd">"""Add a "voter cycle" to a profile.</span>
 
 <span class="sd">    The parameter `profile` will be modified in place.</span>
 
@@ -758,7 +758,7 @@
 <span class="sd">               [1, 0, 2, 3, 4],</span>
 <span class="sd">               [0, 1, 3, 4, 2],</span>
 <span class="sd">               [1, 0, 4, 2, 3]])</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="c1"># First voter: initial permutation</span>
     <span class="n">ranking</span> <span class="o">=</span> <span class="n">ranking_first_voter</span>
     <span class="n">profile</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ranking</span><span class="p">)</span>
@@ -770,7 +770,7 @@
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_random_profile</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">pairs_lam_mu</span><span class="p">,</span> <span class="n">probabilities</span><span class="p">,</span> <span class="n">shuffle_voters</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="c1"># noinspection PyShadowingNames</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Random profile in IANC.</span>
+<span class="w">    </span><span class="sd">"""Random profile in IANC.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -805,7 +805,7 @@
 <span class="sd">        array([[0, 2, 1],</span>
 <span class="sd">               [0, 2, 1],</span>
 <span class="sd">               [2, 0, 1]])</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">lam</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="n">_random_pair_lam_mu</span><span class="p">(</span><span class="n">pairs_lam_mu</span><span class="p">,</span> <span class="n">probabilities</span><span class="p">)</span>
     <span class="n">tau</span> <span class="o">=</span> <span class="n">_canonical_permutation</span><span class="p">(</span><span class="n">mu</span><span class="p">)</span>
     <span class="n">profile</span> <span class="o">=</span> <span class="p">[]</span>

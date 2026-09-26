@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>svvamp.rules.rule_kemeny &#8212; SVVAMP 0.14.0 documentation</title>
+    <title>svvamp.rules.rule_kemeny &#8212; SVVAMP 0.15.0 documentation</title>
   
   
   
@@ -37,7 +37,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=9e420a66"></script>
+    <script src="../../../_static/documentation_options.js?v=ef97403f"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -46,7 +46,7 @@
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.14.0" />
+  <meta name="docsearch:version" content="0.15.0" />
   </head>
   
   
@@ -108,7 +108,7 @@
   
   
   
-    <p class="title logo__title">SVVAMP 0.14.0 documentation</p>
+    <p class="title logo__title">SVVAMP 0.15.0 documentation</p>
   
 </a></div>
     
@@ -424,7 +424,7 @@
                   
   <h1>Source code for svvamp.rules.rule_kemeny</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 <span class="sd">Created on 7 dec. 2018, 16:54</span>
 <span class="sd">Copyright François Durand 2014-2018</span>
 <span class="sd">fradurand@gmail.com</span>
@@ -443,7 +443,7 @@
 
 <span class="sd">    You should have received a copy of the GNU General Public License</span>
 <span class="sd">    along with SVVAMP.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.rules.rule</span><span class="w"> </span><span class="kn">import</span> <span class="n">Rule</span>
@@ -455,27 +455,27 @@
 <div class="viewcode-block" id="RuleKemeny">
 <a class="viewcode-back" href="../../../reference/rules/rule_kemeny.html#svvamp.RuleKemeny">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">RuleKemeny</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Kemeny method.</span>
+<span class="w">    </span><span class="sd">"""Kemeny method.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    winner_option : str</span>
-<span class="sd">        &#39;exact&#39; or &#39;lazy&#39;. Default: &#39;exact&#39;. If `winner_option` is &#39;exact&#39;, then the winner is computed as usual.</span>
-<span class="sd">         If `winner_option` is &#39;lazy&#39;, then the winner is computed only in the obvious case where there is a Condorcet</span>
+<span class="sd">        'exact' or 'lazy'. Default: 'exact'. If `winner_option` is 'exact', then the winner is computed as usual.</span>
+<span class="sd">         If `winner_option` is 'lazy', then the winner is computed only in the obvious case where there is a Condorcet</span>
 <span class="sd">         winner; note that if there is no Condorcet-admissible candidate, it is however possible to decide ``is_cm_``</span>
 <span class="sd">         automatically to True.</span>
 
 <span class="sd">    Options</span>
 <span class="sd">    -------</span>
 <span class="sd">        &gt;&gt;&gt; RuleKemeny.print_options_parameters()</span>
-<span class="sd">        cm_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
-<span class="sd">        icm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        cm_option: ['lazy', 'exact']. Default: 'lazy'.</span>
+<span class="sd">        icm_option: ['exact']. Default: 'exact'.</span>
 <span class="sd">        iia_subset_maximum_size: is_number. Default: 2.</span>
-<span class="sd">        im_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="sd">        im_option: ['lazy', 'exact']. Default: 'lazy'.</span>
 <span class="sd">        precheck_heuristic: is_bool. Default: True.</span>
-<span class="sd">        tm_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;exact&#39;.</span>
-<span class="sd">        um_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
-<span class="sd">        winner_option: [&#39;exact&#39;, &#39;lazy&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        tm_option: ['lazy', 'exact']. Default: 'exact'.</span>
+<span class="sd">        um_option: ['lazy', 'exact']. Default: 'lazy'.</span>
+<span class="sd">        winner_option: ['exact', 'lazy']. Default: 'exact'.</span>
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
@@ -494,13 +494,13 @@
 
 <span class="sd">    References</span>
 <span class="sd">    ----------</span>
-<span class="sd">    &#39;Mathematics without numbers&#39;, J. G. Kemeny, 1959.</span>
+<span class="sd">    'Mathematics without numbers', J. G. Kemeny, 1959.</span>
 
-<span class="sd">    &#39;A Consistent Extension of Condorcet’s Election Principle&#39;, H. P. Young and A. Levenglick, 1978.</span>
+<span class="sd">    'A Consistent Extension of Condorcet’s Election Principle', H. P. Young and A. Levenglick, 1978.</span>
 
-<span class="sd">    &#39;On the approximability of Dodgson and Young elections&#39;, Ioannis Caragiannis et al., 2009.</span>
+<span class="sd">    'On the approximability of Dodgson and Young elections', Ioannis Caragiannis et al., 2009.</span>
 
-<span class="sd">    &#39;Comparing and aggregating partial orders with Kendall tau distances&#39;, Franz J. Brandenburg, Andreas Gleißner</span>
+<span class="sd">    'Comparing and aggregating partial orders with Kendall tau distances', Franz J. Brandenburg, Andreas Gleißner</span>
 <span class="sd">    and Andreas Hofmeier, 2013.</span>
 
 <span class="sd">    Examples</span>
@@ -730,23 +730,23 @@
 <span class="sd">        [0. 1. 2.]</span>
 <span class="sd">        sufficient_coalition_size_cm =</span>
 <span class="sd">        [0. 2. 3.]</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
-    <span class="n">full_name</span> <span class="o">=</span> <span class="s2">&quot;Kemeny&quot;</span>
-    <span class="n">abbreviation</span> <span class="o">=</span> <span class="s2">&quot;Kem&quot;</span>
+    <span class="n">full_name</span> <span class="o">=</span> <span class="s2">"Kemeny"</span>
+    <span class="n">abbreviation</span> <span class="o">=</span> <span class="s2">"Kem"</span>
 
     <span class="n">options_parameters</span> <span class="o">=</span> <span class="n">Rule</span><span class="o">.</span><span class="n">options_parameters</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">options_parameters</span><span class="p">[</span><span class="s2">&quot;icm_option&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;exact&quot;</span><span class="p">],</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;exact&quot;</span><span class="p">}</span>
-    <span class="n">options_parameters</span><span class="p">[</span><span class="s2">&quot;winner_option&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;exact&quot;</span><span class="p">,</span> <span class="s2">&quot;lazy&quot;</span><span class="p">],</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;exact&quot;</span><span class="p">}</span>
+    <span class="n">options_parameters</span><span class="p">[</span><span class="s2">"icm_option"</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"allowed"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"exact"</span><span class="p">],</span> <span class="s2">"default"</span><span class="p">:</span> <span class="s2">"exact"</span><span class="p">}</span>
+    <span class="n">options_parameters</span><span class="p">[</span><span class="s2">"winner_option"</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"allowed"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"exact"</span><span class="p">,</span> <span class="s2">"lazy"</span><span class="p">],</span> <span class="s2">"default"</span><span class="p">:</span> <span class="s2">"exact"</span><span class="p">}</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">winner_option</span><span class="o">=</span><span class="s2">&quot;exact&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">winner_option</span><span class="o">=</span><span class="s2">"exact"</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_winner_option</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">with_two_candidates_reduces_to_plurality</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">is_based_on_rk</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">precheck_icm</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">winner_option</span><span class="o">=</span><span class="n">winner_option</span><span class="p">,</span>
-            <span class="n">log_identity</span><span class="o">=</span><span class="s2">&quot;KEMENY&quot;</span><span class="p">,</span>
+            <span class="n">log_identity</span><span class="o">=</span><span class="s2">"KEMENY"</span><span class="p">,</span>
             <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
         <span class="p">)</span>
 
@@ -760,13 +760,13 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">winner_option</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_winner_option</span> <span class="o">==</span> <span class="n">value</span><span class="p">:</span>
             <span class="k">return</span>
-        <span class="k">if</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">options_parameters</span><span class="p">[</span><span class="s2">&quot;winner_option&quot;</span><span class="p">][</span><span class="s2">&quot;allowed&quot;</span><span class="p">]:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;Setting winner_option =&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">options_parameters</span><span class="p">[</span><span class="s2">"winner_option"</span><span class="p">][</span><span class="s2">"allowed"</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">"Setting winner_option ="</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_winner_option</span> <span class="o">=</span> <span class="n">value</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_result_options</span><span class="p">[</span><span class="s2">&quot;winner_option&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_result_options</span><span class="p">[</span><span class="s2">"winner_option"</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">delete_cache</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown value for winner_option: &quot;</span> <span class="o">+</span> <span class="nb">format</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Unknown value for winner_option: "</span> <span class="o">+</span> <span class="nb">format</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
 
     <span class="c1"># %% Election results</span>
 
@@ -776,60 +776,60 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">score_w_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Integer. With our convention, ``scores_w_`` = :attr:`n_c` - 1.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Compute winner&#39;s score&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="w">        </span><span class="sd">"""Integer. With our convention, ``scores_w_`` = :attr:`n_c` - 1."""</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">"Compute winner's score"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">scores_best_to_worst_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of integers. With our convention, ``scores_best_to_worst`` is the vector [:attr:`n_c` - 1,</span>
+<span class="w">        </span><span class="sd">"""1d array of integers. With our convention, ``scores_best_to_worst`` is the vector [:attr:`n_c` - 1,</span>
 <span class="sd">        :attr:`n_c` - 2, ..., 0].</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Compute scores_best_to_worst&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">"Compute scores_best_to_worst"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_count_first_component_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the optimal order for the first strongly connected component of the victory matrix (ties count as</span>
+<span class="w">        </span><span class="sd">"""Compute the optimal order for the first strongly connected component of the victory matrix (ties count as</span>
 <span class="sd">        a connection).</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Count first strongly connected component&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">"Count first strongly connected component"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">candidates_by_scores_best_to_worst_first_component</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_strong_connected_components_</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
         <span class="n">size_component</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
         <span class="n">best_score</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
         <span class="n">best_order</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">while</span> <span class="n">order</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;order =&quot;</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">"order ="</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="n">score</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_rk</span><span class="p">[:,</span> <span class="n">order</span><span class="p">][</span><span class="n">order</span><span class="p">,</span> <span class="p">:][</span><span class="n">np</span><span class="o">.</span><span class="n">triu_indices</span><span class="p">(</span><span class="n">size_component</span><span class="p">)])</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;score =&quot;</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">"score ="</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">score</span> <span class="o">&gt;</span> <span class="n">best_score</span><span class="p">:</span>
                 <span class="n">best_order</span><span class="p">,</span> <span class="n">best_score</span> <span class="o">=</span> <span class="n">order</span><span class="p">,</span> <span class="n">score</span>
             <span class="n">order</span> <span class="o">=</span> <span class="n">compute_next_permutation</span><span class="p">(</span><span class="n">order</span><span class="p">,</span> <span class="n">size_component</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;best_order =&quot;</span><span class="p">,</span> <span class="n">best_order</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">"best_order ="</span><span class="p">,</span> <span class="n">best_order</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
         <span class="n">w</span> <span class="o">=</span> <span class="n">best_order</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">candidates_by_scores_best_to_worst_first_component</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">best_order</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">{</span>
-            <span class="s2">&quot;candidates_by_scores_best_to_worst_first_component&quot;</span><span class="p">:</span> <span class="n">candidates_by_scores_best_to_worst_first_component</span><span class="p">,</span>
-            <span class="s2">&quot;w&quot;</span><span class="p">:</span> <span class="n">w</span><span class="p">,</span>
+            <span class="s2">"candidates_by_scores_best_to_worst_first_component"</span><span class="p">:</span> <span class="n">candidates_by_scores_best_to_worst_first_component</span><span class="p">,</span>
+            <span class="s2">"w"</span><span class="p">:</span> <span class="n">w</span><span class="p">,</span>
         <span class="p">}</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">w_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">exists_condorcet_winner_rk_ctb</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">condorcet_winner_rk_ctb</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">winner_option</span> <span class="o">==</span> <span class="s2">&quot;lazy&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">winner_option</span> <span class="o">==</span> <span class="s2">"lazy"</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_first_component_</span><span class="p">[</span><span class="s2">&quot;w&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_first_component_</span><span class="p">[</span><span class="s2">"w"</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_candidates_by_scores_best_to_worst_first_component_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_first_component_</span><span class="p">[</span><span class="s2">&quot;candidates_by_scores_best_to_worst_first_component&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_first_component_</span><span class="p">[</span><span class="s2">"candidates_by_scores_best_to_worst_first_component"</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_count_ballots_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the optimal order for all the candidates.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Count other strongly connected components&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="w">        </span><span class="sd">"""Compute the optimal order for all the candidates."""</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">"Count other strongly connected components"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">candidates_by_scores_best_to_worst</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_by_scores_best_to_worst_first_component_</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">component_members</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_strong_connected_components_</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
             <span class="n">order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">component_members</span><span class="p">))</span>
@@ -837,33 +837,33 @@
             <span class="n">best_score</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
             <span class="n">best_order</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="k">while</span> <span class="n">order</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;order =&quot;</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">"order ="</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
                 <span class="n">score</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_rk</span><span class="p">[:,</span> <span class="n">order</span><span class="p">][</span><span class="n">order</span><span class="p">,</span> <span class="p">:][</span><span class="n">np</span><span class="o">.</span><span class="n">triu_indices</span><span class="p">(</span><span class="n">size_component</span><span class="p">)])</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;score =&quot;</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">"score ="</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">score</span> <span class="o">&gt;</span> <span class="n">best_score</span><span class="p">:</span>
                     <span class="n">best_order</span><span class="p">,</span> <span class="n">best_score</span> <span class="o">=</span> <span class="n">order</span><span class="p">,</span> <span class="n">score</span>
                 <span class="n">order</span> <span class="o">=</span> <span class="n">compute_next_permutation</span><span class="p">(</span><span class="n">order</span><span class="p">,</span> <span class="n">size_component</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;best_order =&quot;</span><span class="p">,</span> <span class="n">best_order</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">"best_order ="</span><span class="p">,</span> <span class="n">best_order</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="n">candidates_by_scores_best_to_worst</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">best_order</span><span class="p">)</span>
         <span class="n">candidates_by_scores_best_to_worst</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">candidates_by_scores_best_to_worst</span><span class="p">)</span>
         <span class="n">scores</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">candidates_by_scores_best_to_worst</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;scores&quot;</span><span class="p">:</span> <span class="n">scores</span><span class="p">,</span> <span class="s2">&quot;candidates_by_scores_best_to_worst&quot;</span><span class="p">:</span> <span class="n">candidates_by_scores_best_to_worst</span><span class="p">}</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">"scores"</span><span class="p">:</span> <span class="n">scores</span><span class="p">,</span> <span class="s2">"candidates_by_scores_best_to_worst"</span><span class="p">:</span> <span class="n">candidates_by_scores_best_to_worst</span><span class="p">}</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">scores_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of integers. By convention, scores are integers from 1 to :attr:`n_c`, with :attr:`n_c` for the</span>
+<span class="w">        </span><span class="sd">"""1d array of integers. By convention, scores are integers from 1 to :attr:`n_c`, with :attr:`n_c` for the</span>
 <span class="sd">        winner and 1 for the last candidate in Kemeny optimal order.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s2">&quot;scores&quot;</span><span class="p">]</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s2">"scores"</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">candidates_by_scores_best_to_worst_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of integers. This is an optimal Kemeny order.</span>
+<span class="w">        </span><span class="sd">"""1d array of integers. This is an optimal Kemeny order.</span>
 
 <span class="sd">        In case several orders are optimal, the first one by lexicographic order is given. This implies that if</span>
 <span class="sd">        several winners are possible, the one with lowest index is declared the winner.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s2">&quot;candidates_by_scores_best_to_worst&quot;</span><span class="p">]</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s2">"candidates_by_scores_best_to_worst"</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">meets_condorcet_c_rk_ctb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -874,15 +874,15 @@
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">is_cm_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">exists_condorcet_admissible</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;There no Condorcet-admissible candidate, so coalition manipulation is possible.&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">"There no Condorcet-admissible candidate, so coalition manipulation is possible."</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">is_cm_</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_cm_preliminary_checks_c_subclass_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
         <span class="c1"># We want a Kemeny order like r = c &gt; j_1 &gt; ... &gt; j_k &gt; w &gt; j_{k+1} &gt; ... j_{n_c - 2}.</span>
         <span class="c1"># In particular, this order must be at least as good as putting w on top with:</span>
-        <span class="c1"># r&#39; = w &gt; c &gt; j_1 &gt; ... &gt; j_k &gt; j_{k+1} &gt; ... j_{n_c - 2}. So we must have:</span>
-        <span class="c1">#   * score(r) - score(r&#39;) &gt;= 0</span>
+        <span class="c1"># r' = w &gt; c &gt; j_1 &gt; ... &gt; j_k &gt; j_{k+1} &gt; ... j_{n_c - 2}. So we must have:</span>
+        <span class="c1">#   * score(r) - score(r') &gt;= 0</span>
         <span class="c1">#   * [W(c, w) + W(j_1, w) + ... + W(j_k, w)] - [W(w, c) + W(w, j_1) + ... + W(w, j_k)] &gt;= 0</span>
         <span class="c1">#   * A(c, w) + A(j_1, w) + ... + A(j_k, w) &gt;= 0  (where A is the antisymmetric matrix of duels)</span>
         <span class="c1">#   * A_s(c, w) + n_m + (A_s(j_1, w) + n_m) + ... + (A_s(j_k, w) + n_m) &gt;= 0</span>
@@ -900,17 +900,17 @@
         <span class="n">neither_c_nor_w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">j</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">}</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_c</span><span class="p">)])</span>
         <span class="k">if</span> <span class="n">m_column_w</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">m_column_w</span><span class="p">[</span><span class="n">neither_c_nor_w</span><span class="p">]))</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_update_necessary</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;CM: Preliminary check: necessary_coalition_size_cm =&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">"CM: Preliminary check: necessary_coalition_size_cm ="</span>
             <span class="p">)</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">theta_critical_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 1, 2, 3]])</span>
 <span class="sd">        &gt;&gt;&gt; rule = RuleKemeny()(profile)</span>
 <span class="sd">        &gt;&gt;&gt; rule.theta_critical_</span>
 <span class="sd">        0.18181818181818182</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">n_c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">n_c</span> <span class="o">-</span> <span class="mi">5</span><span class="p">)</span></div>
 

@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>svvamp.preferences.profile_from_file &#8212; SVVAMP 0.14.0 documentation</title>
+    <title>svvamp.preferences.profile_from_file &#8212; SVVAMP 0.15.0 documentation</title>
   
   
   
@@ -37,7 +37,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=9e420a66"></script>
+    <script src="../../../_static/documentation_options.js?v=ef97403f"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -46,7 +46,7 @@
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.14.0" />
+  <meta name="docsearch:version" content="0.15.0" />
   </head>
   
   
@@ -108,7 +108,7 @@
   
   
   
-    <p class="title logo__title">SVVAMP 0.14.0 documentation</p>
+    <p class="title logo__title">SVVAMP 0.15.0 documentation</p>
   
 </a></div>
     
@@ -424,7 +424,7 @@
                   
   <h1>Source code for svvamp.preferences.profile_from_file</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 <span class="sd">Created on nov. 28, 2018, 16:57</span>
 <span class="sd">Copyright François Durand 2014-2018</span>
 <span class="sd">fradurand@gmail.com</span>
@@ -443,7 +443,7 @@
 
 <span class="sd">    You should have received a copy of the GNU General Public License</span>
 <span class="sd">    along with SVVAMP.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
@@ -456,7 +456,7 @@
 <div class="viewcode-block" id="ProfileFromFile">
 <a class="viewcode-back" href="../../../reference/preferences/profile_from_file.html#svvamp.ProfileFromFile">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">ProfileFromFile</span><span class="p">(</span><span class="n">Profile</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Profile from a file.</span>
+<span class="w">    </span><span class="sd">"""Profile from a file.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -470,27 +470,27 @@
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
-<span class="sd">    * If the file name ends with &#39;.cvr.csv&#39; (cvr = Cast Vote Records): first row gives the column headers. The</span>
-<span class="sd">      last headers are &#39;rank1&#39;, &#39;rank2&#39;, etc. Each row represents a voter. In the column &#39;rank1&#39;, the name of</span>
+<span class="sd">    * If the file name ends with '.cvr.csv' (cvr = Cast Vote Records): first row gives the column headers. The</span>
+<span class="sd">      last headers are 'rank1', 'rank2', etc. Each row represents a voter. In the column 'rank1', the name of</span>
 <span class="sd">      her most-liked candidate, etc.</span>
-<span class="sd">    * If the file name ends with &#39;.t.csv&#39; (t = transposed format): simple table of utilities with candidates</span>
+<span class="sd">    * If the file name ends with '.t.csv' (t = transposed format): simple table of utilities with candidates</span>
 <span class="sd">      declared in the first column and voters declared in the first row.</span>
-<span class="sd">    * If the file name ends with &#39;.csv&#39; (but not &#39;.t.csv&#39;), candidates must be declared in the first row and voters</span>
+<span class="sd">    * If the file name ends with '.csv' (but not '.t.csv'), candidates must be declared in the first row and voters</span>
 <span class="sd">      in the first column.</span>
 <span class="sd">    * Otherwise, the file is considered as a PrefLib file.</span>
 
 <span class="sd">    For CVR and PrefLib files, since the information is ordinal only, ``preferences_ut[v, c]`` is set to the Borda</span>
 <span class="sd">    score (with no vtb) minus ``(C - 1) / 2``. This way, utilities are between ``- (C - 1) / 2`` and</span>
 <span class="sd">    ``(C - 1) / 2``.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">sort_candidates</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sort_voters</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">file_name</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">:]</span> <span class="o">==</span> <span class="s2">&quot;.csv&quot;</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">8</span> <span class="ow">and</span> <span class="n">file_name</span><span class="p">[</span><span class="o">-</span><span class="mi">8</span><span class="p">:]</span> <span class="o">==</span> <span class="s2">&quot;.cvr.csv&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">file_name</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">:]</span> <span class="o">==</span> <span class="s2">".csv"</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">8</span> <span class="ow">and</span> <span class="n">file_name</span><span class="p">[</span><span class="o">-</span><span class="mi">8</span><span class="p">:]</span> <span class="o">==</span> <span class="s2">".cvr.csv"</span><span class="p">:</span>
                 <span class="n">preferences_ut</span><span class="p">,</span> <span class="n">labels_candidates</span> <span class="o">=</span> <span class="n">cvr_to_preferences_ut</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="o">=</span><span class="n">file_name</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;;&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">file_name</span><span class="p">[</span><span class="o">-</span><span class="mi">6</span><span class="p">:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;.t&quot;</span><span class="p">:</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="o">=</span><span class="n">file_name</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">";"</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">file_name</span><span class="p">[</span><span class="o">-</span><span class="mi">6</span><span class="p">:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="s2">".t"</span><span class="p">:</span>
                     <span class="n">preferences_ut</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span><span class="o">.</span><span class="n">values</span>
                     <span class="n">labels_candidates</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -502,12 +502,12 @@
             <span class="n">pop_temp</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">(</span><span class="n">preferences_ut</span><span class="p">,</span> <span class="n">sort_voters</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
             <span class="n">nb_victories_temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">pop_temp</span><span class="o">.</span><span class="n">matrix_victories_ut_rel</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
             <span class="n">scores_temp</span> <span class="o">=</span> <span class="n">nb_victories_temp</span> <span class="o">+</span> <span class="n">pop_temp</span><span class="o">.</span><span class="n">borda_score_c_ut</span> <span class="o">/</span> <span class="n">pop_temp</span><span class="o">.</span><span class="n">n_c</span> <span class="o">/</span> <span class="n">pop_temp</span><span class="o">.</span><span class="n">n_v</span>
-            <span class="n">candidates_best_to_worst</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="o">-</span><span class="n">scores_temp</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;mergesort&quot;</span><span class="p">)</span>
+            <span class="n">candidates_best_to_worst</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="o">-</span><span class="n">scores_temp</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">"mergesort"</span><span class="p">)</span>
             <span class="n">preferences_ut</span> <span class="o">=</span> <span class="n">preferences_ut</span><span class="p">[:,</span> <span class="n">candidates_best_to_worst</span><span class="p">]</span>
             <span class="n">labels_candidates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">labels_candidates</span><span class="p">)[</span><span class="n">candidates_best_to_worst</span><span class="p">]</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">preferences_ut</span><span class="o">=</span><span class="n">preferences_ut</span><span class="p">,</span>
-            <span class="n">log_creation</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;From file&quot;</span><span class="p">,</span> <span class="s2">&quot;File name&quot;</span><span class="p">,</span> <span class="n">file_name</span><span class="p">],</span>
+            <span class="n">log_creation</span><span class="o">=</span><span class="p">[</span><span class="s2">"From file"</span><span class="p">,</span> <span class="s2">"File name"</span><span class="p">,</span> <span class="n">file_name</span><span class="p">],</span>
             <span class="n">labels_candidates</span><span class="o">=</span><span class="n">labels_candidates</span><span class="p">,</span>
             <span class="n">sort_voters</span><span class="o">=</span><span class="n">sort_voters</span><span class="p">,</span>
         <span class="p">)</span></div>

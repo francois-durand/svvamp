@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>svvamp.rules.rule_plurality &#8212; SVVAMP 0.14.0 documentation</title>
+    <title>svvamp.rules.rule_plurality &#8212; SVVAMP 0.15.0 documentation</title>
   
   
   
@@ -37,7 +37,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=9e420a66"></script>
+    <script src="../../../_static/documentation_options.js?v=ef97403f"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -46,7 +46,7 @@
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.14.0" />
+  <meta name="docsearch:version" content="0.15.0" />
   </head>
   
   
@@ -108,7 +108,7 @@
   
   
   
-    <p class="title logo__title">SVVAMP 0.14.0 documentation</p>
+    <p class="title logo__title">SVVAMP 0.15.0 documentation</p>
   
 </a></div>
     
@@ -424,7 +424,7 @@
                   
   <h1>Source code for svvamp.rules.rule_plurality</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 <span class="sd">Created on 10 dec. 2018, 15:46</span>
 <span class="sd">Copyright François Durand 2014-2018</span>
 <span class="sd">fradurand@gmail.com</span>
@@ -443,7 +443,7 @@
 
 <span class="sd">    You should have received a copy of the GNU General Public License</span>
 <span class="sd">    along with SVVAMP.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.rules.rule</span><span class="w"> </span><span class="kn">import</span> <span class="n">Rule</span>
@@ -454,18 +454,18 @@
 <div class="viewcode-block" id="RulePlurality">
 <a class="viewcode-back" href="../../../reference/rules/rule_plurality.html#svvamp.RulePlurality">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">RulePlurality</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plurality.</span>
+<span class="w">    </span><span class="sd">"""Plurality.</span>
 
 <span class="sd">    Options</span>
 <span class="sd">    -------</span>
 <span class="sd">        &gt;&gt;&gt; RulePlurality.print_options_parameters()</span>
-<span class="sd">        cm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
-<span class="sd">        icm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        cm_option: ['exact']. Default: 'exact'.</span>
+<span class="sd">        icm_option: ['exact']. Default: 'exact'.</span>
 <span class="sd">        iia_subset_maximum_size: is_number. Default: 2.</span>
-<span class="sd">        im_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        im_option: ['exact']. Default: 'exact'.</span>
 <span class="sd">        precheck_heuristic: [False]. Default: False.</span>
-<span class="sd">        tm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
-<span class="sd">        um_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        tm_option: ['exact']. Default: 'exact'.</span>
+<span class="sd">        um_option: ['exact']. Default: 'exact'.</span>
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
@@ -700,20 +700,20 @@
 <span class="sd">        [0. 2. 3.]</span>
 <span class="sd">        sufficient_coalition_size_cm =</span>
 <span class="sd">        [0. 2. 3.]</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
-    <span class="n">full_name</span> <span class="o">=</span> <span class="s2">&quot;Plurality&quot;</span>
-    <span class="n">abbreviation</span> <span class="o">=</span> <span class="s2">&quot;Plu&quot;</span>
+    <span class="n">full_name</span> <span class="o">=</span> <span class="s2">"Plurality"</span>
+    <span class="n">abbreviation</span> <span class="o">=</span> <span class="s2">"Plu"</span>
 
     <span class="n">options_parameters</span> <span class="o">=</span> <span class="n">Rule</span><span class="o">.</span><span class="n">options_parameters</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">options_parameters</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
         <span class="p">{</span>
-            <span class="s2">&quot;im_option&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;exact&quot;</span><span class="p">],</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;exact&quot;</span><span class="p">},</span>
-            <span class="s2">&quot;tm_option&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;exact&quot;</span><span class="p">],</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;exact&quot;</span><span class="p">},</span>
-            <span class="s2">&quot;um_option&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;exact&quot;</span><span class="p">],</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;exact&quot;</span><span class="p">},</span>
-            <span class="s2">&quot;icm_option&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;exact&quot;</span><span class="p">],</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;exact&quot;</span><span class="p">},</span>
-            <span class="s2">&quot;cm_option&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;exact&quot;</span><span class="p">],</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;exact&quot;</span><span class="p">},</span>
-            <span class="s2">&quot;precheck_heuristic&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="kc">False</span><span class="p">],</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+            <span class="s2">"im_option"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"allowed"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"exact"</span><span class="p">],</span> <span class="s2">"default"</span><span class="p">:</span> <span class="s2">"exact"</span><span class="p">},</span>
+            <span class="s2">"tm_option"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"allowed"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"exact"</span><span class="p">],</span> <span class="s2">"default"</span><span class="p">:</span> <span class="s2">"exact"</span><span class="p">},</span>
+            <span class="s2">"um_option"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"allowed"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"exact"</span><span class="p">],</span> <span class="s2">"default"</span><span class="p">:</span> <span class="s2">"exact"</span><span class="p">},</span>
+            <span class="s2">"icm_option"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"allowed"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"exact"</span><span class="p">],</span> <span class="s2">"default"</span><span class="p">:</span> <span class="s2">"exact"</span><span class="p">},</span>
+            <span class="s2">"cm_option"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"allowed"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"exact"</span><span class="p">],</span> <span class="s2">"default"</span><span class="p">:</span> <span class="s2">"exact"</span><span class="p">},</span>
+            <span class="s2">"precheck_heuristic"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"allowed"</span><span class="p">:</span> <span class="p">[</span><span class="kc">False</span><span class="p">],</span> <span class="s2">"default"</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
         <span class="p">}</span>
     <span class="p">)</span>
 
@@ -724,20 +724,20 @@
             <span class="n">precheck_tm</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
             <span class="n">precheck_um</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
             <span class="n">precheck_icm</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-            <span class="n">log_identity</span><span class="o">=</span><span class="s2">&quot;PLURALITY&quot;</span><span class="p">,</span>
+            <span class="n">log_identity</span><span class="o">=</span><span class="s2">"PLURALITY"</span><span class="p">,</span>
             <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
         <span class="p">)</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">ballots_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of integers. ``ballots[v]`` is the candidate on voter ``v``&#39;s ballot.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Compute ballots&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="w">        </span><span class="sd">"""1d array of integers. ``ballots[v]`` is the candidate on voter ``v``'s ballot."""</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">"Compute ballots"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_rk</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">scores_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of integers. ``scores[c]`` is the number of voters who vote for candidate ``c``.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Compute scores&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="w">        </span><span class="sd">"""1d array of integers. ``scores[c]`` is the number of voters who vote for candidate ``c``."""</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">"Compute scores"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">plurality_scores_rk</span>
 
     <span class="c1"># %% Manipulation criteria of the voting system</span>
@@ -750,7 +750,7 @@
 
     <span class="c1"># noinspection PyProtectedMember</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_compute_winner_of_subset_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">candidates_r</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_ut=[</span>
 <span class="sd">        ...     [ 0. , -0.5, -1. ],</span>
 <span class="sd">        ...     [ 1. , -1. ,  0.5],</span>
@@ -767,20 +767,20 @@
 <span class="sd">        &gt;&gt;&gt; rule = RulePlurality()(profile)</span>
 <span class="sd">        &gt;&gt;&gt; rule._compute_winner_of_subset_(candidates_r=np.array([0, 1]))</span>
 <span class="sd">        0</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;IIA: Compute winner of subset &quot;</span><span class="p">,</span> <span class="n">candidates_r</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">"IIA: Compute winner of subset "</span><span class="p">,</span> <span class="n">candidates_r</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
         <span class="n">scores_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span>
             <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">[:,</span> <span class="n">candidates_r</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span> <span class="n">minlength</span><span class="o">=</span><span class="n">candidates_r</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="p">)</span>
         <span class="n">index_w_r_in_subset</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">scores_r</span><span class="p">)</span>
         <span class="n">w_r</span> <span class="o">=</span> <span class="n">candidates_r</span><span class="p">[</span><span class="n">index_w_r_in_subset</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;IIA: Winner =&quot;</span><span class="p">,</span> <span class="n">w_r</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">"IIA: Winner ="</span><span class="p">,</span> <span class="n">w_r</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">w_r</span><span class="p">)</span>
 
     <span class="c1"># %% Individual manipulation (IM)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_compute_im_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute IM: is_im, candidates_im.</span>
+<span class="w">        </span><span class="sd">"""Compute IM: is_im, candidates_im.</span>
 
 <span class="sd">        For Plurality, since calculation is quite cheap, we calculate everything directly, even if complete_mode is</span>
 <span class="sd">        False.</span>
@@ -797,8 +797,8 @@
 <span class="sd">            &gt;&gt;&gt; rule = RulePlurality()(profile)</span>
 <span class="sd">            &gt;&gt;&gt; rule.is_im_v_with_candidates_(0)</span>
 <span class="sd">            (False, array([0., 0., 0.]))</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Compute IM&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">"Compute IM"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_im_was_computed_with_candidates</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_im_was_computed_with_voters</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_im_was_computed_full</span> <span class="o">=</span> <span class="kc">True</span>
@@ -824,7 +824,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_is_im</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_candidates_im</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_compute_im_v_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">c_is_wanted</span><span class="p">,</span> <span class="n">stop_if_true</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_compute_im_</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_compute_im_</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 
     <span class="c1"># %% Trivial Manipulation (TM)</span>
 
@@ -870,12 +870,12 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">theta_critical_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 1, 2, 3]])</span>
 <span class="sd">        &gt;&gt;&gt; rule = RulePlurality()(profile)</span>
 <span class="sd">        &gt;&gt;&gt; rule.theta_critical_</span>
 <span class="sd">        0.2</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">n_c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">n_c</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span></div>
 

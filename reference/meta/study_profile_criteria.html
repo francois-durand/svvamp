@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>StudyProfileCriteria &#8212; SVVAMP 0.14.0 documentation</title>
+    <title>StudyProfileCriteria &#8212; SVVAMP 0.15.0 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=9e420a66"></script>
+    <script src="../../_static/documentation_options.js?v=ef97403f"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -49,7 +49,7 @@
     <link rel="prev" title="RuleYoung" href="../rules/rule_young.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.14.0" />
+  <meta name="docsearch:version" content="0.15.0" />
   </head>
   
   
@@ -111,7 +111,7 @@
   
   
   
-    <p class="title logo__title">SVVAMP 0.14.0 documentation</p>
+    <p class="title logo__title">SVVAMP 0.15.0 documentation</p>
   
 </a></div>
     
@@ -414,6 +414,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../rules/rule_borda.html">RuleBorda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../rules/rule_bucklin.html">RuleBucklin</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../rules/rule_condorcet_abs_irv.html">RuleCondorcetAbsIRV</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_condorcet_constant.html">RuleCondorcetConstant</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_condorcet_dictatorship.html">RuleCondorcetDictatorship</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_condorcet_duel.html">RuleCondorcetDuel</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../rules/rule_condorcet_vtb_irv.html">RuleCondorcetVtbIRV</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../rules/rule_coombs.html">RuleCoombs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../rules/rule_copeland.html">RuleCopeland</a></li>
@@ -523,19 +526,19 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>boolean_criteria</strong> (<em>List</em><em> of </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Each string must correspond to a boolean criterion defined in Profile.</p></li>
-<li><p><strong>numerical_criteria</strong> (<em>List</em><em> of </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><em>tuple</em></a>) – <dl class="simple">
+<li><p><strong>boolean_criteria</strong> (<em>List</em><em> of </em><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Each string must correspond to a boolean criterion defined in Profile.</p></li>
+<li><p><strong>numerical_criteria</strong> (<em>List</em><em> of </em><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.14)"><em>tuple</em></a>) – <dl class="simple">
 <dt>Each tuple is of the form (criterion, func, name), where:</dt><dd><p>criterion: the numerical data to be processed.
 func: an aggregating function.
 name: the name chosen for this pair criterion / aggregation function.</p>
 </dd>
 </dl>
 </p></li>
-<li><p><strong>special_candidates_criteria</strong> (<em>List</em><em> of </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Each string must correspond to an attribute defined in Profile that returns the
+<li><p><strong>special_candidates_criteria</strong> (<em>List</em><em> of </em><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Each string must correspond to an attribute defined in Profile that returns the
 index of a candidate or NaN.</p></li>
-<li><p><strong>array_criteria</strong> (<em>List</em><em> of </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Each string must correspond to a attribute defined in Profile that returns an 1d array of size n_c
+<li><p><strong>array_criteria</strong> (<em>List</em><em> of </em><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Each string must correspond to a attribute defined in Profile that returns an 1d array of size n_c
 (the number of candidates).</p></li>
-<li><p><strong>matrix_criteria</strong> (<em>List</em><em> of </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Each string must correspond to a attribute defined in Profile that returns an array (whatever
+<li><p><strong>matrix_criteria</strong> (<em>List</em><em> of </em><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Each string must correspond to a attribute defined in Profile that returns an array (whatever
 its size).</p></li>
 </ul>
 </dd>
@@ -548,7 +551,7 @@ is simply:</p>
 </div>
 <p>Here is an example of manually defined <cite>numerical_criteria</cite>:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span> <span class="o">=</span> <span class="n">StudyProfileCriteria</span><span class="p">(</span><span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[</span>
-<span class="gp">... </span>    <span class="p">(</span><span class="s1">&#39;total_utility_mean&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="s1">&#39;total_u_mean_mean&#39;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="s1">'total_utility_mean'</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="s1">'total_u_mean_mean'</span><span class="p">)</span>
 <span class="gp">... </span><span class="p">])</span>
 </pre></div>
 </div>
@@ -560,7 +563,7 @@ to calculate the mean over the profiles. The result will be called ‘total_u_me
 <dd><p>Add an array criterion</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>criterion</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p>
+<dd class="field-odd"><p><strong>criterion</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -568,10 +571,10 @@ to calculate the mean over the profiles. The result will be called ‘total_u_me
 <span class="gp">... </span>    <span class="n">boolean_criteria</span><span class="o">=</span><span class="p">[],</span>
 <span class="gp">... </span>    <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[],</span>
 <span class="gp">... </span>    <span class="n">special_candidates_criteria</span><span class="o">=</span><span class="p">[],</span>
-<span class="gp">... </span>    <span class="n">array_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;plurality_scores_rk&#39;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">array_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">'plurality_scores_rk'</span><span class="p">],</span>
 <span class="gp">... </span>    <span class="n">matrix_criteria</span><span class="o">=</span><span class="p">[]</span>
 <span class="gp">... </span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">append_array_criterion</span><span class="p">(</span><span class="s1">&#39;plurality_scores_ut&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">append_array_criterion</span><span class="p">(</span><span class="s1">'plurality_scores_ut'</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">study_profile_criteria</span><span class="p">)</span>
 <span class="go">StudyProfileCriteria with:</span>
 <span class="go">    boolean_criteria: None</span>
@@ -591,18 +594,18 @@ to calculate the mean over the profiles. The result will be called ‘total_u_me
 <dd><p>Add a boolean criterion</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>criterion</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p>
+<dd class="field-odd"><p><strong>criterion</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span> <span class="o">=</span> <span class="n">StudyProfileCriteria</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="n">boolean_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;exists_condorcet_admissible&#39;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">boolean_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">'exists_condorcet_admissible'</span><span class="p">],</span>
 <span class="gp">... </span>    <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[],</span>
 <span class="gp">... </span>    <span class="n">special_candidates_criteria</span><span class="o">=</span><span class="p">[],</span>
 <span class="gp">... </span>    <span class="n">array_criteria</span><span class="o">=</span><span class="p">[],</span>
 <span class="gp">... </span>    <span class="n">matrix_criteria</span><span class="o">=</span><span class="p">[]</span>
 <span class="gp">... </span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">append_boolean_criterion</span><span class="p">(</span><span class="s1">&#39;exists_weak_condorcet_winner&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">append_boolean_criterion</span><span class="p">(</span><span class="s1">'exists_weak_condorcet_winner'</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">study_profile_criteria</span><span class="p">)</span>
 <span class="go">StudyProfileCriteria with:</span>
 <span class="go">    boolean_criteria:</span>
@@ -622,7 +625,7 @@ to calculate the mean over the profiles. The result will be called ‘total_u_me
 <dd><p>Add a matrix criterion</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>criterion</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p>
+<dd class="field-odd"><p><strong>criterion</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -631,9 +634,9 @@ to calculate the mean over the profiles. The result will be called ‘total_u_me
 <span class="gp">... </span>    <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[],</span>
 <span class="gp">... </span>    <span class="n">special_candidates_criteria</span><span class="o">=</span><span class="p">[],</span>
 <span class="gp">... </span>    <span class="n">array_criteria</span><span class="o">=</span><span class="p">[],</span>
-<span class="gp">... </span>    <span class="n">matrix_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;preferences_ut&#39;</span><span class="p">]</span>
+<span class="gp">... </span>    <span class="n">matrix_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">'preferences_ut'</span><span class="p">]</span>
 <span class="gp">... </span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">append_matrix_criterion</span><span class="p">(</span><span class="s1">&#39;preferences_borda_rk&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">append_matrix_criterion</span><span class="p">(</span><span class="s1">'preferences_borda_rk'</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">study_profile_criteria</span><span class="p">)</span>
 <span class="go">StudyProfileCriteria with:</span>
 <span class="go">    boolean_criteria: None</span>
@@ -654,9 +657,9 @@ to calculate the mean over the profiles. The result will be called ‘total_u_me
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>criterion</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The numerical data to be processed.</p></li>
+<li><p><strong>criterion</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The numerical data to be processed.</p></li>
 <li><p><strong>func</strong> (<em>callable</em>) – An aggregating function.</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name chosen for this pair criterion / aggregation function.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name chosen for this pair criterion / aggregation function.</p></li>
 </ul>
 </dd>
 </dl>
@@ -669,13 +672,13 @@ to calculate the mean over the profiles. The result will be called ‘total_u_me
 <span class="gp">... </span>    <span class="n">matrix_criteria</span><span class="o">=</span><span class="p">[]</span>
 <span class="gp">... </span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">append_numerical_criterion</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="s1">&#39;total_utility_mean&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="s1">&#39;total_u_mean_mean&#39;</span>
+<span class="gp">... </span>    <span class="s1">'total_utility_mean'</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="s1">'total_u_mean_mean'</span>
 <span class="gp">... </span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">study_profile_criteria</span><span class="p">)</span>
 <span class="go">StudyProfileCriteria with:</span>
 <span class="go">    boolean_criteria: None</span>
 <span class="go">    numerical_criteria:</span>
-<span class="go">        (&#39;total_utility_mean&#39;, &lt;function mean at ...&gt;, &#39;total_u_mean_mean&#39;)</span>
+<span class="go">        ('total_utility_mean', &lt;function mean at ...&gt;, 'total_u_mean_mean')</span>
 <span class="go">    special_candidates_criteria: None</span>
 <span class="go">    array_criteria: None</span>
 <span class="go">    matrix_criteria: None</span>
@@ -691,18 +694,18 @@ calculate the mean over the profiles. The result will be called ‘total_u_mean_
 <dd><p>Add a ‘special candidates’ criterion</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>criterion</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p>
+<dd class="field-odd"><p><strong>criterion</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span> <span class="o">=</span> <span class="n">StudyProfileCriteria</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">boolean_criteria</span><span class="o">=</span><span class="p">[],</span>
 <span class="gp">... </span>    <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[],</span>
-<span class="gp">... </span>    <span class="n">special_candidates_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;condorcet_winner_rk_ctb&#39;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">special_candidates_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">'condorcet_winner_rk_ctb'</span><span class="p">],</span>
 <span class="gp">... </span>    <span class="n">array_criteria</span><span class="o">=</span><span class="p">[],</span>
 <span class="gp">... </span>    <span class="n">matrix_criteria</span><span class="o">=</span><span class="p">[]</span>
 <span class="gp">... </span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">append_special_candidates_criterion</span><span class="p">(</span><span class="s1">&#39;condorcet_winner_rk&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">append_special_candidates_criterion</span><span class="p">(</span><span class="s1">'condorcet_winner_rk'</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">study_profile_criteria</span><span class="p">)</span>
 <span class="go">StudyProfileCriteria with:</span>
 <span class="go">    boolean_criteria: None</span>
@@ -724,38 +727,38 @@ calculate the mean over the profiles. The result will be called ‘total_u_mean_
 <p class="rubric">Examples</p>
 <p>Confirm that a configuration is sound:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span> <span class="o">=</span> <span class="n">StudyProfileCriteria</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="n">boolean_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;exists_condorcet_winner_rk&#39;</span><span class="p">],</span>
-<span class="gp">... </span>    <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[(</span><span class="s1">&#39;mean_utility_min&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="s1">&#39;mean_u_min_min&#39;</span><span class="p">)],</span>
-<span class="gp">... </span>    <span class="n">special_candidates_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;condorcet_winner_rk&#39;</span><span class="p">],</span>
-<span class="gp">... </span>    <span class="n">array_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;total_utility_c&#39;</span><span class="p">],</span>
-<span class="gp">... </span>    <span class="n">matrix_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;matrix_duels_rk&#39;</span><span class="p">]</span>
+<span class="gp">... </span>    <span class="n">boolean_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">'exists_condorcet_winner_rk'</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[(</span><span class="s1">'mean_utility_min'</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="s1">'mean_u_min_min'</span><span class="p">)],</span>
+<span class="gp">... </span>    <span class="n">special_candidates_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">'condorcet_winner_rk'</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">array_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">'total_utility_c'</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">matrix_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">'matrix_duels_rk'</span><span class="p">]</span>
 <span class="gp">... </span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">check_sanity</span><span class="p">()</span>
 <span class="go">StudyProfileCriteria: Sanity check was successful.</span>
 </pre></div>
 </div>
 <p>Detect an illegal criterion:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span> <span class="o">=</span> <span class="n">StudyProfileCriteria</span><span class="p">(</span><span class="n">boolean_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;unexpected_criterion&#39;</span><span class="p">])</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span> <span class="o">=</span> <span class="n">StudyProfileCriteria</span><span class="p">(</span><span class="n">boolean_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">'unexpected_criterion'</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">check_sanity</span><span class="p">()</span>
 <span class="gt">Traceback (most recent call last):</span>
-<span class="gr">ValueError</span>: <span class="n">Attribute &#39;unexpected_criterion&#39; is unknown for Profile.</span>
+<span class="gr">ValueError</span>: <span class="n">Attribute 'unexpected_criterion' is unknown for Profile.</span>
 </pre></div>
 </div>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span> <span class="o">=</span> <span class="n">StudyProfileCriteria</span><span class="p">(</span><span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[</span>
-<span class="gp">... </span>    <span class="p">(</span><span class="s1">&#39;unexpected_criterion&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">,</span> <span class="s1">&#39;unexpected_criterion_sum&#39;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="s1">'unexpected_criterion'</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">,</span> <span class="s1">'unexpected_criterion_sum'</span><span class="p">)</span>
 <span class="gp">... </span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">check_sanity</span><span class="p">()</span>
 <span class="gt">Traceback (most recent call last):</span>
-<span class="gr">ValueError</span>: <span class="n">Attribute &#39;unexpected_criterion&#39; is unknown for Profile.</span>
+<span class="gr">ValueError</span>: <span class="n">Attribute 'unexpected_criterion' is unknown for Profile.</span>
 </pre></div>
 </div>
 <p>Detect when a aggregation function is not provided:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span> <span class="o">=</span> <span class="n">StudyProfileCriteria</span><span class="p">(</span><span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[</span>
-<span class="gp">... </span>    <span class="p">(</span><span class="s1">&#39;mean_utility_min&#39;</span><span class="p">,</span> <span class="s1">&#39;this_is_not_callable&#39;</span><span class="p">,</span> <span class="s1">&#39;mean_u_min_min&#39;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="s1">'mean_utility_min'</span><span class="p">,</span> <span class="s1">'this_is_not_callable'</span><span class="p">,</span> <span class="s1">'mean_u_min_min'</span><span class="p">)</span>
 <span class="gp">... </span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">check_sanity</span><span class="p">()</span>
 <span class="gt">Traceback (most recent call last):</span>
-<span class="gr">TypeError</span>: <span class="n">Expected: callable. Got: &#39;this_is_not_callable&#39;.</span>
+<span class="gr">TypeError</span>: <span class="n">Expected: callable. Got: 'this_is_not_callable'.</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -766,19 +769,19 @@ calculate the mean over the profiles. The result will be called ‘total_u_mean_
 <dd><p>Remove a criterion</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>criterion</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p>
+<dd class="field-odd"><p><strong>criterion</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
 <p>Remove all occurrences of <cite>criterion</cite> (generally zero or one):</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span> <span class="o">=</span> <span class="n">StudyProfileCriteria</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="n">boolean_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;exists_condorcet_admissible&#39;</span><span class="p">,</span> <span class="s1">&#39;exists_weak_condorcet_winner&#39;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">boolean_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">'exists_condorcet_admissible'</span><span class="p">,</span> <span class="s1">'exists_weak_condorcet_winner'</span><span class="p">],</span>
 <span class="gp">... </span>    <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[],</span>
 <span class="gp">... </span>    <span class="n">special_candidates_criteria</span><span class="o">=</span><span class="p">[],</span>
 <span class="gp">... </span>    <span class="n">array_criteria</span><span class="o">=</span><span class="p">[],</span>
 <span class="gp">... </span>    <span class="n">matrix_criteria</span><span class="o">=</span><span class="p">[]</span>
 <span class="gp">... </span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;exists_weak_condorcet_winner&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">'exists_weak_condorcet_winner'</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">study_profile_criteria</span><span class="p">)</span>
 <span class="go">StudyProfileCriteria with:</span>
 <span class="go">    boolean_criteria:</span>
@@ -792,18 +795,18 @@ calculate the mean over the profiles. The result will be called ‘total_u_mean_
 <p>For numerical criteria, use the last element of the triple, i.e. the name:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span> <span class="o">=</span> <span class="n">StudyProfileCriteria</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">boolean_criteria</span><span class="o">=</span><span class="p">[],</span>
-<span class="gp">... </span>    <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[(</span><span class="s1">&#39;mean_utility_min&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="s1">&#39;mean_u_min_min&#39;</span><span class="p">),</span>
-<span class="gp">... </span>                        <span class="p">(</span><span class="s1">&#39;mean_utility_min&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="s1">&#39;mean_u_min_max&#39;</span><span class="p">)],</span>
+<span class="gp">... </span>    <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[(</span><span class="s1">'mean_utility_min'</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="s1">'mean_u_min_min'</span><span class="p">),</span>
+<span class="gp">... </span>                        <span class="p">(</span><span class="s1">'mean_utility_min'</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="s1">'mean_u_min_max'</span><span class="p">)],</span>
 <span class="gp">... </span>    <span class="n">special_candidates_criteria</span><span class="o">=</span><span class="p">[],</span>
 <span class="gp">... </span>    <span class="n">array_criteria</span><span class="o">=</span><span class="p">[],</span>
 <span class="gp">... </span>    <span class="n">matrix_criteria</span><span class="o">=</span><span class="p">[]</span>
 <span class="gp">... </span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;mean_u_min_min&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">'mean_u_min_min'</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">study_profile_criteria</span><span class="p">)</span>
 <span class="go">StudyProfileCriteria with:</span>
 <span class="go">    boolean_criteria: None</span>
 <span class="go">    numerical_criteria:</span>
-<span class="go">        (&#39;mean_utility_min&#39;, &lt;function ...max at ...&gt;, &#39;mean_u_min_max&#39;)</span>
+<span class="go">        ('mean_utility_min', &lt;function ...max at ...&gt;, 'mean_u_min_max')</span>
 <span class="go">    special_candidates_criteria: None</span>
 <span class="go">    array_criteria: None</span>
 <span class="go">    matrix_criteria: None</span>
@@ -818,25 +821,25 @@ calculate the mean over the profiles. The result will be called ‘total_u_mean_
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>old_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
-<li><p><strong>new_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
+<li><p><strong>old_name</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
+<li><p><strong>new_name</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
 </ul>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span> <span class="o">=</span> <span class="n">StudyProfileCriteria</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">boolean_criteria</span><span class="o">=</span><span class="p">[],</span>
-<span class="gp">... </span>    <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[(</span><span class="s1">&#39;total_utility_mean&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="s1">&#39;total_u_mean_mean&#39;</span><span class="p">)],</span>
+<span class="gp">... </span>    <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[(</span><span class="s1">'total_utility_mean'</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="s1">'total_u_mean_mean'</span><span class="p">)],</span>
 <span class="gp">... </span>    <span class="n">special_candidates_criteria</span><span class="o">=</span><span class="p">[],</span>
 <span class="gp">... </span>    <span class="n">array_criteria</span><span class="o">=</span><span class="p">[],</span>
 <span class="gp">... </span>    <span class="n">matrix_criteria</span><span class="o">=</span><span class="p">[]</span>
 <span class="gp">... </span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">rename_numerical_criterion</span><span class="p">(</span><span class="s1">&#39;total_u_mean_mean&#39;</span><span class="p">,</span> <span class="s1">&#39;the_new_name&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">rename_numerical_criterion</span><span class="p">(</span><span class="s1">'total_u_mean_mean'</span><span class="p">,</span> <span class="s1">'the_new_name'</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">study_profile_criteria</span><span class="p">)</span>
 <span class="go">StudyProfileCriteria with:</span>
 <span class="go">    boolean_criteria: None</span>
 <span class="go">    numerical_criteria:</span>
-<span class="go">        (&#39;total_utility_mean&#39;, &lt;function mean at ...&gt;, &#39;the_new_name&#39;)</span>
+<span class="go">        ('total_utility_mean', &lt;function mean at ...&gt;, 'the_new_name')</span>
 <span class="go">    special_candidates_criteria: None</span>
 <span class="go">    array_criteria: None</span>
 <span class="go">    matrix_criteria: None</span>

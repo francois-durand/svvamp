@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>svvamp.preferences.generator_profile_vmf_hypersphere &#8212; SVVAMP 0.14.0 documentation</title>
+    <title>svvamp.preferences.generator_profile_vmf_hypersphere &#8212; SVVAMP 0.15.0 documentation</title>
   
   
   
@@ -37,7 +37,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=9e420a66"></script>
+    <script src="../../../_static/documentation_options.js?v=ef97403f"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -46,7 +46,7 @@
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.14.0" />
+  <meta name="docsearch:version" content="0.15.0" />
   </head>
   
   
@@ -108,7 +108,7 @@
   
   
   
-    <p class="title logo__title">SVVAMP 0.14.0 documentation</p>
+    <p class="title logo__title">SVVAMP 0.15.0 documentation</p>
   
 </a></div>
     
@@ -424,7 +424,7 @@
                   
   <h1>Source code for svvamp.preferences.generator_profile_vmf_hypersphere</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 <span class="sd">Created on nov. 28, 2018, 15:44</span>
 <span class="sd">Copyright François Durand 2018</span>
 <span class="sd">fradurand@gmail.com</span>
@@ -443,7 +443,7 @@
 
 <span class="sd">    You should have received a copy of the GNU General Public License</span>
 <span class="sd">    along with SVVAMP.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.utils.misc</span><span class="w"> </span><span class="kn">import</span> <span class="n">initialize_random_seeds</span>
@@ -455,7 +455,7 @@
 <div class="viewcode-block" id="GeneratorProfileVMFHypersphere">
 <a class="viewcode-back" href="../../../reference/preferences/generator_profile_vmf_hypersphere.html#svvamp.GeneratorProfileVMFHypersphere">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">GeneratorProfileVMFHypersphere</span><span class="p">(</span><span class="n">GeneratorProfile</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Profile generator using the Von Mises-Fisher distribution on the ``n_c - 1``-sphere</span>
+<span class="w">    </span><span class="sd">"""Profile generator using the Von Mises-Fisher distribution on the ``n_c - 1``-sphere</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -466,7 +466,7 @@
 <span class="sd">    stretching : number</span>
 <span class="sd">        Number between 0 and ``numpy.inf`` (both included).</span>
 <span class="sd">    vmf_concentration : float or list or ndarray</span>
-<span class="sd">        1d array. Denote ``k`` its size (number of &#39;groups&#39;). ``vmf_concentration[i]`` is the VMF concentration of</span>
+<span class="sd">        1d array. Denote ``k`` its size (number of 'groups'). ``vmf_concentration[i]`` is the VMF concentration of</span>
 <span class="sd">        group ``i``.</span>
 <span class="sd">    vmf_probability : float or list or ndarray or None</span>
 <span class="sd">        1d array of size ``k``. ``vmf_probability[i]`` is the probability, for a voter, to be in group ``i``</span>
@@ -479,15 +479,15 @@
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
 <span class="sd">    For each voter ``c``, we draw a group ``i`` at random, according to ``vmf_probability`` (normalized beforehand if</span>
-<span class="sd">    necessary). Then, ``v``&#39;s utility vector is drawn according to a Von Mises-Fisher distribution of pole</span>
-<span class="sd">    ``vmf_pole[i, :]`` and concentration ``vmf_concentration[i]``, using Ulrich&#39;s method modified by Wood.</span>
+<span class="sd">    necessary). Then, ``v``'s utility vector is drawn according to a Von Mises-Fisher distribution of pole</span>
+<span class="sd">    ``vmf_pole[i, :]`` and concentration ``vmf_concentration[i]``, using Ulrich's method modified by Wood.</span>
 
 <span class="sd">    Once group ``i`` is chosen, then up to a normalization constant, the density of probability for a unit vector</span>
 <span class="sd">    ``x`` is ``exp(vmf_concentration[i] vmf.pole[i, :].x)``, ``where vmf.pole[i, :].x`` is a dot product.</span>
 
-<span class="sd">    Then, ``v``&#39;s utility vector is sent onto the spheroid that is the image of the sphere by a dilatation of factor</span>
+<span class="sd">    Then, ``v``'s utility vector is sent onto the spheroid that is the image of the sphere by a dilatation of factor</span>
 <span class="sd">    ``stretching`` along the direction [1, ..., 1]. For example, if ``stretching = 1``, we stay on the unit sphere of</span>
-<span class="sd">    :math:`\\mathbb{R}^n_c`. Cf. Durand et al. &#39;Geometry on the Utility Sphere&#39;.</span>
+<span class="sd">    :math:`\\mathbb{R}^n_c`. Cf. Durand et al. 'Geometry on the Utility Sphere'.</span>
 
 <span class="sd">    N.B.: if ``stretching != 1``, it amounts to move the poles. For example, if the pole [1, 0, 0, 0] is given and</span>
 <span class="sd">    ``stretching = 0``, then the actual pole will be [0.75, - 0.25, - 0.25, - 0.25] (up to a multiplicative constant).</span>
@@ -578,7 +578,7 @@
 <span class="sd">        Ulrich (1984) - Computer Generation of Distributions on the m-Sphere</span>
 
 <span class="sd">        Wood (1994) - Simulation of the von Mises Fisher distribution</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">n_v</span><span class="p">,</span> <span class="n">n_c</span><span class="p">,</span> <span class="n">vmf_concentration</span><span class="p">,</span> <span class="n">vmf_probability</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vmf_pole</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stretching</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sort_voters</span><span class="o">=</span><span class="kc">False</span>
@@ -607,16 +607,16 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">vmf_pole</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vmf_pole</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stretching</span> <span class="o">=</span> <span class="n">stretching</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log_creation</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="s2">&quot;VMFHypersphere&quot;</span><span class="p">,</span>
+            <span class="s2">"VMFHypersphere"</span><span class="p">,</span>
             <span class="n">n_c</span><span class="p">,</span>
             <span class="n">n_v</span><span class="p">,</span>
-            <span class="s2">&quot;VMF Concentration&quot;</span><span class="p">,</span>
+            <span class="s2">"VMF Concentration"</span><span class="p">,</span>
             <span class="n">vmf_concentration</span><span class="p">,</span>
-            <span class="s2">&quot;VMF Probability&quot;</span><span class="p">,</span>
+            <span class="s2">"VMF Probability"</span><span class="p">,</span>
             <span class="n">vmf_probability</span><span class="p">,</span>
-            <span class="s2">&quot;VMF Pole&quot;</span><span class="p">,</span>
+            <span class="s2">"VMF Pole"</span><span class="p">,</span>
             <span class="n">vmf_pole</span><span class="p">,</span>
-            <span class="s2">&quot;Stretching&quot;</span><span class="p">,</span>
+            <span class="s2">"Stretching"</span><span class="p">,</span>
             <span class="n">stretching</span><span class="p">,</span>
         <span class="p">]</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">sort_voters</span><span class="o">=</span><span class="n">sort_voters</span><span class="p">)</span>

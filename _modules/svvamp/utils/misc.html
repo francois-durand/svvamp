@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>svvamp.utils.misc &#8212; SVVAMP 0.14.0 documentation</title>
+    <title>svvamp.utils.misc &#8212; SVVAMP 0.15.0 documentation</title>
   
   
   
@@ -37,7 +37,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=9e420a66"></script>
+    <script src="../../../_static/documentation_options.js?v=ef97403f"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -46,7 +46,7 @@
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.14.0" />
+  <meta name="docsearch:version" content="0.15.0" />
   </head>
   
   
@@ -108,7 +108,7 @@
   
   
   
-    <p class="title logo__title">SVVAMP 0.14.0 documentation</p>
+    <p class="title logo__title">SVVAMP 0.15.0 documentation</p>
   
 </a></div>
     
@@ -430,7 +430,7 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">preferences_ut_to_preferences_rk</span><span class="p">(</span><span class="n">preferences_ut</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert utilities to rankings.</span>
+<span class="w">    </span><span class="sd">"""Convert utilities to rankings.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -449,7 +449,7 @@
 <span class="sd">        &gt;&gt;&gt; preferences_ut_to_preferences_rk(preferences_ut=[[5, 1, 2], [4, 10, 1]])</span>
 <span class="sd">        array([[0, 2, 1],</span>
 <span class="sd">               [1, 0, 2]])</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">preferences_ut</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">preferences_ut</span><span class="p">)</span>
     <span class="n">n_v</span><span class="p">,</span> <span class="n">n_c</span> <span class="o">=</span> <span class="n">preferences_ut</span><span class="o">.</span><span class="n">shape</span>
     <span class="n">tiebreaker</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">n_v</span><span class="p">,</span> <span class="n">n_c</span><span class="p">)</span>
@@ -457,7 +457,7 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">preferences_rk_to_preferences_borda_rk</span><span class="p">(</span><span class="n">preferences_rk</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert rankings to Borda scores.</span>
+<span class="w">    </span><span class="sd">"""Convert rankings to Borda scores.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -474,14 +474,14 @@
 <span class="sd">        &gt;&gt;&gt; preferences_rk_to_preferences_borda_rk(preferences_rk=[[0, 2, 1], [1, 0, 2]])</span>
 <span class="sd">        array([[2, 0, 1],</span>
 <span class="sd">               [1, 2, 0]])</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">preferences_rk</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">preferences_rk</span><span class="p">)</span>
     <span class="n">_</span><span class="p">,</span> <span class="n">n_c</span> <span class="o">=</span> <span class="n">preferences_rk</span><span class="o">.</span><span class="n">shape</span>
     <span class="k">return</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">preferences_rk</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span> <span class="o">+</span> <span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">preferences_ut_to_preferences_borda_ut</span><span class="p">(</span><span class="n">preferences_ut</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert utilities to Borda scores (with possible equalities).</span>
+<span class="w">    </span><span class="sd">"""Convert utilities to Borda scores (with possible equalities).</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -499,7 +499,7 @@
 <span class="sd">        &gt;&gt;&gt; preferences_ut_to_preferences_borda_ut(preferences_ut=[[5, 1, 2], [4, 10, 1]])</span>
 <span class="sd">        array([[2., 0., 1.],</span>
 <span class="sd">               [1., 2., 0.]])</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">preferences_ut</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">preferences_ut</span><span class="p">)</span>
     <span class="n">n_v</span><span class="p">,</span> <span class="n">n_c</span> <span class="o">=</span> <span class="n">preferences_ut</span><span class="o">.</span><span class="n">shape</span>
     <span class="n">preference_borda_ut</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_v</span><span class="p">,</span> <span class="n">n_c</span><span class="p">))</span>
@@ -516,7 +516,7 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">preferences_ut_to_matrix_duels_ut</span><span class="p">(</span><span class="n">preferences_ut</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute the matrix of duels.</span>
+<span class="w">    </span><span class="sd">"""Compute the matrix of duels.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -535,13 +535,13 @@
 <span class="sd">        array([[0, 1, 2],</span>
 <span class="sd">               [1, 0, 1],</span>
 <span class="sd">               [0, 1, 0]])</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">preferences_ut</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">preferences_ut</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">preferences_ut</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">preferences_ut</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">matrix_victories_to_smith_set</span><span class="p">(</span><span class="n">matrix_victories</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Smith set associated to a matrix of victories.</span>
 
 <span class="sd">    Parameters</span>
@@ -576,7 +576,7 @@
 <span class="sd">        ... ])</span>
 <span class="sd">        &gt;&gt;&gt; matrix_victories_to_smith_set(my_matrix_victories)</span>
 <span class="sd">        [0]</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">n_c</span> <span class="o">=</span> <span class="n">matrix_victories</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">copeland_scores</span> <span class="o">=</span> <span class="n">matrix_victories</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="c1"># Let us gain some time if there is a Condorcet winner</span>
@@ -599,7 +599,7 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">is_resistant_condorcet</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">preferences_ut</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test for resistant Condorcet winner.</span>
+<span class="w">    </span><span class="sd">"""Test for resistant Condorcet winner.</span>
 
 <span class="sd">    A Condorcet winner ``w`` is *resistant* iff in any Condorcet voting system, the profile is not manipulable (cf.</span>
 <span class="sd">    Durand et al. 2014). This is equivalent to say that for any pair ``(c, d)`` of other candidates, there is a strict</span>
@@ -623,7 +623,7 @@
 <span class="sd">    --------</span>
 <span class="sd">        &gt;&gt;&gt; is_resistant_condorcet(w=0, preferences_ut=[[5, 1, 2], [4, 10, 1]])</span>
 <span class="sd">        False</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">w</span><span class="p">):</span>
         <span class="k">return</span> <span class="kc">False</span>
     <span class="n">preferences_ut</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">preferences_ut</span><span class="p">)</span>
@@ -642,7 +642,7 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">compute_next_subset_with_w</span><span class="p">(</span><span class="n">prev_subset</span><span class="p">,</span> <span class="n">n_c</span><span class="p">,</span> <span class="n">n_c_r</span><span class="p">,</span> <span class="n">w</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute the next subset containing w, by lexicographic order.</span>
+<span class="w">    </span><span class="sd">"""Compute the next subset containing w, by lexicographic order.</span>
 
 <span class="sd">    This function is internally used by :class:`Rule` to compute Independence of Irrelevant Alternatives (IIA).</span>
 
@@ -675,7 +675,7 @@
 
 <span class="sd">        &gt;&gt;&gt; print(compute_next_subset_with_w(prev_subset=[0, 6, 7, 8, 9], n_c=10, n_c_r=5, w=0))</span>
 <span class="sd">        None</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="c1"># TODO: this could be rewritten with an iterator.</span>
     <span class="n">max_allowed_value</span> <span class="o">=</span> <span class="n">n_c</span>
     <span class="k">for</span> <span class="n">index_pivot</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_c_r</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
@@ -698,7 +698,7 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">compute_next_permutation</span><span class="p">(</span><span class="n">prev_permutation</span><span class="p">,</span> <span class="n">n_c</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute next permutation by lexicographic order.</span>
+<span class="w">    </span><span class="sd">"""Compute next permutation by lexicographic order.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -719,7 +719,7 @@
 <span class="sd">        array([0, 2, 3, 1, 4])</span>
 <span class="sd">        &gt;&gt;&gt; compute_next_permutation(np.array([0, 2, 1, 4, 3]), 5)</span>
 <span class="sd">        array([0, 2, 3, 1, 4])</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="c1"># TODO: this could be rewritten with an iterator.</span>
     <span class="n">prev_permutation</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">prev_permutation</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
@@ -744,7 +744,7 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">compute_next_borda_clever</span><span class="p">(</span><span class="n">prev_permutation</span><span class="p">,</span> <span class="n">prev_favorite</span><span class="p">,</span> <span class="n">n_c</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute next vector of Borda scores in &#39;clever&#39; order.</span>
+<span class="w">    </span><span class="sd">"""Compute next vector of Borda scores in 'clever' order.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -759,7 +759,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    (``next_permutation``, ``next_favorite``) : tuple</span>
 <span class="sd">        ``next_permutation`` is a 1d array of all integers from 0 to ``C - 1``, . Next vector of Borda scores in the</span>
-<span class="sd">        &#39;clever&#39; order. If ``prev_permutation`` was the last permutation in the &#39;clever&#39; order, then</span>
+<span class="sd">        'clever' order. If ``prev_permutation`` was the last permutation in the 'clever' order, then</span>
 <span class="sd">        ``next_permutation = None``. ``next_favorite`` is an Integer (or None); it is the new preferred candidate.</span>
 
 <span class="sd">    Notes</span>
@@ -769,16 +769,16 @@
 <span class="sd">    1. A permuted list of Borda scores from 0 to ``C - 2``,</span>
 <span class="sd">    2. The insertion of Borda score ``C - 1`` in this list.</span>
 
-<span class="sd">    The &#39;clever&#39; order sorts first by lexicographic order on (1), then by the position (2) (from last position to</span>
+<span class="sd">    The 'clever' order sorts first by lexicographic order on (1), then by the position (2) (from last position to</span>
 <span class="sd">    first position).</span>
 
 <span class="sd">    To find the next permutation, if Borda score ``C - 1`` can be moved one step to the left, we do it. Otherwise,</span>
 <span class="sd">    we take the next permutation of ``{0, ..., C - 2}`` in lexicographic order, and put Borda score ``C - 1`` at the</span>
 <span class="sd">    end.</span>
 
-<span class="sd">    In the &#39;clever&#39; order, the first vector is ``[0, ..., C - 1]`` and the last one is ``[C - 1, ..., 0]``.</span>
+<span class="sd">    In the 'clever' order, the first vector is ``[0, ..., C - 1]`` and the last one is ``[C - 1, ..., 0]``.</span>
 
-<span class="sd">    When looking for manipulations (IM or UM principally), here is the advantage of using the &#39;clever&#39; order instead of</span>
+<span class="sd">    When looking for manipulations (IM or UM principally), here is the advantage of using the 'clever' order instead of</span>
 <span class="sd">    lexicographic order: in only the ``C`` first  vectors, we try all candidates as top-ranked choice. In many voting</span>
 <span class="sd">    systems, this accelerates finding the manipulation.</span>
 
@@ -793,7 +793,7 @@
 
 <span class="sd">        &gt;&gt;&gt; compute_next_borda_clever(prev_permutation=[4, 3, 2, 1, 0], prev_favorite=0, n_c=5)</span>
 <span class="sd">        (None, None)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="c1"># TODO: this could be rewritten with an iterator.</span>
     <span class="k">if</span> <span class="n">prev_favorite</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">next_favorite</span> <span class="o">=</span> <span class="n">prev_favorite</span> <span class="o">-</span> <span class="mi">1</span>
@@ -810,7 +810,7 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">strong_connected_components</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Strong connected components of a digraph, sorted by topological order.</span>
+<span class="w">    </span><span class="sd">"""Strong connected components of a digraph, sorted by topological order.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -833,28 +833,28 @@
 <span class="sd">        ...     [False, False, False, False, False]</span>
 <span class="sd">        ... ]) == [{0, 1, 2}, {3}, {4}]</span>
 <span class="sd">        True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">condensed</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">condensation</span><span class="p">(</span><span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">a</span><span class="p">)))</span>
-    <span class="k">return</span> <span class="p">[</span><span class="n">condensed</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">component</span><span class="p">][</span><span class="s2">&quot;members&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="n">nx</span><span class="o">.</span><span class="n">topological_sort</span><span class="p">(</span><span class="n">condensed</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">condensed</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">component</span><span class="p">][</span><span class="s2">"members"</span><span class="p">]</span> <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="n">nx</span><span class="o">.</span><span class="n">topological_sort</span><span class="p">(</span><span class="n">condensed</span><span class="p">)]</span>
 
 
 <div class="viewcode-block" id="initialize_random_seeds">
 <a class="viewcode-back" href="../../../reference/utils/initialize_random_seeds.html#svvamp.initialize_random_seeds">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">initialize_random_seeds</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize the random seeds.</span>
+<span class="w">    </span><span class="sd">"""Initialize the random seeds.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    n : int</span>
 <span class="sd">        The desired random seed. Default: 0.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
     <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">n</span><span class="p">)</span></div>
 
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">indent</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">n_spaces</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Indent a string.</span>
+<span class="w">    </span><span class="sd">"""Indent a string.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -869,19 +869,19 @@
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
-<span class="sd">        &gt;&gt;&gt; my_s = &#39;First line\\nSecond line&#39;</span>
+<span class="sd">        &gt;&gt;&gt; my_s = 'First line\\nSecond line'</span>
 <span class="sd">        &gt;&gt;&gt; print(my_s)</span>
 <span class="sd">        First line</span>
 <span class="sd">        Second line</span>
 <span class="sd">        &gt;&gt;&gt; print(indent(my_s, 4))</span>
 <span class="sd">            First line</span>
 <span class="sd">            Second line</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="n">n_spaces</span> <span class="o">+</span> <span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">    &quot;</span><span class="p">)</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="s2">" "</span> <span class="o">*</span> <span class="n">n_spaces</span> <span class="o">+</span> <span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">    "</span><span class="p">)</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">euclidean_distances</span><span class="p">(</span><span class="n">voters_positions</span><span class="p">,</span> <span class="n">candidates_positions</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Euclidean distances.</span>
 
 <span class="sd">    This emulates scipy.spatial.distance.cdist, but avoids an (overkill) dependency on scipy.</span>
@@ -915,12 +915,12 @@
 <span class="sd">        array([[0.80622577, 1.1045361 , 0.89442719, 1.36014705],</span>
 <span class="sd">               [0.6       , 1.04403065, 1.3       , 0.98994949],</span>
 <span class="sd">               [0.89442719, 1.3892444 , 1.62788206, 0.9486833 ]])</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(((</span><span class="n">voters_positions</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">candidates_positions</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">powerset</span><span class="p">(</span><span class="n">lst</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Subsequences of the list from shortest to longest.</span>
+<span class="w">    </span><span class="sd">"""Subsequences of the list from shortest to longest.</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
@@ -944,7 +944,7 @@
 <span class="sd">        (1, 3)</span>
 <span class="sd">        (2, 3)</span>
 <span class="sd">        (1, 2, 3)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="n">combinations</span><span class="p">(</span><span class="n">lst</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">min_size</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
 </pre></div>
 

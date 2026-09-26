@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>MyLog &#8212; SVVAMP 0.14.0 documentation</title>
+    <title>MyLog &#8212; SVVAMP 0.15.0 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=9e420a66"></script>
+    <script src="../../_static/documentation_options.js?v=ef97403f"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -49,7 +49,7 @@
     <link rel="prev" title="ExperimentsCompiler" href="../meta/experiments_compiler.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.14.0" />
+  <meta name="docsearch:version" content="0.15.0" />
   </head>
   
   
@@ -111,7 +111,7 @@
   
   
   
-    <p class="title logo__title">SVVAMP 0.14.0 documentation</p>
+    <p class="title logo__title">SVVAMP 0.15.0 documentation</p>
   
 </a></div>
     
@@ -414,6 +414,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../rules/rule_borda.html">RuleBorda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../rules/rule_bucklin.html">RuleBucklin</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../rules/rule_condorcet_abs_irv.html">RuleCondorcetAbsIRV</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_condorcet_constant.html">RuleCondorcetConstant</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_condorcet_dictatorship.html">RuleCondorcetDictatorship</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_condorcet_duel.html">RuleCondorcetDuel</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../rules/rule_condorcet_vtb_irv.html">RuleCondorcetVtbIRV</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../rules/rule_coombs.html">RuleCoombs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../rules/rule_copeland.html">RuleCopeland</a></li>
@@ -539,8 +542,8 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The message to display.</p></li>
-<li><p><strong>detail_level</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The level of detail of the message. The more it is, the less important is the message. Typically:
+<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The message to display.</p></li>
+<li><p><strong>detail_level</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The level of detail of the message. The more it is, the less important is the message. Typically:
 * 1: Beginning of a method (except a simple get).
 * 2: Big steps of calculation.
 * 3: Computations inside loop (very verbose log).
@@ -550,8 +553,8 @@ It is not recommended to use detail_level = 0 or lower.</p></li>
 </dl>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.utils.my_log</span><span class="w"> </span><span class="kn">import</span> <span class="n">MyLog</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">my_log_object</span> <span class="o">=</span> <span class="n">MyLog</span><span class="p">(</span><span class="n">log_identity</span><span class="o">=</span><span class="s2">&quot;COMMENDATORE&quot;</span><span class="p">,</span> <span class="n">log_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">my_log_object</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Don Giovanni!&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_log_object</span> <span class="o">=</span> <span class="n">MyLog</span><span class="p">(</span><span class="n">log_identity</span><span class="o">=</span><span class="s2">"COMMENDATORE"</span><span class="p">,</span> <span class="n">log_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_log_object</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">"Don Giovanni!"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="go">COMMENDATORE: Don Giovanni!</span>
 </pre></div>
 </div>
@@ -565,17 +568,17 @@ It is not recommended to use detail_level = 0 or lower.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
-<li><p><strong>variable</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><em>object</em></a>) – Variable to be displayed.</p></li>
-<li><p><strong>detail_level</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Cf. <a class="reference internal" href="#svvamp.MyLog.mylog" title="svvamp.MyLog.mylog"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mylog()</span></code></a>.</p></li>
+<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
+<li><p><strong>variable</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.14)"><em>object</em></a>) – Variable to be displayed.</p></li>
+<li><p><strong>detail_level</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Cf. <a class="reference internal" href="#svvamp.MyLog.mylog" title="svvamp.MyLog.mylog"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mylog()</span></code></a>.</p></li>
 </ul>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.utils.my_log</span><span class="w"> </span><span class="kn">import</span> <span class="n">MyLog</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">my_log_object</span> <span class="o">=</span> <span class="n">MyLog</span><span class="p">(</span><span class="n">log_identity</span><span class="o">=</span><span class="s2">&quot;MAGIC_SQUARE&quot;</span><span class="p">,</span> <span class="n">log_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">my_log_object</span><span class="o">.</span><span class="n">mylogm</span><span class="p">(</span><span class="s2">&quot;A nice matrix:&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">]]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_log_object</span> <span class="o">=</span> <span class="n">MyLog</span><span class="p">(</span><span class="n">log_identity</span><span class="o">=</span><span class="s2">"MAGIC_SQUARE"</span><span class="p">,</span> <span class="n">log_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_log_object</span><span class="o">.</span><span class="n">mylogm</span><span class="p">(</span><span class="s2">"A nice matrix:"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">]]))</span>
 <span class="go">MAGIC_SQUARE: A nice matrix:</span>
 <span class="go">[[2 7 6]</span>
 <span class="go"> [9 5 1]</span>
@@ -591,16 +594,16 @@ It is not recommended to use detail_level = 0 or lower.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
-<li><p><strong>variable</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><em>object</em></a>) – Variable to be displayed.</p></li>
-<li><p><strong>detail_level</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Cf. <a class="reference internal" href="#svvamp.MyLog.mylog" title="svvamp.MyLog.mylog"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mylog()</span></code></a>.</p></li>
+<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
+<li><p><strong>variable</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.14)"><em>object</em></a>) – Variable to be displayed.</p></li>
+<li><p><strong>detail_level</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Cf. <a class="reference internal" href="#svvamp.MyLog.mylog" title="svvamp.MyLog.mylog"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mylog()</span></code></a>.</p></li>
 </ul>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.utils.my_log</span><span class="w"> </span><span class="kn">import</span> <span class="n">MyLog</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">my_log_object</span> <span class="o">=</span> <span class="n">MyLog</span><span class="p">(</span><span class="n">log_identity</span><span class="o">=</span><span class="s2">&quot;HITCHHIKER&quot;</span><span class="p">,</span> <span class="n">log_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">my_log_object</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;The answer is&quot;</span><span class="p">,</span> <span class="mi">42</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_log_object</span> <span class="o">=</span> <span class="n">MyLog</span><span class="p">(</span><span class="n">log_identity</span><span class="o">=</span><span class="s2">"HITCHHIKER"</span><span class="p">,</span> <span class="n">log_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_log_object</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">"The answer is"</span><span class="p">,</span> <span class="mi">42</span><span class="p">)</span>
 <span class="go">HITCHHIKER: The answer is 42</span>
 </pre></div>
 </div>

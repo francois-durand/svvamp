@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>svvamp.rules.rule_iterated_bucklin &#8212; SVVAMP 0.14.0 documentation</title>
+    <title>svvamp.rules.rule_iterated_bucklin &#8212; SVVAMP 0.15.0 documentation</title>
   
   
   
@@ -37,7 +37,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=9e420a66"></script>
+    <script src="../../../_static/documentation_options.js?v=ef97403f"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -46,7 +46,7 @@
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.14.0" />
+  <meta name="docsearch:version" content="0.15.0" />
   </head>
   
   
@@ -108,7 +108,7 @@
   
   
   
-    <p class="title logo__title">SVVAMP 0.14.0 documentation</p>
+    <p class="title logo__title">SVVAMP 0.15.0 documentation</p>
   
 </a></div>
     
@@ -424,7 +424,7 @@
                   
   <h1>Source code for svvamp.rules.rule_iterated_bucklin</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 <span class="sd">Created on 7 dec. 2018, 16:35</span>
 <span class="sd">Copyright François Durand 2014-2018</span>
 <span class="sd">fradurand@gmail.com</span>
@@ -443,7 +443,7 @@
 
 <span class="sd">    You should have received a copy of the GNU General Public License</span>
 <span class="sd">    along with SVVAMP.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.rules.rule</span><span class="w"> </span><span class="kn">import</span> <span class="n">Rule</span>
@@ -454,18 +454,18 @@
 <div class="viewcode-block" id="RuleIteratedBucklin">
 <a class="viewcode-back" href="../../../reference/rules/rule_iterated_bucklin.html#svvamp.RuleIteratedBucklin">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">RuleIteratedBucklin</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Iterated Bucklin method.</span>
+<span class="w">    </span><span class="sd">"""Iterated Bucklin method.</span>
 
 <span class="sd">    Options</span>
 <span class="sd">    -------</span>
 <span class="sd">        &gt;&gt;&gt; RuleIteratedBucklin.print_options_parameters()</span>
-<span class="sd">        cm_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
-<span class="sd">        icm_option: [&#39;lazy&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="sd">        cm_option: ['lazy', 'exact']. Default: 'lazy'.</span>
+<span class="sd">        icm_option: ['lazy']. Default: 'lazy'.</span>
 <span class="sd">        iia_subset_maximum_size: is_number. Default: 2.</span>
-<span class="sd">        im_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="sd">        im_option: ['lazy', 'exact']. Default: 'lazy'.</span>
 <span class="sd">        precheck_heuristic: is_bool. Default: True.</span>
-<span class="sd">        tm_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;exact&#39;.</span>
-<span class="sd">        um_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="sd">        tm_option: ['lazy', 'exact']. Default: 'exact'.</span>
+<span class="sd">        um_option: ['lazy', 'exact']. Default: 'lazy'.</span>
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
@@ -476,15 +476,15 @@
 <span class="sd">    Adjusted median Borda score:</span>
 
 <span class="sd">        Let ``med_c`` be the median Borda score for candidate ``c``. Let ``x_c`` the number of voters who put a lower</span>
-<span class="sd">        Borda score to ``c``. Then ``c``&#39;s adjusted median is ``med_c - x_c / (n_v + 1)``.</span>
+<span class="sd">        Borda score to ``c``. Then ``c``'s adjusted median is ``med_c - x_c / (n_v + 1)``.</span>
 
 <span class="sd">        If ``med_c &gt; med_d``, then it is also true for the adjusted median. If ``med_c = med_d``, then ``c`` has a</span>
 <span class="sd">        better adjusted median iff ``x_c &lt; x_d``, i.e. if more voters give to ``c`` the Borda score ``med_c`` or</span>
 <span class="sd">        higher.</span>
 
 <span class="sd">        So, the best candidate by adjusted median is the :class:`~Bucklin` winner. Here, at each round,</span>
-<span class="sd">        we eliminate the candidate with lowest adjusted median Borda score, which justifies the name of &quot;Iterated</span>
-<span class="sd">        Bucklin method&quot;.</span>
+<span class="sd">        we eliminate the candidate with lowest adjusted median Borda score, which justifies the name of "Iterated</span>
+<span class="sd">        Bucklin method".</span>
 
 <span class="sd">    Unlike Baldwin method (= Iterated Borda), Iterated Bucklin does not meet the Condorcet criterion. Indeed,</span>
 <span class="sd">    a Condorcet winner may have the (strictly) worst median ranking.</span>
@@ -726,10 +726,10 @@
 <span class="sd">        [0. 0. 1.]</span>
 <span class="sd">        sufficient_coalition_size_cm =</span>
 <span class="sd">        [0. 2. 3.]</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
-    <span class="n">full_name</span> <span class="o">=</span> <span class="s2">&quot;Iterated Bucklin&quot;</span>
-    <span class="n">abbreviation</span> <span class="o">=</span> <span class="s2">&quot;IB&quot;</span>
+    <span class="n">full_name</span> <span class="o">=</span> <span class="s2">"Iterated Bucklin"</span>
+    <span class="n">abbreviation</span> <span class="o">=</span> <span class="s2">"IB"</span>
 
     <span class="n">options_parameters</span> <span class="o">=</span> <span class="n">Rule</span><span class="o">.</span><span class="n">options_parameters</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
@@ -737,13 +737,13 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">with_two_candidates_reduces_to_plurality</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">is_based_on_rk</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">log_identity</span><span class="o">=</span><span class="s2">&quot;ITERATED_BUCKLIN&quot;</span><span class="p">,</span>
+            <span class="n">log_identity</span><span class="o">=</span><span class="s2">"ITERATED_BUCKLIN"</span><span class="p">,</span>
             <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
         <span class="p">)</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_count_ballots_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Count ballots&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">"Count ballots"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">scores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">))</span>
         <span class="n">worst_to_best</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">is_eliminated</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
@@ -765,28 +765,28 @@
         <span class="n">w</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">is_eliminated</span><span class="p">))</span>
         <span class="n">worst_to_best</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
         <span class="n">candidates_by_scores_best_to_worst</span> <span class="o">=</span> <span class="n">worst_to_best</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;scores&quot;</span><span class="p">:</span> <span class="n">scores</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">:</span> <span class="n">w</span><span class="p">,</span> <span class="s2">&quot;candidates_by_scores_best_to_worst&quot;</span><span class="p">:</span> <span class="n">candidates_by_scores_best_to_worst</span><span class="p">}</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">"scores"</span><span class="p">:</span> <span class="n">scores</span><span class="p">,</span> <span class="s2">"w"</span><span class="p">:</span> <span class="n">w</span><span class="p">,</span> <span class="s2">"candidates_by_scores_best_to_worst"</span><span class="p">:</span> <span class="n">candidates_by_scores_best_to_worst</span><span class="p">}</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">scores_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;2d array of integers. ``scores[r, c]`` is the adjusted median Borda score of candidate ``c`` at</span>
+<span class="w">        </span><span class="sd">"""2d array of integers. ``scores[r, c]`` is the adjusted median Borda score of candidate ``c`` at</span>
 <span class="sd">        elimination round ``r``.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s2">&quot;scores&quot;</span><span class="p">]</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s2">"scores"</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">w_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s2">&quot;w&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s2">"w"</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">candidates_by_scores_best_to_worst_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of integers. Candidates are sorted according to their order of elimination.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s2">&quot;candidates_by_scores_best_to_worst&quot;</span><span class="p">]</span>
+<span class="w">        </span><span class="sd">"""1d array of integers. Candidates are sorted according to their order of elimination."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s2">"candidates_by_scores_best_to_worst"</span><span class="p">]</span>
 
     <span class="c1"># noinspection PyProtectedMember</span>
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_one_v_might_be_pivotal_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
 <span class="sd">        ...     [0, 1, 2],</span>
 <span class="sd">        ...     [0, 2, 1],</span>
@@ -797,14 +797,14 @@
 <span class="sd">        &gt;&gt;&gt; rule = RuleIteratedBucklin()(profile)</span>
 <span class="sd">        &gt;&gt;&gt; rule._one_v_might_be_pivotal_</span>
 <span class="sd">        False</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">scores_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">)</span>
         <span class="n">is_eliminated</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
         <span class="n">preferences_borda_temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_borda_rk</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;Pre-testing pivotality: round r =&quot;</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">"Pre-testing pivotality: round r ="</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="n">loser_sincere</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates_by_scores_best_to_worst_</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span> <span class="o">-</span> <span class="n">r</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;Pre-testing pivotality: loser_sincere =&quot;</span><span class="p">,</span> <span class="n">loser_sincere</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">"Pre-testing pivotality: loser_sincere ="</span><span class="p">,</span> <span class="n">loser_sincere</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="c1"># At worst, one manipulator can put one ``c`` from top to bottom or from bottom to top. Can this change the</span>
             <span class="c1"># loser of this round?</span>
             <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">):</span>
@@ -821,16 +821,16 @@
                     <span class="n">x</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">preferences_borda_temp</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">median</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
                 <span class="n">scores_r</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">median</span> <span class="o">-</span> <span class="n">x</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
             <span class="n">loser</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">scores_r</span> <span class="o">==</span> <span class="n">scores_r</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">initial</span><span class="o">=</span><span class="kc">None</span><span class="p">))[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">&quot;Pre-testing pivotality: loser =&quot;</span><span class="p">,</span> <span class="n">loser</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylogv</span><span class="p">(</span><span class="s2">"Pre-testing pivotality: loser ="</span><span class="p">,</span> <span class="n">loser</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">loser</span> <span class="o">!=</span> <span class="n">loser_sincere</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;There might be a pivotal voter&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">"There might be a pivotal voter"</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
                 <span class="k">return</span> <span class="kc">True</span>
             <span class="n">is_eliminated</span><span class="p">[</span><span class="n">loser</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="n">preferences_borda_temp</span><span class="p">[</span>
                 <span class="n">np</span><span class="o">.</span><span class="n">less</span><span class="p">(</span><span class="n">preferences_borda_temp</span><span class="p">,</span> <span class="n">preferences_borda_temp</span><span class="p">[:,</span> <span class="n">loser</span><span class="p">][:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">])</span>
             <span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;There is no pivotal voter&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">"There is no pivotal voter"</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">False</span>
 
     <span class="nd">@cached_property</span>

@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>svvamp.rules.rule_plurality_with_runoff &#8212; SVVAMP 0.14.0 documentation</title>
+    <title>svvamp.rules.rule_plurality_with_runoff &#8212; SVVAMP 0.15.0 documentation</title>
   
   
   
@@ -37,7 +37,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=9e420a66"></script>
+    <script src="../../../_static/documentation_options.js?v=ef97403f"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -46,7 +46,7 @@
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.14.0" />
+  <meta name="docsearch:version" content="0.15.0" />
   </head>
   
   
@@ -108,7 +108,7 @@
   
   
   
-    <p class="title logo__title">SVVAMP 0.14.0 documentation</p>
+    <p class="title logo__title">SVVAMP 0.15.0 documentation</p>
   
 </a></div>
     
@@ -424,7 +424,7 @@
                   
   <h1>Source code for svvamp.rules.rule_plurality_with_runoff</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 <span class="sd">Created on 11 dec. 2018, 13:39</span>
 <span class="sd">Copyright François Durand 2014-2018</span>
 <span class="sd">fradurand@gmail.com</span>
@@ -443,7 +443,7 @@
 
 <span class="sd">    You should have received a copy of the GNU General Public License</span>
 <span class="sd">    along with SVVAMP.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.rules.rule</span><span class="w"> </span><span class="kn">import</span> <span class="n">Rule</span>
@@ -454,18 +454,18 @@
 <div class="viewcode-block" id="RulePluralityWithRunoff">
 <a class="viewcode-back" href="../../../reference/rules/rule_plurality_with_runoff.html#svvamp.RulePluralityWithRunoff">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">RulePluralityWithRunoff</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plurality with runoff.</span>
+<span class="w">    </span><span class="sd">"""Plurality with runoff.</span>
 
 <span class="sd">    Options</span>
 <span class="sd">    -------</span>
 <span class="sd">        &gt;&gt;&gt; RulePluralityWithRunoff.print_options_parameters()</span>
-<span class="sd">        cm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
-<span class="sd">        icm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        cm_option: ['exact']. Default: 'exact'.</span>
+<span class="sd">        icm_option: ['exact']. Default: 'exact'.</span>
 <span class="sd">        iia_subset_maximum_size: is_number. Default: 2.</span>
-<span class="sd">        im_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        im_option: ['exact']. Default: 'exact'.</span>
 <span class="sd">        precheck_heuristic: [False]. Default: False.</span>
-<span class="sd">        tm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
-<span class="sd">        um_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        tm_option: ['exact']. Default: 'exact'.</span>
+<span class="sd">        um_option: ['exact']. Default: 'exact'.</span>
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
@@ -705,20 +705,20 @@
 <span class="sd">        [0. 2. 4.]</span>
 <span class="sd">        sufficient_coalition_size_cm =</span>
 <span class="sd">        [0. 2. 4.]</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
-    <span class="n">full_name</span> <span class="o">=</span> <span class="s2">&quot;Plurality with Runoff&quot;</span>
-    <span class="n">abbreviation</span> <span class="o">=</span> <span class="s2">&quot;PR&quot;</span>
+    <span class="n">full_name</span> <span class="o">=</span> <span class="s2">"Plurality with Runoff"</span>
+    <span class="n">abbreviation</span> <span class="o">=</span> <span class="s2">"PR"</span>
 
     <span class="n">options_parameters</span> <span class="o">=</span> <span class="n">Rule</span><span class="o">.</span><span class="n">options_parameters</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">options_parameters</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
         <span class="p">{</span>
-            <span class="s2">&quot;im_option&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;exact&quot;</span><span class="p">],</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;exact&quot;</span><span class="p">},</span>
-            <span class="s2">&quot;tm_option&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;exact&quot;</span><span class="p">],</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;exact&quot;</span><span class="p">},</span>
-            <span class="s2">&quot;um_option&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;exact&quot;</span><span class="p">],</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;exact&quot;</span><span class="p">},</span>
-            <span class="s2">&quot;icm_option&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;exact&quot;</span><span class="p">],</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;exact&quot;</span><span class="p">},</span>
-            <span class="s2">&quot;cm_option&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;exact&quot;</span><span class="p">],</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;exact&quot;</span><span class="p">},</span>
-            <span class="s2">&quot;precheck_heuristic&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="kc">False</span><span class="p">],</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+            <span class="s2">"im_option"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"allowed"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"exact"</span><span class="p">],</span> <span class="s2">"default"</span><span class="p">:</span> <span class="s2">"exact"</span><span class="p">},</span>
+            <span class="s2">"tm_option"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"allowed"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"exact"</span><span class="p">],</span> <span class="s2">"default"</span><span class="p">:</span> <span class="s2">"exact"</span><span class="p">},</span>
+            <span class="s2">"um_option"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"allowed"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"exact"</span><span class="p">],</span> <span class="s2">"default"</span><span class="p">:</span> <span class="s2">"exact"</span><span class="p">},</span>
+            <span class="s2">"icm_option"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"allowed"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"exact"</span><span class="p">],</span> <span class="s2">"default"</span><span class="p">:</span> <span class="s2">"exact"</span><span class="p">},</span>
+            <span class="s2">"cm_option"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"allowed"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"exact"</span><span class="p">],</span> <span class="s2">"default"</span><span class="p">:</span> <span class="s2">"exact"</span><span class="p">},</span>
+            <span class="s2">"precheck_heuristic"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"allowed"</span><span class="p">:</span> <span class="p">[</span><span class="kc">False</span><span class="p">],</span> <span class="s2">"default"</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
         <span class="p">}</span>
     <span class="p">)</span>
 
@@ -729,7 +729,7 @@
             <span class="n">precheck_um</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
             <span class="n">precheck_icm</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
             <span class="n">precheck_tm</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-            <span class="n">log_identity</span><span class="o">=</span><span class="s2">&quot;PLURALITY_WITH_RUNOFF&quot;</span><span class="p">,</span>
+            <span class="n">log_identity</span><span class="o">=</span><span class="s2">"PLURALITY_WITH_RUNOFF"</span><span class="p">,</span>
             <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
         <span class="p">)</span>
 
@@ -737,7 +737,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_count_ballots_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Count ballots&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">"Count ballots"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="c1"># First round</span>
         <span class="n">scores_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">plurality_scores_rk</span><span class="p">)</span>
         <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">scores_r</span><span class="p">)</span>
@@ -747,27 +747,27 @@
         <span class="n">selected_two</span> <span class="o">=</span> <span class="n">d</span>
         <span class="c1"># Second round</span>
         <span class="n">w</span> <span class="o">=</span> <span class="n">c</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_victories_rk_ctb</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">]</span> <span class="k">else</span> <span class="n">d</span>
-        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;w&quot;</span><span class="p">:</span> <span class="n">w</span><span class="p">,</span> <span class="s2">&quot;selected_one&quot;</span><span class="p">:</span> <span class="n">selected_one</span><span class="p">,</span> <span class="s2">&quot;selected_two&quot;</span><span class="p">:</span> <span class="n">selected_two</span><span class="p">}</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">"w"</span><span class="p">:</span> <span class="n">w</span><span class="p">,</span> <span class="s2">"selected_one"</span><span class="p">:</span> <span class="n">selected_one</span><span class="p">,</span> <span class="s2">"selected_two"</span><span class="p">:</span> <span class="n">selected_two</span><span class="p">}</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">selected_one_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Integer. The candidate with highest score at first round.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s2">&quot;selected_one&quot;</span><span class="p">]</span>
+<span class="w">        </span><span class="sd">"""Integer. The candidate with highest score at first round."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s2">"selected_one"</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">selected_two_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Integer. The candidate with second highest score at first round.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s2">&quot;selected_two&quot;</span><span class="p">]</span>
+<span class="w">        </span><span class="sd">"""Integer. The candidate with second highest score at first round."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s2">"selected_two"</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">w_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s2">&quot;w&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s2">"w"</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">ballots_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;2d array of integers. ``ballots[v, r]`` is the candidate for which voter ``v`` votes at round ``r``,</span>
+<span class="w">        </span><span class="sd">"""2d array of integers. ``ballots[v, r]`` is the candidate for which voter ``v`` votes at round ``r``,</span>
 <span class="sd">        where ``r`` = 0 (first round) or ``r`` = 1 (second round).</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">ballots</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
         <span class="n">ballots</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">preferences_rk</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
         <span class="n">c</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_one_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_two_</span>
@@ -777,9 +777,9 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">scores_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;2d array. ``scores[r, c]`` is the number of voters who vote for candidate ``c`` at round ``r``,</span>
+<span class="w">        </span><span class="sd">"""2d array. ``scores[r, c]`` is the number of voters who vote for candidate ``c`` at round ``r``,</span>
 <span class="sd">        where ``r`` = 0 (first round) or ``r`` = 1 (second round).</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">scores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">))</span>
         <span class="n">scores</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">plurality_scores_rk</span>
         <span class="n">c</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_one_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_two_</span>
@@ -789,11 +789,11 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">candidates_by_scores_best_to_worst_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of integers. ``candidates_by_scores_best_to_worst[k]`` is the candidate with ``k``-th</span>
+<span class="w">        </span><span class="sd">"""1d array of integers. ``candidates_by_scores_best_to_worst[k]`` is the candidate with ``k``-th</span>
 <span class="sd">        best score. Finalists are sorted by their score at second round. Other candidates are sorted by their score</span>
 <span class="sd">        at first round.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Count candidates_by_scores_best_to_worst&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">"Count candidates_by_scores_best_to_worst"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scores_</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
 
     <span class="c1"># %% Manipulation criteria of the voting system</span>
@@ -805,7 +805,7 @@
     <span class="c1"># %% Individual manipulation (IM)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_compute_im_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute IM: is_im, candidates_im, _voters_im and v_im_for_c.</span>
+<span class="w">        </span><span class="sd">"""Compute IM: is_im, candidates_im, _voters_im and v_im_for_c.</span>
 
 <span class="sd">        For Plurality with Runoff, since calculation is not so expensive, we compute everything, even if</span>
 <span class="sd">        complete_mode = False.</span>
@@ -856,8 +856,8 @@
 <span class="sd">                   [0., 0., 1.],</span>
 <span class="sd">                   [0., 0., 1.],</span>
 <span class="sd">                   [0., 0., 0.]])</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Compute IM&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">"Compute IM"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_im_was_computed_with_candidates</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_im_was_computed_with_voters</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_im_was_computed_full</span> <span class="o">=</span> <span class="kc">True</span>
@@ -870,9 +870,9 @@
         <span class="c1"># do better than her sincere voting.</span>
         <span class="c1">#</span>
         <span class="c1"># At first round, when ``v`` removes her sincere vote, a candidate ``z``, either ``w`` or ``y``,</span>
-        <span class="c1"># has the highest score (indeed, only one of them might lose 1 point). Whatever ``v``&#39;s strategic vote,</span>
+        <span class="c1"># has the highest score (indeed, only one of them might lose 1 point). Whatever ``v``'s strategic vote,</span>
         <span class="c1"># ``z`` will be selected for the second round (either as first selected or second selected). The only thing</span>
-        <span class="c1"># ``v`` can do is choose ``z``&#39;s opponent, another candidate called ``c_test``. For that, the best she can do</span>
+        <span class="c1"># ``v`` can do is choose ``z``'s opponent, another candidate called ``c_test``. For that, the best she can do</span>
         <span class="c1">#  is vote for this ``c_test``.</span>
         <span class="c1">#</span>
         <span class="c1">#   * If ``z = w``, then choosing ``c_test = y`` is not interesting, because it leads to a second round</span>
@@ -929,7 +929,7 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">_is_im</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_compute_im_v_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">c_is_wanted</span><span class="p">,</span> <span class="n">stop_if_true</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_compute_im_</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_compute_im_</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 
     <span class="c1"># %% Trivial Manipulation (TM)</span>
 
@@ -938,7 +938,7 @@
     <span class="c1"># %% Unison manipulation (UM)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_um_main_work_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        &gt;&gt;&gt; profile = Profile([</span>
 <span class="sd">        ...     [0, 2, 1],</span>
 <span class="sd">        ...     [0, 2, 1],</span>
@@ -1019,7 +1019,7 @@
 <span class="sd">        &gt;&gt;&gt; rule = RulePluralityWithRunoff()(profile)</span>
 <span class="sd">        &gt;&gt;&gt; rule.candidates_um_</span>
 <span class="sd">        array([0., 0., 0., 0., 1., 0., 0.])</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">n_m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_ut</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)[</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span>
         <span class="n">n_s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span> <span class="o">-</span> <span class="n">n_m</span>
         <span class="n">ballots_first_round_s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ballots_</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_wants_to_help_c_</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]),</span> <span class="mi">0</span><span class="p">]</span>
@@ -1032,7 +1032,7 @@
             <span class="c1"># Then ``c`` is either ``selected_two_s`` or another candidate. After unison manipulation,</span>
             <span class="c1"># ``selected_one_s`` will go to second round anyway (either as first or second selected). So the only</span>
             <span class="c1"># interesting strategy at first round is to vote for ``c``. In that case, UM is equivalent to TM.</span>
-            <span class="c1"># N.B.: the following &#39;if&#39; is also correct when ``selected_two_s = c``.</span>
+            <span class="c1"># N.B.: the following 'if' is also correct when ``selected_two_s = c``.</span>
             <span class="k">if</span> <span class="n">scores_first_round_s</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">+</span> <span class="n">n_m</span> <span class="o">&lt;</span> <span class="n">scores_first_round_s</span><span class="p">[</span><span class="n">selected_two_s</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">selected_two_s</span> <span class="o">&lt;</span> <span class="n">c</span><span class="p">):</span>
                 <span class="c1"># c cannot go to second round</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_um</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
@@ -1050,11 +1050,11 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_um</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
                 <span class="k">return</span>
-        <span class="c1"># Now we know that ``c`` is ``selected_one_s``. So, manipulators can try to choose ``c``&#39;s opponent for</span>
+        <span class="c1"># Now we know that ``c`` is ``selected_one_s``. So, manipulators can try to choose ``c``'s opponent for</span>
         <span class="c1"># second round. ``d`` will be any possible opponent of ``c`` during the second round.</span>
         <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">):</span>
             <span class="c1"># First round</span>
-            <span class="c1"># N.B.: the following &#39;if&#39; is also correct when ``selected_two_s = d``.</span>
+            <span class="c1"># N.B.: the following 'if' is also correct when ``selected_two_s = d``.</span>
             <span class="k">if</span> <span class="n">scores_first_round_s</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">+</span> <span class="n">n_m</span> <span class="o">&lt;</span> <span class="n">scores_first_round_s</span><span class="p">[</span><span class="n">selected_two_s</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">selected_two_s</span> <span class="o">&lt;</span> <span class="n">c</span><span class="p">):</span>
                 <span class="c1"># d cannot go to second round</span>
                 <span class="k">continue</span>
@@ -1078,7 +1078,7 @@
     <span class="c1"># %% Coalition Manipulation (CM)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_cm_main_work_c_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">optimize_bounds</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=[</span>
 <span class="sd">            ...     [0, 1, 2],</span>
 <span class="sd">            ...     [0, 1, 2],</span>
@@ -1151,7 +1151,7 @@
 <span class="sd">            &gt;&gt;&gt; rule._cm_main_work_c_(c=0, optimize_bounds=True)</span>
 <span class="sd">            &gt;&gt;&gt; float(rule._sufficient_coalition_size_cm[0])</span>
 <span class="sd">            0.0</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">n_s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_v</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_ut</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)[</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">]</span>
         <span class="n">ballots_first_round_s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ballots_</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_wants_to_help_c_</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]),</span> <span class="mi">0</span><span class="p">]</span>
         <span class="n">scores_first_round_s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">ballots_first_round_s</span><span class="p">,</span> <span class="n">minlength</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span><span class="p">)</span>
@@ -1183,7 +1183,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">,</span>
                 <span class="n">c</span><span class="p">,</span>
                 <span class="nb">max</span><span class="p">(</span><span class="n">n_m_first</span><span class="p">,</span> <span class="n">n_m_second</span><span class="p">),</span>
-                <span class="s2">&quot;CM: Update sufficient_coalition_size_cm[c] =&quot;</span><span class="p">,</span>
+                <span class="s2">"CM: Update sufficient_coalition_size_cm[c] ="</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sufficient_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">[</span><span class="n">c</span><span class="p">]:</span>
                 <span class="k">return</span>
@@ -1191,12 +1191,12 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">theta_critical_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 1, 2, 3]])</span>
 <span class="sd">        &gt;&gt;&gt; rule = RulePluralityWithRunoff()(profile)</span>
 <span class="sd">        &gt;&gt;&gt; rule.theta_critical_</span>
 <span class="sd">        0.058823529411764705</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">n_c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">n_c</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">n_c</span> <span class="o">-</span> <span class="mi">3</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">5</span> <span class="o">*</span> <span class="n">n_c</span> <span class="o">-</span> <span class="mi">3</span><span class="p">)</span></div>
 

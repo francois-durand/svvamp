@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>History &#8212; SVVAMP 0.14.0 documentation</title>
+    <title>History &#8212; SVVAMP 0.15.0 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=9e420a66"></script>
+    <script src="_static/documentation_options.js?v=ef97403f"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -48,7 +48,7 @@
     <link rel="prev" title="Credits" href="authors.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.14.0" />
+  <meta name="docsearch:version" content="0.15.0" />
   </head>
   
   
@@ -110,7 +110,7 @@
   
   
   
-    <p class="title logo__title">SVVAMP 0.14.0 documentation</p>
+    <p class="title logo__title">SVVAMP 0.15.0 documentation</p>
   
 </a></div>
     
@@ -434,6 +434,29 @@
                   
   <section id="history">
 <h1>History<a class="headerlink" href="#history" title="Link to this heading">#</a></h1>
+<section id="simple-condorcet-consistent-rules-and-better-cm-algorithms-for-condorcet-irv-hybrids">
+<h2>0.15.0 (2026-09-26): Simple Condorcet-consistent rules and better CM algorithms for Condorcet-IRV hybrids<a class="headerlink" href="#simple-condorcet-consistent-rules-and-better-cm-algorithms-for-condorcet-irv-hybrids" title="Link to this heading">#</a></h2>
+<p>Rules:</p>
+<ul class="simple">
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">RuleCondorcetConstant</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleCondorcetDuel</span></code> and <code class="docutils literal notranslate"><span class="pre">RuleCondorcetDictatorship</span></code>: elect the Condorcet winner
+if she exists; otherwise, elect candidate 0, the winner of the duel between candidates 0 and 1, or the favorite
+candidate of voter 0, respectively. Their CM algorithms (options <code class="docutils literal notranslate"><span class="pre">fast</span></code> and <code class="docutils literal notranslate"><span class="pre">exact</span></code>) rely on the new function
+<code class="docutils literal notranslate"><span class="pre">svvamp.utils.prevent_condorcet_winner.prevent_condorcet_winner</span></code>, which decides whether a coalition can prevent
+any other candidate from being a Condorcet winner. Their UM algorithm is exact and polynomial (same function, with
+identical ballots). For <code class="docutils literal notranslate"><span class="pre">RuleCondorcetConstant</span></code> and <code class="docutils literal notranslate"><span class="pre">RuleCondorcetDictatorship</span></code>, IIA is also decided exactly in
+polynomial time.</p></li>
+<li><p>Improve the CM algorithms of <code class="docutils literal notranslate"><span class="pre">RuleBenham</span></code>, <code class="docutils literal notranslate"><span class="pre">RuleSmithIRV</span></code> and <code class="docutils literal notranslate"><span class="pre">RuleTideman</span></code>: when <code class="docutils literal notranslate"><span class="pre">RuleIRV</span></code> finds a
+manipulation, the manipulators’ ballots are also rebuilt from the elimination path (new function
+<code class="docutils literal notranslate"><span class="pre">svvamp.utils.ballots_from_elimination_path.ballots_from_elimination_path</span></code>): the top of the ballots follows the
+path until the sincere winner is eliminated, and the rest is filled with <code class="docutils literal notranslate"><span class="pre">c</span></code>, the other surviving candidates,
+the sincere winner, then the eliminated candidates. This decides many cases that were previously undecided.</p></li>
+</ul>
+<p>Miscellaneous:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Rule._reached_uncovered_code</span></code> now prints its message only once per rule class and method, and the new option
+<code class="docutils literal notranslate"><span class="pre">OPTIONS.PRINT_UNCOVERED_CODE</span></code> allows to silence it.</p></li>
+</ul>
+</section>
 <section id="rename-voting-rules">
 <h2>0.14.0 (2026-07-01): Rename voting rules<a class="headerlink" href="#rename-voting-rules" title="Link to this heading">#</a></h2>
 <p>Rules:</p>
@@ -923,6 +946,7 @@ diamond inheritance. Rename most classes, properties and methods.</p></li>
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-condorcet-consistent-rules-and-better-cm-algorithms-for-condorcet-irv-hybrids">0.15.0 (2026-09-26): Simple Condorcet-consistent rules and better CM algorithms for Condorcet-IRV hybrids</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rename-voting-rules">0.14.0 (2026-07-01): Rename voting rules</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-voting-rules-improved-cm-algorithms-and-new-condorcet-notions">0.13.0 (2026-03-05): New voting rules, improved CM algorithms, and new Condorcet notions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#accelerations-and-bug-fixes">0.12.0 (2025-02-19): Accelerations and Bug Fixes</a></li>

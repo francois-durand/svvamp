@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>RuleCopeland &#8212; SVVAMP 0.14.0 documentation</title>
+    <title>RuleCopeland &#8212; SVVAMP 0.15.0 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=9e420a66"></script>
+    <script src="../../_static/documentation_options.js?v=ef97403f"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -49,7 +49,7 @@
     <link rel="prev" title="RuleCoombs" href="rule_coombs.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.14.0" />
+  <meta name="docsearch:version" content="0.15.0" />
   </head>
   
   
@@ -111,7 +111,7 @@
   
   
   
-    <p class="title logo__title">SVVAMP 0.14.0 documentation</p>
+    <p class="title logo__title">SVVAMP 0.15.0 documentation</p>
   
 </a></div>
     
@@ -414,6 +414,9 @@
 <li class="toctree-l1"><a class="reference internal" href="rule_borda.html">RuleBorda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_bucklin.html">RuleBucklin</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_condorcet_abs_irv.html">RuleCondorcetAbsIRV</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rule_condorcet_constant.html">RuleCondorcetConstant</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rule_condorcet_dictatorship.html">RuleCondorcetDictatorship</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rule_condorcet_duel.html">RuleCondorcetDuel</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_condorcet_vtb_irv.html">RuleCondorcetVtbIRV</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_coombs.html">RuleCoombs</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">RuleCopeland</a></li>
@@ -523,20 +526,20 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>tie_break_rule</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – ‘lexico’ of ‘random’. Default: ‘lexico’. If <cite>tie_break_rule</cite> is ‘lexico’, then the candidate with the lowest
+<li><p><strong>tie_break_rule</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – ‘lexico’ of ‘random’. Default: ‘lexico’. If <cite>tie_break_rule</cite> is ‘lexico’, then the candidate with the lowest
 index is selected in case of a tie (usual behavior of SVVAMP for the other voting rules). If <cite>tie_break_rule</cite>
 is <cite>random</cite>, then each time a profile is loaded, a tie-break order over the candidates is drawn at random.
 This tie-break is used for the result of the sincere election, but also in case of manipulation.</p></li>
 <li><p><strong>Options</strong></p></li>
 <li><p><strong>-------</strong> – <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">RuleCopeland</span><span class="o">.</span><span class="n">print_options_parameters</span><span class="p">()</span>
-<span class="go">cm_option: [&#39;fast&#39;, &#39;exact&#39;]. Default: &#39;fast&#39;.</span>
-<span class="go">icm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="go">cm_option: ['fast', 'exact']. Default: 'fast'.</span>
+<span class="go">icm_option: ['exact']. Default: 'exact'.</span>
 <span class="go">iia_subset_maximum_size: is_number. Default: 2.</span>
-<span class="go">im_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="go">im_option: ['lazy', 'exact']. Default: 'lazy'.</span>
 <span class="go">precheck_heuristic: is_bool. Default: True.</span>
-<span class="go">tie_break_rule: [&#39;lexico&#39;, &#39;random&#39;]. Default: &#39;lexico&#39;.</span>
-<span class="go">tm_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;exact&#39;.</span>
-<span class="go">um_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="go">tie_break_rule: ['lexico', 'random']. Default: 'lexico'.</span>
+<span class="go">tm_option: ['lazy', 'exact']. Default: 'exact'.</span>
+<span class="go">um_option: ['lazy', 'exact']. Default: 'lazy'.</span>
 </pre></div>
 </div>
 </p></li>

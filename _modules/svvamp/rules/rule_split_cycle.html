@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>svvamp.rules.rule_split_cycle &#8212; SVVAMP 0.14.0 documentation</title>
+    <title>svvamp.rules.rule_split_cycle &#8212; SVVAMP 0.15.0 documentation</title>
   
   
   
@@ -37,7 +37,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=9e420a66"></script>
+    <script src="../../../_static/documentation_options.js?v=ef97403f"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -46,7 +46,7 @@
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.14.0" />
+  <meta name="docsearch:version" content="0.15.0" />
   </head>
   
   
@@ -108,7 +108,7 @@
   
   
   
-    <p class="title logo__title">SVVAMP 0.14.0 documentation</p>
+    <p class="title logo__title">SVVAMP 0.15.0 documentation</p>
   
 </a></div>
     
@@ -424,7 +424,7 @@
                   
   <h1>Source code for svvamp.rules.rule_split_cycle</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 <span class="sd">Created on 16 jul. 2021, 15:49</span>
 <span class="sd">Copyright François Durand 2014-2021</span>
 <span class="sd">fradurand@gmail.com</span>
@@ -443,7 +443,7 @@
 
 <span class="sd">    You should have received a copy of the GNU General Public License</span>
 <span class="sd">    along with SVVAMP.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">svvamp.rules.rule</span><span class="w"> </span><span class="kn">import</span> <span class="n">Rule</span>
@@ -454,18 +454,18 @@
 <div class="viewcode-block" id="RuleSplitCycle">
 <a class="viewcode-back" href="../../../reference/rules/rule_split_cycle.html#svvamp.RuleSplitCycle">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">RuleSplitCycle</span><span class="p">(</span><span class="n">Rule</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Split Cycle.</span>
+<span class="w">    </span><span class="sd">"""Split Cycle.</span>
 
 <span class="sd">    Options</span>
 <span class="sd">    -------</span>
 <span class="sd">        &gt;&gt;&gt; RuleSplitCycle.print_options_parameters()</span>
-<span class="sd">        cm_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
-<span class="sd">        icm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="sd">        cm_option: ['lazy', 'exact']. Default: 'lazy'.</span>
+<span class="sd">        icm_option: ['exact']. Default: 'exact'.</span>
 <span class="sd">        iia_subset_maximum_size: is_number. Default: 2.</span>
-<span class="sd">        im_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="sd">        im_option: ['lazy', 'exact']. Default: 'lazy'.</span>
 <span class="sd">        precheck_heuristic: is_bool. Default: True.</span>
-<span class="sd">        tm_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;exact&#39;.</span>
-<span class="sd">        um_option: [&#39;lazy&#39;, &#39;exact&#39;]. Default: &#39;lazy&#39;.</span>
+<span class="sd">        tm_option: ['lazy', 'exact']. Default: 'exact'.</span>
+<span class="sd">        um_option: ['lazy', 'exact']. Default: 'lazy'.</span>
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
@@ -485,7 +485,7 @@
 
 <span class="sd">    References</span>
 <span class="sd">    ----------</span>
-<span class="sd">    &#39;Split cycle: A new Condorcet consistent voting method independent of clones and immune to spoilers.&#39; Holliday</span>
+<span class="sd">    'Split cycle: A new Condorcet consistent voting method independent of clones and immune to spoilers.' Holliday</span>
 <span class="sd">    &amp; Pacuit, 2020.</span>
 
 <span class="sd">    Examples</span>
@@ -714,20 +714,20 @@
 <span class="sd">        [0. 1. 2.]</span>
 <span class="sd">        sufficient_coalition_size_cm =</span>
 <span class="sd">        [0. 2. 3.]</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
-    <span class="n">full_name</span> <span class="o">=</span> <span class="s2">&quot;Split Cycle&quot;</span>
-    <span class="n">abbreviation</span> <span class="o">=</span> <span class="s2">&quot;SC&quot;</span>
+    <span class="n">full_name</span> <span class="o">=</span> <span class="s2">"Split Cycle"</span>
+    <span class="n">abbreviation</span> <span class="o">=</span> <span class="s2">"SC"</span>
 
     <span class="n">options_parameters</span> <span class="o">=</span> <span class="n">Rule</span><span class="o">.</span><span class="n">options_parameters</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">options_parameters</span><span class="p">[</span><span class="s2">&quot;icm_option&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;exact&quot;</span><span class="p">],</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;exact&quot;</span><span class="p">}</span>
+    <span class="n">options_parameters</span><span class="p">[</span><span class="s2">"icm_option"</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"allowed"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"exact"</span><span class="p">],</span> <span class="s2">"default"</span><span class="p">:</span> <span class="s2">"exact"</span><span class="p">}</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">with_two_candidates_reduces_to_plurality</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">is_based_on_rk</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">precheck_icm</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-            <span class="n">log_identity</span><span class="o">=</span><span class="s2">&quot;SPLIT_CYCLE&quot;</span><span class="p">,</span>
+            <span class="n">log_identity</span><span class="o">=</span><span class="s2">"SPLIT_CYCLE"</span><span class="p">,</span>
             <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
         <span class="p">)</span>
 
@@ -736,7 +736,7 @@
     <span class="c1"># noinspection PyProtectedMember</span>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_count_ballot_aux</span><span class="p">(</span><span class="n">matrix_duels</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -750,7 +750,7 @@
 <span class="sd">            &gt;&gt;&gt; a, b, c, d, e, f = 1, 2, 3, 4, 5, 6</span>
 <span class="sd">            &gt;&gt;&gt; def cowinners(profile):</span>
 <span class="sd">            ...     results = RuleSplitCycle._count_ballot_aux(profile.matrix_duels_rk)</span>
-<span class="sd">            ...     my_better_or_tie_c = results[&#39;better_or_tie_c&#39;]</span>
+<span class="sd">            ...     my_better_or_tie_c = results['better_or_tie_c']</span>
 <span class="sd">            ...     return [int(cand) for cand in np.where(my_better_or_tie_c == np.max(my_better_or_tie_c))[0]]</span>
 
 <span class="sd">            &gt;&gt;&gt; profile = Profile(preferences_rk=</span>
@@ -877,7 +877,7 @@
 <span class="sd">            ... ))</span>
 <span class="sd">            &gt;&gt;&gt; cowinners(profile)</span>
 <span class="sd">            [0, 1, 3]</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">n_c</span> <span class="o">=</span> <span class="n">matrix_duels</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="c1"># Margin graph</span>
         <span class="n">margin_graph</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">matrix_duels</span> <span class="o">-</span> <span class="n">matrix_duels</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
@@ -897,34 +897,34 @@
                         <span class="n">strength</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">strength</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">k</span><span class="p">],</span> <span class="nb">min</span><span class="p">(</span><span class="n">strength</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> <span class="n">strength</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">k</span><span class="p">]))</span>
         <span class="c1"># Winners</span>
         <span class="n">better_or_tie_c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">strength</span> <span class="o">&gt;=</span> <span class="n">margin_graph</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="n">candidates_by_scores_best_to_worst</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="o">-</span><span class="n">better_or_tie_c</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;mergesort&quot;</span><span class="p">)</span>
+        <span class="n">candidates_by_scores_best_to_worst</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="o">-</span><span class="n">better_or_tie_c</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">"mergesort"</span><span class="p">)</span>
         <span class="n">winners</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">better_or_tie_c</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">better_or_tie_c</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">w</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">candidates_by_scores_best_to_worst</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
         <span class="k">return</span> <span class="p">{</span>
-            <span class="s2">&quot;w&quot;</span><span class="p">:</span> <span class="n">w</span><span class="p">,</span>
-            <span class="s2">&quot;winners&quot;</span><span class="p">:</span> <span class="n">winners</span><span class="p">,</span>
-            <span class="s2">&quot;margin_graph&quot;</span><span class="p">:</span> <span class="n">margin_graph</span><span class="p">,</span>
-            <span class="s2">&quot;strength&quot;</span><span class="p">:</span> <span class="n">strength</span><span class="p">,</span>
-            <span class="s2">&quot;better_or_tie_c&quot;</span><span class="p">:</span> <span class="n">better_or_tie_c</span><span class="p">,</span>
-            <span class="s2">&quot;candidates_by_scores_best_to_worst&quot;</span><span class="p">:</span> <span class="n">candidates_by_scores_best_to_worst</span><span class="p">,</span>
+            <span class="s2">"w"</span><span class="p">:</span> <span class="n">w</span><span class="p">,</span>
+            <span class="s2">"winners"</span><span class="p">:</span> <span class="n">winners</span><span class="p">,</span>
+            <span class="s2">"margin_graph"</span><span class="p">:</span> <span class="n">margin_graph</span><span class="p">,</span>
+            <span class="s2">"strength"</span><span class="p">:</span> <span class="n">strength</span><span class="p">,</span>
+            <span class="s2">"better_or_tie_c"</span><span class="p">:</span> <span class="n">better_or_tie_c</span><span class="p">,</span>
+            <span class="s2">"candidates_by_scores_best_to_worst"</span><span class="p">:</span> <span class="n">candidates_by_scores_best_to_worst</span><span class="p">,</span>
         <span class="p">}</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_count_ballots_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">&quot;Count ballots&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mylog</span><span class="p">(</span><span class="s2">"Count ballots"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballot_aux</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_</span><span class="o">.</span><span class="n">matrix_duels_rk</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">w_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s2">&quot;w&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s2">"w"</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">candidates_by_scores_best_to_worst_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s2">&quot;candidates_by_scores_best_to_worst&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s2">"candidates_by_scores_best_to_worst"</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">scores_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s2">&quot;better_or_tie_c&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_ballots_</span><span class="p">[</span><span class="s2">"better_or_tie_c"</span><span class="p">]</span>
 
     <span class="c1"># %% Manipulation criteria of the voting system</span>
 
@@ -951,17 +951,17 @@
         <span class="n">score_k_against_c</span> <span class="o">=</span> <span class="n">matrix_duels_sincere</span><span class="p">[</span><span class="n">is_not_c</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span>
         <span class="n">n_m_necessary</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">score_k_against_c</span> <span class="o">-</span> <span class="n">worst_defeat_k</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_necessary</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_m_necessary</span><span class="p">,</span> <span class="s2">&quot;CM: Preliminary check: necessary_coalition_size_cm =&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_necessary_coalition_size_cm</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n_m_necessary</span><span class="p">,</span> <span class="s2">"CM: Preliminary check: necessary_coalition_size_cm ="</span>
         <span class="p">)</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">theta_critical_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        &gt;&gt;&gt; profile = Profile(preferences_rk=[[0, 1, 2, 3]])</span>
 <span class="sd">        &gt;&gt;&gt; rule = RuleSplitCycle()(profile)</span>
 <span class="sd">        &gt;&gt;&gt; rule.theta_critical_</span>
 <span class="sd">        0.14285714285714285</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">7</span></div>
 
 </pre></div>

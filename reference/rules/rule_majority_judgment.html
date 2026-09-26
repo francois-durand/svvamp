@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>RuleMajorityJudgment &#8212; SVVAMP 0.14.0 documentation</title>
+    <title>RuleMajorityJudgment &#8212; SVVAMP 0.15.0 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=9e420a66"></script>
+    <script src="../../_static/documentation_options.js?v=ef97403f"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -49,7 +49,7 @@
     <link rel="prev" title="RuleKimRoush" href="rule_kim_roush.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.14.0" />
+  <meta name="docsearch:version" content="0.15.0" />
   </head>
   
   
@@ -111,7 +111,7 @@
   
   
   
-    <p class="title logo__title">SVVAMP 0.14.0 documentation</p>
+    <p class="title logo__title">SVVAMP 0.15.0 documentation</p>
   
 </a></div>
     
@@ -414,6 +414,9 @@
 <li class="toctree-l1"><a class="reference internal" href="rule_borda.html">RuleBorda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_bucklin.html">RuleBucklin</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_condorcet_abs_irv.html">RuleCondorcetAbsIRV</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rule_condorcet_constant.html">RuleCondorcetConstant</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rule_condorcet_dictatorship.html">RuleCondorcetDictatorship</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rule_condorcet_duel.html">RuleCondorcetDuel</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_condorcet_vtb_irv.html">RuleCondorcetVtbIRV</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_coombs.html">RuleCoombs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_copeland.html">RuleCopeland</a></li>
@@ -534,7 +537,7 @@
 always authorized, even if they are not multiples of <code class="xref py py-attr docutils literal notranslate"><span class="pre">step_grade</span></code>.</p></li>
 </ul>
 </p></li>
-<li><p><strong>rescale_grades</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – <p>Whether sincere voters rescale their utilities to produce grades.</p>
+<li><p><strong>rescale_grades</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – <p>Whether sincere voters rescale their utilities to produce grades.</p>
 <ul>
 <li><p>If <code class="docutils literal notranslate"><span class="pre">rescale_grades</span></code> = <code class="docutils literal notranslate"><span class="pre">True</span></code>, then each sincere voter <code class="docutils literal notranslate"><span class="pre">v</span></code> applies an affine transformation to send
 her utilities into the interval [<code class="xref py py-attr docutils literal notranslate"><span class="pre">min_grade</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">max_grade</span></code>].</p></li>
@@ -545,17 +548,17 @@ her utilities into the interval [<code class="xref py py-attr docutils literal n
 </p></li>
 <li><p><strong>Options</strong></p></li>
 <li><p><strong>-------</strong> – <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">RuleMajorityJudgment</span><span class="o">.</span><span class="n">print_options_parameters</span><span class="p">()</span>
-<span class="go">cm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
-<span class="go">icm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="go">cm_option: ['exact']. Default: 'exact'.</span>
+<span class="go">icm_option: ['exact']. Default: 'exact'.</span>
 <span class="go">iia_subset_maximum_size: is_number. Default: 2.</span>
-<span class="go">im_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="go">im_option: ['exact']. Default: 'exact'.</span>
 <span class="go">max_grade: isfinite. Default: 1.</span>
 <span class="go">min_grade: isfinite. Default: 0.</span>
 <span class="go">precheck_heuristic: [False]. Default: False.</span>
 <span class="go">rescale_grades: is_bool. Default: True.</span>
 <span class="go">step_grade: isfinite. Default: 0.</span>
-<span class="go">tm_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
-<span class="go">um_option: [&#39;exact&#39;]. Default: &#39;exact&#39;.</span>
+<span class="go">tm_option: ['exact']. Default: 'exact'.</span>
+<span class="go">um_option: ['exact']. Default: 'exact'.</span>
 </pre></div>
 </div>
 </p></li>

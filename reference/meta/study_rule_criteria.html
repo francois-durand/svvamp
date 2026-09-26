@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>StudyRuleCriteria &#8212; SVVAMP 0.14.0 documentation</title>
+    <title>StudyRuleCriteria &#8212; SVVAMP 0.15.0 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=9e420a66"></script>
+    <script src="../../_static/documentation_options.js?v=ef97403f"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -49,7 +49,7 @@
     <link rel="prev" title="StudyProfileCriteria" href="study_profile_criteria.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.14.0" />
+  <meta name="docsearch:version" content="0.15.0" />
   </head>
   
   
@@ -111,7 +111,7 @@
   
   
   
-    <p class="title logo__title">SVVAMP 0.14.0 documentation</p>
+    <p class="title logo__title">SVVAMP 0.15.0 documentation</p>
   
 </a></div>
     
@@ -414,6 +414,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../rules/rule_borda.html">RuleBorda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../rules/rule_bucklin.html">RuleBucklin</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../rules/rule_condorcet_abs_irv.html">RuleCondorcetAbsIRV</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_condorcet_constant.html">RuleCondorcetConstant</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_condorcet_dictatorship.html">RuleCondorcetDictatorship</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rules/rule_condorcet_duel.html">RuleCondorcetDuel</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../rules/rule_condorcet_vtb_irv.html">RuleCondorcetVtbIRV</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../rules/rule_coombs.html">RuleCoombs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../rules/rule_copeland.html">RuleCopeland</a></li>
@@ -523,12 +526,12 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>manipulation_criteria</strong> (<em>List</em><em> of </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Manipulation criteria that need to be studied. If None (default), then all criteria related to
+<li><p><strong>manipulation_criteria</strong> (<em>List</em><em> of </em><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Manipulation criteria that need to be studied. If None (default), then all criteria related to
 collective manipulation are taken: <cite>[‘is_tm_’, ‘is_um_’, ‘is_icm_’, ‘is_cm_’]</cite>. If [], then no criterion is
 taken. Note that by default, <cite>‘is_iia_’</cite> and <cite>‘is_im_’</cite> are NOT included.</p></li>
-<li><p><strong>manipulation_criteria_c</strong> (<em>List</em><em> of </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – This is where you put criteria such as <cite>‘candidates_cm_’</cite>, <cite>‘candidates_tm_’</cite>, etc.</p></li>
-<li><p><strong>manipulation_only</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If True, then result_criteria and utility criteria are ignored, i.e. set to [].</p></li>
-<li><p><strong>result_criteria</strong> (<em>List</em><em> of </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Result criteria that need to be studied. If None(default), then all criteria are taken:
+<li><p><strong>manipulation_criteria_c</strong> (<em>List</em><em> of </em><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – This is where you put criteria such as <cite>‘candidates_cm_’</cite>, <cite>‘candidates_tm_’</cite>, etc.</p></li>
+<li><p><strong>manipulation_only</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If True, then result_criteria and utility criteria are ignored, i.e. set to [].</p></li>
+<li><p><strong>result_criteria</strong> (<em>List</em><em> of </em><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Result criteria that need to be studied. If None(default), then all criteria are taken:
 <cite>[‘w_is_weak_condorcet_winner_’, ‘w_missed_weak_condorcet_winner_’, …]</cite>.</p></li>
 <li><p><strong>utility_criteria</strong> (<em>List</em>) – List of tuples  (criterion, func, name), where:
 criterion: the numerical data to be processed.
@@ -541,7 +544,7 @@ If utility_criteria is None (default), then use:
 (‘total_utility_w_’, np.min, ‘total_u_min’),
 (‘total_utility_w_’, np.mean, ‘total_u_mean’),
 (‘total_utility_w_’, np.std, ‘total_u_std’)]</cite>.</p></li>
-<li><p><strong>numerical_criteria</strong> (<em>List</em><em> of </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Other numerical criteria that need to be studied. These criteria must correspond to attributes in the rule
+<li><p><strong>numerical_criteria</strong> (<em>List</em><em> of </em><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Other numerical criteria that need to be studied. These criteria must correspond to attributes in the rule
 that output a pair (inf, sup), for example <cite>nb_candidates_cm_</cite> or <cite>worst_relative_welfare_with_cm_</cite>.</p></li>
 </ul>
 </dd>
@@ -552,7 +555,7 @@ that output a pair (inf, sup), for example <cite>nb_candidates_cm_</cite> or <ci
 <dd><p>Add a manipulation criterion</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>criterion</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p>
+<dd class="field-odd"><p><strong>criterion</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -562,8 +565,8 @@ that output a pair (inf, sup), for example <cite>nb_candidates_cm_</cite> or <ci
 <span class="gp">... </span>    <span class="n">utility_criteria</span><span class="o">=</span><span class="p">[],</span>
 <span class="gp">... </span>    <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[],</span>
 <span class="gp">... </span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">append_manipulation_criterion</span><span class="p">(</span><span class="s1">&#39;is_im_&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">append_manipulation_criterion</span><span class="p">(</span><span class="s1">&#39;is_iia_&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">append_manipulation_criterion</span><span class="p">(</span><span class="s1">'is_im_'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">append_manipulation_criterion</span><span class="p">(</span><span class="s1">'is_iia_'</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">study_rule_criteria</span><span class="p">)</span>
 <span class="go">StudyRuleCriteria with:</span>
 <span class="go">    manipulation_criteria:</span>
@@ -583,7 +586,7 @@ that output a pair (inf, sup), for example <cite>nb_candidates_cm_</cite> or <ci
 <dd><p>Add a manipulation criterion (for candidates)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>criterion</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p>
+<dd class="field-odd"><p><strong>criterion</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -594,8 +597,8 @@ that output a pair (inf, sup), for example <cite>nb_candidates_cm_</cite> or <ci
 <span class="gp">... </span>    <span class="n">utility_criteria</span><span class="o">=</span><span class="p">[],</span>
 <span class="gp">... </span>    <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[],</span>
 <span class="gp">... </span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">append_manipulation_criterion_c</span><span class="p">(</span><span class="s1">&#39;candidates_cm_&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">append_manipulation_criterion_c</span><span class="p">(</span><span class="s1">&#39;candidates_tm_&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">append_manipulation_criterion_c</span><span class="p">(</span><span class="s1">'candidates_cm_'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">append_manipulation_criterion_c</span><span class="p">(</span><span class="s1">'candidates_tm_'</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">study_rule_criteria</span><span class="p">)</span>
 <span class="go">StudyRuleCriteria with:</span>
 <span class="go">    manipulation_criteria: None</span>
@@ -615,7 +618,7 @@ that output a pair (inf, sup), for example <cite>nb_candidates_cm_</cite> or <ci
 <dd><p>Add a numerical criterion</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>criterion</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p>
+<dd class="field-odd"><p><strong>criterion</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -625,7 +628,7 @@ that output a pair (inf, sup), for example <cite>nb_candidates_cm_</cite> or <ci
 <span class="gp">... </span>    <span class="n">utility_criteria</span><span class="o">=</span><span class="p">[],</span>
 <span class="gp">... </span>    <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[],</span>
 <span class="gp">... </span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">append_numerical_criterion</span><span class="p">(</span><span class="s1">&#39;nb_candidates_cm_&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">append_numerical_criterion</span><span class="p">(</span><span class="s1">'nb_candidates_cm_'</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">study_rule_criteria</span><span class="p">)</span>
 <span class="go">StudyRuleCriteria with:</span>
 <span class="go">    manipulation_criteria: None</span>
@@ -644,7 +647,7 @@ that output a pair (inf, sup), for example <cite>nb_candidates_cm_</cite> or <ci
 <dd><p>Add a result criterion</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>criterion</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p>
+<dd class="field-odd"><p><strong>criterion</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -654,7 +657,7 @@ that output a pair (inf, sup), for example <cite>nb_candidates_cm_</cite> or <ci
 <span class="gp">... </span>    <span class="n">utility_criteria</span><span class="o">=</span><span class="p">[],</span>
 <span class="gp">... </span>    <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[],</span>
 <span class="gp">... </span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">append_result_criterion</span><span class="p">(</span><span class="s1">&#39;w_is_condorcet_admissible_&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">append_result_criterion</span><span class="p">(</span><span class="s1">'w_is_condorcet_admissible_'</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">study_rule_criteria</span><span class="p">)</span>
 <span class="go">StudyRuleCriteria with:</span>
 <span class="go">    manipulation_criteria: None</span>
@@ -674,9 +677,9 @@ that output a pair (inf, sup), for example <cite>nb_candidates_cm_</cite> or <ci
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>criterion</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The numerical data to be processed.</p></li>
+<li><p><strong>criterion</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The numerical data to be processed.</p></li>
 <li><p><strong>func</strong> (<em>callable</em>) – An aggregating function.</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name chosen for this pair criterion / aggregation function.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name chosen for this pair criterion / aggregation function.</p></li>
 </ul>
 </dd>
 </dl>
@@ -687,14 +690,14 @@ that output a pair (inf, sup), for example <cite>nb_candidates_cm_</cite> or <ci
 <span class="gp">... </span>    <span class="n">utility_criteria</span><span class="o">=</span><span class="p">[],</span>
 <span class="gp">... </span>    <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[],</span>
 <span class="gp">... </span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">append_utility_criterion</span><span class="p">(</span><span class="s1">&#39;total_utility_w_&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">,</span> <span class="s1">&#39;total_u_sum&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">append_utility_criterion</span><span class="p">(</span><span class="s1">'total_utility_w_'</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">,</span> <span class="s1">'total_u_sum'</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">study_rule_criteria</span><span class="p">)</span>
 <span class="go">StudyRuleCriteria with:</span>
 <span class="go">    manipulation_criteria: None</span>
 <span class="go">    manipulation_criteria_c: None</span>
 <span class="go">    result_criteria: None</span>
 <span class="go">    utility_criteria:</span>
-<span class="go">        (&#39;total_utility_w_&#39;, &lt;function sum at ...&gt;, &#39;total_u_sum&#39;)</span>
+<span class="go">        ('total_utility_w_', &lt;function sum at ...&gt;, 'total_u_sum')</span>
 <span class="go">    numerical_criteria: None</span>
 </pre></div>
 </div>
@@ -714,53 +717,53 @@ and the result will be called ‘total_u_sum’.</p>
 </dl>
 <p class="rubric">Examples</p>
 <p>Detect an illegal manipulation criterion:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">study_rule_criteria</span> <span class="o">=</span> <span class="n">StudyRuleCriteria</span><span class="p">(</span><span class="n">manipulation_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;unexpected_criterion&#39;</span><span class="p">])</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">study_rule_criteria</span> <span class="o">=</span> <span class="n">StudyRuleCriteria</span><span class="p">(</span><span class="n">manipulation_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">'unexpected_criterion'</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">check_sanity</span><span class="p">(</span><span class="n">rule_class</span><span class="o">=</span><span class="n">RuleIRV</span><span class="p">)</span>
 <span class="gt">Traceback (most recent call last):</span>
-<span class="gr">ValueError</span>: <span class="n">Criterion &#39;unexpected_criterion&#39; is unknown for RuleIRV.</span>
+<span class="gr">ValueError</span>: <span class="n">Criterion 'unexpected_criterion' is unknown for RuleIRV.</span>
 </pre></div>
 </div>
 <p>Detect an illegal manipulation criterion (for candidates):</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">study_rule_criteria</span> <span class="o">=</span> <span class="n">StudyRuleCriteria</span><span class="p">(</span><span class="n">manipulation_criteria_c</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;unexpected_criterion&#39;</span><span class="p">])</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">study_rule_criteria</span> <span class="o">=</span> <span class="n">StudyRuleCriteria</span><span class="p">(</span><span class="n">manipulation_criteria_c</span><span class="o">=</span><span class="p">[</span><span class="s1">'unexpected_criterion'</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">check_sanity</span><span class="p">(</span><span class="n">rule_class</span><span class="o">=</span><span class="n">RuleIRV</span><span class="p">)</span>
 <span class="gt">Traceback (most recent call last):</span>
-<span class="gr">ValueError</span>: <span class="n">Criterion &#39;unexpected_criterion&#39; is unknown for RuleIRV.</span>
+<span class="gr">ValueError</span>: <span class="n">Criterion 'unexpected_criterion' is unknown for RuleIRV.</span>
 </pre></div>
 </div>
 <p>Detect an illegal result criterion:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">study_rule_criteria</span> <span class="o">=</span> <span class="n">StudyRuleCriteria</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">manipulation_criteria</span><span class="o">=</span><span class="p">[],</span>
-<span class="gp">... </span>    <span class="n">result_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;unexpected_criterion&#39;</span><span class="p">])</span>
+<span class="gp">... </span>    <span class="n">result_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">'unexpected_criterion'</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">check_sanity</span><span class="p">(</span><span class="n">rule_class</span><span class="o">=</span><span class="n">RuleIRV</span><span class="p">)</span>
 <span class="gt">Traceback (most recent call last):</span>
-<span class="gr">ValueError</span>: <span class="n">Criterion &#39;unexpected_criterion&#39; is unknown for RuleIRV.</span>
+<span class="gr">ValueError</span>: <span class="n">Criterion 'unexpected_criterion' is unknown for RuleIRV.</span>
 </pre></div>
 </div>
 <p>Detect an illegal utility criterion:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">study_rule_criteria</span> <span class="o">=</span> <span class="n">StudyRuleCriteria</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">manipulation_criteria</span><span class="o">=</span><span class="p">[],</span>
-<span class="gp">... </span>    <span class="n">utility_criteria</span><span class="o">=</span><span class="p">[(</span><span class="s1">&#39;unexpected_criterion&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">,</span> <span class="s1">&#39;the_name&#39;</span><span class="p">)])</span>
+<span class="gp">... </span>    <span class="n">utility_criteria</span><span class="o">=</span><span class="p">[(</span><span class="s1">'unexpected_criterion'</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">,</span> <span class="s1">'the_name'</span><span class="p">)])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">check_sanity</span><span class="p">(</span><span class="n">rule_class</span><span class="o">=</span><span class="n">RuleIRV</span><span class="p">)</span>
 <span class="gt">Traceback (most recent call last):</span>
-<span class="gr">ValueError</span>: <span class="n">Criterion &#39;unexpected_criterion&#39; is unknown for RuleIRV.</span>
+<span class="gr">ValueError</span>: <span class="n">Criterion 'unexpected_criterion' is unknown for RuleIRV.</span>
 </pre></div>
 </div>
 <p>Detect when a aggregation function is not provided:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">study_rule_criteria</span> <span class="o">=</span> <span class="n">StudyRuleCriteria</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">manipulation_criteria</span><span class="o">=</span><span class="p">[],</span>
-<span class="gp">... </span>    <span class="n">utility_criteria</span><span class="o">=</span><span class="p">[(</span><span class="s1">&#39;mean_utility_w_&#39;</span><span class="p">,</span> <span class="s1">&#39;this_is_not_callable&#39;</span><span class="p">,</span> <span class="s1">&#39;the_name&#39;</span><span class="p">)])</span>
+<span class="gp">... </span>    <span class="n">utility_criteria</span><span class="o">=</span><span class="p">[(</span><span class="s1">'mean_utility_w_'</span><span class="p">,</span> <span class="s1">'this_is_not_callable'</span><span class="p">,</span> <span class="s1">'the_name'</span><span class="p">)])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">check_sanity</span><span class="p">(</span><span class="n">rule_class</span><span class="o">=</span><span class="n">RuleIRV</span><span class="p">)</span>
 <span class="gt">Traceback (most recent call last):</span>
-<span class="gr">TypeError</span>: <span class="n">Expected: callable. Got: &#39;this_is_not_callable&#39;.</span>
+<span class="gr">TypeError</span>: <span class="n">Expected: callable. Got: 'this_is_not_callable'.</span>
 </pre></div>
 </div>
 <p>Detect an illegal numerical criterion:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">study_rule_criteria</span> <span class="o">=</span> <span class="n">StudyRuleCriteria</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">manipulation_criteria</span><span class="o">=</span><span class="p">[],</span>
-<span class="gp">... </span>    <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;unexpected_criterion&#39;</span><span class="p">])</span>
+<span class="gp">... </span>    <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">'unexpected_criterion'</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">check_sanity</span><span class="p">(</span><span class="n">rule_class</span><span class="o">=</span><span class="n">RuleIRV</span><span class="p">)</span>
 <span class="gt">Traceback (most recent call last):</span>
-<span class="gr">ValueError</span>: <span class="n">Criterion &#39;unexpected_criterion&#39; is unknown for RuleIRV.</span>
+<span class="gr">ValueError</span>: <span class="n">Criterion 'unexpected_criterion' is unknown for RuleIRV.</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -772,7 +775,7 @@ and the result will be called ‘total_u_sum’.</p>
 <p>Remove all occurrences of a criterion (generally zero or one) from this <cite>StudyRuleCriteria</cite> object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>criterion</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p>
+<dd class="field-odd"><p><strong>criterion</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The object itself.</p>
@@ -783,16 +786,16 @@ and the result will be called ‘total_u_sum’.</p>
 </dl>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">study_rule_criteria</span> <span class="o">=</span> <span class="n">StudyRuleCriteria</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="n">manipulation_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;is_cm_&#39;</span><span class="p">,</span> <span class="s1">&#39;is_tm_&#39;</span><span class="p">],</span>
-<span class="gp">... </span>    <span class="n">result_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;w_is_condorcet_admissible_&#39;</span><span class="p">,</span> <span class="s1">&#39;w_is_weak_condorcet_winner_&#39;</span><span class="p">],</span>
-<span class="gp">... </span>    <span class="n">utility_criteria</span><span class="o">=</span><span class="p">[(</span><span class="s1">&#39;mean_utility_w_&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="s1">&#39;mean_u_max&#39;</span><span class="p">),</span>
-<span class="gp">... </span>                      <span class="p">(</span><span class="s1">&#39;mean_utility_w_&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="s1">&#39;mean_u_min&#39;</span><span class="p">)],</span>
-<span class="gp">... </span>    <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;nb_candidates_cm_&#39;</span><span class="p">,</span> <span class="s1">&#39;worst_relative_welfare_with_cm_&#39;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">manipulation_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">'is_cm_'</span><span class="p">,</span> <span class="s1">'is_tm_'</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">result_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">'w_is_condorcet_admissible_'</span><span class="p">,</span> <span class="s1">'w_is_weak_condorcet_winner_'</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">utility_criteria</span><span class="o">=</span><span class="p">[(</span><span class="s1">'mean_utility_w_'</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="s1">'mean_u_max'</span><span class="p">),</span>
+<span class="gp">... </span>                      <span class="p">(</span><span class="s1">'mean_utility_w_'</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="s1">'mean_u_min'</span><span class="p">)],</span>
+<span class="gp">... </span>    <span class="n">numerical_criteria</span><span class="o">=</span><span class="p">[</span><span class="s1">'nb_candidates_cm_'</span><span class="p">,</span> <span class="s1">'worst_relative_welfare_with_cm_'</span><span class="p">],</span>
 <span class="gp">... </span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;is_cm_&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;w_is_weak_condorcet_winner_&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;mean_u_max&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;worst_relative_welfare_with_cm_&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">'is_cm_'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">'w_is_weak_condorcet_winner_'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">'mean_u_max'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">'worst_relative_welfare_with_cm_'</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">study_rule_criteria</span><span class="p">)</span>
 <span class="go">StudyRuleCriteria with:</span>
 <span class="go">    manipulation_criteria:</span>
@@ -801,7 +804,7 @@ and the result will be called ‘total_u_sum’.</p>
 <span class="go">    result_criteria:</span>
 <span class="go">        w_is_condorcet_admissible_</span>
 <span class="go">    utility_criteria:</span>
-<span class="go">        (&#39;mean_utility_w_&#39;, &lt;function ...min at ...&gt;, &#39;mean_u_min&#39;)</span>
+<span class="go">        ('mean_utility_w_', &lt;function ...min at ...&gt;, 'mean_u_min')</span>
 <span class="go">    numerical_criteria:</span>
 <span class="go">        nb_candidates_cm_</span>
 </pre></div>

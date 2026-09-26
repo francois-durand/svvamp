@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>svvamp.meta.voting_rule_tasks &#8212; SVVAMP 0.14.0 documentation</title>
+    <title>svvamp.meta.voting_rule_tasks &#8212; SVVAMP 0.15.0 documentation</title>
   
   
   
@@ -37,7 +37,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=9e420a66"></script>
+    <script src="../../../_static/documentation_options.js?v=ef97403f"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -46,7 +46,7 @@
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.14.0" />
+  <meta name="docsearch:version" content="0.15.0" />
   </head>
   
   
@@ -108,7 +108,7 @@
   
   
   
-    <p class="title logo__title">SVVAMP 0.14.0 documentation</p>
+    <p class="title logo__title">SVVAMP 0.15.0 documentation</p>
   
 </a></div>
     
@@ -424,7 +424,7 @@
                   
   <h1>Source code for svvamp.meta.voting_rule_tasks</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 <span class="sd">Created on jul. 21, 2021, 21:16</span>
 <span class="sd">Copyright François Durand 2014-2021</span>
 <span class="sd">fradurand@gmail.com</span>
@@ -443,7 +443,7 @@
 
 <span class="sd">    You should have received a copy of the GNU General Public License</span>
 <span class="sd">    along with SVVAMP.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">inspect</span>
@@ -466,12 +466,12 @@
 <div class="viewcode-block" id="VotingRuleTasks">
 <a class="viewcode-back" href="../../../reference/meta/voting_rule_tasks.html#svvamp.VotingRuleTasks">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">VotingRuleTasks</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;A set of tasks for the simulator, i.e. which voting rules with which options and which criteria about them.</span>
+<span class="w">    </span><span class="sd">"""A set of tasks for the simulator, i.e. which voting rules with which options and which criteria about them.</span>
 
-<span class="sd">    A &quot;task&quot; consists of: a voting rule, a dictionary of options, and a :class:`StudyRuleCriteria` object. A</span>
+<span class="sd">    A "task" consists of: a voting rule, a dictionary of options, and a :class:`StudyRuleCriteria` object. A</span>
 <span class="sd">    `VotingRuleTasks` is essentially a list of tasks.</span>
 
-<span class="sd">    In the following, what we call a &quot;voting system&quot; consists of a voting rule and a dictionary of options (i.e.</span>
+<span class="sd">    In the following, what we call a "voting system" consists of a voting rule and a dictionary of options (i.e.</span>
 <span class="sd">    like a task, but with no :class:`StudyRuleCriteria` object specified).</span>
 
 <span class="sd">    Parameters</span>
@@ -496,26 +496,26 @@
 <span class="sd">        ...     voting_systems=[</span>
 <span class="sd">        ...         RulePlurality,</span>
 <span class="sd">        ...         RuleExhaustiveBallot,</span>
-<span class="sd">        ...         (RuleIRV, {&#39;cm_option&#39;: &#39;fast&#39;}),</span>
-<span class="sd">        ...         (RuleApproval, {&#39;approval_threshold&#39;: 10}),</span>
+<span class="sd">        ...         (RuleIRV, {'cm_option': 'fast'}),</span>
+<span class="sd">        ...         (RuleApproval, {'approval_threshold': 10}),</span>
 <span class="sd">        ...     ],</span>
 <span class="sd">        ...     study_rule_criteria=StudyRuleCriteria(</span>
-<span class="sd">        ...         manipulation_criteria=[&#39;is_cm_&#39;, &#39;is_tm_&#39;, &#39;is_um_&#39;],</span>
+<span class="sd">        ...         manipulation_criteria=['is_cm_', 'is_tm_', 'is_um_'],</span>
 <span class="sd">        ...     ),</span>
 <span class="sd">        ...     detailed_tasks=[</span>
 <span class="sd">        ...         (</span>
 <span class="sd">        ...             RuleIRV,</span>
-<span class="sd">        ...             {&#39;cm_option&#39;: &#39;exact&#39;},</span>
+<span class="sd">        ...             {'cm_option': 'exact'},</span>
 <span class="sd">        ...             StudyRuleCriteria(</span>
-<span class="sd">        ...                 manipulation_criteria=[&#39;is_cm_&#39;],</span>
+<span class="sd">        ...                 manipulation_criteria=['is_cm_'],</span>
 <span class="sd">        ...                 manipulation_only=True</span>
 <span class="sd">        ...             )</span>
 <span class="sd">        ...         ),</span>
 <span class="sd">        ...         (</span>
 <span class="sd">        ...             RuleApproval,</span>
-<span class="sd">        ...             {&#39;approval_threshold&#39;: 5},</span>
+<span class="sd">        ...             {'approval_threshold': 5},</span>
 <span class="sd">        ...             StudyRuleCriteria(</span>
-<span class="sd">        ...                 manipulation_criteria=[&#39;is_cm_&#39;, &#39;is_tm_&#39;, &#39;is_um_&#39;]</span>
+<span class="sd">        ...                 manipulation_criteria=['is_cm_', 'is_tm_', 'is_um_']</span>
 <span class="sd">        ...             )</span>
 <span class="sd">        ...         ),</span>
 <span class="sd">        ...     ]</span>
@@ -526,11 +526,11 @@
 <span class="sd">        ...     study_rule_criteria=StudyRuleCriteria(),</span>
 <span class="sd">        ...     detailed_tasks=VotingRuleTasks(</span>
 <span class="sd">        ...         voting_systems=[</span>
-<span class="sd">        ...             (RuleIRV, {&#39;cm_option&#39;: &#39;exact&#39;}),</span>
-<span class="sd">        ...             (RuleExhaustiveBallot, {&#39;cm_option&#39;: &#39;exact&#39;})</span>
+<span class="sd">        ...             (RuleIRV, {'cm_option': 'exact'}),</span>
+<span class="sd">        ...             (RuleExhaustiveBallot, {'cm_option': 'exact'})</span>
 <span class="sd">        ...         ],</span>
 <span class="sd">        ...         study_rule_criteria=StudyRuleCriteria(</span>
-<span class="sd">        ...             manipulation_criteria=[&#39;is_cm_&#39;],</span>
+<span class="sd">        ...             manipulation_criteria=['is_cm_'],</span>
 <span class="sd">        ...             manipulation_only=True</span>
 <span class="sd">        ...         )</span>
 <span class="sd">        ...     )</span>
@@ -559,13 +559,13 @@
 <span class="sd">    Study a quite extensive list of voting systems, with CM being the only manipulation criterion:</span>
 
 <span class="sd">        &gt;&gt;&gt; voting_rule_tasks = VotingRuleTasks(</span>
-<span class="sd">        ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=[&#39;is_cm_&#39;])</span>
+<span class="sd">        ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'])</span>
 <span class="sd">        ... )</span>
 
 <span class="sd">    Study a quite extensive list of voting systems with a quite extensive list of criteria:</span>
 
 <span class="sd">        &gt;&gt;&gt; voting_rule_tasks = VotingRuleTasks()</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">voting_systems</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">study_rule_criteria</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">detailed_tasks</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="c1"># Dealing with default arguments...</span>
@@ -588,25 +588,25 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">detailed_tasks</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        &gt;&gt;&gt; voting_rule_tasks = VotingRuleTasks(detailed_tasks=[</span>
 <span class="sd">        ...     (</span>
 <span class="sd">        ...         RuleIRV,</span>
-<span class="sd">        ...         {&#39;cm_option&#39;: &#39;exact&#39;, &#39;um_option&#39;: &#39;exact&#39;},</span>
-<span class="sd">        ...         StudyRuleCriteria(manipulation_criteria=[&#39;is_cm_&#39;], manipulation_only=True,</span>
+<span class="sd">        ...         {'cm_option': 'exact', 'um_option': 'exact'},</span>
+<span class="sd">        ...         StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,</span>
 <span class="sd">        ...                           numerical_criteria=[])</span>
 <span class="sd">        ...     ),</span>
 <span class="sd">        ...     (</span>
 <span class="sd">        ...         RuleCondorcetVtbIRV,</span>
-<span class="sd">        ...         {&#39;cm_option&#39;: &#39;very_slow&#39;, &#39;um_option&#39;: &#39;exact&#39;},</span>
-<span class="sd">        ...         StudyRuleCriteria(manipulation_criteria=[&#39;is_cm_&#39;], manipulation_only=True,</span>
+<span class="sd">        ...         {'cm_option': 'very_slow', 'um_option': 'exact'},</span>
+<span class="sd">        ...         StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,</span>
 <span class="sd">        ...                           numerical_criteria=[])</span>
 <span class="sd">        ...     )</span>
 <span class="sd">        ... ])</span>
 <span class="sd">        &gt;&gt;&gt; print(voting_rule_tasks)</span>
 <span class="sd">        VotingRuleTasks with:</span>
 <span class="sd">            voting_system: RuleIRV</span>
-<span class="sd">            options: {&#39;cm_option&#39;: &#39;exact&#39;, &#39;um_option&#39;: &#39;exact&#39;}</span>
+<span class="sd">            options: {'cm_option': 'exact', 'um_option': 'exact'}</span>
 <span class="sd">            StudyRuleCriteria with:</span>
 <span class="sd">                manipulation_criteria:</span>
 <span class="sd">                    is_cm_</span>
@@ -615,7 +615,7 @@
 <span class="sd">                utility_criteria: None</span>
 <span class="sd">                numerical_criteria: None</span>
 <span class="sd">            voting_system: RuleCondorcetVtbIRV</span>
-<span class="sd">            options: {&#39;cm_option&#39;: &#39;very_slow&#39;, &#39;um_option&#39;: &#39;exact&#39;}</span>
+<span class="sd">            options: {'cm_option': 'very_slow', 'um_option': 'exact'}</span>
 <span class="sd">            StudyRuleCriteria with:</span>
 <span class="sd">                manipulation_criteria:</span>
 <span class="sd">                    is_cm_</span>
@@ -623,18 +623,18 @@
 <span class="sd">                result_criteria: None</span>
 <span class="sd">                utility_criteria: None</span>
 <span class="sd">                numerical_criteria: None</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">rule_class</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
-            <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;voting_system: </span><span class="si">{</span><span class="n">rule_class</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;options: </span><span class="si">{</span><span class="n">options</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"voting_system: </span><span class="si">{</span><span class="n">rule_class</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+            <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"options: </span><span class="si">{</span><span class="n">options</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
             <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">study_rule_criteria</span><span class="p">))</span>
-        <span class="k">return</span> <span class="s2">&quot;VotingRuleTasks with:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">indent</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">))</span>
+        <span class="k">return</span> <span class="s2">"VotingRuleTasks with:</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span> <span class="n">indent</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">))</span>
 
 <div class="viewcode-block" id="VotingRuleTasks.remove_rule">
 <a class="viewcode-back" href="../../../reference/meta/voting_rule_tasks.html#svvamp.VotingRuleTasks.remove_rule">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">remove_rule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rule_class</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Remove a rule</span>
+<span class="w">        </span><span class="sd">"""Remove a rule</span>
 
 <span class="sd">        Removes all occurrences of `rule_class` from this `VotingRuleTasks` object.</span>
 
@@ -648,20 +648,20 @@
 <span class="sd">            &gt;&gt;&gt; voting_rule_tasks = VotingRuleTasks(detailed_tasks=[</span>
 <span class="sd">            ...     (</span>
 <span class="sd">            ...         RuleIRV,</span>
-<span class="sd">            ...         {&#39;cm_option&#39;: &#39;fast&#39;, &#39;um_option&#39;: &#39;fast&#39;},</span>
-<span class="sd">            ...         StudyRuleCriteria(manipulation_criteria=[&#39;is_cm_&#39;], manipulation_only=True,</span>
+<span class="sd">            ...         {'cm_option': 'fast', 'um_option': 'fast'},</span>
+<span class="sd">            ...         StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,</span>
 <span class="sd">            ...                           numerical_criteria=[])</span>
 <span class="sd">            ...     ),</span>
 <span class="sd">            ...     (</span>
 <span class="sd">            ...         RuleIRV,</span>
-<span class="sd">            ...         {&#39;cm_option&#39;: &#39;exact&#39;, &#39;um_option&#39;: &#39;exact&#39;},</span>
-<span class="sd">            ...         StudyRuleCriteria(manipulation_criteria=[&#39;is_cm_&#39;], manipulation_only=True,</span>
+<span class="sd">            ...         {'cm_option': 'exact', 'um_option': 'exact'},</span>
+<span class="sd">            ...         StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,</span>
 <span class="sd">            ...                           numerical_criteria=[])</span>
 <span class="sd">            ...     ),</span>
 <span class="sd">            ...     (</span>
 <span class="sd">            ...         RuleCondorcetVtbIRV,</span>
-<span class="sd">            ...         {&#39;cm_option&#39;: &#39;very_slow&#39;, &#39;um_option&#39;: &#39;exact&#39;},</span>
-<span class="sd">            ...         StudyRuleCriteria(manipulation_criteria=[&#39;is_cm_&#39;], manipulation_only=True,</span>
+<span class="sd">            ...         {'cm_option': 'very_slow', 'um_option': 'exact'},</span>
+<span class="sd">            ...         StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,</span>
 <span class="sd">            ...                           numerical_criteria=[])</span>
 <span class="sd">            ...     )</span>
 <span class="sd">            ... ])</span>
@@ -669,7 +669,7 @@
 <span class="sd">            &gt;&gt;&gt; print(voting_rule_tasks)</span>
 <span class="sd">            VotingRuleTasks with:</span>
 <span class="sd">                voting_system: RuleCondorcetVtbIRV</span>
-<span class="sd">                options: {&#39;cm_option&#39;: &#39;very_slow&#39;, &#39;um_option&#39;: &#39;exact&#39;}</span>
+<span class="sd">                options: {'cm_option': 'very_slow', 'um_option': 'exact'}</span>
 <span class="sd">                StudyRuleCriteria with:</span>
 <span class="sd">                    manipulation_criteria:</span>
 <span class="sd">                        is_cm_</span>
@@ -677,14 +677,14 @@
 <span class="sd">                    result_criteria: None</span>
 <span class="sd">                    utility_criteria: None</span>
 <span class="sd">                    numerical_criteria: None</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">[</span><span class="n">element</span> <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="bp">self</span> <span class="k">if</span> <span class="n">element</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">rule_class</span><span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="VotingRuleTasks.append_task">
 <a class="viewcode-back" href="../../../reference/meta/voting_rule_tasks.html#svvamp.VotingRuleTasks.append_task">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">append_task</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rule_class</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">study_rule_criteria</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Append a task to the list.</span>
+<span class="w">        </span><span class="sd">"""Append a task to the list.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -701,21 +701,21 @@
 <span class="sd">            &gt;&gt;&gt; voting_rule_tasks = VotingRuleTasks(detailed_tasks=[</span>
 <span class="sd">            ...     (</span>
 <span class="sd">            ...         RuleIRV,</span>
-<span class="sd">            ...         {&#39;cm_option&#39;: &#39;fast&#39;},</span>
-<span class="sd">            ...         StudyRuleCriteria(manipulation_criteria=[&#39;is_cm_&#39;], manipulation_only=True,</span>
+<span class="sd">            ...         {'cm_option': 'fast'},</span>
+<span class="sd">            ...         StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,</span>
 <span class="sd">            ...                           numerical_criteria=[])</span>
 <span class="sd">            ...     ),</span>
 <span class="sd">            ... ])</span>
 <span class="sd">            &gt;&gt;&gt; voting_rule_tasks.append_task(</span>
 <span class="sd">            ...     RuleIRV,</span>
-<span class="sd">            ...     {&#39;cm_option&#39;: &#39;exact&#39;},</span>
-<span class="sd">            ...     StudyRuleCriteria(manipulation_criteria=[&#39;is_cm_&#39;], manipulation_only=True,</span>
+<span class="sd">            ...     {'cm_option': 'exact'},</span>
+<span class="sd">            ...     StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,</span>
 <span class="sd">            ...                       numerical_criteria=[])</span>
 <span class="sd">            ... )</span>
 <span class="sd">            &gt;&gt;&gt; print(voting_rule_tasks)</span>
 <span class="sd">            VotingRuleTasks with:</span>
 <span class="sd">                voting_system: RuleIRV</span>
-<span class="sd">                options: {&#39;cm_option&#39;: &#39;fast&#39;}</span>
+<span class="sd">                options: {'cm_option': 'fast'}</span>
 <span class="sd">                StudyRuleCriteria with:</span>
 <span class="sd">                    manipulation_criteria:</span>
 <span class="sd">                        is_cm_</span>
@@ -724,7 +724,7 @@
 <span class="sd">                    utility_criteria: None</span>
 <span class="sd">                    numerical_criteria: None</span>
 <span class="sd">                voting_system: RuleIRV</span>
-<span class="sd">                options: {&#39;cm_option&#39;: &#39;exact&#39;}</span>
+<span class="sd">                options: {'cm_option': 'exact'}</span>
 <span class="sd">                StudyRuleCriteria with:</span>
 <span class="sd">                    manipulation_criteria:</span>
 <span class="sd">                        is_cm_</span>
@@ -739,7 +739,7 @@
 <span class="sd">            &gt;&gt;&gt; voting_rule_tasks.append_task(</span>
 <span class="sd">            ...     rule_class=RuleIRV,</span>
 <span class="sd">            ...     study_rule_criteria=StudyRuleCriteria(</span>
-<span class="sd">            ...         manipulation_criteria=[&#39;is_cm_&#39;], manipulation_only=True, numerical_criteria=[]</span>
+<span class="sd">            ...         manipulation_criteria=['is_cm_'], manipulation_only=True, numerical_criteria=[]</span>
 <span class="sd">            ...     )</span>
 <span class="sd">            ... )</span>
 <span class="sd">            &gt;&gt;&gt; print(voting_rule_tasks)</span>
@@ -757,17 +757,17 @@
 <span class="sd">        If `study_rule_criteria` is not specified, then it is the default instance `StudyRuleCriteria()`:</span>
 
 <span class="sd">            &gt;&gt;&gt; voting_rule_tasks = VotingRuleTasks(voting_systems=[], detailed_tasks=[])</span>
-<span class="sd">            &gt;&gt;&gt; voting_rule_tasks.append_task(rule_class=RuleIRV, options={&#39;cm_option&#39;: &#39;exact&#39;})</span>
+<span class="sd">            &gt;&gt;&gt; voting_rule_tasks.append_task(rule_class=RuleIRV, options={'cm_option': 'exact'})</span>
 <span class="sd">            &gt;&gt;&gt; print(voting_rule_tasks)  # doctest: +ELLIPSIS</span>
 <span class="sd">            VotingRuleTasks with:</span>
 <span class="sd">                voting_system: RuleIRV</span>
-<span class="sd">                options: {&#39;cm_option&#39;: &#39;exact&#39;}</span>
+<span class="sd">                options: {'cm_option': 'exact'}</span>
 <span class="sd">                StudyRuleCriteria with:</span>
 <span class="sd">                    manipulation_criteria:</span>
 <span class="sd">                        is_tm_</span>
 <span class="sd">                        is_um_</span>
 <span class="sd">                        ...</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">options</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">options</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">if</span> <span class="n">study_rule_criteria</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -778,7 +778,7 @@
 <div class="viewcode-block" id="VotingRuleTasks.extend">
 <a class="viewcode-back" href="../../../reference/meta/voting_rule_tasks.html#svvamp.VotingRuleTasks.extend">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">extend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Extend a `VotingRuleTasks` object.</span>
+<span class="w">        </span><span class="sd">"""Extend a `VotingRuleTasks` object.</span>
 
 <span class="sd">        Note that the usual command `extend` can be used to concatenate two `VotingRuleTasks` objects.</span>
 
@@ -786,12 +786,12 @@
 <span class="sd">        --------</span>
 <span class="sd">            &gt;&gt;&gt; voting_rule_tasks = VotingRuleTasks(</span>
 <span class="sd">            ...     voting_systems=[RuleExhaustiveBallot, RuleIRV],</span>
-<span class="sd">            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=[&#39;is_cm_&#39;], manipulation_only=True,</span>
+<span class="sd">            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,</span>
 <span class="sd">            ...                                           numerical_criteria=[])</span>
 <span class="sd">            ... )</span>
 <span class="sd">            &gt;&gt;&gt; voting_rule_tasks_2 = VotingRuleTasks(</span>
 <span class="sd">            ...     voting_systems=[RuleBenham, RuleCondorcetVtbIRV],</span>
-<span class="sd">            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=[&#39;is_um_&#39;], manipulation_only=True,</span>
+<span class="sd">            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_um_'], manipulation_only=True,</span>
 <span class="sd">            ...                                           numerical_criteria=[])</span>
 <span class="sd">            ... )</span>
 <span class="sd">            &gt;&gt;&gt; voting_rule_tasks.extend(voting_rule_tasks_2)</span>
@@ -833,14 +833,14 @@
 <span class="sd">                    result_criteria: None</span>
 <span class="sd">                    utility_criteria: None</span>
 <span class="sd">                    numerical_criteria: None</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="VotingRuleTasks.remove_criterion">
 <a class="viewcode-back" href="../../../reference/meta/voting_rule_tasks.html#svvamp.VotingRuleTasks.remove_criterion">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">remove_criterion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">rule_class</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Remove a criterion for one or all voting rules.</span>
+<span class="w">        </span><span class="sd">"""Remove a criterion for one or all voting rules.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -853,14 +853,14 @@
 <span class="sd">        Removes all occurrences of `criterion` for all occurrences of `rule_class`:</span>
 
 <span class="sd">            &gt;&gt;&gt; voting_rule_tasks = VotingRuleTasks(</span>
-<span class="sd">            ...     voting_systems=[RuleExhaustiveBallot, RuleIRV, (RuleIRV, {&#39;cm_option&#39;: &#39;exact&#39;})],</span>
+<span class="sd">            ...     voting_systems=[RuleExhaustiveBallot, RuleIRV, (RuleIRV, {'cm_option': 'exact'})],</span>
 <span class="sd">            ...     study_rule_criteria=StudyRuleCriteria(</span>
-<span class="sd">            ...         manipulation_criteria=[&#39;is_cm_&#39;, &#39;is_um_&#39;],</span>
+<span class="sd">            ...         manipulation_criteria=['is_cm_', 'is_um_'],</span>
 <span class="sd">            ...         manipulation_only=True,</span>
 <span class="sd">            ...         numerical_criteria=[]</span>
 <span class="sd">            ...     )</span>
 <span class="sd">            ... )</span>
-<span class="sd">            &gt;&gt;&gt; voting_rule_tasks.remove_criterion(criterion=&#39;is_um_&#39;, rule_class=RuleIRV)</span>
+<span class="sd">            &gt;&gt;&gt; voting_rule_tasks.remove_criterion(criterion='is_um_', rule_class=RuleIRV)</span>
 <span class="sd">            &gt;&gt;&gt; print(voting_rule_tasks)</span>
 <span class="sd">            VotingRuleTasks with:</span>
 <span class="sd">                voting_system: RuleExhaustiveBallot</span>
@@ -883,7 +883,7 @@
 <span class="sd">                    utility_criteria: None</span>
 <span class="sd">                    numerical_criteria: None</span>
 <span class="sd">                voting_system: RuleIRV</span>
-<span class="sd">                options: {&#39;cm_option&#39;: &#39;exact&#39;}</span>
+<span class="sd">                options: {'cm_option': 'exact'}</span>
 <span class="sd">                StudyRuleCriteria with:</span>
 <span class="sd">                    manipulation_criteria:</span>
 <span class="sd">                        is_cm_</span>
@@ -897,12 +897,12 @@
 <span class="sd">            &gt;&gt;&gt; voting_rule_tasks = VotingRuleTasks(</span>
 <span class="sd">            ...     voting_systems=[RuleExhaustiveBallot, RuleIRV],</span>
 <span class="sd">            ...     study_rule_criteria=StudyRuleCriteria(</span>
-<span class="sd">            ...         manipulation_criteria=[&#39;is_cm_&#39;, &#39;is_um_&#39;],</span>
+<span class="sd">            ...         manipulation_criteria=['is_cm_', 'is_um_'],</span>
 <span class="sd">            ...         manipulation_only=True,</span>
 <span class="sd">            ...         numerical_criteria=[]</span>
 <span class="sd">            ...     )</span>
 <span class="sd">            ... )</span>
-<span class="sd">            &gt;&gt;&gt; voting_rule_tasks.remove_criterion(&#39;is_um_&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; voting_rule_tasks.remove_criterion('is_um_')</span>
 <span class="sd">            &gt;&gt;&gt; print(voting_rule_tasks)</span>
 <span class="sd">            VotingRuleTasks with:</span>
 <span class="sd">                voting_system: RuleExhaustiveBallot</span>
@@ -923,7 +923,7 @@
 <span class="sd">                    result_criteria: None</span>
 <span class="sd">                    utility_criteria: None</span>
 <span class="sd">                    numerical_criteria: None</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">for</span> <span class="n">rc</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">rule_class</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">rule_class</span> <span class="o">==</span> <span class="n">rc</span><span class="p">:</span>
                 <span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">criterion</span><span class="p">)</span></div>
@@ -932,7 +932,7 @@
 <div class="viewcode-block" id="VotingRuleTasks.append_manipulation_criterion">
 <a class="viewcode-back" href="../../../reference/meta/voting_rule_tasks.html#svvamp.VotingRuleTasks.append_manipulation_criterion">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">append_manipulation_criterion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">rule_class</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a manipulation criterion for one or all voting rules.</span>
+<span class="w">        </span><span class="sd">"""Add a manipulation criterion for one or all voting rules.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -945,11 +945,11 @@
 <span class="sd">        Add `criterion` for all occurrences of `rule_class`:</span>
 
 <span class="sd">            &gt;&gt;&gt; voting_rule_tasks = VotingRuleTasks(</span>
-<span class="sd">            ...     voting_systems=[RuleExhaustiveBallot, RuleIRV, (RuleIRV, {&#39;cm_option&#39;: &#39;exact&#39;})],</span>
-<span class="sd">            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=[&#39;is_cm_&#39;], manipulation_only=True,</span>
+<span class="sd">            ...     voting_systems=[RuleExhaustiveBallot, RuleIRV, (RuleIRV, {'cm_option': 'exact'})],</span>
+<span class="sd">            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,</span>
 <span class="sd">            ...                                           numerical_criteria=[])</span>
 <span class="sd">            ... )</span>
-<span class="sd">            &gt;&gt;&gt; voting_rule_tasks.append_manipulation_criterion(criterion=&#39;is_um_&#39;, rule_class=RuleIRV)</span>
+<span class="sd">            &gt;&gt;&gt; voting_rule_tasks.append_manipulation_criterion(criterion='is_um_', rule_class=RuleIRV)</span>
 <span class="sd">            &gt;&gt;&gt; print(voting_rule_tasks)</span>
 <span class="sd">            VotingRuleTasks with:</span>
 <span class="sd">                voting_system: RuleExhaustiveBallot</span>
@@ -972,7 +972,7 @@
 <span class="sd">                    utility_criteria: None</span>
 <span class="sd">                    numerical_criteria: None</span>
 <span class="sd">                voting_system: RuleIRV</span>
-<span class="sd">                options: {&#39;cm_option&#39;: &#39;exact&#39;}</span>
+<span class="sd">                options: {'cm_option': 'exact'}</span>
 <span class="sd">                StudyRuleCriteria with:</span>
 <span class="sd">                    manipulation_criteria:</span>
 <span class="sd">                        is_cm_</span>
@@ -986,10 +986,10 @@
 
 <span class="sd">            &gt;&gt;&gt; voting_rule_tasks = VotingRuleTasks(</span>
 <span class="sd">            ...     voting_systems=[RuleExhaustiveBallot, RuleIRV],</span>
-<span class="sd">            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=[&#39;is_cm_&#39;], manipulation_only=True,</span>
+<span class="sd">            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,</span>
 <span class="sd">            ...                                           numerical_criteria=[])</span>
 <span class="sd">            ... )</span>
-<span class="sd">            &gt;&gt;&gt; voting_rule_tasks.append_manipulation_criterion(&#39;is_um_&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; voting_rule_tasks.append_manipulation_criterion('is_um_')</span>
 <span class="sd">            &gt;&gt;&gt; print(voting_rule_tasks)</span>
 <span class="sd">            VotingRuleTasks with:</span>
 <span class="sd">                voting_system: RuleExhaustiveBallot</span>
@@ -1012,7 +1012,7 @@
 <span class="sd">                    result_criteria: None</span>
 <span class="sd">                    utility_criteria: None</span>
 <span class="sd">                    numerical_criteria: None</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">for</span> <span class="n">rc</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">rule_class</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">rule_class</span> <span class="o">==</span> <span class="n">rc</span><span class="p">:</span>
                 <span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">append_manipulation_criterion</span><span class="p">(</span><span class="n">criterion</span><span class="p">)</span></div>
@@ -1021,7 +1021,7 @@
 <div class="viewcode-block" id="VotingRuleTasks.append_manipulation_criterion_c">
 <a class="viewcode-back" href="../../../reference/meta/voting_rule_tasks.html#svvamp.VotingRuleTasks.append_manipulation_criterion_c">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">append_manipulation_criterion_c</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">rule_class</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a manipulation criterion (candidates) for one or all voting rules.</span>
+<span class="w">        </span><span class="sd">"""Add a manipulation criterion (candidates) for one or all voting rules.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1034,11 +1034,11 @@
 <span class="sd">        Add `criterion` for all occurrences of `rule_class`:</span>
 
 <span class="sd">            &gt;&gt;&gt; voting_rule_tasks = VotingRuleTasks(</span>
-<span class="sd">            ...     voting_systems=[RuleExhaustiveBallot, RuleIRV, (RuleIRV, {&#39;cm_option&#39;: &#39;exact&#39;})],</span>
-<span class="sd">            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=[&#39;is_cm_&#39;], manipulation_only=True,</span>
+<span class="sd">            ...     voting_systems=[RuleExhaustiveBallot, RuleIRV, (RuleIRV, {'cm_option': 'exact'})],</span>
+<span class="sd">            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,</span>
 <span class="sd">            ...                                           numerical_criteria=[])</span>
 <span class="sd">            ... )</span>
-<span class="sd">            &gt;&gt;&gt; voting_rule_tasks.append_manipulation_criterion_c(criterion=&#39;candidates_cm_&#39;, rule_class=RuleIRV)</span>
+<span class="sd">            &gt;&gt;&gt; voting_rule_tasks.append_manipulation_criterion_c(criterion='candidates_cm_', rule_class=RuleIRV)</span>
 <span class="sd">            &gt;&gt;&gt; print(voting_rule_tasks)</span>
 <span class="sd">            VotingRuleTasks with:</span>
 <span class="sd">                voting_system: RuleExhaustiveBallot</span>
@@ -1061,7 +1061,7 @@
 <span class="sd">                    utility_criteria: None</span>
 <span class="sd">                    numerical_criteria: None</span>
 <span class="sd">                voting_system: RuleIRV</span>
-<span class="sd">                options: {&#39;cm_option&#39;: &#39;exact&#39;}</span>
+<span class="sd">                options: {'cm_option': 'exact'}</span>
 <span class="sd">                StudyRuleCriteria with:</span>
 <span class="sd">                    manipulation_criteria:</span>
 <span class="sd">                        is_cm_</span>
@@ -1075,10 +1075,10 @@
 
 <span class="sd">            &gt;&gt;&gt; voting_rule_tasks = VotingRuleTasks(</span>
 <span class="sd">            ...     voting_systems=[RuleExhaustiveBallot, RuleIRV],</span>
-<span class="sd">            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=[&#39;is_cm_&#39;], manipulation_only=True,</span>
+<span class="sd">            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,</span>
 <span class="sd">            ...                                           numerical_criteria=[])</span>
 <span class="sd">            ... )</span>
-<span class="sd">            &gt;&gt;&gt; voting_rule_tasks.append_manipulation_criterion_c(&#39;candidates_cm_&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; voting_rule_tasks.append_manipulation_criterion_c('candidates_cm_')</span>
 <span class="sd">            &gt;&gt;&gt; print(voting_rule_tasks)</span>
 <span class="sd">            VotingRuleTasks with:</span>
 <span class="sd">                voting_system: RuleExhaustiveBallot</span>
@@ -1101,7 +1101,7 @@
 <span class="sd">                    result_criteria: None</span>
 <span class="sd">                    utility_criteria: None</span>
 <span class="sd">                    numerical_criteria: None</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">for</span> <span class="n">rc</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">rule_class</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">rule_class</span> <span class="o">==</span> <span class="n">rc</span><span class="p">:</span>
                 <span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">append_manipulation_criterion_c</span><span class="p">(</span><span class="n">criterion</span><span class="p">)</span></div>
@@ -1110,7 +1110,7 @@
 <div class="viewcode-block" id="VotingRuleTasks.append_result_criterion">
 <a class="viewcode-back" href="../../../reference/meta/voting_rule_tasks.html#svvamp.VotingRuleTasks.append_result_criterion">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">append_result_criterion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">rule_class</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a result criterion for one or all voting rules</span>
+<span class="w">        </span><span class="sd">"""Add a result criterion for one or all voting rules</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1123,11 +1123,11 @@
 <span class="sd">        Add `criterion` for all occurrences of `rule_class`:</span>
 
 <span class="sd">            &gt;&gt;&gt; voting_rule_tasks = VotingRuleTasks(</span>
-<span class="sd">            ...     voting_systems=[RuleExhaustiveBallot, RuleIRV, (RuleIRV, {&#39;cm_option&#39;: &#39;exact&#39;})],</span>
-<span class="sd">            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=[&#39;is_cm_&#39;], manipulation_only=True,</span>
+<span class="sd">            ...     voting_systems=[RuleExhaustiveBallot, RuleIRV, (RuleIRV, {'cm_option': 'exact'})],</span>
+<span class="sd">            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,</span>
 <span class="sd">            ...                                           numerical_criteria=[])</span>
 <span class="sd">            ... )</span>
-<span class="sd">            &gt;&gt;&gt; voting_rule_tasks.append_result_criterion(criterion=&#39;w_is_condorcet_admissible_&#39;, rule_class=RuleIRV)</span>
+<span class="sd">            &gt;&gt;&gt; voting_rule_tasks.append_result_criterion(criterion='w_is_condorcet_admissible_', rule_class=RuleIRV)</span>
 <span class="sd">            &gt;&gt;&gt; print(voting_rule_tasks)</span>
 <span class="sd">            VotingRuleTasks with:</span>
 <span class="sd">                voting_system: RuleExhaustiveBallot</span>
@@ -1150,7 +1150,7 @@
 <span class="sd">                    utility_criteria: None</span>
 <span class="sd">                    numerical_criteria: None</span>
 <span class="sd">                voting_system: RuleIRV</span>
-<span class="sd">                options: {&#39;cm_option&#39;: &#39;exact&#39;}</span>
+<span class="sd">                options: {'cm_option': 'exact'}</span>
 <span class="sd">                StudyRuleCriteria with:</span>
 <span class="sd">                    manipulation_criteria:</span>
 <span class="sd">                        is_cm_</span>
@@ -1164,10 +1164,10 @@
 
 <span class="sd">            &gt;&gt;&gt; voting_rule_tasks = VotingRuleTasks(</span>
 <span class="sd">            ...     voting_systems=[RuleExhaustiveBallot, RuleIRV],</span>
-<span class="sd">            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=[&#39;is_cm_&#39;], manipulation_only=True,</span>
+<span class="sd">            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,</span>
 <span class="sd">            ...                                           numerical_criteria=[])</span>
 <span class="sd">            ... )</span>
-<span class="sd">            &gt;&gt;&gt; voting_rule_tasks.append_result_criterion(criterion=&#39;w_is_condorcet_admissible_&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; voting_rule_tasks.append_result_criterion(criterion='w_is_condorcet_admissible_')</span>
 <span class="sd">            &gt;&gt;&gt; print(voting_rule_tasks)</span>
 <span class="sd">            VotingRuleTasks with:</span>
 <span class="sd">                voting_system: RuleExhaustiveBallot</span>
@@ -1190,7 +1190,7 @@
 <span class="sd">                        w_is_condorcet_admissible_</span>
 <span class="sd">                    utility_criteria: None</span>
 <span class="sd">                    numerical_criteria: None</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">for</span> <span class="n">rc</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">rule_class</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">rule_class</span> <span class="o">==</span> <span class="n">rc</span><span class="p">:</span>
                 <span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">append_result_criterion</span><span class="p">(</span><span class="n">criterion</span><span class="p">)</span></div>
@@ -1199,7 +1199,7 @@
 <div class="viewcode-block" id="VotingRuleTasks.append_utility_criterion">
 <a class="viewcode-back" href="../../../reference/meta/voting_rule_tasks.html#svvamp.VotingRuleTasks.append_utility_criterion">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">append_utility_criterion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">rule_class</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a utility criterion for one or all voting rules</span>
+<span class="w">        </span><span class="sd">"""Add a utility criterion for one or all voting rules</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1218,12 +1218,12 @@
 <span class="sd">        Add `criterion` for all occurrences of `rule_class`:</span>
 
 <span class="sd">            &gt;&gt;&gt; voting_rule_tasks = VotingRuleTasks(</span>
-<span class="sd">            ...     voting_systems=[RuleExhaustiveBallot, RuleIRV, (RuleIRV, {&#39;cm_option&#39;: &#39;exact&#39;})],</span>
-<span class="sd">            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=[&#39;is_cm_&#39;], manipulation_only=True,</span>
+<span class="sd">            ...     voting_systems=[RuleExhaustiveBallot, RuleIRV, (RuleIRV, {'cm_option': 'exact'})],</span>
+<span class="sd">            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,</span>
 <span class="sd">            ...                                           numerical_criteria=[])</span>
 <span class="sd">            ... )</span>
 <span class="sd">            &gt;&gt;&gt; voting_rule_tasks.append_utility_criterion(</span>
-<span class="sd">            ...     criterion=&#39;total_utility_w_&#39;, func=np.sum, name=&#39;total_u_sum&#39;, rule_class=RuleIRV)</span>
+<span class="sd">            ...     criterion='total_utility_w_', func=np.sum, name='total_u_sum', rule_class=RuleIRV)</span>
 <span class="sd">            &gt;&gt;&gt; print(voting_rule_tasks)  # doctest: +ELLIPSIS</span>
 <span class="sd">            VotingRuleTasks with:</span>
 <span class="sd">                voting_system: RuleExhaustiveBallot</span>
@@ -1243,28 +1243,28 @@
 <span class="sd">                    manipulation_criteria_c: None</span>
 <span class="sd">                    result_criteria: None</span>
 <span class="sd">                    utility_criteria:</span>
-<span class="sd">                        (&#39;total_utility_w_&#39;, &lt;function sum at ...&gt;, &#39;total_u_sum&#39;)</span>
+<span class="sd">                        ('total_utility_w_', &lt;function sum at ...&gt;, 'total_u_sum')</span>
 <span class="sd">                    numerical_criteria: None</span>
 <span class="sd">                voting_system: RuleIRV</span>
-<span class="sd">                options: {&#39;cm_option&#39;: &#39;exact&#39;}</span>
+<span class="sd">                options: {'cm_option': 'exact'}</span>
 <span class="sd">                StudyRuleCriteria with:</span>
 <span class="sd">                    manipulation_criteria:</span>
 <span class="sd">                        is_cm_</span>
 <span class="sd">                    manipulation_criteria_c: None</span>
 <span class="sd">                    result_criteria: None</span>
 <span class="sd">                    utility_criteria:</span>
-<span class="sd">                        (&#39;total_utility_w_&#39;, &lt;function sum at ...&gt;, &#39;total_u_sum&#39;)</span>
+<span class="sd">                        ('total_utility_w_', &lt;function sum at ...&gt;, 'total_u_sum')</span>
 <span class="sd">                    numerical_criteria: None</span>
 
 <span class="sd">        If `rule_class` is None (default), then add `criterion` for all voting rules:</span>
 
 <span class="sd">            &gt;&gt;&gt; voting_rule_tasks = VotingRuleTasks(</span>
 <span class="sd">            ...     voting_systems=[RuleExhaustiveBallot, RuleIRV],</span>
-<span class="sd">            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=[&#39;is_cm_&#39;], manipulation_only=True,</span>
+<span class="sd">            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,</span>
 <span class="sd">            ...                                           numerical_criteria=[])</span>
 <span class="sd">            ... )</span>
 <span class="sd">            &gt;&gt;&gt; voting_rule_tasks.append_utility_criterion(</span>
-<span class="sd">            ...     criterion=&#39;total_utility_w_&#39;, func=np.sum, name=&#39;total_u_sum&#39;)</span>
+<span class="sd">            ...     criterion='total_utility_w_', func=np.sum, name='total_u_sum')</span>
 <span class="sd">            &gt;&gt;&gt; print(voting_rule_tasks)  # doctest: +ELLIPSIS</span>
 <span class="sd">            VotingRuleTasks with:</span>
 <span class="sd">                voting_system: RuleExhaustiveBallot</span>
@@ -1275,7 +1275,7 @@
 <span class="sd">                    manipulation_criteria_c: None</span>
 <span class="sd">                    result_criteria: None</span>
 <span class="sd">                    utility_criteria:</span>
-<span class="sd">                        (&#39;total_utility_w_&#39;, &lt;function sum at ...&gt;, &#39;total_u_sum&#39;)</span>
+<span class="sd">                        ('total_utility_w_', &lt;function sum at ...&gt;, 'total_u_sum')</span>
 <span class="sd">                    numerical_criteria: None</span>
 <span class="sd">                voting_system: RuleIRV</span>
 <span class="sd">                options: {}</span>
@@ -1285,9 +1285,9 @@
 <span class="sd">                    manipulation_criteria_c: None</span>
 <span class="sd">                    result_criteria: None</span>
 <span class="sd">                    utility_criteria:</span>
-<span class="sd">                        (&#39;total_utility_w_&#39;, &lt;function sum at ...&gt;, &#39;total_u_sum&#39;)</span>
+<span class="sd">                        ('total_utility_w_', &lt;function sum at ...&gt;, 'total_u_sum')</span>
 <span class="sd">                    numerical_criteria: None</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">for</span> <span class="n">rc</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">rule_class</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">rule_class</span> <span class="o">==</span> <span class="n">rc</span><span class="p">:</span>
                 <span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">append_utility_criterion</span><span class="p">(</span><span class="n">criterion</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span></div>
@@ -1296,7 +1296,7 @@
 <div class="viewcode-block" id="VotingRuleTasks.append_numerical_criterion">
 <a class="viewcode-back" href="../../../reference/meta/voting_rule_tasks.html#svvamp.VotingRuleTasks.append_numerical_criterion">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">append_numerical_criterion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">rule_class</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a numerical criterion for one or all voting rules</span>
+<span class="w">        </span><span class="sd">"""Add a numerical criterion for one or all voting rules</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1309,11 +1309,11 @@
 <span class="sd">        Add `criterion` for all occurrences of `rule_class`:</span>
 
 <span class="sd">            &gt;&gt;&gt; voting_rule_tasks = VotingRuleTasks(</span>
-<span class="sd">            ...     voting_systems=[RuleExhaustiveBallot, RuleIRV, (RuleIRV, {&#39;cm_option&#39;: &#39;exact&#39;})],</span>
-<span class="sd">            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=[&#39;is_cm_&#39;], manipulation_only=True,</span>
+<span class="sd">            ...     voting_systems=[RuleExhaustiveBallot, RuleIRV, (RuleIRV, {'cm_option': 'exact'})],</span>
+<span class="sd">            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,</span>
 <span class="sd">            ...                                           numerical_criteria=[])</span>
 <span class="sd">            ... )</span>
-<span class="sd">            &gt;&gt;&gt; voting_rule_tasks.append_numerical_criterion(criterion=&#39;nb_candidates_cm_&#39;, rule_class=RuleIRV)</span>
+<span class="sd">            &gt;&gt;&gt; voting_rule_tasks.append_numerical_criterion(criterion='nb_candidates_cm_', rule_class=RuleIRV)</span>
 <span class="sd">            &gt;&gt;&gt; print(voting_rule_tasks)</span>
 <span class="sd">            VotingRuleTasks with:</span>
 <span class="sd">                voting_system: RuleExhaustiveBallot</span>
@@ -1336,7 +1336,7 @@
 <span class="sd">                    numerical_criteria:</span>
 <span class="sd">                        nb_candidates_cm_</span>
 <span class="sd">                voting_system: RuleIRV</span>
-<span class="sd">                options: {&#39;cm_option&#39;: &#39;exact&#39;}</span>
+<span class="sd">                options: {'cm_option': 'exact'}</span>
 <span class="sd">                StudyRuleCriteria with:</span>
 <span class="sd">                    manipulation_criteria:</span>
 <span class="sd">                        is_cm_</span>
@@ -1350,10 +1350,10 @@
 
 <span class="sd">            &gt;&gt;&gt; voting_rule_tasks = VotingRuleTasks(</span>
 <span class="sd">            ...     voting_systems=[RuleExhaustiveBallot, RuleIRV],</span>
-<span class="sd">            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=[&#39;is_cm_&#39;], manipulation_only=True,</span>
+<span class="sd">            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,</span>
 <span class="sd">            ...                                           numerical_criteria=[])</span>
 <span class="sd">            ... )</span>
-<span class="sd">            &gt;&gt;&gt; voting_rule_tasks.append_numerical_criterion(criterion=&#39;nb_candidates_cm_&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; voting_rule_tasks.append_numerical_criterion(criterion='nb_candidates_cm_')</span>
 <span class="sd">            &gt;&gt;&gt; print(voting_rule_tasks)</span>
 <span class="sd">            VotingRuleTasks with:</span>
 <span class="sd">                voting_system: RuleExhaustiveBallot</span>
@@ -1376,7 +1376,7 @@
 <span class="sd">                    utility_criteria: None</span>
 <span class="sd">                    numerical_criteria:</span>
 <span class="sd">                        nb_candidates_cm_</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">for</span> <span class="n">rc</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">rule_class</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">rule_class</span> <span class="o">==</span> <span class="n">rc</span><span class="p">:</span>
                 <span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">append_numerical_criterion</span><span class="p">(</span><span class="n">criterion</span><span class="p">)</span></div>
@@ -1385,7 +1385,7 @@
 <div class="viewcode-block" id="VotingRuleTasks.remove_option">
 <a class="viewcode-back" href="../../../reference/meta/voting_rule_tasks.html#svvamp.VotingRuleTasks.remove_option">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">remove_option</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">rule_class</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Remove an option and its value for one or all voting rules</span>
+<span class="w">        </span><span class="sd">"""Remove an option and its value for one or all voting rules</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1399,17 +1399,17 @@
 
 <span class="sd">            &gt;&gt;&gt; voting_rule_tasks = VotingRuleTasks(</span>
 <span class="sd">            ...     voting_systems=[</span>
-<span class="sd">            ...         (RuleExhaustiveBallot, {&#39;cm_option&#39;: &#39;exact&#39;}),</span>
-<span class="sd">            ...         (RuleIRV, {&#39;cm_option&#39;: &#39;exact&#39;})</span>
+<span class="sd">            ...         (RuleExhaustiveBallot, {'cm_option': 'exact'}),</span>
+<span class="sd">            ...         (RuleIRV, {'cm_option': 'exact'})</span>
 <span class="sd">            ...     ],</span>
-<span class="sd">            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=[&#39;is_cm_&#39;], manipulation_only=True,</span>
+<span class="sd">            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,</span>
 <span class="sd">            ...                                           numerical_criteria=[])</span>
 <span class="sd">            ... )</span>
-<span class="sd">            &gt;&gt;&gt; voting_rule_tasks.remove_option(option=&#39;cm_option&#39;, rule_class=RuleIRV)</span>
+<span class="sd">            &gt;&gt;&gt; voting_rule_tasks.remove_option(option='cm_option', rule_class=RuleIRV)</span>
 <span class="sd">            &gt;&gt;&gt; print(voting_rule_tasks)</span>
 <span class="sd">            VotingRuleTasks with:</span>
 <span class="sd">                voting_system: RuleExhaustiveBallot</span>
-<span class="sd">                options: {&#39;cm_option&#39;: &#39;exact&#39;}</span>
+<span class="sd">                options: {'cm_option': 'exact'}</span>
 <span class="sd">                StudyRuleCriteria with:</span>
 <span class="sd">                    manipulation_criteria:</span>
 <span class="sd">                        is_cm_</span>
@@ -1433,13 +1433,13 @@
 
 <span class="sd">            &gt;&gt;&gt; voting_rule_tasks = VotingRuleTasks(</span>
 <span class="sd">            ...     voting_systems=[</span>
-<span class="sd">            ...         (RuleExhaustiveBallot, {&#39;cm_option&#39;: &#39;exact&#39;}),</span>
-<span class="sd">            ...         (RuleIRV, {&#39;cm_option&#39;: &#39;exact&#39;})</span>
+<span class="sd">            ...         (RuleExhaustiveBallot, {'cm_option': 'exact'}),</span>
+<span class="sd">            ...         (RuleIRV, {'cm_option': 'exact'})</span>
 <span class="sd">            ...     ],</span>
-<span class="sd">            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=[&#39;is_cm_&#39;], manipulation_only=True,</span>
+<span class="sd">            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,</span>
 <span class="sd">            ...                                           numerical_criteria=[])</span>
 <span class="sd">            ... )</span>
-<span class="sd">            &gt;&gt;&gt; voting_rule_tasks.remove_option(option=&#39;cm_option&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; voting_rule_tasks.remove_option(option='cm_option')</span>
 <span class="sd">            &gt;&gt;&gt; print(voting_rule_tasks)</span>
 <span class="sd">            VotingRuleTasks with:</span>
 <span class="sd">                voting_system: RuleExhaustiveBallot</span>
@@ -1460,7 +1460,7 @@
 <span class="sd">                    result_criteria: None</span>
 <span class="sd">                    utility_criteria: None</span>
 <span class="sd">                    numerical_criteria: None</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">for</span> <span class="n">rc</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">rule_class</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">rule_class</span> <span class="o">==</span> <span class="n">rc</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
@@ -1470,7 +1470,7 @@
 <div class="viewcode-block" id="VotingRuleTasks.set_option">
 <a class="viewcode-back" href="../../../reference/meta/voting_rule_tasks.html#svvamp.VotingRuleTasks.set_option">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_option</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">rule_class</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set an option for one or all voting rules</span>
+<span class="w">        </span><span class="sd">"""Set an option for one or all voting rules</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1486,10 +1486,10 @@
 
 <span class="sd">            &gt;&gt;&gt; voting_rule_tasks = VotingRuleTasks(</span>
 <span class="sd">            ...     voting_systems=[RuleExhaustiveBallot, RuleIRV],</span>
-<span class="sd">            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=[&#39;is_cm_&#39;], manipulation_only=True,</span>
+<span class="sd">            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,</span>
 <span class="sd">            ...                                           numerical_criteria=[])</span>
 <span class="sd">            ... )</span>
-<span class="sd">            &gt;&gt;&gt; voting_rule_tasks.set_option(&#39;cm_option&#39;, &#39;exact&#39;, rule_class=RuleIRV)</span>
+<span class="sd">            &gt;&gt;&gt; voting_rule_tasks.set_option('cm_option', 'exact', rule_class=RuleIRV)</span>
 <span class="sd">            &gt;&gt;&gt; print(voting_rule_tasks)</span>
 <span class="sd">            VotingRuleTasks with:</span>
 <span class="sd">                voting_system: RuleExhaustiveBallot</span>
@@ -1502,7 +1502,7 @@
 <span class="sd">                    utility_criteria: None</span>
 <span class="sd">                    numerical_criteria: None</span>
 <span class="sd">                voting_system: RuleIRV</span>
-<span class="sd">                options: {&#39;cm_option&#39;: &#39;exact&#39;}</span>
+<span class="sd">                options: {'cm_option': 'exact'}</span>
 <span class="sd">                StudyRuleCriteria with:</span>
 <span class="sd">                    manipulation_criteria:</span>
 <span class="sd">                        is_cm_</span>
@@ -1515,14 +1515,14 @@
 
 <span class="sd">            &gt;&gt;&gt; voting_rule_tasks = VotingRuleTasks(</span>
 <span class="sd">            ...     voting_systems=[RuleExhaustiveBallot, RuleIRV],</span>
-<span class="sd">            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=[&#39;is_cm_&#39;], manipulation_only=True,</span>
+<span class="sd">            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['is_cm_'], manipulation_only=True,</span>
 <span class="sd">            ...                                           numerical_criteria=[])</span>
 <span class="sd">            ... )</span>
-<span class="sd">            &gt;&gt;&gt; voting_rule_tasks.set_option(&#39;cm_option&#39;, &#39;exact&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; voting_rule_tasks.set_option('cm_option', 'exact')</span>
 <span class="sd">            &gt;&gt;&gt; print(voting_rule_tasks)</span>
 <span class="sd">            VotingRuleTasks with:</span>
 <span class="sd">                voting_system: RuleExhaustiveBallot</span>
-<span class="sd">                options: {&#39;cm_option&#39;: &#39;exact&#39;}</span>
+<span class="sd">                options: {'cm_option': 'exact'}</span>
 <span class="sd">                StudyRuleCriteria with:</span>
 <span class="sd">                    manipulation_criteria:</span>
 <span class="sd">                        is_cm_</span>
@@ -1531,7 +1531,7 @@
 <span class="sd">                    utility_criteria: None</span>
 <span class="sd">                    numerical_criteria: None</span>
 <span class="sd">                voting_system: RuleIRV</span>
-<span class="sd">                options: {&#39;cm_option&#39;: &#39;exact&#39;}</span>
+<span class="sd">                options: {'cm_option': 'exact'}</span>
 <span class="sd">                StudyRuleCriteria with:</span>
 <span class="sd">                    manipulation_criteria:</span>
 <span class="sd">                        is_cm_</span>
@@ -1539,18 +1539,18 @@
 <span class="sd">                    result_criteria: None</span>
 <span class="sd">                    utility_criteria: None</span>
 <span class="sd">                    numerical_criteria: None</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">for</span> <span class="n">rc</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">rule_class</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">rule_class</span> <span class="o">==</span> <span class="n">rc</span><span class="p">:</span>
                 <span class="c1"># print(rule_class)</span>
-                <span class="c1"># print(&#39;Change option to &#39;+ str(value))</span>
+                <span class="c1"># print('Change option to '+ str(value))</span>
                 <span class="n">options</span><span class="p">[</span><span class="n">option</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span></div>
 
 
 <div class="viewcode-block" id="VotingRuleTasks.check_sanity">
 <a class="viewcode-back" href="../../../reference/meta/voting_rule_tasks.html#svvamp.VotingRuleTasks.check_sanity">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">check_sanity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check sanity of the object</span>
+<span class="w">        </span><span class="sd">"""Check sanity of the object</span>
 
 <span class="sd">        Preform some basic checks. It is recommended to use this method before launching big simulations.</span>
 
@@ -1567,28 +1567,28 @@
 <span class="sd">        Detect an illegal option:</span>
 
 <span class="sd">            &gt;&gt;&gt; voting_rule_tasks = VotingRuleTasks(</span>
-<span class="sd">            ...     voting_systems=[(RuleIRV, {&#39;cm_option&#39;: &#39;unexpected_option&#39;})],</span>
+<span class="sd">            ...     voting_systems=[(RuleIRV, {'cm_option': 'unexpected_option'})],</span>
 <span class="sd">            ... )</span>
 <span class="sd">            &gt;&gt;&gt; voting_rule_tasks.check_sanity()</span>
 <span class="sd">            Traceback (most recent call last):</span>
-<span class="sd">            ValueError: &#39;cm_option&#39; = &#39;unexpected_option&#39; is not allowed in RuleIRV.</span>
+<span class="sd">            ValueError: 'cm_option' = 'unexpected_option' is not allowed in RuleIRV.</span>
 
 <span class="sd">        Detect an illegal :class:`StudyRuleCriteria`:</span>
 
 <span class="sd">            &gt;&gt;&gt; voting_rule_tasks = VotingRuleTasks(</span>
 <span class="sd">            ...     voting_systems=[RuleIRV],</span>
-<span class="sd">            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=[&#39;unexpected_criterion&#39;])</span>
+<span class="sd">            ...     study_rule_criteria=StudyRuleCriteria(manipulation_criteria=['unexpected_criterion'])</span>
 <span class="sd">            ... )</span>
 <span class="sd">            &gt;&gt;&gt; voting_rule_tasks.check_sanity()</span>
 <span class="sd">            Traceback (most recent call last):</span>
-<span class="sd">            ValueError: Criterion &#39;unexpected_criterion&#39; is unknown for RuleIRV.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">            ValueError: Criterion 'unexpected_criterion' is unknown for RuleIRV.</span>
+<span class="sd">        """</span>
         <span class="k">for</span> <span class="n">rule_class</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="c1"># print(rule_class)</span>
             <span class="k">for</span> <span class="n">option</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="n">rule_class</span><span class="o">.</span><span class="n">check_option_allowed</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
             <span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">check_sanity</span><span class="p">(</span><span class="n">rule_class</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;VotingRuleTasks: Sanity check was successful.&quot;</span><span class="p">)</span></div>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"VotingRuleTasks: Sanity check was successful."</span><span class="p">)</span></div>
 </div>
 
 </pre></div>

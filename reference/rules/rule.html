@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Rule &#8212; SVVAMP 0.14.0 documentation</title>
+    <title>Rule &#8212; SVVAMP 0.15.0 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=9e420a66"></script>
+    <script src="../../_static/documentation_options.js?v=ef97403f"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -51,7 +51,7 @@
     <link rel="prev" title="PluralityEliminationEngineProfileUM" href="../preferences/plurality_elimination_engine_profile_um.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.14.0" />
+  <meta name="docsearch:version" content="0.15.0" />
   </head>
   
   
@@ -113,7 +113,7 @@
   
   
   
-    <p class="title logo__title">SVVAMP 0.14.0 documentation</p>
+    <p class="title logo__title">SVVAMP 0.15.0 documentation</p>
   
 </a></div>
     
@@ -416,6 +416,9 @@
 <li class="toctree-l1"><a class="reference internal" href="rule_borda.html">RuleBorda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_bucklin.html">RuleBucklin</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_condorcet_abs_irv.html">RuleCondorcetAbsIRV</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rule_condorcet_constant.html">RuleCondorcetConstant</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rule_condorcet_dictatorship.html">RuleCondorcetDictatorship</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rule_condorcet_duel.html">RuleCondorcetDuel</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_condorcet_vtb_irv.html">RuleCondorcetVtbIRV</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_coombs.html">RuleCoombs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rule_copeland.html">RuleCopeland</a></li>
@@ -525,11 +528,11 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>with_two_candidates_reduces_to_plurality</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – <code class="docutils literal notranslate"><span class="pre">True</span></code> iff, when using this voting system with only two candidates, it amounts to Plurality (with voter and
+<li><p><strong>with_two_candidates_reduces_to_plurality</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – <code class="docutils literal notranslate"><span class="pre">True</span></code> iff, when using this voting system with only two candidates, it amounts to Plurality (with voter and
 candidate tie-breaking).</p></li>
-<li><p><strong>is_based_on_rk</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – <code class="docutils literal notranslate"><span class="pre">True</span></code> iff this voting system is based only on strict rankings (no cardinal information, indifference not
+<li><p><strong>is_based_on_rk</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – <code class="docutils literal notranslate"><span class="pre">True</span></code> iff this voting system is based only on strict rankings (no cardinal information, indifference not
 allowed).</p></li>
-<li><p><strong>is_based_on_ut_minus1_1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – <p><code class="docutils literal notranslate"><span class="pre">True</span></code> iff:</p>
+<li><p><strong>is_based_on_ut_minus1_1</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – <p><code class="docutils literal notranslate"><span class="pre">True</span></code> iff:</p>
 <blockquote>
 <div><ul>
 <li><p>This voting system is based only on utilities (not rankings, i.e. does not depend on how voters break
@@ -539,12 +542,12 @@ candidates have utility -1.</p></li>
 </ul>
 </div></blockquote>
 </p></li>
-<li><p><strong>meets_iia</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – <code class="docutils literal notranslate"><span class="pre">True</span></code> iff this voting system meets Independence of Irrelevant Alternatives.</p></li>
-<li><p><strong>precheck_um</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, then before computing CM, we check whether there is UM.</p></li>
-<li><p><strong>precheck_tm</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, then before computing CM, we check whether there is TM.</p></li>
-<li><p><strong>precheck_icm</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, then before computing CM, we check whether there is ICM. Remark: when the voting system meets
+<li><p><strong>meets_iia</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – <code class="docutils literal notranslate"><span class="pre">True</span></code> iff this voting system meets Independence of Irrelevant Alternatives.</p></li>
+<li><p><strong>precheck_um</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, then before computing CM, we check whether there is UM.</p></li>
+<li><p><strong>precheck_tm</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, then before computing CM, we check whether there is TM.</p></li>
+<li><p><strong>precheck_icm</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, then before computing CM, we check whether there is ICM. Remark: when the voting system meets
 InfMC_c_ctb, then precheck on ICM will not do better than other basic prechecks.</p></li>
-<li><p><strong>log_identity</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Cf. <a class="reference internal" href="../utils/my_log.html#svvamp.MyLog" title="svvamp.MyLog"><code class="xref py py-class docutils literal notranslate"><span class="pre">MyLog</span></code></a>.</p></li>
+<li><p><strong>log_identity</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Cf. <a class="reference internal" href="../utils/my_log.html#svvamp.MyLog" title="svvamp.MyLog"><code class="xref py py-class docutils literal notranslate"><span class="pre">MyLog</span></code></a>.</p></li>
 <li><p><strong>kwargs</strong> – Additional keyword parameters. See <a class="reference internal" href="#svvamp.Rule.options_parameters" title="svvamp.Rule.options_parameters"><code class="xref py py-attr docutils literal notranslate"><span class="pre">options_parameters</span></code></a> for allowed and default options.</p></li>
 </ul>
 </dd>
@@ -693,22 +696,22 @@ possible, <code class="docutils literal notranslate"><span class="pre">False</sp
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>option</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
-<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><em>object</em></a>)</p></li>
+<li><p><strong>option</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
+<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.14)"><em>object</em></a>)</p></li>
 </ul>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
 <p>Raise an error if the option is not in <a class="reference internal" href="#svvamp.Rule.options_parameters" title="svvamp.Rule.options_parameters"><code class="xref py py-attr docutils literal notranslate"><span class="pre">options_parameters</span></code></a>:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Rule</span><span class="o">.</span><span class="n">check_option_allowed</span><span class="p">(</span><span class="s1">&#39;not_existing_option&#39;</span><span class="p">,</span> <span class="mi">42</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Rule</span><span class="o">.</span><span class="n">check_option_allowed</span><span class="p">(</span><span class="s1">'not_existing_option'</span><span class="p">,</span> <span class="mi">42</span><span class="p">)</span>
 <span class="gt">Traceback (most recent call last):</span>
-<span class="gr">ValueError</span>: <span class="n">Option &#39;not_existing_option&#39; is unknown for Rule.</span>
+<span class="gr">ValueError</span>: <span class="n">Option 'not_existing_option' is unknown for Rule.</span>
 </pre></div>
 </div>
 <p>Raise an error if the value is not authorized for this option:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Rule</span><span class="o">.</span><span class="n">check_option_allowed</span><span class="p">(</span><span class="s1">&#39;cm_option&#39;</span><span class="p">,</span> <span class="s1">&#39;unexpected_value&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Rule</span><span class="o">.</span><span class="n">check_option_allowed</span><span class="p">(</span><span class="s1">'cm_option'</span><span class="p">,</span> <span class="s1">'unexpected_value'</span><span class="p">)</span>
 <span class="gt">Traceback (most recent call last):</span>
-<span class="gr">ValueError</span>: <span class="n">&#39;cm_option&#39; = &#39;unexpected_value&#39; is not allowed in Rule.</span>
+<span class="gr">ValueError</span>: <span class="n">'cm_option' = 'unexpected_value' is not allowed in Rule.</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -734,7 +737,7 @@ Globally, it is the max over the candidates c != w.</p>
 <dd><p>Demonstrate the manipulation methods of <a class="reference internal" href="#svvamp.Rule" title="svvamp.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a> class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>log_depth</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Integer from 0 (basic info) to 3 (verbose).</p>
+<dd class="field-odd"><p><strong>log_depth</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Integer from 0 (basic info) to 3 (verbose).</p>
 </dd>
 </dl>
 </dd></dl>
@@ -745,7 +748,7 @@ Globally, it is the max over the candidates c != w.</p>
 <dd><p>Demonstrate the attributes of the loaded profile.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>log_depth</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Integer from 0 (basic info) to 3 (verbose).</p>
+<dd class="field-odd"><p><strong>log_depth</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Integer from 0 (basic info) to 3 (verbose).</p>
 </dd>
 </dl>
 </dd></dl>
@@ -756,7 +759,7 @@ Globally, it is the max over the candidates c != w.</p>
 <dd><p>Demonstrate the methods related to the result of the election (without manipulation).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>log_depth</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Integer from 0 (basic info) to 3 (verbose).</p>
+<dd class="field-odd"><p><strong>log_depth</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Integer from 0 (basic info) to 3 (verbose).</p>
 </dd>
 </dl>
 </dd></dl>
@@ -767,7 +770,7 @@ Globally, it is the max over the candidates c != w.</p>
 <dd><p>True iff there is a Condorcet winner, she is elected by sincere voting and it is not CM.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)">bool</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -825,13 +828,13 @@ decide, then <code class="docutils literal notranslate"><span class="pre">numpy.
 <dd><p>Coalition Manipulation, focus on one candidate.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>c</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Candidate.</p>
+<dd class="field-odd"><p><strong>c</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Candidate.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">candidates_cm[c]</span></code>.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)">bool</a> or nan</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)">bool</a> or nan</p>
 </dd>
 </dl>
 </dd></dl>
@@ -842,13 +845,13 @@ decide, then <code class="docutils literal notranslate"><span class="pre">numpy.
 <dd><p>Coalition Manipulation, focus on one candidate, with bounds.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>c</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Candidate.</p>
+<dd class="field-odd"><p><strong>c</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Candidate.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>(<code class="docutils literal notranslate"><span class="pre">candidates_cm[c]</span></code>, <code class="docutils literal notranslate"><span class="pre">necessary_coalition_size_cm[c]</span></code>, <code class="docutils literal notranslate"><span class="pre">sufficient_coalition_size_cm[c]</span></code>).</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)">tuple</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.14)">tuple</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -868,13 +871,13 @@ who prefer <code class="docutils literal notranslate"><span class="pre">c</span>
 <dd><p>Ignorant-Coalition Manipulation, focus on one candidate.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>c</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Candidate.</p>
+<dd class="field-odd"><p><strong>c</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Candidate.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">candidates_icm[c]_</span></code>.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)">bool</a> or nan</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)">bool</a> or nan</p>
 </dd>
 </dl>
 </dd></dl>
@@ -885,13 +888,13 @@ who prefer <code class="docutils literal notranslate"><span class="pre">c</span>
 <dd><p>Ignorant-Coalition Manipulation, focus on one candidate, with bounds.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>c</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Candidate.</p>
+<dd class="field-odd"><p><strong>c</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Candidate.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>(<code class="docutils literal notranslate"><span class="pre">candidates_icm_[c]</span></code>, <code class="docutils literal notranslate"><span class="pre">necessary_coalition_size_icm_[c]</span></code>, <code class="docutils literal notranslate"><span class="pre">sufficient_coalition_size_icm_[c]</span></code>).</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)">tuple</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.14)">tuple</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -922,13 +925,13 @@ algorithm cannot decide, then <code class="docutils literal notranslate"><span c
 <dd><p>Individual manipulation, focus on one candidate.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>c</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Candidate.</p>
+<dd class="field-odd"><p><strong>c</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Candidate.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">candidates_im[c]</span></code>.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)">bool</a> or nan</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)">bool</a> or nan</p>
 </dd>
 </dl>
 </dd></dl>
@@ -939,13 +942,13 @@ algorithm cannot decide, then <code class="docutils literal notranslate"><span c
 <dd><p>Individual manipulation, focus on one candidate, with details.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>c</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Candidate.</p>
+<dd class="field-odd"><p><strong>c</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Candidate.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>(<code class="docutils literal notranslate"><span class="pre">candidates_im[c]</span></code>, <code class="docutils literal notranslate"><span class="pre">v_im_for_c[:,</span> <span class="pre">c]</span></code>).</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)">tuple</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.14)">tuple</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -956,13 +959,13 @@ algorithm cannot decide, then <code class="docutils literal notranslate"><span c
 <dd><p>Individual manipulation, focus on one voter.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>v</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Voter.</p>
+<dd class="field-odd"><p><strong>v</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Voter.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">voters_im[v]</span></code>.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)">bool</a> or nan</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)">bool</a> or nan</p>
 </dd>
 </dl>
 </dd></dl>
@@ -973,13 +976,13 @@ algorithm cannot decide, then <code class="docutils literal notranslate"><span c
 <dd><p>Individual manipulation, focus on one voter, with details.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>v</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Voter.</p>
+<dd class="field-odd"><p><strong>v</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Voter.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>(<code class="docutils literal notranslate"><span class="pre">voters_im[v]</span></code>, <code class="docutils literal notranslate"><span class="pre">v_im_for_c[v,</span> <span class="pre">:]</span></code>).</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)">tuple</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.14)">tuple</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1015,13 +1018,13 @@ preferring <code class="docutils literal notranslate"><span class="pre">c</span>
 <dd><p>Trivial manipulation, focus on one candidate.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>c</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Candidate.</p>
+<dd class="field-odd"><p><strong>c</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Candidate.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">candidates_tm[c]</span></code>.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)">bool</a> or nan</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)">bool</a> or nan</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1042,13 +1045,13 @@ other voters still vote sincerely).</p>
 <dd><p>Unison manipulation, focus on one candidate.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>c</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Candidate.</p>
+<dd class="field-odd"><p><strong>c</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Candidate.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">candidates_um[c]</span></code></p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)">bool</a> or nan</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)">bool</a> or nan</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1065,18 +1068,18 @@ other voters still vote sincerely).</p>
 <dd><p>Log corresponding to a particular manipulation method.</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span> <span class="o">=</span> <span class="n">Rule</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span><span class="o">.</span><span class="n">log_</span><span class="p">(</span><span class="s1">&#39;whatever_iia_whatever&#39;</span><span class="p">)</span>
-<span class="go">&#39;iia_subset_maximum_size = 2.0&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span><span class="o">.</span><span class="n">log_</span><span class="p">(</span><span class="s1">&#39;whatever_im_whatever&#39;</span><span class="p">)</span>
-<span class="go">&#39;im_option = lazy&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span><span class="o">.</span><span class="n">log_</span><span class="p">(</span><span class="s1">&#39;whatever_icm_whatever&#39;</span><span class="p">)</span>
-<span class="go">&#39;icm_option = lazy&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span><span class="o">.</span><span class="n">log_</span><span class="p">(</span><span class="s1">&#39;whatever_tm_whatever&#39;</span><span class="p">)</span>
-<span class="go">&#39;tm_option = exact&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span><span class="o">.</span><span class="n">log_</span><span class="p">(</span><span class="s1">&#39;whatever_um_whatever&#39;</span><span class="p">)</span>
-<span class="go">&#39;um_option = lazy&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span><span class="o">.</span><span class="n">log_</span><span class="p">(</span><span class="s1">&#39;whatever_cm_whatever&#39;</span><span class="p">)</span>
-<span class="go">&#39;cm_option = lazy, um_option = lazy, icm_option = lazy, tm_option = exact&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span><span class="o">.</span><span class="n">log_</span><span class="p">(</span><span class="s1">'whatever_iia_whatever'</span><span class="p">)</span>
+<span class="go">'iia_subset_maximum_size = 2.0'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span><span class="o">.</span><span class="n">log_</span><span class="p">(</span><span class="s1">'whatever_im_whatever'</span><span class="p">)</span>
+<span class="go">'im_option = lazy'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span><span class="o">.</span><span class="n">log_</span><span class="p">(</span><span class="s1">'whatever_icm_whatever'</span><span class="p">)</span>
+<span class="go">'icm_option = lazy'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span><span class="o">.</span><span class="n">log_</span><span class="p">(</span><span class="s1">'whatever_tm_whatever'</span><span class="p">)</span>
+<span class="go">'tm_option = exact'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span><span class="o">.</span><span class="n">log_</span><span class="p">(</span><span class="s1">'whatever_um_whatever'</span><span class="p">)</span>
+<span class="go">'um_option = lazy'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rule</span><span class="o">.</span><span class="n">log_</span><span class="p">(</span><span class="s1">'whatever_cm_whatever'</span><span class="p">)</span>
+<span class="go">'cm_option = lazy, um_option = lazy, icm_option = lazy, tm_option = exact'</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1359,7 +1362,7 @@ but not the numerical evaluation of <span class="math notranslate nohighlight">\
 <dd><p>name of the option. Value: value of the option.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
 </dd>
 <dt class="field-even">Type<span class="colon">:</span></dt>
 <dd class="field-even"><p>The options. Key</p>
@@ -1377,7 +1380,7 @@ is correct. Example: <code class="docutils literal notranslate"><span class="pre
 <span class="pre">51],</span> <span class="pre">default=42)}</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1478,7 +1481,7 @@ we have by convention <code class="docutils literal notranslate"><span class="pr
 <p>For example, instead of <code class="docutils literal notranslate"><span class="pre">rule.cm_option='exact'</span></code>, you can write <code class="docutils literal notranslate"><span class="pre">rule.update_options{'cm_option':</span> <span class="pre">'exact'}</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>options</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – Key: option name. Value: option value.</p>
+<dd class="field-odd"><p><strong>options</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – Key: option name. Value: option value.</p>
 </dd>
 </dl>
 </dd></dl>

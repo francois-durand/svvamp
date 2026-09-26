@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>svvamp.meta.experiment_analyzer &#8212; SVVAMP 0.14.0 documentation</title>
+    <title>svvamp.meta.experiment_analyzer &#8212; SVVAMP 0.15.0 documentation</title>
   
   
   
@@ -37,7 +37,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=9e420a66"></script>
+    <script src="../../../_static/documentation_options.js?v=ef97403f"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -46,7 +46,7 @@
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.14.0" />
+  <meta name="docsearch:version" content="0.15.0" />
   </head>
   
   
@@ -108,7 +108,7 @@
   
   
   
-    <p class="title logo__title">SVVAMP 0.14.0 documentation</p>
+    <p class="title logo__title">SVVAMP 0.15.0 documentation</p>
   
 </a></div>
     
@@ -424,7 +424,7 @@
                   
   <h1>Source code for svvamp.meta.experiment_analyzer</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 <span class="sd">Created on nov. 03, 2014, 23:33</span>
 <span class="sd">Copyright François Durand 2014, 2015</span>
 <span class="sd">fradurand@gmail.com</span>
@@ -443,7 +443,7 @@
 
 <span class="sd">    You should have received a copy of the GNU General Public License</span>
 <span class="sd">    along with SVVAMP.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -459,7 +459,7 @@
 <div class="viewcode-block" id="ExperimentAnalyzer">
 <a class="viewcode-back" href="../../../reference/meta/experiment_analyzer.html#svvamp.ExperimentAnalyzer">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">ExperimentAnalyzer</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Analyze a voting experiment.</span>
+<span class="w">    </span><span class="sd">"""Analyze a voting experiment.</span>
 
 <span class="sd">    The results are stored in several csv files.</span>
 
@@ -498,7 +498,7 @@
 <span class="sd">    If you specify the profile criteria and/or the voting rule tasks, then the relevant sanity checks are performed:</span>
 
 <span class="sd">        &gt;&gt;&gt; experiment_analyzer = ExperimentAnalyzer(</span>
-<span class="sd">        ...     study_profile_criteria=StudyProfileCriteria(boolean_criteria=[&#39;exists_condorcet_winner_rk&#39;]),</span>
+<span class="sd">        ...     study_profile_criteria=StudyProfileCriteria(boolean_criteria=['exists_condorcet_winner_rk']),</span>
 <span class="sd">        ...     voting_rule_tasks=VotingRuleTasks(voting_systems=[RuleIRV])</span>
 <span class="sd">        ... )</span>
 <span class="sd">        StudyProfileCriteria: Sanity check was successful.</span>
@@ -507,7 +507,7 @@
 <span class="sd">    Anyway, you can then call the object with `experiment_analyzer()`. You can override the parameters (like</span>
 <span class="sd">    `base_profile`, `n_samples`, etc) when making the call. For example:</span>
 <span class="sd">    `experiment_analyzer(base_profile=another_base_profile)`.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -518,8 +518,8 @@
         <span class="n">exponential_noise</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">study_profile_criteria</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">voting_rule_tasks</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;out&quot;</span><span class="p">,</span>
-        <span class="n">output_file_suffix</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">output_dir</span><span class="o">=</span><span class="s2">"out"</span><span class="p">,</span>
+        <span class="n">output_file_suffix</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span>
         <span class="n">log_csv</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">ping_period</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
     <span class="p">):</span>
@@ -561,41 +561,41 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">ping_period</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_prepare_csv</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">prefix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_dir</span> <span class="o">+</span> <span class="s2">&quot;/Results_&quot;</span> <span class="o">+</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">_%H-%M-%S&quot;</span><span class="p">)</span>
-        <span class="n">suffix</span> <span class="o">=</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_file_suffix</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_file_suffix</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">file_d_en</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">_d_en</span><span class="si">{</span><span class="n">suffix</span><span class="si">}</span><span class="s2">.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">file_d_fr</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">_d_fr</span><span class="si">{</span><span class="n">suffix</span><span class="si">}</span><span class="s2">.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">file_m_en</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">_m_en</span><span class="si">{</span><span class="n">suffix</span><span class="si">}</span><span class="s2">.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">file_m_fr</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">_m_fr</span><span class="si">{</span><span class="n">suffix</span><span class="si">}</span><span class="s2">.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span>
+        <span class="n">prefix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_dir</span> <span class="o">+</span> <span class="s2">"/Results_"</span> <span class="o">+</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2">_%H-%M-%S"</span><span class="p">)</span>
+        <span class="n">suffix</span> <span class="o">=</span> <span class="s2">"_"</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_file_suffix</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_file_suffix</span> <span class="k">else</span> <span class="s2">""</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_d_en</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">_d_en</span><span class="si">{</span><span class="n">suffix</span><span class="si">}</span><span class="s2">.csv"</span><span class="p">,</span> <span class="s2">"a"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_d_fr</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">_d_fr</span><span class="si">{</span><span class="n">suffix</span><span class="si">}</span><span class="s2">.csv"</span><span class="p">,</span> <span class="s2">"a"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_m_en</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">_m_en</span><span class="si">{</span><span class="n">suffix</span><span class="si">}</span><span class="s2">.csv"</span><span class="p">,</span> <span class="s2">"a"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_m_fr</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">_m_fr</span><span class="si">{</span><span class="n">suffix</span><span class="si">}</span><span class="s2">.csv"</span><span class="p">,</span> <span class="s2">"a"</span><span class="p">)</span>
         <span class="n">headers_m</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
             <span class="p">[</span>
-                <span class="s2">&quot;Rule&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;Rule (abbr)&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;Rule (class)&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;Criterion&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;Candidate&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;Candidate name&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;Algorithm parameters&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;Computation time&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;Rate (lower bound)&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;Rate (upper bound)&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;Rate (uncertainty)&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;Number of profiles&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;V&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;C&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;Culture type&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;Culture parameter 1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;Culture parameter 1 value&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;Culture parameter 2&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;Culture parameter 2 value&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;Culture parameter 3&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;Culture parameter 3 value&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;Culture parameter 4&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;Culture parameter 4 value&quot;</span><span class="p">,</span>
+                <span class="s2">"Rule"</span><span class="p">,</span>
+                <span class="s2">"Rule (abbr)"</span><span class="p">,</span>
+                <span class="s2">"Rule (class)"</span><span class="p">,</span>
+                <span class="s2">"Criterion"</span><span class="p">,</span>
+                <span class="s2">"Candidate"</span><span class="p">,</span>
+                <span class="s2">"Candidate name"</span><span class="p">,</span>
+                <span class="s2">"Algorithm parameters"</span><span class="p">,</span>
+                <span class="s2">"Computation time"</span><span class="p">,</span>
+                <span class="s2">"Rate (lower bound)"</span><span class="p">,</span>
+                <span class="s2">"Rate (upper bound)"</span><span class="p">,</span>
+                <span class="s2">"Rate (uncertainty)"</span><span class="p">,</span>
+                <span class="s2">"Number of profiles"</span><span class="p">,</span>
+                <span class="s2">"V"</span><span class="p">,</span>
+                <span class="s2">"C"</span><span class="p">,</span>
+                <span class="s2">"Culture type"</span><span class="p">,</span>
+                <span class="s2">"Culture parameter 1"</span><span class="p">,</span>
+                <span class="s2">"Culture parameter 1 value"</span><span class="p">,</span>
+                <span class="s2">"Culture parameter 2"</span><span class="p">,</span>
+                <span class="s2">"Culture parameter 2 value"</span><span class="p">,</span>
+                <span class="s2">"Culture parameter 3"</span><span class="p">,</span>
+                <span class="s2">"Culture parameter 3 value"</span><span class="p">,</span>
+                <span class="s2">"Culture parameter 4"</span><span class="p">,</span>
+                <span class="s2">"Culture parameter 4 value"</span><span class="p">,</span>
             <span class="p">]</span>
         <span class="p">)</span><span class="o">.</span><span class="n">T</span>
-        <span class="n">headers_m</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">path_or_buf</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">file_m_en</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">lineterminator</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="n">headers_m</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">path_or_buf</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">file_m_fr</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;;&quot;</span><span class="p">,</span> <span class="n">lineterminator</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">headers_m</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">path_or_buf</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">file_m_en</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">lineterminator</span><span class="o">=</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+        <span class="n">headers_m</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">path_or_buf</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">file_m_fr</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">";"</span><span class="p">,</span> <span class="n">lineterminator</span><span class="o">=</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_df_to_csv_m</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">_df_to_csv</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">file_en</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">file_m_en</span><span class="p">,</span> <span class="n">file_fr</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">file_m_fr</span><span class="p">)</span>
@@ -662,12 +662,12 @@
             <span class="k">for</span> <span class="p">(</span><span class="n">rule_class</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">voting_rule_tasks</span>
         <span class="p">]</span>
         <span class="n">results_vs_manipulation_criteria</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="p">[</span><span class="nb">dict</span><span class="p">(</span><span class="n">inf</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sup</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">manipulation_criteria</span><span class="p">]</span>
+            <span class="p">[</span><span class="nb">dict</span><span class="p">(</span><span class="n">inf</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sup</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">manipulation_criteria</span><span class="p">]</span>
             <span class="k">for</span> <span class="p">(</span><span class="n">rule_class</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">voting_rule_tasks</span>
         <span class="p">]</span>
         <span class="n">results_vs_manipulation_criteria_c</span> <span class="o">=</span> <span class="p">[</span>
             <span class="p">[</span>
-                <span class="nb">dict</span><span class="p">(</span><span class="n">inf</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_c</span><span class="p">),</span> <span class="n">sup</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_c</span><span class="p">),</span> <span class="n">log</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="nb">dict</span><span class="p">(</span><span class="n">inf</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_c</span><span class="p">),</span> <span class="n">sup</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_c</span><span class="p">),</span> <span class="n">log</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
                 <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">manipulation_criteria_c</span>
             <span class="p">]</span>
             <span class="k">for</span> <span class="p">(</span><span class="n">rule_class</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">study_rule_criteria</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">voting_rule_tasks</span>
@@ -684,18 +684,18 @@
             <span class="n">exponential_noise</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">exponential_noise</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="c1"># Heavy lifting</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Compute...&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"Compute..."</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">n_iterations</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span><span class="p">):</span>
             <span class="n">profile</span> <span class="o">=</span> <span class="n">generator_profile</span><span class="p">()</span>
             <span class="c1"># Tests on the profile itself</span>
             <span class="k">for</span> <span class="n">i_criterion</span><span class="p">,</span> <span class="n">criterion</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">boolean_criteria</span><span class="p">):</span>
                 <span class="n">answer</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">criterion</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">equal_true</span><span class="p">(</span><span class="n">answer</span><span class="p">):</span>
-                    <span class="n">results_p_boolean_criteria</span><span class="p">[</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">&quot;inf&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-                    <span class="n">results_p_boolean_criteria</span><span class="p">[</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">&quot;sup&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">results_p_boolean_criteria</span><span class="p">[</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">"inf"</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">results_p_boolean_criteria</span><span class="p">[</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">"sup"</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
                 <span class="k">elif</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">answer</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
                     <span class="c1"># As of now, no Boolean criterion can return `nan`.</span>
-                    <span class="n">results_p_boolean_criteria</span><span class="p">[</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">&quot;sup&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">results_p_boolean_criteria</span><span class="p">[</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">"sup"</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="k">for</span> <span class="n">i_criterion</span><span class="p">,</span> <span class="p">(</span><span class="n">criterion</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">numerical_criteria</span><span class="p">):</span>
                 <span class="n">answer</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">criterion</span><span class="p">)</span>
                 <span class="n">results_p_numerical_criteria</span><span class="p">[</span><span class="n">i_criterion</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">answer</span><span class="p">)</span>
@@ -721,11 +721,11 @@
                 <span class="k">for</span> <span class="n">i_criterion</span><span class="p">,</span> <span class="n">criterion</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">result_criteria</span><span class="p">):</span>
                     <span class="n">answer</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">election</span><span class="p">,</span> <span class="n">criterion</span><span class="p">)</span>
                     <span class="k">if</span> <span class="n">equal_true</span><span class="p">(</span><span class="n">answer</span><span class="p">):</span>
-                        <span class="n">results_vs_result_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">&quot;inf&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-                        <span class="n">results_vs_result_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">&quot;sup&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                        <span class="n">results_vs_result_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">"inf"</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                        <span class="n">results_vs_result_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">"sup"</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
                     <span class="k">elif</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">answer</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
                         <span class="c1"># As of now, no result criterion can return `nan`.</span>
-                        <span class="n">results_vs_result_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">&quot;sup&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                        <span class="n">results_vs_result_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">"sup"</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
                 <span class="c1"># Utility criteria</span>
                 <span class="k">for</span> <span class="n">i_criterion</span><span class="p">,</span> <span class="p">(</span><span class="n">criterion</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">utility_criteria</span><span class="p">):</span>
                     <span class="n">answer</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">election</span><span class="p">,</span> <span class="n">criterion</span><span class="p">)</span>
@@ -735,67 +735,67 @@
                     <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
                     <span class="n">inf</span><span class="p">,</span> <span class="n">sup</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">election</span><span class="p">,</span> <span class="n">criterion</span><span class="p">)</span>
                     <span class="n">t2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-                    <span class="n">results_vs_numerical_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">&quot;time&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">t2</span> <span class="o">-</span> <span class="n">t1</span>
-                    <span class="n">results_vs_numerical_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">&quot;inf&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">inf</span>
-                    <span class="n">results_vs_numerical_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">&quot;sup&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">sup</span>
+                    <span class="n">results_vs_numerical_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">"time"</span><span class="p">]</span> <span class="o">+=</span> <span class="n">t2</span> <span class="o">-</span> <span class="n">t1</span>
+                    <span class="n">results_vs_numerical_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">"inf"</span><span class="p">]</span> <span class="o">+=</span> <span class="n">inf</span>
+                    <span class="n">results_vs_numerical_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">"sup"</span><span class="p">]</span> <span class="o">+=</span> <span class="n">sup</span>
                 <span class="c1"># Manipulation criteria (by candidate)</span>
                 <span class="k">for</span> <span class="n">i_criterion</span><span class="p">,</span> <span class="n">criterion</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">manipulation_criteria_c</span><span class="p">):</span>
                     <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
                     <span class="n">answer</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">election</span><span class="p">,</span> <span class="n">criterion</span><span class="p">)</span>
                     <span class="n">t2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-                    <span class="n">results_vs_manipulation_criteria_c</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">&quot;time&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">t2</span> <span class="o">-</span> <span class="n">t1</span>
-                    <span class="n">results_vs_manipulation_criteria_c</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">&quot;inf&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">answer</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-                    <span class="n">results_vs_manipulation_criteria_c</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">&quot;sup&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">answer</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-                    <span class="n">results_vs_manipulation_criteria_c</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">&quot;sup&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">answer</span><span class="p">)</span>
+                    <span class="n">results_vs_manipulation_criteria_c</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">"time"</span><span class="p">]</span> <span class="o">+=</span> <span class="n">t2</span> <span class="o">-</span> <span class="n">t1</span>
+                    <span class="n">results_vs_manipulation_criteria_c</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">"inf"</span><span class="p">]</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">answer</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+                    <span class="n">results_vs_manipulation_criteria_c</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">"sup"</span><span class="p">]</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">answer</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+                    <span class="n">results_vs_manipulation_criteria_c</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">"sup"</span><span class="p">]</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">answer</span><span class="p">)</span>
                     <span class="k">if</span> <span class="n">n_iterations</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                         <span class="n">log</span> <span class="o">=</span> <span class="n">election</span><span class="o">.</span><span class="n">log_</span><span class="p">(</span><span class="n">criterion</span><span class="p">)</span>
-                        <span class="n">results_vs_manipulation_criteria_c</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">&quot;log&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">log</span>
+                        <span class="n">results_vs_manipulation_criteria_c</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">"log"</span><span class="p">]</span> <span class="o">+=</span> <span class="n">log</span>
                 <span class="c1"># Manipulation criteria (Boolean)</span>
                 <span class="k">for</span> <span class="n">i_criterion</span><span class="p">,</span> <span class="n">criterion</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">manipulation_criteria</span><span class="p">):</span>
                     <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
                     <span class="n">answer</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">election</span><span class="p">,</span> <span class="n">criterion</span><span class="p">)</span>
                     <span class="n">t2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-                    <span class="n">results_vs_manipulation_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">&quot;time&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">t2</span> <span class="o">-</span> <span class="n">t1</span>
+                    <span class="n">results_vs_manipulation_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">"time"</span><span class="p">]</span> <span class="o">+=</span> <span class="n">t2</span> <span class="o">-</span> <span class="n">t1</span>
                     <span class="k">if</span> <span class="n">equal_true</span><span class="p">(</span><span class="n">answer</span><span class="p">):</span>
-                        <span class="n">results_vs_manipulation_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">&quot;inf&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-                        <span class="n">results_vs_manipulation_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">&quot;sup&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                        <span class="n">results_vs_manipulation_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">"inf"</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                        <span class="n">results_vs_manipulation_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">"sup"</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
                     <span class="k">elif</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">answer</span><span class="p">):</span>
-                        <span class="n">results_vs_manipulation_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">&quot;sup&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                        <span class="n">results_vs_manipulation_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">"sup"</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
                     <span class="k">if</span> <span class="n">n_iterations</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                         <span class="n">log</span> <span class="o">=</span> <span class="n">election</span><span class="o">.</span><span class="n">log_</span><span class="p">(</span><span class="n">criterion</span><span class="p">)</span>
-                        <span class="n">results_vs_manipulation_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">&quot;log&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">log</span>
+                        <span class="n">results_vs_manipulation_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">"log"</span><span class="p">]</span> <span class="o">+=</span> <span class="n">log</span>
             <span class="c1"># Report progression (or not)</span>
             <span class="k">if</span> <span class="p">(</span><span class="n">n_iterations</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">ping_period</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">n_iterations</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2"> profiles analyzed&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">n_iterations</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2"> profiles analyzed"</span><span class="p">)</span>
 
         <span class="c1"># Write results in csv</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Write results in csv files...&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"Write results in csv files..."</span><span class="p">)</span>
         <span class="c1"># Results on profiles</span>
         <span class="k">for</span> <span class="n">i_criterion</span><span class="p">,</span> <span class="n">criterion</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">boolean_criteria</span><span class="p">):</span>
-            <span class="n">lower</span> <span class="o">=</span> <span class="n">results_p_boolean_criteria</span><span class="p">[</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">&quot;inf&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span>
-            <span class="n">upper</span> <span class="o">=</span> <span class="n">results_p_boolean_criteria</span><span class="p">[</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">&quot;sup&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span>
+            <span class="n">lower</span> <span class="o">=</span> <span class="n">results_p_boolean_criteria</span><span class="p">[</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">"inf"</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span>
+            <span class="n">upper</span> <span class="o">=</span> <span class="n">results_p_boolean_criteria</span><span class="p">[</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">"sup"</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_df_to_csv_m</span><span class="p">(</span>
-                <span class="p">[</span><span class="s2">&quot;Profile&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">,</span> <span class="n">upper</span> <span class="o">-</span> <span class="n">lower</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_v</span><span class="p">,</span> <span class="n">n_c</span><span class="p">]</span>
+                <span class="p">[</span><span class="s2">"Profile"</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">,</span> <span class="n">upper</span> <span class="o">-</span> <span class="n">lower</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_v</span><span class="p">,</span> <span class="n">n_c</span><span class="p">]</span>
                 <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_csv</span>
             <span class="p">)</span>
         <span class="k">for</span> <span class="n">i_criterion</span><span class="p">,</span> <span class="p">(</span><span class="n">criterion</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">numerical_criteria</span><span class="p">):</span>
             <span class="n">answer</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">results_p_numerical_criteria</span><span class="p">[</span><span class="n">i_criterion</span><span class="p">])</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_df_to_csv_m</span><span class="p">(</span>
-                <span class="p">[</span><span class="s2">&quot;Profile&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">answer</span><span class="p">,</span> <span class="n">answer</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_v</span><span class="p">,</span> <span class="n">n_c</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_csv</span>
+                <span class="p">[</span><span class="s2">"Profile"</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="n">answer</span><span class="p">,</span> <span class="n">answer</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_v</span><span class="p">,</span> <span class="n">n_c</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_csv</span>
             <span class="p">)</span>
         <span class="k">for</span> <span class="n">i_criterion</span><span class="p">,</span> <span class="n">criterion</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">study_profile_criteria</span><span class="o">.</span><span class="n">special_candidates_criteria</span><span class="p">):</span>
             <span class="n">rate</span> <span class="o">=</span> <span class="n">results_p_special_candidates_criteria</span><span class="p">[</span><span class="n">i_criterion</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span>
             <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_c</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_df_to_csv_m</span><span class="p">(</span>
                     <span class="p">[</span>
-                        <span class="s2">&quot;Profile&quot;</span><span class="p">,</span>
-                        <span class="s2">&quot;&quot;</span><span class="p">,</span>
-                        <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                        <span class="s2">"Profile"</span><span class="p">,</span>
+                        <span class="s2">""</span><span class="p">,</span>
+                        <span class="s2">""</span><span class="p">,</span>
                         <span class="n">criterion</span><span class="p">,</span>
                         <span class="n">c</span><span class="p">,</span>
                         <span class="n">labels_candidates</span><span class="p">[</span><span class="n">c</span><span class="p">],</span>
-                        <span class="s2">&quot;&quot;</span><span class="p">,</span>
-                        <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                        <span class="s2">""</span><span class="p">,</span>
+                        <span class="s2">""</span><span class="p">,</span>
                         <span class="n">rate</span><span class="p">[</span><span class="n">c</span><span class="p">],</span>
                         <span class="n">rate</span><span class="p">[</span><span class="n">c</span><span class="p">],</span>
                         <span class="mi">0</span><span class="p">,</span>
@@ -807,14 +807,14 @@
                 <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_df_to_csv_m</span><span class="p">(</span>
                 <span class="p">[</span>
-                    <span class="s2">&quot;Profile&quot;</span><span class="p">,</span>
-                    <span class="s2">&quot;&quot;</span><span class="p">,</span>
-                    <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                    <span class="s2">"Profile"</span><span class="p">,</span>
+                    <span class="s2">""</span><span class="p">,</span>
+                    <span class="s2">""</span><span class="p">,</span>
                     <span class="n">criterion</span><span class="p">,</span>
-                    <span class="s2">&quot;None&quot;</span><span class="p">,</span>
-                    <span class="s2">&quot;None&quot;</span><span class="p">,</span>
-                    <span class="s2">&quot;&quot;</span><span class="p">,</span>
-                    <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                    <span class="s2">"None"</span><span class="p">,</span>
+                    <span class="s2">"None"</span><span class="p">,</span>
+                    <span class="s2">""</span><span class="p">,</span>
+                    <span class="s2">""</span><span class="p">,</span>
                     <span class="n">rate</span><span class="p">[</span><span class="n">n_c</span><span class="p">],</span>
                     <span class="n">rate</span><span class="p">[</span><span class="n">n_c</span><span class="p">],</span>
                     <span class="mi">0</span><span class="p">,</span>
@@ -829,14 +829,14 @@
             <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_c</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_df_to_csv_m</span><span class="p">(</span>
                     <span class="p">[</span>
-                        <span class="s2">&quot;Profile&quot;</span><span class="p">,</span>
-                        <span class="s2">&quot;&quot;</span><span class="p">,</span>
-                        <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                        <span class="s2">"Profile"</span><span class="p">,</span>
+                        <span class="s2">""</span><span class="p">,</span>
+                        <span class="s2">""</span><span class="p">,</span>
                         <span class="n">criterion</span><span class="p">,</span>
                         <span class="n">c</span><span class="p">,</span>
                         <span class="n">labels_candidates</span><span class="p">[</span><span class="n">c</span><span class="p">],</span>
-                        <span class="s2">&quot;&quot;</span><span class="p">,</span>
-                        <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                        <span class="s2">""</span><span class="p">,</span>
+                        <span class="s2">""</span><span class="p">,</span>
                         <span class="n">aver</span><span class="p">[</span><span class="n">c</span><span class="p">],</span>
                         <span class="n">aver</span><span class="p">[</span><span class="n">c</span><span class="p">],</span>
                         <span class="mi">0</span><span class="p">,</span>
@@ -859,11 +859,11 @@
                         <span class="n">rule_class</span><span class="o">.</span><span class="n">full_name</span><span class="p">,</span>
                         <span class="n">rule_class</span><span class="o">.</span><span class="n">abbreviation</span><span class="p">,</span>
                         <span class="n">rule_class</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
-                        <span class="s2">&quot;Winner&quot;</span><span class="p">,</span>
+                        <span class="s2">"Winner"</span><span class="p">,</span>
                         <span class="n">c</span><span class="p">,</span>
                         <span class="n">labels_candidates</span><span class="p">[</span><span class="n">c</span><span class="p">],</span>
-                        <span class="s2">&quot;&quot;</span><span class="p">,</span>
-                        <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                        <span class="s2">""</span><span class="p">,</span>
+                        <span class="s2">""</span><span class="p">,</span>
                         <span class="n">rate_win</span><span class="p">[</span><span class="n">c</span><span class="p">],</span>
                         <span class="n">rate_win</span><span class="p">[</span><span class="n">c</span><span class="p">],</span>
                         <span class="mi">0</span><span class="p">,</span>
@@ -875,18 +875,18 @@
                 <span class="p">)</span>
             <span class="c1"># Result criteria</span>
             <span class="k">for</span> <span class="n">i_criterion</span><span class="p">,</span> <span class="n">criterion</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">result_criteria</span><span class="p">):</span>
-                <span class="n">lower</span> <span class="o">=</span> <span class="n">results_vs_result_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">&quot;inf&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span>
-                <span class="n">upper</span> <span class="o">=</span> <span class="n">results_vs_result_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">&quot;sup&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span>
+                <span class="n">lower</span> <span class="o">=</span> <span class="n">results_vs_result_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">"inf"</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span>
+                <span class="n">upper</span> <span class="o">=</span> <span class="n">results_vs_result_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">"sup"</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_df_to_csv_m</span><span class="p">(</span>
                     <span class="p">[</span>
                         <span class="n">rule_class</span><span class="o">.</span><span class="n">full_name</span><span class="p">,</span>
                         <span class="n">rule_class</span><span class="o">.</span><span class="n">abbreviation</span><span class="p">,</span>
                         <span class="n">rule_class</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
                         <span class="n">criterion</span><span class="p">,</span>
-                        <span class="s2">&quot;&quot;</span><span class="p">,</span>
-                        <span class="s2">&quot;&quot;</span><span class="p">,</span>
-                        <span class="s2">&quot;&quot;</span><span class="p">,</span>
-                        <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                        <span class="s2">""</span><span class="p">,</span>
+                        <span class="s2">""</span><span class="p">,</span>
+                        <span class="s2">""</span><span class="p">,</span>
+                        <span class="s2">""</span><span class="p">,</span>
                         <span class="n">lower</span><span class="p">,</span>
                         <span class="n">upper</span><span class="p">,</span>
                         <span class="n">upper</span> <span class="o">-</span> <span class="n">lower</span><span class="p">,</span>
@@ -898,18 +898,18 @@
                 <span class="p">)</span>
             <span class="c1"># Manipulation criteria</span>
             <span class="k">for</span> <span class="n">i_criterion</span><span class="p">,</span> <span class="n">criterion</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">manipulation_criteria</span><span class="p">):</span>
-                <span class="n">lower</span> <span class="o">=</span> <span class="n">results_vs_manipulation_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">&quot;inf&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span>
-                <span class="n">upper</span> <span class="o">=</span> <span class="n">results_vs_manipulation_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">&quot;sup&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span>
-                <span class="n">the_time</span> <span class="o">=</span> <span class="n">results_vs_manipulation_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">&quot;time&quot;</span><span class="p">]</span>
-                <span class="n">the_log</span> <span class="o">=</span> <span class="n">results_vs_manipulation_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">&quot;log&quot;</span><span class="p">]</span>
+                <span class="n">lower</span> <span class="o">=</span> <span class="n">results_vs_manipulation_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">"inf"</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span>
+                <span class="n">upper</span> <span class="o">=</span> <span class="n">results_vs_manipulation_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">"sup"</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span>
+                <span class="n">the_time</span> <span class="o">=</span> <span class="n">results_vs_manipulation_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">"time"</span><span class="p">]</span>
+                <span class="n">the_log</span> <span class="o">=</span> <span class="n">results_vs_manipulation_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">"log"</span><span class="p">]</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_df_to_csv_m</span><span class="p">(</span>
                     <span class="p">[</span>
                         <span class="n">rule_class</span><span class="o">.</span><span class="n">full_name</span><span class="p">,</span>
                         <span class="n">rule_class</span><span class="o">.</span><span class="n">abbreviation</span><span class="p">,</span>
                         <span class="n">rule_class</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
                         <span class="n">criterion</span><span class="p">,</span>
-                        <span class="s2">&quot;any&quot;</span><span class="p">,</span>
-                        <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                        <span class="s2">"any"</span><span class="p">,</span>
+                        <span class="s2">""</span><span class="p">,</span>
                         <span class="n">the_log</span><span class="p">,</span>
                         <span class="n">the_time</span><span class="p">,</span>
                         <span class="n">lower</span><span class="p">,</span>
@@ -922,10 +922,10 @@
                     <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_csv</span>
                 <span class="p">)</span>
             <span class="k">for</span> <span class="n">i_criterion</span><span class="p">,</span> <span class="n">criterion</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">manipulation_criteria_c</span><span class="p">):</span>
-                <span class="n">lower</span> <span class="o">=</span> <span class="n">results_vs_manipulation_criteria_c</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">&quot;inf&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span>
-                <span class="n">upper</span> <span class="o">=</span> <span class="n">results_vs_manipulation_criteria_c</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">&quot;sup&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span>
-                <span class="n">the_time</span> <span class="o">=</span> <span class="n">results_vs_manipulation_criteria_c</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">&quot;time&quot;</span><span class="p">]</span>
-                <span class="n">the_log</span> <span class="o">=</span> <span class="n">results_vs_manipulation_criteria_c</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">&quot;log&quot;</span><span class="p">]</span>
+                <span class="n">lower</span> <span class="o">=</span> <span class="n">results_vs_manipulation_criteria_c</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">"inf"</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span>
+                <span class="n">upper</span> <span class="o">=</span> <span class="n">results_vs_manipulation_criteria_c</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">"sup"</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span>
+                <span class="n">the_time</span> <span class="o">=</span> <span class="n">results_vs_manipulation_criteria_c</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">"time"</span><span class="p">]</span>
+                <span class="n">the_log</span> <span class="o">=</span> <span class="n">results_vs_manipulation_criteria_c</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">"log"</span><span class="p">]</span>
                 <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_c</span><span class="p">):</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_df_to_csv_m</span><span class="p">(</span>
                         <span class="p">[</span>
@@ -936,7 +936,7 @@
                             <span class="n">c</span><span class="p">,</span>
                             <span class="n">labels_candidates</span><span class="p">[</span><span class="n">c</span><span class="p">],</span>
                             <span class="n">the_log</span><span class="p">,</span>
-                            <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                            <span class="s2">""</span><span class="p">,</span>
                             <span class="n">lower</span><span class="p">[</span><span class="n">c</span><span class="p">],</span>
                             <span class="n">upper</span><span class="p">[</span><span class="n">c</span><span class="p">],</span>
                             <span class="n">upper</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">-</span> <span class="n">lower</span><span class="p">[</span><span class="n">c</span><span class="p">],</span>
@@ -953,13 +953,13 @@
                         <span class="n">rule_class</span><span class="o">.</span><span class="n">abbreviation</span><span class="p">,</span>
                         <span class="n">rule_class</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
                         <span class="n">criterion</span><span class="p">,</span>
-                        <span class="s2">&quot;any&quot;</span><span class="p">,</span>
-                        <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                        <span class="s2">"any"</span><span class="p">,</span>
+                        <span class="s2">""</span><span class="p">,</span>
                         <span class="n">the_log</span><span class="p">,</span>
                         <span class="n">the_time</span><span class="p">,</span>
-                        <span class="s2">&quot;&quot;</span><span class="p">,</span>
-                        <span class="s2">&quot;&quot;</span><span class="p">,</span>
-                        <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                        <span class="s2">""</span><span class="p">,</span>
+                        <span class="s2">""</span><span class="p">,</span>
+                        <span class="s2">""</span><span class="p">,</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span><span class="p">,</span>
                         <span class="n">n_v</span><span class="p">,</span>
                         <span class="n">n_c</span><span class="p">,</span>
@@ -975,10 +975,10 @@
                         <span class="n">rule_class</span><span class="o">.</span><span class="n">abbreviation</span><span class="p">,</span>
                         <span class="n">rule_class</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
                         <span class="n">name</span><span class="p">,</span>
-                        <span class="s2">&quot;&quot;</span><span class="p">,</span>
-                        <span class="s2">&quot;&quot;</span><span class="p">,</span>
-                        <span class="s2">&quot;&quot;</span><span class="p">,</span>
-                        <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                        <span class="s2">""</span><span class="p">,</span>
+                        <span class="s2">""</span><span class="p">,</span>
+                        <span class="s2">""</span><span class="p">,</span>
+                        <span class="s2">""</span><span class="p">,</span>
                         <span class="n">answer</span><span class="p">,</span>
                         <span class="n">answer</span><span class="p">,</span>
                         <span class="mi">0</span><span class="p">,</span>
@@ -990,9 +990,9 @@
                 <span class="p">)</span>
             <span class="c1"># Numerical criteria</span>
             <span class="k">for</span> <span class="n">i_criterion</span><span class="p">,</span> <span class="n">criterion</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">study_rule_criteria</span><span class="o">.</span><span class="n">numerical_criteria</span><span class="p">):</span>
-                <span class="n">lower</span> <span class="o">=</span> <span class="n">results_vs_numerical_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">&quot;inf&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span>
-                <span class="n">upper</span> <span class="o">=</span> <span class="n">results_vs_numerical_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">&quot;sup&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span>
-                <span class="n">the_time</span> <span class="o">=</span> <span class="n">results_vs_numerical_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">&quot;time&quot;</span><span class="p">]</span>
+                <span class="n">lower</span> <span class="o">=</span> <span class="n">results_vs_numerical_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">"inf"</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span>
+                <span class="n">upper</span> <span class="o">=</span> <span class="n">results_vs_numerical_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">"sup"</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span>
+                <span class="n">the_time</span> <span class="o">=</span> <span class="n">results_vs_numerical_criteria</span><span class="p">[</span><span class="n">i_task</span><span class="p">][</span><span class="n">i_criterion</span><span class="p">][</span><span class="s2">"time"</span><span class="p">]</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_df_to_csv_m</span><span class="p">(</span>
                         <span class="p">[</span>
@@ -1000,9 +1000,9 @@
                             <span class="n">rule_class</span><span class="o">.</span><span class="n">abbreviation</span><span class="p">,</span>
                             <span class="n">rule_class</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
                             <span class="n">criterion</span><span class="p">,</span>
-                            <span class="s2">&quot;any&quot;</span><span class="p">,</span>
-                            <span class="s2">&quot;&quot;</span><span class="p">,</span>
-                            <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                            <span class="s2">"any"</span><span class="p">,</span>
+                            <span class="s2">""</span><span class="p">,</span>
+                            <span class="s2">""</span><span class="p">,</span>
                             <span class="n">the_time</span><span class="p">,</span>
                             <span class="n">lower</span><span class="p">,</span>
                             <span class="n">upper</span><span class="p">,</span>
@@ -1023,12 +1023,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">file_m_fr</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">file_d_en</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">file_d_fr</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Simulation finished&quot;</span><span class="p">)</span></div>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"Simulation finished"</span><span class="p">)</span></div>
 
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">my_float</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Convert floats in French format.</span>
 
 <span class="sd">    Parameters</span>
@@ -1045,15 +1045,15 @@
 <span class="sd">    If the input is a float, it is converted to French format (and with 6 digits):</span>
 
 <span class="sd">        &gt;&gt;&gt; my_float(3.14)</span>
-<span class="sd">        &#39;3,140000&#39;</span>
+<span class="sd">        '3,140000'</span>
 
 <span class="sd">    Otherwise, return the input as it is:</span>
 
-<span class="sd">        &gt;&gt;&gt; my_float(&#39;3.14&#39;)</span>
-<span class="sd">        &#39;3.14&#39;</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        &gt;&gt;&gt; my_float('3.14')</span>
+<span class="sd">        '3.14'</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;</span><span class="si">%.6f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;,&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="s2">"</span><span class="si">%.6f</span><span class="s2">"</span> <span class="o">%</span> <span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"."</span><span class="p">,</span> <span class="s2">","</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">x</span>
 
@@ -1062,8 +1062,8 @@
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">T</span>
-    <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">path_or_buf</span><span class="o">=</span><span class="n">file_en</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">lineterminator</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">my_float</span><span class="p">)</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">path_or_buf</span><span class="o">=</span><span class="n">file_fr</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;;&quot;</span><span class="p">,</span> <span class="n">lineterminator</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">path_or_buf</span><span class="o">=</span><span class="n">file_en</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">lineterminator</span><span class="o">=</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">my_float</span><span class="p">)</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">path_or_buf</span><span class="o">=</span><span class="n">file_fr</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">";"</span><span class="p">,</span> <span class="n">lineterminator</span><span class="o">=</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 
                 </article>
